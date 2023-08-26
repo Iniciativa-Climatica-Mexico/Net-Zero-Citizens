@@ -1,0 +1,23 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+message="$(cat $1)"
+requiredPattern="^(build|chore|feat|fix|docs|refactor|perf|style|test)\([a-zA-Z0-9\s\-_]+\): .+$"
+if ! [[ $message =~ $requiredPattern ]];
+then
+  echo "."
+  echo "."
+  echo "Oh no! Tu commit message tiene el formato incorrecto :("
+  echo "El message debe de estar en el siguiente formato:"
+  echo "<type>(<scope>): <subject>"
+  echo "Los 'type' aceptados son: build, chore, feat, fix, docs, refactor, perf, style, test"
+  echo "Ejemplo: fix(middleware): ensure Range headers adhere more closely to RFC 2616"
+  echo "."
+  echo "Tu message fue:"
+  echo $message
+  echo "."
+  echo "Si quieres conocer más sobre este estándar, visita: https://dev.to/ishanmakadia/git-commit-message-convention-that-you-can-follow-1709"
+  echo "."
+  echo "No te preocupes, intenta de nuevo. TQM <3"
+  exit 1
+fi
