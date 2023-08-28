@@ -74,83 +74,81 @@ derechos en consideración a los beneficios que el Licenciante recibe
 por poner a disposición el Material Licenciado bajo estos términos y
 condiciones.
 
-
 Sección 1 -- Definiciones.
 
-  a. Material Adaptado es aquel material protegido por Derechos de
-     Autor y Derechos Similares que se deriva o se crea en base al
-     Material Licenciado y en el cual el Material Licenciado se
-     traduce, altera, arregla, transforma o modifica de manera tal que
-     dicho resultado sea de aquellos que requieran autorización de
-     acuerdo con los Derechos de Autor y Derechos Similares que ostenta
-     el Licenciante. A los efectos de esta Licencia Pública, cuando el
-     Material Licenciado se trate de una obra musical, una
-     interpretación o una grabación sonora, la sincronización temporal
-     de este material con una imagen en movimiento siempre producirá
-     Material Adaptado.
+a. Material Adaptado es aquel material protegido por Derechos de
+Autor y Derechos Similares que se deriva o se crea en base al
+Material Licenciado y en el cual el Material Licenciado se
+traduce, altera, arregla, transforma o modifica de manera tal que
+dicho resultado sea de aquellos que requieran autorización de
+acuerdo con los Derechos de Autor y Derechos Similares que ostenta
+el Licenciante. A los efectos de esta Licencia Pública, cuando el
+Material Licenciado se trate de una obra musical, una
+interpretación o una grabación sonora, la sincronización temporal
+de este material con una imagen en movimiento siempre producirá
+Material Adaptado.
 
-  b. Licencia de adaptador es aquella licencia que Usted aplica a Sus
-     Derechos de Autor y Derechos Similares en Sus contribuciones
-     consideradas como Material Adaptado de acuerdo con los términos y
-     condiciones de esta Licencia Pública.
+b. Licencia de adaptador es aquella licencia que Usted aplica a Sus
+Derechos de Autor y Derechos Similares en Sus contribuciones
+consideradas como Material Adaptado de acuerdo con los términos y
+condiciones de esta Licencia Pública.
 
-  c. Derechos de Autor y Derechos Similares son todos aquellos derechos
-     estrechamente vinculados a los derechos de autor, incluidos, de
-     manera enunciativa y no taxativa, los derechos sobre las
-     interpretaciones, las emisiones, las grabaciones sonoras y los
-     Derechos "Sui Generis" sobre Bases de Datos, sin importar cómo
-     estos derechos se encuentren enunciados o categorizados. A los
-     efectos de esta Licencia Pública, los derechos especificados en
-     las secciones 2(b)(1)-(2) no se consideran Derechos de Autor y
-     Derechos Similares.
+c. Derechos de Autor y Derechos Similares son todos aquellos derechos
+estrechamente vinculados a los derechos de autor, incluidos, de
+manera enunciativa y no taxativa, los derechos sobre las
+interpretaciones, las emisiones, las grabaciones sonoras y los
+Derechos "Sui Generis" sobre Bases de Datos, sin importar cómo
+estos derechos se encuentren enunciados o categorizados. A los
+efectos de esta Licencia Pública, los derechos especificados en
+las secciones 2(b)(1)-(2) no se consideran Derechos de Autor y
+Derechos Similares.
 
-  d. Medidas Tecnológicas Efectivas son aquellas medidas que, en
-     ausencia de la debida autorización, no pueden ser eludidas en
-     virtud de las leyes que cumplen las obligaciones del artículo 11
-     del Tratado de la OMPI sobre Derecho de Autor adoptado el 20 de
-     diciembre de 1996, y/o acuerdos internacionales similares.
+d. Medidas Tecnológicas Efectivas son aquellas medidas que, en
+ausencia de la debida autorización, no pueden ser eludidas en
+virtud de las leyes que cumplen las obligaciones del artículo 11
+del Tratado de la OMPI sobre Derecho de Autor adoptado el 20 de
+diciembre de 1996, y/o acuerdos internacionales similares.
 
-  e. Excepciones y Limitaciones son el uso justo (fair use), el trato
-     justo (fair dealing) y/o cualquier otra excepción o limitación a
-     los Derechos de Autor y Derechos Similares que se apliquen al uso
-     el Material Licenciado.
+e. Excepciones y Limitaciones son el uso justo (fair use), el trato
+justo (fair dealing) y/o cualquier otra excepción o limitación a
+los Derechos de Autor y Derechos Similares que se apliquen al uso
+el Material Licenciado.
 
-  f. Material Licenciado es obra artística o literaria, base de datos o
-     cualquier otro material al cual el Licenciante aplicó esta
-     Licencia Pública.
+f. Material Licenciado es obra artística o literaria, base de datos o
+cualquier otro material al cual el Licenciante aplicó esta
+Licencia Pública.
 
-  g. Derechos Licenciados son derechos otorgados a Usted bajo los
-     términos y condiciones de esta Licencia Pública, los cuales se
-     limitan a todos los Derechos de Autor y Derechos Similares que
-     apliquen al uso del Material Licenciado y que el Licenciante tiene
-     potestad legal para licenciar.
+g. Derechos Licenciados son derechos otorgados a Usted bajo los
+términos y condiciones de esta Licencia Pública, los cuales se
+limitan a todos los Derechos de Autor y Derechos Similares que
+apliquen al uso del Material Licenciado y que el Licenciante tiene
+potestad legal para licenciar.
 
-  h. Licenciante es el individuo(s) o la entidad(es) que concede
-     derechos bajo esta Licencia Pública.
+h. Licenciante es el individuo(s) o la entidad(es) que concede
+derechos bajo esta Licencia Pública.
 
-  i. Compartir significa proporcionar material al público por cualquier
-     medio o procedimiento que requiera permiso conforme a los Derechos
-     Licenciados, tales como la reproducción, exhibición pública,
-     presentación pública, distribución, difusión, comunicación o
-     importación, así como también su puesta a disposición, incluyendo
-     formas en que el público pueda acceder al material desde un lugar
-     y momento elegido individualmente por ellos.
+i. Compartir significa proporcionar material al público por cualquier
+medio o procedimiento que requiera permiso conforme a los Derechos
+Licenciados, tales como la reproducción, exhibición pública,
+presentación pública, distribución, difusión, comunicación o
+importación, así como también su puesta a disposición, incluyendo
+formas en que el público pueda acceder al material desde un lugar
+y momento elegido individualmente por ellos.
 
-  j. Derechos "Sui Generis" sobre Bases de Datos son aquellos derechos
-     diferentes a los derechos de autor, resultantes de la Directiva
-     96/9/EC del Parlamento Europeo y del Consejo, de 11 de marzo de
-     1996 sobre la protección jurídica de las bases de datos, en sus
-     versiones modificadas y/o posteriores, así como otros derechos
-     esencialmente equivalentes en cualquier otra parte del mundo.
+j. Derechos "Sui Generis" sobre Bases de Datos son aquellos derechos
+diferentes a los derechos de autor, resultantes de la Directiva
+96/9/EC del Parlamento Europeo y del Consejo, de 11 de marzo de
+1996 sobre la protección jurídica de las bases de datos, en sus
+versiones modificadas y/o posteriores, así como otros derechos
+esencialmente equivalentes en cualquier otra parte del mundo.
 
-  k. Usted es el individuo o la entidad que ejerce los Derechos
-     Licenciados en esta Licencia Pública. La palabra Su tiene un
-     significado equivalente.
-
+k. Usted es el individuo o la entidad que ejerce los Derechos
+Licenciados en esta Licencia Pública. La palabra Su tiene un
+significado equivalente.
 
 Sección 2 -- Ámbito de Aplicación.
 
-  a. Otorgamiento de la licencia.
+a. Otorgamiento de la licencia.
 
        1. Sujeto a los términos y condiciones de esta Licencia Pública,
           el Licenciante le otorga a Usted una licencia de carácter
@@ -159,7 +157,7 @@ Sección 2 -- Ámbito de Aplicación.
           Material Licenciado para:
 
             a. reproducir y Compartir el Material Licenciado, en su
-               totalidad o en parte; y 
+               totalidad o en parte; y
 
             b. producir, reproducir y Compartir Material Adaptado.
 
@@ -170,7 +168,7 @@ Sección 2 -- Ámbito de Aplicación.
           condiciones.
 
        3. Vigencia. La vigencia de esta Licencia Pública está
-          especificada en la sección 6(a). 
+          especificada en la sección 6(a).
 
        4. Medios y formatos; modificaciones técnicas permitidas. El
           Licenciante le autoriza a Usted a ejercer los Derechos
@@ -210,7 +208,7 @@ Sección 2 -- Ámbito de Aplicación.
           recibir la Atribución/Reconocimiento según lo dispuesto en la
           sección 3(a)(1)(A)(i).
 
-  b. Otros derechos.
+b. Otros derechos.
 
        1. Los derechos morales, tales como el derecho a la integridad,
           no están comprendidos bajo esta Licencia Pública ni tampoco
@@ -232,13 +230,12 @@ Sección 2 -- Ámbito de Aplicación.
           todos los demás casos, el Licenciante se reserva expresamente
           cualquier derecho de cobrar esas regalías.
 
-
 Sección 3 -- Condiciones de la Licencia.
 
 Su ejercicio de los Derechos Licenciados está expresamente sujeto a las
 condiciones siguientes.
 
-  a. Atribución/Reconocimiento.
+a. Atribución/Reconocimiento.
 
        1. Si Usted comparte el Material Licenciado (incluyendo en forma
           modificada), Usted debe:
@@ -282,78 +279,75 @@ condiciones siguientes.
           cualquier información requerida por la sección 3(a)(1)(A) en
           la medida razonablemente posible.
 
-  b. Si Usted Comparte Material Adaptado producido por Usted, la
-     Licencia del Adaptador que Usted aplique no debe evitar que los
-     destinatarios del material adaptado cumplan con esta Licencia
-     Pública.
-
+b. Si Usted Comparte Material Adaptado producido por Usted, la
+Licencia del Adaptador que Usted aplique no debe evitar que los
+destinatarios del material adaptado cumplan con esta Licencia
+Pública.
 
 Sección 4 -- Derechos "Sui Generis" sobre Bases de Datos.
 
 Cuando los Derechos Licenciados incluyan Derechos "Sui Generis" sobre
 Bases de Datos que apliquen a Su uso del Material Licenciado:
 
-  a. para evitar cualquier duda, la sección 2(a)(1) le concede a Usted
-     el derecho a extraer, reutilizar, reproducir y Compartir todo o
-     una parte sustancial de los contenidos de la base de datos;
+a. para evitar cualquier duda, la sección 2(a)(1) le concede a Usted
+el derecho a extraer, reutilizar, reproducir y Compartir todo o
+una parte sustancial de los contenidos de la base de datos;
 
-  b. si Usted incluye la totalidad o una parte sustancial del contenido
-     de una base de datos en otra sobre la cual Usted ostenta Derecho
-     "Sui Generis" sobre Bases de Datos, entonces ella (pero no sus
-     contenidos individuales) se entenderá como Material Adaptado; y
+b. si Usted incluye la totalidad o una parte sustancial del contenido
+de una base de datos en otra sobre la cual Usted ostenta Derecho
+"Sui Generis" sobre Bases de Datos, entonces ella (pero no sus
+contenidos individuales) se entenderá como Material Adaptado; y
 
-  c. Usted debe cumplir con las condiciones de la sección 3(a) si Usted
-     Comparte la totalidad o una parte sustancial de los contenidos de
-     la base de datos.
+c. Usted debe cumplir con las condiciones de la sección 3(a) si Usted
+Comparte la totalidad o una parte sustancial de los contenidos de
+la base de datos.
 
 Para evitar dudas, esta sección 4 complementa y no sustituye Sus
 obligaciones bajo esta Licencia Pública cuando los Derechos Licenciados
 incluyen otros Derechos de Autor y Derechos Similares.
 
-
 Sección 5 -- Exención de Garantías y Limitación de Responsabilidad.
 
-  a. SALVO QUE EL LICENCIANTE SE HAYA COMPROMETIDO MEDIANTE UN ACUERDO
-     POR SEPARADO, EN LA MEDIDA DE LO POSIBLE EL LICENCIANTE OFRECE EL
-     MATERIAL LICENCIADO TAL COMO ES Y TAL COMO ESTÁ DISPONIBLE Y NO SE
-     HACE RESPONSABLE NI OFRECE GARANTÍAS DE NINGÚN TIPO RESPECTO AL
-     MATERIAL LICENCIADO, YA SEA DE MANERA EXPRESA, IMPLÍCITA, LEGAL U
-     OTRA. ESTO INCLUYE, DE MANERA NO TAXATIVA, LAS GARANTÍAS DE
-     TÍTULO, COMERCIABILIDAD, IDONEIDAD PARA UN PROPÓSITO EN
-     PARTICULAR, NO INFRACCIÓN, AUSENCIA DE VICIOS OCULTOS U OTROS
-     DEFECTOS, LA EXACTITUD, LA PRESENCIA O LA AUSENCIA DE ERRORES,
-     SEAN O NO CONOCIDOS O DETECTABLES. CUANDO NO SE PERMITA,
-     TOTALMENTE O EN PARTE, LA DECLARACIÓN DE AUSENCIA DE GARANTÍAS, A
-     USTED PUEDE NO APLICÁRSELE ESTA EXCLUSIÓN.
+a. SALVO QUE EL LICENCIANTE SE HAYA COMPROMETIDO MEDIANTE UN ACUERDO
+POR SEPARADO, EN LA MEDIDA DE LO POSIBLE EL LICENCIANTE OFRECE EL
+MATERIAL LICENCIADO TAL COMO ES Y TAL COMO ESTÁ DISPONIBLE Y NO SE
+HACE RESPONSABLE NI OFRECE GARANTÍAS DE NINGÚN TIPO RESPECTO AL
+MATERIAL LICENCIADO, YA SEA DE MANERA EXPRESA, IMPLÍCITA, LEGAL U
+OTRA. ESTO INCLUYE, DE MANERA NO TAXATIVA, LAS GARANTÍAS DE
+TÍTULO, COMERCIABILIDAD, IDONEIDAD PARA UN PROPÓSITO EN
+PARTICULAR, NO INFRACCIÓN, AUSENCIA DE VICIOS OCULTOS U OTROS
+DEFECTOS, LA EXACTITUD, LA PRESENCIA O LA AUSENCIA DE ERRORES,
+SEAN O NO CONOCIDOS O DETECTABLES. CUANDO NO SE PERMITA,
+TOTALMENTE O EN PARTE, LA DECLARACIÓN DE AUSENCIA DE GARANTÍAS, A
+USTED PUEDE NO APLICÁRSELE ESTA EXCLUSIÓN.
 
-  b. EN LA MEDIDA DE LO POSIBLE, EN NINGÚN CASO EL LICENCIANTE SERÁ
-     RESPONSABLE ANTE USTED POR NINGUNA TEORÍA LEGAL (INCLUYENDO, DE
-     MANERA NO TAXATIVA, LA NEGLIGENCIA) O DE OTRA MANERA POR CUALQUIER
-     PÉRDIDA, COSTE, GASTO O DAÑO DIRECTO, ESPECIAL, INDIRECTO,
-     INCIDENTAL, CONSECUENTE, PUNITIVO, EJEMPLAR U OTRO QUE SURJA DE
-     ESTA LICENCIA PÚBLICA O DEL USO DEL MATERIAL LICENCIADO, INCLUSO
-     CUANDO EL LICENCIANTE HAYA SIDO ADVERTIDO DE LA POSIBILIDAD DE
-     TALES PÉRDIDAS, COSTES, GASTOS O DAÑOS. CUANDO NO SE PERMITA LA
-     LIMITACIÓN DE RESPONSABILIDAD, YA SEA TOTALMENTE O EN PARTE, A
-     USTED PUEDE NO APLICÁRSELE ESTA LIMITACIÓN.
+b. EN LA MEDIDA DE LO POSIBLE, EN NINGÚN CASO EL LICENCIANTE SERÁ
+RESPONSABLE ANTE USTED POR NINGUNA TEORÍA LEGAL (INCLUYENDO, DE
+MANERA NO TAXATIVA, LA NEGLIGENCIA) O DE OTRA MANERA POR CUALQUIER
+PÉRDIDA, COSTE, GASTO O DAÑO DIRECTO, ESPECIAL, INDIRECTO,
+INCIDENTAL, CONSECUENTE, PUNITIVO, EJEMPLAR U OTRO QUE SURJA DE
+ESTA LICENCIA PÚBLICA O DEL USO DEL MATERIAL LICENCIADO, INCLUSO
+CUANDO EL LICENCIANTE HAYA SIDO ADVERTIDO DE LA POSIBILIDAD DE
+TALES PÉRDIDAS, COSTES, GASTOS O DAÑOS. CUANDO NO SE PERMITA LA
+LIMITACIÓN DE RESPONSABILIDAD, YA SEA TOTALMENTE O EN PARTE, A
+USTED PUEDE NO APLICÁRSELE ESTA LIMITACIÓN.
 
-  c. La renuncia de garantías y la limitación de responsabilidad
-     descritas anteriormente deberán ser interpretadas, en la medida de
-     lo posible, como lo más próximo a una exención y renuncia absoluta
-     a todo tipo de responsabilidad.
-
+c. La renuncia de garantías y la limitación de responsabilidad
+descritas anteriormente deberán ser interpretadas, en la medida de
+lo posible, como lo más próximo a una exención y renuncia absoluta
+a todo tipo de responsabilidad.
 
 Sección 6 -- Vigencia y Terminación.
 
-  a. Esta Licencia Pública tiene una vigencia de aplicación igual al
-     plazo de protección de los Derechos de Autor y Derechos Similares
-     licenciados aquí. Sin embargo, si Usted incumple las condiciones
-     de esta Licencia Pública, los derechos que se le conceden mediante
-     esta Licencia Pública terminan automáticamente.
+a. Esta Licencia Pública tiene una vigencia de aplicación igual al
+plazo de protección de los Derechos de Autor y Derechos Similares
+licenciados aquí. Sin embargo, si Usted incumple las condiciones
+de esta Licencia Pública, los derechos que se le conceden mediante
+esta Licencia Pública terminan automáticamente.
 
-  b. En aquellos casos en que Su derecho a utilizar el Material
-     Licenciado se haya terminado conforme a la sección 6(a), éste será
-     restablecido:
+b. En aquellos casos en que Su derecho a utilizar el Material
+Licenciado se haya terminado conforme a la sección 6(a), éste será
+restablecido:
 
        1. automáticamente a partir de la fecha en que la violación sea
           subsanada, siempre y cuando esta se subsane dentro de los 30
@@ -366,52 +360,49 @@ Sección 6 -- Vigencia y Terminación.
      pueda tener el Licenciante a buscar resarcimiento por Sus
      violaciones de esta Licencia Pública.
 
-  c. Para evitar dudas, el Licenciante también puede ofrecer el
-     Material Licenciado bajo términos o condiciones diferentes, o
-     dejar de distribuir el Material Licenciado en cualquier momento;
-     sin embargo, hacer esto no pondrá fin a esta Licencia Pública.
+c. Para evitar dudas, el Licenciante también puede ofrecer el
+Material Licenciado bajo términos o condiciones diferentes, o
+dejar de distribuir el Material Licenciado en cualquier momento;
+sin embargo, hacer esto no pondrá fin a esta Licencia Pública.
 
-  d. Las secciones 1, 5, 6, 7, y 8 permanecerán vigentes a la
-     terminación de esta Licencia Pública.
-
+d. Las secciones 1, 5, 6, 7, y 8 permanecerán vigentes a la
+terminación de esta Licencia Pública.
 
 Sección 7 -- Otros Términos y Condiciones.
 
-  a. El Licenciante no estará obligado por ningún término o condición
-     adicional o diferente que Usted le comunique a menos que se
-     acuerde expresamente.
+a. El Licenciante no estará obligado por ningún término o condición
+adicional o diferente que Usted le comunique a menos que se
+acuerde expresamente.
 
-  b. Cualquier arreglo, convenio o acuerdo en relación con el Material
-     Licenciado que no se indique en este documento se considera
-     separado e independiente de los términos y condiciones de esta
-     Licencia Pública.
-
+b. Cualquier arreglo, convenio o acuerdo en relación con el Material
+Licenciado que no se indique en este documento se considera
+separado e independiente de los términos y condiciones de esta
+Licencia Pública.
 
 Sección 8 -- Interpretación.
 
-  a. Para evitar dudas, esta Licencia Pública no es ni deberá
-     interpretarse como una reducción, limitación, restricción, o una
-     imposición de condiciones al uso de Material Licenciado que
-     legalmente pueda realizarse sin permiso del titular, más allá de
-     lo contemplado en esta Licencia Pública.
+a. Para evitar dudas, esta Licencia Pública no es ni deberá
+interpretarse como una reducción, limitación, restricción, o una
+imposición de condiciones al uso de Material Licenciado que
+legalmente pueda realizarse sin permiso del titular, más allá de
+lo contemplado en esta Licencia Pública.
 
-  b. En la medida de lo posible, si alguna disposición de esta Licencia
-     Pública se considera inaplicable, esta será automáticamente
-     modificada en la medida mínima necesaria para hacerla aplicable.
-     Si la disposición no puede ser reformada, deberá ser eliminada de
-     esta Licencia Pública sin afectar la exigibilidad de los términos
-     y condiciones restantes.
+b. En la medida de lo posible, si alguna disposición de esta Licencia
+Pública se considera inaplicable, esta será automáticamente
+modificada en la medida mínima necesaria para hacerla aplicable.
+Si la disposición no puede ser reformada, deberá ser eliminada de
+esta Licencia Pública sin afectar la exigibilidad de los términos
+y condiciones restantes.
 
-  c. No se podrá renunciar a ningún término o condición de esta
-     Licencia Pública, ni se consentirá ningún incumplimiento, a menos
-     que se acuerde expresamente con el Licenciante.
+c. No se podrá renunciar a ningún término o condición de esta
+Licencia Pública, ni se consentirá ningún incumplimiento, a menos
+que se acuerde expresamente con el Licenciante.
 
-  d. Nada en esta Licencia Pública constituye ni puede ser interpretado
-     como una limitación o una renuncia a los privilegios e inmunidades
-     que aplican al Licenciante o a Usted, incluyendo aquellos surgidos
-     a partir de procesos legales de cualquier jurisdicción o
-     autoridad.
-
+d. Nada en esta Licencia Pública constituye ni puede ser interpretado
+como una limitación o una renuncia a los privilegios e inmunidades
+que aplican al Licenciante o a Usted, incluyendo aquellos surgidos
+a partir de procesos legales de cualquier jurisdicción o
+autoridad.
 
 =======================================================================
 

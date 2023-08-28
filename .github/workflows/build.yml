@@ -1,0 +1,175 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [main, develop]
+
+  pull_request:
+    branches: [main, develop]
+    types: [opened, synchronize, reopened, closed]
+
+  workflow_dispatch:
+
+jobs:
+  # Prevent File Change for Husky configuration
+  prevent_change:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Get all File changes
+        id: changed_files
+        uses: jitterbit/get-changed-files@v1
+
+      - name: Check if .husky files are modified
+        id: check_file
+        run: |
+          echo "::set-output name=modified::$(echo '${{ steps.changed_files.outputs.all }}' | grep -q '.husky/commit-msg' && echo 'true' || echo 'false')"
+
+      - name: Prevent File Change
+        if: steps.check_file.outputs.modified == 'true'
+        uses: xalvarez/prevent-file-change-action@v1
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          pattern: ".husky/commit-msg"
+          trustedAuthors: "salgue441, drlangh"
+
+  # Android Test
+  unit_test:
+    name: UNIT TEST
+    runs-on: ubuntu-latest
+
+    # Pipeline to continue Android Test Report Step
+    continue-on-error: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: gradle
+
+      - name: Print Java Version
+        run: javac -version
+
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+
+      - name: Restore cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Unit tests
+        # Juni test: ./gradlew testDebugUnitTest
+        run: ./gradlew testDebugUnitTest --continue
+
+      - name: Make unit test report
+        uses: doanpt/AndroidTestReportAction@v1.0
+        if: ${{ always() }} # Always run this step
+
+      - name: Upload Unit Test Report
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: unit-test-reports
+          path: "**/build/reports/tests/"
+
+  # Android Build
+  apk_generate:
+    name: APK GENERATE
+    runs-on: ubuntu-latest
+    continue-on-error: true
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: gradle
+
+      - name: Print Java Version
+        run: javac -version
+
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+
+      - name: Restore cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Sign app APK
+        uses: ilharp/sign-android-release@v1
+        id: sign_app
+        with:
+          releaseDir: app/release
+          signingKey: ${{ secrets.SIGNING_KEY }}
+          keyAlias: ${{ secrets.KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+          buildToolsVersion: 33.0.0
+
+      - uses: jungwinter/split@v2
+        id: signed_files
+        with:
+          msg: ${{ steps.sign_app.outputs.signedFiles }}
+          separator: ":"
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Signed AAB
+          path: ${{ steps.signed_files.outputs._0 }}
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Signed APK
+          path: ${{ steps.signed_files.outputs._1 }}
+
+  # Security Scan: Vulnerabilities
+  # security_scan:
+  #   name: SECURITY SCAN WITH ADDSWEEP
+
+  # NodeJS Testing with JEST
+  node_test:
+    name: Backend Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.JS
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18.17.1"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Jest with Coverage
+        run: npm test -- --coverage
+
+      - name: Upload Jest Coverage Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: jest-coverage-report
+          path: coverage/
