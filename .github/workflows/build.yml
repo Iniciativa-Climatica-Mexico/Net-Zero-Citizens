@@ -2,12 +2,9 @@ name: Build and Test
 
 on:
   push:
-    branches: [main, develop]
-
   pull_request:
     branches: [main, develop]
     types: [opened, synchronize, reopened, closed]
-
   workflow_dispatch:
 
 jobs:
