@@ -39,7 +39,7 @@ jobs:
 
     # Pipeline to continue Android Test Report Step
     continue-on-error: true
-    if: contains(github.ref, 'android/')
+    if: contains(github.ref, 'android/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
 
     steps:
       - name: Checkout
@@ -88,7 +88,7 @@ jobs:
     name: APK GENERATE
     runs-on: ubuntu-latest
     continue-on-error: true
-    if: contains(github.ref, 'android/')
+    if: contains(github.ref, 'android/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
 
     steps:
       - name: Checkout
@@ -152,7 +152,7 @@ jobs:
   node_test:
     name: Backend Unit Tests
     runs-on: ubuntu-latest
-    if: contains(github.ref, 'backend/')
+    if: contains(github.ref, 'backend/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
 
     steps:
       - name: Checkout
