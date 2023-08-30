@@ -1,3 +1,16 @@
+### IDEs ###
+# Visual Studio Code
+.vscode/*
+
+# Android Studio
+*.iml
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/gradle.xml
+.idea/assetWizardSettings.xml
+.idea/dictionaries
+.idea/libraries
+
 ### Node JS ###
 # dependencies
 /node_modules
@@ -80,13 +93,6 @@ captures/
 ### IntelliJ ###
 *.iml
 .idea/
-
-# Comment out the next few lines if these configurations are important to you
-# .idea/workspace.xml
-# .idea/tasks.xml
-# .idea/gradle.xml
-# .idea/assetWizardSettings.xml
-# .idea/dictionaries
 
 .idea/libraries
 # Android Studio 3 in .gitignore file.
