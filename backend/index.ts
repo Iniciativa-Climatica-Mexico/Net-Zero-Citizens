@@ -2,29 +2,14 @@ import DotEnv from 'dotenv'
 DotEnv.config()
 
 import express from 'express'
-import {
-  TypedRequest,
-  TypedResponse,
-  NoQueryParams,
-  NoBody,
-} from './src/utils/RequestResponse'
+import { initRouter } from './src/routes/index.routes'
 
 const app = express()
 
-// Endpoint de ejemplo
-app.get(
-  '/dummy',
-  (
-    req: TypedRequest<
-      { name: string }, // Query Params type (Si no hay Query Params usar NoQueryParams)
-      NoBody // Body type (Si no hay Body usar NoBody)
-    >,
-    res: TypedResponse<{ greeting: string }> // Response type
-  ) => {
-    req.body.name
-    res.json({ greeting: 'Hello World!' + req.body.name })
-  }
-)
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
+initRouter(app)
 
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
