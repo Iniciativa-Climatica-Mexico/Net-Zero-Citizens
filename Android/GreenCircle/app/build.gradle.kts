@@ -48,6 +48,8 @@ ktlint {
     outputToConsole.set(true)
 
     reporters {
+        // Create fle
+        reporter(ReporterType.CHECKSTYLE)
         reporter(ReporterType.PLAIN)
         reporter(ReporterType.CHECKSTYLE)
         reporter(ReporterType.JSON)
