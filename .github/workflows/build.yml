@@ -6,6 +6,7 @@ on:
     branches: [main, develop]
     types: [opened, synchronize, reopened, closed]
   workflow_dispatch:
+  create:
 
 jobs:
   # Prevent File Change for Husky configuration
@@ -31,6 +32,23 @@ jobs:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           pattern: ".husky/commit-msg"
           trustedAuthors: "salgue441, drlangh"
+
+  # Run yarn install when a branch is created
+  yarn_install:
+    name: YARN INSTALL
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.JS
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18.17.1"
+
+      - name: Install dependencies
+        run: yarn install
 
   # Android Test
   unit_test:
