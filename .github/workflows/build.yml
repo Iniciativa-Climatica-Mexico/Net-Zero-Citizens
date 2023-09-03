@@ -37,6 +37,7 @@ jobs:
   yarn_install:
     name: YARN INSTALL
     runs-on: ubuntu-latest
+    if: github.event_name == 'create' && github.event.ref_type == 'branch'
 
     steps:
       - name: Checkout code
