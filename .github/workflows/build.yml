@@ -37,6 +37,7 @@ jobs:
   yarn_install:
     name: YARN INSTALL
     runs-on: ubuntu-latest
+    if: github.event_name == 'create' && github.event.ref_type == 'branch'
 
     steps:
       - name: Checkout code
@@ -166,11 +167,11 @@ jobs:
   # security_scan:
   #   name: SECURITY SCAN WITH ADDSWEEP
 
-  # NodeJS Testing with JEST
+  # Backend Testing with JEST
   node_test:
     name: Backend Unit Tests
     runs-on: ubuntu-latest
-    if: contains(github.ref, 'backend/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    if: contains(github.ref, 'backend/') || contains(github.ref, 'Admin/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
 
     steps:
       - name: Checkout
@@ -185,10 +186,13 @@ jobs:
         run: npm ci
 
       - name: Run Jest with Coverage
-        run: npm test -- --coverage
+        run: npm test
 
-      - name: Upload Jest Coverage Report
+      - name: Upload Mocha & Chai Test Report
+        if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: jest-coverage-report
-          path: coverage/
+          name: mocha-chai-test-report
+          path: ./test-results/test-report.xml
+
+  # Admin panel unit testing
