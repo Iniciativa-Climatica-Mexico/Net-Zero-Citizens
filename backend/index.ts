@@ -3,6 +3,9 @@ DotEnv.config()
 
 import express from 'express'
 import { initRouter } from './src/routes/index.routes'
+import { db, initDB } from './src/configs/database.config'
+
+initDB()
 
 const app = express()
 

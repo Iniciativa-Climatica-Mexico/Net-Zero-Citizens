@@ -71,6 +71,7 @@ next-env.d.ts
 bin/
 gen/
 out/
+.dist
 
 # If you have release build type files in your app, comment the next line
 # release/

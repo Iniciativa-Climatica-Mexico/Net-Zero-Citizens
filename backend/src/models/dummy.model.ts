@@ -1,7 +1,26 @@
-export const getGreeting = async (name: string): Promise<string> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(`Hello ${name}`)
-    }, 1000)
-  })
+import { db } from '../configs/database.config'
+import {
+  DataTypes,
+  Model,
+  InferAttributes,
+  InferCreationAttributes,
+} from 'sequelize'
+
+interface Dummy
+  extends Model<InferAttributes<Dummy>, InferCreationAttributes<Dummy>> {
+  id: number
+  name: string
+  lastName: string
+  createdAt?: Date
+  updatedAt?: Date
 }
+
+export const Dummy = db.define<Dummy>('Dummy', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  name: DataTypes.STRING,
+  lastName: DataTypes.STRING,
+})
