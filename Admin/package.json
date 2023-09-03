@@ -9,7 +9,8 @@
     "lint": "next lint",
     "migrate": "sequelize-cli db:migrate",
     "migrate:undo": "sequelize-cli db:migrate:undo",
-    "test": "mocha tests/**/*.test.ts"
+    "test": "mocha -r ts-node/register 'test/**/*.ts'"
+
   },
   "dependencies": {
     "@types/node": "^20.5.9",
@@ -23,15 +24,19 @@
     "react-dom": "^18.2.0",
     "sequelize": "^6.32.1",
     "tailwindcss": "3.3.3",
-    "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
   },
   "devDependencies": {
+    "@types/chai": "^4.3.5",
+    "@types/mocha": "^10.0.1",
     "@types/sequelize": "^4.28.15",
     "@typescript-eslint/eslint-plugin": "^6.5.0",
     "@typescript-eslint/parser": "^6.5.0",
+    "chai": "^4.3.8",
     "eslint": "^8.48.0",
     "eslint-config-next": "13.4.19",
-    "sequelize-cli": "^6.6.1"
+    "mocha": "^10.2.0",
+    "sequelize-cli": "^6.6.1",
+    "ts-node": "^10.9.1"
   }
 }
