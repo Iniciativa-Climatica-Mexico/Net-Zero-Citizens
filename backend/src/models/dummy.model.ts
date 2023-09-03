@@ -4,11 +4,12 @@ import {
   Model,
   InferAttributes,
   InferCreationAttributes,
+  CreationOptional,
 } from 'sequelize'
 
 interface Dummy
   extends Model<InferAttributes<Dummy>, InferCreationAttributes<Dummy>> {
-  id: number
+  id: CreationOptional<number>
   name: string
   lastName: string
   createdAt?: Date

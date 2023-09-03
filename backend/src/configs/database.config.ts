@@ -1,9 +1,7 @@
 'use strict'
 
 import { Sequelize } from 'sequelize'
-import dotenv from 'dotenv'
-
-dotenv.config()
+import { bootstrapDB } from './database.bootstrap'
 
 const env = process.env.NODE_ENV || 'development'
 
@@ -31,9 +29,6 @@ if (env === 'production') {
       freezeTableName: true,
     },
   })
-  if (process.env.NODE_ENV === 'development') {
-    // TODO: Bootstraping data
-  }
 }
 
 const initDB = async () => {
@@ -42,6 +37,10 @@ const initDB = async () => {
     console.log('Database connected')
     await db.sync()
     console.log('Database synchronized')
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Bootstrapping database')
+      await bootstrapDB()
+    }
   } catch (error) {
     console.error('Unable to init connection to DB:', error)
   }
