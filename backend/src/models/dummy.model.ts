@@ -7,7 +7,7 @@ import {
   CreationOptional,
 } from 'sequelize'
 
-interface Dummy
+export interface Dummy
   extends Model<InferAttributes<Dummy>, InferCreationAttributes<Dummy>> {
   id: CreationOptional<number>
   name: string
@@ -16,7 +16,7 @@ interface Dummy
   updatedAt?: Date
 }
 
-export const Dummy = db.define<Dummy>('Dummy', {
+export const DummyModel = db.define<Dummy>('Dummy', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
