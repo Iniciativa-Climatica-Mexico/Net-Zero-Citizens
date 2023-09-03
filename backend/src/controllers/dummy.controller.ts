@@ -37,10 +37,12 @@ export const getAllDummys: RequestHandler<
     },
   }
   const dummys = await DummyService.getAllDummys(params)
-  return new Paginator<Dummy>(
-    dummys.rows,
-    params.start,
-    params.pageSize,
-    dummys.count
+  res.json(
+    new Paginator<Dummy>(
+      dummys.rows,
+      params.start,
+      params.pageSize,
+      dummys.count
+    )
   )
 }
