@@ -105,7 +105,8 @@ jobs:
         run: javac -version
 
       - name: Change wrapper permissions
-        run: chmod +x ./gradlew
+        run: chmod +x .GreenCircle/gradlew
+        working-directory: Android
 
       - name: Restore cache
         uses: actions/cache@v2
