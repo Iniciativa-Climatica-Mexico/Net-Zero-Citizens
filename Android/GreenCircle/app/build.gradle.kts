@@ -4,17 +4,19 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+
+    // Klint
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
 }
 
 android {
     namespace = "com.greencircle"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.greencircle"
-        minSdk = 33
-        targetSdk = 33
+        minSdk = 26
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -30,11 +32,16 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 }
 
@@ -48,7 +55,6 @@ ktlint {
     outputToConsole.set(true)
 
     reporters {
-        // Create fle
         reporter(ReporterType.CHECKSTYLE)
         reporter(ReporterType.PLAIN)
         reporter(ReporterType.CHECKSTYLE)
