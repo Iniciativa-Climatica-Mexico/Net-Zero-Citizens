@@ -57,6 +57,7 @@ jobs:
 
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
+        working-directory: Android/GreenCircle
 
       - name: Restore cache
         uses: actions/cache@v2
@@ -122,7 +123,7 @@ jobs:
         uses: ilharp/sign-android-release@v1
         id: sign_app
         with:
-          releaseDir: app/release
+          releaseDir: Android/GreenCircle/app/release
           signingKey: ${{ secrets.SIGNING_KEY }}
           keyAlias: ${{ secrets.KEY_ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
