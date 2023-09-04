@@ -7,5 +7,8 @@
   },
   "devDependencies": {
     "husky": "^8.0.3"
+  },
+  "dependencies": {
+    "mysql2": "^3.6.0"
   }
 }
