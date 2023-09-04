@@ -121,31 +121,30 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Sign app APK
-        uses: ilharp/sign-android-release@v1
+        uses: r0adkll/sign-android-release@v1
         id: sign_app
         with:
-          releaseDir: Android/GreenCircle/app/release
-          signingKey: ${{ secrets.SIGNING_KEY }}
-          keyAlias: ${{ secrets.KEY_ALIAS }}
+          releaseDirectory: Android/GreenCircle/app/release
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          alias: ${{ secrets.KEY_ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
-          buildToolsVersion: 33.0.0
 
-      - uses: jungwinter/split@v2
-        id: signed_files
-        with:
-          msg: ${{ steps.sign_app.outputs.signedFiles }}
-          separator: ":"
+      # - uses: jungwinter/split@v2
+      #   id: signed_files
+      #   with:
+      #     msg: ${{ steps.sign_app.outputs.signedFiles }}
+      #     separator: ":"
+
+      # # - uses: actions/upload-artifact@v3
+      # #   with:
+      # #     name: Signed AAB
+      # #     path: ${{ steps.signed_files.outputs._0 }}
 
       # - uses: actions/upload-artifact@v3
       #   with:
-      #     name: Signed AAB
-      #     path: ${{ steps.signed_files.outputs._0 }}
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: Signed APK
-          path: ${{ steps.signed_files.outputs._1 }}
+      #     name: Signed APK
+      #     path: ${{ steps.signed_files.outputs._1 }}
 
   # Security Scan: Vulnerabilities
   # security_scan:
