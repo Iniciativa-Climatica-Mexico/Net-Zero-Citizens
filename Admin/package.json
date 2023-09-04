@@ -9,8 +9,7 @@
     "lint": "next lint",
     "migrate": "sequelize-cli db:migrate",
     "migrate:undo": "sequelize-cli db:migrate:undo",
-    "test": "mocha -r ts-node/register 'test/**/*.ts'"
-
+    "test": "ts-mocha -p tsconfig.test.json 'test/**/*.ts'"
   },
   "dependencies": {
     "@types/node": "^20.5.9",
@@ -37,6 +36,7 @@
     "eslint-config-next": "13.4.19",
     "mocha": "^10.2.0",
     "sequelize-cli": "^6.6.1",
+    "ts-mocha": "^10.0.0",
     "ts-node": "^10.9.1"
   }
 }
