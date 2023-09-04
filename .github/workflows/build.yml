@@ -37,6 +37,7 @@ jobs:
   yarn_install:
     name: YARN INSTALL
     runs-on: ubuntu-latest
+    if: github.event_name == 'create' && github.event.ref_type == 'branch'
 
     steps:
       - name: Checkout code
@@ -75,6 +76,7 @@ jobs:
 
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
+        working-directory: Android/GreenCircle
 
       - name: Restore cache
         uses: actions/cache@v2
@@ -87,6 +89,7 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Unit tests
+        working-directory: Android/GreenCircle
         # Juni test: ./gradlew testDebugUnitTest
         run: ./gradlew testDebugUnitTest --continue
 
@@ -121,9 +124,11 @@ jobs:
 
       - name: Print Java Version
         run: javac -version
+        working-directory: Android/GreenCircle
 
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
+        working-directory: Android/GreenCircle
 
       - name: Restore cache
         uses: actions/cache@v2
@@ -135,42 +140,44 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: List release
+        run: ls -la Android/GreenCircle/app/release
+
       - name: Sign app APK
-        uses: ilharp/sign-android-release@v1
+        uses: r0adkll/sign-android-release@v1
         id: sign_app
         with:
-          releaseDir: app/release
-          signingKey: ${{ secrets.SIGNING_KEY }}
-          keyAlias: ${{ secrets.KEY_ALIAS }}
+          releaseDirectory: Android/GreenCircle/app/release
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          alias: ${{ secrets.KEY_ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
-          buildToolsVersion: 33.0.0
 
-      - uses: jungwinter/split@v2
-        id: signed_files
-        with:
-          msg: ${{ steps.sign_app.outputs.signedFiles }}
-          separator: ":"
+        # - uses: jungwinter/split@v2
+        #   id: signed_files
+        #   with:
+        #     msg: ${{ steps.sign_app.outputs.signedFiles }}
+        #     separator: ":"
 
-      - uses: actions/upload-artifact@v3
-        with:
-          name: Signed AAB
-          path: ${{ steps.signed_files.outputs._0 }}
+        # # - uses: actions/upload-artifact@v3
+        # #   with:
+        # #     name: Signed AAB
+        # #     path: ${{ steps.signed_files.outputs._0 }}
 
-      - uses: actions/upload-artifact@v3
-        with:
-          name: Signed APK
-          path: ${{ steps.signed_files.outputs._1 }}
+        # - uses: actions/upload-artifact@v3
+        #   with:
+        #     name: Signed APK
+        #     path: ${{ steps.signed_files.outputs._1 }}
 
   # Security Scan: Vulnerabilities
   # security_scan:
   #   name: SECURITY SCAN WITH ADDSWEEP
 
-  # NodeJS Testing with JEST
+  # Backend Testing with JEST
   node_test:
     name: Backend Unit Tests
     runs-on: ubuntu-latest
-    if: contains(github.ref, 'backend/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    if: contains(github.ref, 'backend/') || contains(github.ref, 'Admin/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
 
     steps:
       - name: Checkout
@@ -182,13 +189,16 @@ jobs:
           node-version: "18.17.1"
 
       - name: Install dependencies
-        run: npm ci
+        run: yarn ci
 
       - name: Run Jest with Coverage
-        run: npm test -- --coverage
+        run: yarn test
 
-      - name: Upload Jest Coverage Report
+      - name: Upload Mocha & Chai Test Report
+        if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: jest-coverage-report
-          path: coverage/
+          name: mocha-chai-test-report
+          path: ./test-results/test-report.xml
+
+  # Admin panel unit testing
