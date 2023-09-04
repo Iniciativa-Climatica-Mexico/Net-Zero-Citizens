@@ -183,16 +183,14 @@ jobs:
           node-version: "18.17.1"
 
       - name: Install dependencies
-        run: yarn ci
+        run: yarn install
 
       - name: Run Jest with Coverage
         run: yarn test
 
-      - name: Upload Mocha & Chai Test Report
+      - name: Upload Mocha Test Report
         if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: mocha-chai-test-report
-          path: ./test-results/test-report.xml
-
-  # Admin panel unit testing
+          name: mocha-test-report
+          path: ./test-results.xml
