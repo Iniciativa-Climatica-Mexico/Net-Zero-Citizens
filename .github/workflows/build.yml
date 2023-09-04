@@ -121,6 +121,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: List release
+        run: ls -la Android/GreenCircle/app/release
+
       - name: Sign app APK
         uses: r0adkll/sign-android-release@v1
         id: sign_app
