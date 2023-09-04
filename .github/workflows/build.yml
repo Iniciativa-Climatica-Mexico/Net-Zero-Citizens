@@ -105,6 +105,7 @@ jobs:
 
       - name: Print Java Version
         run: javac -version
+        working-directory: Android/GreenCircle
 
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
@@ -124,27 +125,27 @@ jobs:
         uses: r0adkll/sign-android-release@v1
         id: sign_app
         with:
-          releaseDirectory: /app/release
+          releaseDirectory: Android/GreenCircle/app/release
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: ${{ secrets.KEY_ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
 
-      # - uses: jungwinter/split@v2
-      #   id: signed_files
-      #   with:
-      #     msg: ${{ steps.sign_app.outputs.signedFiles }}
-      #     separator: ":"
+        # - uses: jungwinter/split@v2
+        #   id: signed_files
+        #   with:
+        #     msg: ${{ steps.sign_app.outputs.signedFiles }}
+        #     separator: ":"
 
-      # # - uses: actions/upload-artifact@v3
-      # #   with:
-      # #     name: Signed AAB
-      # #     path: ${{ steps.signed_files.outputs._0 }}
+        # # - uses: actions/upload-artifact@v3
+        # #   with:
+        # #     name: Signed AAB
+        # #     path: ${{ steps.signed_files.outputs._0 }}
 
-      # - uses: actions/upload-artifact@v3
-      #   with:
-      #     name: Signed APK
-      #     path: ${{ steps.signed_files.outputs._1 }}
+        # - uses: actions/upload-artifact@v3
+        #   with:
+        #     name: Signed APK
+        #     path: ${{ steps.signed_files.outputs._1 }}
 
   # Security Scan: Vulnerabilities
   # security_scan:
