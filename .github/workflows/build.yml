@@ -70,6 +70,7 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Unit tests
+        working-directory: Android/GreenCircle
         # Juni test: ./gradlew testDebugUnitTest
         run: ./gradlew testDebugUnitTest --continue
 
@@ -136,10 +137,10 @@ jobs:
           msg: ${{ steps.sign_app.outputs.signedFiles }}
           separator: ":"
 
-      - uses: actions/upload-artifact@v3
-        with:
-          name: Signed AAB
-          path: ${{ steps.signed_files.outputs._0 }}
+      # - uses: actions/upload-artifact@v3
+      #   with:
+      #     name: Signed AAB
+      #     path: ${{ steps.signed_files.outputs._0 }}
 
       - uses: actions/upload-artifact@v3
         with:
