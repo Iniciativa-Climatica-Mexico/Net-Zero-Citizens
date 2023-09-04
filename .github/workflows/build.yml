@@ -183,10 +183,10 @@ jobs:
           node-version: "18.17.1"
 
       - name: Install dependencies
-        run: npm ci
+        run: yarn ci
 
       - name: Run Jest with Coverage
-        run: npm test
+        run: yarn test
 
       - name: Upload Mocha & Chai Test Report
         if: always()

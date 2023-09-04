@@ -13,9 +13,13 @@
 
 ### Node JS ###
 # dependencies
-/node_modules
+/**/node_modules
 /.pnp
 .pnp.js
+.pnp.cjs
+.pnp.loader.mjs
+/**/.yarn
+.yarnrc.yml
 
 # testing
 /coverage
@@ -67,6 +71,7 @@ next-env.d.ts
 bin/
 gen/
 out/
+.dist
 
 # If you have release build type files in your app, comment the next line
 # release/
