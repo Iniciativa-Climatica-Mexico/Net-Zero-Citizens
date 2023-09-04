@@ -187,10 +187,3 @@ jobs:
 
       - name: Run Jest with Coverage
         run: yarn test
-
-      - name: Upload Mocha Test Report
-        if: always()
-        uses: actions/upload-artifact@v2
-        with:
-          name: mocha-test-report
-          path: ./test-results.xml
