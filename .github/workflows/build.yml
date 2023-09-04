@@ -121,7 +121,7 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Sign app APK
-        uses: ilharp/sign-android-release@nightly
+        uses: ilharp/sign-android-release@v1
         id: sign_app
         with:
           releaseDir: Android/GreenCircle/app/release
