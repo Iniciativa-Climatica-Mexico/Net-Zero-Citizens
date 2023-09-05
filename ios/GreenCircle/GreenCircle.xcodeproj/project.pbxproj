@@ -94,6 +94,10 @@
 		6C4452B62AA6EF8500BE5930 /* GreenCircle */ = {
 			isa = PBXGroup;
 			children = (
+				6C4452E42AA6F06D00BE5930 /* Utils */,
+				6C4452E32AA6F06700BE5930 /* Data */,
+				6C4452E22AA6F05F00BE5930 /* Domain */,
+				6C4452E12AA6F04D00BE5930 /* Presentation */,
 				6C4452B72AA6EF8500BE5930 /* GreenCircleApp.swift */,
 				6C4452B92AA6EF8500BE5930 /* ContentView.swift */,
 				6C4452BB2AA6EF8600BE5930 /* Assets.xcassets */,
@@ -125,6 +129,82 @@
 				6C4452D42AA6EF8600BE5930 /* GreenCircleUITestsLaunchTests.swift */,
 			);
 			path = GreenCircleUITests;
+			sourceTree = "<group>";
+		};
+		6C4452E12AA6F04D00BE5930 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				6C4452E62AA6F08F00BE5930 /* ViewModels */,
+				6C4452E52AA6F08700BE5930 /* Views */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		6C4452E22AA6F05F00BE5930 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				6C4452E82AA6F09D00BE5930 /* Models */,
+				6C4452E72AA6F09500BE5930 /* UseCases */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		6C4452E32AA6F06700BE5930 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				6C4452EA2AA6F0AE00BE5930 /* Remote */,
+				6C4452E92AA6F0A800BE5930 /* Repository */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		6C4452E42AA6F06D00BE5930 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		6C4452E52AA6F08700BE5930 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		6C4452E62AA6F08F00BE5930 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		6C4452E72AA6F09500BE5930 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		6C4452E82AA6F09D00BE5930 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		6C4452E92AA6F0A800BE5930 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		6C4452EA2AA6F0AE00BE5930 /* Remote */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Remote;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
