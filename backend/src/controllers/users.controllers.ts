@@ -3,7 +3,7 @@ import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
 import { User } from '../models/users.model'
 
-export const getUsers: RequestHandler<
+export const getUser: RequestHandler<
   { id: string }
   
   > = async (req, res) => {
