@@ -10,7 +10,7 @@ export const bootstrapDB = async () => {
     const files = await readdir(bootstrapDirs)
     const pool: Promise<void>[] = []
     for (const file of files) {
-      if (file.endsWith('.bootstrap.ts')) {
+      if (file.endsWith('.bootstrap.ts') || file.endsWith('.bootstrap.js')) {
         const { default: bootstrapper } = await import(
           join(bootstrapDirs, file)
         )
