@@ -1,5 +1,5 @@
 import DummyRouter from './dummy.routes'
-import UserRouter from './users.routes'
+import UserRouter from './user.routes'
 import { Express } from 'express'
 
 export const initRouter = (app: Express) => {
