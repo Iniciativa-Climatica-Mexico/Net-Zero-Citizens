@@ -19,16 +19,16 @@ import java.sql.Timestamp
  * @since 0.0.1
  */
 data class Companies(
-    @SerializedName("company_id") val companyId: Int,
-    @SerializedName("user_id") val userId: Int,
+    @SerializedName("companyId") val companyId: Int,
+    @SerializedName("userId") val userId: Int,
     @SerializedName("name") val name: String,
     @SerializedName("description") val description: String,
     @SerializedName("email") val email: String,
     @SerializedName("location") val location: String,
     @SerializedName("profile_picture") val profilePicture: String? = null,
     @SerializedName("status") val status: Status,
-    @SerializedName("phone_number") val phoneNumber: String,
-    @SerializedName("web_page") val website: String? = null,
-    @SerializedName("created_at") val createdAt: Timestamp,
-    @SerializedName("updated_at") val updatedAt: Timestamp
+    @SerializedName("phoneNumber") val phoneNumber: String,
+    @SerializedName("webPage") val website: String? = null,
+    @SerializedName("createdAt") val createdAt: Timestamp,
+    @SerializedName("updatedAt") val updatedAt: Timestamp
 )
