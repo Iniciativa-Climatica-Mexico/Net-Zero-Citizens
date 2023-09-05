@@ -1,9 +1,12 @@
 import express from 'express'
 import * as controller from '../controllers/users.controllers'
 
-const router = express.Router()
+const usersRouter = express.Router()
 
-router.get('/', controller.getAllUsers)
-router.get('/:id', controller.getUser)
+//router.get('/', controller.getAllUsers)
+usersRouter.get('/:id', controller.getUserInfo)
 
-export default router
+//router.put('/:id', controller.updateUser)
+
+
+export default usersRouter
