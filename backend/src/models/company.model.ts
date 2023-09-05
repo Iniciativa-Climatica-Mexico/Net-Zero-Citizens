@@ -25,7 +25,7 @@ export interface Company
   updatedAt?: Date
 }
 
-export const CompanyModel = db.define<Company>('Dummy', {
+export const CompanyModel = db.define<Company>('Company', {
   companyId: {
     autoIncrement: true,
     type: DataTypes.INTEGER,
@@ -35,11 +35,12 @@ export const CompanyModel = db.define<Company>('Dummy', {
   userId: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    references: {
-      model: 'users',
-      key: 'USER_ID',
-    },
-    unique: 'FK_COMPANY_USER',
+    // Uncomment when User model is created
+    // references: {
+    //   model: 'users',
+    //   key: 'USER_ID',
+    // },
+    // unique: 'FK_COMPANY_USER',
   },
   name: {
     type: DataTypes.STRING(255),
