@@ -25,7 +25,7 @@ data class Companies(
     @SerializedName("description") val description: String,
     @SerializedName("email") val email: String,
     @SerializedName("location") val location: String,
-    @SerializedName("profile_picture") val profilePicture: String? = null,
+    @SerializedName("profilePicture") val profilePicture: String? = null,
     @SerializedName("status") val status: Status,
     @SerializedName("phoneNumber") val phoneNumber: String,
     @SerializedName("webPage") val website: String? = null,
