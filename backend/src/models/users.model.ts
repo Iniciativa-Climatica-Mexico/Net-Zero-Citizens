@@ -63,7 +63,7 @@ export const UserModel = db.define<User>(
     },
     companyId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     googleId: {
       type: DataTypes.STRING,

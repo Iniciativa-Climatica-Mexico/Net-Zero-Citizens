@@ -12,7 +12,9 @@ import { RequestHandler } from 'express'
 
 export const getUserInfo: RequestHandler<{ userId: string }> = async (req, res) => {
   const userId = req.params.userId
+  console.log(userId)
   const userInfo = await UserService.getUserInfo(userId)
+  console.log(userInfo)
 
   if (userInfo) {
     res.json(userInfo)
