@@ -18,32 +18,47 @@ export interface Surveys
   updatedAt?: Date
 }
 
-export const SurveysModel = db.define<Surveys>('SURVEYS', {
-  surveyId: {
-    type: DataTypes.INTEGER,
-    field: 'SURVEY_ID',
-    primaryKey: true,
-    allowNull: false,
-    autoIncrement: true,
+export const SurveysModel = db.define<Surveys>(
+  'SURVEYS',
+  {
+    surveyId: {
+      type: DataTypes.INTEGER,
+      field: 'SURVEY_ID',
+      primaryKey: true,
+      allowNull: false,
+      autoIncrement: true,
+    },
+    title: {
+      type: DataTypes.STRING(225),
+      field: 'TITLE',
+      allowNull: false,
+    },
+    description: {
+      type: DataTypes.STRING(500),
+      field: 'DESCRIPTION',
+      allowNull: true,
+    },
+    startDate: {
+      type: DataTypes.DATE,
+      field: 'START_DATE',
+      allowNull: false,
+    },
+    endDate: {
+      type: DataTypes.DATE,
+      field: 'END_DATE',
+      allowNull: false,
+    },
   },
-  title: {
-    type: DataTypes.STRING(225),
-    field: 'TITLE',
-    allowNull: false,
-  },
-  description: {
-    type: DataTypes.STRING(500),
-    field: 'DESCRIPTION',
-    allowNull: true,
-  },
-  startDate: {
-    type: DataTypes.DATE,
-    field: 'START_DATE',
-    allowNull: false,
-  },
-  endDate: {
-    type: DataTypes.DATE,
-    field: 'END_DATE',
-    allowNull: false,
-  },
-})
+  {
+    tableName: 'SURVEYS',
+    timestamps: true,
+    indexes: [
+      {
+        name: 'PRIMARY',
+        unique: true,
+        using: 'BTREE',
+        fields: [{ name: 'SURVEY_ID' }],
+      },
+    ],
+  }
+)
