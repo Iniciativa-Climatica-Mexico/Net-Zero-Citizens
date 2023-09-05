@@ -1,10 +1,30 @@
-// Cambiar id autoincremental por uuid
-
 import { db } from '../configs/database.config'
 import { DataTypes, Model } from 'sequelize'
 
+/**
+ * @interface User
+ * @description User interface
+ * @param {string} userId - The user's id
+ * @param {number} roleId - The user's role id
+ * @param {number} companyId - The user's company id
+ * @param {number} googleId - The user's google id
+ * @param {number} facebookId - The user's facebook id
+ * @param {number} appleId - The user's apple id
+ * @param {string} firstName - The user's first name
+ * @param {string} lastName - The user's last name
+ * @param {string} secondLastName - The user's second last name
+ * @param {string} email - The user's email
+ * @param {string} password - The user's password
+ * @param {string} phoneNumber - The user's phone number
+ * @param {number} age - The user's age
+ * @param {string} state - The user's state
+ * @param {enum} sex - The user's sex
+ * @param {string} profilePicture - The user's profile picture url
+ * @param {date} createdAt - The user's creation date
+ * @param {date} updatedAt - The user's update date
+ */
 export interface User extends Model {
-  id: number
+  userId: string
   roleId: number
   companyId: number | null
   googleId: number | null
@@ -24,13 +44,18 @@ export interface User extends Model {
   updatedAt?: Date
 }
 
+/**
+ * @function UserModel
+ * @description Create the model for the users table
+ */
+
 export const UserModel = db.define<User>(
   'User',
   {
-    id: {
-      type: DataTypes.INTEGER,
+    userId: {
+      type: DataTypes.UUID,
       primaryKey: true,
-      autoIncrement: true,
+      defaultValue: DataTypes.UUIDV4,
     },
     roleId: {
       type: DataTypes.INTEGER,
@@ -111,3 +136,4 @@ export const UserModel = db.define<User>(
     updatedAt: 'UPDATED_AT',
   }
 )
+
