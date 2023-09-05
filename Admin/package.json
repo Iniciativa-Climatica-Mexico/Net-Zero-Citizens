@@ -1,0 +1,42 @@
+{
+  "name": "admin-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "migrate": "sequelize-cli db:migrate",
+    "migrate:undo": "sequelize-cli db:migrate:undo",
+    "test": "ts-mocha -p tsconfig.test.json 'test/**/*.ts'"
+  },
+  "dependencies": {
+    "@types/node": "^20.5.9",
+    "@types/react": "^18.2.21",
+    "@types/react-dom": "18.2.7",
+    "autoprefixer": "10.4.15",
+    "mysql2": "^3.6.0",
+    "next": "^13.4.19",
+    "postcss": "8.4.29",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sequelize": "^6.32.1",
+    "tailwindcss": "3.3.3",
+    "typescript": "^5.2.2"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.5",
+    "@types/mocha": "^10.0.1",
+    "@types/sequelize": "^4.28.15",
+    "@typescript-eslint/eslint-plugin": "^6.5.0",
+    "@typescript-eslint/parser": "^6.5.0",
+    "chai": "^4.3.8",
+    "eslint": "^8.48.0",
+    "eslint-config-next": "13.4.19",
+    "mocha": "^10.2.0",
+    "sequelize-cli": "^6.6.1",
+    "ts-mocha": "^10.0.0",
+    "ts-node": "^10.9.1"
+  }
+}
