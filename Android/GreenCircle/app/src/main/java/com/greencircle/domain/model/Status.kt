@@ -9,7 +9,6 @@
  */
 package com.greencircle.domain.model
 
-// Google Services
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -18,7 +17,10 @@ import com.google.gson.annotations.SerializedName
  * @since 0.0.1
  */
 enum class Status {
-    @SerializedName("approved") APPROVED,
-    @SerializedName("pending") PENDING_APPROVAL,
-    @SerializedName("rejected") REJECTED
+    @SerializedName("approved")
+    APPROVED,
+    @SerializedName("pending")
+    PENDING_APPROVAL,
+    @SerializedName("rejected")
+    REJECTED
 }

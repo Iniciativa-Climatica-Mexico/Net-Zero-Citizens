@@ -10,14 +10,8 @@
  */
 package com.greencircle.domain.model
 
-// Google Services
 import com.google.gson.annotations.SerializedName
-
-// Java Sql Imports
 import java.sql.Timestamp
-
-// Project files
-import com.greencircle.domain.model.Status
 
 /**
  * @dataclass Companies
