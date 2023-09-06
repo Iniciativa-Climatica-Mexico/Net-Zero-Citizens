@@ -24,3 +24,28 @@ export const getAllCompanies: RequestHandler<
     total: companies.count,
   })
 }
+
+/**
+ * @brief
+ * Obtiene un proveedor por su id y lo devuelve en la respuesta
+ * @param req Request con el id del proveedor
+ * @param res Response con el proveedor
+ */
+export const getCompanyById: RequestHandler<
+  NoRecord,
+  Company | { message: string },
+  NoRecord,
+  { id: string }
+> = async (req, res) => {
+  try {
+    const company = await CompanyService.getCompanyById(req.params.id)
+
+    if (!company) {
+      res.status(404).json({ message: 'Company not found' })
+    } else {
+      res.json(company)
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error' })
+  }
+}
