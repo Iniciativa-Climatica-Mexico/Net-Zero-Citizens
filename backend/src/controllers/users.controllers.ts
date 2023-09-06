@@ -22,3 +22,29 @@ export const getUserInfo: RequestHandler<{ userId: string }> = async (req, res) 
     res.status(404).json({ error: 'User not found' })
   }
 }
+
+
+export const updateUserInfo: RequestHandler<{ userId: string }> = async (req, res) => {
+  const userId = req.params.userId
+  const userInfo = await UserService.getUserInfo(userId)
+  const newUserInfo = new UserService.User({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    secondLastName: req.body.secondLastName,
+    email: req.body.email,
+    password: req.body.password,
+    phoneNumber: req.body.phoneNumber,
+    age: req.body.age,
+    state: req.body.state,
+    sex: req.body.sex,
+    profilePicture: req.body.profilePicture,
+  })
+
+  if (userInfo) {
+    await UserService.updateUserInfo(userId, newUserInfo)
+    res.json({ message: 'User updated' })
+  } else {
+    res.status(404).json({ error: 'User not found' })
+  }
+
+}

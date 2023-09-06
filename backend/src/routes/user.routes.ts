@@ -6,7 +6,7 @@ const usersRouter = express.Router()
 //router.get('/', controller.getAllUsers)
 usersRouter.get('/:userId', controller.getUserInfo)
 
-//router.put('/:id', controller.updateUser)
+usersRouter.put('/:userId', controller.updateUserInfo)
 
 
 export default usersRouter
