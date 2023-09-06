@@ -56,18 +56,22 @@ export const UserModel = db.define<User>(
       type: DataTypes.UUID,
       primaryKey: true,
       defaultValue: DataTypes.UUIDV4,
+      field: 'USER_ID',
     },
     roleId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      field: 'ROLE_ID',
     },
     companyId: {
       type: DataTypes.INTEGER,
       allowNull: true,
+      field: 'COMPANY_ID',
     },
     googleId: {
       type: DataTypes.STRING,
       allowNull: true,
+      field: 'GOOGLE_ID',
     },
     facebookId: {
       type: DataTypes.STRING,
@@ -76,58 +80,71 @@ export const UserModel = db.define<User>(
     appleId: {
       type: DataTypes.STRING,
       allowNull: true,
+      field: 'APPLE_ID',
     },
     firstName: {
       type: DataTypes.STRING,
       allowNull: false,
+      field: 'FIRST_NAME',
     },
     lastName: {
       type: DataTypes.STRING,
       allowNull: false,
+      field: 'LAST_NAME',
     },
     secondLastName: {
       type: DataTypes.STRING,
       allowNull: true,
+      field: 'SECOND_LAST_NAME',
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
+      field: 'EMAIL', 
     },
     password: {
       type: DataTypes.STRING,
       allowNull: true,
+      field: 'PASSWORD',
     },
     phoneNumber: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
+      field: 'PHONE_NUMBER',
     },
     age: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      field: 'AGE',
     },
     state: {
       type: DataTypes.STRING,
       allowNull: false,
+      field: 'STATE',
     },
     sex: {
       type: DataTypes.ENUM('masculine', 'femenine', 'other', 'no_answer'),
       allowNull: false,
+      field:'SEX',
     },
     profilePicture: {
       type: DataTypes.STRING,
       allowNull: true,
+      field: 'PROFILE_PICTURE',
     },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: DataTypes.NOW,
+      field: 'CREATED_AT',
     },
     updatedAt: {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: DataTypes.NOW,
+      field: 'UPDATED_AT',
     },
   },
   {
