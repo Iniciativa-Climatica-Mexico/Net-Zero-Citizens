@@ -49,8 +49,8 @@ export interface User extends Model {
  * @description Create the model for the users table
  */
 
-export const UserModel = db.define<User>(
-  'User',
+export const UsersModel = db.define<User>(
+  'USERS',
   {
     userId: {
       type: DataTypes.UUID,
