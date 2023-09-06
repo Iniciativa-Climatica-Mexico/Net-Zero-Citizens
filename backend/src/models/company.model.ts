@@ -25,55 +25,66 @@ export interface Company
   updatedAt?: Date
 }
 
-export const CompanyModel = db.define<Company>('Company', {
+export const CompanyModel = db.define<Company>('COMPANIES', {
   companyId: {
     autoIncrement: true,
     type: DataTypes.INTEGER,
     allowNull: false,
     primaryKey: true,
+    field: 'COMPANY_ID',
   },
   userId: {
     type: DataTypes.INTEGER,
     allowNull: false,
     // Uncomment when User model is created
     // references: {
-    //   model: 'users',
+    //   model: 'USERS',
     //   key: 'USER_ID',
     // },
     // unique: 'FK_COMPANY_USER',
+    field: 'USER_ID',
   },
   name: {
     type: DataTypes.STRING(255),
     allowNull: false,
+    field: 'NAME',
   },
   description: {
     type: DataTypes.STRING(500),
     allowNull: false,
+    field: 'DESCRIPTION',
   },
   email: {
     type: DataTypes.STRING(255),
     allowNull: false,
     unique: 'EMAIL',
+    field: 'EMAIL',
   },
   location: {
     type: DataTypes.STRING(500),
     allowNull: false,
+    field: 'LOCATION',
   },
   profilePicture: {
     type: DataTypes.STRING(500),
     allowNull: true,
+    field: 'PROFILE_PICTURE',
   },
   status: {
     type: DataTypes.ENUM('approved', 'pending_approval', 'rejected'),
     allowNull: false,
+    defaultValue: 'pending_approval',
+    field: 'STATUS',
   },
   phoneNumber: {
     type: DataTypes.STRING(10),
     allowNull: false,
     unique: 'PHONE_NUMBER',
+    field: 'PHONE_NUMBER',
   },
   webPage: {
     type: DataTypes.STRING(255),
     allowNull: true,
+    field: 'WEB_PAGE',
   },
 })
