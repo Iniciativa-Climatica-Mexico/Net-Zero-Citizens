@@ -83,4 +83,10 @@ describe('Company Service', () => {
         ...testData[0],
       })
   })
+
+  it('should return null if the company does not exist', async () => {
+    const response = await getCompanyById('999')
+
+    expect(response).to.be.null
+  })
 })
