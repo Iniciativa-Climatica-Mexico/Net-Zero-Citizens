@@ -3,6 +3,7 @@ import * as controller from '../controllers/company.controller'
 
 const router = express.Router()
 
+router.get('/', controller.getAllCompanies)
 router.get('/pending', controller.getPendingCompanies)
 
 export default router

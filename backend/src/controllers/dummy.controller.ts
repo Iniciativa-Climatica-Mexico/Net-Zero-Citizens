@@ -32,9 +32,7 @@ export const getAllDummys: RequestHandler<
   const params = {
     start: req.query.start || 0,
     pageSize: req.query.pageSize || 10,
-    filters: {
-      name: req.query.filters?.name || '',
-    },
+    name: req.query.name || '',
   }
   const dummys = await DummyService.getAllDummys(params)
   res.json({
