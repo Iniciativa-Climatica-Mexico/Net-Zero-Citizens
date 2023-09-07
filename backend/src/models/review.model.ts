@@ -12,7 +12,7 @@ import {
 export interface Review
     extends Model<InferAttributes<Review>, InferCreationAttributes<Review>> { 
     reviewId: CreationOptional<number>
-    userId: number
+    userId: string
     companyId: number
     rating: number
     comment: string
@@ -29,7 +29,7 @@ export const ReviewModel = db.define<Review>('REVIEWS', {
         field: 'REVIEW_ID',
     },
     userId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         allowNull: false,
         references: {
           model: UsersModel,
@@ -58,4 +58,10 @@ export const ReviewModel = db.define<Review>('REVIEWS', {
         allowNull: false,
         field: 'COMMENT',
     },
-})
+}, {
+    tableName: 'REVIEWS',
+    timestamps: true,
+    createdAt: 'CREATED_AT',
+    updatedAt: 'UPDATED_AT',
+}
+)

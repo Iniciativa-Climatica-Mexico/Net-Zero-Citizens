@@ -7,7 +7,15 @@ const bootstrapDirs = join(__dirname, '../bootstrap')
 
 export const bootstrapDB = async () => {
   try {
-    const files = await readdir(bootstrapDirs)
+    // const files = await readdir(bootstrapDirs)
+    // JUST FOR TESTING
+    const files = [
+      'Bootstraper.ts',
+      'company.bootstrap.ts',
+      'dummy.bootstrap.ts',
+      'users.bootstrap.ts',
+      'reviews.bootstrap.ts'
+    ]
     const pool: Promise<void>[] = []
     for (const file of files) {
       if (file.endsWith('.bootstrap.ts') || file.endsWith('.bootstrap.js')) {
