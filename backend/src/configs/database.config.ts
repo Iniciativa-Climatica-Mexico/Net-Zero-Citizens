@@ -1,7 +1,11 @@
 'use strict'
 
-import { Sequelize } from 'sequelize'
+import { Sequelize } from 'sequelize-typescript'
 import { bootstrapDB } from './database.bootstrap'
+import Survey from '../models/survey.model'
+import Question from '../models/question.model'
+import QuestionOption from '../models/questionOption.model'
+import Answer from '../models/answer.model'
 
 const env = process.env.NODE_ENV || 'development'
 
@@ -30,19 +34,13 @@ if (env === 'production') {
     },
   })
 }
+// db.addModels([__dirname + '../../**/*.model.ts'])
+db.addModels([Survey, Question, QuestionOption, Answer])
 
 const initDB = async () => {
   try {
     console.log(await db.authenticate())
     console.log('Database connected')
-
-    const modules = [
-      import('../models/surveys.model'),
-      import('../models/questions.model'),
-      import('../models/answers.model'),
-      import('../models/questionOptions.model'),
-    ]
-
     console.log(await db.sync())
     console.log('Database synchronized')
     if (process.env.NODE_ENV !== 'production') {
