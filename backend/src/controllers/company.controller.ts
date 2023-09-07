@@ -13,7 +13,7 @@ export const getAllCompanies: RequestHandler<
     start: req.query.start || 0,
     pageSize: req.query.pageSize || 10,
     filters: {
-      name: req.query.filters?.name || '',
+      name: req.query.name || '',
     },
   }
   const companies = await CompanyService.getAllCompanies(params)
