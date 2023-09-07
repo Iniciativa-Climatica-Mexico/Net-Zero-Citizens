@@ -3,7 +3,7 @@ import * as ReviewService from '../services/review.service'
 import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
 
-export const getAllCompanies: RequestHandler<
+export const getAllReviews: RequestHandler<
   NoRecord,
   Paginator<Review>,
   NoRecord,
