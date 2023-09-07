@@ -1,9 +1,9 @@
 import { literal } from 'sequelize'
-import { DummiesModel, Dummy } from '../models/dummy.model'
+import { DummyModel, Dummy } from '../models/dummy.model'
 import { PaginatedQuery, PaginationParams } from '../utils/RequestResponse'
 
 export const getGreeting = async (name: string): Promise<string> => {
-  const dummy = await DummiesModel.findOne({ where: { name } })
+  const dummy = await DummyModel.findOne({ where: { name } })
   if (dummy) {
     console.log(dummy)
     return `Hello ${dummy.name} ${dummy.lastName}!`
@@ -16,7 +16,7 @@ export const getGreeting = async (name: string): Promise<string> => {
 export const getAllDummys = async (
   params: PaginationParams<{ name: string }>
 ): Promise<PaginatedQuery<Dummy>> => {
-  return await DummiesModel.findAndCountAll({
+  return await DummyModel.findAndCountAll({
     limit: params.pageSize,
     offset: params.start,
     // Case insensitive search
