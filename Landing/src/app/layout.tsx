@@ -1,3 +1,4 @@
+import Navbar from '@/components/Nabvar';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Lato } from 'next/font/google';
@@ -16,7 +17,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={lato.className}>{children}</body>
+      <body className={lato.className}>
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }

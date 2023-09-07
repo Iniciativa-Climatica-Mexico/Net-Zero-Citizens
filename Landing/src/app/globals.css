@@ -15,7 +15,20 @@
   }
 }
 
+html {
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+
+  @media (max-width: $viewport-7) {
+    font-size: 50%;
+  }
+}
+
 body {
   color: rgb(var(--text-rgb));
   background: rgb(var(--foreground-rgb));
+  overflow-x: hidden;
+  width: 100%;
 }

@@ -10,6 +10,7 @@
     "test": "ts-mocha -p tsconfig.test.json 'test/**/*.ts'"
   },
   "dependencies": {
+    "@svgr/webpack": "^8.1.0",
     "@types/node": "20.5.9",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
