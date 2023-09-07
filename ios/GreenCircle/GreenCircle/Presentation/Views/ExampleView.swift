@@ -16,7 +16,7 @@ struct ExampleView: View {
                 title: "Example",
                 leftIcon: "chevron.left",  // Nombre SF Symbol para ícono izquierdo
                 rightIcon: nil,            // Nombre SF Symbol para ícono derecho
-                leftDestination: { Example2View() },  // View a la que se navegará con el ícono izquierdo
+                leftDestination: { ProfileView() },  // View a la que se navegará con el ícono izquierdo
                 rightDestination: { }                 // View a la que se navegará con el ícono derecho
             )
             .frame(height: 80)  // Espacio entre el titel bar y el contenido
