@@ -16,6 +16,13 @@ export const getAllCompanies = async <T>(
   })
 }
 
+/**
+ * @brief 
+ * Función del servicio que devuelve todos los proveedores pendientes por aprobar
+ * @params Los parametros de paginación
+ * @returns Una promesa con los proveedores y la información de paginación 
+ */
+
 export const getPendingCompanies = async <T>(
   params: PaginationParams<T>
 ): Promise<PaginatedQuery<Company>> => {

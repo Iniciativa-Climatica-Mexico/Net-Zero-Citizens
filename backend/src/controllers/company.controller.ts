@@ -31,7 +31,12 @@ export const getAllCompanies: RequestHandler<
   })
 }
 
-
+/**
+ * @brief
+ * Función del controlador que devuelve todos los proveedores pendientes por aprobar de la base de datos
+ * @param req La request HTTP al servidor
+ * @param res Un objeto paginador con los proveedores y la información de paginación
+ */
 export const getPendingCompanies: RequestHandler<
   NoRecord,
   Paginator<Company>,
