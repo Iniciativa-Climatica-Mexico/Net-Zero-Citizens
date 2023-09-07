@@ -1,3 +1,2 @@
-import { SurveysModel, Surveys } from "../models/survey.model";
-import { PaginatedQuery, PaginationParams } from "../utils/RequestResponse";
-
+import { SurveysModel, Surveys } from '../models/surveys.model'
+import { PaginatedQuery, PaginationParams } from '../utils/RequestResponse'
