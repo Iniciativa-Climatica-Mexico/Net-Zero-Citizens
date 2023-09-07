@@ -37,7 +37,7 @@ const initDB = async () => {
     console.log('Database connected')
     await db.sync()
     console.log('Database synchronized')
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV != 'production') {
       console.log('Bootstrapping database')
       await bootstrapDB()
     }
