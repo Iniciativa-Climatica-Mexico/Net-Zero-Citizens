@@ -3,10 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:flow_horizontalGap="40dp"
     android:background="@color/white">
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.25"
         android:orientation="vertical"
@@ -19,6 +18,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="@string/eco_info"
             android:textColor="@color/black"
             android:textStyle="bold"
@@ -26,8 +26,9 @@
             />
     </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="0.25"
         android:orientation="vertical"
         >
         <ImageView            android:layout_width="34dp"
@@ -38,6 +39,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="@string/proveedores"
             android:textColor="@color/black"
             android:textStyle="bold"
@@ -45,8 +47,9 @@
             />
     </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="0.25"
         android:orientation="vertical"
         >
         <ImageView            android:layout_width="34dp"
@@ -57,6 +60,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="@string/mapa"
             android:textColor="@color/black"
             android:textStyle="bold"
@@ -64,8 +68,9 @@
             />
     </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="0.25"
         android:orientation="vertical"
         >
         <ImageView            android:layout_width="34dp"
@@ -76,6 +81,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="@string/perfil"
             android:textColor="@color/black"
             android:textStyle="bold"
