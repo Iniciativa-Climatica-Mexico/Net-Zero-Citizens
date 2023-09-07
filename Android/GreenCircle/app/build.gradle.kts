@@ -80,11 +80,14 @@ dependencies {
 
     // Glide
     implementation("com.github.bumptech.glide:glide:4.12.0")
+    implementation ("jp.wasabeef:glide-transformations:4.3.0")
     kapt("com.github.bumptech.glide:compiler:4.12.0")
-    implementation("jp.wasabeef:glide-transformations:4.3.0")
+
+    // Gson
+    implementation("com.google.code.gson:gson:2.8.9")
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
 
     // Fragment
     implementation("androidx.fragment:fragment-ktx:1.6.1")
@@ -92,6 +95,19 @@ dependencies {
     // Activity
     implementation("androidx.activity:activity-ktx:1.7.2")
 
-    // Databinding
+    // Data Binding
     implementation("androidx.databinding:databinding-runtime:8.1.1")
+
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+
+    // Live Data
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
+
+    // Navigation
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.1")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.1")
+
+    // Lifecycle
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
 }
