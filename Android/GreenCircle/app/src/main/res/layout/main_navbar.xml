@@ -3,91 +3,94 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/main_navbar_border"
-    android:padding="5dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:padding="5dp">
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.25"
-        android:orientation="vertical"
-        >
-        <ImageView            android:layout_width="34dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="34dp"
             android:layout_height="34dp"
-            android:src="@drawable/leaf_icon"
             android:layout_gravity="center"
-            />
+            android:src="@drawable/leaf_icon" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center"
             android:text="@string/eco_info"
             android:textColor="@color/black"
-            android:textStyle="bold"
-            android:gravity="center"
-            />
+            android:textStyle="bold" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.25"
-        android:orientation="vertical"
-        >
-        <ImageView            android:layout_width="34dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="34dp"
             android:layout_height="34dp"
-            android:src="@drawable/proveedores_icon"
             android:layout_gravity="center"
-            />
+            android:src="@drawable/proveedores_icon" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center"
             android:text="@string/proveedores"
             android:textColor="@color/black"
-            android:textStyle="bold"
-            android:gravity="center"
-            />
+            android:textStyle="bold" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.25"
-        android:orientation="vertical"
-        >
-        <ImageView            android:layout_width="34dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="34dp"
             android:layout_height="34dp"
-            android:src="@drawable/mapa_icon"
             android:layout_gravity="center"
-            />
+            android:src="@drawable/mapa_icon" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center"
             android:text="@string/mapa"
             android:textColor="@color/black"
-            android:textStyle="bold"
-            android:gravity="center"
-            />
+            android:textStyle="bold" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.25"
-        android:orientation="vertical"
-        >
-        <ImageView            android:layout_width="34dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="34dp"
             android:layout_height="34dp"
-            android:src="@drawable/perfil_icon"
             android:layout_gravity="center"
-            />
+            android:src="@drawable/perfil_icon" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center"
             android:text="@string/perfil"
             android:textColor="@color/black"
-            android:textStyle="bold"
-            android:gravity="center"
-            />
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>
