@@ -25,7 +25,7 @@ export interface Company
   updatedAt?: Date
 }
 
-export const CompanyModel = db.define<Company>('COMPANIES', {
+export const CompaniesModel = db.define<Company>('COMPANIES', {
   companyId: {
     autoIncrement: true,
     type: DataTypes.INTEGER,
