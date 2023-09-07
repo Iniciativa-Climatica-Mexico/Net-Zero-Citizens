@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/ecoInfo"
+        android:icon="@drawable/leaf_icon"
+        android:title="@string/eco_info" />
+    <item
+        android:id="@+id/proveedores"
+        android:icon="@drawable/proveedores_icon"
+        android:title="@string/proveedores" />
+
+    <item
+        android:id="@+id/mapa"
+        android:icon="@drawable/mapa_icon"
+        android:title="@string/mapa" />
+
+    <item
+        android:id="@+id/perfil"
+        android:icon="@drawable/perfil_icon"
+        android:title="@string/perfil" />
+
+</menu>

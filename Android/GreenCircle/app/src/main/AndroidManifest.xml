@@ -16,15 +16,17 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".framework.views.activities.MainActivity"
+            android:name=".framework.views.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.GreenCircle.NoActionBar"
-            android:windowSoftInputMode="adjustResize|stateHidden">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.GreenCircle.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+    </application>
+
 
         <activity
             android:name=".framework.views.fragments.ContactarProveedoresActivity"
