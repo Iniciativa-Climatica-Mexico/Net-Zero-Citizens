@@ -1,4 +1,6 @@
 import { db } from '../configs/database.config'
+import { UsersModel } from './users.model'
+import { CompanyModel } from './company.model'
 import {
   DataTypes,
   Model,
@@ -29,23 +31,21 @@ export const ReviewModel = db.define<Review>('REVIEWS', {
     userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        // Uncomment when User model is created
-        // references: {
-        //   model: 'USERS',
-        //   key: 'USER_ID',
-        // },
-        // unique: 'FK_COMPANY_USER',
+        references: {
+          model: UsersModel,
+          key: 'USER_ID',
+        },
+        unique: 'FK_REVIEW_USER',
         field: 'USER_ID',
     },
     companyId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        // Uncomment when Company model is created
-        // references: {
-        //   model: 'COMPANIES',
-        //   key: 'COMPANY_ID',
-        // },
-        // unique: 'FK_COMPANY_USER',
+        references: {
+          model: CompanyModel,
+          key: 'COMPANY_ID',
+        },
+        unique: 'FK_REVIEW_COMPANY',
         field: 'COMPANY_ID',
     },
     rating: {
@@ -58,9 +58,4 @@ export const ReviewModel = db.define<Review>('REVIEWS', {
         allowNull: false,
         field: 'COMMENT',
     },
-}, {
-    tableName: 'REVIEWS',
-    timestamps: true,
-    createdAt: 'CREATED_AT',
-    updatedAt: 'UPDATED_AT',
 })
