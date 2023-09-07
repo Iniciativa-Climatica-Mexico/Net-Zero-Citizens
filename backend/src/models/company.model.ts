@@ -9,6 +9,10 @@ import {
 
 type StatusEnum = 'approved' | 'pending_approval' | 'rejected'
 
+/**
+ * @brief
+ * La interfaz con los atributos de la tabla COMPANIES
+ */
 export interface Company
   extends Model<InferAttributes<Company>, InferCreationAttributes<Company>> {
   companyId: CreationOptional<number>
@@ -25,6 +29,10 @@ export interface Company
   updatedAt?: Date
 }
 
+/**
+ * @brief
+ * El modelo que representa la tabla COMPANIES
+ */
 export const CompaniesModel = db.define<Company>('COMPANIES', {
   companyId: {
     autoIncrement: true,
