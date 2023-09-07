@@ -33,9 +33,17 @@ if (env === 'production') {
 
 const initDB = async () => {
   try {
-    await db.authenticate()
+    console.log(await db.authenticate())
     console.log('Database connected')
-    await db.sync()
+
+    const modules = [
+      import('../models/surveys.model'),
+      import('../models/questions.model'),
+      import('../models/answers.model'),
+      import('../models/questionOptions.model'),
+    ]
+
+    console.log(await db.sync())
     console.log('Database synchronized')
     if (process.env.NODE_ENV !== 'production') {
       console.log('Bootstrapping database')

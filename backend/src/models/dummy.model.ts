@@ -5,11 +5,12 @@ import {
   InferAttributes,
   InferCreationAttributes,
   CreationOptional,
+  UUIDV4,
 } from 'sequelize'
 
 export interface Dummy
   extends Model<InferAttributes<Dummy>, InferCreationAttributes<Dummy>> {
-  dummyId: CreationOptional<number>
+  dummyId: CreationOptional<string>
   name: string
   lastName: string
   createdAt?: Date
@@ -18,10 +19,10 @@ export interface Dummy
 
 export const DummiesModel = db.define<Dummy>('DUMMIES', {
   dummyId: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     primaryKey: true,
-    autoIncrement: true,
     field: 'DUMMY_ID',
+    defaultValue: UUIDV4,
   },
   name: {
     type: DataTypes.STRING,
