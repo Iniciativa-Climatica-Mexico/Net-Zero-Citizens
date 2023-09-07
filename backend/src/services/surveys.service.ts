@@ -23,7 +23,7 @@ export const getAllSurveys = async <T>(
  * @returns Promise<Surveys | null>
  */
 export const getSurveyById = async (surveyId: number): Promise<Survey | null> => {
-    return await SurveysModel.findOne({ where: { surveyId } })
+    return await SurveysModel.findOne({ where: { surveyId: surveyId } })
 }
 
 export const createSurvey = async (survey: Survey): Promise<Survey> => {
