@@ -16,7 +16,7 @@ export interface Answer
   scaleValue: number
 }
 
-export const AnswerModel = db.define<Answer>(
+export const AnswersModel = db.define<Answer>(
   'ANSWERS',
   {
     answerId: {
@@ -37,12 +37,12 @@ export const AnswerModel = db.define<Answer>(
     },
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       field: 'USER_ID',
-      references: {
-        model: 'USERS',
-        key: 'USER_ID',
-      },
+      // references: {
+      //   model: 'USERS',
+      //   key: 'USER_ID',
+      // },
     },
     answerText: {
       type: DataTypes.STRING(500),
@@ -66,20 +66,15 @@ export const AnswerModel = db.define<Answer>(
         fields: [{ name: 'ANSWER_ID' }],
       },
       {
-        name: 'FK_ANSWERS_SURVEYS',
-        using: 'BTREE',
-        fields: [{ name: 'SURVEY_ID' }],
-      },
-      {
         name: 'FK_ANSWERS_QUESTIONS',
         using: 'BTREE',
         fields: [{ name: 'QUESTION_ID' }],
       },
-      {
-        name: 'FK_ANSWER_USERS',
-        using: 'BTREE',
-        fields: [{ name: 'USER_ID' }],
-      },
+      // {
+      //   name: 'FK_ANSWER_USERS',
+      //   using: 'BTREE',
+      //   fields: [{ name: 'USER_ID' }],
+      // },
     ],
   }
 )
