@@ -1,5 +1,9 @@
 import jwt from 'jsonwebtoken'
 
+/**
+ * @brief
+ * Tipo de dato para el payload de los tokens que contiene la información del usuario
+ */
 export type Payload = {
   first_name: string,
   last_name: string,
@@ -10,6 +14,10 @@ export type Payload = {
   created_at?: number,
 }
 
+/**
+ * @brief
+ * Tipo de dato para el tipo de token
+ */
 export type TokenType = 'auth' | 'refresh'
 
 /**
@@ -22,7 +30,7 @@ export const generateAuthToken = (payload: Payload): string => {
   if (!process.env.JWT_AUTH) {
     throw new Error('JWT_AUTH not set')
   }
-  return jwt.sign(payload, process.env.JWT_AUTH, { expiresIn: '300ms' })
+  return jwt.sign(payload, process.env.JWT_AUTH, { expiresIn: '300s' })
 
 }
 
@@ -53,7 +61,7 @@ export const verifyToken = (token: string, type: TokenType): Payload => {
   if(type == null) type = 'auth'
   if(type == 'auth' && !process.env.JWT_AUTH) throw new Error('JWT_AUTH not set')
   if(type == 'refresh' && !process.env.JWT_REFRESH) throw new Error('JWT_REFRESH not set')
-
+    
   const secret: string = type == 'auth' ? process.env.JWT_AUTH! : process.env.JWT_REFRESH!
   return jwt.verify(token, secret) as Payload
 }
