@@ -16,4 +16,7 @@ export const getAllSurveys = async <T>(
     })
 }
 
+export const getSurveyById = async (surveyId: number): Promise<Surveys | null> => {
+    return await SurveysModel.findOne({ where: { surveyId } })
+}
 
