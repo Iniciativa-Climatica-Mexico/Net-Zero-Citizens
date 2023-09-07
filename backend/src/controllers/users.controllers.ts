@@ -23,7 +23,7 @@ export const getUserInfo: RequestHandler<{ userId: string }> = async (
   if (userInfo) {
     res.json(userInfo)
   } else {
-    res.status(404).json({ error: 'User not found' })
+    res.status(200).status(404).json({ error: 'User not found' })
   }
 }
 
@@ -47,18 +47,29 @@ export const updateUserInfo: RequestHandler<
   const userId = req.params.userId
   const userInfo = await UserService.getUserInfo(userId)
   if (userInfo) {
-    // const allowedFields = [
-    //   'firstName',
-    //   'lastName',
-    //   'secondLastName',
-    //   'phoneNumber',
-    //   'age',
-    //   'state',
-    //   'sex',
-    //   'profilePicture',
-    // ]
     await UserService.updateUserInfo(userId, req.body)
-    res.json({ message: 'User updated' })
+    res.status(201).json({ message: 'User updated' })
+  } else {
+    res.status(404).json({ message: 'User not found' })
+  }
+}
+
+export const updateUserCredentials: RequestHandler<
+  { userId: string },
+  { message: string },
+  UserService.UpdateUserCredentials
+> = async (req, res) => {
+  const userId = req.params.userId
+  const userInfo = await UserService.getUserInfo(userId)
+
+  if (!userId || !userInfo) {
+    res.status(400).json({ message: 'User not found' })
+    return
+  }
+
+  if (userInfo) {
+    await UserService.updateUserCredentials(userId, req.body)
+    res.status(201).json({ message: 'User credentials updated' })
   } else {
     res.status(404).json({ message: 'User not found' })
   }
