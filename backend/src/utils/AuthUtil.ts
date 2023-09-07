@@ -4,8 +4,10 @@ export type Payload = {
   first_name: string,
   last_name: string,
   uuid: string,
+  email: string,
   roles: string[],
-  created_at?: number
+  login_type?: string,
+  created_at?: number,
 }
 
 export type TokenType = 'auth' | 'refresh'
@@ -21,6 +23,7 @@ export const generateAuthToken = (payload: Payload): string => {
     throw new Error('JWT_AUTH not set')
   }
   return jwt.sign(payload, process.env.JWT_AUTH, { expiresIn: '300ms' })
+
 }
 
 /**
@@ -31,7 +34,7 @@ export const generateAuthToken = (payload: Payload): string => {
  */
 export const generateRefreshToken = (payload: Payload): string => {
   if (!process.env.JWT_REFRESH) {
-    throw new Error('JWT_AUTH not set')
+    throw new Error('JWT_REFRESH not set')
   }
   payload.created_at = new Date().getTime()
   return jwt.sign(payload, process.env.JWT_REFRESH, { expiresIn: '24h' })
