@@ -2,6 +2,7 @@ import chai from 'chai'
 import chaiExclude from 'chai-exclude'
 import { db, initDB } from '../src/configs/database.config'
 import { getAllCompanies } from '../src/services/company.service'
+import { unwrap } from './utils'
 
 chai.use(chaiExclude)
 
@@ -63,11 +64,8 @@ afterEach(async () => {
 describe('Company Service', () => {
   it('should return a list of all companies', async () => {
     const response = await getAllCompanies({ start: 0, pageSize: 10 })
-
-    response.rows.forEach((row, i) => {
-      expect(row.dataValues)
-        .excluding(attributesToExclude)
-        .to.deep.equal(testData[i])
-    })
+    expect(unwrap(response).rows)
+      .excluding(attributesToExclude)
+      .to.deep.equal(testData)
   })
 })

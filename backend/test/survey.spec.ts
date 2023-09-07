@@ -2,6 +2,7 @@ import chai from 'chai'
 import chaiExclude from 'chai-exclude'
 import { db, initDB } from '../src/configs/database.config'
 import Survey from '../src/models/survey.model'
+import { unwrap } from './utils'
 
 chai.use(chaiExclude)
 
@@ -43,6 +44,3 @@ describe('Survey model', () => {
       })
   })
 })
-const unwrap = <T>(obj: T): T => {
-  return JSON.parse(JSON.stringify(obj))
-}
