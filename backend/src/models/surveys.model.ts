@@ -7,8 +7,8 @@ import {
   CreationOptional,
 } from 'sequelize'
 
-export interface Surveys
-  extends Model<InferAttributes<Surveys>, InferCreationAttributes<Surveys>> {
+export interface Survey
+  extends Model<InferAttributes<Survey>, InferCreationAttributes<Survey>> {
   surveyId: CreationOptional<number>
   title: string
   description: string
@@ -18,7 +18,7 @@ export interface Surveys
   updatedAt?: Date
 }
 
-export const SurveysModel = db.define<Surveys>(
+export const SurveysModel = db.define<Survey>(
   'SURVEYS',
   {
     surveyId: {

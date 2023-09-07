@@ -1,4 +1,4 @@
-import { SurveysModel, Surveys } from '../models/surveys.model'
+import { SurveysModel, Survey } from '../models/surveys.model'
 import { PaginatedQuery, PaginationParams } from '../utils/RequestResponse'
 
 /**
@@ -9,14 +9,23 @@ import { PaginatedQuery, PaginationParams } from '../utils/RequestResponse'
  */
 export const getAllSurveys = async <T>(
     params: PaginationParams<T>
-): Promise<PaginatedQuery<Surveys>> => {
+): Promise<PaginatedQuery<Survey>> => {
     return await SurveysModel.findAndCountAll({
         limit: params.pageSize,
         offset: params.start,
     })
 }
 
-export const getSurveyById = async (surveyId: number): Promise<Surveys | null> => {
+/**
+ * @brief
+ * Función del servicio que devuelve una encuesta por su id
+ * @param surveyId El id de la encuesta
+ * @returns Promise<Surveys | null>
+ */
+export const getSurveyById = async (surveyId: number): Promise<Survey | null> => {
     return await SurveysModel.findOne({ where: { surveyId } })
 }
 
+export const createSurvey = async (survey: Survey): Promise<Survey> => {
+    return await SurveysModel.create(survey)
+}

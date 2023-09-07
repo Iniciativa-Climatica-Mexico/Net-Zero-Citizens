@@ -1,11 +1,11 @@
-import { Surveys } from "../models/surveys.model";
+import { Survey } from "../models/surveys.model";
 import * as SurveysService from "../services/surveys.service";
 import { RequestHandler } from "express";
 import { NoRecord, Paginator, PaginationParams } from "../utils/RequestResponse";
 
 export const getAllSurveys: RequestHandler<
     NoRecord,
-    Paginator<Surveys>,
+    Paginator<Survey>,
     NoRecord,
     PaginationParams<{ name?: string }>
 > = async (req, res) => {
