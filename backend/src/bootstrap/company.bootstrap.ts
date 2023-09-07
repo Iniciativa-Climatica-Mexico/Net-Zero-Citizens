@@ -1,9 +1,9 @@
-import { CompanyModel } from '../models/company.model'
+import { CompaniesModel } from '../models/company.model'
 import { Bootstrapper } from './Bootstraper'
 
 export default class CompanyBootstrap extends Bootstrapper {
   async run() {
-    CompanyModel.bulkCreate([
+    CompaniesModel.bulkCreate([
       {
         companyId: '1',
         userId: '1',
