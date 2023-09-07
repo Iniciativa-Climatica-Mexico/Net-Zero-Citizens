@@ -21,8 +21,43 @@ export const validateToken = async (req: Request, res: Response, next: NextFunct
 
     next()
   } catch (err) {
-    res.json({ message: err })
+    res.json({ message: 'Invalid token' })
     next(err) // Pass the error to the next middleware
   }
 }
 
+/**
+ * @brief
+ * Función middleware para verificar el tipo de rol de un usuario
+ * @param req Request
+ * @param res Response
+ * @param next NextFunction
+ * @returns void
+ */
+
+export const validateRole = (roles: string[]) => {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    // TODO Revisar rol en la base de datos
+    
+    // Get the user ID from token
+    const auth = req.headers['authorization'] as string
+    const token = auth.split(' ')[1]
+
+    const decoded: Payload = await verifyToken(token, 'auth')
+
+    console.log(decoded.roles)
+    console.log(roles)
+
+    let flag = false
+    for(let i = 0; i < roles.length; i++) {
+      if(decoded.roles.includes(roles[i])) {
+        flag = true
+        break
+      }
+    }
+
+    if (!flag) return res.status(401).json({ message: 'Unauthorized' })
+  
+    next()
+  }
+}
