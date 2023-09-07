@@ -1,10 +1,10 @@
-import { Company, CompanyModel } from '../models/company.model'
+import { Company, CompaniesModel } from '../models/company.model'
 import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
 
 export const getAllCompanies = async <T>(
   params: PaginationParams<T>
 ): Promise<PaginatedQuery<Company>> => {
-  return await CompanyModel.findAndCountAll({
+  return await CompaniesModel.findAndCountAll({
     limit: params.pageSize,
     offset: params.start,
   })
