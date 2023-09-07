@@ -5,10 +5,10 @@ import GreenTriangle from '../../public/svg/greenTriangle.svg';
 export default function Home() {
   return (
     <section
-      className="w-full h-full overflow-x-hidden text-center"
+      className="relative w-full h-[100vh] overflow-x-hidden text-center"
       id="hero"
     >
-      <GreenTriangle className="w-[60rem] lg:w-[100rem] absolute" />
+      <GreenTriangle className="w-[60rem] lg:w-[120%] absolute" />
       <h1 className="font-bold text-5xl relative">
         Ilumina tu camino solar
       </h1>
