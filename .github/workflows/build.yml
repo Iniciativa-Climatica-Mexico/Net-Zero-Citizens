@@ -178,9 +178,10 @@ jobs:
       - name: Run Jest with Coverage
         working-directory: backend
         run: yarn test
-        env:  
+        env:
           JWT_AUTH: ${{ secrets.JWT_AUTH }}
           JWT_REFRESH: ${{ secrets.JWT_REFRESH }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
 
       - name: Upload Mocha & Chai Test Report
         if: always()
