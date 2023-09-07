@@ -55,3 +55,12 @@ export const getPendingCompanies: RequestHandler<
     total: companies.count,
   })
 }
+
+export const updateCompanyInfo: RequestHandler<
+  { companyId: string },
+  { message: string }, 
+  CompanyService.UpdateCompanyInfoBody
+> = async (req, res) => {
+  const compId = req.params.companyId
+  const companyInfo = await CompanyService.getCompanyInfo(compId)
+}
