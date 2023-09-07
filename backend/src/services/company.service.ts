@@ -19,7 +19,7 @@ export const getAllCompanies = async <T>(
 export const getPendingCompanies = async <T>(
   params: PaginationParams<T>
 ): Promise<PaginatedQuery<Company>> => {
-  return await CompanyModel.findAndCountAll({
+  return await CompaniesModel.findAndCountAll({
     limit: params.pageSize,
     offset: params.start,
     where: {

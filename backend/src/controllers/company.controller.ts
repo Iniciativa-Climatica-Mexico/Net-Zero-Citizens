@@ -49,5 +49,4 @@ export const getPendingCompanies: RequestHandler<
     pageSize: params.pageSize,
     total: companies.count,
   })
-  console.log(companies)
 }
