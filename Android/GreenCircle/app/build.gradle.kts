@@ -47,7 +47,7 @@ android {
     }
 }
 
-tasks.getByPath("preBuild").dependsOn("ktlintFormat")
+tasks.getByPath("preBuild").dependsOn("ktlintCheck")
 
 ktlint {
     android.set(true)
@@ -66,7 +66,7 @@ ktlint {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.10.1")
+    implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     testImplementation("junit:junit:4.13.2")
@@ -80,7 +80,7 @@ dependencies {
 
     // Glide
     implementation("com.github.bumptech.glide:glide:4.12.0")
-    implementation ("jp.wasabeef:glide-transformations:4.3.0")
+    implementation("jp.wasabeef:glide-transformations:4.3.0")
     kapt("com.github.bumptech.glide:compiler:4.12.0")
 
     // Gson
@@ -99,15 +99,24 @@ dependencies {
     implementation("androidx.databinding:databinding-runtime:8.1.1")
 
     // ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
 
     // Live Data
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
 
     // Navigation
-    implementation("androidx.navigation:navigation-fragment-ktx:2.7.1")
-    implementation("androidx.navigation:navigation-ui-ktx:2.7.1")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.2")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.2")
 
     // Lifecycle
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+
+    // Material Components para Android.
+    implementation("com.google.android.material:material:1.9.0")
+
+    // Circle Indicator (To fix the xml preview "Missing classes" error)
+    implementation("me.relex:circleindicator:2.1.6")
+
+    // Carousel
+    implementation("org.imaginativeworld.whynotimagecarousel:whynotimagecarousel:2.1.0")
 }
