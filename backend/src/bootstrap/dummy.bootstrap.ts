@@ -1,9 +1,9 @@
-import { DummyModel } from '../models/dummy.model'
+import { DummiesModel } from '../models/dummy.model'
 import { Bootstrapper } from './Bootstraper'
 
 export default class DummyBootstrap extends Bootstrapper {
   async run() {
-    DummyModel.bulkCreate([
+    DummiesModel.bulkCreate([
       { name: 'Andres', lastName: 'Garcia' },
       { name: 'Juan', lastName: 'Perez' },
       { name: 'Pedro', lastName: 'Gonzalez' },
