@@ -16,7 +16,7 @@ export interface Dummy
   updatedAt?: Date
 }
 
-export const DummyModel = db.define<Dummy>('DUMMIES', {
+export const DummiesModel = db.define<Dummy>('DUMMIES', {
   dummyId: {
     type: DataTypes.INTEGER,
     primaryKey: true,
