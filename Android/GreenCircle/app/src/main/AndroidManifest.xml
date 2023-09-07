@@ -27,11 +27,4 @@
         </activity>
     </application>
 
-
-        <activity
-            android:name=".framework.views.fragments.ContactarProveedoresActivity"
-            android:exported="false"
-            android:theme="@style/Theme.GreenCircle.NoActionBar"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
-    </application>
 </manifest>
