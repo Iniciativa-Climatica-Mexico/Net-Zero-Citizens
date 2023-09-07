@@ -34,7 +34,7 @@
         >
         <ImageView            android:layout_width="34dp"
             android:layout_height="34dp"
-            android:src="@drawable/leaf_icon"
+            android:src="@drawable/proveedores_icon"
             android:layout_gravity="center"
             />
         <TextView
