@@ -1,6 +1,6 @@
 import { db } from '../configs/database.config'
 import { UsersModel } from './users.model'
-import { CompanyModel } from './company.model'
+import { CompaniesModel } from './company.model'
 import {
   DataTypes,
   Model,
@@ -20,48 +20,51 @@ export interface Review
     updatedAt?: Date
 }
 
-export const ReviewModel = db.define<Review>('REVIEWS', {
+export const ReviewModel = db.define<Review>(
+  'REVIEWS',
+  {
     reviewId: {
-        autoIncrement: true,
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-        field: 'REVIEW_ID',
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      field: 'REVIEW_ID',
     },
     userId: {
-        type: DataTypes.UUID,
-        allowNull: false,
-        references: {
-          model: UsersModel,
-          key: 'USER_ID',
-        },
-        unique: 'FK_REVIEW_USER',
-        field: 'USER_ID',
+      type: DataTypes.UUID,
+      allowNull: false,
+      references: {
+        model: UsersModel,
+        key: 'USER_ID',
+      },
+      unique: 'FK_REVIEW_USER',
+      field: 'USER_ID',
     },
     companyId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: CompanyModel,
-          key: 'COMPANY_ID',
-        },
-        unique: 'FK_REVIEW_COMPANY',
-        field: 'COMPANY_ID',
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: CompaniesModel,
+        key: 'COMPANY_ID',
+      },
+      unique: 'FK_REVIEW_COMPANY',
+      field: 'COMPANY_ID',
     },
     rating: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        field: 'RATING',
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'RATING',
     },
     comment: {
-        type: DataTypes.STRING(500),
-        allowNull: false,
-        field: 'COMMENT',
+      type: DataTypes.STRING(500),
+      allowNull: false,
+      field: 'COMMENT',
     },
-}, {
+  },
+  {
     tableName: 'REVIEWS',
     timestamps: true,
     createdAt: 'CREATED_AT',
     updatedAt: 'UPDATED_AT',
-}
+  }
 )

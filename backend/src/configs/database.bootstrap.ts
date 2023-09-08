@@ -1,4 +1,3 @@
-// import all the files from .bootstrap and run them
 import { readdir } from 'fs/promises'
 import { join } from 'path'
 import { Bootstrapper } from '../bootstrap/Bootstraper'
@@ -7,15 +6,8 @@ const bootstrapDirs = join(__dirname, '../bootstrap')
 
 export const bootstrapDB = async () => {
   try {
-    // const files = await readdir(bootstrapDirs)
-    // JUST FOR TESTING
-    const files = [
-      'Bootstraper.ts',
-      'company.bootstrap.ts',
-      'dummy.bootstrap.ts',
-      'users.bootstrap.ts',
-      'reviews.bootstrap.ts'
-    ]
+    const files = await readdir(bootstrapDirs)
+
     const pool: Promise<void>[] = []
     for (const file of files) {
       if (file.endsWith('.bootstrap.ts') || file.endsWith('.bootstrap.js')) {

@@ -1,6 +1,4 @@
-'use strict'
-
-import { Sequelize } from 'sequelize-typescript'
+import { Sequelize } from 'sequelize'
 import { bootstrapDB } from './database.bootstrap'
 
 const env = process.env.NODE_ENV || 'development'
