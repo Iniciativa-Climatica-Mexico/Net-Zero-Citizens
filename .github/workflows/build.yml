@@ -168,7 +168,7 @@ jobs:
 
   # Android Build
   apk_generate:
-    name: APK GENERATE
+    name: ANDROID APK GENERATE
     runs-on: ubuntu-latest
     continue-on-error: true
     if: contains(github.ref, 'android/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/G')
