@@ -1,4 +1,6 @@
 import jwt from 'jsonwebtoken'
+import { OAuth2Client } from 'google-auth-library'
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
 /**
  * @brief
@@ -64,4 +66,30 @@ export const verifyToken = (token: string, type: TokenType): Payload => {
     
   const secret: string = type == 'auth' ? process.env.JWT_AUTH! : process.env.JWT_REFRESH!
   return jwt.verify(token, secret) as Payload
+}
+
+/**
+ * @brief
+ * Función para verificar el token de Google
+ * @param token Token a verificar
+ * @returns Payload con la información del token
+*/
+export const verifyGoogleToken = async(token: string): Promise<Payload> => {
+  const ticket = await client.verifyIdToken({
+    idToken: token,
+    audience: process.env.GOOGLE_CLIENT_ID,
+  })
+
+  const payload = ticket.getPayload()
+
+  if(!payload) throw new Error('Invalid Google token')
+
+  return {
+    first_name: payload.given_name!,
+    last_name: payload.family_name!,
+    uuid: payload.sub!,
+    email: payload.email!,
+    roles: [],
+    login_type: 'google'
+  }
 }
