@@ -14,8 +14,8 @@ enum StatusEnum: String, Codable {
 }
 
 struct Company: Codable {
-    var companyId: Int
-    var userId: Int
+    var companyId: UUID
+    var userId: String // Needs to be UUID
     var name: String
     var description: String
     var email: String

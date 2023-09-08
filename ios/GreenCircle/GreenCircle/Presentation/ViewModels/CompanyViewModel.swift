@@ -9,8 +9,8 @@ import Foundation
 
 class CompanyViewModel: ObservableObject {
     @Published var contentCompany: Company = Company(
-            companyId: 0,
-            userId: 0,
+            companyId: UUID(uuidString: "") ?? UUID(),
+            userId: "",
             name: "",
             description: "",
             email: "",
@@ -40,7 +40,7 @@ class CompanyViewModel: ObservableObject {
         self.companyInfoRequirement = companyInfoRequirement
     }
     @MainActor
-    func getCompanyById(idCompany: Int) async {
+    func getCompanyById(idCompany: UUID) async {
         let resultCompany = await companyInfoRequirement.getCompanyById(id: idCompany)
         if let resultCompany = resultCompany {
             contentCompany = resultCompany
