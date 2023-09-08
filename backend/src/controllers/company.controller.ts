@@ -3,6 +3,23 @@ import * as CompanyService from '../services/company.service'
 import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
 
+
+export const getCompanyInfo : RequestHandler<{ companyId: string }> =async (
+  req,
+  res
+) => {
+  const compId = req.params.companyId
+
+  const companyInfo = await CompanyService.getCompanyInfo(compId)
+
+  if (companyInfo){
+    res.json(companyInfo)
+  }
+  else {
+    res.status(404).json({error: 'Company not found'})
+  }
+}
+
 /**
  * @brief
  * Función del controlador que devuelve todos los proveedores de la base de datos
@@ -63,4 +80,11 @@ export const updateCompanyInfo: RequestHandler<
 > = async (req, res) => {
   const compId = req.params.companyId
   const companyInfo = await CompanyService.getCompanyInfo(compId)
+  if (companyInfo) {
+    await CompanyService.updateCompanyInfo(compId, req.body)
+    res.status(201).json({ message: 'Company updated' })
+  }
+  else {
+    res.status(404).json({ message: 'Company not found' })
+  }
 }
