@@ -1,6 +1,6 @@
 // import * as CompanyService from '../services/company.service'
-import { blackListToken } from '../services/auth.service'
-import { generateAuthToken, generateRefreshToken, verifyToken, Payload, verifyGoogleToken } from '../utils/AuthUtil'
+import { blackListToken, createTokens } from '../services/auth.service'
+import { generateAuthToken, generateRefreshToken, verifyToken, Payload, TokenPair, verifyGoogleToken } from '../utils/AuthUtil'
 import { NoRecord } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
 
@@ -41,8 +41,7 @@ export const googleLogin: RequestHandler<
     }
 
     // Generar nuevo token de autenticación y nuevo token de refresco
-    const authToken: string = generateAuthToken(dummyUser)
-    const refreshToken: string = generateRefreshToken(dummyUser)
+    const {authToken, refreshToken}: TokenPair = await createTokens(dummyUser)
 
     // Devolver los tokens
     res.status(200).json({ token: authToken, refreshToken: refreshToken })
@@ -77,11 +76,10 @@ export const updateTokens: RequestHandler<
       }
 
       // Generar nuevo token de autenticación y nuevo token de refresco
-      const authToken: string = generateAuthToken(payload)
-      const refreshToken: string = generateRefreshToken(payload)
+      const {authToken, refreshToken}: TokenPair = await createTokens(payload, token)
 
       // Guardar el token anterior de refresco en la blacklist
-      await blackListToken(token)
+      // await blackListToken(token)
 
       // Devolver los tokens
       res.json({ token: authToken, refreshToken: refreshToken })

@@ -18,6 +18,15 @@ export type Payload = {
 
 /**
  * @brief
+ * Tipo de dato para el par de tokens
+ */
+export type TokenPair = {
+  authToken: string, 
+  refreshToken: string
+}
+
+/**
+ * @brief
  * Tipo de dato para el tipo de token
  */
 export type TokenType = 'auth' | 'refresh'
