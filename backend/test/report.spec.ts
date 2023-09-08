@@ -12,65 +12,59 @@ const testData = {
   surveyId: 'surv-1234-efgh-0000',
   title: 'Encuesta de satisfacción',
   description: 'Encuesta para medir la satisfacción de los clientes',
+  endDate: null,
   questions: [
     {
-      questionId: 'ques-1234-efgh-0000',
       questionText: '¿Qué tan satisfecho está con el servicio?',
       questionType: 'scale',
+      questionOptions: [],
       answers: [
         {
-          answerId: 'answ-1234-efgh-0000',
-          userId: 'abcd-1234-efgh-5678',
+          answerText: null,
           scaleValue: 5,
         },
         {
-          answerId: 'answ-1234-efgh-0001',
-          userId: 'abcd-1234-efgh-5679',
+          answerText: null,
+
           scaleValue: 4,
         },
       ],
     },
     {
-      questionId: 'ques-1234-efgh-0001',
       questionText: '¿Cómo describiria nuestro servicio?',
       questionType: 'multiple_choice',
       questionOptions: [
         {
-          questionOptionId: 'optn-1234-efgh-0000',
           textOption: 'Excelente',
         },
         {
-          questionOptionId: 'optn-1234-efgh-0001',
           textOption: 'Bueno',
         },
         {
-          questionOptionId: 'optn-1234-efgh-0002',
           textOption: 'Regular',
         },
         {
-          questionOptionId: 'optn-1234-efgh-0003',
           textOption: 'Malo',
         },
         {
-          questionOptionId: 'optn-1234-efgh-0004',
           textOption: 'Pésimo',
         },
       ],
       answers: [
         {
-          answerId: 'answ-1234-efgh-0002',
-          userId: 'abcd-1234-efgh-5678',
           answerText: 'Excelente',
+          scaleValue: null,
         },
         {
-          answerId: 'answ-1234-efgh-0003',
-          userId: 'abcd-1234-efgh-5679',
           answerText: 'Bueno',
+          scaleValue: null,
         },
       ],
     },
   ],
 }
+
+const attributesToExclude = ['createdAt', 'updatedAt', 'startDate']
 
 beforeEach(async () => {
   await db.drop()
@@ -80,6 +74,6 @@ beforeEach(async () => {
 describe('Report Service', () => {
   it('should return a report of a survey with its questions, options and answers', async () => {
     const survey = await getSurveyReport('surv-1234-efgh-0000')
-    expect(survey).containSubset(testData)
+    expect(survey).excludingEvery(attributesToExclude).to.deep.equal(testData)
   })
 })
