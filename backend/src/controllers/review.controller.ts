@@ -44,14 +44,23 @@ export const getAllReviews: RequestHandler<
  *            información de paginación
  */
 
-export const getReviewById: RequestHandler<{ reviewId: string }> = async (req, res) => {
-  const { reviewId } = req.params
-  console.log(req.params)
-  const review = await ReviewService.getReviewById(reviewId)
-
-  if (review) {
-    res.json(review)
-  } else {
-    res.status(200).status(404).json({ error: 'User not found' })
+export const getReviewById: RequestHandler<
+  { reviewId: string },
+  Paginator<Review>,
+  NoRecord,
+  NoRecord
+  > = async (req, res) => {
+    const { reviewId } = req.params
+    const params = {
+      start: req.query.start || 0,
+      pageSize: req.query.pageSize || 10,
+      reviewId: reviewId,
+    }
+    const review = await ReviewService.getReviewById(params)
+    res.json({
+      rows: review.rows,
+      start: params.start,
+      pageSize: params.pageSize,
+      total: review.count,
+    })
   }
-}

@@ -24,6 +24,19 @@ export const getAllReviews = async <T>(
  * @returns Una promesa con la review o null
  */
 
-export const getReviewById = async (reviewId: string): Promise<Review | null> => { 
-  return await Review.findByPk(reviewId)
+// export const getReviewById = async (reviewId: string): Promise<Review | null> => { 
+//   return await Review.findByPk(reviewId)
+// }
+
+export const getReviewById = async (
+  params: PaginationParams<{ reviewId: string }>
+): Promise<PaginatedQuery<Review>> => {
+  const { reviewId } = params
+  return await Review.findAndCountAll({
+    limit: params.pageSize,
+    offset: params.start,
+    where: {
+      reviewId: reviewId,
+    },
+  })
 }
