@@ -1,6 +1,6 @@
-import GreenTriangleSVG from '@/components/GreenTriangle';
-import PhoneMockup from '@public/images/phoneMockup.png';
-import Image from 'next/image';
+import GreenTriangleSVG from '@/components/GreenTriangle'
+import PhoneMockup from '@public/images/phoneMockup.png'
+import Image from 'next/image'
 
 export default function Hero() {
   return (
@@ -28,5 +28,5 @@ export default function Hero() {
         sizes="100vw"
       />
     </section>
-  );
+  )
 }
