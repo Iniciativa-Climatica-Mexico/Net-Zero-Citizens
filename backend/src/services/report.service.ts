@@ -12,12 +12,15 @@ export const getSurveyReport = async (
     include: [
       {
         model: Question,
+        attributes: ['questionText', 'questionType'],
         include: [
           {
             model: QuestionOption,
+            attributes: ['textOption'],
           },
           {
             model: Answer,
+            attributes: ['answerText', 'scaleValue'],
           },
         ],
       },
