@@ -71,6 +71,18 @@ jobs:
       - name: Husky Git Hooks
         run: yarn husky install
 
+  # Security scan
+  security_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Run snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
   # Android Test
   unit_test:
     name: UNIT TEST
