@@ -1,19 +1,11 @@
-import { db } from '../configs/database.config'
-import {
-  DataTypes, 
-  Model, 
-  InferAttributes,
-  InferCreationAttributes,
-} from 'sequelize'
+import { Table, Column, Model, DataType } from 'sequelize-typescript'
 
-export interface Token extends Model<InferAttributes<Token>, InferCreationAttributes<Token>> {
-  tokenId: string,
-}
-
-export const TokensModel = db.define<Token>('TOKENS', {
-  tokenId: {
-    type: DataTypes.STRING,
+@Table({ tableName: 'TOKENS'})
+export default class Tokens extends Model {
+  @Column({
+    type: DataType.STRING(500),
     primaryKey: true,
     field: 'TOKEN_ID',
-  }
-})
+  })
+  tokenId: string
+}
