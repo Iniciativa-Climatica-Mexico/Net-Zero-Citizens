@@ -12,26 +12,43 @@ jobs:
   # Prevent File Change for Husky configuration
   prevent_change:
     runs-on: ubuntu-latest
+    outputs:
+      husky_file_modified: ${{ steps.check_file.outputs.husky_file_modified }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Get all File changes
+      - name: Get all file changes
         id: changed_files
         uses: jitterbit/get-changed-files@v1
 
       - name: Check if .husky files are modified
         id: check_file
         run: |
-          echo "::set-output name=modified::$(echo '${{ steps.changed_files.outputs.all }}' | grep -q '.husky/commit-msg' && echo 'true' || echo 'false')"
+          if echo "${{ steps.changed_files.outputs.all }}" | grep -q ".husky/commit-msg"; then
+           echo "true" > husky_file_modified.txt
+          else 
+            echo "false" > husky_file_modified.txt
+          fi
+        shell: zsh
 
+      - name: Set output from file
+        id: set_output
+        run: echo ::set-output name=husky_file_modified::$(cat husky_file_modified.txt)
+
+  # Prevent File Change for Husky configuration
+  prevent_file_change:
+    needs: prevent_change
+    if: needs.prevent_change.outputs.husky_file_modified == 'true'
+    runs-on: ubuntu-latest
+    steps:
       - name: Prevent File Change
-        if: steps.check_file.outputs.modified == 'true'
         uses: xalvarez/prevent-file-change-action@v1
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           pattern: ".husky/commit-msg"
-          trustedAuthors: "salgue441, drlangh"
+          trustedAuthors: "drlangh"
 
   # Run yarn install when a branch is created
   yarn_install:
