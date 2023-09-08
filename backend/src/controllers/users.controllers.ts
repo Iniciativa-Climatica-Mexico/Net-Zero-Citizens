@@ -16,9 +16,7 @@ export const getUserInfo: RequestHandler<{ userId: string }> = async (
   res
 ) => {
   const userId = req.params.userId
-  console.log(userId)
   const userInfo = await UserService.getUserInfo(userId)
-  console.log(userInfo)
 
   if (userInfo) {
     res.json(userInfo)
@@ -28,7 +26,10 @@ export const getUserInfo: RequestHandler<{ userId: string }> = async (
 }
 
 /**
- * The `updateUserInfo` function updates the user information based on the provided user ID and request
+ * @brief
+ * En espanol
+ * The `updateUserInfo` function updates the user information based on the *
+ * provided user ID and request
  * body, and returns a success message if the user is found, otherwise returns a 404 error message.
  * @param req - The `req` parameter is the request object that contains information about the incoming
  * HTTP request. It includes properties such as `params` (which contains route parameters), `body`
@@ -46,6 +47,7 @@ export const updateUserInfo: RequestHandler<
 > = async (req, res) => {
   const userId = req.params.userId
   const userInfo = await UserService.getUserInfo(userId)
+
   if (userInfo) {
     await UserService.updateUserInfo(userId, req.body)
     res.status(201).json({ message: 'User updated' })

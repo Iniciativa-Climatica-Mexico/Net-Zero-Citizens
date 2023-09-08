@@ -1,4 +1,3 @@
-import { literal } from 'sequelize'
 import { DummiesModel, Dummy } from '../models/dummy.model'
 import { PaginatedQuery, PaginationParams } from '../utils/RequestResponse'
 
@@ -14,15 +13,19 @@ export const getGreeting = async (name: string): Promise<string> => {
 }
 
 export const getAllDummys = async (
-  params: PaginationParams<{ name: string }>
+  params: PaginationParams<{ name?: string }>
 ): Promise<PaginatedQuery<Dummy>> => {
+  const { name } = params
+  const filters: { name?: string } = {}
+  if (name) {
+    filters.name = name
+  }
+
   return await DummiesModel.findAndCountAll({
     limit: params.pageSize,
     offset: params.start,
     // Case insensitive search
     // where: literal(`LOWER(name) LIKE LOWER('%${params.name}%')`),
-    where: {
-      name: params.name,
-    },
+    where: filters,
   })
 }

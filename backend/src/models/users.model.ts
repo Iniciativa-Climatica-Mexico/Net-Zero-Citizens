@@ -45,10 +45,9 @@ export interface User extends Model {
 }
 
 /**
- * @function UserModel
- * @description Create the model for the users table
+ * @brief
+ * User model
  */
-
 export const UsersModel = db.define<User>(
   'USERS',
   {
@@ -101,7 +100,7 @@ export const UsersModel = db.define<User>(
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
-      field: 'EMAIL', 
+      field: 'EMAIL',
     },
     password: {
       type: DataTypes.STRING,
@@ -127,7 +126,7 @@ export const UsersModel = db.define<User>(
     sex: {
       type: DataTypes.ENUM('masculine', 'femenine', 'other', 'no_answer'),
       allowNull: false,
-      field:'SEX',
+      field: 'SEX',
     },
     profilePicture: {
       type: DataTypes.STRING,
@@ -153,4 +152,3 @@ export const UsersModel = db.define<User>(
     updatedAt: 'UPDATED_AT',
   }
 )
-

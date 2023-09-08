@@ -1,7 +1,5 @@
 import { UsersModel } from '../models/users.model'
 import { Bootstrapper } from './Bootstraper'
-import { v4 as uuidv4 } from 'uuid'
-
 
 export default class UserBootstrap extends Bootstrapper {
   async run() {
