@@ -1,4 +1,4 @@
-import { TokensModel, Token } from '../models/token.model'
+import Token from '../models/token.model'
 import { Payload, TokenPair, generateAuthToken, generateRefreshToken } from '../utils/AuthUtil'
 
 
@@ -9,7 +9,7 @@ import { Payload, TokenPair, generateAuthToken, generateRefreshToken } from '../
  * @returns Token | null con la información del token
 */
 export const getTokenById = async (tokenId: string): Promise<Token | null> => {
-  return await TokensModel.findByPk(tokenId) 
+  return await Token.findByPk(tokenId) 
 }
 
 /**
@@ -20,7 +20,7 @@ export const getTokenById = async (tokenId: string): Promise<Token | null> => {
 */
 export const blackListToken = async (tokenId: string): Promise<void> => {
   if(!tokenId) throw new Error('No token provided')
-  await TokensModel.create({ tokenId: tokenId })
+  await Token.create({ tokenId: tokenId })
 }
 
 
