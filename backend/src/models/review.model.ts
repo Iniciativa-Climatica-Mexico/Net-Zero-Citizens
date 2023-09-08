@@ -44,14 +44,12 @@ export default class Review extends Model {
 
   @Column({
     type: DataType.INTEGER,
-    allowNull: false,
     field: 'RATING',
   })
   rating: number
 
   @Column({
     type: DataType.STRING(500),
-    allowNull: false,
     field: 'COMMENT',
   })
   comment: string

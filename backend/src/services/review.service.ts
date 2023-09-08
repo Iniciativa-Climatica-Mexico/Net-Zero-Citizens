@@ -24,10 +24,6 @@ export const getAllReviews = async <T>(
  * @returns Una promesa con la review o null
  */
 
-// export const getReviewById = async (reviewId: string): Promise<Review | null> => { 
-//   return await Review.findByPk(reviewId)
-// }
-
 export const getReviewById = async (
   params: PaginationParams<{ reviewId: string }>
 ): Promise<PaginatedQuery<Review>> => {
@@ -38,5 +34,20 @@ export const getReviewById = async (
     where: {
       reviewId: reviewId,
     },
+  })
+}
+
+/**
+ * @brief
+ * Función del servicio que agrega una review a la base de datos
+ * @param params userId, companyId
+ * @returns Una promesa con la review creada
+ */
+
+export const addComment = async (userId: string, companyId: string, comment: string): Promise<Review> => {
+  return await Review.create({
+    userId: userId,
+    companyId: companyId,
+    comment: comment
   })
 }

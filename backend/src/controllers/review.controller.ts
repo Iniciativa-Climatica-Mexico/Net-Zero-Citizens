@@ -64,3 +64,39 @@ export const getReviewById: RequestHandler<
       total: review.count,
     })
   }
+
+/**
+ * @brief
+ * Función del controlador que agrega una review a la base de datos
+ * @param req La request HTTP al servidor
+ * @param res Un objeto con la review creada
+ * @returns
+ * - 400 si no se envía el userId o el companyId
+ * - 200 si se crea la review
+ * - 500 si ocurre un error en el servidor
+*/
+
+export const addComment: RequestHandler<
+  { userId: string, companyId: string },
+  string,
+  { comment: string },
+  NoRecord
+  > = async (req, res) => {
+    const { userId, companyId } = req.params
+    const { comment } = req.body
+    if (!userId || !companyId) {
+      res.status(400).json('Missing userId or companyId')
+      return
+    }
+    if (!comment) {
+      res.status(400).json('Missing review')
+      return
+    }
+    try {
+      await ReviewService.addComment(userId, companyId, comment)
+      res.status(200).send('Added review')
+    } catch (error) {
+      console.log(error)
+      res.status(500).send('Error')
+    }
+  }
