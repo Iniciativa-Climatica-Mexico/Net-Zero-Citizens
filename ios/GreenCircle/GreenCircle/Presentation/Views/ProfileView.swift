@@ -17,11 +17,11 @@ struct ProfileView: View {
         VStack {
             // TitleBarView (No forma parte del ScrollView)
             TitleBarView(
-                title: "Mi perfil",
+                title: "Mi Perfil",
                 leftIcon: nil,  // Nombre SF Symbol para ícono izquierdo
                 rightIcon: "person.fill",            // Nombre SF Symbol para ícono derecho
                 leftDestination: {  },  // View a la que se navegará con el ícono izquierdo
-                rightDestination: { Example2View()}                 // View a la que se navegará con el ícono derecho
+                rightDestination: { ProfileInformationView()}                 // View a la que se navegará con el ícono derecho
             )
             .frame(height: 55)  // Espacio entre el titel bar y el contenido
             .navigationBarBackButtonHidden(true)  // Ocultar botón "back" predeterminado
