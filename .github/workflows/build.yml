@@ -83,6 +83,19 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
+  # Android Vulnerability Scan
+  android_app_sweep:
+    name: ANDROID APP SWEEP
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Upload app to AppSweep with gradle
+        env:
+          APP_SWEEP: ${{ secrets.APP_SWEEP }}
+        run: ./gradlew appSweepUpload
+
   # Android Test
   unit_test:
     name: UNIT TEST
