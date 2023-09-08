@@ -11,31 +11,50 @@ on:
 jobs:
   # Prevent File Change for Husky configuration
   prevent_change:
+    name: CHECK IF HUSKY FILE IS MODIFIED
     runs-on: ubuntu-latest
+    outputs:
+      husky_file_modified: ${{ steps.check_file.outputs.husky_file_modified }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Get all File changes
+      - name: Get all file changes
         id: changed_files
         uses: jitterbit/get-changed-files@v1
 
       - name: Check if .husky files are modified
         id: check_file
         run: |
-          echo "::set-output name=modified::$(echo '${{ steps.changed_files.outputs.all }}' | grep -q '.husky/commit-msg' && echo 'true' || echo 'false')"
+          if echo "${{ steps.changed_files.outputs.all }}" | grep -q ".husky/commit-msg"; then
+           echo "true" > husky_file_modified.txt
+          else 
+            echo "false" > husky_file_modified.txt
+          fi
+        shell: bash
 
+      - name: Set output from file
+        id: set_output
+        run: echo ::set-output name=husky_file_modified::$(cat husky_file_modified.txt)
+
+  # Prevent File Change for Husky configuration
+  prevent_file_change:
+    name: PREVENT FILE CHANGE FOR HUSKY
+    needs: prevent_change
+    if: needs.prevent_change.outputs.husky_file_modified == 'true'
+    runs-on: ubuntu-latest
+    steps:
       - name: Prevent File Change
-        if: steps.check_file.outputs.modified == 'true'
         uses: xalvarez/prevent-file-change-action@v1
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           pattern: ".husky/commit-msg"
-          trustedAuthors: "salgue441, drlangh"
+          trustedAuthors: "drlangh"
 
   # Run yarn install when a branch is created
   yarn_install:
-    name: YARN INSTALL
+    name: YARN INSTALL FOR GIT HOOKS
     runs-on: ubuntu-latest
     if: github.event_name == 'create' && github.event.ref_type == 'branch'
 
@@ -54,14 +73,54 @@ jobs:
       - name: Husky Git Hooks
         run: yarn husky install
 
+  # Security scan
+  security_scan:
+    name: SECURITY SCAN WITH SNYK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Run snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+  # Android Vulnerability Scan
+  android_app_sweep:
+    name: ANDROID APP SWEEP
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: gradle
+
+      - name: Print Java Version
+        run: javac -version
+
+      - name: Change wrapper permissions
+        run: chmod +x Android/GreenCircle/gradlew
+
+      - name: Upload app to AppSweep with gradle
+        working-directory: Android/GreenCircle
+        run: ./gradlew uploadToAppSweepRelease
+        env:
+          APPSWEEP_API_KEY: ${{ secrets.APPSWEEP_API_KEY }}
+
   # Android Test
   unit_test:
-    name: UNIT TEST
+    name: ANDROID UNIT TEST
     runs-on: ubuntu-latest
 
     # Pipeline to continue Android Test Report Step
     continue-on-error: true
-    if: contains(github.ref, 'android/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    if: contains(github.ref, 'android/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/G')
 
     steps:
       - name: Checkout
@@ -109,10 +168,10 @@ jobs:
 
   # Android Build
   apk_generate:
-    name: APK GENERATE
+    name: ANDROID APK GENERATE
     runs-on: ubuntu-latest
     continue-on-error: true
-    if: contains(github.ref, 'android/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    if: contains(github.ref, 'android/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/G')
 
     steps:
       - name: Checkout
@@ -158,9 +217,9 @@ jobs:
 
   # Backend Testing with JEST
   node_test:
-    name: Backend Unit Tests
+    name: BACKEND UNIT TESTS
     runs-on: ubuntu-latest
-    if: contains(github.ref, 'backend/')  || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    if: contains(github.ref, 'backend/')  || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/G')
 
     steps:
       - name: Checkout
@@ -192,9 +251,9 @@ jobs:
 
   # Admin panel unit testing
   node_test_admin:
-    name: Admin Panel Unit Tests
+    name: ADMIN PANEL UNIT TESTS
     runs-on: ubuntu-latest
-    if: contains(github.ref, 'Admin/')  || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    if: contains(github.ref, 'Admin/')  || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/G')
 
     steps:
       - name: Checkout
