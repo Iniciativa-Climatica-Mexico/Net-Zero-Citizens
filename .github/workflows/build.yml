@@ -11,6 +11,7 @@ on:
 jobs:
   # Prevent File Change for Husky configuration
   prevent_change:
+    name: CHECK IF HUSKY FILE IS MODIFIED
     runs-on: ubuntu-latest
     outputs:
       husky_file_modified: ${{ steps.check_file.outputs.husky_file_modified }}
@@ -39,6 +40,7 @@ jobs:
 
   # Prevent File Change for Husky configuration
   prevent_file_change:
+    name: PREVENT FILE CHANGE FOR HUSKY
     needs: prevent_change
     if: needs.prevent_change.outputs.husky_file_modified == 'true'
     runs-on: ubuntu-latest
@@ -52,7 +54,7 @@ jobs:
 
   # Run yarn install when a branch is created
   yarn_install:
-    name: YARN INSTALL
+    name: YARN INSTALL FOR GIT HOOKS
     runs-on: ubuntu-latest
     if: github.event_name == 'create' && github.event.ref_type == 'branch'
 
@@ -73,6 +75,7 @@ jobs:
 
   # Security scan
   security_scan:
+    name: SECURITY SCAN WITH SNYK
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -112,7 +115,7 @@ jobs:
 
   # Android Test
   unit_test:
-    name: UNIT TEST
+    name: ANDROID UNIT TEST
     runs-on: ubuntu-latest
 
     # Pipeline to continue Android Test Report Step
@@ -214,7 +217,7 @@ jobs:
 
   # Backend Testing with JEST
   node_test:
-    name: Backend Unit Tests
+    name: BACKEND UNIT TESTS
     runs-on: ubuntu-latest
     if: contains(github.ref, 'backend/')  || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/G')
 
@@ -248,7 +251,7 @@ jobs:
 
   # Admin panel unit testing
   node_test_admin:
-    name: Admin Panel Unit Tests
+    name: ADMIN PANEL UNIT TESTS
     runs-on: ubuntu-latest
     if: contains(github.ref, 'Admin/')  || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/G')
 
