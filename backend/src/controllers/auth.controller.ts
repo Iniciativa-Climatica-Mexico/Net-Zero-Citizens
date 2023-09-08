@@ -22,7 +22,7 @@ export const googleLogin: RequestHandler<
 
     // Verificar el token de google
     // TODO probar esta función
-    const data = await verifyGoogleToken(googleToken)
+    // const data = await verifyGoogleToken(googleToken)
 
     // TODO Revisar si el usaurio ya existe en la base de datos
 
