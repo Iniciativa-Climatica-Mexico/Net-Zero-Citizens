@@ -1,4 +1,14 @@
-import { Column, DataType, Model, Table } from 'sequelize-typescript'
+import {
+  BelongsTo,
+  Column,
+  DataType,
+  ForeignKey,
+  HasMany,
+  Model,
+  Table,
+} from 'sequelize-typescript'
+import User from './users.model'
+import Review from './review.model'
 
 type StatusEnum = 'approved' | 'pending_approval' | 'rejected'
 
@@ -9,19 +19,30 @@ type StatusEnum = 'approved' | 'pending_approval' | 'rejected'
 @Table({ tableName: 'COMPANIES' })
 export default class Company extends Model {
   @Column({
-    autoIncrement: true,
+    type: DataType.UUID,
     primaryKey: true,
+    defaultValue: DataType.UUIDV4,
+    allowNull: false,
     field: 'COMPANY_ID',
-    type: DataType.INTEGER,
+  })
+  companyId: string
+
+  @ForeignKey(() => User)
+  @Column({
+    field: 'USER_ID',
+    type: DataType.UUID,
+    allowNull: true,
+  })
+  userId: string | null
+
+  @BelongsTo(() => User)
+  user: User
+
+  @Column({
+    field: 'NAME',
+    type: DataType.STRING(255),
     allowNull: false,
   })
-  companyId: number
-
-  // @ForeignKey(() => User)
-  @Column({ field: 'USER_ID', type: DataType.UUID, allowNull: false })
-  userId: string
-
-  @Column({ field: 'NAME', type: DataType.STRING(255), allowNull: false })
   name: string
 
   @Column({
@@ -39,7 +60,11 @@ export default class Company extends Model {
   })
   email: string
 
-  @Column({ field: 'LOCATION', type: DataType.STRING(500), allowNull: false })
+  @Column({
+    field: 'LOCATION',
+    type: DataType.STRING(500),
+    allowNull: false,
+  })
   location: string
 
   @Column({
@@ -65,6 +90,13 @@ export default class Company extends Model {
   })
   phoneNumber: string
 
-  @Column({ field: 'WEB_PAGE', type: DataType.STRING(255), allowNull: true })
+  @Column({
+    field: 'WEB_PAGE',
+    type: DataType.STRING(255),
+    allowNull: true,
+  })
   webPage: string
+
+  @HasMany(() => Review)
+  reviews: Review[]
 }

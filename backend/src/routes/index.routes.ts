@@ -5,10 +5,8 @@ import ReviewRouter from './review.routes'
 import { Express } from 'express'
 
 export const initRouterV1 = (app: Express) => {
-  app.use('/api/v1')
-
-  app.use('/dummy', DummyRouter)
-  app.use('/users', UserRouter)
-  app.use('/company', CompanyRouter)
-  app.use('/review', ReviewRouter)
+  app.use('/api/v1/dummy', DummyRouter)
+  app.use('/api/v1/users', UserRouter)
+  app.use('/api/v1/company', CompanyRouter)
+  app.use('/api/v1/review', ReviewRouter)
 }
