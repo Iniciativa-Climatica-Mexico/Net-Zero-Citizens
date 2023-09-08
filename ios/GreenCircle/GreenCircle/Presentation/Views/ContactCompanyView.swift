@@ -43,7 +43,7 @@ struct ContactCompanyRatingView: View {
         VStack(alignment: .leading) {
             Text("Rating")
                 .font(.system(size: 15))
-                .padding(.bottom, 3).bold().foregroundColor(Color("BlackCustom"))
+                .padding(.bottom, 3).bold().foregroundColor(Color("BlackCustom")).contrast(12.6)
             HStack {
                 Image(systemName: "star.fill")
                 Image(systemName: "star.fill")
@@ -54,9 +54,9 @@ struct ContactCompanyRatingView: View {
             Divider()
             Text("Reviews")
                 .font(.system(size: 15))
-                .padding(.bottom, 3).bold().foregroundColor(Color("BlackCustom"))
+                .padding(.bottom, 3).bold().foregroundColor(Color("BlackCustom")).contrast(12.6)
             Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incididunt ut labore et dolore magna aliqua.")
-                .font(.system(size: 13)).foregroundColor(Color("BlackCustom"))
+                .font(.system(size: 13)).foregroundColor(Color("BlackCustom")).contrast(12.6)
             Spacer()
         }.padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
     }
@@ -71,7 +71,7 @@ struct ContactCompanyComponentView: View {
                 .padding(.bottom, 3).bold()
             VStack(alignment: .leading, spacing: 5) {
                 Text("Página web").font(.system(size: 13))
-                    .foregroundColor(Color("BlackCustom"))
+                    .foregroundColor(Color("BlackCustom")).contrast(12.6)
                 Text(modelCompany.contentCompany.webPage ?? "No hay página web disponible").font(.system(size: 10))
                     .foregroundColor(Color("GreenCustom"))
 
@@ -81,7 +81,7 @@ struct ContactCompanyComponentView: View {
 
             VStack(alignment: .leading, spacing: 5) {
                 Text("Correo electrónico").font(.system(size: 13))
-                    .foregroundColor(Color("BlackCustom"))
+                    .foregroundColor(Color("BlackCustom")).contrast(12.6)
                 Text(modelCompany.contentCompany.email).font(.system(size: 10))
                     .foregroundColor(Color("GreenCustom"))
 
@@ -91,7 +91,7 @@ struct ContactCompanyComponentView: View {
 
             VStack(alignment: .leading, spacing: 5) {
                 Text("Dirección").font(.system(size: 13))
-                    .foregroundColor(Color("BlackCustom"))
+                    .foregroundColor(Color("BlackCustom")).contrast(12.6)
                 Text(modelCompany.contentCompany.location).font(.system(size: 10))
                     .foregroundColor(Color("GreenCustom"))
 
@@ -100,7 +100,7 @@ struct ContactCompanyComponentView: View {
 
             VStack(alignment: .leading, spacing: 5) {
                 Text("Número telefónico").font(.system(size: 13))
-                    .foregroundColor(Color("BlackCustom"))
+                    .foregroundColor(Color("BlackCustom")).contrast(12.6)
                 Text(modelCompany.contentCompany.phoneNumber)
                     .font(.system(size: 10))
                     .foregroundColor(Color("GreenCustom"))
@@ -123,7 +123,7 @@ struct ServiceComponentView: View {
                         .padding(EdgeInsets(top: 5, leading: 0, bottom: 6, trailing: 0))
                     Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incididunt ut labore et dolore magna aliqua.")
                         .font(.system(size: 12))
-                        .multilineTextAlignment(.leading)
+                        .multilineTextAlignment(.leading).foregroundColor(Color("BlackCustom")).contrast(12.6)
                 }.padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 9))
             }
             Spacer()
@@ -199,7 +199,14 @@ struct ContactCompanyView: View {
                 Spacer()
             }.onAppear {
                 Task {
-                    await contactCompanyViewModel.getCompanyById(idCompany: 2)
+                    let specificUUIDString = "9b1d7e8a-fa5d-4e63-a5ca-6f7d40f1a2c8"
+                    if let specificUUID = UUID(uuidString: specificUUIDString) {
+                        await contactCompanyViewModel.getCompanyById(idCompany: specificUUID)
+                    } else {
+                        // Handle the case where the UUID string is not valid
+                        print("Invalid UUID string: \(specificUUIDString)")
+                    }
+                    
                 }
             }
             .navigationTitle(contactCompanyViewModel.contentCompany.name)

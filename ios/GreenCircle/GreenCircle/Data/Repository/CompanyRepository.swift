@@ -18,7 +18,7 @@ struct Api {
 protocol CompanyAPIProtocol {
     // GET all companies
     
-    func getCompanyById(companyId: Int) async -> Company?
+    func getCompanyById(companyId: UUID) async -> Company?
 }
 
 class CompanyRepository: CompanyAPIProtocol {
@@ -29,7 +29,7 @@ class CompanyRepository: CompanyAPIProtocol {
         self.backEndService = backEndService
     }
     
-    func getCompanyById(companyId: Int) async -> Company? {
-        return await backEndService.getCompanyById(url: URL(string: "\(Api.baseCompany)/\(companyId)")!)
+    func getCompanyById(companyId: UUID) async -> Company? {
+        return await backEndService.getCompanyById(url: URL(string: "\(Api.baseCompany)/\(companyId.uuidString.lowercased())")!)
     }
 }

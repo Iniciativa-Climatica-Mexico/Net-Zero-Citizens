@@ -8,7 +8,7 @@
 import Foundation
 
 protocol CompanyInfoRequirementProtocol {
-    func getCompanyById(id: Int) async -> Company?
+    func getCompanyById(id: UUID) async -> Company?
 }
 
 class CompanyInfoRequirement: CompanyInfoRequirementProtocol {
@@ -18,7 +18,7 @@ class CompanyInfoRequirement: CompanyInfoRequirementProtocol {
     init(companyDataRepository: CompanyRepository = CompanyRepository.shared) {
         self.companyDataRepository = companyDataRepository
     }
-    func getCompanyById(id: Int) async -> Company? {
+    func getCompanyById(id: UUID) async -> Company? {
         return await companyDataRepository.getCompanyById(companyId: id)
     }
     
