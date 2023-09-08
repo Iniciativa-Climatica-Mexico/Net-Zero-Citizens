@@ -1,11 +1,5 @@
 import { Sequelize } from 'sequelize-typescript'
 import { bootstrapDB } from './database.bootstrap'
-import Survey from '../models/survey.model'
-import Question from '../models/question.model'
-import Answer from '../models/answer.model'
-import QuestionOption from '../models/questionOption.model'
-import Dummy from '../models/dummy.model'
-import Company from '../models/company.model'
 
 const env = process.env.NODE_ENV || 'development'
 

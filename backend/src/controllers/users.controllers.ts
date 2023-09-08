@@ -1,5 +1,4 @@
 import * as UserService from '../services/users.service'
-import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
 
 /**

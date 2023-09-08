@@ -1,4 +1,3 @@
-import { Bootstrapper } from '../bootstrap/Bootstraper'
 import CompanyBootstrap from '../bootstrap/company.bootstrap'
 import DummyBootstrap from '../bootstrap/dummy.bootstrap'
 import ReviewBootstrap from '../bootstrap/reviews.bootstrap'

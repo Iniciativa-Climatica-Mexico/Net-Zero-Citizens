@@ -3,7 +3,6 @@ import {
   Column,
   Model,
   DataType,
-  ForeignKey,
   HasOne,
   HasMany,
 } from 'sequelize-typescript'
