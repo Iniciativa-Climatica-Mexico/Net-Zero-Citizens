@@ -1,4 +1,5 @@
 import { TokensModel, Token } from '../models/token.model'
+import { Payload, TokenPair, generateAuthToken, generateRefreshToken } from '../utils/AuthUtil'
 
 
 /**
@@ -20,4 +21,25 @@ export const getTokenById = async (tokenId: string): Promise<Token | null> => {
 export const blackListToken = async (tokenId: string): Promise<void> => {
   if(!tokenId) throw new Error('No token provided')
   await TokensModel.create({ tokenId: tokenId })
+}
+
+
+/**
+ * @brief
+ * Función para crear un nuevo par de tokens
+ * @param payload información del usuario para guardar en el token
+ * @returns {authToken, refreshToken} objeto con los tokens generados
+*/
+export const createTokens = async (payload: Payload, token: string = ''): Promise<TokenPair> => {
+  const authToken: string = generateAuthToken(payload)
+  const refreshToken: string = generateRefreshToken(payload)
+
+  if(!authToken || !refreshToken) throw new Error('Error generating tokens')
+
+  if(token) await blackListToken(token)
+
+  return {
+    authToken: authToken, 
+    refreshToken: refreshToken
+  }
 }
