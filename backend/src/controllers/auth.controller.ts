@@ -1,6 +1,6 @@
 // import * as CompanyService from '../services/company.service'
 import { blackListToken } from '../services/auth.service'
-import { generateAuthToken, generateRefreshToken, verifyToken, Payload } from '../utils/AuthUtil'
+import { generateAuthToken, generateRefreshToken, verifyToken, Payload, verifyGoogleToken } from '../utils/AuthUtil'
 import { NoRecord } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
 
@@ -20,11 +20,17 @@ export const googleLogin: RequestHandler<
 
     if(!googleToken) return res.json({ token: '', refreshToken: '', error: 'No google token provided' })
 
-    // TODO Verificar el token de google
+    // Verificar el token de google
+    // TODO probar esta función
+    const data = await verifyGoogleToken(googleToken)
 
-    // TODO Get user data from google
+    // TODO Revisar si el usaurio ya existe en la base de datos
 
-    // TODO Get user data from database and delete this dummy user
+    // TODO Registrar cliente
+
+    // TODO Registrar empresa
+
+    // TODO Obtener la información del usaurio de la base de datos y eliminar este ejemplo
     const dummyUser: Payload = {
       first_name: 'Dummy',
       last_name: 'User',
