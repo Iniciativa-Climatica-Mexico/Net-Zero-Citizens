@@ -30,7 +30,6 @@ class CompanyRepository: CompanyAPIProtocol {
     }
     
     func getCompanyById(companyId: Int) async -> Company? {
-        print(URL(string: "\(Api.baseCompany)/\(companyId)")!)
         return await backEndService.getCompanyById(url: URL(string: "\(Api.baseCompany)/\(companyId)")!)
     }
 }
