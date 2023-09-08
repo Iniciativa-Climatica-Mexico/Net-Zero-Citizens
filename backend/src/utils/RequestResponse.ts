@@ -10,8 +10,7 @@ export type Paginator<T> = {
 export type PaginationParams<T = never> = {
   start?: number
   pageSize?: number
-  filters?: T
-}
+} & T
 
 export type PaginatedQuery<T> = {
   rows: T[]

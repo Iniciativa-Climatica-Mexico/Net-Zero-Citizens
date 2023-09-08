@@ -1,5 +1,3 @@
-'use strict'
-
 import { Sequelize } from 'sequelize'
 import { bootstrapDB } from './database.bootstrap'
 
@@ -37,7 +35,7 @@ const initDB = async () => {
     console.log('Database connected')
     await db.sync()
     console.log('Database synchronized')
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV != 'production') {
       console.log('Bootstrapping database')
       await bootstrapDB()
     }

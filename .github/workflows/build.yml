@@ -51,6 +51,9 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
+      - name: Husky Git Hooks
+        run: yarn husky install
+
   # Android Test
   unit_test:
     name: UNIT TEST
@@ -76,6 +79,7 @@ jobs:
 
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
+        working-directory: Android/GreenCircle
 
       - name: Restore cache
         uses: actions/cache@v2
@@ -88,6 +92,7 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Unit tests
+        working-directory: Android/GreenCircle
         # Juni test: ./gradlew testDebugUnitTest
         run: ./gradlew testDebugUnitTest --continue
 
@@ -122,9 +127,11 @@ jobs:
 
       - name: Print Java Version
         run: javac -version
+        working-directory: Android/GreenCircle
 
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
+        working-directory: Android/GreenCircle
 
       - name: Restore cache
         uses: actions/cache@v2
@@ -136,42 +143,24 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: List release
+        run: ls -la Android/GreenCircle/app/release
+
       - name: Sign app APK
-        uses: ilharp/sign-android-release@v1
+        uses: r0adkll/sign-android-release@v1
         id: sign_app
         with:
-          releaseDir: app/release
-          signingKey: ${{ secrets.SIGNING_KEY }}
-          keyAlias: ${{ secrets.KEY_ALIAS }}
+          releaseDirectory: Android/GreenCircle/app/release
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          alias: ${{ secrets.KEY_ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
-          buildToolsVersion: 33.0.0
-
-      - uses: jungwinter/split@v2
-        id: signed_files
-        with:
-          msg: ${{ steps.sign_app.outputs.signedFiles }}
-          separator: ":"
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: Signed AAB
-          path: ${{ steps.signed_files.outputs._0 }}
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: Signed APK
-          path: ${{ steps.signed_files.outputs._1 }}
-
-  # Security Scan: Vulnerabilities
-  # security_scan:
-  #   name: SECURITY SCAN WITH ADDSWEEP
 
   # Backend Testing with JEST
   node_test:
     name: Backend Unit Tests
     runs-on: ubuntu-latest
-    if: contains(github.ref, 'backend/') || contains(github.ref, 'Admin/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    if: contains(github.ref, 'backend/')  || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
 
     steps:
       - name: Checkout
@@ -183,10 +172,16 @@ jobs:
           node-version: "18.17.1"
 
       - name: Install dependencies
-        run: yarn ci
+        working-directory: backend
+        run: yarn install
 
       - name: Run Jest with Coverage
+        working-directory: backend
         run: yarn test
+        env:
+          JWT_AUTH: ${{ secrets.JWT_AUTH }}
+          JWT_REFRESH: ${{ secrets.JWT_REFRESH }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
 
       - name: Upload Mocha & Chai Test Report
         if: always()
@@ -196,3 +191,31 @@ jobs:
           path: ./test-results/test-report.xml
 
   # Admin panel unit testing
+  node_test_admin:
+    name: Admin Panel Unit Tests
+    runs-on: ubuntu-latest
+    if: contains(github.ref, 'Admin/')  || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.JS
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18.17.1"
+
+      - name: Install dependencies
+        working-directory: Admin
+        run: yarn install
+
+      - name: Run Jest with Coverage
+        working-directory: Admin
+        run: yarn test
+
+      - name: Upload Mocha & Chai Test Report
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: mocha-chai-test-report
+          path: ./test-results/test-report.xml
