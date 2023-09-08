@@ -1,3 +1,13 @@
+/**
+ * Represents a green triangle svg decoration component.
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <GreenTriangleSVG />
+ * ```
+ */
+
 'use client'
 import { useIsMobile } from '@/hooks'
 import GreenTriangle from '@public/svg/greenTriangle.svg'

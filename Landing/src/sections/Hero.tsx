@@ -1,3 +1,13 @@
+/**
+ * Represents a hero section component.
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <Hero />
+ * ```
+ */
+
 import GreenTriangleSVG from '@/components/GreenTriangle'
 import PhoneMockup from '@public/images/phoneMockup.png'
 import Image from 'next/image'

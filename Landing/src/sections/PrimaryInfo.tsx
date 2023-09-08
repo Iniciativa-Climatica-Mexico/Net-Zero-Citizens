@@ -1,3 +1,13 @@
+/**
+ * Represents a primary info section component.
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <PrimaryInfo />
+ * ```
+ */
+
 import PeopleIcon from '@public/svg/peopleIcon.svg'
 import StarIcon from '@public/svg/starIcon.svg'
 
