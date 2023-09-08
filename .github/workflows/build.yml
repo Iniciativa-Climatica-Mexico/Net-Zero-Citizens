@@ -111,7 +111,7 @@ jobs:
         working-directory: Android/GreenCircle
         run: ./gradlew uploadToAppSweepRelease
         env:
-          APP_SWEEP: ${{ secrets.APPSWEEP_API_KEY }}
+          APPSWEEP_API_KEY: ${{ secrets.APPSWEEP_API_KEY }}
 
   # Android Test
   unit_test:
