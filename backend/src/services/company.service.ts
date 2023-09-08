@@ -23,7 +23,7 @@ export const getAllCompanies = async <T>(
  * @returns Promise<Company | Null> Proveedor con el id especificado
  */
 export const getCompanyById = async (id: string): Promise<Company | null> => {
-  return CompaniesModel.findOne({
+  return Company.findOne({
     where: {
       companyId: id,
     },
