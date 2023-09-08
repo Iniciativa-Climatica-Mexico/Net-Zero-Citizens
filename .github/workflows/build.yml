@@ -106,9 +106,9 @@ jobs:
 
       - name: Upload app to AppSweep with gradle
         working-directory: Android/GreenCircle
+        run: ./gradlew uploadToAppSweepRelease
         env:
           APP_SWEEP: ${{ secrets.APP_SWEEP }}
-        run: ./gradlew uploadToAppSweepRelease
 
   # Android Test
   unit_test:
