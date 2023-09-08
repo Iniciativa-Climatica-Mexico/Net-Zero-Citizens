@@ -2,6 +2,7 @@ import chai from 'chai'
 import chaiExclude from 'chai-exclude'
 import { db, initDB } from '../src/configs/database.config'
 import { generateAuthToken, generateRefreshToken, verifyToken, Payload } from '../src/utils/AuthUtil'
+import { getTokenById, blackListToken } from '../src/services/auth.service'
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -54,3 +55,13 @@ describe('AuthUtil', () => {
     expect(payload).excluding(attributesToExclude).to.deep.equal(testData)
   })
 })
+
+describe('AuthService', () => {
+  it('should save a refresh token', async () => {
+    const token = generateRefreshToken(testData)
+    await blackListToken(token)
+    const savedToken = await getTokenById(token)
+    expect(savedToken).to.be.not.null
+  })
+})
+
