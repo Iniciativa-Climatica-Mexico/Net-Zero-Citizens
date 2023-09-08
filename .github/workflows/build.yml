@@ -31,7 +31,7 @@ jobs:
           else 
             echo "false" > husky_file_modified.txt
           fi
-        shell: zsh
+        shell: bash
 
       - name: Set output from file
         id: set_output
