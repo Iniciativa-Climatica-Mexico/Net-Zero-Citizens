@@ -1,4 +1,4 @@
-import { Sequelize } from 'sequelize'
+import { Sequelize } from 'sequelize-typescript'
 import { bootstrapDB } from './database.bootstrap'
 
 const env = process.env.NODE_ENV || 'development'
@@ -28,6 +28,7 @@ if (env === 'production') {
     },
   })
 }
+db.addModels([__dirname + '../../**/*.model.ts'])
 
 const initDB = async () => {
   try {
