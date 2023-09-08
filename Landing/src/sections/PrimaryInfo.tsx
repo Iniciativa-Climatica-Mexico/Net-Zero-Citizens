@@ -4,7 +4,7 @@ import StarIcon from '@public/svg/starIcon.svg';
 export default function PrimaryInfo() {
   return (
     <section className="bg-primary-blue px-8 py-36 w-full">
-      <div className="flex flex-col gap-28 lg:flex-row">
+      <article className="flex flex-col gap-28 lg:flex-row">
         <div className="flex flex-col items-center text-center text-primary-white">
           <StarIcon />
           <h2 className=" text-3xl font-semibold py-8">
@@ -29,7 +29,7 @@ export default function PrimaryInfo() {
             conservación del medio ambiente.
           </p>
         </div>
-      </div>
+      </article>
     </section>
   );
 }

@@ -8,7 +8,7 @@ export default function Hero() {
       <div className="absolute w-full overflow-x-hidden top-0 -z-[1]">
         <GreenTriangleSVG />
       </div>
-      <div className="relative flex flex-col items-center gap-5 py-10 px-12 lg:gap-10 lg:px-40 lg:py-28 lg:w-full lg:text-left lg:items-start">
+      <article className="relative flex flex-col items-center gap-5 py-10 px-12 lg:gap-10 lg:px-40 lg:py-28 lg:w-full lg:text-left lg:items-start">
         <h1 className="font-bold text-[3rem] leading-[3rem] lg:text-[5.5rem] lg:leading-[5.5rem] lg:max-w-4xl relative">
           Ilumina tu camino solar
         </h1>
@@ -17,7 +17,7 @@ export default function Hero() {
         </p>
         {/* TODO: CHANGE STORE BUTTON FOR A REAL ONE */}
         <img src="/images/appStore.svg" className="w-36" />
-      </div>
+      </article>
       <Image
         src={PhoneMockup}
         alt="Phone mockup"
