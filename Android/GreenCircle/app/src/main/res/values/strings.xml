@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Green Circle</string>
+    <string name="eco_info">Eco Info</string>
+    <string name="proveedores">Proveedores</string>
+    <string name="mapa">Mapa</string>
+    <string name="perfil">Perfil</string>
 </resources>
