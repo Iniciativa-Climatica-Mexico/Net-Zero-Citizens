@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
-import { verifyToken } from '../utils/AuthUtil'
-import { Payload } from '../utils/AuthUtil'
+import * as AuthService from '../services/auth.service'
+// import { verifyToken } from '../utils/AuthUtil'
+// import { Payload } from '../utils/AuthUtil'
 
 /**
  * @brief
@@ -16,7 +17,7 @@ export const validateToken = async (req: Request, res: Response, next: NextFunct
     const token = auth.split(' ')[1]
     if (!token) throw new Error('No token provided')
 
-    const decoded: Payload = await verifyToken(token, 'auth')    
+    const decoded = await AuthService.verifyToken(token, 'auth')    
     if (!decoded) throw new Error('Invalid token')
 
     next()
@@ -43,7 +44,8 @@ export const validateRole = (roles: string[]) => {
     const auth = req.headers['authorization'] as string
     const token = auth.split(' ')[1]
 
-    const decoded: Payload = await verifyToken(token, 'auth')
+    const decoded = await AuthService.verifyToken(token, 'auth')
+    if(!decoded) throw new Error('Error')
 
     console.log(decoded.roles)
     console.log(roles)

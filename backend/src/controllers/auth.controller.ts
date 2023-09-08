@@ -1,5 +1,4 @@
-import { blackListToken, createTokens } from '../services/auth.service'
-import { generateAuthToken, generateRefreshToken, verifyToken, Payload, TokenPair, verifyGoogleToken } from '../utils/AuthUtil'
+import * as AuthService from '../services/auth.service'
 import { NoRecord } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
 
@@ -9,15 +8,14 @@ import { RequestHandler } from 'express'
  * @param req La request HTTP al servidor
  * @param res Un objeto paginador con los proveedores y la información de paginación
  */
-
 export const googleLogin: RequestHandler<
   NoRecord,
-  { token: string, refreshToken: string, error?: string },
+  { authToken: string, refreshToken: string, error?: string },
   { googleToken: string },
   NoRecord> = async (req, res) => {
     const { googleToken } = req.body
 
-    if(!googleToken) return res.json({ token: '', refreshToken: '', error: 'No google token provided' })
+    if(!googleToken) return res.json({ authToken: '', refreshToken: '', error: 'No google token provided' })
 
     // Verificar el token de google
     // TODO probar esta función
@@ -30,7 +28,7 @@ export const googleLogin: RequestHandler<
     // TODO Registrar empresa
 
     // TODO Obtener la información del usaurio de la base de datos y eliminar este ejemplo
-    const dummyUser: Payload = {
+    const dummyUser: AuthService.Payload = {
       first_name: 'Dummy',
       last_name: 'User',
       uuid: googleToken,
@@ -40,10 +38,11 @@ export const googleLogin: RequestHandler<
     }
 
     // Generar nuevo token de autenticación y nuevo token de refresco
-    const {authToken, refreshToken}: TokenPair = await createTokens(dummyUser)
+    const tokens = await AuthService.createTokens(dummyUser)
+    if(!tokens) return res.json({authToken: '', refreshToken: '', error: 'Invalid user'})
 
     // Devolver los tokens
-    res.status(200).json({ token: authToken, refreshToken: refreshToken })
+    res.status(200).json(tokens)
   }
 
 /**
@@ -54,35 +53,21 @@ export const googleLogin: RequestHandler<
  */
 export const updateTokens: RequestHandler<
   NoRecord,
-  { token: string, refreshToken: string, error?: string },
-  { refreshToken: string },
+  { authToken: string, refreshToken: string, error?: string },
+  { refreshToken?: string },
   NoRecord> = async (req, res) => {
+    // Verificar que el refreshToken se haya mandado
+    if(!req.body.refreshToken) return res.json({ authToken: '', refreshToken: '', error: 'No refresh token provided' })    
     const token: string = req.body.refreshToken
-    if(!token) return res.json({ token: '', refreshToken: '', error: 'No refresh token provided' })    
    
     try {
-      // Verificar el token de refresco
-      const userData: Payload = verifyToken(token, 'refresh')
-
-      // Obtener los datos del usuario del token
-      const payload: Payload = {
-        first_name: userData.first_name,
-        last_name: userData.last_name,
-        uuid: userData.uuid,
-        email: userData.email,
-        roles: userData.roles,
-        login_type: userData.login_type
-      }
-
-      // Generar nuevo token de autenticación y nuevo token de refresco
-      const {authToken, refreshToken}: TokenPair = await createTokens(payload, token)
-
-      // Guardar el token anterior de refresco en la blacklist
-      // await blackListToken(token)
-
+      // Actualizar tokens
+      const tokens = await AuthService.updateTokens(token)
+      if(!tokens) return res.json({authToken: '', refreshToken: '', error: 'Invalid user'})
+      
       // Devolver los tokens
-      res.json({ token: authToken, refreshToken: refreshToken })
+      res.status(200).json(tokens) 
     } catch(error) {
-      res.json({ token: '', refreshToken: '', error: 'Invalid refresh token' })
+      res.json({ authToken: '', refreshToken: '', error: 'Invalid refresh token' })
     }
   }
