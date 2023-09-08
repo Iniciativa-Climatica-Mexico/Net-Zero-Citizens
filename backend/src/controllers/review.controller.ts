@@ -16,11 +16,12 @@ export const getAllReviews: RequestHandler<
       name: req.query.name || '',
     },
   }
-  const companies = await ReviewService.getAllReviews(params)
+
+  const reviews = await ReviewService.getAllReviews(params)
   res.json({
-    rows: companies.rows,
+    rows: reviews.rows,
     start: params.start,
     pageSize: params.pageSize,
-    total: companies.count,
+    total: reviews.count,
   })
 }

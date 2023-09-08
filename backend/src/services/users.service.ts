@@ -25,20 +25,9 @@ export const updateUserInfo = async (
   userId: string,
   newUserInfo: UpdateUserInfoBody
 ): Promise<User | null> => {
-  const allowedKeys = [
-    'firstName',
-    'lastName',
-    'secondLastName',
-    'phoneNumber',
-    'age',
-    'state',
-    'sex',
-    'profilePicture',
-  ]
   const userInfo = await UsersModel.findByPk(userId)
   if (userInfo) {
-    await userInfo.update(newUserInfo)
-    return userInfo
+    return userInfo.update(newUserInfo)
   } else {
     return null
   }
@@ -55,8 +44,7 @@ export const updateUserCredentials = async (
 ): Promise<User | null> => {
   const userInfo = await UsersModel.findByPk(userId)
   if (userInfo) {
-    await userInfo.update(newUserCredentials)
-    return userInfo
+    return userInfo.update(newUserCredentials)
   } else {
     return null
   }
