@@ -7,7 +7,7 @@ const config: Config = {
       colors: {
         'primary-black': '#333333',
         'primary-white': '#FFFFFF',
-        'primary-blue': '#547C8B',
+        'primary-blue': '#5096af',
 
         'primary-blue-50': '#0D0D547C8B',
         'primary-blue-100': '#1A547C8B',

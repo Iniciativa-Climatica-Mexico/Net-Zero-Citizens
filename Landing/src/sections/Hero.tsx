@@ -4,8 +4,8 @@ import Image from 'next/image';
 
 export default function Hero() {
   return (
-    <section className="flex flex-col items-center w-full text-center lg:flex-row lg:items-start lg:max-h-[90vh]">
-      <div className="absolute w-full overflow-x-hidden top-0 -z-[1]">
+    <section className="flex flex-col items-center w-full text-center lg:flex-row lg:items-start lg:max-h-[85vh]">
+      <div className="absolute w-full overflow-x-hidden top-0 -z-30">
         <GreenTriangleSVG />
       </div>
       <article className="relative flex flex-col items-center gap-5 py-10 px-12 lg:gap-10 lg:px-40 lg:py-28 lg:w-full lg:text-left lg:items-start">

@@ -3,11 +3,11 @@ import StarIcon from '@public/svg/starIcon.svg';
 
 export default function PrimaryInfo() {
   return (
-    <section className="bg-primary-blue px-8 py-36 w-full">
-      <article className="flex flex-col gap-28 lg:flex-row">
-        <div className="flex flex-col items-center text-center text-primary-white">
+    <section className="bg-primary-blue px-8 py-32 w-full text-center text-primary-white lg:px-40">
+      <article className="flex flex-col gap-28 lg:flex-row lg:gap-44">
+        <div className="flex flex-col items-center gap-5">
           <StarIcon />
-          <h2 className=" text-3xl font-semibold py-8">
+          <h2 className="text-3xl font-semibold">
             ¿Qué puedes hacer?
           </h2>
           <p>
@@ -17,11 +17,9 @@ export default function PrimaryInfo() {
             decisiones de compra más responsables.
           </p>
         </div>
-        <div className="flex flex-col items-center text-center text-primary-white">
+        <div className="flex flex-col items-center gap-5">
           <PeopleIcon />
-          <h2 className="text-3xl font-semibold py-8">
-            ¿Cómo funciona?
-          </h2>
+          <h2 className="text-3xl font-semibold">¿Cómo funciona?</h2>
           <p>
             A través de GreenCircle los usuarios pueden explorar una
             amplia variedad de productos y servicios ofrecidos por
