@@ -113,7 +113,7 @@ dependencies {
     // Material Components para Android.
     implementation("com.google.android.material:material:1.9.0")
 
-    // Circle Indicator (To fix the xml preview "Missing classes" error)
+    // Circle Indicator (Arregla el error "Missing classes" en el xml)
     implementation("me.relex:circleindicator:2.1.6")
 
     // Carousel
