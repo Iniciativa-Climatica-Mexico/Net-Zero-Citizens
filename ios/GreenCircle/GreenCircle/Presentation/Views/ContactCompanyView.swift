@@ -201,7 +201,7 @@ struct ContactCompanyView: View {
                 Task {
                     let specificUUIDString = "9b1d7e8a-fa5d-4e63-a5ca-6f7d40f1a2c8"
                     if let specificUUID = UUID(uuidString: specificUUIDString) {
-                        await contactCompanyViewModel.getCompanyById(idCompany: specificUUID)
+                        await contactCompanyViewModel.fetchCompanyById(idCompany: specificUUID)
                     } else {
                         // Handle the case where the UUID string is not valid
                         print("Invalid UUID string: \(specificUUIDString)")

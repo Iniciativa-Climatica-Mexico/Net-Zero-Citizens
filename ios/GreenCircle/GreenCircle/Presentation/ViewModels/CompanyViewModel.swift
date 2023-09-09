@@ -9,6 +9,9 @@ import Foundation
 
 /// Implementación de view model de modelo de Compañía
 class CompanyViewModel: ObservableObject {
+    /// Caso de uso para hacer fetch de los datos de compañía
+    private let fetchCompanyInfoUseCase: FetchCompanyInfoUseCase
+    
     /// La compañía puede cambiar en la vista (se construye .onAppear())
     @Published var contentCompany: Company = Company(
             companyId: UUID(uuidString: "") ?? UUID(),
@@ -23,31 +26,16 @@ class CompanyViewModel: ObservableObject {
             webPage: nil,
             createdAt: "",
             updatedAt: ""
-            // product: Products(
-               //  poductId: 0,
-               //  companyId: 0,
-               //  name: "",
-               //  description: ""
-            // ),
-            // reviews: Reviews(
-               //  idReview: 0,
-               //  UUID: "",
-               //  idCompany: 0,
-               //  review: "",
-               //  score: 0
-            // )
         )
-    /// Requerimientos para hacer fetch de los datos de compañía
-    var companyInfoRequirement: CompanyInfoRequirementProtocol
-    /// Para implementar el requerimiento en la vista que llame al ViewModel Compañía
-    init(companyInfoRequirement: CompanyInfoRequirementProtocol = CompanyInfoRequirement.shared) {
-        self.companyInfoRequirement = companyInfoRequirement
+    /// Para implementar el caso de uso en la vista que llame al ViewModel Compañía
+    init(fetchCompanyInfoUseCase: FetchCompanyInfoUseCase = FetchCompanyInfoUseCaseImpl.shared) {
+        self.fetchCompanyInfoUseCase = fetchCompanyInfoUseCase
     }
-    /// Obtener información de la compañía mediante el requerimiento
     @MainActor
+    /// Obtener información de la compañía mediante el caso de uso
     /// Actualización de la compañía si existe el UUID en base de datos
-    func getCompanyById(idCompany: UUID) async {
-        let resultCompany = await companyInfoRequirement.getCompanyById(id: idCompany)
+    func fetchCompanyById(idCompany: UUID) async {
+        let resultCompany = await fetchCompanyInfoUseCase.fetchCompanyById(id: idCompany)
         if let resultCompany = resultCompany {
             contentCompany = resultCompany
         }

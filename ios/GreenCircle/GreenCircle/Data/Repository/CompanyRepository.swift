@@ -23,7 +23,7 @@ protocol CompanyAPIProtocol {
     /// Obtener compañía por UUID recibido desde el view listCompanies
     ///  - Parameters: UUID
     ///  - Returns: Modelo de Compañía
-    func getCompanyById(companyId: UUID) async -> Company?
+    func fetchCompanyById(companyId: UUID) async -> Company?
 }
 
 /// Implementación de repoitorio de Compañía con singleton
@@ -39,7 +39,7 @@ class CompanyRepository: CompanyAPIProtocol {
     /// Obtener compañía por UUID llamando al método del servicio del backend
     ///   - Parameters: UUID de la compañía
     ///   - Returns: Modelo de compañía
-    func getCompanyById(companyId: UUID) async -> Company? {
-        return await backEndService.getCompanyById(url: URL(string: "\(ApiCompany.baseCompany)/\(companyId.uuidString.lowercased())")!)
+    func fetchCompanyById(companyId: UUID) async -> Company? {
+        return await backEndService.fetchCompanyById(url: URL(string: "\(ApiCompany.baseCompany)/\(companyId.uuidString.lowercased())")!)
     }
 }
