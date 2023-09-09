@@ -1,7 +1,7 @@
 import * as DummyService from '../services/dummy.service'
 import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
-import { Dummy } from '../models/dummy.model'
+import Dummy from '../models/dummy.model'
 // export const getGreeting = async (
 //   req: TypedRequest<{ name: string }, NoBody>,
 //   res: TypedResponse<{ greeting: string }>

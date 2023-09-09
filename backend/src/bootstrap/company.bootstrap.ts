@@ -1,12 +1,12 @@
-import { CompaniesModel } from '../models/company.model'
+import Company from '../models/company.model'
 import { Bootstrapper } from './Bootstraper'
 
 export default class CompanyBootstrap extends Bootstrapper {
   async run() {
-    CompaniesModel.bulkCreate([
+    Company.bulkCreate([
       {
-        companyId: '1',
-        userId: '1',
+        companyId: 'comp-1234-efgh-0000',
+        userId: 'abcd-1234-efgh-5678',
         name: 'Company 1',
         description: 'Company 1 description',
         email: 'example1@mail.com',
@@ -15,8 +15,8 @@ export default class CompanyBootstrap extends Bootstrapper {
         phoneNumber: '123456789',
       },
       {
-        companyId: '2',
-        userId: '2',
+        companyId: 'comp-1234-efgh-0001',
+        userId: 'abcd-1234-efgh-5678',
         name: 'Company 2',
         description: 'Company 2 description',
         email: 'example2@mail.com',
@@ -25,8 +25,8 @@ export default class CompanyBootstrap extends Bootstrapper {
         phoneNumber: '1244598349',
       },
       {
-        companyId: '3',
-        userId: '3',
+        companyId: 'comp-1234-efgh-0002',
+        userId: 'abcd-1234-efgh-5680',
         name: 'Company 3',
         description: 'Company 3 description',
         email: 'example3@mail.com',
@@ -35,8 +35,8 @@ export default class CompanyBootstrap extends Bootstrapper {
         phoneNumber: '8345858931',
       },
       {
-        companyId: '4',
-        userId: '4',
+        companyId: 'comp-1234-efgh-0003',
+        userId:'abcd-1234-efgh-5681',
         name: 'Company 4',
         description: 'Company 4 description',
         email: 'example4@mail.com',
@@ -45,8 +45,8 @@ export default class CompanyBootstrap extends Bootstrapper {
         phoneNumber: '548593485',
       },
       {
-        companyId: '10',
-        userId: '10',
+        companyId: 'comp-1234-efgh-0010',
+        userId:'abcd-1234-efgh-5682',
         name: 'Company 10',
         description: 'Company 10 description',
         email: 'example10@mail.com',
@@ -55,8 +55,8 @@ export default class CompanyBootstrap extends Bootstrapper {
         phoneNumber: '548593480',
       },
       {
-        companyId: '11',
-        userId: '11',
+        companyId: 'comp-1234-efgh-0011',
+        userId:'abcd-1234-efgh-5683',
         name: 'Company 11',
         description: 'Company 11 description',
         email: 'example11@mail.com',
@@ -65,8 +65,8 @@ export default class CompanyBootstrap extends Bootstrapper {
         phoneNumber: '12843840',
       },
       {
-        companyId: '12',
-        userId: '12',
+        companyId: 'comp-1234-efgh-0012',
+        userId:'abcd-1234-efgh-5684',
         name: 'Company 12',
         description: 'Company 12 description',
         email: 'example12@mail.com',
@@ -75,8 +75,8 @@ export default class CompanyBootstrap extends Bootstrapper {
         phoneNumber: '54832485',
       },
       {
-        companyId: '13',
-        userId: '13',
+        companyId: 'comp-1234-efgh-0013',
+        userId:'abcd-1234-efgh-5685',
         name: 'Company 13',
         description: 'Company 13 description',
         email: 'example13@mail.com',
@@ -85,8 +85,8 @@ export default class CompanyBootstrap extends Bootstrapper {
         phoneNumber: '30405485',
       },
       {
-        companyId: '15',
-        userId: '15',
+        companyId: 'comp-1234-efgh-0014',
+        userId:'abcd-1234-efgh-5686',
         name: 'Company 15',
         description: 'Company 15 description',
         email: 'example15@mail.com',
@@ -95,8 +95,8 @@ export default class CompanyBootstrap extends Bootstrapper {
         phoneNumber: '9402485',
       },
       {
-        companyId: '16',
-        userId: '16',
+        companyId: 'comp-1234-efgh-0015',
+        userId:'abcd-1234-efgh-5687',
         name: 'Company 16',
         description: 'Company 16 description',
         email: 'example16@mail.com',
@@ -105,8 +105,8 @@ export default class CompanyBootstrap extends Bootstrapper {
         phoneNumber: '54893485',
       },
       {
-        companyId: '17',
-        userId: '17',
+        companyId: 'comp-1234-efgh-0017',
+        userId:'abcd-1234-efgh-5688',
         name: 'Company 17',
         description: 'Company 17 description',
         email: 'example17@mail.com',

@@ -1,96 +1,102 @@
-import { db } from '../configs/database.config'
 import {
-  DataTypes,
+  BelongsTo,
+  Column,
+  DataType,
+  ForeignKey,
+  HasMany,
   Model,
-  InferAttributes,
-  InferCreationAttributes,
-  CreationOptional,
-} from 'sequelize'
+  Table,
+} from 'sequelize-typescript'
+import User from './users.model'
+import Review from './review.model'
 
 type StatusEnum = 'approved' | 'pending_approval' | 'rejected'
 
 /**
  * @brief
- * La interfaz con los atributos de la tabla COMPANIES
- */
-export interface Company
-  extends Model<InferAttributes<Company>, InferCreationAttributes<Company>> {
-  companyId: string
-  userId: string
-  name: string
-  description: string
-  email: string
-  location: string
-  profilePicture: CreationOptional<string>
-  status: StatusEnum
-  phoneNumber: string
-  webPage: CreationOptional<string>
-  createdAt?: Date
-  updatedAt?: Date
-}
-/**
- * @brief
  * El modelo que representa la tabla COMPANIES
  */
-export const CompaniesModel = db.define<Company>('COMPANIES', {
-  companyId: {
-    type: DataTypes.UUID,
-    field: 'COMPANY_ID',
-    allowNull: false,
+@Table({ tableName: 'COMPANIES' })
+export default class Company extends Model {
+  @Column({
+    type: DataType.UUID,
     primaryKey: true,
-    defaultValue: DataTypes.UUIDV4
-  },
-  userId: {
-    type: DataTypes.STRING,
+    defaultValue: DataType.UUIDV4,
+    allowNull: false,
+    field: 'COMPANY_ID',
+  })
+  companyId: string
+
+  @ForeignKey(() => User)
+  @Column({
     field: 'USER_ID',
-    allowNull: false,
-    // Uncomment when User model is created
-    // references: {
-    //   model: 'users',
-    //   key: 'USER_ID',
-    // },
-    // unique: 'FK_COMPANY_USER',
-  },
-  name: {
-    type: DataTypes.STRING(255),
+    type: DataType.UUID,
+    allowNull: true,
+  })
+  userId: string | null
+
+  @BelongsTo(() => User)
+  user: User
+
+  @Column({
     field: 'NAME',
+    type: DataType.STRING(255),
     allowNull: false,
-  },
-  description: {
-    type: DataTypes.STRING(500),
+  })
+  name: string
+
+  @Column({
     field: 'DESCRIPTION',
+    type: DataType.STRING(500),
     allowNull: false,
-  },
-  email: {
-    type: DataTypes.STRING(255),
+  })
+  description: string
+
+  @Column({
     field: 'EMAIL',
+    type: DataType.STRING(255),
     allowNull: false,
     unique: 'EMAIL',
-  },
-  location: {
-    type: DataTypes.STRING(500),
+  })
+  email: string
+
+  @Column({
     field: 'LOCATION',
+    type: DataType.STRING(500),
     allowNull: false,
-  },
-  profilePicture: {
-    type: DataTypes.STRING(500),
+  })
+  location: string
+
+  @Column({
     field: 'PROFILE_PICTURE',
+    type: DataType.STRING(500),
     allowNull: true,
-  },
-  status: {
-    type: DataTypes.ENUM('approved', 'pending_approval', 'rejected'),
+  })
+  profilePicture: string
+
+  @Column({
     field: 'STATUS',
+    type: DataType.ENUM('approved', 'pending_approval', 'rejected'),
     allowNull: false,
-  },
-  phoneNumber: {
-    type: DataTypes.STRING(10),
+    defaultValue: 'pending_approval',
+  })
+  status: StatusEnum
+
+  @Column({
     field: 'PHONE_NUMBER',
+    type: DataType.STRING(10),
     allowNull: false,
     unique: 'PHONE_NUMBER',
-  },
-  webPage: {
-    type: DataTypes.STRING(255),
+  })
+  phoneNumber: string
+
+  @Column({
     field: 'WEB_PAGE',
+    type: DataType.STRING(255),
     allowNull: true,
-  },
-})
+  })
+  webPage: string
+
+  @HasMany(() => Review)
+  reviews: Review[]
+}

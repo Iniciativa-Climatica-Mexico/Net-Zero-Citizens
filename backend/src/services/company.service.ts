@@ -1,4 +1,4 @@
-import { Company, CompaniesModel } from '../models/company.model'
+import Company from '../models/company.model'
 import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
 
 /**
@@ -8,7 +8,7 @@ import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
  * @returns Una promesa con la información del proveedor
  */
 export const getCompanyInfo = async (companyId: string): Promise <Company | null> => {
-  return await CompaniesModel.findByPk(companyId)
+  return await Company.findByPk(companyId)
 }
 
 /**
@@ -20,7 +20,7 @@ export const getCompanyInfo = async (companyId: string): Promise <Company | null
 export const getAllCompanies = async <T>(
   params: PaginationParams<T>
 ): Promise<PaginatedQuery<Company>> => {
-  return await CompaniesModel.findAndCountAll({
+  return await Company.findAndCountAll({
     limit: params.pageSize,
     offset: params.start,
   })
@@ -37,7 +37,7 @@ export const getAllCompanies = async <T>(
 export const getPendingCompanies = async <T>(
   params: PaginationParams<T>
 ): Promise<PaginatedQuery<Company>> => {
-  return await CompaniesModel.findAndCountAll({
+  return await Company.findAndCountAll({
     limit: params.pageSize,
     offset: params.start,
     where: {
@@ -68,7 +68,7 @@ export const updateCompanyInfo = async (
   companyId: string,
   newCompanyInfo: UpdateCompanyInfoBody
 ): Promise <Company | null> => {
-  const companyInfo = await CompaniesModel.findByPk(companyId)
+  const companyInfo = await Company.findByPk(companyId)
   if (companyInfo){
     return companyInfo.update(newCompanyInfo)
   }
