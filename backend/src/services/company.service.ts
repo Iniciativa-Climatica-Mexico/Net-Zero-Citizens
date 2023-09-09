@@ -1,7 +1,12 @@
 import { Company, CompaniesModel } from '../models/company.model'
 import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
 
-
+/**
+ * @brief
+ * Función del servicio que devuelve el proveedor con el mismo id que contiene el parametro
+ * @param companyId 
+ * @returns Una promesa con la información del proveedor
+ */
 export const getCompanyInfo = async (companyId: string): Promise <Company | null> => {
   return await CompaniesModel.findByPk(companyId)
 }
@@ -52,6 +57,13 @@ export type UpdateCompanyInfoBody = {
   webPage:string
 }
 
+/**
+ * @brief 
+ * Actualiza en la base de datos el proveedor con los datos pasados en los parametros
+ * @param companyId 
+ * @param newCompanyInfo 
+ * @returns Una promesa de la actualización del proveedor en la base de datos.
+ */
 export const updateCompanyInfo = async (
   companyId: string,
   newCompanyInfo: UpdateCompanyInfoBody

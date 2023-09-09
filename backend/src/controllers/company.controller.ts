@@ -73,6 +73,12 @@ export const getPendingCompanies: RequestHandler<
   })
 }
 
+/**
+ * @brief
+ * Función del controlador que actualiza a un proveedor de la base de datos
+ * @param req 
+ * @param res 
+ */
 export const updateCompanyInfo: RequestHandler<
   { companyId: string },
   { message: string }, 
