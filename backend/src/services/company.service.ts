@@ -58,8 +58,7 @@ export const updateCompanyInfo = async (
 ): Promise <Company | null> => {
   const companyInfo = await CompaniesModel.findByPk(companyId)
   if (companyInfo){
-    await companyInfo.update(newCompanyInfo)
-    return companyInfo
+    return companyInfo.update(newCompanyInfo)
   }
   else {
     return null
