@@ -31,7 +31,7 @@ export default class SurveysBootstrapper extends Bootstrapper {
           },
           {
             questionId: 'ques-1234-efgh-0001',
-            questionText: '¿Cómo describiria nuestro servicio?',
+            questionText: '¿Cómo describiría nuestro servicio?',
             questionType: 'multiple_choice',
             questionOptions: [
               {
@@ -88,6 +88,137 @@ export default class SurveysBootstrapper extends Bootstrapper {
           },
         ],
       }
-    )
+    );
+
+    // Example 1
+    await Survey.create(
+      {
+        surveyId: 'surv-5678-abcd-1111',
+        title: 'Product Feedback Survey',
+        description: 'Survey to gather feedback on our latest product',
+        questions: [
+          {
+            questionId: 'ques-5678-abcd-1111',
+            questionText: 'What features would you like to see in our product?',
+            questionType: 'text',
+          },
+          {
+            questionId: 'ques-5678-abcd-1112',
+            questionText: 'On a scale of 1 to 10, how likely are you to recommend our product?',
+            questionType: 'scale',
+            answers: [
+              {
+                answerId: 'answ-5678-abcd-1111',
+                userId: 'efgh-5678-abcd-1111',
+                scaleValue: 8,
+              },
+              {
+                answerId: 'answ-5678-abcd-1112',
+                userId: 'efgh-5678-abcd-1112',
+                scaleValue: 9,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        include: [
+          {
+            model: Question,
+            association: 'questions',
+            include: [
+              {
+                model: Answer,
+                association: 'answers',
+              },
+            ],
+          },
+        ],
+      }
+    );
+
+    // Example 2
+    await Survey.create(
+      {
+        surveyId: 'surv-9876-dcba-2222',
+        title: 'Employee Engagement Survey',
+        description: 'Survey to measure employee engagement in the company',
+        questions: [
+          {
+            questionId: 'ques-9876-dcba-2222',
+            questionText: 'Do you feel valued in your role?',
+            questionType: 'yes_no',
+            answers: [
+              {
+                answerId: 'answ-9876-dcba-2221',
+                userId: 'ijkl-9876-dcba-2221',
+                answerText: 'Yes',
+              },
+              {
+                answerId: 'answ-9876-dcba-2222',
+                userId: 'ijkl-9876-dcba-2222',
+                answerText: 'No',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        include: [
+          {
+            model: Question,
+            association: 'questions',
+            include: [
+              {
+                model: Answer,
+                association: 'answers',
+              },
+            ],
+          },
+        ],
+      }
+    );
+
+    // Example 3
+    await Survey.create(
+      {
+        surveyId: 'surv-5555-efgh-3333',
+        title: 'Website Usability Survey',
+        description: 'Survey to assess the usability of our website',
+        questions: [
+          {
+            questionId: 'ques-5555-efgh-3333',
+            questionText: 'Did you find the website easy to navigate?',
+            questionType: 'yes_no',
+            answers: [
+              {
+                answerId: 'answ-5555-efgh-3331',
+                userId: 'mnop-5555-efgh-3331',
+                answerText: 'Yes',
+              },
+              {
+                answerId: 'answ-5555-efgh-3332',
+                userId: 'mnop-5555-efgh-3332',
+                answerText: 'No',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        include: [
+          {
+            model: Question,
+            association: 'questions',
+            include: [
+              {
+                model: Answer,
+                association: 'answers',
+              },
+            ],
+          },
+        ],
+      }
+    );
   }
 }
