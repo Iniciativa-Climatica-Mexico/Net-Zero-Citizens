@@ -2,7 +2,7 @@
 //  ProfileInformationView.swift
 //  GreenCircle
 //
-//  Created by ITESM on 07/09/23.
+//  Created by Frida Bailleres on 07/09/23.
 //
 
 import SwiftUI
@@ -160,41 +160,8 @@ struct ProfileInformationView: View {
 
                     }
                     
-                    //Text Field Email
-                        Text("Correo Electrónico")
-                            .padding(.top, 16)
-                            .foregroundColor(.black)
-                            .font(.system(size: 13))
-                            .fontWeight(.semibold)
-                        
-                        TextField("Correo Electrónico", text:$email) //Cambiar
-                            .disabled(true)
-                            .padding(.top, 3)
-                            .font(.system(size: 13))
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .foregroundColor(.gray)
-                    
-                    
-                    //Text Field Email
-                        Text("Estad")
-                            .padding(.top, 16)
-                            .foregroundColor(.black)
-                            .font(.system(size: 13))
-                            .fontWeight(.semibold)
-                        
-                        TextField("Estado", text:$state) //Cambiar
-                            .disabled(true)
-                            .padding(.top, 3)
-                            .font(.system(size: 13))
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .foregroundColor(.gray)
-                    
-                   
-                    
-                    
-
-
-
+                  
+    
     
                 }
                 .padding() // Agrega padding alrededor del VStack
@@ -203,6 +170,9 @@ struct ProfileInformationView: View {
         }
 
     }
+    
+    
+    
 }
 
 struct ProfileInformationView_Previews: PreviewProvider {

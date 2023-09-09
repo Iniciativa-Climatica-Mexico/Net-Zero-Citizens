@@ -6,14 +6,18 @@
 //
 
 import SwiftUI
-
 struct ProfileView: View {
-        @State private var firstName: String = "Nombre"
-        @State private var lastName: String = "Apellido"
-        @State private var profilePicture: Image = Image("profile_placeholder")
+    
+    @StateObject private var viewModel: ProfileViewModel
+    
+    init() {
+        let apiService = APIService()
+        let userRepository: UserRepository = apiService
+        let useCase = FetchUserDataUseCase(userRepository: userRepository)
+        _viewModel = StateObject(wrappedValue: ProfileViewModel(fetchUserDataUseCase: useCase))
+    }
     
     var body: some View {
-        
         VStack {
             // TitleBarView (No forma parte del ScrollView)
             TitleBarView(
@@ -28,55 +32,44 @@ struct ProfileView: View {
             .offset(y: -60)  // Ajustar TitleBar a la altura correcta
             
             VStack {
-                        profilePicture
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 103, height: 103)
-                            .clipShape(Circle())
-                            .overlay(Circle().stroke(TitleBarColor.TitleBarColor, lineWidth: 1))
-                        
-                HStack{
-                            Text(firstName)
-                                .foregroundColor(Color.black)
-                                .font(.system(size: 16))
-                                .bold()
-                                .padding(.top, 12)
-                    
-                            Text(lastName)
-                                .foregroundColor(Color.black)
-                                .font(.system(size: 16))
-                                .fontWeight(.semibold)
-                                .padding(.top, 12)
-                                .padding(.bottom, 2)
-                    
-                        }
+                if let user = viewModel.user{
+                //profilePicture
+                // .resizable()
+                // .aspectRatio(contentMode: .fill)
+                // .frame(width: 103, height: 103)
+                //.clipShape(Circle())
+                // .overlay(Circle().stroke(TitleBarColor.TitleBarColor, lineWidth: 1))
                 
-                        NavigationLink("Cerrar Sesión",destination: Example2View())
-                                .foregroundColor(TitleBarColor.TitleBarColor)
-                                .font(.system(size: 13))
-                                .fontWeight(.bold)
-                            
-
-                    }
-                    .onAppear {
-                        // Aquí tendrías que reemplazar "Nombre Apellido" y "profile_placeholder" con la información real del usuario loggeado
-                        // Suponiendo que tienes una función 'fetchUserProfile' que establece los valores de 'userName' y 'userImage' con los datos del usuario
-                        // fetchUserProfile()
-                    }
-            
-            
-            
-            
-            // ScrollView (Esta parte sí se desplaza)
-            ScrollView {
-                VStack {
-                    // Contenido desplazable
+                HStack{
                     
-                    
+                        Text("\(user.firstName)")
+                            .foregroundColor(Color.black)
+                            .font(.system(size: 16))
+                            .bold()
+                            .padding(.top, 12)
+                        
+                        Text("\(user.lastName)")
+                            .foregroundColor(Color.black)
+                            .font(.system(size: 16))
+                            .fontWeight(.semibold)
+                            .padding(.top, 12)
+                            .padding(.bottom, 2)
+                    }
                 }
+                
+
+                
+                NavigationLink("Cerrar Sesión",destination: Example2View())
+                    .foregroundColor(TitleBarColor.TitleBarColor)
+                    .font(.system(size: 13))
+                    .fontWeight(.bold)
+                
+                
+            }
+            .onAppear {
+                viewModel.fetchUserData()
             }
         }
-
     }
 }
 
