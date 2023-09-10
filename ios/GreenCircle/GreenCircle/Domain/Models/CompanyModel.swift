@@ -29,4 +29,3 @@ struct Company: Codable {
     var createdAt: String
     var updatedAt: String
 }
-
