@@ -25,7 +25,6 @@ const testData = {
         },
         {
           answerText: null,
-
           scaleValue: 4,
         },
       ],
@@ -75,5 +74,10 @@ describe('Report Service', () => {
   it('should return a report of a survey with its questions, options and answers', async () => {
     const survey = await getSurveyReport('surv-1234-efgh-0000')
     expect(survey).excludingEvery(attributesToExclude).to.deep.equal(testData)
+  })
+
+  it('It should return a null survey', async () => {
+    const survey = await getSurveyReport('testID')
+    expect(survey).to.be.null
   })
 })

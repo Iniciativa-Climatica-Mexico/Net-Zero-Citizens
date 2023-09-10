@@ -2,6 +2,7 @@ import DummyRouter from './dummy.routes'
 import UserRouter from './user.routes'
 import CompanyRouter from './company.routes'
 import SurveyRouter from './survey.routes'
+import ReportRouter from './report.routes'
 import ReviewRouter from './review.routes'
 import { Express } from 'express'
 
@@ -11,4 +12,5 @@ export const initRouterV1 = (app: Express) => {
   app.use('/api/v1/company', CompanyRouter)
   app.use('/api/v1/survey', SurveyRouter)
   app.use('/api/v1/review', ReviewRouter)
+  app.use('/api/v1/report', ReportRouter)
 }
