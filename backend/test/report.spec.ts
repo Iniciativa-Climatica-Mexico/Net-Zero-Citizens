@@ -31,7 +31,7 @@ const testData = {
       ],
     },
     {
-      questionText: '¿Cómo describiria nuestro servicio?',
+      questionText: '¿Cómo describiría nuestro servicio?',
       questionType: 'multiple_choice',
       questionOptions: [
         {
