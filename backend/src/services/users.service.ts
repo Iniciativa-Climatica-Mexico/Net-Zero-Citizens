@@ -31,9 +31,15 @@ export const getUserByEmailWithRole = async (email: string): Promise<User | null
 }
 
 export type UpdateUserInfoBody = {
+  roleId: string,
+  companyId?: string,
+  googleId?: string,
+  facebookId?: string,
+  appleId?: string,
   firstName: string
   lastName: string
   secondLastName?: string
+  email: string,
   phoneNumber: string
   age: number
   state: string
