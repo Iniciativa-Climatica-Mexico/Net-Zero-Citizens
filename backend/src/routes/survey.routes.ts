@@ -1,11 +1,11 @@
-import express from 'express';
-import * as controller from '../controllers/survey.controller';
+import express from 'express'
+import * as controller from '../controllers/survey.controller'
 
-const router = express.Router();
+const router = express.Router()
 
-router.get('/', controller.getAllSurveys);
-router.get('/:surveyId', controller.getSurveyById);
+router.get('/', controller.getAllSurveys)
+router.get('/:surveyId', controller.getSurveyById)
 
 //router.post('/', controller.createSurvey);
 
-export default router;
+export default router
