@@ -71,11 +71,8 @@ export const googleLogin = async (googleToken: string): Promise<TokenPair | null
   // const data = await verifyGoogleToken(googleToken)
   // if(!data) return null
 
-  // TODO Obtener la información del usaurio de la base de datos y eliminar este ejemplo
   const emailFromGoogleDummy = 'john.doe@example.com'
-
-  // Revisar si el usaurio ya existe en la base de datos
-  const user = await UserService.getUserByEmail(emailFromGoogleDummy)
+  const user = await UserService.getUserByEmailWithRole(emailFromGoogleDummy)
 
   // TODO Registrar cliente
   if(!user) console.log('Register user')
@@ -94,14 +91,14 @@ export const googleLogin = async (googleToken: string): Promise<TokenPair | null
     dummyUser.first_name = user.firstName
     dummyUser.last_name = user.lastName
     dummyUser.uuid = user.userId
-    dummyUser.email = emailFromGoogleDummy
-    dummyUser.roles.push('admin')
-    dummyUser.roles.push('user')
+    dummyUser.email = user.email
+    dummyUser.roles.push(user.role.dataValues.NAME)
   }
+
+  console.log(dummyUser)
 
   // TODO Registrar empresa
   
-  // Generar nuevo token de autenticación y nuevo token de refresco
   const tokens = await createTokens(dummyUser)
   if(!tokens) return null
 

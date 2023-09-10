@@ -5,7 +5,8 @@ import {
   DataType,
   HasOne,
   HasMany,
-  ForeignKey
+  ForeignKey,
+  BelongsTo
 } from 'sequelize-typescript'
 import Company from './company.model'
 import Review from './review.model'
@@ -56,6 +57,9 @@ export default class User extends Model {
     field: 'ROLE_ID',
   })
   roleId: string
+
+  @BelongsTo(() => Role) // Define the association to Role
+  role: Role // This will allow you to access the associated Role model
 
   @HasOne(() => Company)
   company: Company | null

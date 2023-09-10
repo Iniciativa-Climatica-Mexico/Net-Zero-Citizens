@@ -13,7 +13,7 @@ export default class UserBootstrap extends Bootstrapper {
         age: 30,
         state: 'NY',
         sex: 'masculine',
-        roleId: 'admin',
+        roleId: 'ADMIN_ROLE_ID',
       },
       {
         userId: 'abcd-1234-efgh-5679',
@@ -24,7 +24,7 @@ export default class UserBootstrap extends Bootstrapper {
         age: 25,
         state: 'CA',
         sex: 'femenine',
-        roleId: 'customer',
+        roleId: 'CUSTOMER_ROLE_ID',
       },
     ])
   }

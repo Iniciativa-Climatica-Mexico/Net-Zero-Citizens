@@ -5,19 +5,19 @@ export default class RolesBootstrapper extends Bootstrapper {
   async run() {
     Role.bulkCreate([
       {
-        roleId: 'admin',
+        roleId: 'ADMIN_ROLE_ID',
         name: 'admin'
       },
       {
-        roleId: 'customer',
+        roleId: 'CUSTOMER_ROLE_ID',
         name: 'customer'
       },
       {
-        roleId: 'company',
+        roleId: 'COMAPNY_ROLE_ID',
         name: 'company'
       },
       {
-        roleId: 'icm',
+        roleId: 'ICM_ROLE_ID',
         name: 'icm'
       }
     ])
