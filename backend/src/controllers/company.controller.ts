@@ -33,3 +33,21 @@ export const getAllCompanies: RequestHandler<
     total: companies.count,
   })
 }
+
+/**
+ * @brief
+ * Función del controlador que para registrar un nuevo proveedor
+ * @param req La request HTTP al servidor
+ * @param res Un objeto paginador con los proveedores y la
+ *            información de paginación
+ */
+export const createCompany: RequestHandler<
+  NoRecord,
+  {companyId: string, message?: string, error?: string},
+  {company: Company},
+  NoRecord
+  > = async (req, res) => {
+    console.log(req.body.company)
+    res.json({ companyId: '', message: 'Company created'})
+  }
+
