@@ -16,3 +16,13 @@ export const getPendingCompanies = async () => {
     throw error
   }
 }
+
+export const updateCompany = async () => {
+  try {
+    const response = await axios.post(`${backendBaseUrl}/company/pending`)
+    return response.data
+  } catch (error) {
+    console.error('Error fetching pending companies:', error)
+    throw error
+  }
+}
