@@ -51,7 +51,7 @@ const getTokenById = async (tokenId: string): Promise<Token | null> => {
  * @param token Token a guardar
  * @returns void
 */
-export const blackListToken = async (tokenId: string): Promise<void> => {
+const blackListToken = async (tokenId: string): Promise<void> => {
   if(!tokenId) throw new Error('No token provided')
   await Token.create({ tokenId: tokenId })
 }
