@@ -1,5 +1,7 @@
 import User from '../models/users.model'
+import Sequelize from 'sequelize'
 import { PaginatedQuery, PaginationParams } from '../utils/RequestResponse'
+import Role from '../models/role.model'
 
 /**
  * @function getAllUsers
@@ -11,12 +13,21 @@ export const getUserInfo = async (userId: string): Promise<User | null> => {
 }
 
 /**
- * @function getUserByEmail
+ * @function getUserByEmailWithRole
  * @param email User's email
- * @returns User or Null
+ * @returns User with role or Null
  */
-export const getUserByEmail = async (email: string): Promise<User | null> => {
-  return await User.findOne({ where: { email } })
+export const getUserByEmailWithRole = async (email: string): Promise<User | null> => {
+  return await User.findOne({
+    where: { email },
+    include: [
+      {
+        model: Role,
+        as: 'role',
+        attributes: ['ROLE_ID', 'NAME']
+      }
+    ]
+  })        
 }
 
 export type UpdateUserInfoBody = {
