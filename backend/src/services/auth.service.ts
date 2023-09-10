@@ -1,4 +1,5 @@
 import Token from '../models/token.model'
+import * as UserService from '../services/users.service'
 import jwt from 'jsonwebtoken'
 import { OAuth2Client } from 'google-auth-library'
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
@@ -60,6 +61,53 @@ const blackListToken = async (tokenId: string): Promise<void> => {
 // EXPORT METHODS
 /**
  * @brief
+ * Función iniciar sesión con Google
+ * @param googleToken token de Google con la información del usuario
+ * @returns {authToken, refreshToken} objeto con los tokens generados
+*/
+export const googleLogin = async (googleToken: string): Promise<TokenPair | null> => {
+  // Verificar el token de Google
+  // const data = await verifyGoogleToken(googleToken)
+  // if(!data) return null
+
+  // TODO Obtener la información del usaurio de la base de datos y eliminar este ejemplo
+  const emailFromGoogleDummy = 'john.doe@example.com'
+
+  // Revisar si el usaurio ya existe en la base de datos
+  const user = await UserService.getUserByEmail(emailFromGoogleDummy)
+
+  // TODO Registrar cliente
+  if(!user) console.log('Register user')
+
+  // Si ya está registrado, crear un Payload con la información del usuario
+  const dummyUser: Payload = {
+    first_name: '',
+    last_name:  '',
+    uuid: '',
+    email: '',
+    login_type: 'google',
+    roles: []
+  }
+  if(user) {
+    dummyUser.first_name = user.firstName
+    dummyUser.last_name = user.lastName
+    dummyUser.uuid = user.userId
+    dummyUser.email = emailFromGoogleDummy
+    dummyUser.roles.push('admin')
+    dummyUser.roles.push('user')
+  }
+
+  // TODO Registrar empresa
+  
+  // Generar nuevo token de autenticación y nuevo token de refresco
+  const tokens = await createTokens(dummyUser)
+  if(!tokens) return null
+
+  return tokens
+}
+
+/**
+ * @brief
  * Función para crear un nuevo par de tokens
  * @param payload información del usuario para guardar en el token
  * @returns {authToken, refreshToken} objeto con los tokens generados
@@ -108,6 +156,7 @@ export const updateTokens = async (token: string): Promise<TokenPair | null> => 
     refreshToken: tokens.refreshToken
   }
 }
+
 
 // UTIL METHODS
 /**
