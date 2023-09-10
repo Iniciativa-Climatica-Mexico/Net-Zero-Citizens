@@ -15,6 +15,7 @@ export type Payload = {
   uuid: string,
   email: string,
   roles: string[],
+  googleId?: string,
   login_type?: string,
   created_at?: number,
 }
@@ -86,7 +87,8 @@ export const googleLogin = async (googleToken: string): Promise<TokenPair | null
     uuid: '',
     email: '',
     login_type: 'google',
-    roles: []
+    roles: [],
+    googleId: googleToken
   }
   if(user) {
     dummyUser.first_name = user.firstName
