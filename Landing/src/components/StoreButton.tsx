@@ -1,26 +1,14 @@
-'use client'
-
 import Image from 'next/image'
+import { headers } from 'next/headers'
 
 export default function StoreButton() {
-  const getMobileOS = () => {
-    const ua = navigator.userAgent
-    if (/android/i.test(ua)) {
-      return 'Android'
-    } else if (
-      /iPad|iPhone|iPod/.test(ua) ||
-      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
-    ) {
-      return 'iOS'
-    }
-    return 'Other'
-  }
-
-  const OS = getMobileOS()
-
+  const headersList = headers()
+  const userAgent = String(headersList.get('user-agent'))
+  const isAndroid = /Android/i.test(userAgent)
+  const isIOS = /iPhone|iPad|iPod/i.test(userAgent)
   return (
     <div>
-      {OS == 'iOS' && (
+      {isIOS == true && (
         <a href="https://apple.com">
           <Image
             src="/images/appstore.svg"
@@ -31,7 +19,7 @@ export default function StoreButton() {
           />
         </a>
       )}
-      {OS == 'Android' && (
+      {isAndroid == true && (
         <a href="https://play.google.com">
           <Image
             src="/images/playstore.svg"
@@ -42,7 +30,7 @@ export default function StoreButton() {
           />
         </a>
       )}
-      {OS == 'Other' && (
+      {!isAndroid && !isIOS && (
         <div className="flex gap-10">
           <a href="https://apple.com">
             <Image
