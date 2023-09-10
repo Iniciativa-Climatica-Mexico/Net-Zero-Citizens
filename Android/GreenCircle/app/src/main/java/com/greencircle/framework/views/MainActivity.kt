@@ -35,6 +35,10 @@ class MainActivity : AppCompatActivity() {
                     replaceFragment(ProfileFragment())
                     true
                 }
+                R.id.perfil -> {
+                    replaceFragment(ProfileFragment())
+                    true
+                }
 
                 else -> false
             }
