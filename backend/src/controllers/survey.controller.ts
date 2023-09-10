@@ -1,7 +1,7 @@
-import Survey from "../models/survey.model";
-import * as SurveyService from "../services/survey.service";
-import { NoRecord, Paginator, PaginationParams } from "../utils/RequestResponse";
-import { RequestHandler } from "express";
+import Survey from '../models/survey.model'
+import * as SurveyService from '../services/survey.service'
+import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
+import { RequestHandler } from 'express'
 
 /**
  * @brief
@@ -9,29 +9,29 @@ import { RequestHandler } from "express";
  * de la base de datos
  * @param req La request HTTP al servidor
  * @param res Un objeto paginador con las encuestas y la
- *           información de paginación 
+ *           información de paginación
  */
 export const getAllSurveys: RequestHandler<
-    NoRecord,
-    Paginator<Survey>,
-    NoRecord,
-    PaginationParams<{ title?: string }>
+  NoRecord,
+  Paginator<Survey>,
+  NoRecord,
+  PaginationParams<{ name?: string }>
 > = async (req, res) => {
-    const params = {
-        start: req.query.start || 0,
-        pageSize: req.query.pageSize || 10,
-        filters: {
-            title: req.query.title || '',
-        },
-    }
+  const params = {
+    start: req.query.start || 0,
+    pageSize: req.query.pageSize || 10,
+    filters: {
+      title: req.query.name || '',
+    },
+  }
 
-    const surveys = await SurveyService.getAllSurveys(params)
-    res.json({
-        rows: surveys.rows,
-        start: params.start,
-        pageSize: params.pageSize,
-        total: surveys.count,
-    })
+  const surveys = await SurveyService.getAllSurveys(params)
+  res.json({
+    rows: surveys.rows,
+    start: params.start,
+    pageSize: params.pageSize,
+    total: surveys.count,
+  })
 }
 
 /**
@@ -41,17 +41,17 @@ export const getAllSurveys: RequestHandler<
  * @param req La request HTTP al servidor
  * @param res Un objeto paginador con las encuestas y la
  *          información de paginación
- * 
+ *
  */
 export const getSurveyById: RequestHandler<
-    NoRecord,
-    Survey,
-    NoRecord,
-    NoRecord
+  NoRecord,
+  Survey,
+  NoRecord,
+  NoRecord
 > = async (req, res) => {
-    const surveyId = req.params.surveyId
-    const survey = await SurveyService.getSurveyById(surveyId)
-    res.json(survey || undefined) 
+  const surveyId = req.params.surveyId
+  const survey = await SurveyService.getSurveyById(surveyId)
+  res.json(survey || undefined)
 }
 
 /**
@@ -72,4 +72,3 @@ export const getSurveyById: RequestHandler<
 //     const survey = await SurveyService.createSurvey(req.body)
 //     res.json(survey || undefined)
 // }
-

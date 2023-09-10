@@ -90,7 +90,6 @@ export default class SurveysBootstrapper extends Bootstrapper {
       }
     );
 
-    // Example 1
     await Survey.create(
       {
         surveyId: 'surv-5678-abcd-1111',
@@ -137,7 +136,6 @@ export default class SurveysBootstrapper extends Bootstrapper {
       }
     );
 
-    // Example 2
     await Survey.create(
       {
         surveyId: 'surv-9876-dcba-2222',
@@ -179,7 +177,6 @@ export default class SurveysBootstrapper extends Bootstrapper {
       }
     );
 
-    // Example 3
     await Survey.create(
       {
         surveyId: 'surv-5555-efgh-3333',
