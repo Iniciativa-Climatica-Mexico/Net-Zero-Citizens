@@ -86,8 +86,8 @@ export const updateTokens = async (token: string): Promise<TokenPair | null> => 
   const userData = verifyToken(token, 'refresh')
   if(!userData) return null
   
-  // const res = await getTokenById(token)
-  // if(res) return null
+  const res = await getTokenById(token)
+  if(res) return null
 
   const payload: Payload = {
     first_name: userData.first_name,

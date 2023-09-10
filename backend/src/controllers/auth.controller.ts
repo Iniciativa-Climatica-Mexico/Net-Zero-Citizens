@@ -34,7 +34,7 @@ export const googleLogin: RequestHandler<
       uuid: googleToken,
       email: 'dummy@user.com',
       login_type: 'google',
-      roles: ['user']
+      roles: ['admin', 'user']
     }
 
     // Generar nuevo token de autenticación y nuevo token de refresco
@@ -63,11 +63,11 @@ export const updateTokens: RequestHandler<
     try {
       // Actualizar tokens
       const tokens = await AuthService.updateTokens(token)
-      if(!tokens) return res.json({authToken: '', refreshToken: '', error: 'Invalid user'})
+      if(!tokens) return res.json({authToken: '', refreshToken: '', error: 'Invalid token'})
       
       // Devolver los tokens
       res.status(200).json(tokens) 
     } catch(error) {
-      res.json({ authToken: '', refreshToken: '', error: 'Invalid refresh token' })
+      res.json({ authToken: '', refreshToken: '', error: 'Invalid token' })
     }
   }
