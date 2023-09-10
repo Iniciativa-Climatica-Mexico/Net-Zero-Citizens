@@ -1,4 +1,5 @@
 import * as AuthService from '../services/auth.service'
+import * as UserService from '../services/users.service'
 import { NoRecord } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
 
@@ -13,32 +14,10 @@ export const googleLogin: RequestHandler<
   { authToken: string, refreshToken: string, error?: string },
   { googleToken: string },
   NoRecord> = async (req, res) => {
+    if(!req.body.googleToken) return res.json({ authToken: '', refreshToken: '', error: 'No google token provided' })
     const { googleToken } = req.body
 
-    if(!googleToken) return res.json({ authToken: '', refreshToken: '', error: 'No google token provided' })
-
-    // Verificar el token de google
-    // TODO probar esta función
-    // const data = await verifyGoogleToken(googleToken)
-
-    // TODO Revisar si el usaurio ya existe en la base de datos
-
-    // TODO Registrar cliente
-
-    // TODO Registrar empresa
-
-    // TODO Obtener la información del usaurio de la base de datos y eliminar este ejemplo
-    const dummyUser: AuthService.Payload = {
-      first_name: 'Dummy',
-      last_name: 'User',
-      uuid: googleToken,
-      email: 'dummy@user.com',
-      login_type: 'google',
-      roles: ['admin', 'user']
-    }
-
-    // Generar nuevo token de autenticación y nuevo token de refresco
-    const tokens = await AuthService.createTokens(dummyUser)
+    const tokens = await AuthService.googleLogin(googleToken)
     if(!tokens) return res.json({authToken: '', refreshToken: '', error: 'Invalid user'})
 
     // Devolver los tokens

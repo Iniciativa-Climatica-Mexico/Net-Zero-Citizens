@@ -10,6 +10,15 @@ export const getUserInfo = async (userId: string): Promise<User | null> => {
   return await User.findByPk(userId)
 }
 
+/**
+ * @function getUserByEmail
+ * @param email User's email
+ * @returns User or Null
+ */
+export const getUserByEmail = async (email: string): Promise<User | null> => {
+  return await User.findOne({ where: { email } })
+}
+
 export type UpdateUserInfoBody = {
   firstName: string
   lastName: string
