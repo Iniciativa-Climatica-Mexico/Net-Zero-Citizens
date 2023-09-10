@@ -3,10 +3,12 @@ import DummyBootstrap from '../bootstrap/dummy.bootstrap'
 import ReviewBootstrap from '../bootstrap/reviews.bootstrap'
 import SurveysBootstrapper from '../bootstrap/survey.bootstrap'
 import UserBootstrap from '../bootstrap/users.bootstrap'
+import RolesBootstrapper from '../bootstrap/roles.bootstrap'
 
 export const bootstrapDB = async () => {
   try {
     const bootstrappers = [
+      RolesBootstrapper,
       UserBootstrap,
       CompanyBootstrap,
       ReviewBootstrap,
