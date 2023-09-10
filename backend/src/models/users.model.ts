@@ -5,9 +5,11 @@ import {
   DataType,
   HasOne,
   HasMany,
+  ForeignKey
 } from 'sequelize-typescript'
 import Company from './company.model'
 import Review from './review.model'
+import Role from './role.model'
 
 /**
  * @interface User
@@ -47,13 +49,13 @@ export default class User extends Model {
   })
   userId: string
 
-  // @ForeignKey(() => Role)
+  @ForeignKey(() => Role)
   @Column({
-    type: DataType.INTEGER,
+    type: DataType.UUID,
     allowNull: false,
     field: 'ROLE_ID',
   })
-  roleId: number
+  roleId: string
 
   @HasOne(() => Company)
   company: Company | null
