@@ -26,6 +26,13 @@ export default class Ecoinfo extends Model {
   ecoinfoId: string
 
   @Column({
+    type: DataType.STRING(255),
+    allowNull: false,
+    field: 'POST_ID',
+  })
+  postId: string
+
+  @Column({
     type: DataType.STRING(500),
     allowNull: true,
     field: 'COVER_IMAGE_URL',
