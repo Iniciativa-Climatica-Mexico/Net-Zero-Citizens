@@ -1,13 +1,10 @@
 import {
-  BelongsTo,
   Column,
   DataType,
-  ForeignKey,
   HasMany,
   Model,
   Table,
 } from 'sequelize-typescript'
-import User from './users.model'
 import Review from './review.model'
 
 type StatusEnum = 'approved' | 'pending_approval' | 'rejected'
@@ -26,17 +23,6 @@ export default class Company extends Model {
     field: 'COMPANY_ID',
   })
   companyId: string
-
-  @ForeignKey(() => User)
-  @Column({
-    field: 'USER_ID',
-    type: DataType.UUID,
-    allowNull: true,
-  })
-  userId: string | null
-
-  @BelongsTo(() => User)
-  user: User
 
   @Column({
     field: 'NAME',
@@ -61,28 +47,6 @@ export default class Company extends Model {
   email: string
 
   @Column({
-    field: 'LOCATION',
-    type: DataType.STRING(500),
-    allowNull: false,
-  })
-  location: string
-
-  @Column({
-    field: 'PROFILE_PICTURE',
-    type: DataType.STRING(500),
-    allowNull: true,
-  })
-  profilePicture: string
-
-  @Column({
-    field: 'STATUS',
-    type: DataType.ENUM('approved', 'pending_approval', 'rejected'),
-    allowNull: false,
-    defaultValue: 'pending_approval',
-  })
-  status: StatusEnum
-
-  @Column({
     field: 'PHONE_NUMBER',
     type: DataType.STRING(10),
     allowNull: false,
@@ -94,8 +58,105 @@ export default class Company extends Model {
     field: 'WEB_PAGE',
     type: DataType.STRING(255),
     allowNull: true,
+    unique: 'WEB_PAGE',
   })
   webPage: string
+
+  @Column({
+    field: 'STRET',
+    type: DataType.STRING(255),
+    allowNull: false,
+  })
+  street: string
+
+  @Column({
+    field: 'STREET_NUMBER',
+    type: DataType.NUMBER,
+    allowNull: false,
+  })
+  streetNumber: number
+
+  @Column({
+    field: 'CITY',
+    type: DataType.STRING(255),
+    allowNull: false,
+  })
+  city: string
+
+  @Column({
+    field: 'STATE',
+    type: DataType.STRING(255),
+    allowNull: false,
+  })
+  state: string
+
+  @Column({
+    field: 'ZIP_CODE',
+    type: DataType.NUMBER,
+    allowNull: false,
+  })
+  zipCode: number
+
+  @Column({
+    field: 'LATITUDE',
+    type: DataType.NUMBER,
+    allowNull: false,
+  })
+  latitude: number
+
+  @Column({
+    field: 'LONGITUDE',
+    type: DataType.NUMBER,
+    allowNull: false,
+  })
+  longitude: number
+
+  @Column({
+    field: 'PROFILE_PICTURE',
+    type: DataType.STRING(500),
+    allowNull: true,
+  })
+  profilePicture: string
+
+  @Column({
+    field: 'PDF_CURRICULUM_URL',
+    type: DataType.STRING(500),
+    allowNull: false,
+    unique: 'PDF_CURRICULUM_URL',
+  })
+  pdfCurriculumUrl: string
+
+  @Column({
+    field: 'PDF_DIC_CDMX_URL',
+    type: DataType.STRING(500),
+    allowNull: true,
+    unique: 'PDF_DIC_CDMX_URL',
+  })
+  pdfDicCdmxUrl: string
+
+  @Column({
+    field: 'PDF_PEE_FIDE_URL',
+    type: DataType.STRING(500),
+    allowNull: true,
+    unique: 'PDF_PEE_FIDE_URL',
+  })
+  pdfPeeFideUrl: string
+
+  @Column({
+    field: 'PDF_GUARANTEE_SECURITY_URL',
+    type: DataType.STRING(500),
+    allowNull: false,
+    unique: 'PDF_GUARANTEE_SECURITY_URL',
+  })
+  pdfGuaranteeSecurityUrl: string
+
+  @Column({
+    field: 'STATUS',
+    type: DataType.ENUM('approved', 'pending_approval', 'rejected'),
+    allowNull: false,
+    defaultValue: 'pending_approval',
+  })
+  status: StatusEnum
 
   @HasMany(() => Review)
   reviews: Review[]

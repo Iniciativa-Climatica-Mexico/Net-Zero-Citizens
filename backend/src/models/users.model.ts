@@ -61,7 +61,16 @@ export default class User extends Model {
   @BelongsTo(() => Role) // Define the association to Role
   role: Role // This will allow you to access the associated Role model
 
-  @HasOne(() => Company)
+  @ForeignKey(() => Company)
+  @Column({
+    type: DataType.UUID,
+    allowNull: true,
+    field: 'COMPANY_ID',
+    unique: 'COMPANY_ID',
+  })
+  companyId: string
+
+  @BelongsTo(() => Company)
   company: Company | null
 
   @Column({
