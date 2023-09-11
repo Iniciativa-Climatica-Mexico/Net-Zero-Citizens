@@ -1,7 +1,7 @@
 import { Bootstrapper } from './Bootstraper'
 import Role from '../models/role.model'
 
-export default class RolesBootstrapper extends Bootstrapper {
+export default class RolesBootstrap extends Bootstrapper {
   async run() {
     Role.bulkCreate([
       {

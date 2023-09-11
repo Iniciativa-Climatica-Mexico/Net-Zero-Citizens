@@ -1,16 +1,16 @@
 import { Table, Column, Model, DataType, BelongsTo, ForeignKey } from 'sequelize-typescript'
 import Product from './product.model'
 
-@Table({ tableName: 'PRODUCT_IMAGES' })
+@Table({ tableName: 'IMAGES' })
 export default class ProductImage extends Model {
   @Column({
     type: DataType.UUID,
     allowNull: false,
     primaryKey: true,
-    field: 'PRODUCT_IMAGE_ID',
+    field: 'IMAGE_ID',
     defaultValue: DataType.UUIDV4,
   })
-  productImageId: string
+  imageId: string
 
   @ForeignKey(() => Product)
   @Column({
