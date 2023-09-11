@@ -5,11 +5,6 @@
     android:background="@color/white"
     tools:context=".framework.views.fragments.HomeFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Home Fragment"
-        android:textSize="26dp" />
+    <include layout="@layout/item_review" />
 
 </FrameLayout>
