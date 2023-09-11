@@ -46,7 +46,7 @@ export default class User extends Model {
     primaryKey: true,
     defaultValue: DataType.UUIDV4,
     allowNull: false,
-    field: 'USER_ID',
+    field: 'UUID',
   })
   userId: string
 
