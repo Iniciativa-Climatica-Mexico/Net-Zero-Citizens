@@ -1,7 +1,6 @@
 import { RequestHandler } from 'express'
 import Survey from '../models/survey.model'
 import { NoRecord } from '../utils/RequestResponse'
-import { unwrap } from '../../test/utils'
 import * as ReportService from '../services/report.service'
 
 export const getSurveyReport: RequestHandler<
