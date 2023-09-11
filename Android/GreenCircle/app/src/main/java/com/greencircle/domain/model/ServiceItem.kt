@@ -1,0 +1,13 @@
+package com.greencircle.domain.model
+
+import com.google.gson.annotations.SerializedName
+import java.sql.Timestamp
+
+data class ServiceItem(
+    @SerializedName("companyId") val companyId: String,
+    @SerializedName("productId") val productId: String,
+    @SerializedName("name") val name: String,
+    @SerializedName("description") val description: String,
+    @SerializedName("createdAt") val createdAt: Timestamp,
+    @SerializedName("updatedAt") val updatedAt: Timestamp
+)

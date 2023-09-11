@@ -3,7 +3,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 
-class ContactarProveedoresViewModel : ViewModel() {
+class CompanyContactViewModel : ViewModel() {
 
     private val _carouselItems = MutableLiveData<List<CarouselItem>>()
     val carouselItems: LiveData<List<CarouselItem>> = _carouselItems

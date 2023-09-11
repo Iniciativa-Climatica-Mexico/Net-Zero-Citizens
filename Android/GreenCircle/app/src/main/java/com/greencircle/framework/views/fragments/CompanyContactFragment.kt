@@ -1,6 +1,6 @@
 package com.greencircle.framework.views.fragments
 
-import ContactarProveedoresViewModel
+import CompanyContactViewModel
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,13 +11,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.greencircle.R
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 
-class ContactarProveedoresFragment : Fragment() {
+class CompanyContactFragment : Fragment() {
 
-    private lateinit var viewModel: ContactarProveedoresViewModel
+    private lateinit var viewModel: CompanyContactViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[ContactarProveedoresViewModel::class.java]
+        viewModel = ViewModelProvider(this)[CompanyContactViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -26,7 +26,7 @@ class ContactarProveedoresFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(
-            R.layout.fragment_contactar_proveedores,
+            R.layout.fragment_company_contact,
             container, false
         )
 

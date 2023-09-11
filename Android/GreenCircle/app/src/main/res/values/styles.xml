@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.Material3.SmallComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">16dp</item>
-
     </style>
 
     <style name="TextAppearance.App.Button" parent="TextAppearance.Material3.LabelLarge">
@@ -17,6 +17,8 @@
         <item name="android:textAppearance">@style/TextAppearance.App.Button</item>
         <item name="strokeColor">@color/blue</item>
         <item name="strokeWidth">2dp</item>
+        <item name="backgroundTint">@animator/custom_selector</item>
+
     </style>
 
 
