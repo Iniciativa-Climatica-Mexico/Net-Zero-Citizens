@@ -3,18 +3,20 @@ import DummyBootstrap from '../bootstrap/dummy.bootstrap'
 import ReviewBootstrap from '../bootstrap/reviews.bootstrap'
 import SurveysBootstrapper from '../bootstrap/survey.bootstrap'
 import UserBootstrap from '../bootstrap/users.bootstrap'
-import RolesBootstrapper from '../bootstrap/roles.bootstrap'
+import RolesBootstrap from '../bootstrap/roles.bootstrap'
 import ProductBootstrap from '../bootstrap/product.bootstrap'
+import ProductImageBootstrap from '../bootstrap/productImage.bootstrap'
 
 export const bootstrapDB = async () => {
   try {
     const bootstrappers = [
-      RolesBootstrapper,
+      RolesBootstrap,
       CompanyBootstrap,
       UserBootstrap,
       ReviewBootstrap,
       SurveysBootstrapper,
       ProductBootstrap,
+      ProductImageBootstrap,
       DummyBootstrap,
     ]
     const pool = bootstrappers.map((bootstrapper) => {
