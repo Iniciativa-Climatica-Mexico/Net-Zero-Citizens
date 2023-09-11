@@ -1,4 +1,4 @@
-import { Table, Column, Model, DataType, BelongsTo } from 'sequelize-typescript'
+import { Table, Column, Model, DataType, BelongsTo, ForeignKey } from 'sequelize-typescript'
 import Company from './company.model'
 
 @Table({ tableName: 'PRODUCTS' })
@@ -12,6 +12,7 @@ export default class Product extends Model {
   })
   productId: string
 
+  @ForeignKey(() => Company)
   @Column({
     type: DataType.UUID,
     field: 'COMPANY_ID',
