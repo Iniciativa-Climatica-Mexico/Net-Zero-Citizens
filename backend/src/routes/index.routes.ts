@@ -3,6 +3,7 @@ import UserRouter from './user.routes'
 import CompanyRouter from './company.routes'
 import AuthRouter from './auth.routes'
 import ReviewRouter from './review.routes'
+import ProducRouter from './product.routes'
 import { validateToken, validateRole } from '../middlewares/auth.middleware'
 import { Express } from 'express'
 
@@ -21,4 +22,5 @@ export const initRouterV1 = (app: Express) => {
   app.use('/api/v1/users', UserRouter)
   app.use('/api/v1/company', CompanyRouter)
   app.use('/api/v1/review', ReviewRouter)
+  app.use('/api/v1/product', ProducRouter)
 }
