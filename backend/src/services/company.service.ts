@@ -1,4 +1,5 @@
 import Company from '../models/company.model'
+import CompanyProduct from '../models/companyProduct.model'
 import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
 
 // TYPES
@@ -26,6 +27,16 @@ export type CompanyType = {
   pdfPeeFideUrl?: string,
   pdfGuaranteeSecurityUrl: string,
   status: string,
+}
+
+/**
+ * @brief
+ * Tipo de dato para el proveedor
+ */
+export type CompanyProductType = {
+  companyId: string,
+  productId: string,
+  pdfProductCertificationUrl: string,
 }
 
 /**
@@ -58,4 +69,14 @@ export const getAllCompanies = async <T>(
  */
 export const createCompany = async (company: CompanyType): Promise<Company | null> => {
   return await Company.create(company)
+}
+
+/**
+ * @brief
+ * Función del servicio para crear asociar un producto a una compañia
+ * @param CompanyProduct La información de la asociación (companyId, productId, pdfProductCertificationUrl)
+ * @returns Una promesa con los proveedores y la información de paginación
+ */
+export const addProduct = async (companyProduct: CompanyProductType): Promise<CompanyProduct | null> => {
+  return await CompanyProduct.create(companyProduct)
 }
