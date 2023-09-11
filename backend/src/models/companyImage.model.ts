@@ -1,27 +1,27 @@
 import { Table, Column, Model, DataType, BelongsTo, ForeignKey } from 'sequelize-typescript'
-import Product from './product.model'
+import Company from './company.model'
 
 @Table({ tableName: 'IMAGES' })
-export default class ProductImage extends Model {
+export default class CompanyImage extends Model {
   @Column({
     type: DataType.UUID,
     allowNull: false,
     primaryKey: true,
-    field: 'IMAGE_ID',
+    field: 'COMPANY_IMAGE_ID',
     defaultValue: DataType.UUIDV4,
   })
-  imageId: string
+  companyImageId: string
 
-  @ForeignKey(() => Product)
+  @ForeignKey(() => Company)
   @Column({
     type: DataType.UUID,
-    field: 'PRODUCT_ID',
+    field: 'COMPANY_ID',
     allowNull: false,
   })
-  productId: string
+  companyId: string
 
-  @BelongsTo(() => Product)
-  product!: Product
+  @BelongsTo(() => Company)
+  company!: Company
 
   @Column({
     type: DataType.STRING(500),
