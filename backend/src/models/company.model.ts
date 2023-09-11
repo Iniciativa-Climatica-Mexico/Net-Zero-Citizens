@@ -6,6 +6,7 @@ import {
   Table,
 } from 'sequelize-typescript'
 import Review from './review.model'
+import Product from './product.model'
 
 type StatusEnum = 'approved' | 'pending_approval' | 'rejected'
 
@@ -160,4 +161,7 @@ export default class Company extends Model {
 
   @HasMany(() => Review)
   reviews: Review[]
+
+  @HasMany(() => Product)
+  products: Product[]
 }
