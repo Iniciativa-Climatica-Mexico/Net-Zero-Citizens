@@ -28,7 +28,10 @@ if (env === 'production') {
     },
   })
 }
-db.addModels([__dirname + '../../**/*.model.ts'])
+db.addModels([
+  __dirname + '../../**/*.model.ts',
+  __dirname + '../../**/*.model.js',
+])
 
 const initDB = async () => {
   try {

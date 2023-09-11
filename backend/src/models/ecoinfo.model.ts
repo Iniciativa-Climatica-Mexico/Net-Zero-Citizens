@@ -13,24 +13,24 @@ import User from './users.model'
  * Interface con los atributos de la tabla de ecoinfo
  */
 
-@Table({tableName: 'ECOINFO'})
+@Table({ tableName: 'ECOINFO' })
 export default class Ecoinfo extends Model {
   @Column({
-      type: DataType.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-      allowNull: false,
-      unique: 'ECOINFO_ID',
-      field: 'ECOINFO_ID',
-    })
-    ecoinfoId: string
+    type: DataType.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+    allowNull: false,
+    unique: 'ECOINFO_ID',
+    field: 'ECOINFO_ID',
+  })
+  ecoinfoId: string
 
   @ForeignKey(() => User)
   @Column({
     field: 'USER_ID',
     type: DataType.UUID,
     allowNull: true,
-    })
+  })
   userId: string | null
 
   @Column({
