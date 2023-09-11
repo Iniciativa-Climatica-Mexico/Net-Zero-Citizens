@@ -65,6 +65,27 @@ export const getReviewById: RequestHandler<
     })
   }
 
+export const getReviewByCompany: RequestHandler<
+  { companyId: string },
+  Paginator<Review>,
+  NoRecord,
+  NoRecord
+  > = async (req, res) => {
+    const { companyId } = req.params
+    const params = {
+      start: req.query.start || 0,
+      pageSize: req.query.pageSize || 10,
+      companyId: companyId,
+    }
+    const review = await ReviewService.getReviewByCompany(params)
+    res.json({
+      rows: review.rows,
+      start: params.start,
+      pageSize: params.pageSize,
+      total: review.count,
+    })
+  }
+
 /**
  * @brief
  * Función del controlador que agrega una review a la base de datos
