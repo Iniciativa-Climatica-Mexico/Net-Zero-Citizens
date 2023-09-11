@@ -9,6 +9,8 @@ import {
 } from 'sequelize-typescript'
 import User from './users.model'
 import Review from './review.model'
+import CompanyImages from './companyImages.model'
+import CompanyProducts from './companyProducts.model'
 
 type StatusEnum = 'approved' | 'pending_approval' | 'rejected'
 
@@ -99,4 +101,10 @@ export default class Company extends Model {
 
   @HasMany(() => Review)
   reviews: Review[]
+
+  @HasMany(() => CompanyImages)
+  companyImages: CompanyImages[]
+
+  // @HasMany(() => CompanyProducts) OTHER N TO M IMP
+  // companyProducts!: CompanyProducts[] OTHER N TO M IMP
 }
