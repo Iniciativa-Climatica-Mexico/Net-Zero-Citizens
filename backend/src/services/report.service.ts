@@ -26,5 +26,5 @@ export const getSurveyReport = async (
       },
     ],
   })
-  return s ? unwrap(s) : null
+  return unwrap(s)
 }

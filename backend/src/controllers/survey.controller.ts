@@ -1,6 +1,11 @@
 import Survey from '../models/survey.model'
 import * as SurveyService from '../services/survey.service'
-import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
+import {
+  NoRecord,
+  Paginator,
+  PaginationParams,
+  DeepPartial,
+} from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
 
 /**
@@ -65,13 +70,58 @@ export const getSurveyById: RequestHandler<
  */
 export const createSurvey: RequestHandler<
   NoRecord,
-  Survey,
-  Partial<Survey>,
+  Survey | { message: string },
+  DeepPartial<SurveyService.CreateSurveyReqBody>,
   NoRecord
 > = async (req, res) => {
-  const surveyData = req.body
-  const survey = await SurveyService.createSurvey(surveyData)
-  res.json(survey)
+  try {
+    if (!req.body.title) {
+      res.status(400).json({ message: 'Title is required' })
+      return
+    }
+    if (!req.body.description) {
+      res.status(400).json({ message: 'Description is required' })
+      return
+    }
+    if (!req.body.questions) {
+      res.status(400).json({ message: 'Questions are required' })
+      return
+    }
+
+    for (const question of req.body.questions) {
+      if (!question?.questionText) {
+        res.status(400).json({ message: 'Question text is required' })
+        return
+      }
+      if (!question.questionType) {
+        res.status(400).json({ message: 'Question type is required' })
+        return
+      }
+      if (question.questionType === 'multipleChoice') {
+        if (!question.questionOptions) {
+          res.status(400).json({ message: 'Question options are required' })
+          return
+        }
+        question.questionOptions.forEach((option) => {
+          if (!option?.textOption) {
+            res.status(400).json({ message: 'Option text is required' })
+            return
+          }
+        })
+      }
+    }
+
+    const surveyData: SurveyService.CreateSurveyReqBody = {
+      title: req.body.title,
+      description: req.body.description,
+      questions: req.body.questions as SurveyService.QuestionsReq[],
+    }
+
+    const survey = await SurveyService.createSurvey(surveyData)
+    res.json(survey)
+  } catch (err) {
+    res.status(500).json({ message: 'Error creating survey' })
+  }
 }
 
 /**
@@ -82,12 +132,17 @@ export const createSurvey: RequestHandler<
  *        información de paginación
  */
 export const closeSurvey: RequestHandler<
-  NoRecord,
-  Survey,
+  { surveyId: string },
+  { message: string } | null,
   NoRecord,
   NoRecord
 > = async (req, res) => {
   const surveyId = req.params.surveyId
   const survey = await SurveyService.closeSurvey(surveyId)
-  res.json(survey || undefined)
+
+  if (!survey) {
+    res.status(404).json({ message: 'Survey not found' })
+  } else {
+    res.status(200)
+  }
 }

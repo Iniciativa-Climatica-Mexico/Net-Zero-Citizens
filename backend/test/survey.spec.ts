@@ -8,6 +8,7 @@ import {
   closeSurvey,
 } from '../src/services/survey.service'
 import { unwrap } from './utils'
+import Survey from '../src/models/survey.model'
 
 chai.use(chaiExclude)
 
@@ -18,21 +19,25 @@ const testSurveyList = [
     surveyId: 'surv-1234-efgh-0000',
     title: 'Encuesta de satisfacción',
     description: 'Encuesta para medir la satisfacción de los clientes',
+    endDate: null,
   },
   {
     surveyId: 'surv-5678-abcd-1111',
     title: 'Product Feedback Survey',
     description: 'Survey to gather feedback on our latest product',
+    endDate: null,
   },
   {
     surveyId: 'surv-9876-dcba-2222',
     title: 'Employee Engagement Survey',
     description: 'Survey to measure employee engagement in the company',
+    endDate: null,
   },
   {
     surveyId: 'surv-5555-efgh-3333',
     title: 'Website Usability Survey',
     description: 'Survey to assess the usability of our website',
+    endDate: null,
   },
 ]
 
@@ -41,17 +46,14 @@ const testSurvey = [
     surveyId: 'surv-0309-efgh-0000',
     title: 'Encuesta de Portaluppi',
     description: 'Portaluppi nos va a invitar pastelitos',
-    startDate: '2021-05-01T00:00:00.000Z',
-    endDate: null,
   },
 ]
 
-const attributesToExclude = ['createdAt', 'updatedAt', 'startDate', 'endDate']
+const attributesToExclude = ['createdAt', 'updatedAt', 'startDate']
 const attributesToExclude2 = [
   'createdAt',
   'updatedAt',
   'startDate',
-  'endDate',
   'surveyId',
 ]
 
@@ -93,15 +95,15 @@ describe('Survey Service', () => {
 
   it('should create a new survey', async () => {
     const response = await createSurvey(surveyToCreate)
-    expect(unwrap(response))
+    const surveyDb = Survey.findByPk(response.surveyId)
+    expect(unwrap(surveyDb))
       .excludingEvery(attributesToExclude2)
       .to.deep.equal(surveyToCreate)
   })
 
   it('should close a survey giving an endDate to the testSurvey', async () => {
-    const response = await closeSurvey('surv-0309-efgh-0000')
-    expect(unwrap(response))
-      .excludingEvery(attributesToExclude3)
-      .to.deep.equal(testSurvey[0])
+    await closeSurvey('surv-0309-efgh-0000')
+    const surveyBd = await Survey.findByPk('surv-0309-efgh-0000')
+    expect(unwrap(surveyBd)?.endDate).to.not.be.null
   })
 })
