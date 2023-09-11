@@ -5,6 +5,7 @@ import {
   getAllSurveys,
   getSurveyById,
   createSurvey,
+  closeSurvey,
 } from '../src/services/survey.service'
 import { unwrap } from './utils'
 
@@ -35,6 +36,16 @@ const testSurveyList = [
   },
 ]
 
+const testSurvey = [
+  {
+    surveyId: 'surv-0309-efgh-0000',
+    title: 'Encuesta de Portaluppi',
+    description: 'Portaluppi nos va a invitar pastelitos',
+    startDate: '2021-05-01T00:00:00.000Z',
+    endDate: null,
+  },
+]
+
 const attributesToExclude = ['createdAt', 'updatedAt', 'startDate', 'endDate']
 const attributesToExclude2 = [
   'createdAt',
@@ -42,6 +53,12 @@ const attributesToExclude2 = [
   'startDate',
   'endDate',
   'surveyId',
+]
+
+const attributesToExclude3 = [
+  'createdAt',
+  'updatedAt',
+  'endDate',
 ]
 
 const surveyToCreate = {
@@ -79,5 +96,12 @@ describe('Survey Service', () => {
     expect(unwrap(response))
       .excludingEvery(attributesToExclude2)
       .to.deep.equal(surveyToCreate)
+  })
+
+  it('should close a survey giving an endDate to the testSurvey', async () => {
+    const response = await closeSurvey('surv-0309-efgh-0000')
+    expect(unwrap(response))
+      .excludingEvery(attributesToExclude3)
+      .to.deep.equal(testSurvey[0])
   })
 })

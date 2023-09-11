@@ -61,21 +61,12 @@ export const getSurveyById = async (
  *
  * TODO: Verificar caul de las dos funciones es la correcta.
  */
-export const createSurvey = async (surveyData: Partial<Survey>): Promise<Survey> => {
+export const createSurvey = async (
+  surveyData: Partial<Survey>
+): Promise<Survey> => {
   const survey = await Survey.create(surveyData)
   return unwrap(survey)
 }
-
-// export const createSurvey = async (surveyData: Partial<Survey>): Promise<Survey> => {
-//     const survey = {
-//         title: surveyData.title,
-//         description: surveyData.description,
-//         startDate: surveyData.startDate,
-//         endDate: surveyData.endDate,
-//     }
-//     const s = await Survey.create(survey)
-//     //return unwrap(s)
-// }
 
 /**
  * @brief
@@ -85,13 +76,13 @@ export const createSurvey = async (surveyData: Partial<Survey>): Promise<Survey>
  *
  * TODO: Hasta que quede la función de getOpenSurveys funcionando.
  */
-// export const closeSurvey = async (surveyId: string): Promise<Survey | null> => {
-//     const s = await Survey.findByPk(surveyId, {
-//         plain: true,
-//     })
-//     if (s) {
-//         s.isOpen = false
-//         await s.save()
-//     }
-//     return s ? unwrap(s) : null
-// }
+export const closeSurvey = async (surveyId: string): Promise<Survey | null> => {
+  const s = await Survey.findByPk(surveyId, {
+    plain: true,
+  })
+  if (s) {
+    s.endDate = new Date() 
+    await s.save()
+  }
+  return s ? unwrap(s) : null
+}

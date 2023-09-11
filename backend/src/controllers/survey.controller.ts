@@ -73,3 +73,21 @@ export const createSurvey: RequestHandler<
   const survey = await SurveyService.createSurvey(surveyData)
   res.json(survey)
 }
+
+/**
+ * @brief
+ * Función del controlador que cierra la encuesta y la actualiza en la base de datos
+ * @param req La request HTTP al servidor
+ * @param res Un objeto paginador con las encuestas y la
+ *        información de paginación
+ */
+export const closeSurvey: RequestHandler<
+  NoRecord,
+  Survey,
+  NoRecord,
+  NoRecord
+> = async (req, res) => {
+  const surveyId = req.params.surveyId
+  const survey = await SurveyService.closeSurvey(surveyId)
+  res.json(survey || undefined)
+}
