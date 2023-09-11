@@ -1,4 +1,5 @@
-import Image from "../../node_modules/next/image";
+// import Image from "../../node_modules/next/image";
+import Image from "next/image";
 import Logo from "../../public/LogoBloque.png";
 
 export default function Navbar() {

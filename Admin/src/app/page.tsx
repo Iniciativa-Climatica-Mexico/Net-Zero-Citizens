@@ -98,7 +98,10 @@ export default function Home() {
   return (
     <>
       {modalOpen ? (
-        <div className="flex flex-col items-center justify-center h-screen absolute left-1/2 right-1/2">
+        <div className="fixed top-0 left-0 right-0 bottom-0 bg-black opacity-60 z-20"></div>
+      ) : null}
+      {modalOpen ? (
+        <div className="flex flex-col items-center justify-center h-screen absolute left-1/2 right-1/2 z-30">
           <ModalProveedor setIsModalOpen={setIsModalOpen} />
         </div>
       ) : (
