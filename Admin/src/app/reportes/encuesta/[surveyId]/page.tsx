@@ -1,45 +1,10 @@
-import { apiV1Url } from '@/utils/constants'
+import { fetchSurveyReport, Question, QuestionOption, Answer } from '@/api/report'
+
 
 type SurveyReportProps = {
   params: {
     surveyId: string
   }
-}
-
-async function fetchSurveyReport(surveyId: string) {
-  const res = await fetch(`${apiV1Url}/report/survey/${surveyId}`)
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch survey report')
-  }
-
-  const json = await res.json()
-  return json as SurveyReport
-}
-
-type Answer = {
-  answerText: string | null
-  scaleValue: number | null
-}
-
-type QuestionOption = {
-  textOption: string
-}
-
-type Question = {
-  questionText: string
-  questionType: string
-  questionOptions: QuestionOption[]
-  answers: Answer[]
-}
-
-type SurveyReport = {
-  surveyId: string
-  title: string
-  description: string
-  startDate: string
-  endDate: string | null
-  questions: Question[]
 }
 
 export default async function SurveyReport(props: SurveyReportProps) {
@@ -86,7 +51,9 @@ function Question(props: Question) {
       {props.questionOptions?.map((option, index) => {
         return <QuestionOption key={index} {...option} />
       })}
-      {props.answers?.length > 0 && <h4 className="text-primary">ANSWERS ({props.answers.length})</h4>}
+      {props.answers?.length > 0 && (
+        <h4 className="text-primary">ANSWERS ({props.answers.length})</h4>
+      )}
       {props.answers?.map((answer, index) => {
         return <Answer key={index} {...answer} />
       })}
