@@ -27,6 +27,8 @@ const testData = [
     pdfDicCdmxUrl: 'https://picsum.photos/200',
     pdfPeeFideUrl: 'https://picsum.photos/200',
     pdfGuaranteeSecurityUrl: 'https://picsum.photos/200',
+    pdfActaConstitutivaUrl: 'https://picsum.photos/200',
+    pdfIneUrl: 'https://picsum.photos/200',
     status: 'approved',
   },
   {
@@ -48,6 +50,8 @@ const testData = [
     pdfDicCdmxUrl: null,
     pdfPeeFideUrl: null,
     pdfGuaranteeSecurityUrl: 'https://picsum.photos/100',
+    pdfActaConstitutivaUrl: 'https://picsum.photos/100',
+    pdfIneUrl: 'https://picsum.photos/100',
     status: 'pending_approval',
   },
 ]
@@ -71,6 +75,8 @@ const newCompany = {
   pdfDicCdmxUrl: null,
   pdfPeeFideUrl: null,
   pdfGuaranteeSecurityUrl: 'https://picsum.photos/300',
+  pdfActaConstitutivaUrl: 'https://picsum.photos/300',
+  pdfIneUrl: 'https://picsum.photos/300',
   status: 'pending_approval'
 }
 

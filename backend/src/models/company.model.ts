@@ -152,6 +152,22 @@ export default class Company extends Model {
   pdfGuaranteeSecurityUrl: string
 
   @Column({
+    field: 'PDF_ACTA_CONSTITUTIVA_URL',
+    type: DataType.STRING(500),
+    allowNull: false,
+    unique: 'PDF_ACTA_CONSTITUTIVA_URL',
+  })
+  pdfActaConstitutivaUrl: string
+
+  @Column({
+    field: 'PDF_INE_URL',
+    type: DataType.STRING(500),
+    allowNull: false,
+    unique: 'PDF_INE_URL',
+  })
+  pdfIneUrl: string
+
+  @Column({
     field: 'STATUS',
     type: DataType.ENUM('approved', 'pending_approval', 'rejected'),
     allowNull: false,
