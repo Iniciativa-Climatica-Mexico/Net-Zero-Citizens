@@ -7,6 +7,7 @@ const router = express.Router()
 router.get('/', CompanyController.getAllCompanies)
 router.post('/create', CompanyController.createCompany)
 
-router.post('/:id/upload/image', CompanyImageController.uploadCompanyImage)
+router.post('/add/product', CompanyController.addProduct)
+router.post('/upload/image', CompanyImageController.uploadCompanyImage)
 
 export default router
