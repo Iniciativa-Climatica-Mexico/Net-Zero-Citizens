@@ -5,7 +5,7 @@ import SurveysBootstrapper from '../bootstrap/survey.bootstrap'
 import UserBootstrap from '../bootstrap/users.bootstrap'
 import RolesBootstrap from '../bootstrap/roles.bootstrap'
 import ProductBootstrap from '../bootstrap/product.bootstrap'
-import ProductImageBootstrap from '../bootstrap/productImage.bootstrap'
+import ProductImageBootstrap from '../bootstrap/companyImage.bootstrap'
 
 export const bootstrapDB = async () => {
   try {

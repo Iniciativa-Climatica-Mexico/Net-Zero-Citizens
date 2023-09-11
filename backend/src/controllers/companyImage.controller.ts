@@ -1,4 +1,4 @@
-import * as ProductImageService from '../services/productImage.service'
+import * as CompanyImageService from '../services/companyImage.service'
 import { NoRecord } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
 
@@ -12,12 +12,12 @@ import { RequestHandler } from 'express'
 export const createProductImage: RequestHandler<
   NoRecord,
   {productImageId: string, message?: string, error?: string},
-  {productImage: ProductImageService.ProductImageType},
+  {productImage: CompanyImageService.CompanyImageType},
   NoRecord> = async (req, res) => {
     if(!req.body.productImage)
       return res.json({ productImageId: '', message: 'No product image provided'})
     
-    if(!req.body.productImage.productId)
+    if(!req.body.productImage.companyId)
       return res.json({ productImageId: '', message: 'No product provided'})
 
     if(!req.body.productImage.imageUrl)
@@ -26,7 +26,7 @@ export const createProductImage: RequestHandler<
     if(!req.body.productImage.altText)
       return res.json({ productImageId: '', message: 'No image alt text provided'})
 
-    const productImage = await ProductImageService.createProductImage(req.body.productImage)
+    const productImage = await CompanyImageService.createCompanyImage(req.body.productImage)
 
     if(!productImage)
       return res.json({ productImageId: '', message: 'Error creating product image'})
