@@ -15,7 +15,7 @@ const user = {
   phoneNumber: '1234567890',
   age: 30,
   state: 'NY',
-  sex: 'masculine',
+  gender: 'masculine',
   roleId: 'ADMIN_ROLE_ID',
 }
 
