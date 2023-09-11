@@ -19,13 +19,14 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/top_background"
                     android:layout_width="match_parent"
                     android:layout_height="170dp"
-                    android:background="@drawable/top_background"></androidx.constraintlayout.widget.ConstraintLayout>
+                    android:background="@drawable/top_background"
+                    tools:ignore="MissingConstraints"></androidx.constraintlayout.widget.ConstraintLayout>
 
                 <ImageView
                     android:id="@+id/imageView2"
@@ -74,22 +75,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/emailTextView" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="319dp">
 
-                <Button
-                    android:id="@+id/button2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="48dp"
-                    android:text="Button"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.498"
-                    app:layout_constraintStart_toStartOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
