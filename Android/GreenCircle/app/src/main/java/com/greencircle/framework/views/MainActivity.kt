@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.mapa -> {
-                    replaceFragment(com.greencircle.framework.views.fragments.MapFragment())
+                    replaceFragment(MapFragment())
                     true
                 }
 
