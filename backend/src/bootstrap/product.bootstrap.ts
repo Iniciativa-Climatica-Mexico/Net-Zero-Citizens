@@ -6,17 +6,17 @@ export default class ProductBootstrap extends Bootstrapper {
     Product.bulkCreate([
       {
         productId: 'prod-1234-efgh-0000',
-        name: 'Solar Panel XYZ',
-        description: 'Solar Panel XYZ description',
+        name: 'Sistemas Fotovoltaicos',	
+        description: 'Descripcion de Sistemas Fotovoltaicos ABC',
         imageUrl: 'https://picsum.photos/100',
-        altText: 'Solar Panel XYZ alt text',
+        altText: 'Panel Solar XYZ alt text',
       },
       {
         productId: 'prod-1235-efgh-0000',
-        name: 'Solar Heater IJK',
-        description: 'Solar Heater IJK description',
+        name: 'Calentador Solar',
+        description: 'Descripcion de Calentador Solar ABC',
         imageUrl: 'https://picsum.photos/200',
-        altText: 'Solar Heater IJK alt text',
+        altText: 'Calentador Solar XYZ alt text',
       },
     ])
   }}
