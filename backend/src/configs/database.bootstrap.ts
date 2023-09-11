@@ -9,8 +9,8 @@ export const bootstrapDB = async () => {
   try {
     const bootstrappers = [
       RolesBootstrapper,
-      UserBootstrap,
       CompanyBootstrap,
+      UserBootstrap,
       ReviewBootstrap,
       SurveysBootstrapper,
       DummyBootstrap,
