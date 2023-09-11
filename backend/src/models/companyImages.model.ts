@@ -11,7 +11,7 @@ import Company from './company.model'
 @Table({ tableName: 'COMPANY_PRODUCTS' })
 export default class CompanyImages extends Model {
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(100),
     primaryKey: true,
     allowNull: false,
     field: 'COMPANY_IMAGE_ID',
@@ -21,21 +21,21 @@ export default class CompanyImages extends Model {
 
   @ForeignKey(() => Company)
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(100),
     allowNull: false,
     field: 'COMPANY_ID',
   })
   companyId: string
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(500),
     allowNull: true,
     field: 'IMAGE_URL',
   })
   imageUrl: string | null
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(100),
     allowNull: true,
     field: 'ALT_TEXT',
   })

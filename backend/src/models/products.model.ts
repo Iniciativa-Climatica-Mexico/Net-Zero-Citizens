@@ -10,7 +10,7 @@ import companyProducts from './companyProducts.model'
 @Table({ tableName: 'PRODUCTS' })
 export default class Product extends Model {
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(100),
     primaryKey: true,
     allowNull: false,
     field: 'PRODUCT_ID',
@@ -19,21 +19,21 @@ export default class Product extends Model {
   productId: string
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(255),
     allowNull: false,
     field: 'NAME',
   })
   name: string
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(500),
     allowNull: true,
     field: 'DESCRIPTION',
   })
   description: string | null
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(500),
     allowNull: false,
     field: 'DESCRIPTION',
     unique: true,
@@ -41,7 +41,7 @@ export default class Product extends Model {
   imageUrl: string
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(100),
     allowNull: false,
     field: 'IMAGE_ALT_TEXT',
   })
