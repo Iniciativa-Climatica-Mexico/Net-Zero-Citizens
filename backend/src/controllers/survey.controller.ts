@@ -63,12 +63,14 @@ export const getSurveyById: RequestHandler<
  *
  * TODO: Verificar caul de las dos funciones es la correcta del servicio.
  */
-// export const createSurvey: RequestHandler<
-//     NoRecord,
-//     Survey,
-//     NoRecord,
-//     NoRecord
-// > = async (req, res) => {
-//     const survey = await SurveyService.createSurvey(req.body)
-//     res.json(survey || undefined)
-// }
+
+export const createSurvey: RequestHandler<
+  NoRecord,
+  Survey,
+  Partial<Survey>,
+  NoRecord
+> = async (req, res) => {
+  const surveyData = req.body
+  const survey = await SurveyService.createSurvey(surveyData)
+  res.json(survey)
+}

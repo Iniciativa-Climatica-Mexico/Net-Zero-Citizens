@@ -1,7 +1,7 @@
 import chai from 'chai'
 import chaiExclude from 'chai-exclude'
 import { db, initDB } from '../src/configs/database.config'
-import { getAllSurveys, getSurveyById } from '../src/services/survey.service'
+import { getAllSurveys, getSurveyById, createSurvey } from '../src/services/survey.service'
 import { unwrap } from './utils'
 
 chai.use(chaiExclude)
@@ -62,4 +62,16 @@ describe('Survey Service', () => {
     const response = await getSurveyById('surv-1234-efgh-0001')
     expect(response).to.be.null
   })
+
+  it('should create a new survey', async () => {
+    const survey = {
+      title: 'Encuesta de prueba',
+      description: 'Encuesta para probar el servicio de encuestas',
+    }
+    const response = await createSurvey(survey)
+    expect(unwrap(response))
+      .excludingEvery(attributesToExclude)
+      .to.deep.equal(survey)
+  })
 })
+

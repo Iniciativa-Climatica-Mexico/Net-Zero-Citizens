@@ -61,10 +61,10 @@ export const getSurveyById = async (
  *
  * TODO: Verificar caul de las dos funciones es la correcta.
  */
-// export const createSurvey = async (surveyData: Partial<Survey>): Promise<Survey> => {
-//     const survey = await Survey.create(surveyData)
-//     return unwrap(survey)
-// }
+export const createSurvey = async (surveyData: Partial<Survey>): Promise<Survey> => {
+  const survey = await Survey.create(surveyData)
+  return unwrap(survey)
+}
 
 // export const createSurvey = async (surveyData: Partial<Survey>): Promise<Survey> => {
 //     const survey = {
