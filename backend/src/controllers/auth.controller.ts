@@ -1,5 +1,4 @@
 import * as AuthService from '../services/auth.service'
-import * as UserService from '../services/users.service'
 import { NoRecord } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
 

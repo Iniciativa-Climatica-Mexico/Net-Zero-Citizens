@@ -1,5 +1,6 @@
 import Token from '../models/token.model'
 import * as UserService from '../services/users.service'
+import * as CompanyService from '../services/company.service'
 import jwt from 'jsonwebtoken'
 import { OAuth2Client } from 'google-auth-library'
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
@@ -94,10 +95,6 @@ export const googleLogin = async (googleToken: string): Promise<TokenPair | null
     dummyUser.email = user.email
     dummyUser.roles.push(user.role.dataValues.NAME)
   }
-
-  console.log(dummyUser)
-
-  // TODO Registrar empresa
   
   const tokens = await createTokens(dummyUser)
   if(!tokens) return null

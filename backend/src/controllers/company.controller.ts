@@ -80,9 +80,7 @@ export const addProduct: RequestHandler<
       const newCompanyProduct = await CompanyService.addProduct(company)    
 
       if(!newCompanyProduct) res.status(400).json({ companyProductId: '', error: 'Error adding product to company'})
-
-      console.log(newCompanyProduct)
-
+      
       res.json({ companyProductId: newCompanyProduct?.dataValues.companyId, message: 'Product added to company'})
     } catch (error) {
       res.status(400).json({ companyProductId: '', error: 'Error adding product to company'})
