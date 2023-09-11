@@ -9,28 +9,27 @@ import { RequestHandler } from 'express'
  * @param res Un objeto paginador con los proveedores y la
  *            información de paginación
  */
-export const createProductImage: RequestHandler<
+export const uploadCompanyImage: RequestHandler<
   NoRecord,
-  {productImageId: string, message?: string, error?: string},
-  {productImage: CompanyImageService.CompanyImageType},
+  {companyImageId: string, message?: string, error?: string},
+  {companyImage: CompanyImageService.CompanyImageType},
   NoRecord> = async (req, res) => {
-    if(!req.body.productImage)
-      return res.json({ productImageId: '', message: 'No product image provided'})
+    if(!req.body.companyImage)
+      return res.json({ companyImageId: '', message: 'No product image provided'})
     
-    if(!req.body.productImage.companyId)
-      return res.json({ productImageId: '', message: 'No product provided'})
+    if(!req.body.companyImage.companyId)
+      return res.json({ companyImageId: '', message: 'No product provided'})
 
-    if(!req.body.productImage.imageUrl)
-      return res.json({ productImageId: '', message: 'No image provided'})
+    if(!req.body.companyImage.imageUrl)
+      return res.json({ companyImageId: '', message: 'No image provided'})
 
-    if(!req.body.productImage.altText)
-      return res.json({ productImageId: '', message: 'No image alt text provided'})
+    if(!req.body.companyImage.altText)
+      return res.json({ companyImageId: '', message: 'No image alt text provided'})
 
-    const productImage = await CompanyImageService.createCompanyImage(req.body.productImage)
+    const companyImage = await CompanyImageService.uploadCompanyImage(req.body.companyImage)
 
-    if(!productImage)
-      return res.json({ productImageId: '', message: 'Error creating product image'})
-    
+    if(!companyImage)
+      return res.json({ companyImageId: '', message: 'Error creating product image'})    
 
-    return res.json({ productImageId: productImage.id, message: 'Product image created'})
+    return res.json({ companyImageId: companyImage.dataValues.companyImageId, message: 'Product image created'})
   }

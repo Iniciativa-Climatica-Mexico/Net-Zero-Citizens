@@ -13,6 +13,6 @@ export type CompanyImageType = {
  * @param CompanyImage Objeto con la información de la imagen
  * @returns Promesa con la información de la imagen o null
  */
-export const createCompanyImage = async (productImage: CompanyImageType): Promise<CompanyImage | null> => {
-  return await CompanyImage.create(productImage)
+export const uploadCompanyImage = async (companyImage: CompanyImageType): Promise<CompanyImage | null> => {
+  return await CompanyImage.create(companyImage)
 }
