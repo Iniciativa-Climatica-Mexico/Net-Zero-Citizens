@@ -23,6 +23,8 @@ export default class CompanyBootstrap extends Bootstrapper {
         pdfDicCdmxUrl: 'https://picsum.photos/200',
         pdfPeeFideUrl: 'https://picsum.photos/200',
         pdfGuaranteeSecurityUrl: 'https://picsum.photos/200',
+        pdfActaConstitutivaUrl: 'https://picsum.photos/200',
+        pdfIneUrl: 'https://picsum.photos/200',
         status: 'approved',
       },
       {
@@ -40,6 +42,8 @@ export default class CompanyBootstrap extends Bootstrapper {
         longitude: 1.111111,
         pdfCurriculumUrl: 'https://picsum.photos/100',
         pdfGuaranteeSecurityUrl: 'https://picsum.photos/100',
+        pdfActaConstitutivaUrl: 'https://picsum.photos/100',
+        pdfIneUrl: 'https://picsum.photos/100',
         status: 'pending_approval',
       },
       

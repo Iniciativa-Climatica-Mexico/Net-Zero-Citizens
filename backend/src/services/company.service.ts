@@ -26,6 +26,8 @@ export type CompanyType = {
   pdfDicCdmxUrl?: string | null,
   pdfPeeFideUrl?: string | null,
   pdfGuaranteeSecurityUrl: string,
+  pdfActaConstitutivaUrl: string,
+  pdfIneUrl: string,
   status: string,
 }
 
