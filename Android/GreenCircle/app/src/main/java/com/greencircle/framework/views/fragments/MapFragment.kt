@@ -14,7 +14,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.greencircle.R
 
-class MapFragment : Fragment(   ), OnMapReadyCallback {
+class MapFragment : Fragment(), OnMapReadyCallback {
 
     private var mGoogleMap: GoogleMap? = null
 
