@@ -1,4 +1,3 @@
-import { db } from '../configs/database.config'
 import {
   Table,
   Column,
