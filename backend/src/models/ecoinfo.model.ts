@@ -25,48 +25,12 @@ export default class Ecoinfo extends Model {
   })
   ecoinfoId: string
 
-  @ForeignKey(() => User)
-  @Column({
-    field: 'USER_ID',
-    type: DataType.UUID,
-    allowNull: true,
-  })
-  userId: string | null
-
-  @Column({
-    type: DataType.STRING(50),
-    allowNull: false,
-    field: 'TITLE',
-  })
-  title: string
-
-  @Column({
-    type: DataType.TEXT,
-    allowNull: false,
-    field: 'CONTENT',
-  })
-  content: string
-
-  @Column({
-    type: DataType.STRING(50),
-    allowNull: true,
-    field: 'SUBTITLE',
-  })
-  subtitle: string | null
-
   @Column({
     type: DataType.STRING(500),
     allowNull: true,
-    field: 'COVER_IMAGE',
+    field: 'COVER_IMAGE_URL',
   })
   coverImage: string | null
-
-  @Column({
-    type: DataType.STRING(50),
-    allowNull: true,
-    field: 'AUTHOR',
-  })
-  author: string | null
 
   @Column({
     type: DataType.STRING(100),
