@@ -85,6 +85,9 @@ dependencies {
     // Gson
     implementation("com.google.code.gson:gson:2.8.9")
 
+    // Google API
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
+
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
 
