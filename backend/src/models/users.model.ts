@@ -155,9 +155,9 @@ export default class User extends Model {
   @Column({
     type: DataType.ENUM('masculine', 'femenine', 'other', 'no_answer'),
     allowNull: false,
-    field: 'SEX',
+    field: 'GENDER',
   })
-  sex: 'masculine' | 'femenine' | 'other' | 'no_answer'
+  gender: 'masculine' | 'femenine' | 'other' | 'no_answer'
 
   @Column({
     type: DataType.STRING,
