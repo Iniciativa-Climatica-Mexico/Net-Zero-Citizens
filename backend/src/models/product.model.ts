@@ -1,5 +1,4 @@
-import { Table, Column, Model, DataType, BelongsTo, ForeignKey } from 'sequelize-typescript'
-import Company from './company.model'
+import { Table, Column, Model, DataType } from 'sequelize-typescript'
 
 @Table({ tableName: 'PRODUCTS' })
 export default class Product extends Model {
@@ -11,17 +10,6 @@ export default class Product extends Model {
     defaultValue: DataType.UUIDV4,
   })
   productId: string
-
-  @ForeignKey(() => Company)
-  @Column({
-    type: DataType.UUID,
-    field: 'COMPANY_ID',
-    allowNull: false,
-  })
-  companyId: string
-
-  @BelongsTo(() => Company)
-  company!: Company
 
   @Column({
     type: DataType.STRING(225),
@@ -39,9 +27,16 @@ export default class Product extends Model {
 
   @Column({
     type: DataType.STRING(500),
-    field: 'PDF_PRODUCT_CERTIFICATION_URL',
+    field: 'IMAGE_URL',
     allowNull: false,
     unique: true,
   })
-  pdfProductCertificationUrl: string
+  imageUrl: string
+
+  @Column({
+    type: DataType.STRING(100),
+    field: 'ALT_TEXT',
+    allowNull: false,
+  })
+  altText: string
 }
