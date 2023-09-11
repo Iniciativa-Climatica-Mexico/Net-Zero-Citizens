@@ -1,6 +1,5 @@
 import Token from '../models/token.model'
 import * as UserService from '../services/users.service'
-import * as CompanyService from '../services/company.service'
 import jwt from 'jsonwebtoken'
 import { OAuth2Client } from 'google-auth-library'
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
