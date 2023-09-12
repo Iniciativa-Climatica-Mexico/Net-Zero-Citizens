@@ -43,4 +43,28 @@ class CompanyContactFragment : Fragment() {
 
         return view
     }
+
+    //        val toggleButton =
+//            root.findViewById<com.google.android.material.button.MaterialButtonToggleGroup>(
+//                R.id.toggleButton
+//            )
+//
+//        toggleButton.addOnButtonCheckedListener { _, checkedId, isChecked ->
+//            if (isChecked) {
+//                when (checkedId) {
+//                    R.id.btnServices -> setFragment(companyServicesFragment)
+//                    R.id.btnContactInfo -> setFragment(companyContactFragment)
+//                }
+//            }
+//        }
+
+
+//    private fun setFragment(fragment: Fragment) {
+//        val fragmentManager = parentFragmentManager
+//        val transaction = fragmentManager.beginTransaction()
+//        transaction.replace(R.id.FCompanyServices, fragment)
+//        transaction.addToBackStack(null)
+//        transaction.commit()
+//    }
+
 }
