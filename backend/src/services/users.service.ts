@@ -1,31 +1,4 @@
 import User from '../models/users.model'
-import { PaginatedQuery, PaginationParams } from '../utils/RequestResponse'
-import Role from '../models/role.model'
-
-//TYPES
-/**
- * @brief
- * Tipo de dato del usuario
- */
-
-export type UserType = {
-  userId?: string,
-  roleId?: string,
-  companyId?: string | null,
-  googleId?: string | null,
-  facebookId?: string | null,
-  appleId?: string | null,
-  firstName: string,
-  lastName: string,
-  secondLastName?: string | null,
-  email: string,
-  password?: string | null,
-  phoneNumber: string,
-  age: number,
-  state: string,
-  gender: string,
-  profilePicture?: string | null,
-}
 
 /**
  * @brief
