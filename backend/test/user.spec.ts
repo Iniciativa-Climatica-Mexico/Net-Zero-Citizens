@@ -2,7 +2,8 @@ import chai from 'chai'
 import chaiExclude from 'chai-exclude'
 import { db, initDB } from '../src/configs/database.config'
 import * as UserService from '../src/services/users.service'
-
+import { getAllUsers, createUser} from '../src/services/users.service'
+import { unwrap } from './utils' 
 chai.use(chaiExclude)
 
 const { expect } = chai
@@ -19,6 +20,68 @@ const user = {
   roleId: 'ADMIN_ROLE_ID',
 }
 
+const testData = [
+  {
+  userId: 'abcd-1234-efgh-5678',
+  roleId: 'ADMIN_ROLE_ID',
+  companyId: null,
+  googleId: null,
+  facebookId: null,
+  appleId: null,
+  firstName: 'John',
+  lastName: 'Doe',
+  secondLastName: null,
+  password: null,
+  email: 'john.doe@example.com',
+  phoneNumber: '1234567890',
+  age: 30,
+  state: 'NY',
+  gender: 'masculine',
+  profilePicture: null,
+  },
+  {
+  userId: 'abcd-1234-efgh-5679',
+  roleId: 'CUSTOMER_ROLE_ID',
+  companyId: null,
+  googleId: null,
+  facebookId: null,
+  appleId: null,
+  firstName: 'Jane',
+  lastName: 'Doe',
+  secondLastName: null,
+  email: 'jane.doe@example.com',
+  password: null,
+  phoneNumber: '0987654321',
+  age: 25,
+  state: 'CA',
+  gender: 'femenine',
+  profilePicture: null,
+  },
+
+]
+const newUser = {
+  userId: 'abcd-1234-efgh-5680',
+  roleId: 'CUSTOMER_ROLE_ID',
+  companyId: null,
+  googleId: null,
+  facebookId: null,
+  appleId: null,
+  firstName: 'Test',
+  lastName: 'Doe',
+  secondLastName: null,
+  email: 'test.doe@example.com',
+  password: null,
+  phoneNumber: '0147258369',
+  age: 21,
+  state: 'CA',
+  gender: 'femenine',
+  profilePicture: null,
+}
+
+const attributesToExclude = [
+  'createdAt',
+  'updatedAt',
+]
 
 beforeEach(async () => {
   await initDB()
@@ -29,6 +92,18 @@ afterEach(async () => {
 })
 
 describe('UserService', () => {
+  it('should return a list of all users', async () => {
+    const response = await getAllUsers({ start: 0, pageSize: 10 })
+    expect(unwrap(response).rows)
+      .excluding(attributesToExclude)
+      .to.deep.equal(testData)
+  })
+
+  it('should create a new user', async () => {
+    const res = await createUser(newUser)
+    expect(unwrap(res)).excluding(attributesToExclude).to.deep.equal(newUser)
+  })
+
   it('should return null while getting a false user', async () => {
     const res = await UserService.getUserByEmailWithRole('falseuseremail@mail.com')
     expect(res).to.be.null
