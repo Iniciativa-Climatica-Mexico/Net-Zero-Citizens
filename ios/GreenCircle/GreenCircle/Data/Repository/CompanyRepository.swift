@@ -29,11 +29,11 @@ protocol CompanyAPIProtocol {
 /// Implementación de repoitorio de Compañía con singleton
 class CompanyRepository: CompanyAPIProtocol {
     /// Inicialización de servicio backEnd
-    let backEndService: BackEndService
+    let backEndService: CompanyService
     /// Inicialización de singleton de repositorio de compañía
     static let shared = CompanyRepository()
     /// Constructor que toma el valor del servicio del backEnd
-    init(backEndService: BackEndService = BackEndService.shared) {
+    init(backEndService: CompanyService = CompanyService.shared) {
         self.backEndService = backEndService
     }
     /// Obtener compañía por UUID llamando al método del servicio del backend
