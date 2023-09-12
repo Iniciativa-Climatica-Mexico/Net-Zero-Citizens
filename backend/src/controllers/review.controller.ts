@@ -136,25 +136,59 @@ export const getReviewByUser: RequestHandler<
  * - 500 si ocurre un error en el servidor
 */
 
-export const addComment: RequestHandler<
+export const addReview: RequestHandler<
   { userId: string, companyId: string },
   string,
-  { comment: string },
+  { comment: string, rating: number },
   NoRecord
   > = async (req, res) => {
     const { userId, companyId } = req.params
-    const { comment } = req.body
+    const { comment, rating } = req.body
     if (!userId || !companyId) {
       res.status(400).json('Missing userId or companyId')
       return
     }
     if (!comment) {
-      res.status(400).json('Missing review')
+      res.status(400).json('Missing comment')
+      return
+    } else if (!rating) {
+      res.status(400).json('Missing rating')
       return
     }
     try {
-      await ReviewService.addComment(userId, companyId, comment)
+      await ReviewService.addReview(userId, companyId, comment, rating)
       res.status(200).send('Added review')
+    } catch (error) {
+      console.log(error)
+      res.status(500).send('Error')
+    }
+  }
+
+/**
+ * @brief
+ * Función del controlador que elimina una review de la base de datos
+ * @param req La request HTTP al servidor
+ * @param res Un objeto con la review eliminada
+ * @returns
+ * - 400 si no se envía el reviewId
+ * - 200 si se elimina la review
+ * - 500 si ocurre un error en el servidor
+ */
+
+export const deleteReview: RequestHandler<
+  { reviewId: string },
+  string,
+  NoRecord,
+  NoRecord
+  > = async (req, res) => {
+    const { reviewId } = req.params
+    if (!reviewId) {
+      res.status(400).json('Missing reviewId')
+      return
+    }
+    try {
+      await ReviewService.deleteReview(reviewId)
+      res.status(200).send('Deleted review')
     } catch (error) {
       console.log(error)
       res.status(500).send('Error')

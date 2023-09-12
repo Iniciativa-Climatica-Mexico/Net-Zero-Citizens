@@ -7,6 +7,9 @@ router.get('/', controller.getAllReviews)
 router.get('/:reviewId', controller.getReviewById)
 router.get('/company/:companyId', controller.getReviewByCompany)
 router.get('/user/:userId', controller.getReviewByUser)
-router.post('/:userId/:companyId', controller.addComment)
+
+router.post('/:userId/:companyId', controller.addReview)
+
+router.delete('/:reviewId', controller.deleteReview)
 
 export default router
