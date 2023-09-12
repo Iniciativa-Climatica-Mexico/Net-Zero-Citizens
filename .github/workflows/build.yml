@@ -159,7 +159,7 @@ jobs:
 
       - name: Linter test
         working-directory: Android/GreenCircle
-        run: ./gradlew kttlintCheck
+        run: ./gradlew ktlintCheck
 
   # Android Test
   unit_test:
