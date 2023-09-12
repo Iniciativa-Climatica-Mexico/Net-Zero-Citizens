@@ -2,10 +2,6 @@ name: Build and Test
 
 on:
   push:
-    branches:
-      - "G*"
-      - "Carlos/GithubActions"
-
   pull_request:
     branches: [main, develop]
     types: [opened, synchronize, reopened, closed]
@@ -163,7 +159,7 @@ jobs:
 
       - name: Linter test
         working-directory: Android/GreenCircle
-        run: ./gradlew kttlintCheck
+        run: ./gradlew ktlintCheck
 
   # Android Test
   unit_test:
