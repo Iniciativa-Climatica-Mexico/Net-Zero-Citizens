@@ -28,12 +28,18 @@ export type UserType = {
 }
 
 /**
- * @function getAllUsers
- * @param userId
- * @returns User or Null
+ * @brief
+ * Función del servicio que devuelve todos los usuarios de la base de datos
+ * @param params Los parametros de paginación
+ * @returns Una promesa con los usuarios y la información de paginación
  */
-export const getUserInfo = async (userId: string): Promise<User | null> => {
-  return await User.findByPk(userId)
+export const getAllUsers = async <T>(
+  params: PaginationParams<T>
+): Promise<PaginatedQuery<User>> => {
+  return await User.findAndCountAll({
+    limit: params.pageSize,
+    offset: params.start,
+  })
 }
 
 /**
@@ -44,6 +50,17 @@ export const getUserInfo = async (userId: string): Promise<User | null> => {
  */
 export const createUser = async (user: UserType): Promise<User | null> => {
   return await User.create(user)
+}
+
+
+/**
+ * @function getUserInfo
+ * @param userId
+ * @returns User or Null
+ */
+
+export const getUserInfo = async (userId: string): Promise<User | null> => {
+  return await User.findByPk(userId)
 }
 
 /**
