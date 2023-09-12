@@ -18,7 +18,7 @@
         <item name="strokeColor">@color/blue</item>
         <item name="strokeWidth">2dp</item>
         <item name="backgroundTint">@animator/custom_selector</item>
-
+        <item name="rippleColor">@null</item>
     </style>
 
 

@@ -3,6 +3,7 @@ package com.greencircle.framework.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.greencircle.domain.model.ServicesObject
+import java.sql.Timestamp
 
 class CompanyServicesViewModel : ViewModel() {
 
@@ -10,35 +11,33 @@ class CompanyServicesViewModel : ViewModel() {
 
     // TODO: Repository and Getters
 
-    fun getMockServicesList() {
+    fun getMockServicesList(): ServicesObject {
         val mockServices = ServicesObject(
-            3,
+            2,
             arrayListOf(
                 com.greencircle.domain.model.ServiceItem(
-                    "1",
-                    "1",
-                    "Service 1",
-                    "Description 1",
-                    java.sql.Timestamp(0),
-                    java.sql.Timestamp(0)
+                    companyId = "1",
+                    productId = "1",
+                    name = "Service 1",
+                    description = "Description 1",
+                    imgUrl = "https://www.revista.ferrepat.com/wp-content/uploads/2016/06/Instal" +
+                        "acion-de-paneles-solares-en-casa.jpg",
+                    createdAt = Timestamp(0),
+                    updatedAt = Timestamp(0)
                 ),
                 com.greencircle.domain.model.ServiceItem(
-                    "2",
-                    "2",
-                    "Service 2",
-                    "Description 2",
-                    java.sql.Timestamp(0),
-                    java.sql.Timestamp(0)
-                ),
-                com.greencircle.domain.model.ServiceItem(
-                    "3",
-                    "3",
-                    "Service 3",
-                    "Description 3",
-                    java.sql.Timestamp(0),
-                    java.sql.Timestamp(0)
+                    companyId = "1",
+                    productId = "2",
+                    name = "Service 2",
+                    description = "Description 2",
+                    imgUrl = "https://ibero.mx/sites/default/files/prensaymultimedios/" +
+                        "alternative-21581_960_720.jpg",
+                    createdAt = Timestamp(0),
+                    updatedAt = Timestamp(0)
                 ),
             )
         )
+
+        return mockServices
     }
 }

@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.greencircle.R
 import com.greencircle.databinding.FragmentCompanyServicesBinding
+import com.greencircle.domain.model.ServiceItem
+import com.greencircle.framework.ui.adapters.ServiceAdapter
 import com.greencircle.framework.viewmodel.CompanyServicesViewModel
 
 class CompanyServicesFragment : Fragment() {
@@ -16,9 +17,8 @@ class CompanyServicesFragment : Fragment() {
     private var _binding: FragmentCompanyServicesBinding? = null
 
     private val binding get() = _binding!!
-
+    private val adapter = ServiceAdapter()
     private lateinit var viewModel: CompanyServicesViewModel
-
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
@@ -31,7 +31,25 @@ class CompanyServicesFragment : Fragment() {
         _binding = FragmentCompanyServicesBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        initializeComponents(root)
+        // Inicializar fragmentos
+        val companyServicesFragment = CompanyServicesFragment()
+        val companyContactFragment = CompanyContactFragment()
+
+//        initializeComponents(root)
+
+//        val toggleButton =
+//            root.findViewById<com.google.android.material.button.MaterialButtonToggleGroup>(
+//                R.id.toggleButton
+//            )
+//
+//        toggleButton.addOnButtonCheckedListener { _, checkedId, isChecked ->
+//            if (isChecked) {
+//                when (checkedId) {
+//                    R.id.btnServices -> setFragment(companyServicesFragment)
+//                    R.id.btnContactInfo -> setFragment(companyContactFragment)
+//                }
+//            }
+//        }
 
         // TODO: viewModel.getServicesList()
         viewModel.getMockServicesList()
@@ -44,7 +62,20 @@ class CompanyServicesFragment : Fragment() {
         _binding = null
     }
 
-    private fun initializeComponents(root: View) {
-        recyclerView = root.findViewById(R.id.RVServices)
+//    private fun initializeComponents(root: View) {
+//        recyclerView = root.findViewById(R.id.RVServices)
+//    }
+
+//    private fun setFragment(fragment: Fragment) {
+//        val fragmentManager = parentFragmentManager
+//        val transaction = fragmentManager.beginTransaction()
+//        transaction.replace(R.id.FCompanyServices, fragment)
+//        transaction.addToBackStack(null)
+//        transaction.commit()
+//    }
+
+    private fun setUpRecyclerView(dataForList: ArrayList<ServiceItem>) {
+        adapter.ServiceAdapter(dataForList, requireContext())
+        recyclerView.adapter = adapter
     }
 }

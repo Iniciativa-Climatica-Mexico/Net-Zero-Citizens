@@ -8,6 +8,7 @@ data class ServiceItem(
     @SerializedName("productId") val productId: String,
     @SerializedName("name") val name: String,
     @SerializedName("description") val description: String,
+    @SerializedName("imgUrl") val imgUrl: String,
     @SerializedName("createdAt") val createdAt: Timestamp,
     @SerializedName("updatedAt") val updatedAt: Timestamp
 )
