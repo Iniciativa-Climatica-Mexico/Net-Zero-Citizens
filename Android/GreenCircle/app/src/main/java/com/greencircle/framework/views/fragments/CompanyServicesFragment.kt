@@ -48,7 +48,6 @@ class CompanyServicesFragment : Fragment() {
         recyclerView = root.findViewById(R.id.RVServices)
     }
 
-
     private fun setUpRecyclerView(dataForList: ArrayList<ServiceItem>) {
         adapter.ServiceAdapter(dataForList, requireContext())
         recyclerView.adapter = adapter

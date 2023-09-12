@@ -58,7 +58,6 @@ class CompanyContactFragment : Fragment() {
 //            }
 //        }
 
-
 //    private fun setFragment(fragment: Fragment) {
 //        val fragmentManager = parentFragmentManager
 //        val transaction = fragmentManager.beginTransaction()
@@ -66,5 +65,4 @@ class CompanyContactFragment : Fragment() {
 //        transaction.addToBackStack(null)
 //        transaction.commit()
 //    }
-
 }
