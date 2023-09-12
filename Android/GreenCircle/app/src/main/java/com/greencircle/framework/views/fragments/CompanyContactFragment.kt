@@ -44,7 +44,7 @@ class CompanyContactFragment : Fragment() {
         return view
     }
 
-    //        val toggleButton =
+//        val toggleButton =
 //            root.findViewById<com.google.android.material.button.MaterialButtonToggleGroup>(
 //                R.id.toggleButton
 //            )

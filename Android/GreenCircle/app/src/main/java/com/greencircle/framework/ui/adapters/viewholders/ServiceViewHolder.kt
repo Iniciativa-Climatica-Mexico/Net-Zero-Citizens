@@ -17,18 +17,29 @@ class ServiceViewHolder(private val binding: ItemServiceBinding) :
         binding.IVSImage.setImageResource(0)
     }
 
-    fun getServies(companyId: String): ArrayList<ServiceItem> {
+    fun initMockServices(): HashMap<String, ArrayList<ServiceItem>> {
         // TODO: Implement this function with endpoint
 
-        val serviceList = ArrayList<ServiceItem>()
+        val serviceMap = HashMap<String, ArrayList<ServiceItem>>()
         val serviceItems: ServicesObject = CompanyServicesViewModel().getMockServicesList()
 
         for (service in serviceItems.results) {
-            if (service.companyId == companyId) {
-                serviceList.add(service)
+            val companyId = service.companyId
+            if (!serviceMap.containsKey(companyId)) {
+                // If the companyId is not already a key in the map, create a new list for it
+                serviceMap[companyId] = ArrayList()
             }
+            // Add the service to the list associated with the companyId
+            serviceMap[companyId]?.add(service)
         }
 
-        return serviceList
+        return serviceMap
     }
+
+    fun getServies(companyId: String): ArrayList<ServiceItem> {
+        val servicesMap = initMockServices()
+        return servicesMap[companyId]!!
+    }
+
+
 }

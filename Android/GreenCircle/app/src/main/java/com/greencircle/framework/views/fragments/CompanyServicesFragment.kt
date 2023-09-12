@@ -37,10 +37,9 @@ class CompanyServicesFragment : Fragment() {
 
         initializeComponents(root)
 
-
         // TODO: viewModel.getServicesList()
-        viewModel.getMockServicesList()
-
+        val data = viewModel.getMockServicesList()
+        setUpRecyclerView(data.results)
         return root
     }
 
@@ -52,7 +51,6 @@ class CompanyServicesFragment : Fragment() {
     private fun initializeComponents(root: View) {
         recyclerView = root.findViewById(R.id.RVServices)
     }
-
 
     private fun setUpRecyclerView(dataForList: ArrayList<ServiceItem>) {
         adapter.ServiceAdapter(dataForList, requireContext())
