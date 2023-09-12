@@ -29,7 +29,7 @@ import Role from './role.model'
  * @param {string} phoneNumber - The user's phone number
  * @param {number} age - The user's age
  * @param {string} state - The user's state
- * @param {enum} sex - The user's sex
+ * @param {enum} gender - The user's sex
  * @param {string} profilePicture - The user's profile picture url
  * @param {date} createdAt - The user's creation date
  * @param {date} updatedAt - The user's update date
@@ -37,7 +37,7 @@ import Role from './role.model'
 
 /**
  * @brief
- * User model
+ * El modelo representa la tabla USERS
  */
 @Table({ tableName: 'USERS' })
 export default class User extends Model {
