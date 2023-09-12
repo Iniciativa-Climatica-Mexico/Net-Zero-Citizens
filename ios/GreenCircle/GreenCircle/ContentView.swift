@@ -16,11 +16,6 @@ struct ContentView: View {
       Text("Hello, world!")
     }
     .padding()
-    .onAppear {
-      Task {
-        print(await fetchTest()!)
-      }
-    }
   }
 }
 
