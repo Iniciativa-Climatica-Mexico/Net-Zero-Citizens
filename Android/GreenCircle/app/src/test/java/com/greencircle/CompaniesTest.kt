@@ -10,8 +10,8 @@ import org.junit.Assert.assertNull
 import org.junit.Test
 
 /**
- * @class CompaniesTest
- * @brief Pruebas unitarias para la clase Companies
+ * Pruebas unitarias para la clase Companies
+ * @constructor Crea un objeto Companies para realizar las pruebas unitarias
  */
 class CompaniesTest {
     /**
