@@ -45,7 +45,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         // Crear un marcador en la ubicacion
         val marker = MarkerOptions()
             .position(location)
-            .title("Ubicacion deseada")
+            .title("Empresa paneles solares ejemplo")
             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
 
         // Agregar el marcador al mapa
