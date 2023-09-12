@@ -4,7 +4,7 @@ import {
   Model,
   DataType,
   BelongsTo,
-  ForeignKey,
+  ForeignKey
 } from 'sequelize-typescript'
 import Company from './company.model'
 

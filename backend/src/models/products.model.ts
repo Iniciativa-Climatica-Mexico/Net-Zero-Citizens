@@ -2,10 +2,8 @@ import {
   Table,
   Column,
   Model,
-  DataType,
-  HasMany,
+  DataType
 } from 'sequelize-typescript'
-import companyProducts from './companyProducts.model'
 
 @Table({ tableName: 'PRODUCTS' })
 export default class Product extends Model {
@@ -47,6 +45,4 @@ export default class Product extends Model {
   })
   imageAltText: string
 
-  // @HasMany(() => CompanyProducts)
-  // companyProducts!: CompanyProducts[]
 }

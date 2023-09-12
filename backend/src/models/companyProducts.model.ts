@@ -3,9 +3,8 @@ import {
   Column,
   Model,
   DataType,
-  BelongsTo,
   BelongsToMany,
-  ForeignKey,
+  ForeignKey
 } from 'sequelize-typescript'
 import Company from './company.model'
 import Products from './products.model'
@@ -44,12 +43,6 @@ export default class CompanyProducts extends Model {
     unique: true,
   })
   pdfProductCertificationUrl: string
-
-  // @BelongsTo(() => Company) OTHER M TO N IMP
-  // company: Company
-
-  // @BelongsTo(() => Products) OTHER M TO N IMP
-  // products: Products
 
   @BelongsToMany(() => Company, { through: () => CompanyProducts })
   companies!: Company[]
