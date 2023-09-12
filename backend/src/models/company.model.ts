@@ -1,5 +1,6 @@
 import {
   BelongsTo,
+  BelongsToMany,
   Column,
   DataType,
   ForeignKey,
@@ -105,9 +106,6 @@ export default class Company extends Model {
   @HasMany(() => CompanyImages)
   companyImages: CompanyImages[]
 
-  @HasMany(() => CompanyProducts)
-  companyProducts: CompanyProducts[]
-
-  // @HasMany(() => CompanyProducts) OTHER N TO M IMP
-  // companyProducts!: CompanyProducts[] OTHER N TO M IMP
+  @BelongsToMany(() => CompanyProducts, { through: () => CompanyProducts })
+  companyProducts!: CompanyProducts[]
 }

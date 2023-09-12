@@ -43,5 +43,5 @@ export default class CompanyImages extends Model {
   altText: string | null
 
   @BelongsTo(() => Company)
-  imageCompany: CompanyImages
+  company: Company
 }
