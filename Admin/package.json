@@ -16,10 +16,7 @@
     "@types/react": "^18.2.21",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.15",
-<<<<<<< HEAD
     "chart.js": "^4.4.0",
-=======
->>>>>>> 4f43b1993cf382ef75e350a59cfbb64708451f03
     "next": "^13.4.19",
     "postcss": "8.4.29",
     "react": "^18.2.0",
