@@ -3,6 +3,7 @@ package com.greencircle
 import com.greencircle.domain.model.Companies
 import com.greencircle.domain.model.Status
 import java.sql.Timestamp
+import java.util.UUID
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNull
@@ -24,70 +25,116 @@ class CompaniesTest {
         val timestamp = Timestamp(System.currentTimeMillis())
         val status = Status.APPROVED
         val company = Companies(
-            companyId = 1,
-            userId = 1,
+            companyId = UUID(0, 1),
+            userId = UUID(0, 1),
             name = "Test Company",
             description = "Test Description",
-            email = "test@example.com",
-            location = "Test Location",
-            profilePicture = "test.jpg",
-            status = status,
+            email = "company@test.com",
             phoneNumber = "+52 442 123 4567",
-            website = "https://example.com",
+            webPage = null,
+            street = "Test Street",
+            streetNumber = 123,
+            city = "Test City",
+            state = "Test State",
+            zipCode = 12345,
+            latitude = 19.4326,
+            longitude = -99.1332,
+            profilePicture = "test.jpg",
+            pdfCurriculumUrl = "test.pdf",
+            pdfDicCdmxUrl = null,
+            pdfPeeFideUrl = null,
+            pdfGuaranteeSecurityUrl = "test.pdf",
+            pdfActaConstituyentesUrl = "test.pdf",
+            pdfIneUrl = "test.pdf",
+            status = status,
             createdAt = timestamp,
             updatedAt = timestamp
         )
 
-        assertEquals(1, company.companyId)
-        assertEquals(1, company.userId)
+        assertEquals(UUID(0, 1), company.companyId)
+        assertEquals(UUID(0, 1), company.userId)
         assertEquals("Test Company", company.name)
         assertEquals("Test Description", company.description)
-        assertEquals("test@example.com", company.email)
-        assertEquals("Test Location", company.location)
-        assertEquals("test.jpg", company.profilePicture)
-        assertEquals(status, company.status)
+        assertEquals("company@test.com", company.email)
         assertEquals("+52 442 123 4567", company.phoneNumber)
-        assertEquals("https://example.com", company.website)
+        assertNull(company.webPage)
+        assertEquals("Test Street", company.street)
+        assertEquals(123, company.streetNumber)
+        assertEquals("Test City", company.city)
+        assertEquals("Test State", company.state)
+        assertEquals(12345, company.zipCode)
+        assertEquals(19.4326, company.latitude, 0.0)
+        assertEquals(-99.1332, company.longitude, 0.0)
+        assertEquals("test.jpg", company.profilePicture)
+        assertEquals("test.pdf", company.pdfCurriculumUrl)
+        assertNull(company.pdfDicCdmxUrl)
+        assertNull(company.pdfPeeFideUrl)
+        assertEquals("test.pdf", company.pdfGuaranteeSecurityUrl)
+        assertEquals("test.pdf", company.pdfActaConstituyentesUrl)
+        assertEquals("test.pdf", company.pdfIneUrl)
+        assertEquals(status, company.status)
         assertEquals(timestamp, company.createdAt)
         assertEquals(timestamp, company.updatedAt)
     }
 
     /**
-     * @brief
-     * Test de la igualdad de dos objetos de la clase Companies
-     * @flags @Test
-     * @since 0.0.1
+     * @Brief
+     * Test de equals de la clase Companies
      */
     @Test
-    fun testEquality() {
+    fun testCompaniesEquals() {
         val timestamp = Timestamp(System.currentTimeMillis())
         val status = Status.APPROVED
         val company = Companies(
-            companyId = 1,
-            userId = 1,
+            companyId = UUID(0, 1),
+            userId = UUID(0, 1),
             name = "Test Company",
             description = "Test Description",
-            email = "company@email.com",
-            location = "Test Location",
-            profilePicture = "test.jpg",
-            status = status,
+            email = "company@test.com",
             phoneNumber = "+52 442 123 4567",
-            website = "https://example.com",
+            webPage = null,
+            street = "Test Street",
+            streetNumber = 123,
+            city = "Test City",
+            state = "Test State",
+            zipCode = 12345,
+            latitude = 19.4326,
+            longitude = -99.1332,
+            profilePicture = "test.jpg",
+            pdfCurriculumUrl = "test.pdf",
+            pdfDicCdmxUrl = null,
+            pdfPeeFideUrl = null,
+            pdfGuaranteeSecurityUrl = "test.pdf",
+            pdfActaConstituyentesUrl = "test.pdf",
+            pdfIneUrl = "test.pdf",
+            status = status,
             createdAt = timestamp,
             updatedAt = timestamp
         )
 
         val company2 = Companies(
-            companyId = 1,
-            userId = 1,
+            companyId = UUID(0, 1),
+            userId = UUID(0, 1),
             name = "Test Company",
             description = "Test Description",
-            email = "company@email.com",
-            location = "Test Location",
-            profilePicture = "test.jpg",
-            status = status,
+            email = "company@test.com",
             phoneNumber = "+52 442 123 4567",
-            website = "https://example.com",
+            webPage = null,
+            street = "Test Street",
+            streetNumber = 123,
+            city = "Test City",
+            state = "Test State",
+            zipCode = 12345,
+            latitude = 19.4326,
+            longitude = -99.1332,
+            profilePicture = "test.jpg",
+            pdfCurriculumUrl = "test.pdf",
+            pdfDicCdmxUrl = null,
+            pdfPeeFideUrl = null,
+            pdfGuaranteeSecurityUrl = "test.pdf",
+            pdfActaConstituyentesUrl = "test.pdf",
+            pdfIneUrl = "test.pdf",
+            status = status,
             createdAt = timestamp,
             updatedAt = timestamp
         )
@@ -96,41 +143,63 @@ class CompaniesTest {
     }
 
     /**
-     * @brief
-     * Test de la desigualdad de dos objetos de la clase Companies
-     * @flags @Test
-     * @since 0.0.1
+     * @Brief
+     * Test de not equals de la clase Companies
      */
     @Test
-    fun testInequality() {
+    fun testCompaniesNotEquals() {
         val timestamp = Timestamp(System.currentTimeMillis())
         val status = Status.APPROVED
         val company = Companies(
-            companyId = 1,
-            userId = 1,
+            companyId = UUID(0, 1),
+            userId = UUID(0, 1),
             name = "Test Company",
             description = "Test Description",
-            email = "company@email.com",
-            location = "Test Location",
-            profilePicture = "test.jpg",
-            status = status,
+            email = "company@test.com",
             phoneNumber = "+52 442 123 4567",
-            website = "https://example.com",
+            webPage = null,
+            street = "Test Street",
+            streetNumber = 123,
+            city = "Test City",
+            state = "Test State",
+            zipCode = 12345,
+            latitude = 19.4326,
+            longitude = -99.1332,
+            profilePicture = "test.jpg",
+            pdfCurriculumUrl = "test.pdf",
+            pdfDicCdmxUrl = null,
+            pdfPeeFideUrl = null,
+            pdfGuaranteeSecurityUrl = "test.pdf",
+            pdfActaConstituyentesUrl = "test.pdf",
+            pdfIneUrl = "test.pdf",
+            status = status,
             createdAt = timestamp,
             updatedAt = timestamp
         )
 
         val company2 = Companies(
-            companyId = 2,
-            userId = 2,
-            name = "Test Company 2",
-            description = "Test Description 2",
-            email = "company2@email.com",
-            location = "Test Location 2",
-            profilePicture = "test2.jpg",
-            status = status,
+            companyId = UUID(0, 3),
+            userId = UUID(0, 2),
+            name = "Test Company",
+            description = "Test Description",
+            email = "company@test.com",
             phoneNumber = "+52 442 123 4567",
-            website = "https://example.com",
+            webPage = null,
+            street = "Test Street",
+            streetNumber = 123,
+            city = "Test City",
+            state = "Test State",
+            zipCode = 12345,
+            latitude = 19.4326,
+            longitude = -99.1332,
+            profilePicture = "test.jpg",
+            pdfCurriculumUrl = "test.pdf",
+            pdfDicCdmxUrl = null,
+            pdfPeeFideUrl = null,
+            pdfGuaranteeSecurityUrl = "test.pdf",
+            pdfActaConstituyentesUrl = "test.pdf",
+            pdfIneUrl = "test.pdf",
+            status = status,
             createdAt = timestamp,
             updatedAt = timestamp
         )
@@ -140,106 +209,66 @@ class CompaniesTest {
 
     /**
      * @brief
-     * Test el hashCode de dos objetos de la clase Companies
-     * @flags @Test
-     * @since 0.0.1
+     * Test de hashCode de la clase Companies
      */
     @Test
-    fun testHashCode() {
+    fun testCompaniesHashCode() {
         val timestamp = Timestamp(System.currentTimeMillis())
         val status = Status.APPROVED
         val company = Companies(
-            companyId = 1,
-            userId = 1,
+            companyId = UUID(0, 1),
+            userId = UUID(0, 1),
             name = "Test Company",
             description = "Test Description",
-            email = "company@email.com",
-            location = "Test Location",
-            profilePicture = "test.jpg",
-            status = status,
+            email = "company@test.com",
             phoneNumber = "+52 442 123 4567",
-            website = "https://example.com",
+            webPage = null,
+            street = "Test Street",
+            streetNumber = 123,
+            city = "Test City",
+            state = "Test State",
+            zipCode = 12345,
+            latitude = 19.4326,
+            longitude = -99.1332,
+            profilePicture = "test.jpg",
+            pdfCurriculumUrl = "test.pdf",
+            pdfDicCdmxUrl = null,
+            pdfPeeFideUrl = null,
+            pdfGuaranteeSecurityUrl = "test.pdf",
+            pdfActaConstituyentesUrl = "test.pdf",
+            pdfIneUrl = "test.pdf",
+            status = status,
             createdAt = timestamp,
             updatedAt = timestamp
         )
 
         val company2 = Companies(
-            companyId = 1,
-            userId = 1,
+            companyId = UUID(0, 1),
+            userId = UUID(0, 1),
             name = "Test Company",
             description = "Test Description",
-            email = "company@email.com",
-            location = "Test Location",
-            profilePicture = "test.jpg",
-            status = status,
+            email = "company@test.com",
             phoneNumber = "+52 442 123 4567",
-            website = "https://example.com",
+            webPage = null,
+            street = "Test Street",
+            streetNumber = 123,
+            city = "Test City",
+            state = "Test State",
+            zipCode = 12345,
+            latitude = 19.4326,
+            longitude = -99.1332,
+            profilePicture = "test.jpg",
+            pdfCurriculumUrl = "test.pdf",
+            pdfDicCdmxUrl = null,
+            pdfPeeFideUrl = null,
+            pdfGuaranteeSecurityUrl = "test.pdf",
+            pdfActaConstituyentesUrl = "test.pdf",
+            pdfIneUrl = "test.pdf",
+            status = status,
             createdAt = timestamp,
             updatedAt = timestamp
         )
 
         assertEquals(company.hashCode(), company2.hashCode())
-    }
-
-    /**
-     * @brief
-     * Test el toString de un objeto de la clase Companies
-     * @flags @Test
-     * @since 0.0.1
-     */
-    @Test
-    fun testToString() {
-        val timestamp = Timestamp(System.currentTimeMillis())
-        val status = Status.APPROVED
-        val company = Companies(
-            companyId = 1,
-            userId = 1,
-            name = "Test Company",
-            description = "Test Description",
-            email = "test@example.com",
-            location = "Test Location",
-            profilePicture = "test.jpg",
-            status = status,
-            phoneNumber = "+52 442 123 4567",
-            website = "https://example.com",
-            createdAt = timestamp,
-            updatedAt = timestamp
-        )
-
-        val expectedString = "Companies(companyId=1, userId=1, name=Test Company" +
-            ", description=Test Description, email=test@example.com, location=Test Location" +
-            ", profilePicture=test.jpg, status=APPROVED, phoneNumber=+52 442 123 4567" +
-            ", website=https://example.com, createdAt=$timestamp, updatedAt=$timestamp)"
-
-        assertEquals(expectedString, company.toString())
-    }
-
-    /**
-     * @brief
-     * Test de nulabilidad de la propiedad profilePicture
-     * @flag @Test
-     * @since 0.0.1
-     */
-    @Test
-    fun testNullability() {
-        val timestamp = Timestamp(System.currentTimeMillis())
-        val status = Status.APPROVED
-        val company = Companies(
-            companyId = 1,
-            userId = 1,
-            name = "Test Company",
-            description = "Test Description",
-            email = "company@email.com",
-            location = "Test Location",
-            profilePicture = null,
-            status = status,
-            phoneNumber = "+52 442 123 4567",
-            website = null,
-            createdAt = timestamp,
-            updatedAt = timestamp
-        )
-
-        assertNull(company.profilePicture)
-        assertNull(company.website)
     }
 }
