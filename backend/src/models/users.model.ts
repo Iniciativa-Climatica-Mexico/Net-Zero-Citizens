@@ -12,6 +12,8 @@ import Company from './company.model'
 import Review from './review.model'
 import Role from './role.model'
 
+type Gender = 'masculine' | 'femenine' | 'other' | 'no_answer'
+
 /**
  * @interface User
  * @description User interface
@@ -29,7 +31,7 @@ import Role from './role.model'
  * @param {string} phoneNumber - The user's phone number
  * @param {number} age - The user's age
  * @param {string} state - The user's state
- * @param {enum} sex - The user's sex
+ * @param {enum} gender - The user's gender
  * @param {string} profilePicture - The user's profile picture url
  * @param {date} createdAt - The user's creation date
  * @param {date} updatedAt - The user's update date
@@ -37,7 +39,7 @@ import Role from './role.model'
 
 /**
  * @brief
- * User model
+ * El modelo representa la tabla USERS
  */
 @Table({ tableName: 'USERS' })
 export default class User extends Model {
@@ -46,7 +48,7 @@ export default class User extends Model {
     primaryKey: true,
     defaultValue: DataType.UUIDV4,
     allowNull: false,
-    field: 'USER_ID',
+    field: 'UUID',
   })
   userId: string
 
@@ -155,9 +157,9 @@ export default class User extends Model {
   @Column({
     type: DataType.ENUM('masculine', 'femenine', 'other', 'no_answer'),
     allowNull: false,
-    field: 'SEX',
+    field: 'GENDER',
   })
-  sex: 'masculine' | 'femenine' | 'other' | 'no_answer'
+  gender: Gender
 
   @Column({
     type: DataType.STRING,

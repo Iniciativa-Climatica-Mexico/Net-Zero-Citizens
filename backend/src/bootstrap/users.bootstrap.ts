@@ -12,7 +12,7 @@ export default class UserBootstrap extends Bootstrapper {
         phoneNumber: '1234567890',
         age: 30,
         state: 'NY',
-        sex: 'masculine',
+        gender: 'masculine',
         roleId: 'ADMIN_ROLE_ID',
       },
       {
@@ -23,7 +23,7 @@ export default class UserBootstrap extends Bootstrapper {
         phoneNumber: '0987654321',
         age: 25,
         state: 'CA',
-        sex: 'femenine',
+        gender: 'femenine',
         roleId: 'CUSTOMER_ROLE_ID',
       },
     ])
