@@ -1,16 +1,21 @@
 import chai from 'chai'
 import chaiExclude from 'chai-exclude'
+import chaiSubset from 'chai-subset'
 import { db, initDB } from '../src/configs/database.config'
 import {
   getAllSurveys,
   getSurveyById,
   createSurvey,
   closeSurvey,
+  CreateSurveyReqBody,
 } from '../src/services/survey.service'
 import { unwrap } from './utils'
 import Survey from '../src/models/survey.model'
+import Question from '../src/models/question.model'
+import QuestionOption from '../src/models/questionOption.model'
 
 chai.use(chaiExclude)
+chai.use(chaiSubset)
 
 const { expect } = chai
 
@@ -41,32 +46,44 @@ const testSurveyList = [
   },
 ]
 
-const testSurvey = [
-  {
-    surveyId: 'surv-0309-efgh-0000',
-    title: 'Encuesta de Portaluppi',
-    description: 'Portaluppi nos va a invitar pastelitos',
-  },
-]
+const testSurvey: CreateSurveyReqBody = {
+  title: 'Encuesta de Porta',
+  description: 'Encuesta de portaluppi con su portafolio',
+  questions: [
+    {
+      questionText: '¿Qué tan satisfecho está con el servicio?',
+      questionType: 'scale',
+    },
+    {
+      questionText: '¿Cómo describiría nuestro servicio?',
+      questionType: 'multiple_choice',
+      questionOptions: [
+        {
+          textOption: 'Excelente',
+        },
+        {
+          textOption: 'Bueno',
+        },
+        {
+          textOption: 'Regular',
+        },
+        {
+          textOption: 'Malo',
+        },
+        {
+          textOption: 'Pésimo',
+        },
+      ],
+    },
+  ],
+}
 
 const attributesToExclude = ['createdAt', 'updatedAt', 'startDate']
-const attributesToExclude2 = [
-  'createdAt',
-  'updatedAt',
-  'startDate',
+const attributesToExclude2 = attributesToExclude.concat(
   'surveyId',
-]
-
-const attributesToExclude3 = [
-  'createdAt',
-  'updatedAt',
-  'endDate',
-]
-
-const surveyToCreate = {
-  title: 'Encuesta de prueba',
-  description: 'Encuesta para probar el servicio de encuestas',
-}
+  'questionId',
+  'questionOptionId'
+)
 
 beforeEach(async () => {
   await db.drop()
@@ -94,16 +111,41 @@ describe('Survey Service', () => {
   })
 
   it('should create a new survey', async () => {
-    const response = await createSurvey(surveyToCreate)
-    const surveyDb = Survey.findByPk(response.surveyId)
-    expect(unwrap(surveyDb))
-      .excludingEvery(attributesToExclude2)
-      .to.deep.equal(surveyToCreate)
+    const response = await createSurvey(testSurvey)
+    const surveyDb = await Survey.findByPk(response.surveyId, {
+      include: [
+        {
+          model: Question,
+          association: 'questions',
+          include: [
+            {
+              model: QuestionOption,
+              association: 'questionOptions',
+            },
+          ],
+        },
+      ],
+    })
+    expect(unwrap(surveyDb)).containSubset(testSurvey)
   })
 
   it('should close a survey giving an endDate to the testSurvey', async () => {
-    await closeSurvey('surv-0309-efgh-0000')
-    const surveyBd = await Survey.findByPk('surv-0309-efgh-0000')
-    expect(unwrap(surveyBd)?.endDate).to.not.be.null
+    const response = await createSurvey(testSurvey)
+    const surveyDb = await Survey.findByPk(response.surveyId, {
+      include: [
+        {
+          model: Question,
+          association: 'questions',
+          include: [
+            {
+              model: QuestionOption,
+              association: 'questionOptions',
+            },
+          ],
+        },
+      ],
+    })
+    const closedSurvey = await closeSurvey(response.surveyId)
+    expect(closedSurvey?.endDate).to.not.be.null
   })
 })

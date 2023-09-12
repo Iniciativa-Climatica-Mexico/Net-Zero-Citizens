@@ -1,6 +1,9 @@
+import { z } from 'zod'
 import { unwrap } from '../../test/utils'
 import Survey from '../models/survey.model'
 import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
+import Question from '../models/question.model'
+import QuestionOption from '../models/questionOption.model'
 
 /**
  * @brief
@@ -33,22 +36,19 @@ export const getSurveyById = async (
   return s ? unwrap(s) : null
 }
 
-export type CreateSurveyReqBody = {
-  title: string
-  description: string
-  questions: QuestionsReq[]
-}
-export type QuestionsReq = {
-  questionText: string
-  questionType: string
-  questionOptions:
-    | [
-        {
-          textOption: string
-        },
-      ]
-    | undefined
-}
+export const createSurveyBodyScheme = z.object({
+  title: z.string().nonempty(),
+  description: z.string(),
+  questions: z.array(
+    z.object({
+      questionText: z.string(),
+      questionType: z.enum(['open', 'scale', 'multiple_choice']),
+      questionOptions: z.array(z.object({ textOption: z.string() })).optional(),
+    })
+  ),
+})
+
+export type CreateSurveyReqBody = z.infer<typeof createSurveyBodyScheme>
 /**
  * @brief
  * Función del servicio que devuelve todas las encuestas cerradas de la base de datos
@@ -60,10 +60,19 @@ export type QuestionsReq = {
 export const createSurvey = async (
   survey: CreateSurveyReqBody
 ): Promise<Survey> => {
-  const s = await Survey.create({
-    title: survey.title,
-    description: survey.description,
-    questions: survey.questions,
+  const s = await Survey.create(survey, {
+    include: [
+      {
+        model: Question,
+        association: 'questions',
+        include: [
+          {
+            model: QuestionOption,
+            association: 'questionOptions',
+          },
+        ],
+      },
+    ],
   })
   return unwrap(s)
 }

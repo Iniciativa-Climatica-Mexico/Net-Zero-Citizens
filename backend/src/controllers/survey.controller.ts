@@ -7,6 +7,7 @@ import {
   DeepPartial,
 } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
+import * as z from 'zod'
 
 /**
  * @brief
@@ -59,6 +60,8 @@ export const getSurveyById: RequestHandler<
   res.json(survey || undefined)
 }
 
+
+
 /**
  * @brief
  * Función del controlador que crea una encuesta en la base de datos
@@ -71,51 +74,11 @@ export const getSurveyById: RequestHandler<
 export const createSurvey: RequestHandler<
   NoRecord,
   Survey | { message: string },
-  DeepPartial<SurveyService.CreateSurveyReqBody>,
+  undefined,
   NoRecord
 > = async (req, res) => {
   try {
-    if (!req.body.title) {
-      res.status(400).json({ message: 'Title is required' })
-      return
-    }
-    if (!req.body.description) {
-      res.status(400).json({ message: 'Description is required' })
-      return
-    }
-    if (!req.body.questions) {
-      res.status(400).json({ message: 'Questions are required' })
-      return
-    }
-
-    for (const question of req.body.questions) {
-      if (!question?.questionText) {
-        res.status(400).json({ message: 'Question text is required' })
-        return
-      }
-      if (!question.questionType) {
-        res.status(400).json({ message: 'Question type is required' })
-        return
-      }
-      if (question.questionType === 'multipleChoice') {
-        if (!question.questionOptions) {
-          res.status(400).json({ message: 'Question options are required' })
-          return
-        }
-        question.questionOptions.forEach((option) => {
-          if (!option?.textOption) {
-            res.status(400).json({ message: 'Option text is required' })
-            return
-          }
-        })
-      }
-    }
-
-    const surveyData: SurveyService.CreateSurveyReqBody = {
-      title: req.body.title,
-      description: req.body.description,
-      questions: req.body.questions as SurveyService.QuestionsReq[],
-    }
+    const surveyData = SurveyService.createSurveyBodyScheme.parse(req.body)
 
     const survey = await SurveyService.createSurvey(surveyData)
     res.json(survey)
