@@ -1,11 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--tools:context=".framework.views.fragments.RegisterCompanyFragment" -->
+<?xml version="1.0" encoding="utf-8"?><!--tools:context=".framework.views.fragments.RegisterCompanyFragment" -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@android:color/white">
+    android:background="@android:color/white"
+    android:orientation="vertical">
 
     <!-- First LinearLayout, occupies half of the height -->
     <LinearLayout
@@ -26,12 +24,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Crear cuenta de empresa"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
             android:layout_marginBottom="10dp"
-            />
+            android:text="Crear cuenta de empresa"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -43,52 +40,51 @@
 
     <!-- Second LinearLayout, occupies half of the height -->
     <RelativeLayout
-            android:id="@+id/secondLinearLayout"
+        android:id="@+id/secondLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/rounded_edge_background"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@drawable/rounded_edge_background"
-            android:orientation="vertical"
+            android:layout_height="match_parent"
             android:gravity="center"
-            >
+            android:orientation="vertical"
+            android:padding="30dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:padding="30dp"
-                android:orientation="vertical">
-                <com.google.android.gms.common.SignInButton
-                    android:id="@+id/sign_in_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/sign_in_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <View
+                android:layout_width="300dp"
+                android:layout_height="1dp"
+                android:background="#B7B7B8" />
+
+            <Button
+                android:id="@+id/textButton"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_alignParentBottom="true"
-                android:orientation="vertical">
-                
-                <View
-                    android:layout_width="300dp"
-                    android:layout_height="1dp"
-                    android:background="#B7B7B8"/>
-                
-                <Button
-                    style="@style/Widget.Material3.Button.TextButton"
-                    android:id="@+id/textButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Aviso de privacidad"
-                    android:textSize="12sp"
-                    />
-            </LinearLayout>
+                android:text="Aviso de privacidad"
+                android:textSize="12sp" />
+        </LinearLayout>
 
 
-        </RelativeLayout>
+    </RelativeLayout>
 
 </LinearLayout>
