@@ -1,98 +1,183 @@
-import { db } from '../configs/database.config'
 import {
-  DataTypes,
+  Column,
+  DataType,
+  HasMany,
   Model,
-  InferAttributes,
-  InferCreationAttributes,
-  CreationOptional,
-} from 'sequelize'
+  Table,
+} from 'sequelize-typescript'
+import Review from './review.model'
+import CompanyImage from './companyImage.model'
 
 type StatusEnum = 'approved' | 'pending_approval' | 'rejected'
 
 /**
  * @brief
- * La interfaz con los atributos de la tabla COMPANIES
- */
-export interface Company
-  extends Model<InferAttributes<Company>, InferCreationAttributes<Company>> {
-  companyId: CreationOptional<number>
-  userId: number
-  name: string
-  description: string
-  email: string
-  location: string
-  profilePicture: CreationOptional<string>
-  status: StatusEnum
-  phoneNumber: string
-  webPage: CreationOptional<string>
-  createdAt?: Date
-  updatedAt?: Date
-}
-
-/**
- * @brief
  * El modelo que representa la tabla COMPANIES
  */
-export const CompaniesModel = db.define<Company>('COMPANIES', {
-  companyId: {
-    autoIncrement: true,
-    type: DataTypes.INTEGER,
-    allowNull: false,
+@Table({ tableName: 'COMPANIES' })
+export default class Company extends Model {
+  @Column({
+    type: DataType.UUID,
     primaryKey: true,
+    defaultValue: DataType.UUIDV4,
+    allowNull: false,
     field: 'COMPANY_ID',
-  },
-  userId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    // Uncomment when User model is created
-    // references: {
-    //   model: 'USERS',
-    //   key: 'USER_ID',
-    // },
-    // unique: 'FK_COMPANY_USER',
-    field: 'USER_ID',
-  },
-  name: {
-    type: DataTypes.STRING(255),
-    allowNull: false,
+  })
+  companyId: string
+
+  @Column({
     field: 'NAME',
-  },
-  description: {
-    type: DataTypes.STRING(500),
+    type: DataType.STRING(255),
     allowNull: false,
+  })
+  name: string
+
+  @Column({
     field: 'DESCRIPTION',
-  },
-  email: {
-    type: DataTypes.STRING(255),
+    type: DataType.STRING(500),
+    allowNull: false,
+  })
+  description: string
+
+  @Column({
+    field: 'EMAIL',
+    type: DataType.STRING(255),
     allowNull: false,
     unique: 'EMAIL',
-    field: 'EMAIL',
-  },
-  location: {
-    type: DataTypes.STRING(500),
-    allowNull: false,
-    field: 'LOCATION',
-  },
-  profilePicture: {
-    type: DataTypes.STRING(500),
-    allowNull: true,
-    field: 'PROFILE_PICTURE',
-  },
-  status: {
-    type: DataTypes.ENUM('approved', 'pending_approval', 'rejected'),
-    allowNull: false,
-    defaultValue: 'pending_approval',
-    field: 'STATUS',
-  },
-  phoneNumber: {
-    type: DataTypes.STRING(10),
+  })
+  email: string
+
+  @Column({
+    field: 'PHONE_NUMBER',
+    type: DataType.STRING(10),
     allowNull: false,
     unique: 'PHONE_NUMBER',
-    field: 'PHONE_NUMBER',
-  },
-  webPage: {
-    type: DataTypes.STRING(255),
-    allowNull: true,
+  })
+  phoneNumber: string
+
+  @Column({
     field: 'WEB_PAGE',
-  },
-})
+    type: DataType.STRING(255),
+    allowNull: true,
+    unique: 'WEB_PAGE',
+  })
+  webPage: string
+
+  @Column({
+    field: 'STRET',
+    type: DataType.STRING(255),
+    allowNull: false,
+  })
+  street: string
+
+  @Column({
+    field: 'STREET_NUMBER',
+    type: DataType.NUMBER,
+    allowNull: false,
+  })
+  streetNumber: number
+
+  @Column({
+    field: 'CITY',
+    type: DataType.STRING(255),
+    allowNull: false,
+  })
+  city: string
+
+  @Column({
+    field: 'STATE',
+    type: DataType.STRING(255),
+    allowNull: false,
+  })
+  state: string
+
+  @Column({
+    field: 'ZIP_CODE',
+    type: DataType.NUMBER,
+    allowNull: false,
+  })
+  zipCode: number
+
+  @Column({
+    field: 'LATITUDE',
+    type: DataType.NUMBER,
+    allowNull: false,
+  })
+  latitude: number
+
+  @Column({
+    field: 'LONGITUDE',
+    type: DataType.NUMBER,
+    allowNull: false,
+  })
+  longitude: number
+
+  @Column({
+    field: 'PROFILE_PICTURE',
+    type: DataType.STRING(500),
+    allowNull: true,
+  })
+  profilePicture: string
+
+  @Column({
+    field: 'PDF_CURRICULUM_URL',
+    type: DataType.STRING(500),
+    allowNull: false,
+    unique: 'PDF_CURRICULUM_URL',
+  })
+  pdfCurriculumUrl: string
+
+  @Column({
+    field: 'PDF_DIC_CDMX_URL',
+    type: DataType.STRING(500),
+    allowNull: true,
+    unique: 'PDF_DIC_CDMX_URL',
+  })
+  pdfDicCdmxUrl: string
+
+  @Column({
+    field: 'PDF_PEE_FIDE_URL',
+    type: DataType.STRING(500),
+    allowNull: true,
+    unique: 'PDF_PEE_FIDE_URL',
+  })
+  pdfPeeFideUrl: string
+
+  @Column({
+    field: 'PDF_GUARANTEE_SECURITY_URL',
+    type: DataType.STRING(500),
+    allowNull: false,
+    unique: 'PDF_GUARANTEE_SECURITY_URL',
+  })
+  pdfGuaranteeSecurityUrl: string
+
+  @Column({
+    field: 'PDF_ACTA_CONSTITUTIVA_URL',
+    type: DataType.STRING(500),
+    allowNull: false,
+    unique: 'PDF_ACTA_CONSTITUTIVA_URL',
+  })
+  pdfActaConstitutivaUrl: string
+
+  @Column({
+    field: 'PDF_INE_URL',
+    type: DataType.STRING(500),
+    allowNull: false,
+    unique: 'PDF_INE_URL',
+  })
+  pdfIneUrl: string
+
+  @Column({
+    field: 'STATUS',
+    type: DataType.ENUM('approved', 'pending_approval', 'rejected'),
+    allowNull: false,
+    defaultValue: 'pending_approval',
+  })
+  status: StatusEnum
+
+  @HasMany(() => Review)
+  reviews: Review[]
+
+  @HasMany(() => CompanyImage)
+  products: CompanyImage[]
+}
