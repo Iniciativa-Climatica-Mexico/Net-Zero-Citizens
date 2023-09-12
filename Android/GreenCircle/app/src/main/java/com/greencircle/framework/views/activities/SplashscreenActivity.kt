@@ -36,7 +36,7 @@ class SplashscreenActivity : AppCompatActivity() {
     }
 
     private fun passViewGoToMain() {
-        var intent: Intent = Intent(this, RegisterClientActivity::class.java)
+        var intent: Intent = Intent(this, RegisterCompanyActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         startActivity(intent)
         finish()
