@@ -2,6 +2,7 @@
 export function sum(a: number, b: number): number {
   return a + b
 }
+<<<<<<< HEAD
 
 export function scaleGenerator(
   color: string,
@@ -35,3 +36,6 @@ export function scaleGenerator(
   }
   return colors
 }
+=======
+  
+>>>>>>> 4f43b1993cf382ef75e350a59cfbb64708451f03
