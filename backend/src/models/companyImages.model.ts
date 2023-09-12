@@ -11,9 +11,10 @@ import Company from './company.model'
 @Table({ tableName: 'COMPANY_PRODUCTS' })
 export default class CompanyImages extends Model {
   @Column({
-    type: DataType.STRING(100),
+    type: DataType.UUID,
     primaryKey: true,
     allowNull: false,
+    defaultValue: DataType.UUIDV4,
     field: 'COMPANY_IMAGE_ID',
     unique: true,
   })
@@ -21,7 +22,7 @@ export default class CompanyImages extends Model {
 
   @ForeignKey(() => Company)
   @Column({
-    type: DataType.STRING(100),
+    type: DataType.UUID,
     allowNull: false,
     field: 'COMPANY_ID',
   })
@@ -42,5 +43,5 @@ export default class CompanyImages extends Model {
   altText: string | null
 
   @BelongsTo(() => Company)
-  imageCompany: CompanyImages
+  company: Company
 }

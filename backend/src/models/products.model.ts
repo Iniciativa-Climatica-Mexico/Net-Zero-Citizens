@@ -2,8 +2,11 @@ import {
   Table,
   Column,
   Model,
-  DataType
+  DataType,
+  BelongsToMany,
 } from 'sequelize-typescript'
+import Company from './company.model'
+import CompanyProducts from './companyProducts.model'
 
 @Table({ tableName: 'PRODUCTS' })
 export default class Product extends Model {
@@ -45,4 +48,6 @@ export default class Product extends Model {
   })
   imageAltText: string
 
+  @BelongsToMany(() => Company, { through: () => CompanyProducts })
+  companies!: Company[]
 }

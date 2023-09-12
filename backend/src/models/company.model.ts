@@ -1,5 +1,6 @@
 import {
   BelongsTo,
+  BelongsToMany,
   Column,
   DataType,
   ForeignKey,
@@ -10,6 +11,7 @@ import {
 import User from './users.model'
 import Review from './review.model'
 import CompanyImages from './companyImages.model'
+import CompanyProducts from './companyProducts.model'
 
 type StatusEnum = 'approved' | 'pending_approval' | 'rejected'
 
@@ -104,4 +106,6 @@ export default class Company extends Model {
   @HasMany(() => CompanyImages)
   companyImages: CompanyImages[]
 
+  @BelongsToMany(() => CompanyProducts, { through: () => CompanyProducts })
+  companyProducts!: CompanyProducts[]
 }

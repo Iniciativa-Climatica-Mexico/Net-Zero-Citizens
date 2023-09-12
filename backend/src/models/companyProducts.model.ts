@@ -3,18 +3,23 @@ import {
   Column,
   Model,
   DataType,
-  BelongsToMany,
-  ForeignKey
+  BelongsTo,
+  ForeignKey,
 } from 'sequelize-typescript'
 import Company from './company.model'
 import Products from './products.model'
 
+/**
+ * Modelo que representa la tabla COMPANY_PRODUCTS
+ * @class
+ */
 @Table({ tableName: 'COMPANY_PRODUCTS' })
 export default class CompanyProducts extends Model {
   @Column({
-    type: DataType.STRING(100),
+    type: DataType.UUID,
     primaryKey: true,
     allowNull: false,
+    defaultValue: DataType.UUIDV4,
     field: 'COMPANY_PRODUCT_ID',
     unique: true,
   })
@@ -22,7 +27,7 @@ export default class CompanyProducts extends Model {
 
   @ForeignKey(() => Products)
   @Column({
-    type: DataType.STRING(100),
+    type: DataType.UUID,
     allowNull: false,
     field: 'PRODUCT_ID',
   })
@@ -30,22 +35,23 @@ export default class CompanyProducts extends Model {
 
   @ForeignKey(() => Company)
   @Column({
-    type: DataType.STRING(100),
+    type: DataType.UUID,
     allowNull: false,
     field: 'COMPANY_ID',
   })
   companyId: string
 
   @Column({
-    type: DataType.STRING(500),
+    type: DataType.STRING(255),
     allowNull: false,
     field: 'PDF_PRODUCT_CERTIFICATION_URL',
     unique: true,
   })
   pdfProductCertificationUrl: string
 
-  @BelongsToMany(() => Company, { through: () => CompanyProducts })
-  companies!: Company[]
-  @BelongsToMany(() => Products, { through: () => CompanyProducts })
-  products!: Products[]
+  @BelongsTo(() => Company)
+  company!: Company
+
+  @BelongsTo(() => Products)
+  product!: Products
 }
