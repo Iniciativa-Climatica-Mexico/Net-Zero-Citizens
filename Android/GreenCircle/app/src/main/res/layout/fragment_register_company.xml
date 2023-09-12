@@ -65,14 +65,12 @@
                 android:gravity="center"
                 android:padding="30dp"
                 android:orientation="vertical">
-                <Button
-                    style="@style/Widget.Material3.Button.ElevatedButton"
-                    android:id="@+id/elevatedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:text="Continuar con Google"
-                    android:textSize="16sp"
-                    />
+
+                <com.google.android.gms.common.SignInButton
+                    android:id="@+id/sign_in_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
             </LinearLayout>
 
 
