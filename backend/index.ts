@@ -3,7 +3,7 @@ DotEnv.config()
 
 import express from 'express'
 import cors from 'cors'
-import { initRouter } from './src/routes/index.routes'
+import { initRouterV1 } from './src/routes/index.routes'
 import { initDB } from './src/configs/database.config'
 
 initDB()
@@ -14,7 +14,7 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-initRouter(app)
+initRouterV1(app)
 
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {

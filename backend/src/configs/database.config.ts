@@ -1,6 +1,4 @@
-'use strict'
-
-import { Sequelize } from 'sequelize'
+import { Sequelize } from 'sequelize-typescript'
 import { bootstrapDB } from './database.bootstrap'
 
 const env = process.env.NODE_ENV || 'development'
@@ -30,6 +28,7 @@ if (env === 'production') {
     },
   })
 }
+db.addModels([__dirname + '../../**/*.model.ts'])
 
 const initDB = async () => {
   try {
@@ -37,7 +36,7 @@ const initDB = async () => {
     console.log('Database connected')
     await db.sync()
     console.log('Database synchronized')
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV != 'production') {
       console.log('Bootstrapping database')
       await bootstrapDB()
     }

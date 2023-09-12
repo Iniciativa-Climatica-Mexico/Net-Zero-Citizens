@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from 'axios'
 
-const backendBaseUrl = "http://localhost:3000";
+const backendBaseUrl = 'http://localhost:3000'
 
 /**
  * @brief
@@ -9,10 +9,12 @@ const backendBaseUrl = "http://localhost:3000";
  */
 export const getPendingCompanies = async () => {
   try {
-    const response = await axios.get(`${backendBaseUrl}/company/pending`);
-    return response.data;
+    const response = await axios.get(`${backendBaseUrl}/api/v1/company/pending`)
+    return response.data.rows
   } catch (error) {
-    console.error("Error fetching pending companies:", error);
-    throw error;
+    console.error('Error fetching pending companies:', error)
+    throw error
   }
-};
+}
+
+

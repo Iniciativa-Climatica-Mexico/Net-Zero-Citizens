@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
+import { getPendingCompanies } from "@/api/v1/company";
+// Import the updateCompany function and UpdateCompanyInfoBody type
 
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { CellAction } from "@/components/cell-action";
-import ModalProveedor from "@/components/ModalProveedor";
 import {
   Table,
   TableBody,
@@ -16,97 +16,39 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useEffect } from "react";
 
-const proveedores = [
-  {
-    id: 1,
-    imagen:
-      "https://www.iwmbuzz.com/wp-content/uploads/2021/01/arnold-schwarzenegger-goes-face-to-face-with-himself-here-take-a-look-to-know-more.jpg",
-    nombre: "Villenergy",
-    servicio: "Instalaciones fotovoltaicas",
-    ubicacion: "Santiago de Queretaro, Queretaro",
-    estado: "Aprobado",
-  },
-  {
-    id: 2,
-    imagen:
-      "https://www.iwmbuzz.com/wp-content/uploads/2021/01/arnold-schwarzenegger-goes-face-to-face-with-himself-here-take-a-look-to-know-more.jpg",
-    nombre: "Villenergy",
-    servicio: "Instalaciones fotovoltaicas",
-    ubicacion: "Santiago de Queretaro, Queretaro",
-    estado: "Pendiente",
-  },
-  {
-    id: 3,
-    imagen:
-      "https://www.iwmbuzz.com/wp-content/uploads/2021/01/arnold-schwarzenegger-goes-face-to-face-with-himself-here-take-a-look-to-know-more.jpg",
-    nombre: "Villenergy",
-    servicio: "Instalaciones fotovoltaicas",
-    ubicacion: "Santiago de Queretaro, Queretaro",
-    estado: "Pendiente",
-  },
-  {
-    id: 4,
-    imagen:
-      "https://www.iwmbuzz.com/wp-content/uploads/2021/01/arnold-schwarzenegger-goes-face-to-face-with-himself-here-take-a-look-to-know-more.jpg",
-    nombre: "Villenergy",
-    servicio: "Instalaciones fotovoltaicas",
-    ubicacion: "Santiago de Queretaro, Queretaro",
-    estado: "Aprobado",
-  },
-  {
-    id: 5,
-    imagen:
-      "https://www.iwmbuzz.com/wp-content/uploads/2021/01/arnold-schwarzenegger-goes-face-to-face-with-himself-here-take-a-look-to-know-more.jpg",
-    nombre: "Villenergy",
-    servicio: "Instalaciones fotovoltaicas",
-    ubicacion: "Santiago de Queretaro, Queretaro",
-    estado: "Pendiente",
-  },
-  {
-    id: 6,
-    imagen:
-      "https://www.iwmbuzz.com/wp-content/uploads/2021/01/arnold-schwarzenegger-goes-face-to-face-with-himself-here-take-a-look-to-know-more.jpg",
-    nombre: "Villenergy",
-    servicio: "Instalaciones fotovoltaicas",
-    ubicacion: "Santiago de Queretaro, Queretaro",
-    estado: "Aprobado",
-  },
-  {
-    id: 7,
-    imagen:
-      "https://www.iwmbuzz.com/wp-content/uploads/2021/01/arnold-schwarzenegger-goes-face-to-face-with-himself-here-take-a-look-to-know-more.jpg",
-    nombre: "Villenergy",
-    servicio: "Instalaciones fotovoltaicas",
-    ubicacion: "Santiago de Queretaro, Queretaro",
-    estado: "Pendiente",
-  },
-  {
-    id: 8,
-    imagen:
-      "https://www.iwmbuzz.com/wp-content/uploads/2021/01/arnold-schwarzenegger-goes-face-to-face-with-himself-here-take-a-look-to-know-more.jpg",
-    nombre: "Villenergy",
-    servicio: "Instalaciones fotovoltaicas",
-    ubicacion: "Santiago de Queretaro, Queretaro",
-    estado: "Pendiente",
-  },
-];
+interface Company {
+  companyId: number
+  name: string
+  description: string
+  location: string
+  profilePicture: string
+  status: 'approved' | 'pending_approval' | 'rejected'
+  phoneNumber: string
+  webPage: string
+}
 
 export default function Home() {
-  const [modalOpen, setIsModalOpen] = useState(false);
+  const [pendingCompanies, setPendingCompanies] = useState<Company []>([])
+  const [status, setStatus] = useState('pending_approval') // State to track the current status
+
+  const fetchPending = async () => {
+    try {
+      const companies = await getPendingCompanies()
+      console.log(companies)
+      setPendingCompanies(companies)
+    } catch(error){
+      console.log("Fetch of companies was not succesful", error)
+    }
+  }
+
+  useEffect(() => {
+    fetchPending()
+  },[])
 
   return (
     <>
-      {modalOpen ? (
-        <div className="fixed top-0 left-0 right-0 bottom-0 bg-black opacity-60 z-20"></div>
-      ) : null}
-      {modalOpen ? (
-        <div className="flex flex-col items-center justify-center h-screen absolute left-1/2 right-1/2 z-30">
-          <ModalProveedor setIsModalOpen={setIsModalOpen} />
-        </div>
-      ) : (
-        <></>
-      )}
       <main className={`border m-[30px] mt-[15px] p-[20px] pb-5 rounded-lg`}>
         <h1 className="text-[20px] font-bold">Descubre Proveedores</h1>
         <div className="flex items-center py-4 gap-x-2">
@@ -130,36 +72,30 @@ export default function Home() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {proveedores.map((proveedor) => (
+            {pendingCompanies.map((company) => (
               <TableRow
-                key={proveedor.id}
-                onClick={() => {
-                  setIsModalOpen(true);
-                }}
+                key={company.companyId}
+
               >
                 <TableCell>
                   <Avatar>
-                    <AvatarImage src={proveedor.imagen} />
+                    <AvatarImage src={company.profilePicture} />
                   </Avatar>
                 </TableCell>
-                <TableCell>{proveedor.nombre}</TableCell>
-                <TableCell>{proveedor.servicio}</TableCell>
-                <TableCell>{proveedor.ubicacion}</TableCell>
+                <TableCell>{company.name}</TableCell>
+                <TableCell>{company.phoneNumber}</TableCell>
+                <TableCell>{company.location}</TableCell>
                 <TableCell>
                   <div
                     className={`${
-                      proveedor.estado === "Aprobado"
+                      company.status === "approved"
                         ? "bg-[#547C8B] text-white"
                         : "bg-[#FFE6C2] text-jet"
                     }
                     text-center rounded-xl py-2`}
                   >
-                    {proveedor.estado}
+                    Pendiente
                   </div>
-                </TableCell>
-
-                <TableCell className="text-right">
-                  <CellAction />
                 </TableCell>
               </TableRow>
             ))}
