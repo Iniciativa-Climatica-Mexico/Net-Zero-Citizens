@@ -1,5 +1,4 @@
 import User from '../models/users.model'
-import { PaginatedQuery, PaginationParams } from '../utils/RequestResponse'
 
 /**
  * @function getAllUsers
