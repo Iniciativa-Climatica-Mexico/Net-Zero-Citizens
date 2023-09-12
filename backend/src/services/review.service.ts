@@ -114,3 +114,26 @@ export const deleteReview = async (reviewId: string): Promise<Review> => {
     throw new Error('Review not found')
   }
 }
+
+/**
+ * @brief
+ * Función del servicio que actualiza una review de la base de datos
+ * @param params reviewId, comment, rating
+ * @returns Una promesa con la review actualizada
+ */
+
+export const updateReview = async (reviewId: string, comment: string, rating: number): Promise<Review> => {
+  const review = await Review.findOne({
+    where: {
+      reviewId: reviewId,
+    },
+  })
+  if (review) {
+    review.comment = comment
+    review.rating = rating
+    await review.save()
+    return review
+  } else {
+    throw new Error('Review not found')
+  }
+}

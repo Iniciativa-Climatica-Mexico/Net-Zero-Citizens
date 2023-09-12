@@ -12,4 +12,6 @@ router.post('/:userId/:companyId', controller.addReview)
 
 router.delete('/:reviewId', controller.deleteReview)
 
+router.put('/:reviewId', controller.updateReview)
+
 export default router
