@@ -1,4 +1,4 @@
-package com.greencircle.framework.views
+package com.greencircle.framework.views.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

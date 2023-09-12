@@ -1,4 +1,4 @@
-package com.greencircle.framework.views
+package com.greencircle.framework.views.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -36,7 +36,7 @@ class SplashscreenActivity : AppCompatActivity() {
     }
 
     private fun passViewGoToMain() {
-        var intent: Intent = Intent(this, MainActivity::class.java)
+        var intent: Intent = Intent(this, RegisterClientActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         startActivity(intent)
         finish()
