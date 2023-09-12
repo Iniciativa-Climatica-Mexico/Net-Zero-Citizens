@@ -1,29 +1,22 @@
-import { ReviewModel } from '../models/review.model'
-import axios from 'axios'
+import Review from '../models/review.model'
 import { Bootstrapper } from './Bootstraper'
-
-const companies = async() => {
-  const companies = await axios.get('https://localhost:3000/company')
-  return companies.data.rows
-}
-
-export default class CompanyBootstrap extends Bootstrapper {
+export default class ReviewBootstrap extends Bootstrapper {
   async run() {
-      ReviewModel.bulkCreate([
-        {
-            reviewId: 1,
-            userId: 'abcd-1234-efgh-5678',
-            companyId: 1,
-            rating: 5,
-            comment: 'This is a comment',
-        },
-        {
-            reviewId: 2,
-            userId: 'abcd-1234-efgh-5679',
-            companyId: 2,
-            rating: 5,
-            comment: 'This is a comment',
-          },
-      ])    
+    Review.bulkCreate([
+      {
+        reviewId: 'revw-1234-efgh-0000',
+        userId: 'abcd-1234-efgh-5678',
+        companyId: 'comp-1234-efgh-0000',
+        rating: 5,
+        comment: 'This is a comment',
+      },
+      {
+        reviewId: 'revw-1234-efgh-0001',
+        userId: 'abcd-1234-efgh-5679',
+        companyId: 'comp-1234-efgh-0000',
+        rating: 5,
+        comment: 'This is a comment',
+      },
+    ])
   }
 }

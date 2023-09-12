@@ -1,5 +1,4 @@
-import { UsersModel, User } from '../models/users.model'
-import { PaginatedQuery, PaginationParams } from '../utils/RequestResponse'
+import User from '../models/users.model'
 
 /**
  * @function getAllUsers
@@ -7,7 +6,7 @@ import { PaginatedQuery, PaginationParams } from '../utils/RequestResponse'
  * @returns User or Null
  */
 export const getUserInfo = async (userId: string): Promise<User | null> => {
-  return await UsersModel.findByPk(userId)
+  return await User.findByPk(userId)
 }
 
 export type UpdateUserInfoBody = {
@@ -25,20 +24,9 @@ export const updateUserInfo = async (
   userId: string,
   newUserInfo: UpdateUserInfoBody
 ): Promise<User | null> => {
-  const allowedKeys = [
-    'firstName',
-    'lastName',
-    'secondLastName',
-    'phoneNumber',
-    'age',
-    'state',
-    'sex',
-    'profilePicture',
-  ]
-  const userInfo = await UsersModel.findByPk(userId)
+  const userInfo = await User.findByPk(userId)
   if (userInfo) {
-    await userInfo.update(newUserInfo)
-    return userInfo
+    return userInfo.update(newUserInfo)
   } else {
     return null
   }
@@ -53,10 +41,9 @@ export const updateUserCredentials = async (
   userId: string,
   newUserCredentials: UpdateUserCredentials
 ): Promise<User | null> => {
-  const userInfo = await UsersModel.findByPk(userId)
+  const userInfo = await User.findByPk(userId)
   if (userInfo) {
-    await userInfo.update(newUserCredentials)
-    return userInfo
+    return userInfo.update(newUserCredentials)
   } else {
     return null
   }

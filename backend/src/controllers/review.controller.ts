@@ -1,4 +1,4 @@
-import { Review } from '../models/review.model'
+import Review from '../models/review.model'
 import * as ReviewService from '../services/review.service'
 import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
@@ -16,11 +16,12 @@ export const getAllReviews: RequestHandler<
       name: req.query.name || '',
     },
   }
-  const companies = await ReviewService.getAllReviews(params)
+
+  const reviews = await ReviewService.getAllReviews(params)
   res.json({
-    rows: companies.rows,
+    rows: reviews.rows,
     start: params.start,
     pageSize: params.pageSize,
-    total: companies.count,
+    total: reviews.count,
   })
 }

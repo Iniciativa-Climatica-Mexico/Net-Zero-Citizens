@@ -1,11 +1,9 @@
-import { UsersModel } from '../models/users.model'
+import User from '../models/users.model'
 import { Bootstrapper } from './Bootstraper'
-import { v4 as uuidv4 } from 'uuid'
-
 
 export default class UserBootstrap extends Bootstrapper {
   async run() {
-    UsersModel.bulkCreate([
+    User.bulkCreate([
       {
         userId: 'abcd-1234-efgh-5678',
         roleId: 1,
