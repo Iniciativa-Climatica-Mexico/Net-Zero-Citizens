@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.greencircle.databinding.FragmentCompanyContactInfoBinding
 
-class CompanyContactInfo: Fragment() {
+class CompanyContactInfo : Fragment() {
 
     private var _binding: FragmentCompanyContactInfoBinding? = null
 
@@ -19,10 +19,11 @@ class CompanyContactInfo: Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentCompanyContactInfoBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        return root
+        _binding = FragmentCompanyContactInfoBinding.inflate(
+            inflater, container,
+            false
+        )
+        return binding.root
     }
 
     override fun onDestroyView() {

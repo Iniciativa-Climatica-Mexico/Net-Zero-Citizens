@@ -31,10 +31,6 @@ class CompanyServicesFragment : Fragment() {
 
         _binding = FragmentCompanyServicesBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        // Inicializar fragmentos
-        val companyServicesFragment = CompanyServicesFragment()
-
         initializeComponents(root)
 
         // TODO: viewModel.getServicesList()
