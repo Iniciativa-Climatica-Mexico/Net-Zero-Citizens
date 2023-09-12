@@ -79,11 +79,6 @@ const testSurvey: CreateSurveyReqBody = {
 }
 
 const attributesToExclude = ['createdAt', 'updatedAt', 'startDate']
-const attributesToExclude2 = attributesToExclude.concat(
-  'surveyId',
-  'questionId',
-  'questionOptionId'
-)
 
 beforeEach(async () => {
   await db.drop()
@@ -131,20 +126,6 @@ describe('Survey Service', () => {
 
   it('should close a survey giving an endDate to the testSurvey', async () => {
     const response = await createSurvey(testSurvey)
-    const surveyDb = await Survey.findByPk(response.surveyId, {
-      include: [
-        {
-          model: Question,
-          association: 'questions',
-          include: [
-            {
-              model: QuestionOption,
-              association: 'questionOptions',
-            },
-          ],
-        },
-      ],
-    })
     const closedSurvey = await closeSurvey(response.surveyId)
     expect(closedSurvey?.endDate).to.not.be.null
   })
