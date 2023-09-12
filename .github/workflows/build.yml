@@ -7,7 +7,7 @@ on:
       - "Carlos/GithubActions"
 
   pull_request:
-    branches: [main, develop, "G*"]
+    branches: [main, develop]
     types: [opened, synchronize, reopened, closed]
   workflow_dispatch:
   create:
