@@ -39,7 +39,7 @@ export default class Survey extends Model {
     field: 'END_DATE',
     allowNull: true,
   })
-  endDate: Date
+  endDate: Date | null
 
   @HasMany(() => Question)
   questions!: Question[]

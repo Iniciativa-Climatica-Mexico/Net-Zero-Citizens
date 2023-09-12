@@ -23,7 +23,7 @@ export default class QuestionOption extends Model {
     allowNull: false,
     field: 'TEXT_OPTION',
   })
-  textOption: string | null
+  textOption: string
 
   @ForeignKey(() => Question)
   @Column({
