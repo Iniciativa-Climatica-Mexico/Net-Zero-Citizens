@@ -65,6 +65,15 @@ export const getReviewById: RequestHandler<
     })
   }
 
+/**
+ * @brief
+ * Función del controlador que devuelve una review por idCompany
+ * de la base de datos
+ * @param req La request HTTP al servidor
+ * @param res Un objeto paginador con la review y la
+ *            información de paginación
+ */
+
 export const getReviewByCompany: RequestHandler<
   { companyId: string },
   Paginator<Review>,
@@ -78,6 +87,36 @@ export const getReviewByCompany: RequestHandler<
       companyId: companyId,
     }
     const review = await ReviewService.getReviewByCompany(params)
+    res.json({
+      rows: review.rows,
+      start: params.start,
+      pageSize: params.pageSize,
+      total: review.count,
+    })
+  }
+
+/**
+ * @brief
+ * Función del controlador que devuelve una review por idUser
+ * de la base de datos
+ * @param req La request HTTP al servidor
+ * @param res Un objeto paginador con la review y la
+ *            información de paginación
+ */
+
+export const getReviewByUser: RequestHandler<
+  { userId: string },
+  Paginator<Review>,
+  NoRecord,
+  NoRecord
+  > = async (req, res) => {
+    const { userId } = req.params
+    const params = {
+      start: req.query.start || 0,
+      pageSize: req.query.pageSize || 10,
+      userId: userId,
+    }
+    const review = await ReviewService.getReviewByUser(params)
     res.json({
       rows: review.rows,
       start: params.start,
