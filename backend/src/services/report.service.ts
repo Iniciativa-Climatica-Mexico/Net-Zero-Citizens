@@ -62,44 +62,52 @@ export const getSurveyReport = async (
 
 function tabulateAnswers(question: Question): tabulatedAns[] {
   if (question.questionType == 'open') {
-    const tabulation = new Map<string, number>()
-    question.answers.forEach((ans) => {
-      const label = ans.answerText || ans.scaleValue?.toString()
-      if (label) {
-        const prev = tabulation.get(label)
-
-        tabulation.set(label, (prev || 0) + 1)
-      }
-    })
-
-    const ans: tabulatedAns[] = []
-
-    for (const [label, count] of tabulation.entries()) {
-      ans.push({ label, count })
-    }
-    return ans
-  } else {
-    const ans: tabulatedAns[] = []
-
-    if (question.questionType == 'scale') {
-      for (let i = 5; i >= 1; i--) {
-        ans.push({ label: i.toString(), count: 0 })
-      }
-    } else {
-      question.questionOptions.forEach((opt) => {
-        ans.push({ label: opt.textOption, count: 0 })
-      })
-    }
-
-    question.answers.forEach((answ) => {
-      const label = answ.answerText || answ.scaleValue?.toString()
-      if (label) {
-        const opt = ans.find((opt) => opt.label == label)
-        if (opt) {
-          opt.count++
-        }
-      }
-    })
-    return ans
+    return tabulateOpenQuestion(question)
   }
+
+  let labels: string[]
+  if (question.questionType == 'scale') {
+    labels = ['5', '4', '3', '2', '1']
+  } else {
+    labels = question.questionOptions.map((option) => option.textOption)
+  }
+
+  return tabulateFromLabels(question.answers, labels)
+}
+
+function tabulateOpenQuestion(question: Question): tabulatedAns[] {
+  const tabulation = new Map<string, number>()
+  question.answers.forEach((ans) => {
+    const label = ans.answerText || ans.scaleValue?.toString()
+    if (label) {
+      const prev = tabulation.get(label)
+
+      tabulation.set(label, (prev || 0) + 1)
+    }
+  })
+
+  const ans: tabulatedAns[] = []
+
+  for (const [label, count] of tabulation.entries()) {
+    ans.push({ label, count })
+  }
+  return ans
+}
+
+function tabulateFromLabels(
+  answers: Answer[],
+  labels: string[]
+): tabulatedAns[] {
+  const ans = labels.map((label) => ({ label, count: 0 }))
+
+  answers.forEach((answ) => {
+    const label = answ.answerText || answ.scaleValue?.toString()
+    if (label) {
+      const opt = ans.find((opt) => opt.label == label)
+      if (opt) {
+        opt.count++
+      }
+    }
+  })
+  return ans
 }
