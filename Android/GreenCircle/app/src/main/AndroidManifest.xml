@@ -31,7 +31,7 @@
             android:theme="@style/Theme.GreenCircle.NoActionBar" />
 
         <activity
-            android:name=".framework.views.activities.RegisterClientActivity"
+            android:name=".framework.views.activities.RegisterCompanyActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.GreenCircle.NoActionBar" />
