@@ -17,15 +17,22 @@ export type UserType = {
   appleId?: string | null,
   firstName: string,
   lastName: string,
-  secondLastName: string | null,
+  secondLastName?: string | null,
   email: string,
   password?: string | null,
   phoneNumber: string,
   age: number,
   state: string,
-  gender: 'masculine' | 'femenine' | 'other' | 'no_answer'
+  gender: string,
   profilePicture?: string | null,
 }
+
+/**
+ * @brief
+ * Tipo de dato para el género del usuario
+ */
+export type Gender = 'masculine' | 'femenine' | 'other' | 'no_answer'
+
 
 /**
  * @brief
