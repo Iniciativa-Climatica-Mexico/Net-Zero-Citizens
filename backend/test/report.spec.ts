@@ -17,46 +17,52 @@ const testData = {
     {
       questionText: '¿Qué tan satisfecho está con el servicio?',
       questionType: 'scale',
-      questionOptions: [],
       answers: [
         {
-          answerText: null,
-          scaleValue: 5,
+          count: 1,
+          label: '5',
         },
         {
-          answerText: null,
-          scaleValue: 4,
+          count: 1,
+          label: '4',
+        },
+        {
+          count: 0,
+          label: '3',
+        },
+        {
+          count: 0,
+          label: '2',
+        },
+        {
+          count: 0,
+          label: '1',
         },
       ],
     },
     {
       questionText: '¿Cómo describiría nuestro servicio?',
       questionType: 'multiple_choice',
-      questionOptions: [
-        {
-          textOption: 'Excelente',
-        },
-        {
-          textOption: 'Bueno',
-        },
-        {
-          textOption: 'Regular',
-        },
-        {
-          textOption: 'Malo',
-        },
-        {
-          textOption: 'Pésimo',
-        },
-      ],
       answers: [
         {
-          answerText: 'Excelente',
-          scaleValue: null,
+          count: 1,
+          label: 'Excelente',
         },
         {
-          answerText: 'Bueno',
-          scaleValue: null,
+          count: 1,
+          label: 'Bueno',
+        },
+        {
+          count: 0,
+          label: 'Regular',
+        },
+        {
+          count: 0,
+          label: 'Malo',
+        },
+        {
+          count: 0,
+          label: 'Pésimo',
         },
       ],
     },
