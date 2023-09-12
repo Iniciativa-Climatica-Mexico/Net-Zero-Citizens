@@ -105,16 +105,16 @@ export const getReviewByCompany: RequestHandler<
  */
 
 export const getReviewByUser: RequestHandler<
-  { userId: string },
+  { UUID: string },
   Paginator<Review>,
   NoRecord,
   NoRecord
   > = async (req, res) => {
-    const { userId } = req.params
+    const { UUID } = req.params
     const params = {
       start: req.query.start || 0,
       pageSize: req.query.pageSize || 10,
-      userId: userId,
+      UUID: UUID,
     }
     const review = await ReviewService.getReviewByUser(params)
     res.json({
@@ -139,24 +139,24 @@ export const getReviewByUser: RequestHandler<
 export const addReview: RequestHandler<
   { userId: string, companyId: string },
   string,
-  { comment: string, rating: number },
+  { review: string, score: number },
   NoRecord
   > = async (req, res) => {
     const { userId, companyId } = req.params
-    const { comment, rating } = req.body
+    const { review, score } = req.body
     if (!userId || !companyId) {
       res.status(400).json('Missing userId or companyId')
       return
     }
-    if (!comment) {
-      res.status(400).json('Missing comment')
+    if (!review) {
+      res.status(400).json('Missing review')
       return
-    } else if (!rating) {
-      res.status(400).json('Missing rating')
+    } else if (!score) {
+      res.status(400).json('Missing score')
       return
     }
     try {
-      await ReviewService.addReview(userId, companyId, comment, rating)
+      await ReviewService.addReview(userId, companyId, review, score)
       res.status(200).send('Added review')
     } catch (error) {
       console.log(error)
@@ -209,24 +209,24 @@ export const deleteReview: RequestHandler<
 export const updateReview: RequestHandler<
   { reviewId: string },
   string,
-  { comment: string, rating: number },
+  { review: string, score: number },
   NoRecord
   > = async (req, res) => {
     const { reviewId } = req.params
-    const { comment, rating } = req.body
+    const { review, score } = req.body
     if (!reviewId) {
       res.status(400).json('Missing reviewId')
       return
     }
-    if (!comment) {
-      res.status(400).json('Missing comment')
+    if (!review) {
+      res.status(400).json('Missing review')
       return
-    } else if (!rating) {
-      res.status(400).json('Missing rating')
+    } else if (!score) {
+      res.status(400).json('Missing score')
       return
     }
     try {
-      await ReviewService.updateReview(reviewId, comment, rating)
+      await ReviewService.updateReview(reviewId, review, score)
       res.status(200).send('Updated review')
     } catch (error) {
       console.log(error)

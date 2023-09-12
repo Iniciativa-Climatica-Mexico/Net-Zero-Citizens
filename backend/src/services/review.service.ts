@@ -1,4 +1,5 @@
 import Review from '../models/review.model'
+import User from '../models/users.model'
 import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
 
 /**
@@ -54,25 +55,32 @@ export const getReviewByCompany = async(
     where: {
       companyId: companyId,
     },
+    
+    include: [
+      {
+        model: User,
+        attributes: ['firstName', 'lastName'],
+      },
+    ],
   })
 }
 
 /**
  * @brief
  * Función del servicio que la(s) review(s) por id de usuario de la base de datos
- * @param params userId
+ * @param params UUID
  * @returns Una promesa con la(s) review(s) o null
  */
 
 export const getReviewByUser = async(
-  params: PaginationParams<{ userId: string }>
+  params: PaginationParams<{ UUID: string }>
 ): Promise<PaginatedQuery<Review>> => {
-  const { userId } = params
+  const { UUID } = params
   return await Review.findAndCountAll({
     limit: params.pageSize,
     offset: params.start,
     where: {
-      userId: userId,
+      UUID: UUID,
     },
   })
 }
@@ -81,16 +89,16 @@ export const getReviewByUser = async(
 /**
  * @brief
  * Función del servicio que agrega una review a la base de datos
- * @param params userId, companyId, comment, rating
+ * @param params UUID, companyId, review, score
  * @returns Una promesa con la review creada
  */
 
-export const addReview = async (userId: string, companyId: string, comment: string, rating: number): Promise<Review> => {
+export const addReview = async (UUID: string, companyId: string, review: string, score: number): Promise<Review> => {
   return await Review.create({
-    userId: userId,
+    UUID: UUID,
     companyId: companyId,
-    comment: comment,
-    rating: rating
+    review: review,
+    score: score
   })
 }
 
@@ -118,21 +126,21 @@ export const deleteReview = async (reviewId: string): Promise<Review> => {
 /**
  * @brief
  * Función del servicio que actualiza una review de la base de datos
- * @param params reviewId, comment, rating
+ * @param params reviewId, review, score
  * @returns Una promesa con la review actualizada
  */
 
-export const updateReview = async (reviewId: string, comment: string, rating: number): Promise<Review> => {
-  const review = await Review.findOne({
+export const updateReview = async (reviewId: string, review: string, score: number): Promise<Review> => {
+  const res = await Review.findOne({
     where: {
       reviewId: reviewId,
     },
   })
-  if (review) {
-    review.comment = comment
-    review.rating = rating
-    await review.save()
-    return review
+  if (res) {
+    res.review = review
+    res.score = score
+    await res.save()
+    return res
   } else {
     throw new Error('Review not found')
   }

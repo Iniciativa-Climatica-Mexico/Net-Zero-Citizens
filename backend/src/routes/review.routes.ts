@@ -6,9 +6,9 @@ const router = express.Router()
 router.get('/', controller.getAllReviews)
 router.get('/:reviewId', controller.getReviewById)
 router.get('/company/:companyId', controller.getReviewByCompany)
-router.get('/user/:userId', controller.getReviewByUser)
+router.get('/user/:UUID', controller.getReviewByUser)
 
-router.post('/:userId/:companyId', controller.addReview)
+router.post('/:UUID/:companyId', controller.addReview)
 
 router.delete('/:reviewId', controller.deleteReview)
 
