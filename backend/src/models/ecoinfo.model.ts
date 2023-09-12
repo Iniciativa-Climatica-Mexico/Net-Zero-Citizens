@@ -1,72 +1,36 @@
-import { db } from '../configs/database.config'
-import {
-  Table,
-  Column,
-  Model,
-  DataType,
-  ForeignKey,
-} from 'sequelize-typescript'
-import User from './users.model'
+import { Table, Column, Model, DataType } from 'sequelize-typescript'
 
 /**
  * @brief
  * Interface con los atributos de la tabla de ecoinfo
  */
 
-@Table({tableName: 'ECOINFO'})
+@Table({ tableName: 'ECOINFO' })
 export default class Ecoinfo extends Model {
   @Column({
-      type: DataType.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-      allowNull: false,
-      unique: 'ECOINFO_ID',
-      field: 'ECOINFO_ID',
-    })
-    ecoinfoId: string
-
-  @ForeignKey(() => User)
-  @Column({
-    field: 'USER_ID',
     type: DataType.UUID,
-    allowNull: true,
-    })
-  userId: string | null
-
-  @Column({
-    type: DataType.STRING(50),
+    primaryKey: true,
+    autoIncrement: true,
     allowNull: false,
-    field: 'TITLE',
+    defaultValue: DataType.UUIDV4,
+    unique: 'ECOINFO_ID',
+    field: 'ECOINFO_ID',
   })
-  title: string
+  ecoinfoId: string
 
   @Column({
-    type: DataType.TEXT,
+    type: DataType.STRING(255),
     allowNull: false,
-    field: 'CONTENT',
+    field: 'POST_ID',
   })
-  content: string
-
-  @Column({
-    type: DataType.STRING(50),
-    allowNull: true,
-    field: 'SUBTITLE',
-  })
-  subtitle: string | null
+  postId: string
 
   @Column({
     type: DataType.STRING(500),
     allowNull: true,
-    field: 'COVER_IMAGE',
+    field: 'COVER_IMAGE_URL',
   })
   coverImage: string | null
-
-  @Column({
-    type: DataType.STRING(50),
-    allowNull: true,
-    field: 'AUTHOR',
-  })
-  author: string | null
 
   @Column({
     type: DataType.STRING(100),

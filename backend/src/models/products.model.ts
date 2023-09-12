@@ -3,9 +3,10 @@ import {
   Column,
   Model,
   DataType,
-  HasMany,
+  BelongsToMany,
 } from 'sequelize-typescript'
-import companyProducts from './companyProducts.model'
+import Company from './company.model'
+import CompanyProducts from './companyProducts.model'
 
 @Table({ tableName: 'PRODUCTS' })
 export default class Product extends Model {
@@ -47,6 +48,6 @@ export default class Product extends Model {
   })
   imageAltText: string
 
-  // @HasMany(() => CompanyProducts)
-  // companyProducts!: CompanyProducts[]
+  @BelongsToMany(() => Company, { through: () => CompanyProducts })
+  companies!: Company[]
 }

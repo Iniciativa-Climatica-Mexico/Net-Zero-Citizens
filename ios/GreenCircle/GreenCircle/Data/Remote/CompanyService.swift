@@ -10,9 +10,9 @@ import Alamofire
 
 /// Inicializar clase de servicio con Singleton
 /// Se declaran los métodos para hacer las llamadas al backend
-class BackEndService {
+class CompanyService {
     /// Inicialización de singleton
-    static let shared = BackEndService()
+    static let shared = CompanyService()
     // TODO GET all companies
     
     /// Obtener compañía por id
