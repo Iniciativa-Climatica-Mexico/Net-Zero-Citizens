@@ -14,6 +14,14 @@
 		6C4452C92AA6EF8600BE5930 /* GreenCircleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4452C82AA6EF8600BE5930 /* GreenCircleTests.swift */; };
 		6C4452D32AA6EF8600BE5930 /* GreenCircleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4452D22AA6EF8600BE5930 /* GreenCircleUITests.swift */; };
 		6C4452D52AA6EF8600BE5930 /* GreenCircleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4452D42AA6EF8600BE5930 /* GreenCircleUITestsLaunchTests.swift */; };
+		6CB4982C2AB102CD00B6560C /* CoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB4982B2AB102CD00B6560C /* CoordinatorView.swift */; };
+		6CB4982E2AB102D300B6560C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB4982D2AB102D300B6560C /* LoginView.swift */; };
+		6CB498312AB1031A00B6560C /* FlowStacks in Frameworks */ = {isa = PBXBuildFile; productRef = 6CB498302AB1031A00B6560C /* FlowStacks */; };
+		6CB498342AB1077700B6560C /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 6CB498332AB1077700B6560C /* GoogleSignIn */; };
+		6CB498362AB1077700B6560C /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 6CB498352AB1077700B6560C /* GoogleSignInSwift */; };
+		6CB498382AB10B0800B6560C /* CornerRadiusExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB498372AB10B0800B6560C /* CornerRadiusExtension.swift */; };
+		6CB4983C2AB12C5800B6560C /* LinkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB4983B2AB12C5800B6560C /* LinkButton.swift */; };
+		6CB4983E2AB1367700B6560C /* UserRegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB4983D2AB1367700B6560C /* UserRegisterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +52,11 @@
 		6C4452CE2AA6EF8600BE5930 /* GreenCircleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GreenCircleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C4452D22AA6EF8600BE5930 /* GreenCircleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreenCircleUITests.swift; sourceTree = "<group>"; };
 		6C4452D42AA6EF8600BE5930 /* GreenCircleUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreenCircleUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		6CB4982B2AB102CD00B6560C /* CoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorView.swift; sourceTree = "<group>"; };
+		6CB4982D2AB102D300B6560C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		6CB498372AB10B0800B6560C /* CornerRadiusExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRadiusExtension.swift; sourceTree = "<group>"; };
+		6CB4983B2AB12C5800B6560C /* LinkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkButton.swift; sourceTree = "<group>"; };
+		6CB4983D2AB1367700B6560C /* UserRegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegisterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +64,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6CB498362AB1077700B6560C /* GoogleSignInSwift in Frameworks */,
+				6CB498312AB1031A00B6560C /* FlowStacks in Frameworks */,
+				6CB498342AB1077700B6560C /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,6 +150,7 @@
 		6C4452E12AA6F04D00BE5930 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				6CB498392AB12C1A00B6560C /* Components */,
 				6C4452E62AA6F08F00BE5930 /* ViewModels */,
 				6C4452E52AA6F08700BE5930 /* Views */,
 			);
@@ -161,6 +178,7 @@
 		6C4452E42AA6F06D00BE5930 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				6CB498372AB10B0800B6560C /* CornerRadiusExtension.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -168,6 +186,9 @@
 		6C4452E52AA6F08700BE5930 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6CB4982B2AB102CD00B6560C /* CoordinatorView.swift */,
+				6CB4983D2AB1367700B6560C /* UserRegisterView.swift */,
+				6CB4982D2AB102D300B6560C /* LoginView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -207,6 +228,14 @@
 			path = Remote;
 			sourceTree = "<group>";
 		};
+		6CB498392AB12C1A00B6560C /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				6CB4983B2AB12C5800B6560C /* LinkButton.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -223,6 +252,11 @@
 			dependencies = (
 			);
 			name = GreenCircle;
+			packageProductDependencies = (
+				6CB498302AB1031A00B6560C /* FlowStacks */,
+				6CB498332AB1077700B6560C /* GoogleSignIn */,
+				6CB498352AB1077700B6560C /* GoogleSignInSwift */,
+			);
 			productName = GreenCircle;
 			productReference = 6C4452B42AA6EF8500BE5930 /* GreenCircle.app */;
 			productType = "com.apple.product-type.application";
@@ -295,6 +329,10 @@
 				Base,
 			);
 			mainGroup = 6C4452AB2AA6EF8500BE5930;
+			packageReferences = (
+				6CB4982F2AB1031A00B6560C /* XCRemoteSwiftPackageReference "FlowStacks" */,
+				6CB498322AB1077700B6560C /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+			);
 			productRefGroup = 6C4452B52AA6EF8500BE5930 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -338,6 +376,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C4452BA2AA6EF8500BE5930 /* ContentView.swift in Sources */,
+				6CB4982C2AB102CD00B6560C /* CoordinatorView.swift in Sources */,
+				6CB4982E2AB102D300B6560C /* LoginView.swift in Sources */,
+				6CB4983E2AB1367700B6560C /* UserRegisterView.swift in Sources */,
+				6CB4983C2AB12C5800B6560C /* LinkButton.swift in Sources */,
+				6CB498382AB10B0800B6560C /* CornerRadiusExtension.swift in Sources */,
 				6C4452B82AA6EF8500BE5930 /* GreenCircleApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -657,6 +700,43 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6CB4982F2AB1031A00B6560C /* XCRemoteSwiftPackageReference "FlowStacks" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/johnpatrickmorgan/FlowStacks";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.3.4;
+			};
+		};
+		6CB498322AB1077700B6560C /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6CB498302AB1031A00B6560C /* FlowStacks */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6CB4982F2AB1031A00B6560C /* XCRemoteSwiftPackageReference "FlowStacks" */;
+			productName = FlowStacks;
+		};
+		6CB498332AB1077700B6560C /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6CB498322AB1077700B6560C /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		6CB498352AB1077700B6560C /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6CB498322AB1077700B6560C /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6C4452AC2AA6EF8500BE5930 /* Project object */;
 }
