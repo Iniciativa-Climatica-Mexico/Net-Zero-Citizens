@@ -1,7 +1,9 @@
 package com.greencircle.framework.ui.adapters.viewholders
 
 import android.content.Context
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
+import com.greencircle.R
 import com.greencircle.databinding.ItemServiceBinding
 import com.greencircle.domain.model.ServiceItem
 import com.greencircle.domain.model.ServicesObject
@@ -10,17 +12,20 @@ import com.greencircle.framework.viewmodel.CompanyServicesViewModel
 class ServiceViewHolder(private val binding: ItemServiceBinding) :
 
     RecyclerView.ViewHolder(binding.root) {
+
+    private val servicesMap = initMockServices()
     fun bind(item: ServiceItem, context: Context) {
-        val data = getServies(item.companyId)
+//        val serviceData = getService(item.companyId)
+        Log.d("SalidaBind", item.toString())
         binding.TVSName.text = item.name
         binding.TVSDescription.text = item.description
-        binding.IVSImage.setImageResource(0)
+        binding.IVSImage.setImageResource(R.drawable.ic_launcher_background)
     }
 
     fun initMockServices(): HashMap<String, ArrayList<ServiceItem>> {
         // TODO: Implement this function with endpoint
         val serviceMap = HashMap<String, ArrayList<ServiceItem>>()
-        val serviceItems: ServicesObject = CompanyServicesViewModel().getMockServicesList()
+        val serviceItems: ServicesObject = CompanyServicesViewModel().createMOckServicesList()
 
         for (service in serviceItems.results) {
             val companyId = service.companyId
@@ -35,8 +40,7 @@ class ServiceViewHolder(private val binding: ItemServiceBinding) :
         return serviceMap
     }
 
-    fun getServies(companyId: String): ArrayList<ServiceItem> {
-        val servicesMap = initMockServices()
+    fun getService(companyId: String): ArrayList<ServiceItem> {
         return servicesMap[companyId]!!
     }
 }

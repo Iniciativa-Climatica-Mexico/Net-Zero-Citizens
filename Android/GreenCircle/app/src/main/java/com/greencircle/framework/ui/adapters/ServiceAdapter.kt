@@ -1,6 +1,5 @@
 package com.greencircle.framework.ui.adapters
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -14,8 +13,7 @@ class ServiceAdapter : RecyclerView.Adapter<ServiceViewHolder>() {
     lateinit var context: Context
     var data: ArrayList<ServiceItem> = ArrayList()
 
-    @SuppressLint("NotConstructor")
-    fun ServiceAdapter(basicData: ArrayList<ServiceItem>, context: Context) {
+    fun initServiceAdapter(basicData: ArrayList<ServiceItem>, context: Context) {
         this.data = basicData
         this.context = context
     }

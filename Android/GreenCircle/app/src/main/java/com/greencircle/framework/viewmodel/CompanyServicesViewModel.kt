@@ -1,7 +1,9 @@
 package com.greencircle.framework.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.greencircle.domain.model.ServiceItem
 import com.greencircle.domain.model.ServicesObject
 import java.sql.Timestamp
 
@@ -11,11 +13,18 @@ class CompanyServicesViewModel : ViewModel() {
 
     // TODO: Repository and Getters
 
-    fun getMockServicesList(): ServicesObject {
-        val mockServices = ServicesObject(
+    fun getMockServicesList() {
+        val data = createMOckServicesList()
+        Log.d("CompanyServicesViewModel", "Generated mock services data: $data")
+        servicesObjectLiveData.postValue(data)
+    }
+
+    fun createMOckServicesList(): ServicesObject {
+
+        return ServicesObject(
             2,
             arrayListOf(
-                com.greencircle.domain.model.ServiceItem(
+                ServiceItem(
                     companyId = "1",
                     productId = "1",
                     name = "Service 1",
@@ -25,7 +34,7 @@ class CompanyServicesViewModel : ViewModel() {
                     createdAt = Timestamp(0),
                     updatedAt = Timestamp(0)
                 ),
-                com.greencircle.domain.model.ServiceItem(
+                ServiceItem(
                     companyId = "1",
                     productId = "2",
                     name = "Service 2",
@@ -37,7 +46,5 @@ class CompanyServicesViewModel : ViewModel() {
                 ),
             )
         )
-
-        return mockServices
     }
 }
