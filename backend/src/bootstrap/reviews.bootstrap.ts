@@ -8,6 +8,7 @@ export default class ReviewBootstrap extends Bootstrapper {
         UUID: 'abcd-1234-efgh-5678',
         companyId: 'comp-1234-efgh-0000',
         score: 5,
+        reviewTitle: 'This is a title',
         review: 'This is a comment',
       },
       {
@@ -15,6 +16,7 @@ export default class ReviewBootstrap extends Bootstrapper {
         UUID: 'abcd-1234-efgh-5679',
         companyId: 'comp-1234-efgh-0000',
         score: 5,
+        reviewTitle: 'This is a title',
         review: 'This is a comment',
       },
     ])

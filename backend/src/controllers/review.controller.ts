@@ -139,16 +139,16 @@ export const getReviewByUser: RequestHandler<
 export const addReview: RequestHandler<
   { UUID: string, companyId: string },
   string,
-  { review: string, score: number },
+  { reviewTitle: string, review: string, score: number },
   NoRecord
   > = async (req, res) => {
     const { UUID, companyId } = req.params
-    const { review, score } = req.body
+    const { reviewTitle, review, score } = req.body
     if (!UUID || !companyId) {
       res.status(400).json('Missing UUID or companyId')
       return
     }
-    if (!review) {
+    if (!review || !reviewTitle) {
       res.status(400).json('Missing review')
       return
     } else if (!score) {
@@ -156,7 +156,7 @@ export const addReview: RequestHandler<
       return
     }
     try {
-      await ReviewService.addReview(UUID, companyId, review, score)
+      await ReviewService.addReview(UUID, companyId, reviewTitle, review, score)
       res.status(200).send('Added review')
     } catch (error) {
       console.log(error)
@@ -209,16 +209,16 @@ export const deleteReview: RequestHandler<
 export const updateReview: RequestHandler<
   { reviewId: string },
   string,
-  { review: string, score: number },
+  { reviewTitle: string, review: string, score: number },
   NoRecord
   > = async (req, res) => {
     const { reviewId } = req.params
-    const { review, score } = req.body
+    const { reviewTitle, review, score } = req.body
     if (!reviewId) {
       res.status(400).json('Missing reviewId')
       return
     }
-    if (!review) {
+    if (!review || !reviewTitle) {
       res.status(400).json('Missing review')
       return
     } else if (!score) {
@@ -226,7 +226,7 @@ export const updateReview: RequestHandler<
       return
     }
     try {
-      await ReviewService.updateReview(reviewId, review, score)
+      await ReviewService.updateReview(reviewId, reviewTitle, review, score)
       res.status(200).send('Updated review')
     } catch (error) {
       console.log(error)

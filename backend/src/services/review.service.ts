@@ -55,7 +55,7 @@ export const getReviewByCompany = async(
     where: {
       companyId: companyId,
     },
-    
+
     include: [
       {
         model: User,
@@ -93,10 +93,11 @@ export const getReviewByUser = async(
  * @returns Una promesa con la review creada
  */
 
-export const addReview = async (UUID: string, companyId: string, review: string, score: number): Promise<Review> => {
+export const addReview = async (UUID: string, companyId: string, reviewTitle: string, review: string, score: number): Promise<Review> => {
   return await Review.create({
     UUID: UUID,
     companyId: companyId,
+    reviewTitle: reviewTitle,
     review: review,
     score: score
   })
@@ -130,13 +131,14 @@ export const deleteReview = async (reviewId: string): Promise<Review> => {
  * @returns Una promesa con la review actualizada
  */
 
-export const updateReview = async (reviewId: string, review: string, score: number): Promise<Review> => {
+export const updateReview = async (reviewId: string, reviewTitle: string, review: string, score: number): Promise<Review> => {
   const res = await Review.findOne({
     where: {
       reviewId: reviewId,
     },
   })
   if (res) {
+    res.reviewTitle = reviewTitle
     res.review = review
     res.score = score
     await res.save()
