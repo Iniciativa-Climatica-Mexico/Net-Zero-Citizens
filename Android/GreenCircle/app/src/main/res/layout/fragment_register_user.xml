@@ -59,9 +59,16 @@
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/sign_in_button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:signInText="Continuar con Google" />
+                android:layout_height="wrap_content"/>
                 />
+
+            <Button
+                android:id="@+id/continueToCreateUser"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ir a formulario"
+                android:textSize="12sp" />
 
         </LinearLayout>
 
