@@ -117,30 +117,48 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/userState"
-            style="?attr/textInputOutlinedDenseStyle"
+            android:id="@+id/textInputLayoutState"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:hint="Estado *">
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <AutoCompleteTextView
+                android:id="@+id/userState"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:hint="Estado *"
+                android:inputType="none"
+                android:importantForAccessibility="yes"
+                android:clickable="true"
+                android:layout_gravity="center_vertical"
+                app:hintTextColor="@color/blue"
+                android:textColorHint="@color/gray_500"
+                app:boxStrokeColor="@color/blue"
+                android:layout_marginBottom="20dp"
+                />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/userGender"
-            style="?attr/textInputOutlinedDenseStyle"
+            android:id="@+id/textInputLayoutGender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:hint="Género *">
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <AutoCompleteTextView
+                android:id="@+id/userGender"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:hint="Género *"
+                android:inputType="none"
+                android:importantForAccessibility="yes"
+                android:clickable="true"
+                android:layout_gravity="center_vertical"
+                app:hintTextColor="@color/blue"
+                android:textColorHint="@color/gray_500"
+                app:boxStrokeColor="@color/blue"
+                android:layout_marginBottom="20dp"
+                />
 
         </com.google.android.material.textfield.TextInputLayout>
 
