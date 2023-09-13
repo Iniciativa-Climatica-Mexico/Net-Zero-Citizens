@@ -43,10 +43,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/TVCompanyName"
-            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="24dp"
-            app:checkedButton="@+id/button1"
+            app:checkedButton="@+id/btnServices"
             app:selectionRequired="true"
             app:singleSelection="true">
 
