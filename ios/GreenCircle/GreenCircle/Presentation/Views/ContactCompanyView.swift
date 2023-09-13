@@ -92,7 +92,7 @@ struct ContactCompanyComponentView: View {
             VStack(alignment: .leading, spacing: 5) {
                 Text("Dirección").font(.system(size: 13))
                     .foregroundColor(Color("BlackCustom")).contrast(12.6)
-                Text(modelCompany.contentCompany.location).font(.system(size: 10))
+                Text(modelCompany.contentCompany.state).font(.system(size: 10))
                     .foregroundColor(Color("GreenCustom"))
 
             }
@@ -101,7 +101,7 @@ struct ContactCompanyComponentView: View {
             VStack(alignment: .leading, spacing: 5) {
                 Text("Número telefónico").font(.system(size: 13))
                     .foregroundColor(Color("BlackCustom")).contrast(12.6)
-                Text(modelCompany.contentCompany.phoneNumber)
+                Text(modelCompany.contentCompany.phone)
                     .font(.system(size: 10))
                     .foregroundColor(Color("GreenCustom"))
 
