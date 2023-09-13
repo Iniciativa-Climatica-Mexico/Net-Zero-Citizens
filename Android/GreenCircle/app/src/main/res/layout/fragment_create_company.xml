@@ -253,6 +253,25 @@
                     android:textColor="@color/gray_900"/>
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/companyZipCodeTextField"
+                style="?attr/textInputOutlinedDenseStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="Código Postal *"
+                android:textColorHint="@color/gray_500"
+                app:boxStrokeColor="@color/blue"
+                app:endIconMode="clear_text"
+                app:endIconTint="@color/gray_500"
+                app:hintTextColor="@color/blue">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray_900"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
             <Button
                 style="@style/Widget.Material3.Button.TonalButton"
                 android:id="@+id/continueToCompanyRegisterForm"
