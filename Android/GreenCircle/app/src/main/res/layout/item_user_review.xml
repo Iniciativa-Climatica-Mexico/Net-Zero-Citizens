@@ -44,6 +44,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/reviewCardDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="end"
@@ -51,6 +52,7 @@
                     android:textSize="11sp" />
 
                 <ImageButton
+                    android:id="@+id/reviewCardDeleteButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -73,17 +75,19 @@
             card_view:layout_constraintTop_toBottomOf="@id/linearLayout2">
 
             <RatingBar
+                android:id="@+id/reviewCardRatingBar"
                 style="@android:style/Widget.Material.RatingBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <TextView
+                android:id="@+id/reviewCardRating"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
-                android:textColor="@color/green"
                 android:gravity="center_vertical|end"
                 android:text="4 / 5"
+                android:textColor="@color/green"
                 android:textSize="13sp" />
 
         </LinearLayout>
@@ -98,10 +102,10 @@
 El servicio de atención al cliente es satisfactorio, pero tuve pequeñas complicaciones en la comunicacion"
             android:textColor="@color/gray_700"
             android:textSize="13sp"
+            card_view:flow_verticalBias="0.0"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:flow_verticalBias="0.0"
             card_view:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
 
