@@ -37,7 +37,7 @@ export default class Product extends Model {
   @Column({
     type: DataType.STRING(500),
     allowNull: false,
-    field: 'DESCRIPTION',
+    field: 'IMAGE_URL',
     unique: true,
   })
   imageUrl: string

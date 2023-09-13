@@ -15,7 +15,7 @@ class CompanyViewModel: ObservableObject {
     /// La compañía puede cambiar en la vista (se construye .onAppear())
     @Published var contentCompany: Company = Company(
             companyId: UUID(uuidString: "") ?? UUID(),
-            userId: UUID(uuidString: "") ?? UUID(),
+            userId: "",
             name: "",
             description: "",
             email: "",
@@ -26,8 +26,8 @@ class CompanyViewModel: ObservableObject {
             city: "",
             state: "",
             zipCode: 0,
-            latitude: 0,
-            longitude: 0,
+            latitude: 0.0,
+            longitude: 0.0,
             profilePicture: "",
             pdfCurriculumUrl: "",
             pdfDicCdmxUrl: "",

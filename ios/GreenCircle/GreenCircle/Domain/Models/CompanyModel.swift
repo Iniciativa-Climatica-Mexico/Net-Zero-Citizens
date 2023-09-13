@@ -15,19 +15,19 @@ enum StatusEnum: String, Codable {
 
 struct Company: Codable {
     var companyId: UUID
-    var userId: UUID
+    var userId: String
     var name: String
     var description: String
     var email: String
     var phone: String
     var webPage: String?
     var street: String
-    var streetNumber: Int //TO DO maybe it is string
+    var streetNumber: Int
     var city: String
     var state: String
     var zipCode: Int
-    var latitude: Int
-    var longitude: Int
+    var latitude: Double
+    var longitude: Double
     var profilePicture: String?
     var pdfCurriculumUrl: String?
     var pdfDicCdmxUrl: String
@@ -36,8 +36,9 @@ struct Company: Codable {
     var pdfActaConstitutivaUrl: String
     var pdfIneUrl: String
     var status: StatusEnum
-    // var product: Products?
-    // var reviews: Reviews?
+    // var reviews: [Review]
+    // var images: [CompanyImages]
+    // var images: [Product]
     var createdAt: String
     var updatedAt: String
 }
