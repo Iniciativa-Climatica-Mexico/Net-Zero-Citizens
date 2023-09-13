@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/reviewCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    card_view:cardCornerRadius="10dp"
+    card_view:cardElevation="50dp"
     android:orientation="vertical"
+    android:layout_marginTop="10dp"
+    android:layout_marginHorizontal="10dp"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -105,26 +110,19 @@
             card_view:layout_constraintTop_toBottomOf="@+id/linearLayout"
             card_view:layout_constraintVertical_bias="0.0" />
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/reviewCardContent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:gravity="left"
+            android:text="¡Me encantaron sus productos! Estos paneles solares fueron entregados en mi puerta justo a tiempo :)
+El servicio de atención al cliente es satisfactorio, pero tuve pequeñas complicaciones en la comunicacion"
+            android:textColor="@color/gray_700"
+            android:textSize="13sp"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/reviewCardTitle"
-            card_view:layout_constraintVertical_bias="0.0">
-
-            <TextView
-                android:id="@+id/reviewCardContent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="¡Me encantaron sus productos! Estos paneles solares fueron entregados en mi puerta justo a tiempo :)
-El servicio de atención al cliente es satisfactorio, pero tuve pequeñas complicaciones en la comunicacion"
-                android:textColor="@color/gray_700"
-                android:textSize="13sp" />
-
-        </LinearLayout>
+            card_view:layout_constraintTop_toBottomOf="@+id/reviewCardTitle" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -9,7 +9,13 @@ class CompanyReviewViewHolder(private var binding: ItemCompanyReviewBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: CompanyReview, context: Context) {
-        binding.reviewCardName.text = item.UUID
+        val name = item.user.firstName + " " + item.user.lastName
+        val rating = item.rating.toString() + "/5"
+        binding.reviewCardName.text = name
+        binding.reviewCardTitle.text = item.reviewTitle
         binding.reviewCardContent.text = item.review
+        binding.reviewCardRating.text = rating
+        binding.reviewCardDate.text = item.updatedAt
+        binding.reviewCardRatingBar.rating = item.rating.toFloat()
     }
 }
