@@ -127,7 +127,7 @@ jobs:
   linter_test:
     name: ANDROID LINTER TEST
     runs-on: ubuntu-latest
-    if: contains(github.ref, 'android/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    if: contains(github.ref, 'android/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/G')
 
     steps:
       - name: Checkout
@@ -159,7 +159,7 @@ jobs:
 
       - name: Linter test
         working-directory: Android/GreenCircle
-        run: ./gradlew kttlintCheck
+        run: ./gradlew ktlintCheck
 
   # Android Test
   unit_test:
@@ -168,7 +168,7 @@ jobs:
 
     # Pipeline to continue Android Test Report Step
     continue-on-error: true
-    if: contains(github.ref, 'android/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    if: contains(github.ref, 'android/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/G')
 
     steps:
       - name: Checkout
@@ -218,7 +218,7 @@ jobs:
     name: ANDROID APK GENERATE
     runs-on: ubuntu-latest
     continue-on-error: true
-    if: contains(github.ref, 'android/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    if: contains(github.ref, 'android/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/G')
 
     steps:
       - name: Checkout
@@ -265,7 +265,7 @@ jobs:
   backend_linter_test:
     name: BACKEND LINTER TEST
     runs-on: ubuntu-latest
-    if: contains(github.ref, 'backend/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    if: contains(github.ref, 'backend/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/G')
 
     steps:
       - name: Checkout
@@ -298,7 +298,7 @@ jobs:
   node_test:
     name: BACKEND UNIT TESTS
     runs-on: ubuntu-latest
-    if: contains(github.ref, 'backend/')  || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    if: contains(github.ref, 'backend/')  || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/G')
 
     steps:
       - name: Checkout
@@ -342,7 +342,7 @@ jobs:
   admin_linter_test:
     name: ADMIN PANEL LINTER TEST
     runs-on: ubuntu-latest
-    if: contains(github.ref, 'Admin/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    if: contains(github.ref, 'Admin/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/G')
 
     steps:
       - name: Checkout
@@ -375,7 +375,7 @@ jobs:
   node_test_admin:
     name: ADMIN PANEL UNIT TESTS
     runs-on: ubuntu-latest
-    if: contains(github.ref, 'Admin/')  || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    if: contains(github.ref, 'Admin/')  || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/G')
 
     steps:
       - name: Checkout
