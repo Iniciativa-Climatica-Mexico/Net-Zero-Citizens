@@ -76,8 +76,8 @@
                 android:text="Reviews" />
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
-        <fragment
-            android:id="@+id/FCompanyServices"
+        <FrameLayout
+            android:id="@+id/fragmentContainer"
             android:name="com.greencircle.framework.views.fragments.CompanyServicesFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

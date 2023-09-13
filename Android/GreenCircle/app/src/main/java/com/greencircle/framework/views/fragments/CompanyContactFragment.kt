@@ -1,22 +1,23 @@
 package com.greencircle.framework.views.fragments
+
 import CompanyContactViewModel
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.button.MaterialButtonToggleGroup
 import com.greencircle.R
 import com.greencircle.databinding.FragmentCompanyContactBinding
-import org.imaginativeworld.whynotimagecarousel.ImageCarousel
 
 class CompanyContactFragment : Fragment() {
 
     private lateinit var viewModel: CompanyContactViewModel
     private var _binding: FragmentCompanyContactBinding? = null
     private val binding get() = _binding!!
+
+    private val servicesFragment by lazy { CompanyServicesFragment() }
+    private val contactInfoFragment by lazy { CompanyContactInfoFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,45 +30,38 @@ class CompanyContactFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCompanyContactBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
-        val carousel = root.findViewById<ImageCarousel>(R.id.carousel)
+        viewModel.carouselItems.observe(viewLifecycleOwner) { items ->
+            binding.carousel.addData(items)
+        }
 
-        viewModel.carouselItems.observe(
-            viewLifecycleOwner,
-            Observer { items ->
-                // Add new data to the carousel
-                carousel.addData(items)
-            }
-        )
+        childFragmentManager.beginTransaction()
+            .add(R.id.fragmentContainer, servicesFragment)
+            .add(R.id.fragmentContainer, contactInfoFragment)
+            .hide(contactInfoFragment)
+            .commit()
 
-        val toggleButtonGroup = root.findViewById<MaterialButtonToggleGroup>(
-            R.id.toggleButtonGroup
-        )
-
-        toggleButtonGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
+        binding.toggleButtonGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
                 when (checkedId) {
                     R.id.btnServices -> {
-                        // Replace the current fragment with CompanyServicesFragment
-                        val fragment = CompanyServicesFragment()
                         childFragmentManager.beginTransaction()
-                            .replace(R.id.FCompanyServices, fragment)
+                            .show(servicesFragment)
+                            .hide(contactInfoFragment)
                             .commit()
                     }
 
                     R.id.btnContactInfo -> {
-                        // Replace the current fragment with ContactInfoFragment
-                        val fragment = CompanyContactInfoFragment()
                         childFragmentManager.beginTransaction()
-                            .replace(R.id.FCompanyServices, fragment)
+                            .show(contactInfoFragment)
+                            .hide(servicesFragment)
                             .commit()
                     }
                 }
             }
         }
 
-        return root
+        return binding.root
     }
 
     override fun onDestroyView() {
