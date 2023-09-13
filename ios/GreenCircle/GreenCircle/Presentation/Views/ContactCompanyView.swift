@@ -39,26 +39,34 @@ struct TabViewImages: View {
 }
 
 struct ContactCompanyRatingView: View {
+    @Binding var dispScrollView: Bool
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("Rating")
-                .font(.system(size: 15))
-                .padding(.bottom, 3).bold().foregroundColor(Color("BlackCustom")).contrast(12.6)
-            HStack {
-                Image(systemName: "star.fill")
-                Image(systemName: "star.fill")
-                Image(systemName: "star.fill")
-                Image(systemName: "star.fill")
-                Image(systemName: "star.fill")
-            }
-            Divider()
-            Text("Reviews")
-                .font(.system(size: 15))
-                .padding(.bottom, 3).bold().foregroundColor(Color("BlackCustom")).contrast(12.6)
-            Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incididunt ut labore et dolore magna aliqua.")
-                .font(.system(size: 13)).foregroundColor(Color("BlackCustom")).contrast(12.6)
-            Spacer()
-        }.padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
+        if !dispScrollView {
+            VStack(alignment: .leading) {
+                Text("Rating")
+                    .font(.system(size: 15))
+                    .padding(.bottom, 3).bold().foregroundColor(Color("BlackCustom")).contrast(12.6)
+                HStack {
+                    Image(systemName: "star.fill")
+                    Image(systemName: "star.fill")
+                    Image(systemName: "star.fill")
+                    Image(systemName: "star.fill")
+                    Image(systemName: "star.fill")
+                }
+                Divider()
+                Text("Reviews")
+                    .font(.system(size: 15))
+                    .padding(.bottom, 3).bold().foregroundColor(Color("BlackCustom")).contrast(12.6)
+                HStack {
+                    Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incididunt ut labore et dolore magna aliqua.")
+                        .font(.system(size: 13)).foregroundColor(Color("BlackCustom")).contrast(12.6)
+                    Text("Ver mas...").onTapGesture {
+                        dispScrollView = true
+                    }
+                }
+                Spacer()
+            }.padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
+        }
     }
 }
 
@@ -157,64 +165,72 @@ struct ContactCompanyView: View {
     @StateObject var contactCompanyViewModel = CompanyViewModel()
     @State var isPressed: [String: Bool] = ["Servicio": true]
     @State var selectedPage: Int = 0
+    @State var dispScrollView: Bool = false
     
     init() {
         Theme.navigationBarColors(background: UIColor(Color("BlueCustom")), titleColor: .white)
     }
     
     var body: some View {
-        NavigationStack {
-            VStack(alignment: .leading) {
-                HStack {
-                    Image(systemName: "square.and.arrow.up.on.square")
-                        .resizable()
-                        .scaledToFit()
-                        .aspectRatio(contentMode: .fit)
-                    
-                }.padding().frame(maxWidth: .infinity, maxHeight: 165).foregroundColor(.blue)
-                Text(contactCompanyViewModel.contentCompany.name)
-                    .foregroundColor(Color("BlackCustom"))
-                    .padding(.leading, 25).bold() // Align the text to the leading edge
-                Divider()
-                HStack {
-                    CustomButtonOption(isPressed: $isPressed, content: "Servicio")
-                    CustomButtonOption(isPressed: $isPressed, content: "Contacto")
-                    CustomButtonOption(isPressed: $isPressed, content: "Reviews")
-                }
-                Spacer()
-                ForEach(Array(isPressed.keys), id: \.self) { key in
-                    if let value: Bool = isPressed[key], value == true {
-                        TabViewImages()
-                        if key == "Servicio" {
-                            ServiceComponentView()
-                        }
-                        if key == "Contacto" {
-                           ContactCompanyComponentView(modelCompany: contactCompanyViewModel)
-                        }
-                        if key == "Reviews" {
-                            ContactCompanyRatingView()
+        if !dispScrollView {
+            NavigationStack {
+                VStack(alignment: .leading) {
+                    HStack {
+                        Image(systemName: "square.and.arrow.up.on.square")
+                            .resizable()
+                            .scaledToFit()
+                            .aspectRatio(contentMode: .fit)
+                        
+                    }.padding().frame(maxWidth: .infinity, maxHeight: 165).foregroundColor(.blue)
+                    Text(contactCompanyViewModel.contentCompany.name)
+                        .foregroundColor(Color("BlackCustom"))
+                        .padding(.leading, 25).bold() // Align the text to the leading edge
+                    Divider()
+                    HStack {
+                        CustomButtonOption(isPressed: $isPressed, content: "Servicio")
+                        CustomButtonOption(isPressed: $isPressed, content: "Contacto")
+                        CustomButtonOption(isPressed: $isPressed, content: "Reviews")
+                    }
+                    Spacer()
+                    ForEach(Array(isPressed.keys), id: \.self) { key in
+                        if let value: Bool = isPressed[key], value == true {
+                            TabViewImages()
+                            if key == "Servicio" {
+                                ServiceComponentView()
+                            }
+                            if key == "Contacto" {
+                                ContactCompanyComponentView(modelCompany: contactCompanyViewModel)
+                            }
+                            if key == "Reviews" {
+                                ContactCompanyRatingView(dispScrollView: $dispScrollView)
+                            }
                         }
                     }
-                }
-                Spacer()
-            }.onAppear {
-                Task {
-                    let specificUUIDString = "c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e"
-                    if let specificUUID = UUID(uuidString: specificUUIDString) {
-                        await contactCompanyViewModel.fetchCompanyById(idCompany: specificUUID)
-                    } else {
-                        // Handle the case where the UUID string is not valid
-                        print("Invalid UUID string: \(specificUUIDString)")
+                    Spacer()
+                }.onAppear {
+                    Task {
+                        let specificUUIDString = "c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e"
+                        if let specificUUID = UUID(uuidString: specificUUIDString) {
+                            await contactCompanyViewModel.fetchCompanyById(idCompany: specificUUID)
+                        } else {
+                            // Handle the case where the UUID string is not valid
+                            print("Invalid UUID string: \(specificUUIDString)")
+                        }
+                        
                     }
-                    
+                }
+                .navigationTitle(contactCompanyViewModel.contentCompany.name)
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Image(systemName: "chevron.left").foregroundColor(.white)
+                    }
                 }
             }
-            .navigationTitle(contactCompanyViewModel.contentCompany.name)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Image(systemName: "chevron.left").foregroundColor(.white)
-                }
+        } else {
+            ScrollViewRating(dispScrollView: $dispScrollView, isPressed: $isPressed)
+            .onAppear {
+                isPressed = ["Servicio": false, "Contacto": false, "Reviews": true]
             }
         }
     }
