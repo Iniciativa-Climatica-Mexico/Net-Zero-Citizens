@@ -3,7 +3,7 @@
     android:layout_height="match_parent">
 
     <fragment
-        android:id="@+id/register_company_fragment"
+        android:id="@+id/register_user_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
