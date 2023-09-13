@@ -65,7 +65,6 @@ export default class Company extends Model {
     type: DataType.STRING(10),
     allowNull: false,
     field: 'PHONE_NUMBER',
-    unique: true,
   })
   phone: string
 
@@ -73,7 +72,6 @@ export default class Company extends Model {
     type: DataType.STRING(255),
     allowNull: true,
     field: 'WEB_PAGE',
-    unique: true,
   })
   webPage: string | null
 
@@ -106,11 +104,11 @@ export default class Company extends Model {
   state: string
 
   @Column({
-    type: DataType.STRING(50),
+    type: DataType.INTEGER,
     allowNull: false,
     field: 'ZIP_CODE',
   })
-  zipCode: string
+  zipCode: number
 
   @Column({
     type: DataType.DOUBLE,

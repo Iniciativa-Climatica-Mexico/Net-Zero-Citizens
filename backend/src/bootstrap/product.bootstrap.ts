@@ -3,7 +3,7 @@ import { Bootstrapper } from './Bootstraper'
 
 export default class ProductBootstrap extends Bootstrapper {
   async run() {
-    Product.bulkCreate([
+    await Product.bulkCreate([
       {
         productId: 'd1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
         name: 'Product 1',
