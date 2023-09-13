@@ -36,6 +36,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.GreenCircle.NoActionBar" />
 
+        <activity
+            android:name=".framework.views.activities.RegisterUserActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.GreenCircle.NoActionBar" />
+
 
     </application>
 

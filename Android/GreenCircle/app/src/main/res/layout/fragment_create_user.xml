@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/white"
     android:orientation="vertical">
 
@@ -80,12 +81,19 @@
             style="?attr/textInputOutlinedDenseStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="Número Telefónico *"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/gray_500"
+            app:hintTextColor="@color/blue"
+            android:textColorHint="@color/gray_500"
+            app:boxStrokeColor="@color/blue"
             android:layout_marginBottom="20dp"
-            android:hint="Número Telefónico *">
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray_900"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,8 +102,13 @@
             style="?attr/textInputOutlinedDenseStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:hint="Edad *">
+            android:hint="Edad *"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/gray_500"
+            app:hintTextColor="@color/blue"
+            android:textColorHint="@color/gray_500"
+            app:boxStrokeColor="@color/blue"
+            android:layout_marginBottom="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
