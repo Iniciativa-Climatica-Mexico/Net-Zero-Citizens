@@ -1,4 +1,4 @@
-import { Review } from '../models/review.model'
+import Review from '../models/review.model'
 import * as ReviewService from '../services/review.service'
 import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
