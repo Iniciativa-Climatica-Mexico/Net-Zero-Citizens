@@ -52,24 +52,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:gravity="top"
             android:orientation="vertical"
             android:padding="30dp">
 
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/sign_in_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="10dp"/>
 
             <Button
                 style="@style/Widget.Material3.Button.TonalButton"
                 android:id="@+id/continueToCompanyRegisterForm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small"
                 android:text="Continuar"
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 app:backgroundTint="@color/blue"
+                app:rippleColor="@color/primary_700"
                 />
 
         </LinearLayout>
