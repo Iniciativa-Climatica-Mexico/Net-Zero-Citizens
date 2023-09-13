@@ -25,7 +25,7 @@
         </activity>
 
         <activity
-            android:name=".framework.views.activities.MainActivity"
+            android:name=".framework.views.MainActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.GreenCircle.NoActionBar" />
@@ -36,8 +36,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.GreenCircle.NoActionBar" />
 
+        <activity
+            android:name=".framework.views.activities.LoginActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.GreenCircle.NoActionBar" />
 
     </application>
-
-
 </manifest>
