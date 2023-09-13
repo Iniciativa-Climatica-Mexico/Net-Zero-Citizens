@@ -18,57 +18,65 @@ struct ProfileView: View {
     }
     
     var body: some View {
-        VStack {
-            // TitleBarView (No forma parte del ScrollView)
-            TitleBarView(
-                title: "Mi Perfil",
-                leftIcon: nil,  // Nombre SF Symbol para ícono izquierdo
-                rightIcon: "person.fill",            // Nombre SF Symbol para ícono derecho
-                leftDestination: {  },  // View a la que se navegará con el ícono izquierdo
-                rightDestination: { ProfileInformationView()}                 // View a la que se navegará con el ícono derecho
-            )
-            .frame(height: 55)  // Espacio entre el titel bar y el contenido
-            .navigationBarBackButtonHidden(true)  // Ocultar botón "back" predeterminado
-            .offset(y: -60)  // Ajustar TitleBar a la altura correcta
-            
+        ZStack {
             VStack {
-                if let user = viewModel.user{
-                //profilePicture
-                // .resizable()
-                // .aspectRatio(contentMode: .fill)
-                // .frame(width: 103, height: 103)
-                //.clipShape(Circle())
-                // .overlay(Circle().stroke(TitleBarColor.TitleBarColor, lineWidth: 1))
+                Spacer()
+                    .frame(height: 55) // Espacio para el TitleBar
                 
-                HStack{
-                    
-                        Text("\(user.firstName)")
-                            .foregroundColor(Color.black)
-                            .font(.system(size: 16))
-                            .bold()
-                            .padding(.top, 12)
-                        
-                        Text("\(user.lastName)")
-                            .foregroundColor(Color.black)
-                            .font(.system(size: 16))
-                            .fontWeight(.semibold)
-                            .padding(.top, 12)
-                            .padding(.bottom, 2)
-                    }
-                }
-                
+                if let user = viewModel.user {
+                    // Aquí es donde deberías poner tu imagen, una vez que tengas una URL para cargar
+                    // Por ahora, está comentado
 
-                
-                NavigationLink("Cerrar Sesión",destination: Example2View())
-                    .foregroundColor(TitleBarColor.TitleBarColor)
-                    .font(.system(size: 13))
-                    .fontWeight(.bold)
-                
-                
+                    VStack {
+                        HStack {
+                            Text("\(user.firstName)")
+                                .foregroundColor(Color.black)
+                                .font(.system(size: 16))
+                                .bold()
+                                .padding(.top, 12)
+                            
+                            Text("\(user.lastName)")
+                                .foregroundColor(Color.black)
+                                .font(.system(size: 16))
+                                .fontWeight(.semibold)
+                                .padding(.top, 12)
+                                .padding(.bottom, 2)
+                        }
+                        .padding(.top, 15) // Añade padding para mover el texto hacia abajo un poco
+
+                        NavigationLink("Cerrar Sesión", destination: Example2View())
+                            .foregroundColor(TitleBarColor.TitleBarColor)
+                            .font(.system(size: 13))
+                            .fontWeight(.bold)
+                            .padding(.top, 12) // Añade padding para separar el botón del texto
+                    }
+
+                } else {
+                    // Placeholder para cuando los datos están cargando
+                    Text("Loading...")
+                        .padding(.top, 16)
+                }
+
+                Spacer() // Esto empujará todo hacia arriba
             }
-            .onAppear {
-                viewModel.fetchUserData()
+            .padding(.top, 60) // Espacio adicional para el TitleBar
+
+            VStack {
+                TitleBarView(
+                    title: "Mi Perfil",
+                    leftIcon: nil,
+                    rightIcon: "person.fill",
+                    leftDestination: {  },
+                    rightDestination: { ProfileInformationView() }
+                )
+                .frame(height: 55)
+                .offset(y: -60)
+                
+                Spacer() // Esto empuja el TitleBarView hacia arriba
             }
+        }
+        .onAppear {
+            viewModel.fetchUserData()
         }
     }
 }

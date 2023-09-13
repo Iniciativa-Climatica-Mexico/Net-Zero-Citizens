@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import Alamofire
+
 
 class APIService: UserRepository {
     func fetchUserData(completion: @escaping (User?, Error?) -> Void) {
@@ -23,9 +25,9 @@ class APIService: UserRepository {
             do {
                 // Imprime los datos JSON crudos para ayudar a diagnosticar el problema
                 print(String(data: data, encoding: .utf8) ?? "Could not print raw JSON")
-                
+
                 // Intenta decodificar los datos JSON a un objeto User
-                let user = try JSONDecoder().decode(User.self, from: data)
+               let user = try JSONDecoder().decode(User.self, from: data)
                 completion(user, nil)
             } catch let error {
                 // Si la decodificación falla, imprime el error para saber qué salió mal
