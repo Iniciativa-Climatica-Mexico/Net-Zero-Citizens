@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { getPendingCompanies } from "@/api/v1/company";
-// Import the updateCompany function and UpdateCompanyInfoBody type
 
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -16,17 +15,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useEffect } from "react";
+import { Toggle } from "@/components/ui/toggle";
 
 interface Company {
   companyId: number
   name: string
-  description: string
   location: string
   profilePicture: string
   status: 'approved' | 'pending_approval' | 'rejected'
-  phoneNumber: string
-  webPage: string
+  email: string
 }
 
 export default function Home() {
@@ -49,23 +46,22 @@ export default function Home() {
 
   return (
     <>
-      <main className={`border m-[30px] mt-[15px] p-[20px] pb-5 rounded-lg`}>
+      <main className={`border border-[#C1C9D2] m-[30px] mt-[15px] p-[20px] pb-5 rounded-lg`}>
         <h1 className="text-[20px] font-bold">Descubre Proveedores</h1>
         <div className="flex items-center py-4 gap-x-2">
           <Input placeholder="Busca un proveedor" className="max-w-sm" />
-          <Button variant="outline" className="px-4">
-            Aprobados
-          </Button>
-          <Button variant="outline">Pendientes</Button>
+          <Toggle aria-label="Toggle italic">
+            Pendientes
+    </Toggle>
         </div>
-        <Table className="border rounded">
+        <Table className="border border-[#C1C9D2] rounded">
           <TableCaption></TableCaption>
 
           <TableHeader>
             <TableRow>
               <TableHead className="w-[100px]">Imagen</TableHead>
               <TableHead>Nombre</TableHead>
-              <TableHead>Servicio</TableHead>
+              <TableHead>Correo</TableHead>
               <TableHead>Ubicacion</TableHead>
               <TableHead>Estado</TableHead>
               <TableHead className="text-right"></TableHead>
@@ -74,7 +70,7 @@ export default function Home() {
           <TableBody>
             {pendingCompanies.map((company) => (
               <TableRow
-                key={company.companyId}
+              key={company.companyId}
 
               >
                 <TableCell>
@@ -83,17 +79,18 @@ export default function Home() {
                   </Avatar>
                 </TableCell>
                 <TableCell>{company.name}</TableCell>
-                <TableCell>{company.phoneNumber}</TableCell>
+
+                <TableCell>{company.email}</TableCell>
                 <TableCell>{company.location}</TableCell>
                 <TableCell>
                   <div
                     className={`${
                       company.status === "approved"
-                        ? "bg-[#547C8B] text-white"
-                        : "bg-[#FFE6C2] text-jet"
+                      ? "bg-[#547C8B] text-white"
+                      : "bg-[#FFE6C2] text-jet"
                     }
                     text-center rounded-xl py-2`}
-                  >
+                    >
                     Pendiente
                   </div>
                 </TableCell>

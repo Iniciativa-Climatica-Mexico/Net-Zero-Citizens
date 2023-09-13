@@ -2,21 +2,21 @@
 
 
 // import Image from "../../node_modules/next/image";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import Logo from "../../public/LogoBloque.png";
+import Image from 'next/image'
+import { useEffect, useState } from 'react'
+import Logo from '../../public/LogoBloque.png'
 
 export default function Navbar() {
-const [condition, setCondition] = useState(false)
+  const [condition, setCondition] = useState(false)
   useEffect(() => {
     setCondition(true)
   }, [])
 
   return (
     <>
-    {condition &&
+      {condition &&
 
-    <nav className="bg-white border-b border-jet dark:bg-gray-900 w-full h-17">
+    <nav className="bg-white border-b border-[#C1C9D2] dark:bg-gray-900 w-full h-17">
       <div className="flex flex-wrap justify-between items-center mx-auto p-4 font-bold">
         <div className="flex items-center space-x-4">
           <Image
@@ -72,8 +72,8 @@ const [condition, setCondition] = useState(false)
         </div>
       </div>
     </nav>
-    }
+      }
     </>
 
-  );
+  )
 }
