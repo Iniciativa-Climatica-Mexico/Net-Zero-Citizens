@@ -67,6 +67,16 @@ jobs:
         with:
           node-version: "18.17.1"
 
+      - name: Cache Node modules and Yarn cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            ~/.yarn
+          key: ${{ runner.OS }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-yarn-
+
       - name: Install dependencies
         run: yarn install
 
@@ -113,6 +123,44 @@ jobs:
         env:
           APPSWEEP_API_KEY: ${{ secrets.APPSWEEP_API_KEY }}
 
+  ## Android Linter test
+  linter_test:
+    name: ANDROID LINTER TEST
+    runs-on: ubuntu-latest
+    if: contains(github.ref, 'android/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/G')
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: gradle
+
+      - name: Print Java Version
+        run: javac -version
+
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+        working-directory: Android/GreenCircle
+
+      - name: Restore cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Linter test
+        working-directory: Android/GreenCircle
+        run: ./gradlew ktlintCheck
+
   # Android Test
   unit_test:
     name: ANDROID UNIT TEST
@@ -152,7 +200,6 @@ jobs:
 
       - name: Unit tests
         working-directory: Android/GreenCircle
-        # Juni test: ./gradlew testDebugUnitTest
         run: ./gradlew testDebugUnitTest --continue
 
       - name: Make unit test report
@@ -215,6 +262,38 @@ jobs:
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
 
+  backend_linter_test:
+    name: BACKEND LINTER TEST
+    runs-on: ubuntu-latest
+    if: contains(github.ref, 'backend/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/G')
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.JS
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18.17.1"
+
+      - name: Install dependencies
+        working-directory: backend
+        run: yarn install
+
+      - name: Cache Node modules and Yarn cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            ~/.yarn
+          key: ${{ runner.OS }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-yarn-
+
+      - name: Run ESLint
+        working-directory: backend
+        run: yarn eslint --config .eslintrc.json .
+
   # Backend Testing with JEST
   node_test:
     name: BACKEND UNIT TESTS
@@ -230,11 +309,21 @@ jobs:
         with:
           node-version: "18.17.1"
 
+      - name: Cache Node modules and Yarn cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            ~/.yarn
+          key: ${{ runner.OS }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-yarn-
+
       - name: Install dependencies
         working-directory: backend
         run: yarn install
 
-      - name: Run Jest with Coverage
+      - name: Run Mocha & Chai Test
         working-directory: backend
         run: yarn test
         env:
@@ -248,6 +337,39 @@ jobs:
         with:
           name: mocha-chai-test-report
           path: ./test-results/test-report.xml
+
+  # Admin panel linter test
+  admin_linter_test:
+    name: ADMIN PANEL LINTER TEST
+    runs-on: ubuntu-latest
+    if: contains(github.ref, 'Admin/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/G')
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.JS
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18.17.1"
+
+      - name: Cache Node modules and Yarn cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            ~/.yarn
+          key: ${{ runner.OS }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-yarn-
+
+      - name: Install dependencies
+        working-directory: Admin
+        run: yarn install
+
+      - name: Run ESLint
+        working-directory: Admin
+        run: yarn eslint --config .eslintrc.json .
 
   # Admin panel unit testing
   node_test_admin:
@@ -264,11 +386,21 @@ jobs:
         with:
           node-version: "18.17.1"
 
+      - name: Cache Node modules and Yarn cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            ~/.yarn
+          key: ${{ runner.OS }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-yarn-
+
       - name: Install dependencies
         working-directory: Admin
         run: yarn install
 
-      - name: Run Jest with Coverage
+      - name: Run Mocho & Chai Test
         working-directory: Admin
         run: yarn test
 
