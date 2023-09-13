@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.greencircle.R
+import com.greencircle.databinding.FragmentRegisterCompanyBinding
+import com.greencircle.framework.views.activities.RegisterCompanyActivity
 
 class RegisterCompanyFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,10 +19,17 @@ class RegisterCompanyFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val binding = FragmentRegisterCompanyBinding.inflate(inflater, container, false)
+
+        val continueButton = binding.root.findViewById<View>(R.id.continueToCompanyRegisterForm)
+
+        continueButton.setOnClickListener {
+            val createCompanyFragment = CreateCompanyFragment()
+            val activity = requireActivity() as RegisterCompanyActivity
+            activity.replaceFragment(createCompanyFragment)
+        }
+
         // Inflate the layout for this fragment
-        return inflater.inflate(
-            R.layout.fragment_register_company,
-            container, false
-        )
+        return binding.root
     }
 }
