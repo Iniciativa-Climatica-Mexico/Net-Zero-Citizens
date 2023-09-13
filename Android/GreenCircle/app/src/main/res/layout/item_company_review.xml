@@ -105,7 +105,7 @@
             card_view:layout_constraintTop_toBottomOf="@+id/linearLayout"
             card_view:layout_constraintVertical_bias="0.0" />
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -121,20 +121,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="¡Me encantaron sus productos! Estos paneles solares fueron entregados en mi puerta justo a tiempo :)
-El servicio de atención al cliente es satisfactorio, pero tuve pequeñas complicaciones en la comunicac...\n\n"
+El servicio de atención al cliente es satisfactorio, pero tuve pequeñas complicaciones en la comunicacion"
                 android:textColor="@color/gray_700"
                 android:textSize="13sp" />
 
-            <Button
-                style="@style/Widget.Material3.Button.TextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@id/reviewCardContent"
-                android:layout_alignBottom="@id/reviewCardContent"
-                android:text="View more..."
-                android:textSize="13sp" />
-
-
-        </RelativeLayout>
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

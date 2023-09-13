@@ -8,6 +8,7 @@ import {
 } from 'sequelize-typescript'
 import User from './users.model'
 import Company from './company.model'
+import { Col } from 'sequelize/types/utils'
 
 @Table({ tableName: 'REVIEWS' })
 export default class Review extends Model {
@@ -53,4 +54,10 @@ export default class Review extends Model {
     field: 'REVIEW',
   })
   review: string
+
+  @Column({
+    type: DataType.STRING(100),
+    field: 'REVIEW_TITLE',
+  })
+  reviewTitle: string
 }

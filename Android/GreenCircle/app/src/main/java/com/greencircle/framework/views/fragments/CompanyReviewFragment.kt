@@ -57,7 +57,7 @@ class CompanyReviewFragment : Fragment() {
     private fun setUpRecyclerView(dataForList: ArrayList<CompanyReview>) {
         recyclerView.setHasFixedSize(true)
         val gridLayoutManager =
-            GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+            GridLayoutManager(requireContext(), 1, GridLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = gridLayoutManager
         adapter.CompanyReviewAdapter(dataForList, requireContext())
         recyclerView.adapter = adapter
