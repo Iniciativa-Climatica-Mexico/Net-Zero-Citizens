@@ -26,6 +26,7 @@ class CompanyService {
         switch response.result {
         case .success(let data):
             do {
+                print()
                 return try JSONDecoder().decode(Company.self, from: data)
             } catch {
                 return nil
