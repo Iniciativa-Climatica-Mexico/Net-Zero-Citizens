@@ -14,7 +14,7 @@
         android:layout_marginBottom="24dp"
         android:text="Contacto"
         android:textColor="@color/black"
-        android:textSize="28sp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <RelativeLayout
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:text="Pagina Web: "
             android:textColor="@color/black"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/TVWPValue"
@@ -43,7 +43,7 @@
             android:layout_toEndOf="@+id/TVWPTitle"
             android:text="www.google.com"
             android:textColor="@color/secondary_900"
-            android:textSize="24sp"
+            android:textSize="16sp"
             android:layout_marginStart="24dp" />
 
     </RelativeLayout>
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:text="Correo: "
             android:textColor="@color/black"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/TVEmailValue"
@@ -76,7 +76,7 @@
             android:layout_toEndOf="@+id/TVEmailTitle"
             android:text="example@email.com"
             android:textColor="@color/secondary_900"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
 
     </RelativeLayout>
 
@@ -98,7 +98,7 @@
             android:layout_height="wrap_content"
             android:text="Telefono:"
             android:textColor="@color/black"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/TVPhoneValue"
@@ -107,7 +107,7 @@
             android:layout_toEndOf="@+id/TVPNTitle"
             android:text="123-456-7890"
             android:textColor="@color/secondary_900"
-            android:textSize="24sp"
+            android:textSize="16sp"
             android:layout_marginStart="76dp" />
 
     </RelativeLayout>
@@ -130,7 +130,7 @@
             android:layout_height="wrap_content"
             android:text="Direccion: "
             android:textColor="@color/black"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/TVAddressValue"
@@ -139,7 +139,7 @@
             android:layout_toEndOf="@+id/TVATitle"
             android:text="123 Main St, City, Country"
             android:textColor="@color/secondary_900"
-            android:textSize="24sp"
+            android:textSize="16sp"
             android:layout_marginStart="64dp" />
 
     </RelativeLayout>

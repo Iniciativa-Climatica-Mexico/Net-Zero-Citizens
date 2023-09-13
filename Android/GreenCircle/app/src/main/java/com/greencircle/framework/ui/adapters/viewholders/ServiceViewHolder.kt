@@ -19,7 +19,6 @@ class ServiceViewHolder(private val binding: ItemServiceBinding) :
 
     fun initMockServices(): HashMap<String, ArrayList<ServiceItem>> {
         // TODO: Implement this function with endpoint
-
         val serviceMap = HashMap<String, ArrayList<ServiceItem>>()
         val serviceItems: ServicesObject = CompanyServicesViewModel().getMockServicesList()
 
@@ -40,6 +39,4 @@ class ServiceViewHolder(private val binding: ItemServiceBinding) :
         val servicesMap = initMockServices()
         return servicesMap[companyId]!!
     }
-
-
 }
