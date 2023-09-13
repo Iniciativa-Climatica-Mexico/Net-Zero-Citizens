@@ -8,6 +8,13 @@ class CompanyContactViewModel : ViewModel() {
     private val _carouselItems = MutableLiveData<List<CarouselItem>>()
     val carouselItems: LiveData<List<CarouselItem>> = _carouselItems
 
+    private val _selectedButtonId = MutableLiveData<Int>()
+    val selectedButtonId: LiveData<Int> = _selectedButtonId
+
+    fun onButtonSelected(checkedId: Int) {
+        _selectedButtonId.value = checkedId
+    }
+
     init {
 
         val items = mutableListOf<CarouselItem>()

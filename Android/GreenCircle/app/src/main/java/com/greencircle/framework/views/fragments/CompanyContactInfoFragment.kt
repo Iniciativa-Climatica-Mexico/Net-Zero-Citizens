@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.greencircle.databinding.FragmentCompanyContactInfoBinding
 
-class CompanyContactInfo : Fragment() {
+class CompanyContactInfoFragment : Fragment() {
 
     private var _binding: FragmentCompanyContactInfoBinding? = null
 
