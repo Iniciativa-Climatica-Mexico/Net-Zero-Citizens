@@ -41,7 +41,11 @@
             android:layout_weight="2"
             android:text="www.google.com"
             android:textColor="@color/secondary_900"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:autoLink="web"
+            android:clickable="true"
+            android:linksClickable="true" />
+
     </LinearLayout>
 
     <!-- Email detail -->
@@ -67,6 +71,8 @@
             android:layout_weight="2"
             android:text="example@email.com"
             android:textColor="@color/secondary_900"
+            android:autoLink="email"
+            android:clickable="true"
             android:textSize="16sp" />
     </LinearLayout>
 
@@ -93,6 +99,8 @@
             android:layout_weight="2"
             android:text="123-456-7890"
             android:textColor="@color/secondary_900"
+            android:autoLink="phone"
+            android:clickable="true"
             android:textSize="16sp" />
     </LinearLayout>
 
@@ -119,7 +127,10 @@
             android:layout_weight="2"
             android:text="123 Main St, City, Country"
             android:textColor="@color/secondary_900"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:linksClickable="true"
+            android:clickable="true" />
+
     </LinearLayout>
 
 </LinearLayout>
