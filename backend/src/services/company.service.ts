@@ -10,7 +10,7 @@ import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
 export const getAllCompanies = async <T>(
   params: PaginationParams<T>
 ): Promise<PaginatedQuery<Company>> => {
-  return await Company.findAndCountAll({
+  return Company.findAndCountAll({
     limit: params.pageSize,
     offset: params.start,
   })

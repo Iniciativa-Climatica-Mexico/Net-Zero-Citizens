@@ -10,7 +10,6 @@ export default class Ecoinfo extends Model {
   @Column({
     type: DataType.UUID,
     primaryKey: true,
-    autoIncrement: true,
     allowNull: false,
     defaultValue: DataType.UUIDV4,
     unique: 'ECOINFO_ID',

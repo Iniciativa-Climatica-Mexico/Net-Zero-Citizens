@@ -3,7 +3,7 @@ import { Bootstrapper } from './Bootstraper'
 
 export default class UserBootstrap extends Bootstrapper {
   async run() {
-    User.bulkCreate([
+    await User.bulkCreate([
       {
         userId: 'abcd-1234-efgh-5678',
         roleId: 1,

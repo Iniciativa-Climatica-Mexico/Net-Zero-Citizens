@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.greencircle.R
 import com.greencircle.databinding.ActivityMainBinding
+import com.greencircle.framework.views.fragments.CompanyContactFragment
 import com.greencircle.framework.views.fragments.HomeFragment
-import com.greencircle.framework.views.fragments.ProfileFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        replaceFragment(HomeFragment())
+        replaceFragment(CompanyContactFragment())
 
         bottomNavigationView = binding.bottomNavigation
 
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.proveedores -> {
-                    replaceFragment(ProfileFragment())
+                    replaceFragment(CompanyContactFragment())
                     true
                 }
 

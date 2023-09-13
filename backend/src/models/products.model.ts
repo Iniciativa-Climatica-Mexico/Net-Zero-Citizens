@@ -11,9 +11,10 @@ import CompanyProducts from './companyProducts.model'
 @Table({ tableName: 'PRODUCTS' })
 export default class Product extends Model {
   @Column({
-    type: DataType.STRING(100),
+    type: DataType.UUID,
     primaryKey: true,
     allowNull: false,
+    defaultValue: DataType.UUIDV4,
     field: 'PRODUCT_ID',
     unique: true,
   })
