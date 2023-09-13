@@ -1,2 +1,0 @@
-oh-my-posh init pwsh --config 'C:\Users\diego\AppData\Local\Programs\oh-my-posh\themes\aliens.omp.json' | Invoke-Expression
-Import-Module 'C:\tools\poshgit\dahlbyk-posh-git-9bda399\src\posh-git.psd1'

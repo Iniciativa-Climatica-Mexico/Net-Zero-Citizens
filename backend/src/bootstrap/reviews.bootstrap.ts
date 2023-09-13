@@ -2,7 +2,7 @@ import Review from '../models/review.model'
 import { Bootstrapper } from './Bootstraper'
 export default class ReviewBootstrap extends Bootstrapper {
   async run() {
-    Review.bulkCreate([
+    await Review.bulkCreate([
       {
         reviewId: 'revw-1234-efgh-0000',
         userId: 'abcd-1234-efgh-5678',
