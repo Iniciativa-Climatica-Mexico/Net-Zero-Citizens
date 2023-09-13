@@ -9,6 +9,7 @@
  */
 
 import GreenTriangleSVG from '@/components/GreenTriangle'
+import StoreButton from '@/components/StoreButton'
 import PhoneMockup from '@public/images/phoneMockup.png'
 import Image from 'next/image'
 
@@ -26,7 +27,8 @@ export default function Hero() {
           ¡Conéctate con proveedores y desata el potencial del sol!
         </p>
         {/* TODO: CHANGE STORE BUTTON FOR A REAL ONE */}
-        <img src="/images/appStore.svg" className="w-36" />
+        {/* STORE BUTTONS */}
+        <StoreButton />
       </article>
       <Image
         src={PhoneMockup}
