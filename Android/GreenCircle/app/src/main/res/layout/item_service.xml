@@ -3,29 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/llService"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/CVService"
-        android:layout_width="240dp"
-        android:layout_height="120dp"
+        android:layout_width="0dp"
+        android:layout_height="188dp"
         android:layout_gravity="center"
-        android:padding="16dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         card_view:cardCornerRadius="16dp"
-        card_view:cardElevation="16dp"
-
-        card_view:layout_constraintBottom_toBottomOf="parent"
-        card_view:layout_constraintEnd_toEndOf="parent"
-        card_view:layout_constraintStart_toStartOf="parent"
-        card_view:layout_constraintTop_toTopOf="parent">
+        card_view:cardElevation="8dp"
+        card_view:cardUseCompatPadding="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="4dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -33,17 +35,15 @@
                 android:id="@+id/CVSImage"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
                 android:layout_weight="1"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="8dp"
                 app:cardUseCompatPadding="true" >
 
                 <ImageView
                     android:id="@+id/IVSImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_launcher_background" />
 
@@ -61,7 +61,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="8dp"
                     android:text="Nombre"
                     android:textColor="@color/black"
@@ -84,5 +84,13 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <!-- Guideline for width (85% of screen width) -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="85dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
