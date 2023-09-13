@@ -72,6 +72,7 @@ export default class Company extends Model {
     field: 'WEB_PAGE',
     type: DataType.STRING(255),
     allowNull: true,
+    unique: 'WEB_PAGE',
   })
   webPage: string
 
@@ -121,6 +122,7 @@ export default class Company extends Model {
     field: 'PDF_CURRICULUM_URL',
     type: DataType.STRING(500),
     allowNull: false,
+    unique: 'PDF_CURRICULUM_URL',
   })
   pdfCurriculumURL: string
 
@@ -128,6 +130,7 @@ export default class Company extends Model {
     field: 'PDF_DIC_CDMX_URL',
     type: DataType.STRING(500),
     allowNull: true,
+    unique: 'PDF_DIC_CDMX_URL',
   })
   pdfDicCdmxURL: string
 
@@ -135,6 +138,7 @@ export default class Company extends Model {
     field: 'PDF_PEE_FIDE_URL',
     type: DataType.STRING(500),
     allowNull: true,
+    unique: 'PDF_PEE_FIDE_URL',
   })
   pdfPeeFideURL: string
 
@@ -142,6 +146,7 @@ export default class Company extends Model {
     field: 'PDF_GUARANTEE_SECURITY_URL',
     type: DataType.STRING(500),
     allowNull: false,
+    unique: 'PDF_GUARANTEE_SECURITY_URL',
   })
   pdfGuaranteeSecurityURL: string
 
@@ -149,6 +154,7 @@ export default class Company extends Model {
     field: 'PDF_ACTA_CONSTITUTIVA_URL',
     type: DataType.STRING(500),
     allowNull: false,
+    unique: 'PDF_ACTA_CONSTITUTIVA_URL',
   })
   pdfActaConstitutivaURL: string
 
@@ -156,6 +162,7 @@ export default class Company extends Model {
     field: 'PDF_INE_URL',
     type: DataType.STRING(500),
     allowNull: false,
+    unique: 'PDF_INE_URL',
   })
   pdfINEURL: string
 
