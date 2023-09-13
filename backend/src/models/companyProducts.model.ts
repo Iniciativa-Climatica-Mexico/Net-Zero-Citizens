@@ -4,8 +4,7 @@ import {
   Model,
   DataType,
   BelongsTo,
-  ForeignKey,
-  BelongsToMany,
+  ForeignKey
 } from 'sequelize-typescript'
 import Company from './company.model'
 import Products from './products.model'

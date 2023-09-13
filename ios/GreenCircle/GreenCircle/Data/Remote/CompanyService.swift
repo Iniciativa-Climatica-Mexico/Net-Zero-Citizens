@@ -22,16 +22,15 @@ class CompanyService {
     func fetchCompanyById(url: URL) async -> Company? {
         let taskRequest = AF.request(url, method: .get).validate()
         let response = await taskRequest.serializingData().response
-
         switch response.result {
         case .success(let data):
             do {
-                print()
                 return try JSONDecoder().decode(Company.self, from: data)
             } catch {
                 return nil
             }
         case let .failure(error):
+            print(error)
             debugPrint(error.localizedDescription)
             return nil
         }
