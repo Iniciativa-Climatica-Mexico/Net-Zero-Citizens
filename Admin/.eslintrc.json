@@ -3,7 +3,11 @@
     "browser": true,
     "es2021": true
   },
-  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
@@ -11,17 +15,8 @@
   },
   "plugins": ["@typescript-eslint"],
   "rules": {
-    "indent": [
-      "error",
-      2,
-      {
-        "ignoredNodes": [
-          "FunctionExpression > .params[decorators.length > 0]",
-          "FunctionExpression > .params > :matches(Decorator, :not(:first-child))",
-          "ClassBody.body > PropertyDefinition[decorators.length > 0] > .key"
-        ]
-      }
-    ],
+    "prefer-const": "error",
+    "indent": ["error", 2],
     "quotes": ["error", "single"],
     "semi": ["error", "never"],
     "no-unused-vars": ["warn", { "vars": "all", "args": "all" }],

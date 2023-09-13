@@ -22,6 +22,10 @@ interface Company {
   name: string
   location: string
   profilePicture: string
+  state: string,
+  city: string,
+  street: string,
+  zipCode: string,
   status: 'approved' | 'pending_approval' | 'rejected'
   email: string
 }
@@ -81,7 +85,7 @@ export default function Home() {
                 <TableCell>{company.name}</TableCell>
 
                 <TableCell>{company.email}</TableCell>
-                <TableCell>{company.location}</TableCell>
+                <TableCell>{`${company.street} ${company.city}, ${company.state} ${company.zipCode}`}</TableCell>
                 <TableCell>
                   <div
                     className={`${
