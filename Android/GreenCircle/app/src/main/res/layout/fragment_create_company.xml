@@ -103,12 +103,12 @@
                 android:hint="Descripción Empresa *"
                 android:textColorHint="@color/gray_500"
                 app:boxStrokeColor="@color/blue"
-                app:endIconTint="@color/gray_500"
-                app:hintTextColor="@color/blue"
                 app:counterEnabled="true"
                 app:counterMaxLength="500"
+                app:counterOverflowTextColor="@color/gray_700"
                 app:counterTextColor="@color/blue"
-                app:counterOverflowTextColor="@color/gray_700">
+                app:endIconTint="@color/gray_500"
+                app:hintTextColor="@color/blue">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -164,7 +164,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/gray_900"/>
+                    android:textColor="@color/gray_900" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -183,7 +183,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/gray_900"/>
+                    android:textColor="@color/gray_900" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -212,7 +212,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/gray_900"/>
+                    android:textColor="@color/gray_900" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -231,7 +231,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/gray_900"/>
+                    android:textColor="@color/gray_900" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -250,7 +250,30 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/gray_900"/>
+                    android:textColor="@color/gray_900" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutState"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="Estado *"
+                android:textColorHint="@color/gray_500"
+                app:boxStrokeColor="@color/blue"
+                app:endIconMode="clear_text"
+                app:endIconTint="@color/gray_500"
+                app:hintTextColor="@color/blue">
+
+                <AutoCompleteTextView
+                    android:id="@+id/userState"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:importantForAccessibility="yes"
+                    android:inputType="none" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -269,15 +292,14 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/gray_900"/>
+                    android:textColor="@color/gray_900" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                style="@style/Widget.Material3.Button.TonalButton"
                 android:id="@+id/continueToCompanyRegisterForm"
+                style="@style/Widget.Material3.Button.TonalButton"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="30dp"
                 android:text="Siguiente"
@@ -285,7 +307,7 @@
                 android:textSize="15sp"
                 app:backgroundTint="@color/blue"
                 app:rippleColor="@color/primary_700"
-                />
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
 
         </LinearLayout>
 
