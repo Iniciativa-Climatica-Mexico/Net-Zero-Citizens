@@ -27,15 +27,43 @@ class LoginActivity : AppCompatActivity() {
                 // Handle the case where the user canceled the registration
             }
         }
+    private val googleSignInActivityResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                Log.d("GoogleSignIn", "data: $data")
+                if (data != null && result.resultCode == Activity.RESULT_OK) {
+                    val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+                    try {
+                        val account = task.getResult(ApiException::class.java)
+                        Log.d("GoogleSignIn", "Signed in successfully")
+                        Log.d("GoogleSignIn", "account: $account")
+                        navigateToHome()
+                    } catch (e: ApiException) {
+                        Toast.makeText(
+                            applicationContext, "Something went wrong", Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            } else if (result.resultCode == Activity.RESULT_CANCELED) {
+                // Handle the case where the user canceled the operation
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Methods
-        onRegisterCompany()
+        // Listener Methods
+        registerCompanyOnClickListener()
 
+        // Google Login
+        googleLoginListener()
+    }
+
+    // Google Login Methods
+    private fun googleLoginListener() {
         // Google Login
         val googleButton = binding.root.findViewById<View>(R.id.sign_in_button)
 
@@ -53,48 +81,25 @@ class LoginActivity : AppCompatActivity() {
 
         googleButton.setOnClickListener {
             when (it.id) {
-                R.id.sign_in_button -> signIn(mGoogleSignInClient)
+                R.id.sign_in_button -> googleLogin(mGoogleSignInClient)
             }
         }
     }
 
-    private fun signIn(mGoogleSignInClient: GoogleSignInClient) {
+    private fun googleLogin(mGoogleSignInClient: GoogleSignInClient) {
         val signInIntent: Intent = mGoogleSignInClient.signInIntent
         googleSignInActivityResult.launch(signInIntent)
     }
 
-    private val googleSignInActivityResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data: Intent? = result.data
-                Log.d("GoogleSignIn", "data: $data")
-                if (data != null && result.resultCode == Activity.RESULT_OK) {
-                    val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-                    try {
-                        val account = task.getResult(ApiException::class.java)
-                        Log.d("GoogleSignIn", "Signed in successfully")
-                        Log.d("GoogleSignIn", "account: $account")
-                        navigateToHome()
-                    } catch (e: ApiException) {
-                        Toast.makeText(
-                            applicationContext,
-                            "Something went wrong",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-            } else if (result.resultCode == Activity.RESULT_CANCELED) {
-                // Handle the case where the user canceled the operation
-            }
-        }
-
-    private fun onRegisterCompany() {
+    // On Click Listener Methods
+    private fun registerCompanyOnClickListener() {
         val registerCompanyButton = binding.root.findViewById<View>(R.id.login_register_company)
         registerCompanyButton.setOnClickListener {
             navigateToRegisterCompany()
         }
     }
 
+    // Navigation Methods
     private fun navigateToHome() {
         var intent: Intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
