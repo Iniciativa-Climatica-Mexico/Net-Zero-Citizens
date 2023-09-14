@@ -88,6 +88,8 @@ dependencies {
     implementation("com.google.code.gson:gson:2.8.9")
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    // Coroutines - Asynchronous Code
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1")
     // Fragment
     implementation("androidx.fragment:fragment-ktx:1.6.1")
     // Activity

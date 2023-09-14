@@ -1,6 +1,9 @@
 package com.greencircle.data.repository
 
-class CompanyRepository {
-    private val apiCompany = CompanyAPIClient()
+import com.greencircle.data.remote.AuthAPIClient
 
+class AuthRepository {
+    private val apiCompany = AuthAPIClient()
+
+    suspend fun googleLogin(): String? = apiCompany.googleLogin()
 }
