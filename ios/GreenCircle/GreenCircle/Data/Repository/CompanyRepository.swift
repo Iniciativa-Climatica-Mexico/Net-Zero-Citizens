@@ -29,17 +29,17 @@ protocol CompanyAPIProtocol {
 /// Implementación de repoitorio de Compañía con singleton
 class CompanyRepository: CompanyAPIProtocol {
     /// Inicialización de servicio backEnd
-    let backEndService: CompanyService
+    let service: NetworkAPIService
     /// Inicialización de singleton de repositorio de compañía
     static let shared = CompanyRepository()
     /// Constructor que toma el valor del servicio del backEnd
-    init(backEndService: CompanyService = CompanyService.shared) {
-        self.backEndService = backEndService
+    init(service: NetworkAPIService = NetworkAPIService.shared) {
+        self.service = service
     }
     /// Obtener compañía por UUID llamando al método del servicio del backend
     ///   - Parameters: UUID de la compañía
     ///   - Returns: Modelo de compañía
     func fetchCompanyById(companyId: UUID) async -> Company? {
-        return await backEndService.fetchCompanyById(url: URL(string: "\(ApiCompany.baseCompany)/\(companyId.uuidString.lowercased())")!)
+        return await service.fetchCompanyById(url: URL(string: "\(ApiCompany.baseCompany)/\(companyId.uuidString.lowercased())")!)
     }
 }

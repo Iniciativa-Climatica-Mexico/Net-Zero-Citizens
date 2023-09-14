@@ -36,4 +36,25 @@ class NetworkAPIService {
       return nil
     }
   }
-}
+    /// Obtener compañía por id
+    ///  - Parameters:
+    ///     - url: Backend url para obtener datos
+    ///  - Returns: Modelo de compañía o error en cualquier otro caso no válido
+    func fetchCompanyById(url: URL) async -> Company? {
+        let taskRequest = AF.request(url, method: .get).validate()
+        let response = await taskRequest.serializingData().response
+        switch response.result {
+        case .success(let data):
+            do {
+                return try 
+                NetworkAPIService
+                .decoder
+                .decode(Company.self, from: data)
+            } catch {
+                return nil
+            }
+        case let .failure(error):
+            debugPrint(error.localizedDescription)
+            return nil
+        }
+    }}
