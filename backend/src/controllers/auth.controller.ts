@@ -49,3 +49,18 @@ export const updateTokens: RequestHandler<
       res.json({ authToken: '', refreshToken: '', error: 'Invalid token' })
     }
   }
+
+/**
+ * @brief
+ * Función del controlador que genera un token de autenticación y un token de refresco
+ * @param req La request HTTP al servidor
+ * @param res Un objeto paginador con los proveedores y la información de paginación
+ */
+export const test: RequestHandler<
+  NoRecord,
+  { message: string },
+  NoRecord,
+  NoRecord> = async (req, res) => {
+    console.log('TEST ENDPOINT')
+    res.json({message: 'Google login works!'})
+  }
