@@ -9,10 +9,10 @@ import SwiftUI
 
 @main
 struct GreenCircleApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContactCompanyView()
-            // ContentView()
-        }
+  var body: some Scene {
+    WindowGroup {
+      // ContentView()
+        ContactCompanyView()
     }
+  }
 }

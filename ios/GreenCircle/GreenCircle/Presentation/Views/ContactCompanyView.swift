@@ -57,12 +57,14 @@ struct ContactCompanyRatingView: View {
                 Text("Reviews")
                     .font(.system(size: 15))
                     .padding(.bottom, 3).bold().foregroundColor(Color("BlackCustom")).contrast(12.6)
-                HStack {
+                VStack {
                     Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incididunt ut labore et dolore magna aliqua.")
                         .font(.system(size: 13)).foregroundColor(Color("BlackCustom")).contrast(12.6)
                     Text("Ver mas...").onTapGesture {
                         dispScrollView = true
                     }
+                    .font(.system(size: 13)).foregroundColor(Color("BlueCustom")).contrast(12.6)
+
                 }
                 Spacer()
             }.padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
