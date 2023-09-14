@@ -61,20 +61,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginBottom="10dp"/>
-
-            <Button
-                style="@style/Widget.Material3.Button.TonalButton"
-                android:id="@+id/continueToCompanyRegisterForm"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small"
-                android:text="Continuar"
-                android:textColor="@color/white"
-                android:textSize="15sp"
-                app:backgroundTint="@color/blue"
-                app:rippleColor="@color/primary_700"
-                />
-
         </LinearLayout>
 
 
