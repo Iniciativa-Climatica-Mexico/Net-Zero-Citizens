@@ -11,6 +11,8 @@ import SwiftUI
 struct LoginView: View {
   var goUserRegister: () -> Void
   
+  @State var name = ""
+  
   var body: some View {
     VStack {
       VStack(alignment: .leading) {
@@ -19,9 +21,12 @@ struct LoginView: View {
           .foregroundColor(.green)
         Text("Inicia sesión con tu cuenta")
           .font(.system(size: 52))
+          .bold()
+          .padding(.bottom)
         Text("Nos da gusto verte de nuevo")
       }
       .padding(.horizontal)
+      .frame(alignment: .leading)
       
       Spacer(minLength: 80)
 
@@ -34,7 +39,7 @@ struct LoginView: View {
           VStack(spacing: 45) {
             Spacer()
             GoogleSignInButton(style: .wide){}
-              .padding(.horizontal, 40)
+              .padding(.horizontal)
             
             Spacer()
             Divider().padding(.horizontal)
@@ -42,17 +47,10 @@ struct LoginView: View {
             HStack {
               Text("¿No tienes una cuenta?")
               Spacer()
-              Button("Regístrate") {
-                goUserRegister()
-              }.buttonStyle(LinkButtonConfig())
-            }.padding(.horizontal, 30)
+              LinkButton("Regístrate", buttonColor: .blue){}
+            }.padding(.horizontal)
             
-            Button() {
-            } label: {
-              Text("Soy proveedor")
-                .foregroundColor(.green)
-            }
-            .buttonStyle(LinkButtonConfig())
+            LinkButton("Soy Proveedor", buttonColor: .blue, action: {})
             .padding(.bottom)
           }
         }
@@ -62,6 +60,6 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
   static var previews: some View {
-    LoginView{()}
+    LoginView{}
   }
 }

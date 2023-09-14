@@ -7,12 +7,25 @@
 
 import SwiftUI
 
-struct LinkButtonConfig: ButtonStyle {
-  func makeBody(configuration: Configuration) -> some View {
-    configuration.label
-      .foregroundColor(.gray)
-      .bold()
-      .underline()
-      .opacity(configuration.isPressed ? 1 : 0.5)
+struct LinkButton: View {
+  var content: String
+  var action: () -> Void
+  var buttonColor: Color
+  
+  init(_ content: String,
+       buttonColor: Color = .gray,
+       action: @escaping () -> Void) {
+    self.content = content
+    self.action = action
+    self.buttonColor = buttonColor
+  }
+  
+  var body: some View {
+    Button{action()} label: {
+      Text(content)
+        .foregroundColor(buttonColor)
+        .bold()
+        .underline()
+    }
   }
 }

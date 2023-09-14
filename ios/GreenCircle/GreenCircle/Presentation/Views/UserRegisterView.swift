@@ -14,12 +14,13 @@ struct UserRegisterView: View {
   var body: some View {
     VStack {
       VStack(alignment: .leading) {
-          Image(systemName: "leaf")
-            .font(.largeTitle)
-            .foregroundColor(.green)
+        Image(systemName: "leaf")
+          .font(.largeTitle)
+          .foregroundColor(.green)
         
         Text("Crear cuenta")
           .font(.system(size: 52))
+          .bold()
           .padding(.bottom)
         Text("Registrate con tu cuenta preferida")
       }
@@ -46,17 +47,11 @@ struct UserRegisterView: View {
             HStack {
               Text("¿Ya tienes una cuenta?")
               Spacer()
-              Button("Inicia sesión") {
-                goLogin()
-              }.buttonStyle(LinkButtonConfig())
+              LinkButton("Inicia Sesión", buttonColor: .blue){}
             }.padding(.horizontal, 30)
             
-            Button{} label: {
-              Text("Aviso de privacidad")
-                .foregroundColor(.green)
-            }
-            .buttonStyle(LinkButtonConfig())
-            .padding(.bottom)
+            LinkButton("Aviso de privacidad", buttonColor: .blue){}
+            
           }
         }
     }
