@@ -14,6 +14,7 @@ import * as AuthService from '../services/auth.service'
 export const validateToken = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const auth = req.headers['authorization'] as string
+    if(!auth) return res.json({ message: 'No token provided' })
     const token = auth.split(' ')[1]
     if (!token) throw new Error('No token provided')
 
