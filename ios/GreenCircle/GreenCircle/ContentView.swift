@@ -16,7 +16,7 @@ struct ContentView: View {
       Text("Hello, world!")
     }
     .padding()
-    .onAppear{
+    .onAppear {
       Task {
         print(await DummyRepository.shared.getDummies()!)
       }
