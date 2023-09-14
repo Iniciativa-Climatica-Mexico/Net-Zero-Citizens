@@ -12,4 +12,8 @@
     <string name="review_title_label">Escribe un título para tu opinión</string>
     <string name="review_opinion_label">Escribe tu opinión</string>
     <string name="review_publish_botton_label">Publicar</string>
+    <string name="review_rate_action_title">Califica al proveedor</string>
+    <string name="review_rate_description">Comparte tu opinión sobre este proveedor</string>
+    <string name="review_rate_button">Escribe una opinión</string>
+    <string name="review_opinions_title">Opiniones del proveedor</string>
 </resources>

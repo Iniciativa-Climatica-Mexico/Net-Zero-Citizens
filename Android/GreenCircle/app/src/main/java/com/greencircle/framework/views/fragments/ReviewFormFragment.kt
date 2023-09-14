@@ -14,6 +14,7 @@ class ReviewFormFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var viewModel: ReviewFormViewModel
+    private var rating: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
