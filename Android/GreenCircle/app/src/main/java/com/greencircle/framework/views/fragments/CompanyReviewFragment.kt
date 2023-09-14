@@ -22,6 +22,7 @@ class CompanyReviewFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private val adapter: CompanyReviewAdapter = CompanyReviewAdapter()
     private lateinit var data: ArrayList<CompanyReview>
+    private lateinit var companyId: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
