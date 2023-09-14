@@ -19,6 +19,7 @@ class EcoInfoTest {
         val ecoInfo = EcoInfo(
             ecoinfoId = ecoinfoId,
             postId = postId,
+            postUrl = "https://example.com/post",
             coverImageUrl = coverImageUrl,
             description = description,
             createdAt = createdAt,
@@ -46,6 +47,7 @@ class EcoInfoTest {
         val ecoInfo = EcoInfo(
             ecoinfoId = ecoinfoId,
             postId = postId,
+            postUrl = "https://example.com/post",
             coverImageUrl = coverImageUrl,
             description = description,
             createdAt = createdAt,
@@ -55,6 +57,7 @@ class EcoInfoTest {
         val ecoInfo2 = EcoInfo(
             ecoinfoId = ecoinfoId,
             postId = postId,
+            postUrl = "https://example.com/post",
             coverImageUrl = coverImageUrl,
             description = description,
             createdAt = createdAt,
