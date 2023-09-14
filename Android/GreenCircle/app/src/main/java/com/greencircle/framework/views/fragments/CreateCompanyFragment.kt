@@ -1,9 +1,11 @@
 package com.greencircle.framework.views.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.greencircle.R
@@ -11,6 +13,7 @@ import com.greencircle.framework.viewmodel.CreateCompanyViewModel
 
 class CreateCompanyFragment : Fragment() {
     private lateinit var viewModel: CreateCompanyViewModel
+    private var arguments = Bundle()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -20,14 +23,30 @@ class CreateCompanyFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProvider(this)[CreateCompanyViewModel::class.java]
-
-        viewModel.googleLogin()
-
         // Inflate the layout for this fragment
-        return inflater.inflate(
+        val view = inflater.inflate(
             R.layout.fragment_create_company,
             container, false
         )
+        viewModel = ViewModelProvider(this)[CreateCompanyViewModel::class.java]
+        arguments = requireArguments()
+
+        // Texts
+        val displayName = arguments.getString("displayName")
+        val email = arguments.getString("email")
+
+        // Replace texts
+        val userName = view.findViewById<TextView>(R.id.tvUserName)
+        val userEmail = view.findViewById<TextView>(R.id.tvUserEmail)
+
+        userName.text = displayName
+        userEmail.text = email
+
+        Log.d("CreateCompanyFragment", "arguments: $arguments")
+
+        // Google Login
+        viewModel.googleLogin()
+
+        return view
     }
 }
