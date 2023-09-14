@@ -20,6 +20,8 @@
 		6CB498242AB0DECC00B6560C /* PaginatedQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB498232AB0DECC00B6560C /* PaginatedQuery.swift */; };
 		6CB498272AB0E07600B6560C /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 6CB498262AB0E07600B6560C /* Alamofire */; };
 		6CB4982A2AB0FAA400B6560C /* CustomDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB498292AB0FAA400B6560C /* CustomDateFormatter.swift */; };
+		C483FD832AB39F7100A9E85A /* EcoInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483FD822AB39F7100A9E85A /* EcoInfoModel.swift */; };
+		C483FD852AB3A12500A9E85A /* BibliographiesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483FD842AB3A12500A9E85A /* BibliographiesModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,8 @@
 		6C9761862AB2B65C0046DB50 /* DummyRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyRepository.swift; sourceTree = "<group>"; };
 		6CB498232AB0DECC00B6560C /* PaginatedQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginatedQuery.swift; sourceTree = "<group>"; };
 		6CB498292AB0FAA400B6560C /* CustomDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDateFormatter.swift; sourceTree = "<group>"; };
+		C483FD822AB39F7100A9E85A /* EcoInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoInfoModel.swift; sourceTree = "<group>"; };
+		C483FD842AB3A12500A9E85A /* BibliographiesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibliographiesModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +206,8 @@
 			isa = PBXGroup;
 			children = (
 				6C9761822AB2B45D0046DB50 /* DummyModel.swift */,
+				C483FD822AB39F7100A9E85A /* EcoInfoModel.swift */,
+				C483FD842AB3A12500A9E85A /* BibliographiesModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -369,7 +375,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C9761832AB2B45D0046DB50 /* DummyModel.swift in Sources */,
+				C483FD832AB39F7100A9E85A /* EcoInfoModel.swift in Sources */,
 				6CB498242AB0DECC00B6560C /* PaginatedQuery.swift in Sources */,
+				C483FD852AB3A12500A9E85A /* BibliographiesModel.swift in Sources */,
 				6C9761812AB2B2920046DB50 /* NetworkAPIService.swift in Sources */,
 				6CB4982A2AB0FAA400B6560C /* CustomDateFormatter.swift in Sources */,
 				6C4452BA2AA6EF8500BE5930 /* ContentView.swift in Sources */,
