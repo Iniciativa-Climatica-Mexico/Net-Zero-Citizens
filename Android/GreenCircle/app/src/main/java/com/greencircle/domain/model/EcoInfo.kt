@@ -17,8 +17,9 @@ import java.util.UUID
  */
 data class EcoInfo(
     @SerializedName("ecoinfoId") val ecoinfoId: UUID,
-    @SerializedName("postId") val postId: UUID,
-    @SerializedName("coverImageUrl") val userId: String? = null,
+    @SerializedName("postId") val postId: String,
+    @SerializedName("postUrl") val postUrl: String,
+    @SerializedName("coverImageUrl") val coverImageUrl: String? = null,
     @SerializedName("description") val description: String? = null,
     @SerializedName("createdAt") val createdAt: Time,
     @SerializedName("updatedAt") val updatedAt: Time

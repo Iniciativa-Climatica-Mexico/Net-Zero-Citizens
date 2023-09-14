@@ -26,7 +26,21 @@
             android:id="@+id/descriptionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="description_text"/>
+            android:text="description_text"/>`
+
+        <TextView
+            android:id="@+id/linkToPost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="right"
+            android:layout_marginTop="10dp"
+            android:text="Ver más ..."
+            android:clickable="true"
+            android:focusable="true"
+            android:textColor="@color/green"
+            android:onClick="handleLinkClick"/>
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>
