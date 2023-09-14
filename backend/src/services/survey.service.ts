@@ -32,6 +32,19 @@ export const getSurveyById = async (
 ): Promise<Survey | null> => {
   const s = await Survey.findByPk(surveyId, {
     plain: true,
+    include: [
+      {
+        model: Question,
+        association: 'questions',
+        attributes: ['questionId', 'questionText', 'questionType'],
+        include: [
+          {
+            model: QuestionOption,
+            association: 'questionOptions',
+          },
+        ],
+      },
+    ],
   })
   return s ? unwrap(s) : null
 }

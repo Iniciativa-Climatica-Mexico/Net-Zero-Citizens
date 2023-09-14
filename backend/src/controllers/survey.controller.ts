@@ -55,6 +55,7 @@ export const getSurveyById: RequestHandler<
 > = async (req, res) => {
   const surveyId = req.params.surveyId
   const survey = await SurveyService.getSurveyById(surveyId)
+  console.log(survey)
   res.json(survey || undefined)
 }
 
