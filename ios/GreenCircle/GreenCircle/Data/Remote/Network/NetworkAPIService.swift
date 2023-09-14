@@ -36,4 +36,28 @@ class NetworkAPIService {
       return nil
     }
   }
+  
+  ///  Fetch toda la ecoInfo del  backend
+  ///  - Parameter url: ruta al endpoint
+  ///  - Returns EcoInfo decoded o error
+  func fetchAllEcoInfo(url: URL) async -> PaginatedQuery<EcoInfo>? {
+    let requestTask = AF.request(url, method: .get).validate()
+    let response = await requestTask.serializingData().response
+
+    switch response.result {
+    case .success(let data):
+      do {
+        return
+          try NetworkAPIService
+          .decoder
+          .decode(PaginatedQuery<EcoInfo>.self, from: data)
+      } catch {
+        debugPrint(error)
+        return nil
+      }
+    case let .failure(error):
+      debugPrint(error)
+      return nil
+    }
+  }
 }

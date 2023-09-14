@@ -22,6 +22,8 @@
 		6CB4982A2AB0FAA400B6560C /* CustomDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB498292AB0FAA400B6560C /* CustomDateFormatter.swift */; };
 		C483FD832AB39F7100A9E85A /* EcoInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483FD822AB39F7100A9E85A /* EcoInfoModel.swift */; };
 		C483FD852AB3A12500A9E85A /* BibliographiesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483FD842AB3A12500A9E85A /* BibliographiesModel.swift */; };
+		C483FD872AB3A34500A9E85A /* EcoInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483FD862AB3A34500A9E85A /* EcoInfoRepository.swift */; };
+		C483FD892AB3A58E00A9E85A /* fetchAllEcoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483FD882AB3A58E00A9E85A /* fetchAllEcoInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,8 @@
 		6CB498292AB0FAA400B6560C /* CustomDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDateFormatter.swift; sourceTree = "<group>"; };
 		C483FD822AB39F7100A9E85A /* EcoInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoInfoModel.swift; sourceTree = "<group>"; };
 		C483FD842AB3A12500A9E85A /* BibliographiesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibliographiesModel.swift; sourceTree = "<group>"; };
+		C483FD862AB3A34500A9E85A /* EcoInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoInfoRepository.swift; sourceTree = "<group>"; };
+		C483FD882AB3A58E00A9E85A /* fetchAllEcoInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fetchAllEcoInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +202,7 @@
 		6C4452E72AA6F09500BE5930 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				C483FD882AB3A58E00A9E85A /* fetchAllEcoInfo.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -216,6 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				6C9761862AB2B65C0046DB50 /* DummyRepository.swift */,
+				C483FD862AB3A34500A9E85A /* EcoInfoRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -375,6 +381,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C9761832AB2B45D0046DB50 /* DummyModel.swift in Sources */,
+				C483FD872AB3A34500A9E85A /* EcoInfoRepository.swift in Sources */,
 				C483FD832AB39F7100A9E85A /* EcoInfoModel.swift in Sources */,
 				6CB498242AB0DECC00B6560C /* PaginatedQuery.swift in Sources */,
 				C483FD852AB3A12500A9E85A /* BibliographiesModel.swift in Sources */,
@@ -383,6 +390,7 @@
 				6C4452BA2AA6EF8500BE5930 /* ContentView.swift in Sources */,
 				6C9761872AB2B65C0046DB50 /* DummyRepository.swift in Sources */,
 				6C4452B82AA6EF8500BE5930 /* GreenCircleApp.swift in Sources */,
+				C483FD892AB3A58E00A9E85A /* fetchAllEcoInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
