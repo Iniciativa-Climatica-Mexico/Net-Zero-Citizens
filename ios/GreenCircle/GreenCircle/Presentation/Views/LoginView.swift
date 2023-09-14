@@ -6,10 +6,27 @@
 //
 
 import GoogleSignInSwift
+import GoogleSignIn
 import SwiftUI
+
+func handleSignInButton() {
+  guard let presentingViewController = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController else {return}
+  
+  GIDSignIn.sharedInstance.signIn(withPresenting: presentingViewController) { signInResult, error in
+    guard let result = signInResult else {
+      // Inspect error
+      return
+    }
+    // If sign in succeeded, display the app's main content View.
+    print(
+      result.user.profile!.name
+    )
+  }
+}
 
 struct LoginView: View {
   var goUserRegister: () -> Void
+  var goForm: () -> Void
   
   @State var name = ""
   
@@ -29,7 +46,7 @@ struct LoginView: View {
       .frame(alignment: .leading)
       
       Spacer(minLength: 80)
-
+      
       Rectangle()
         .fill(.gray)
         .opacity(0.1)
@@ -38,8 +55,11 @@ struct LoginView: View {
         .overlay {
           VStack(spacing: 45) {
             Spacer()
-            GoogleSignInButton(style: .wide){}
-              .padding(.horizontal)
+            GoogleSignInButton(style: .wide){
+              handleSignInButton()
+              goForm()
+            }
+            .padding(.horizontal)
             
             Spacer()
             Divider().padding(.horizontal)
@@ -51,7 +71,7 @@ struct LoginView: View {
             }.padding(.horizontal)
             
             LinkButton("Soy Proveedor", buttonColor: .blue, action: {})
-            .padding(.bottom)
+              .padding(.bottom)
           }
         }
     }
@@ -60,6 +80,8 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
   static var previews: some View {
-    LoginView{}
+    LoginView(goUserRegister: {}, goForm: {})
   }
 }
+
+

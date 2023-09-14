@@ -13,7 +13,8 @@ struct CoordinatorView: View {
   enum Screens {
     case login
     case userRegister
-    //    case companyRegister
+    case userRegisterForm
+    // case companyRegister
   }
   
   @State var routes: Routes<Screens> = [.root(.login)]
@@ -22,10 +23,14 @@ struct CoordinatorView: View {
     Router($routes) { screen, _ in
       switch screen {
       case .login:
-        LoginView(goUserRegister: {routes.presentCover(.userRegister)})
+        LoginView(goUserRegister: {routes.presentCover(.userRegister)},
+                  goForm: {routes.presentCover(.userRegisterForm)})
         
       case .userRegister:
         UserRegisterView(goLogin: {routes.goBackToRoot()})
+        
+      case .userRegisterForm:
+        UserRegisterFormView()
       }
     }
   }
