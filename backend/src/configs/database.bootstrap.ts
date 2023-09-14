@@ -3,6 +3,7 @@ import DummyBootstrap from '../bootstrap/dummy.bootstrap'
 import ReviewBootstrap from '../bootstrap/reviews.bootstrap'
 import SurveysBootstrapper from '../bootstrap/survey.bootstrap'
 import UserBootstrap from '../bootstrap/users.bootstrap'
+import EcoinfoBootstrap from '../bootstrap/ecoinfo.bootstrap'
 
 export const bootstrapDB = async () => {
   try {
@@ -11,6 +12,7 @@ export const bootstrapDB = async () => {
       CompanyBootstrap,
       ReviewBootstrap,
       SurveysBootstrapper,
+      EcoinfoBootstrap,
       DummyBootstrap,
     ]
     const pool = bootstrappers.map((bootstrapper) => {
