@@ -25,9 +25,7 @@ class CompanyContactFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCompanyContactBinding.inflate(inflater, container, false)
 
@@ -35,28 +33,25 @@ class CompanyContactFragment : Fragment() {
             binding.carousel.addData(items)
         }
 
-        childFragmentManager.beginTransaction()
-            .add(R.id.fragmentContainer, servicesFragment)
-            .add(R.id.fragmentContainer, contactInfoFragment)
-            .hide(contactInfoFragment)
-            .commit()
+        childFragmentManager.beginTransaction().add(R.id.fragmentContainer, servicesFragment)
+            .add(R.id.fragmentContainer, contactInfoFragment).hide(contactInfoFragment).commit()
 
+        /*
+        *Boton que cambia entre los fragmentos de servicios, informacion de contacto y reviews
+        */
         binding.toggleButtonGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
                 when (checkedId) {
                     R.id.btnServices -> {
-                        childFragmentManager.beginTransaction()
-                            .show(servicesFragment)
-                            .hide(contactInfoFragment)
-                            .commit()
+                        childFragmentManager.beginTransaction().show(servicesFragment)
+                            .hide(contactInfoFragment).commit()
                     }
 
                     R.id.btnContactInfo -> {
-                        childFragmentManager.beginTransaction()
-                            .show(contactInfoFragment)
-                            .hide(servicesFragment)
-                            .commit()
+                        childFragmentManager.beginTransaction().show(contactInfoFragment)
+                            .hide(servicesFragment).commit()
                     }
+                    //TODO : Add button reviews
                 }
             }
         }

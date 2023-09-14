@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         replaceFragment(HomeFragment())
 
-        bottomNavigationView = binding.bottomNavigation
+        bottomNavigationView = binding.bottomNaSvigation
 
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {

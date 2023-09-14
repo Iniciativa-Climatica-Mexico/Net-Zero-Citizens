@@ -15,6 +15,9 @@ import com.greencircle.domain.model.ServiceItem
 import com.greencircle.framework.ui.adapters.ServiceAdapter
 import com.greencircle.framework.viewmodel.CompanyServicesViewModel
 
+/*
+* Fragmento que muestra los servicios de la empresa
+*/
 class CompanyServicesFragment : Fragment() {
 
     private var _binding: FragmentCompanyServicesBinding? = null
@@ -25,9 +28,7 @@ class CompanyServicesFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         viewModel = ViewModelProvider(this)[CompanyServicesViewModel::class.java]
 
@@ -35,11 +36,10 @@ class CompanyServicesFragment : Fragment() {
         val root: View = binding.root
         initializeComponents(root)
 
-        // Initialize adapter data
         val data = viewModel.createMOckServicesList()
         initializeObservers()
         Log.d("Salida", data.results.toString())
-        setUpRecyclerView(data.results) // Call the updated function
+        setUpRecyclerView(data.results)
 
         return root
     }
@@ -49,10 +49,18 @@ class CompanyServicesFragment : Fragment() {
         _binding = null
     }
 
+    /*
+    * Inicializa los componentes de la vista
+    *
+    * @param root Vista raíz
+     */
     private fun initializeComponents(root: View) {
         recyclerView = root.findViewById(R.id.RVServices)
     }
 
+    /*
+    * Inicializa los observadores de la vista
+     */
     private fun initializeObservers() {
         viewModel.servicesObjectLiveData.observe(viewLifecycleOwner) { servicesObject ->
             Log.d("CompanyServicesFragment", "Observer called")
@@ -61,6 +69,11 @@ class CompanyServicesFragment : Fragment() {
         }
     }
 
+    /*
+    * Inicializa el RecyclerView con los datos mediante el adaptador
+    *
+    * @param dataForList Datos para el RecyclerView
+     */
     private fun setUpRecyclerView(dataForList: ArrayList<ServiceItem>) {
         Log.d("CompanyServicesFragment", "Setting up RecyclerView with data: $dataForList")
         recyclerView.setHasFixedSize(true)
