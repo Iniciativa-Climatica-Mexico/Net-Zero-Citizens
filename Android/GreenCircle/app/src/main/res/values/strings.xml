@@ -6,6 +6,4 @@
     <string name="perfil">Perfil</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
-    <string name="google_map_api_key">AIzaSyDeTe4G16OstIhKSDtpLuS1dwyYOMyfaCw</string>
 </resources>
