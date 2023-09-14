@@ -27,19 +27,19 @@ class CompanyContactViewModel : ViewModel() {
         items.add(
             CarouselItem(
                 "https://www.labodegasolar.com/cdn/shop/articles/placas-solares-tejado-" +
-                        "thinkstock-getty-1662535982.jpg?v=1667323017"
+                    "thinkstock-getty-1662535982.jpg?v=1667323017"
             )
         )
         items.add(
             CarouselItem(
                 "https://www.viviendasaludable.es/wp-content/uploads/2021/09/Paneles-" +
-                        "Solares-en-casa.jpg"
+                    "Solares-en-casa.jpg"
             )
         )
         items.add(
             CarouselItem(
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSid3sii1nL-4PaHZE_" +
-                        "Ksa9HRslIsrgXPlizHbu7AKNM0KAee8FOw38iFNgec_mk_buf_M&usqp=CAU"
+                    "Ksa9HRslIsrgXPlizHbu7AKNM0KAee8FOw38iFNgec_mk_buf_M&usqp=CAU"
             )
         )
         _carouselItems.value = items
