@@ -5,7 +5,6 @@
 //  Created by Dani Gutiérrez on 07/09/23.
 //
 
-import Foundation
 import SwiftUI
 
 class Theme {
