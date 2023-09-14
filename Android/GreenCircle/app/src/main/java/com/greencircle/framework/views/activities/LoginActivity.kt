@@ -27,6 +27,14 @@ class LoginActivity : AppCompatActivity() {
                 // Handle the case where the user canceled the registration
             }
         }
+    private val registerUserActivityResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // Handle the result as needed, e.g., update UI or perform actions
+            } else if (result.resultCode == Activity.RESULT_CANCELED) {
+                // Handle the case where the user canceled the registration
+            }
+        }
     private val googleSignInActivityResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -57,6 +65,7 @@ class LoginActivity : AppCompatActivity() {
 
         // Listener Methods
         registerCompanyOnClickListener()
+        registerUserOnClickListener()
 
         // Google Login
         googleLoginListener()
@@ -99,6 +108,13 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    private fun registerUserOnClickListener() {
+        val registerUserButton = binding.root.findViewById<View>(R.id.login_register_user)
+        registerUserButton.setOnClickListener {
+            navigateToRegisterUser()
+        }
+    }
+
     // Navigation Methods
     private fun navigateToHome() {
         var intent: Intent = Intent(this, MainActivity::class.java)
@@ -108,5 +124,10 @@ class LoginActivity : AppCompatActivity() {
     private fun navigateToRegisterCompany() {
         var intent: Intent = Intent(this, RegisterCompanyActivity::class.java)
         registerCompanyActivityResult.launch(intent)
+    }
+
+    private fun navigateToRegisterUser() {
+        var intent: Intent = Intent(this, RegisterUserActivity::class.java)
+        registerUserActivityResult.launch(intent)
     }
 }
