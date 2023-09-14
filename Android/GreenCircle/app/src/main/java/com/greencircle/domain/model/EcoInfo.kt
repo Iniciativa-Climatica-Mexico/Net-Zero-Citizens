@@ -1,7 +1,7 @@
 package com.greencircle.domain.model
 
 import com.google.gson.annotations.SerializedName
-import java.sql.Time
+import java.util.Date
 import java.util.UUID
 
 /**
@@ -18,9 +18,9 @@ import java.util.UUID
 data class EcoInfo(
     @SerializedName("ecoinfoId") val ecoinfoId: UUID,
     @SerializedName("postId") val postId: String,
-    @SerializedName("postUrl") val postUrl: String,
-    @SerializedName("coverImageUrl") val coverImageUrl: String? = null,
+    @SerializedName("postLink") val postUrl: String,
+    @SerializedName("coverImage") val coverImageUrl: String? = null,
     @SerializedName("description") val description: String? = null,
-    @SerializedName("createdAt") val createdAt: Time,
-    @SerializedName("updatedAt") val updatedAt: Time
+    @SerializedName("createdAt") val createdAt: Date,
+    @SerializedName("updatedAt") val updatedAt: Date
 )
