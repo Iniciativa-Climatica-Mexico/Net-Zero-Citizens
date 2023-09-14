@@ -58,9 +58,9 @@ export const updateTokens: RequestHandler<
  */
 export const test: RequestHandler<
   NoRecord,
-  { message: string },
+  { message: string, url: string },
   NoRecord,
   NoRecord> = async (req, res) => {
     console.log('TEST ENDPOINT')
-    res.json({message: 'Google login works!'})
+    res.json({message: 'Google login works!', url: req.url})
   }
