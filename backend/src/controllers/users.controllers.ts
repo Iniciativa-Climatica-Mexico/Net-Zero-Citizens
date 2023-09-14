@@ -17,9 +17,9 @@ export const getUserInfo: RequestHandler<{ userId: string }> = async (
   const userInfo = await UserService.getUserInfo(userId)
 
   if (userInfo) {
-    res.json(userInfo)
+    res.status(200).json(userInfo)
   } else {
-    res.status(200).status(404).json({ error: 'User not found' })
+    res.status(404).json({ message: 'User not found' })
   }
 }
 
