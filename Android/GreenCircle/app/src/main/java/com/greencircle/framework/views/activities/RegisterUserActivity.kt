@@ -12,7 +12,6 @@ class RegisterUserActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityRegisterUserBinding.inflate(
             layoutInflater
         )

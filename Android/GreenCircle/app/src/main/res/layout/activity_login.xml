@@ -93,7 +93,7 @@
                     android:textSize="14sp" />
 
                 <Button
-                    android:id="@+id/login_register"
+                    android:id="@+id/login_register_user"
                     style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

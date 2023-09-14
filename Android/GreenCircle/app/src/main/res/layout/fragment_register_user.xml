@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--tools:context=".framework.views.fragments.RegisterCompanyFragment" -->
+<?xml version="1.0" encoding="utf-8"?><!--tools:context=".framework.views.fragments.RegisterUserFragment" -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -52,24 +52,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:gravity="top"
             android:orientation="vertical"
             android:padding="30dp">
 
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/sign_in_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-                />
-
-            <Button
-                android:id="@+id/continueToCreateUser"
-                style="@style/Widget.Material3.Button.TextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ir a formulario"
-                android:textSize="12sp" />
-
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="10dp"/>
         </LinearLayout>
 
 
