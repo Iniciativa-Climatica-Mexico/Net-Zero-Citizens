@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/white"
     android:orientation="vertical">
 
@@ -26,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="Crear cuenta de empresa"
+            android:text="Inicia sesión con tu cuenta"
             android:textColor="@color/black"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -34,7 +33,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Regístrate con tu cuenta preferida"
+            android:text="Nos da gusto verte de regreso"
             android:textColor="@color/black"
             android:textSize="16sp" />
     </LinearLayout>
@@ -60,7 +59,7 @@
                 android:id="@+id/sign_in_button"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="10dp" />
         </LinearLayout>
 
 
@@ -76,13 +75,44 @@
                 android:layout_height="1dp"
                 android:background="#B7B7B8" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="start"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="¿No tienes una cuenta?"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/login_register"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Regístrate"
+                    android:textColorLink="@color/blue"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
             <Button
-                android:id="@+id/textButton"
+                android:id="@+id/login_register_company"
                 style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Aviso de privacidad"
-                android:textSize="12sp" />
+                android:layout_marginBottom="20dp"
+                android:text="Soy Proveedor"
+                android:textSize="14sp"
+                android:textFontWeight="800"/>
         </LinearLayout>
 
 

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GreenCircle"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
         <activity
@@ -25,13 +28,19 @@
         </activity>
 
         <activity
-            android:name=".framework.views.activities.MainActivity"
+            android:name=".framework.views.MainActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.GreenCircle.NoActionBar" />
 
         <activity
             android:name=".framework.views.activities.RegisterCompanyActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.GreenCircle.NoActionBar" />
+
+        <activity
+            android:name=".framework.views.activities.LoginActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.GreenCircle.NoActionBar" />
