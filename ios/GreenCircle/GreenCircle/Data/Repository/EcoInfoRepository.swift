@@ -22,7 +22,7 @@ protocol EcoInfoApiProtocol {
 class EcoInfoRepository: EcoInfoApiProtocol {
   let service: NetworkAPIService
   static let shared = EcoInfoRepository()
-  
+
   init(service: NetworkAPIService = NetworkAPIService.shared) {
     self.service = service
   }

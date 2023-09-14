@@ -13,13 +13,12 @@ protocol FetchAllEcoInfoUseCase {
 
 class FetchAllEcoInfoUseCaseImpl: FetchAllEcoInfoUseCase {
   let ecoInfoRepository: EcoInfoRepository
-  
+
   static let shared = FetchAllEcoInfoUseCaseImpl()
-  
   init(ecoInfoRepository: EcoInfoRepository = EcoInfoRepository.shared) {
     self.ecoInfoRepository = ecoInfoRepository
   }
-  
+
   func fetchAllEcoInfo() async -> PaginatedQuery<EcoInfo>? {
     return await ecoInfoRepository.fetchAllEcoInfo()
   }
