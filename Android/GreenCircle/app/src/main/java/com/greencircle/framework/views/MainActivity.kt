@@ -20,9 +20,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        replaceFragment(CompanyContactFragment())
+        replaceFragment(HomeFragment())
 
-        bottomNavigationView = binding.bottomNavigation
+        bottomNavigationView = binding.bottomNaSvigation
 
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {

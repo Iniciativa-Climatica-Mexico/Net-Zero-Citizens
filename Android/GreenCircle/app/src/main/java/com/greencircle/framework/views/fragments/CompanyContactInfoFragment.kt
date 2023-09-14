@@ -7,21 +7,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.greencircle.databinding.FragmentCompanyContactInfoBinding
 
-class CompanyContactInfo : Fragment() {
+class CompanyContactInfoFragment : Fragment() {
 
     private var _binding: FragmentCompanyContactInfoBinding? = null
 
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
 
         _binding = FragmentCompanyContactInfoBinding.inflate(
-            inflater, container,
-            false
+            inflater, container, false
         )
         return binding.root
     }
