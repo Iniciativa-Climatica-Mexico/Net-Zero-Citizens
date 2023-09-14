@@ -4,4 +4,12 @@
     <string name="proveedores">Proveedores</string>
     <string name="mapa">Mapa</string>
     <string name="perfil">Perfil</string>
+    <string name="review_nested_scroll_desc">Scrollable content</string>
+    <string name="review_form_title">Comparte tu opinión</string>
+    <string name="review_rating_bar_label">¿Cómo calificarías la atención y servicio del proveedor?</string>
+    <string name="review_bad_rating_title">Malo</string>
+    <string name="review_excellent_rating_title">Excelente</string>
+    <string name="review_title_label">Escribe un título para tu opinión</string>
+    <string name="review_opinion_label">Escribe tu opinión</string>
+    <string name="review_publish_botton_label">Publicar</string>
 </resources>

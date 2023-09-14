@@ -7,7 +7,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="Scrollable content">
+        android:contentDescription="@string/review_nested_scroll_desc">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="0dp"
                 android:paddingEnd="80dp"
-                android:text="Comparte tu opinión"
+                android:text="@string/review_form_title"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
-                    android:text="¿Cómo calificarías la atención y servicio del proveedor?"
+                    android:text="@string/review_rating_bar_label"
                     android:textSize="14sp" />
 
                 <LinearLayout
@@ -55,12 +55,12 @@
 
                     <RatingBar
                         android:id="@+id/ratingBar"
-                        style="@android:style/Widget.Material.Light.RatingBar"
+                        style="@android:style/Widget.Material.RatingBar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:numStars="5"
-                        android:progressTint="@color/green"
+                        android:progressTint="@color/blue"
                         android:stepSize="1" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -72,7 +72,7 @@
                             android:layout_width="50dp"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="Malo"
+                            android:text="@string/review_bad_rating_title"
                             android:textSize="12sp"
                             app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +82,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="Excelente"
+                            android:text="@string/review_excellent_rating_title"
                             android:textSize="12sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -107,7 +107,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:labelFor="@+id/titleInput"
-                    android:text="Escribe un título para tu opinión"
+                    android:text="@string/review_title_label"
                     android:textSize="14sp" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -141,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:labelFor="@+id/commentInput"
-                    android:text="Escribe tu opinión"
+                    android:text="@string/review_opinion_label"
                     android:textSize="14sp" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -175,7 +175,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="70dp"
                 android:fontFamily="sans-serif-medium"
-                android:text="Publicar"
+                android:text="@string/review_publish_botton_label"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
