@@ -8,13 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-      SurveyView(survey: sampleSurvey)
+  var body: some View {
+    VStack {
+      Image(systemName: "globe")
+        .imageScale(.large)
+        .foregroundColor(.accentColor)
+      Text("Hello, world!")
     }
+    .padding()
+    .onAppear {
+      Task {
+        print(await DummyRepository.shared.getDummies()!)
+      }
+    }
+  }
 }
 
 struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+  static var previews: some View {
+    ContentView()
+  }
 }
