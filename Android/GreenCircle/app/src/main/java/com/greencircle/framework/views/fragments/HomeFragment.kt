@@ -63,6 +63,7 @@ class HomeFragment : Fragment() {
     private fun setUpViewModel() {
         val repository = EcoInfoRepository(EcoInfoRetrofit.api)
         val viewModelFactory = EcoInfoViewModelFactory(repository)
+
         viewModel = ViewModelProvider(this, viewModelFactory)[EcoInfoViewModel::class.java]
     }
 
