@@ -32,10 +32,12 @@ class RegisterCompanyFragment : Fragment() {
                     val task = GoogleSignIn.getSignedInAccountFromIntent(data)
                     try {
                         val account = task.getResult(ApiException::class.java)
-                        Log.d("GoogleSignIn", "Signed in successfully")
-                        Log.d("GoogleSignIn", "account: $account")
 
-                        navigateToForm()
+                        val arguments = Bundle()
+                        arguments.putString("displayName", account?.displayName)
+                        arguments.putString("email", account?.email)
+
+                        navigateToForm(arguments)
                     } catch (e: ApiException) {
                         Toast.makeText(
                             requireContext(), "Something went wrong", Toast.LENGTH_SHORT
@@ -90,9 +92,9 @@ class RegisterCompanyFragment : Fragment() {
     }
 
     // Navigate Methods
-    private fun navigateToForm() {
+    private fun navigateToForm(arguments: Bundle? = null) {
         val createCompanyFragment = CreateCompanyFragment()
         val activity = requireActivity() as RegisterCompanyActivity
-        activity.replaceFragment(createCompanyFragment)
+        activity.replaceFragment(createCompanyFragment, arguments)
     }
 }

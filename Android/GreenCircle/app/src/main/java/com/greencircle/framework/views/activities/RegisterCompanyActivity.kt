@@ -20,7 +20,8 @@ class RegisterCompanyActivity : AppCompatActivity() {
         replaceFragment(RegisterCompanyFragment())
     }
 
-    fun replaceFragment(fragment: Fragment) {
+    fun replaceFragment(fragment: Fragment, data: Bundle? = null) {
+        fragment.arguments = data
         val fragmentManager = supportFragmentManager
         var fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.register_company_fragment, fragment)
