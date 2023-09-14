@@ -36,7 +36,7 @@ export const getSurveyById = async (
       {
         model: Question,
         association: 'questions',
-        attributes: ['questionId', 'questionText', 'questionType'],
+        attributes: ['questionId', 'questionText', 'questionType', 'isRequired'],
         include: [
           {
             model: QuestionOption,

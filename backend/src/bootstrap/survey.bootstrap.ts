@@ -81,6 +81,7 @@ export default class SurveysBootstrapper extends Bootstrapper {
               questionText:
                 'What features would you like to see in our product?',
               questionType: 'text',
+              isRequired: false,
             },
             {
               questionId: 'ques-5678-abcd-1112',

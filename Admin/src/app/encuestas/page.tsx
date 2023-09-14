@@ -20,7 +20,7 @@ export default async function ListSurveys() {
         <div className="flex flex-col items-center w-full justify-center">
           <table className="table-fixed border-collapse w-4/5">
             <thead className="">
-              <tr className="text-primary font-bold">
+              <tr className="text-txt font-bold">
                 <th
                   scope="col"
                   className="py-8 border-b w-[20%] border-gray-700"

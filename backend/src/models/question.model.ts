@@ -41,7 +41,7 @@ export default class Question extends Model {
     field: 'IS_REQUIRED',
     defaultValue: true,
   })
-  requiredQuestion: boolean
+  isRequired: boolean
 
   @ForeignKey(() => Survey)
   @Column({

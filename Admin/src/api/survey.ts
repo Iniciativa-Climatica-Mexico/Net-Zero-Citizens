@@ -7,13 +7,13 @@ export type Survey = {
   description: string
   startDate: Date
   endDate: Date | null
-  questions: DetailedSurvey[]
+  questions: QuestionDetail[]
 }
 
-export type DetailedSurvey = {
+export type QuestionDetail = {
   questionText: string
   questionType: string
-  requiredQuestion: boolean
+  isRequired: boolean
 }
 
 export async function fetchAllSurveys() {

@@ -1,4 +1,4 @@
-import { fetchSurveyById, DetailedSurvey, Survey } from '@/api/survey'
+import { fetchSurveyById, QuestionDetail } from '@/api/survey'
 import Link from 'next/link'
 
 type DetailedSurveyProps = {
@@ -28,14 +28,14 @@ export default async function DetailedSurvey(props: DetailedSurveyProps) {
           </Link>
         </div>
         <div className="flex mx-8">
-          <p className="self-start mb-8 mx-8 text-txt">
+          <p className="self-start mb-8 mx-8 text-secondary">
             {surveyDetail.description}
           </p>
         </div>
-        <div>
+        <div className="flex flex-col items-center w-full justify-center">
           <table className="table-fixed border-collapse w-4/5">
             <thead className="">
-              <tr className="text-primary font-bold">
+              <tr className="text-txt font-bold">
                 <th scope="col" className="py-8 border-b border-gray-700">
                   Pregunta
                 </th>
@@ -67,17 +67,25 @@ export default async function DetailedSurvey(props: DetailedSurveyProps) {
   }
 }
 
-function QuestionComponent(props: DetailedSurvey) {
+function QuestionComponent(props: QuestionDetail) {
   return (
     <tr className="border-b border-gray-300">
-      <td className="text-center py-8 px-8 truncate cursor-pointer  text-txt">
+      <td className="text-center py-8 px-8 truncate text-txt">
         {props.questionText}
       </td>
       <td className="text-center truncate py-8 px-8 text-txt ">
         {props.questionType}
       </td>
       <td className="text-center truncate py-8 px-8 text-txt ">
-        {props.requiredQuestion ? 'Obligatorio' : 'Opcional'}
+        {props.isRequired ? (
+          <button className="text-primary py-2 px-4 w-[8rem] rounded cursor-default border-primary border-2">
+            Opcional
+          </button>
+        ) : (
+          <button className="bg-primary text-white py-2 px-4 w-[8rem] rounded cursor-default">
+            Obligatorio{' '}
+          </button>
+        )}
       </td>
     </tr>
   )
