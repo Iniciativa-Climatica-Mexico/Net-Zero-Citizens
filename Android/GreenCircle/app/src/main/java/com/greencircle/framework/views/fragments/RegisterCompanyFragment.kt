@@ -76,7 +76,8 @@ class RegisterCompanyFragment : Fragment() {
         val acct: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(activity)
         Log.d("GoogleSignIn", "acct: $acct")
         if (acct != null) {
-            navigateToForm()
+            // Cambiar por navigateToForm()
+            googleSignOut(mGoogleSignInClient)
         }
 
         googleButton.setOnClickListener {
@@ -89,6 +90,25 @@ class RegisterCompanyFragment : Fragment() {
     private fun googleLogin(mGoogleSignInClient: GoogleSignInClient) {
         val signInIntent: Intent = mGoogleSignInClient.signInIntent
         googleSignInActivityResult.launch(signInIntent)
+    }
+
+    private fun googleSignOut(mGoogleSignInClient: GoogleSignInClient) {
+        mGoogleSignInClient.signOut()
+    }
+
+    private fun getDataFromGoogleAccount(account: GoogleSignInAccount?): Bundle {
+        val arguments = Bundle()
+
+        arguments.putString("givenName", account?.givenName)
+        arguments.putString("familyName", account?.familyName)
+        arguments.putString("displayName", account?.displayName)
+        arguments.putString("email", account?.email)
+        arguments.putString("photoUrl", account?.photoUrl.toString())
+        arguments.putString("idToken", account?.idToken)
+
+        Log.d("Token", account?.id.toString())
+
+        return arguments
     }
 
     // Navigate Methods

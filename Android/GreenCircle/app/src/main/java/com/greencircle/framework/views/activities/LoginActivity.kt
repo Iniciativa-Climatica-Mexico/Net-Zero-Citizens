@@ -85,7 +85,8 @@ class LoginActivity : AppCompatActivity() {
         val acct: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(this)
         Log.d("GoogleSignIn", "acct: $acct")
         if (acct != null) {
-            navigateToHome()
+            // Cambiar por navigateToForm()
+            googleSignOut(mGoogleSignInClient)
         }
 
         googleButton.setOnClickListener {
@@ -98,6 +99,10 @@ class LoginActivity : AppCompatActivity() {
     private fun googleLogin(mGoogleSignInClient: GoogleSignInClient) {
         val signInIntent: Intent = mGoogleSignInClient.signInIntent
         googleSignInActivityResult.launch(signInIntent)
+    }
+
+    private fun googleSignOut(mGoogleSignInClient: GoogleSignInClient) {
+        mGoogleSignInClient.signOut()
     }
 
     // On Click Listener Methods
