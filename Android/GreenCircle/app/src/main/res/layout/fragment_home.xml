@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:layout_marginBottom="10dp"
-        android:text="Eco Info"
+        android:text="Últimas Noticias"
         android:textSize="22sp"
         android:textColor="@color/black"
         android:textStyle="bold" />
