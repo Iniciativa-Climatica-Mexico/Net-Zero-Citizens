@@ -22,7 +22,9 @@ class ReviewFormFragment : Fragment() {
     private var allowedReview: Boolean = true
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         viewModel = ViewModelProvider(this)[ReviewFormViewModel::class.java]
 
@@ -30,10 +32,15 @@ class ReviewFormFragment : Fragment() {
         val root: View = binding.root
 
         addReview()
+        initializeRatingBar()
         initializeRatingBarListener()
         initializeReviewListener()
 
         return root
+    }
+
+    private fun initializeRatingBar() {
+        binding.ratingBar.rating = viewModel.rating.value!!
     }
 
     private fun initializeReviewListener() {
