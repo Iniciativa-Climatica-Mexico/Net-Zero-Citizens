@@ -27,9 +27,8 @@ export const getAllCompanies = async <T>(
  * @returns Promise<Company | Null> Proveedor con el id especificado
  */
 export const getCompanyById = async (id: string): Promise<Company | null> => {
-  console.log(await getCompanyScore(id))
-  console.log('----------------------------------------------------------')
-  // console.log(await getCompanyProductImages(id))
+  const companyScore = await getCompanyScore(id)
+  
   return Company.findOne({
     where: {
       companyId: id,
@@ -37,7 +36,9 @@ export const getCompanyById = async (id: string): Promise<Company | null> => {
   })
 }
 
-const getCompanyProductImages = async (id: string): Promise<Company[] | null> => {
+const getCompanyProductImages = async (
+  id: string
+): Promise<Company[] | null> => {
   return Company.findAll({
     where: {
       companyId: id,
@@ -108,18 +109,10 @@ const getCompanyScore = async (id: string): Promise<Review[] | null> => {
   return await Review.findAll({
     where: {
       companyId: id,
-      },
+    },
     attributes: {
-      include: [
-        [Sequelize.fn('AVG', Sequelize.col('rating')), 'rating'],
-      ],
-      exclude: [
-        'reviewId',
-        'userId',
-        'comment',
-        'createdAt',
-        'updatedAt'
-      ]
+      include: [[Sequelize.fn('AVG', Sequelize.col('rating')), 'rating']],
+      exclude: ['reviewId', 'userId', 'comment', 'createdAt', 'updatedAt'],
     },
   })
 }
