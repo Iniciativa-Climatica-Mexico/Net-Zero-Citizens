@@ -8,9 +8,10 @@ const nextConfig = {
           loader: '@svgr/webpack',
         },
       ],
-    });
-    return config;
+    })
+    return config
   },
-};
+}
 
-module.exports = nextConfig;
+// eslint-disable-next-line no-undef
+module.exports = nextConfig
