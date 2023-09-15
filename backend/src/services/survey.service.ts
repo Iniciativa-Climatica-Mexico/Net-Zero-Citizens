@@ -55,6 +55,7 @@ export const getSurveyById = async (
   return s ? unwrap(s) : null
 }
 
+
 export const createSurveyBodyScheme = z.object({
   title: z.string().nonempty(),
   description: z.string(),
@@ -68,13 +69,13 @@ export const createSurveyBodyScheme = z.object({
 })
 
 export type CreateSurveyReqBody = z.infer<typeof createSurveyBodyScheme>
+
 /**
  * @brief
  * Función del servicio que devuelve todas las encuestas cerradas de la base de datos
  * @param params Los parametros de paginación
  * @returns Una promesa con las encuestas y la información de paginación
  *
- * TODO: Verificar caul de las dos funciones es la correcta.
  */
 export const createSurvey = async (
   survey: CreateSurveyReqBody
@@ -125,6 +126,7 @@ export const answerSurveyBodyScheme = z.object({
 
 export type AnswerSurveyReqBody = z.infer<typeof answerSurveyBodyScheme>
 type FullAnswers = AnswerSurveyReqBody & { userId: string }
+
 
 export const answerSurvey = async (answers: FullAnswers): Promise<Answer[]> => {
   const processedAnswers = answers.answers.map((a) => {

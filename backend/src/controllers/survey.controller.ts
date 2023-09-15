@@ -1,3 +1,4 @@
+import Answer from '../models/answer.model'
 import Survey from '../models/survey.model'
 import * as SurveyService from '../services/survey.service'
 import {
@@ -106,5 +107,29 @@ export const closeSurvey: RequestHandler<
     res.status(404).json({ message: 'Survey not found' })
   } else {
     res.status(200)
+  }
+}
+
+
+// temporary until mered with Auth
+type Token = {
+  uuid: string
+}
+
+export const answerSurvey: RequestHandler<
+  NoRecord,
+  Answer[]  | { message: string },
+  undefined,
+  NoRecord
+> = async (req , res) => {
+  try {
+    const answerData = SurveyService.answerSurveyBodyScheme.parse(req.body)
+    const req2 = req as typeof req & { user: Token }
+
+    const userId = req2?.user?.uuid || 'abcd-1234-efgh-5678' 
+    const answer = await SurveyService.answerSurvey({...answerData, userId})
+    res.json(answer)
+  } catch (err) {
+    res.status(500).json({ message: 'Error creating answer' })
   }
 }
