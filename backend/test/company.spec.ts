@@ -1,6 +1,7 @@
 import chai from 'chai'
 import chaiExclude from 'chai-exclude'
 import { db, initDB } from '../src/configs/database.config'
+import { unwrap } from './utils'
 import {
   getAllCompanies,
   getCompanyById,
@@ -92,8 +93,6 @@ const attributesToExclude = [
   'createdAt',
   'updatedAt',
   'deletedAt',
-  'userId',
-  'companyId',
 ]
 
 beforeEach(async () => {
@@ -108,7 +107,7 @@ describe('Company Service', () => {
   it('should return all companies', async () => {
     const response = await getAllCompanies({ start: 0, pageSize: 10 })
 
-    expect(response.rows.map((company) => company.get()))
+    expect(unwrap(response.rows))
       .excludingEvery(attributesToExclude)
       .to.deep.equal(testData)
   })
@@ -116,7 +115,7 @@ describe('Company Service', () => {
   it('should return all companies with pagination', async () => {
     const response = await getAllCompanies({ start: 0, pageSize: 1 })
 
-    expect(response.rows.map((company) => company.get()))
+    expect(unwrap(response.rows))
       .excludingEvery(attributesToExclude)
       .to.deep.equal([testData[0]])
   })
@@ -124,7 +123,7 @@ describe('Company Service', () => {
   it('should return all companies with pagination', async () => {
     const response = await getAllCompanies({ start: 1, pageSize: 1 })
 
-    expect(response.rows.map((company) => company.get()))
+    expect(unwrap(response.rows))
       .excludingEvery(attributesToExclude)
       .to.deep.equal([testData[1]])
   })

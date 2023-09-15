@@ -4,6 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!--    Import topbar.xml-->
+    <include
+        android:id="@+id/topbar"
+        layout="@layout/top_bar"
+        />
+
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
@@ -11,7 +17,7 @@
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
+        android:id="@+id/bottom_naSvigation"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
