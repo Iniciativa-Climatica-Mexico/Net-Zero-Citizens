@@ -18,7 +18,14 @@ let sampleSurvey: SurveyModel = SurveyModel(
       questionText: "Which of the following features do you find most useful?",
       options: ["Fast Delivery", "Easy Returns", "Wide Product Range"]
     ),
-    SurveyQuestion(questionType: .open, questionText: "Any additional comments or suggestions?", options: nil)
+    SurveyQuestion(questionType: .open, questionText: "Any additional comments or suggestions?", options: nil),
+    SurveyQuestion(
+      questionType: .multipleChoice,
+      questionText: "Which of the following features do you find most useful?",
+      options: ["5", "w Returns", "w w Range"]
+    ),
+    SurveyQuestion(questionType: .open, questionText: "What did you like about our service?", options: nil),
+    SurveyQuestion(questionType: .open, questionText: "What did you like about our service?", options: nil)
   ]
 )
 

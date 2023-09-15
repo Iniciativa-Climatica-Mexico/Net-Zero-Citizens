@@ -11,22 +11,35 @@ struct SurveyView: View {
   let survey: SurveyModel
   
   var body: some View {
-    VStack(alignment: .leading) {
-      Text(survey.title)
-        .font(.title)
-      Text(survey.description)
-        .font(.subheadline)
-      
-      ForEach(survey.questions, id: \.self) { question in
-        switch question.questionType {
-        case .open:
-          OpenQuestion(question: question)
-        case .scale:
-          ScaleQuestion(question: question)
-        case .multipleChoice:
-          MultipleChoice(question: question)
-        }
+    NavigationView {
+      ScrollView {
+        VStack(alignment: .leading) {
+          Text(survey.title)
+            .font(.headline)
+            .padding(.bottom, 1)
+          Text(survey.description)
+            .font(.subheadline)
+            .padding(.bottom)
+          
+          ForEach(survey.questions, id: \.self) { question in
+            switch question.questionType {
+            case .open:
+              OpenQuestion(question: question)
+            case .scale:
+              ScaleQuestion(question: question)
+            case .multipleChoice:
+              MultipleChoice(question: question)
+            }
+          }
+        } .padding(8)
       }
+      .navigationBarTitle(Text(survey.title))
     }
+  }
+}
+
+struct Previews_SurveyView_Previews: PreviewProvider {
+  static var previews: some View {
+    SurveyView(survey: sampleSurvey)
   }
 }
