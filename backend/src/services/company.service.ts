@@ -3,7 +3,7 @@ import Product from '../models/products.model'
 import Review from '../models/review.model'
 import Company from '../models/company.model'
 import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
-import { Sequelize } from 'sequelize-typescript'
+import { fn, col } from 'sequelize'
 
 /**
  * @brief
@@ -28,7 +28,7 @@ export const getAllCompanies = async <T>(
  */
 export const getCompanyById = async (id: string): Promise<Company | null> => {
   const companyScore = await getCompanyScore(id)
-  
+
   return Company.findOne({
     where: {
       companyId: id,
@@ -111,7 +111,7 @@ const getCompanyScore = async (id: string): Promise<Review[] | null> => {
       companyId: id,
     },
     attributes: {
-      include: [[Sequelize.fn('AVG', Sequelize.col('rating')), 'rating']],
+      include: [[fn('AVG', col('rating')), 'rating']],
       exclude: ['reviewId', 'userId', 'comment', 'createdAt', 'updatedAt'],
     },
   })
