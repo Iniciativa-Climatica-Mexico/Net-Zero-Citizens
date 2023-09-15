@@ -27,7 +27,7 @@ class CompanyReviewViewModel : ViewModel() {
                 Log.d("Salida", "result is null")
             } else {
                 CoroutineScope(Dispatchers.Main).launch {
-                    reviewObjectLiveData.postValue(result)
+                    reviewObjectLiveData.postValue(result!!)
                 }
             }
         }
