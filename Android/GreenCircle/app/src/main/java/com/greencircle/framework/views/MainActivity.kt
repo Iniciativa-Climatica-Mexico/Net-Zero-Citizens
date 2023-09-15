@@ -4,8 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.greencircle.R
 import com.greencircle.databinding.ActivityMainBinding
+import com.greencircle.framework.views.fragments.ProveedoresFragment
+import com.greencircle.R
 import com.greencircle.framework.views.fragments.ReviewFormFragment
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +27,11 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.ecoInfo -> {
                     replaceFragment(ReviewFormFragment())
+                    true
+                }
+
+                R.id.proveedores -> {
+                    replaceFragment(ProveedoresFragment())
                     true
                 }
 
