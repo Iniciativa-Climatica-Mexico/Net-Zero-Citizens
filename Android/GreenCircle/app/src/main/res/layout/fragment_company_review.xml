@@ -11,11 +11,24 @@
         android:id="@+id/ratingWrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:layout_marginTop="20dp"
         android:orientation="vertical"
+        android:paddingTop="20dp"
+        android:scrollbars="vertical"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/emptyView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="No items to display"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <TextView
             android:layout_width="wrap_content"

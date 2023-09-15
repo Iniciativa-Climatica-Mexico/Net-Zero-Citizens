@@ -60,7 +60,14 @@ class CompanyReviewFragment : Fragment() {
         val gridLayoutManager =
             GridLayoutManager(requireContext(), 1, GridLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = gridLayoutManager
-        adapter.CompanyReviewAdapter(dataForList, requireContext())
-        recyclerView.adapter = adapter
+        if (dataForList.size > 0) {
+            binding.RVCompanyReview.visibility = View.VISIBLE
+            binding.emptyView.visibility = View.GONE
+            adapter.CompanyReviewAdapter(dataForList, requireContext())
+            recyclerView.adapter = adapter
+        } else {
+            binding.RVCompanyReview.visibility = View.GONE
+            binding.emptyView.visibility = View.VISIBLE
+        }
     }
 }
