@@ -1,7 +1,4 @@
 import Ecoinfo from '../models/ecoinfo.model'
-import { Request, Response } from 'express'
-import dotenv from 'dotenv'
-import { type } from 'os'
 import { z } from 'zod'
 
 /**
@@ -13,7 +10,7 @@ import { z } from 'zod'
  *            información de paginación
  */
 export const getAllEcoinfo = async (): Promise<Ecoinfo[]> => {
-  // await fetchEcoInfo()
+  await fetchEcoInfo()
   return await Ecoinfo.findAll()
 }
 
