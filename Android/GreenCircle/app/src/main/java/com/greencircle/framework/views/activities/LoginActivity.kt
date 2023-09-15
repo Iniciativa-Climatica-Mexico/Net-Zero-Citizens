@@ -44,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
                     val task = GoogleSignIn.getSignedInAccountFromIntent(data)
                     try {
                         val account = task.getResult(ApiException::class.java)
-                        navigateToHome()
+                        Log.d("Test", "${account.idToken}")
                     } catch (e: ApiException) {
                         Toast.makeText(
                             applicationContext, "Something went wrong", Toast.LENGTH_SHORT
