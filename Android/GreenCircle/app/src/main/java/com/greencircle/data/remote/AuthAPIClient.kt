@@ -15,10 +15,7 @@ class AuthAPIClient {
             val body = AuthAPIService.GoogleLoginRequest(token)
             val response = api.googleLogin(body)
             Log.d("AuthAPIClient", "Res: $response")
-            Log.d("AuthAPIClient", "User: ${response.user.firstName}")
-            Log.d("AuthAPIClient", "Email: ${response.user.email}")
-            Log.d("AuthAPIClient", "Token: ${response.tokens.authToken}")
-            response // Extract the message from the response
+            response
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e("AuthAPIClient", "Error: $e")

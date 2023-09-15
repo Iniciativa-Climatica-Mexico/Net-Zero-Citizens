@@ -1,7 +1,6 @@
 package com.greencircle.framework.views.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,7 +35,6 @@ class CreateCompanyFragment : Fragment() {
         val email = arguments.getString("email")
 
         val token: String = arguments.getString("idToken").toString()
-        Log.d("Token", token)
 
         // Google Login
         viewModel.googleLogin(token)

@@ -9,16 +9,16 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.greencircle.R
 import com.greencircle.databinding.ActivityLoginBinding
 import com.greencircle.framework.views.MainActivity
+import com.greencircle.utils.AuthUtils
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
+    private val authUtils = AuthUtils()
+
     private val registerCompanyActivityResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -44,8 +44,6 @@ class LoginActivity : AppCompatActivity() {
                     val task = GoogleSignIn.getSignedInAccountFromIntent(data)
                     try {
                         val account = task.getResult(ApiException::class.java)
-                        Log.d("GoogleSignIn", "Signed in successfully")
-                        Log.d("GoogleSignIn", "account: $account")
                         navigateToHome()
                     } catch (e: ApiException) {
                         Toast.makeText(
@@ -68,44 +66,10 @@ class LoginActivity : AppCompatActivity() {
         registerUserOnClickListener()
 
         // Google Login
-        googleLoginListener()
+        authUtils.googleLoginListener(binding, this, googleSignInActivityResult)
     }
 
-    // Google Login Methods
-    private fun googleLoginListener() {
-        // Google Login
-        val googleButton = binding.root.findViewById<View>(R.id.sign_in_button)
-
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        val gso =
-            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
-        val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
-
-        val acct: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(this)
-        Log.d("GoogleSignIn", "acct: $acct")
-        if (acct != null) {
-            // Cambiar por navigateToForm()
-            googleSignOut(mGoogleSignInClient)
-        }
-
-        googleButton.setOnClickListener {
-            when (it.id) {
-                R.id.sign_in_button -> googleLogin(mGoogleSignInClient)
-            }
-        }
-    }
-
-    private fun googleLogin(mGoogleSignInClient: GoogleSignInClient) {
-        val signInIntent: Intent = mGoogleSignInClient.signInIntent
-        googleSignInActivityResult.launch(signInIntent)
-    }
-
-    private fun googleSignOut(mGoogleSignInClient: GoogleSignInClient) {
-        mGoogleSignInClient.signOut()
-    }
-
-    // On Click Listener Methods
+    // On Click Listener Method
     private fun registerCompanyOnClickListener() {
         val registerCompanyButton = binding.root.findViewById<View>(R.id.login_register_company)
         registerCompanyButton.setOnClickListener {
