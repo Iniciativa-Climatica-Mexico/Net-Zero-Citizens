@@ -4,6 +4,7 @@ import Survey from '../models/survey.model'
 import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
 import Question from '../models/question.model'
 import QuestionOption from '../models/questionOption.model'
+import Answer from '../models/answer.model'
 
 /**
  * @brief
@@ -36,7 +37,12 @@ export const getSurveyById = async (
       {
         model: Question,
         association: 'questions',
-        attributes: ['questionId', 'questionText', 'questionType', 'isRequired'],
+        attributes: [
+          'questionId',
+          'questionText',
+          'questionType',
+          'isRequired',
+        ],
         include: [
           {
             model: QuestionOption,
@@ -104,5 +110,28 @@ export const closeSurvey = async (surveyId: string): Promise<Survey | null> => {
     s.endDate = new Date()
     await s.save()
   }
+  return unwrap(s)
+}
+
+export const answerSurveyBodyScheme = z.object({
+  answers: z.array(
+    z.object({
+      questionId: z.string(),
+      scaleValue: z.number().optional(),
+      textAnswer: z.string().optional(),
+    })
+  ),
+})
+
+export type AnswerSurveyReqBody = z.infer<typeof answerSurveyBodyScheme>
+type FullAnswers = AnswerSurveyReqBody & { userId: string }
+
+export const answerSurvey = async (answers: FullAnswers): Promise<Answer[]> => {
+  const processedAnswers = answers.answers.map((a) => {
+    const processedAns = { ...a, userId: answers.userId }
+    return processedAns
+  })
+
+  const s = await Answer.bulkCreate(processedAnswers)
   return unwrap(s)
 }
