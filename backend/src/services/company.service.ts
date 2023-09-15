@@ -4,10 +4,12 @@ import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
 /**
  * @brief
  * Función del servicio que devuelve el proveedor con el mismo id que contiene el parametro
- * @param companyId 
+ * @param companyId
  * @returns Una promesa con la información del proveedor
  */
-export const getCompanyInfo = async (companyId: string): Promise <Company | null> => {
+export const getCompanyInfo = async (
+  companyId: string
+): Promise<Company | null> => {
   return await Company.findByPk(companyId)
 }
 
@@ -27,12 +29,11 @@ export const getAllCompanies = async <T>(
 }
 
 /**
- * @brief 
+ * @brief
  * Función del servicio que devuelve todos los proveedores pendientes por aprobar
  * @params Los parametros de paginación
- * @returns Una promesa con los proveedores y la información de paginación 
+ * @returns Una promesa con los proveedores y la información de paginación
  */
-
 
 export const getPendingCompanies = async <T>(
   params: PaginationParams<T>
@@ -41,11 +42,10 @@ export const getPendingCompanies = async <T>(
     limit: params.pageSize,
     offset: params.start,
     where: {
-      status: 'pending_approval'
+      status: 'pending_approval',
     },
-  });
-};
-
+  })
+}
 
 export type UpdateCompanyInfoBody = {
   name: string
@@ -54,25 +54,24 @@ export type UpdateCompanyInfoBody = {
   profilePicture: string
   status: 'approved' | 'pending_approval' | 'rejected'
   phoneNumber: string
-  webPage:string
+  webPage: string
 }
 
 /**
- * @brief 
+ * @brief
  * Actualiza en la base de datos el proveedor con los datos pasados en los parametros
- * @param companyId 
- * @param newCompanyInfo 
+ * @param companyId
+ * @param newCompanyInfo
  * @returns Una promesa de la actualización del proveedor en la base de datos.
  */
 export const updateCompanyInfo = async (
   companyId: string,
   newCompanyInfo: UpdateCompanyInfoBody
-): Promise <Company | null> => {
+): Promise<Company | null> => {
   const companyInfo = await Company.findByPk(companyId)
-  if (companyInfo){
+  if (companyInfo) {
     return companyInfo.update(newCompanyInfo)
-  }
-  else {
+  } else {
     return null
   }
 }
