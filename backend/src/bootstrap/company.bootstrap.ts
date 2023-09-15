@@ -82,6 +82,30 @@ export default class CompanyBootstrap extends Bootstrapper {
         pdfIneUrl: 'https://www.company3.com/pdfIne.pdf',
         status: 'pending_approval',
       },
+      {
+        companyId: 'a3c0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
+        userId: 'abcd-1234-efgh-5679',
+        name: 'Company 4',
+        description: 'Company 4 description',
+        email: 'company4@outlook.com',
+        phone: '0123456789',
+        street: 'Company 4 street',
+        streetNumber: 124,
+        city: 'Queretaro',
+        state: 'Queretaro',
+        zipCode: 76153,
+        latitude: 20.041297,
+        longitude: -120.2062,
+        pdfCurriculumUrl: 'https://www.company4.com/pdfCurriculum.pdf',
+        pdfDicCdmxUrl: 'https://www.company4.com/pdfDicCdmx.pdf',
+        pdfPeeFideUrl: 'https://www.company4.com/pdfPeeFide.pdf',
+        pdfGuaranteeSecurityUrl:
+          'https://www.company4.com/pdfGuaranteeSecurity.pdf',
+        pdfActaConstitutivaUrl:
+          'https://www.company4.com/pdfActaConstitutiva.pdf',
+        pdfIneUrl: 'https://www.company4.com/pdfIne.pdf',
+        status: 'pending_approval',
+      },
     ])
   }
 }

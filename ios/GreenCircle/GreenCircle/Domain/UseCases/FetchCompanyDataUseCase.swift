@@ -28,7 +28,15 @@ class FetchCompanyInfoUseCaseImpl: FetchCompanyInfoUseCase {
     ///   - Parameters:UUID de compañía
     ///   - Returns: Modelo de compañía
     func fetchCompanyById(id: UUID) async -> Company? {
-        return await companyDataRepository.fetchCompanyById(companyId: id)
+      if var company = await companyDataRepository.fetchCompanyById(companyId: id) {
+        if let webPage = company.webPage, webPage.isEmpty {
+          company.webPage = "No contamos con Página Web"
+        }
+        if let profilePicture = company.profilePicture, profilePicture.isEmpty {
+          company.profilePicture = "person.crop.circle.badge.xmark"
+        }
+        return company
+      }
+      return nil
     }
-    
 }

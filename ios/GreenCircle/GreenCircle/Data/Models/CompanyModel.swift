@@ -7,13 +7,13 @@
 
 import Foundation
 
-enum StatusEnum: String, Codable {
-    case approved
-    case pendingApproval
-    case rejected
+enum StatusEnum: String, Codable, Equatable {
+  case approved = "approved"
+  case pendingApproval = "pending_approval"
+  case rejected = "rejected"
 }
 
-struct Company: Codable {
+struct Company: Codable, Equatable {
     var companyId: UUID
     var userId: String
     var name: String

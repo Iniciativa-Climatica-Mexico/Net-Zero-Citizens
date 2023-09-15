@@ -46,11 +46,12 @@ class NetworkAPIService {
         switch response.result {
         case .success(let data):
             do {
-                return try 
-                NetworkAPIService
+              return
+                try NetworkAPIService
                 .decoder
                 .decode(Company.self, from: data)
             } catch {
+              debugPrint(error)
                 return nil
             }
         case let .failure(error):

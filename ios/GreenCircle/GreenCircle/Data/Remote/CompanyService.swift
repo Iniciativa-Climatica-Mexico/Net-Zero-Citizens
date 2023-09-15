@@ -13,7 +13,6 @@ import Alamofire
 class CompanyService {
     /// Inicialización de singleton
     static let shared = CompanyService()
-    // TODO GET all companies
     
     /// Obtener compañía por id
     ///  - Parameters:
