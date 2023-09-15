@@ -90,7 +90,7 @@
                 android:orientation="vertical">
 
                 <RatingBar
-                    android:id="@+id/reviewProviderStars"
+                    android:id="@+id/reviewCompanyStars"
                     style="@android:style/Widget.Material.RatingBar.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

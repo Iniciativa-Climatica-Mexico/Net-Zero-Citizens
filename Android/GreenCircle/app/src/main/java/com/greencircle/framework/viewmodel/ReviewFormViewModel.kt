@@ -1,20 +1,17 @@
 package com.greencircle.framework.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.greencircle.domain.model.ReviewBase
+import com.greencircle.domain.usecase.AddReviewRequirement
+import kotlinx.coroutines.launch
 
 class ReviewFormViewModel : ViewModel() {
-    private val _rating = MutableLiveData<Int>()
+    private val addReviewRequirement = AddReviewRequirement()
 
-    val rating: LiveData<Int>
-        get() = _rating
-
-    init {
-        _rating.value = 0
-    }
-
-    fun setRating(rating: Int) {
-        _rating.value = rating
+    fun addReview(UUID: String, companyId: String, review: ReviewBase) {
+        viewModelScope.launch {
+            val response = addReviewRequirement(UUID, companyId, review)
+        }
     }
 }
