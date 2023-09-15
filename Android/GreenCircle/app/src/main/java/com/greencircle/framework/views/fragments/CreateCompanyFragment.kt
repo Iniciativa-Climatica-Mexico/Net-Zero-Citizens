@@ -31,22 +31,23 @@ class CreateCompanyFragment : Fragment() {
         viewModel = ViewModelProvider(this)[CreateCompanyViewModel::class.java]
         arguments = requireArguments()
 
-        // Texts
-        val displayName = arguments.getString("displayName")
-        val email = arguments.getString("email")
+        // Set texts
+        setTexts(arguments, view)
 
-        // Replace texts
-        val userName = view.findViewById<TextView>(R.id.tvUserName)
-        val userEmail = view.findViewById<TextView>(R.id.tvUserEmail)
-
-        userName.text = displayName
-        userEmail.text = email
-
-        Log.d("CreateCompanyFragment", "arguments: $arguments")
+        Log.d("Token", arguments.getString("idToken").toString())
 
         // Google Login
         viewModel.googleLogin()
 
         return view
+    }
+
+    private fun setTexts(arguments: Bundle, view: View) {
+        // Replace texts
+        val userName = view.findViewById<TextView>(R.id.tvUserName)
+        val userEmail = view.findViewById<TextView>(R.id.tvUserEmail)
+
+        userName.text = arguments.getString("displayName")
+        userEmail.text = arguments.getString("email")
     }
 }

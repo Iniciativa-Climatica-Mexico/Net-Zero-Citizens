@@ -16,10 +16,19 @@ import com.google.android.gms.common.api.ApiException
 import com.greencircle.R
 import com.greencircle.databinding.ActivityLoginBinding
 import com.greencircle.framework.views.MainActivity
+import com.greencircle.utils.Constants
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private val registerCompanyActivityResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // Handle the result as needed, e.g., update UI or perform actions
+            } else if (result.resultCode == Activity.RESULT_CANCELED) {
+                // Handle the case where the user canceled the registration
+            }
+        }
+    private val registerUserActivityResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 // Handle the result as needed, e.g., update UI or perform actions
@@ -57,6 +66,7 @@ class LoginActivity : AppCompatActivity() {
 
         // Listener Methods
         registerCompanyOnClickListener()
+        registerUserOnClickListener()
 
         // Google Login
         googleLoginListener()
@@ -70,7 +80,10 @@ class LoginActivity : AppCompatActivity() {
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         val gso =
-            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(Constants.GOOGLE_CLIENT_ID)
+                .requestEmail()
+                .build()
         val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
         val acct: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(this)
@@ -99,6 +112,13 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    private fun registerUserOnClickListener() {
+        val registerUserButton = binding.root.findViewById<View>(R.id.login_register_user)
+        registerUserButton.setOnClickListener {
+            navigateToRegisterUser()
+        }
+    }
+
     // Navigation Methods
     private fun navigateToHome() {
         var intent: Intent = Intent(this, MainActivity::class.java)
@@ -108,5 +128,10 @@ class LoginActivity : AppCompatActivity() {
     private fun navigateToRegisterCompany() {
         var intent: Intent = Intent(this, RegisterCompanyActivity::class.java)
         registerCompanyActivityResult.launch(intent)
+    }
+
+    private fun navigateToRegisterUser() {
+        var intent: Intent = Intent(this, RegisterUserActivity::class.java)
+        registerUserActivityResult.launch(intent)
     }
 }

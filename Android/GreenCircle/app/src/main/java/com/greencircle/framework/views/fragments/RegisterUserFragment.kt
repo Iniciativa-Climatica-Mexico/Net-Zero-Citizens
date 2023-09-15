@@ -16,24 +16,27 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.greencircle.R
-import com.greencircle.databinding.FragmentRegisterCompanyBinding
-import com.greencircle.framework.views.activities.RegisterCompanyActivity
+import com.greencircle.databinding.FragmentRegisterUserBinding
+import com.greencircle.framework.views.activities.RegisterUserActivity
 import com.greencircle.utils.Constants
 
-class RegisterCompanyFragment : Fragment() {
-    private var _binding: FragmentRegisterCompanyBinding? = null
+class RegisterUserFragment : Fragment() {
+    private var _binding: FragmentRegisterUserBinding? = null
     private val binding get() = _binding!!
     // Activity Result Contracts
     private val googleSignInActivityResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = result.data
+                Log.d("GoogleSignIn", "data: $data")
                 if (data != null && result.resultCode == Activity.RESULT_OK) {
                     val task = GoogleSignIn.getSignedInAccountFromIntent(data)
                     try {
                         val account = task.getResult(ApiException::class.java)
-                        val arguments = getDataFromGoogleAccount(account)
-                        navigateToForm(arguments)
+                        Log.d("GoogleSignIn", "Signed in successfully")
+                        Log.d("GoogleSignIn", "account: $account")
+
+                        navigateToForm()
                     } catch (e: ApiException) {
                         Toast.makeText(
                             requireContext(), "Something went wrong", Toast.LENGTH_SHORT
@@ -49,7 +52,7 @@ class RegisterCompanyFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentRegisterCompanyBinding.inflate(inflater, container, false)
+        _binding = FragmentRegisterUserBinding.inflate(inflater, container, false)
 
         // Google Login
         googleLoginListener()
@@ -61,7 +64,7 @@ class RegisterCompanyFragment : Fragment() {
     // Google Login
     private fun googleLoginListener() {
         val googleButton = binding.root.findViewById<View>(R.id.sign_in_button)
-        val activity = requireActivity() as RegisterCompanyActivity
+        val activity = requireActivity() as RegisterUserActivity
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -90,25 +93,10 @@ class RegisterCompanyFragment : Fragment() {
         googleSignInActivityResult.launch(signInIntent)
     }
 
-    private fun getDataFromGoogleAccount(account: GoogleSignInAccount?): Bundle {
-        val arguments = Bundle()
-
-        arguments.putString("givenName", account?.givenName)
-        arguments.putString("familyName", account?.familyName)
-        arguments.putString("displayName", account?.displayName)
-        arguments.putString("email", account?.email)
-        arguments.putString("photoUrl", account?.photoUrl.toString())
-        arguments.putString("idToken", account?.idToken)
-
-        Log.d("Token", account?.id.toString())
-
-        return arguments
-    }
-
     // Navigate Methods
-    private fun navigateToForm(arguments: Bundle? = null) {
-        val createCompanyFragment = CreateCompanyFragment()
-        val activity = requireActivity() as RegisterCompanyActivity
-        activity.replaceFragment(createCompanyFragment, arguments)
+    private fun navigateToForm() {
+        val createUserFragment = CreateUserFragment()
+        val activity = requireActivity() as RegisterUserActivity
+        activity.replaceFragment(createUserFragment)
     }
 }
