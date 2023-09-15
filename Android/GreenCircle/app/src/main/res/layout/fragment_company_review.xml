@@ -21,6 +21,16 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/emptyView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/no_reviews_to_display"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/review_rate_action_title"
