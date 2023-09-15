@@ -104,10 +104,12 @@ class CompanyReviewFragment : Fragment() {
         if (dataForList.size > 0) {
             binding.RVCompanyReview.visibility = View.VISIBLE
             binding.emptyView.visibility = View.GONE
+            binding.reviewInfoWrapper.visibility = View.VISIBLE
             adapter.CompanyReviewAdapter(dataForList, requireContext())
             recyclerView.adapter = adapter
         } else {
             binding.RVCompanyReview.visibility = View.GONE
+            binding.reviewInfoWrapper.visibility = View.GONE
             binding.emptyView.visibility = View.VISIBLE
         }
     }
