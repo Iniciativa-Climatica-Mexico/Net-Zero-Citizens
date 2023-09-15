@@ -34,10 +34,11 @@ class CreateCompanyFragment : Fragment() {
         // Set texts
         setTexts(arguments, view)
 
-        Log.d("Token", arguments.getString("idToken").toString())
+        val token: String = arguments.getString("idToken").toString()
+        Log.d("Token", token)
 
         // Google Login
-        viewModel.googleLogin()
+        viewModel.googleLogin(token)
 
         return view
     }
