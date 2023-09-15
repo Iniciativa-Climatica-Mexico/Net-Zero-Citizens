@@ -1,9 +1,10 @@
 'use client'
 
-
-// import Image from "../../node_modules/next/image";
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState
+} from 'react'
 import Logo from '../../public/LogoBloque.png'
 
 export default function Navbar() {
