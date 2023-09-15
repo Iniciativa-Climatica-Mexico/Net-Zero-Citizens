@@ -55,7 +55,6 @@ export const getSurveyById = async (
   return s ? unwrap(s) : null
 }
 
-
 export const createSurveyBodyScheme = z.object({
   title: z.string().nonempty(),
   description: z.string(),
@@ -115,6 +114,7 @@ export const closeSurvey = async (surveyId: string): Promise<Survey | null> => {
 }
 
 export const answerSurveyBodyScheme = z.object({
+  surveyId: z.string(),
   answers: z.array(
     z.object({
       questionId: z.string(),
@@ -127,13 +127,63 @@ export const answerSurveyBodyScheme = z.object({
 export type AnswerSurveyReqBody = z.infer<typeof answerSurveyBodyScheme>
 type FullAnswers = AnswerSurveyReqBody & { userId: string }
 
-
 export const answerSurvey = async (answers: FullAnswers): Promise<Answer[]> => {
   const processedAnswers = answers.answers.map((a) => {
     const processedAns = { ...a, userId: answers.userId }
     return processedAns
   })
+  const surveyId = answers.surveyId
+  const survey = await Survey.findByPk(surveyId, {
+    include: [
+      {
+        model: Question,
+        association: 'questions',
+        attributes: ['questionId', 'questionType', 'isRequired'],
+        include: [
+          {
+            model: QuestionOption,
+            association: 'questionOptions',
+          },
+        ],
+      },
+    ],
+  })
+  if (!survey) throw new Error('Survey not found')
 
-  const s = await Answer.bulkCreate(processedAnswers)
+  const answersToInsert: typeof processedAnswers = []
+  const questions = survey.questions
+  for (const question of questions) {
+    const ans = processedAnswers.find(
+      (a) => a.questionId === question.questionId
+    )
+
+    if (!ans) {
+      if (question.isRequired) {
+        throw new Error('Answer is required')
+      } else {
+        continue
+      }
+    }
+
+    if (question.questionType === 'multiple_choice') {
+      if (ans.scaleValue) throw new Error('Scale value not allowed')
+      if (!ans.textAnswer) throw new Error('Text answer is required')
+      const isValidOption = question.questionOptions.some(
+        (option) => option.textOption === ans.textAnswer
+      )
+      if (!isValidOption) throw new Error('Invalid option')
+    } else if (question.questionType === 'scale') {
+      if (ans.textAnswer) throw new Error('Text answer not allowed')
+      if (!ans.scaleValue) throw new Error('Scale value is required')
+    } else if (question.questionType === 'open') {
+      if (ans.scaleValue) throw new Error('Scale value not allowed')
+      if (!ans.textAnswer) throw new Error('Text answer is required')
+    } else {
+      throw new Error('Invalid question type')
+    }
+    answersToInsert.push(ans)
+  }
+
+  const s = await Answer.bulkCreate(answersToInsert)
   return unwrap(s)
 }
