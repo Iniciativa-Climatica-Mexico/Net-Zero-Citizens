@@ -37,13 +37,26 @@ class CompanyReviewFragment : Fragment() {
         _binding = FragmentCompanyReviewBinding.inflate(inflater, container, false)
         val root: View = binding.root
         data = ArrayList()
+
+        viewModel.setCompanyId("comp-1234-efgh-0000")
+        viewModel.getReviewsList()
+
         initializeComponents(root)
         initializeObservers()
         initializeReviewFormButton()
         setRating()
-        viewModel.setCompanyId("comp-1234-efgh-0000")
-        viewModel.getReviewsList()
+
         return root
+    }
+
+    override fun onStop() {
+        super.onStop()
+        ratingBar.rating = 0.0f
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun initializeReviewFormButton() {
@@ -62,16 +75,6 @@ class CompanyReviewFragment : Fragment() {
             if (rating > 0.0f)
                 navigateToReviewFormFragment()
         }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        ratingBar.rating = 0.0f
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun navigateToReviewFormFragment() {
