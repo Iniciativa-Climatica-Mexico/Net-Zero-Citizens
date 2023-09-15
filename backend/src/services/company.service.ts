@@ -105,6 +105,12 @@ const getCompanyProductImages = async (
   })
 }
 
+/**
+ * 
+ * @function
+ * @param id 
+ * @returns 
+ */
 const getCompanyScore = async (id: string): Promise<Review[] | null> => {
   return await Review.findAll({
     where: {
