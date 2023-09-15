@@ -68,37 +68,41 @@ const blackListToken = async (tokenId: string): Promise<void> => {
 */
 export const googleLogin = async (googleToken: string): Promise<TokenPair | null> => {
   // Verificar el token de Google
-  // const data = await verifyGoogleToken(googleToken)
-  // if(!data) return null
+  try {
+    const data = await verifyGoogleToken(googleToken)
+    if(!data) return null
 
-  const emailFromGoogleDummy = 'john.doe@example.com'
-  const user = await UserService.getUserByEmailWithRole(emailFromGoogleDummy)
+    const emailFromGoogleDummy = 'john.doe@example.com'
+    const user = await UserService.getUserByEmailWithRole(emailFromGoogleDummy)
 
-  // TODO Registrar cliente
-  if(!user) console.log('Register user')
+    // TODO Registrar cliente
+    if(!user) console.log('Register user')
 
-  // Si ya está registrado, crear un Payload con la información del usuario
-  const dummyUser: Payload = {
-    first_name: '',
-    last_name:  '',
-    uuid: '',
-    email: '',
-    login_type: 'google',
-    roles: [],
-    googleId: googleToken
+    // Si ya está registrado, crear un Payload con la información del usuario
+    const dummyUser: Payload = {
+      first_name: '',
+      last_name:  '',
+      uuid: '',
+      email: '',
+      login_type: 'google',
+      roles: [],
+      googleId: googleToken
+    }
+    if(user) {
+      dummyUser.first_name = user.firstName
+      dummyUser.last_name = user.lastName
+      dummyUser.uuid = user.userId
+      dummyUser.email = user.email
+      dummyUser.roles.push(user.role.dataValues.NAME)
+    }
+    
+    const tokens = await createTokens(dummyUser)
+    if(!tokens) return null
+
+    return tokens
+  } catch(error) {
+    return null
   }
-  if(user) {
-    dummyUser.first_name = user.firstName
-    dummyUser.last_name = user.lastName
-    dummyUser.uuid = user.userId
-    dummyUser.email = user.email
-    dummyUser.roles.push(user.role.dataValues.NAME)
-  }
-  
-  const tokens = await createTokens(dummyUser)
-  if(!tokens) return null
-
-  return tokens
 }
 
 /**
@@ -204,22 +208,26 @@ export const verifyToken = (token: string, type: TokenType): Payload | null => {
  * @param token Token a verificar
  * @returns Payload con la información del token
 */
-export const verifyGoogleToken = async(token: string): Promise<Payload> => {
-  const ticket = await client.verifyIdToken({
-    idToken: token,
-    audience: process.env.GOOGLE_CLIENT_ID,
-  })
+export const verifyGoogleToken = async(token: string): Promise<Payload | null> => {
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    })
 
-  const payload = ticket.getPayload()
+    const payload = ticket.getPayload()
 
-  if(!payload) throw new Error('Invalid Google token')
+    if(!payload) throw new Error('Invalid Google token')
 
-  return {
-    first_name: payload.given_name!,
-    last_name: payload.family_name!,
-    uuid: payload.sub!,
-    email: payload.email!,
-    roles: [],
-    login_type: 'google'
+    return {
+      first_name: payload.given_name!,
+      last_name: payload.family_name!,
+      uuid: payload.sub!,
+      email: payload.email!,
+      roles: [],
+      login_type: 'google'
+    }
+  } catch(error) {
+    return null
   }
 }
