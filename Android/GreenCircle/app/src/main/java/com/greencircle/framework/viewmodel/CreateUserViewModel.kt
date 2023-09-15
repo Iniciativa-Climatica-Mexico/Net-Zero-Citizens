@@ -11,9 +11,9 @@ class CreateUserViewModel : ViewModel() {
 
     private val googleAuthRequirement = GoogleAuthRequirement()
 
-    fun googleLogin() {
+    fun googleLogin(token: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val result: String? = googleAuthRequirement()
+            val result: String? = googleAuthRequirement(token)
             Log.d("Salida", "Calling googleLogin()")
             Log.d("Salida", result.toString())
         }

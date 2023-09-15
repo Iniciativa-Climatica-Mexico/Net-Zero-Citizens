@@ -35,17 +35,11 @@ class CreateCompanyFragment : Fragment() {
         val displayName = arguments.getString("displayName")
         val email = arguments.getString("email")
 
-        // Replace texts
-        val userName = view.findViewById<TextView>(R.id.tvUserName)
-        val userEmail = view.findViewById<TextView>(R.id.tvUserEmail)
-
-        userName.text = displayName
-        userEmail.text = email
-
-        Log.d("CreateCompanyFragment", "arguments: $arguments")
+        val token: String = arguments.getString("idToken").toString()
+        Log.d("Token", token)
 
         // Google Login
-        viewModel.googleLogin()
+        viewModel.googleLogin(token)
 
         return view
     }

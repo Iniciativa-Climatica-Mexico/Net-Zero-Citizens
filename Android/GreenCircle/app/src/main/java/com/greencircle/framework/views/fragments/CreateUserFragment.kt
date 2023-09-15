@@ -22,8 +22,6 @@ class CreateUserFragment : Fragment() {
     ): View? {
         viewModel = ViewModelProvider(this)[CreateUserViewModel::class.java]
 
-        viewModel.googleLogin()
-
         // Inflate the layout for this fragment
         return inflater.inflate(
             R.layout.fragment_create_user,

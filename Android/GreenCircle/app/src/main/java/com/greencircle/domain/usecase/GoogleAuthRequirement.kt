@@ -5,5 +5,5 @@ import com.greencircle.data.repository.AuthRepository
 class GoogleAuthRequirement {
     private val repository = AuthRepository()
 
-    suspend operator fun invoke(): String? = repository.googleLogin()
+    suspend operator fun invoke(token: String): String? = repository.googleLogin(token)
 }

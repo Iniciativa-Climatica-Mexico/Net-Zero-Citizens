@@ -5,5 +5,5 @@ import com.greencircle.data.remote.AuthAPIClient
 class AuthRepository {
     private val apiCompany = AuthAPIClient()
 
-    suspend fun googleLogin(): String? = apiCompany.googleLogin()
+    suspend fun googleLogin(token: String): String? = apiCompany.googleLogin(token)
 }
