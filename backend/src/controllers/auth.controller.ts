@@ -10,17 +10,27 @@ import { RequestHandler } from 'express'
  */
 export const googleLogin: RequestHandler<
   NoRecord,
-  { authToken: string, refreshToken: string, error?: string },
+  AuthService.AuthResponse,
   { googleToken: string },
   NoRecord> = async (req, res) => {
-    if(!req.body.googleToken) return res.json({ authToken: '', refreshToken: '', error: 'No google token provided' })
+    let authResponse: AuthService.AuthResponse = {tokens: null, user: null, error: null}
+    // Verificar que el token se haya mandado
+    if(!req.body.googleToken) {
+      authResponse.error = 'No google token provided'
+      return res.json(authResponse)
+    }
     const { googleToken } = req.body
 
-    const tokens = await AuthService.googleLogin(googleToken)
-    if(!tokens) return res.json({authToken: '', refreshToken: '', error: 'Invalid user'})
+    const data = await AuthService.googleLogin(googleToken)
 
+    if(!data?.user || !data.tokens) {
+      authResponse.error = 'Invalid user'
+      return res.json(authResponse)
+    }
+
+    authResponse = data
     // Devolver los tokens
-    res.status(200).json(tokens)
+    res.status(200).json(authResponse)
   }
 
 /**
