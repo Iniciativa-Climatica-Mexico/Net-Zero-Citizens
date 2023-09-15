@@ -13,7 +13,7 @@ import { z } from 'zod'
  *            información de paginación
  */
 export const getAllEcoinfo = async (): Promise<Ecoinfo[]> => {
-  await fetchEcoInfo()
+  // await fetchEcoInfo()
   return await Ecoinfo.findAll()
 }
 
@@ -94,8 +94,6 @@ const updateEcoInfo = async (data: EcoInfoCreateModel) => {
         description,
         postLink,
       }
-
-      console.log('Temp EcoInfo:', tempEcoInfo)
 
       await Ecoinfo.create(tempEcoInfo)
     }
