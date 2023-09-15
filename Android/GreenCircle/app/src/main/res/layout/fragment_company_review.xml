@@ -54,11 +54,14 @@
             android:progressTint="@color/blue"
             android:stepSize="1" />
 
-        <TextView
+        <Button
             android:id="@+id/reviewButton"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
+            android:padding="0dp"
+            android:layout_marginTop="-15dp"
             android:text="@string/review_rate_button"
             android:textColor="@color/blue"
             android:textSize="14sp" />

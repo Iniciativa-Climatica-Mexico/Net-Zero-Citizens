@@ -17,6 +17,7 @@ class ReviewFormFragment : Fragment() {
 
     private lateinit var viewModel: ReviewFormViewModel
 
+    private var rating: Float = 0.0f
     private var reviewTitle: String = ""
     private var review: String = ""
     private var allowedReview: Boolean = true
@@ -40,7 +41,8 @@ class ReviewFormFragment : Fragment() {
     }
 
     private fun initializeRatingBar() {
-        binding.ratingBar.rating = viewModel.rating.value!!
+        rating = arguments?.getFloat("rating") ?: 0.0f
+        binding.ratingBar.rating = rating
     }
 
     private fun initializeReviewListener() {
