@@ -22,9 +22,7 @@ class ReviewFormFragment : Fragment() {
     private var allowedReview: Boolean = true
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         viewModel = ViewModelProvider(this)[ReviewFormViewModel::class.java]
 

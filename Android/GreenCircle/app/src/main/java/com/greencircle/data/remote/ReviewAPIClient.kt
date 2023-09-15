@@ -1,11 +1,11 @@
 package com.greencircle.data.remote
 
-import android.util.Log // ktlint-disable import-ordering
-import com.greencircle.domain.model.CompanyReviewObject // ktlint-disable import-ordering
-import com.greencircle.domain.model.ReviewBase // ktlint-disable import-ordering
-import com.greencircle.domain.model.UserReviewObject // ktlint-disable import-ordering
-import okhttp3.ResponseBody // ktlint-disable import-ordering
-import retrofit2.Response // ktlint-disable import-ordering
+import android.util.Log
+import com.greencircle.domain.model.CompanyReviewObject
+import com.greencircle.domain.model.ReviewBase
+import com.greencircle.domain.model.UserReviewObject
+import okhttp3.ResponseBody
+import retrofit2.Response
 
 class ReviewAPIClient {
     private lateinit var api: ReviewAPIService
