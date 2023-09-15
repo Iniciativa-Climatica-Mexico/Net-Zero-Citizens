@@ -118,6 +118,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingStart="3dp"
+                    android:paddingEnd="0dp"
                     android:text="@string/review_initial_opinions_number"
                     android:textSize="12sp" />
 
