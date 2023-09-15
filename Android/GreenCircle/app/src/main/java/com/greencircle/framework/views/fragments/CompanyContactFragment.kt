@@ -25,7 +25,9 @@ class CompanyContactFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCompanyContactBinding.inflate(inflater, container, false)
 
@@ -51,7 +53,8 @@ class CompanyContactFragment : Fragment() {
                         childFragmentManager.beginTransaction().show(contactInfoFragment)
                             .hide(servicesFragment).commit()
                     }
-                    //TODO : Add button reviews
+
+                    // TODO : Add button reviews
                 }
             }
         }
