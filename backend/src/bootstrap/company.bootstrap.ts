@@ -32,7 +32,7 @@ export default class CompanyBootstrap extends Bootstrapper {
       },
       {
         companyId: 'a2b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
-        userId: 'abcd-1234-efgh-5678',
+        userId: 'abcd-1234-efgh-5679',
         name: 'Company 2',
         description: 'Company 2 description',
         email: 'company2@outlook.com',
