@@ -10,6 +10,9 @@ plugins {
 
     // App Sweep
     id("com.guardsquare.appsweep") version "latest.release"
+
+    // Google secrets
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin") version "2.0.1"
 }
 
 android {
@@ -84,6 +87,9 @@ dependencies {
 
     // Gson
     implementation("com.google.code.gson:gson:2.8.9")
+
+    // Google API
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
 
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")

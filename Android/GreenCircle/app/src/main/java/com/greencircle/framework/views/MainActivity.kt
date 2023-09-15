@@ -7,6 +7,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.greencircle.R
 import com.greencircle.databinding.ActivityMainBinding
 import com.greencircle.framework.views.fragments.HomeFragment
+import com.greencircle.framework.views.fragments.MapFragment
 import com.greencircle.framework.views.fragments.ProfileFragment
 
 class MainActivity : AppCompatActivity() {
@@ -33,6 +34,11 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.proveedores -> {
                     replaceFragment(ProfileFragment())
+                    true
+                }
+
+                R.id.mapa -> {
+                    replaceFragment(MapFragment())
                     true
                 }
 
