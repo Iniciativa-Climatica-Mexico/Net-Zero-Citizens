@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		657A83462AB652F90022F62C /* CustomDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657A83452AB652F90022F62C /* CustomDateFormatter.swift */; };
+		657A83492AB670E30022F62C /* LocalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657A83482AB670E30022F62C /* LocalService.swift */; };
 		6C4452B82AA6EF8500BE5930 /* GreenCircleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4452B72AA6EF8500BE5930 /* GreenCircleApp.swift */; };
 		6C4452BA2AA6EF8500BE5930 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4452B92AA6EF8500BE5930 /* ContentView.swift */; };
 		6C4452BC2AA6EF8600BE5930 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C4452BB2AA6EF8600BE5930 /* Assets.xcassets */; };
@@ -47,6 +49,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		657A83452AB652F90022F62C /* CustomDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDateFormatter.swift; sourceTree = "<group>"; };
+		657A83482AB670E30022F62C /* LocalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalService.swift; sourceTree = "<group>"; };
 		6C4452B42AA6EF8500BE5930 /* GreenCircle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GreenCircle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C4452B72AA6EF8500BE5930 /* GreenCircleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreenCircleApp.swift; sourceTree = "<group>"; };
 		6C4452B92AA6EF8500BE5930 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -97,6 +101,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		657A83442AB6509A0022F62C /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				B35DBF372AB3490A006C4BB2 /* NetworkAPIService.swift */,
+				657A83452AB652F90022F62C /* CustomDateFormatter.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		657A83472AB663CA0022F62C /* Local */ = {
+			isa = PBXGroup;
+			children = (
+				657A83482AB670E30022F62C /* LocalService.swift */,
+			);
+			path = Local;
+			sourceTree = "<group>";
+		};
 		6C4452AB2AA6EF8500BE5930 = {
 			isa = PBXGroup;
 			children = (
@@ -177,6 +198,7 @@
 		6C4452E32AA6F06700BE5930 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				657A83472AB663CA0022F62C /* Local */,
 				6C4452E82AA6F09D00BE5930 /* Models */,
 				6C4452EA2AA6F0AE00BE5930 /* Remote */,
 				6C4452E92AA6F0A800BE5930 /* Repository */,
@@ -240,7 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				B3827EFC2AACF8C000AC7213 /* UserService.swift */,
-				B35DBF372AB3490A006C4BB2 /* NetworkAPIService.swift */,
+				657A83442AB6509A0022F62C /* Network */,
 			);
 			path = Remote;
 			sourceTree = "<group>";
@@ -386,9 +408,11 @@
 				6C4452BA2AA6EF8500BE5930 /* ContentView.swift in Sources */,
 				B34AC9A82AA93C7500CE97AF /* Example2View.swift in Sources */,
 				B35DBF342AB27A93006C4BB2 /* ProfileInformationView.swift in Sources */,
+				657A83462AB652F90022F62C /* CustomDateFormatter.swift in Sources */,
 				B3E8EDDA2AA91E170050B051 /* TitleBarView.swift in Sources */,
 				B3827F012AACF9A800AC7213 /* FetchUserDataUseCase.swift in Sources */,
 				6C4452B82AA6EF8500BE5930 /* GreenCircleApp.swift in Sources */,
+				657A83492AB670E30022F62C /* LocalService.swift in Sources */,
 				B3827EFB2AACF45400AC7213 /* User.swift in Sources */,
 				B35DBF382AB3490A006C4BB2 /* NetworkAPIService.swift in Sources */,
 				B3827EFD2AACF8C000AC7213 /* UserService.swift in Sources */,

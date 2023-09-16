@@ -19,9 +19,9 @@ import Alamofire
 
 /// Estructura con rutas para modelo de compañía
 struct ApiUser {
-    static let baseUser = "http://localhost:3000/api/v1/users"
+    static let base = "http://localhost:3000/api/v1"
     struct Routes {
-        static let user = "/users/"
+        static let user = "/users"
     }
 }
 
@@ -41,14 +41,16 @@ class UserRepository: UserAPIProtocol {
     let backEndService: UserService
     /// Inicialización de singleton de repositorio de compañía
     static let shared = UserRepository()
-    /// Constructor que toma el valor del servicio del backEnd
-    init(backEndService: UserService = UserService.shared) {
+    
+    init(backEndService: UserService = UserService.shared){
         self.backEndService = backEndService
     }
+    
     /// Obtener compañía por UUID llamando al método del servicio del backend
     ///   - Parameters: UUID de la compañía
     ///   - Returns: Modelo de compañía
+
     func fetchUserById(userId: String) async -> User? {
-        return await backEndService.fetchUserById(url: URL(string: "\(ApiUser.baseUser)/\(userId)")!)
-    }
+        return await backEndService.fetchUserById(url: URL(string: "\(ApiUser.base)/\(ApiUser.Routes.user)/\(userId)")!)
+      }
 }

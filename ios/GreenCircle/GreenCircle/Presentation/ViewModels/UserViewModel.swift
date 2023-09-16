@@ -83,5 +83,4 @@ class UserViewModel: ObservableObject {
             print("No se pudo obtener el usuario")
         }
     }
-
 }
