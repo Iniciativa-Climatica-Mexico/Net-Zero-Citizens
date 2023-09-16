@@ -187,5 +187,8 @@ export const getCoordinates: RequestHandler<
     total: filteredCompanies.length,
   };
 
+  console.log("-----------------------------------------------------")
+  console.log(filteredCompanies)
+
   res.json(paginator);
 };
