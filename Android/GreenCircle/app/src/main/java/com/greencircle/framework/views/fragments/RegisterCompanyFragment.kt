@@ -56,7 +56,15 @@ class RegisterCompanyFragment : Fragment() {
         return binding.root
     }
 
-    // Navigate Methods
+    /**
+     * Navega hacia el fragmento "CreateCompanyFragment" dentro de la "RegisterCompanyActivity".
+     *
+     * Esta función se encarga de hacer la transición al fragmento "CreateCompanyFragment" desde el fragmento
+     * actual dentro de la "RegisterCompanyActivity". Opcionalmente, puede recibir un Bundle de argumentos
+     * que se pueden pasar al fragmento de destino.
+     *
+     * @param arguments Un Bundle opcional de argumentos que contiene la información de la cuenta de Google.
+     */
     private fun navigateToForm(arguments: Bundle? = null) {
         val createCompanyFragment = CreateCompanyFragment()
         val activity = requireActivity() as RegisterCompanyActivity

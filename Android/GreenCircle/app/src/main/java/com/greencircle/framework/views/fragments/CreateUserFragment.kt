@@ -1,12 +1,15 @@
 package com.greencircle.framework.views.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.textfield.TextInputEditText
 import com.greencircle.R
 import com.greencircle.framework.viewmodel.CreateUserViewModel
 
@@ -52,7 +55,51 @@ class CreateUserFragment : Fragment() {
 
         setTexts(arguments, view)
 
+        onSubmitListener(view)
+
         return view
+    }
+
+    /**
+     * Método llamado cuando la vista del fragmento ha sido creada después de onCreateView.
+     * Observa y maneja el Live Data proveniente del inicio de sesión de Google.
+     *
+     * @param view La vista raíz del fragmento "CreateUserFragment".
+     * @param savedInstanceState La instancia de Bundle que contiene datos previamente guardados del fragmento.
+     */
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.googleLoginResult.observe(viewLifecycleOwner) { result ->
+            // Handle the result here
+            if (result != null) {
+                Log.d("CreateUserFragment", "Google login success")
+                Log.d("CreateUserFragment", result.toString())
+            } else {
+                Log.d("CreateUserFragment", "Google login failed")
+            }
+        }
+    }
+
+    /**
+     * Configura un listener para el botón de envío.
+     *
+     * @param view La vista raíz del fragmento "CreateUserFragment".
+     */
+    private fun onSubmitListener(view: View) {
+        val submitButton = view.findViewById<Button>(R.id.submit_create_user)
+        submitButton.setOnClickListener {
+            Log.d("CreateUserFragment", "Send data to backend")
+        }
+    }
+
+    /**
+     * Maneja la lógica del envió de los datos introducidos en el formulario al backend.
+     *
+     * @param view La vista raíz del fragmento "CreateUserFragment".
+     */
+    private fun onSubmitHandler(view: View) {
+        val phoneNumberEditText: TextInputEditText = view.findViewById(R.id.user_phone_number)
+        val ageEditText: TextInputEditText = view.findViewById(R.id.user_age)
     }
 
     /**

@@ -13,9 +13,19 @@ import com.google.android.material.textfield.TextInputEditText
 import com.greencircle.R
 import com.greencircle.framework.viewmodel.CreateCompanyViewModel
 
+/**Constructor de "CreateCompanyFragment"
+ *
+ * @constructor Incializa y crea la vista del "CreateCompanyFragment"
+ */
 class CreateCompanyFragment : Fragment() {
     private lateinit var viewModel: CreateCompanyViewModel
     private var arguments = Bundle()
+
+    /**
+     * Inicializa el "CreateCompanyFragment"
+     *
+     * @param savedInstanceState La instancia de Bundle que contiene datos previamente guardados del fragmento.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this)[CreateCompanyViewModel::class.java]
@@ -25,6 +35,14 @@ class CreateCompanyFragment : Fragment() {
         viewModel.googleLogin(token)
     }
 
+    /**
+     * Método que se llama cuando se crea la vista del fragmento de crear empresa.
+     *
+     * @param inflater El inflador de diseño que se utiliza para inflar la vista.
+     * @param container El contenedor en el que se debe colocar la vista del fragmento.
+     * @param savedInstanceState La instancia de Bundle que contiene datos previamente guardados del fragmento.
+     * @return La vista inflada para el fragmento.
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,6 +61,13 @@ class CreateCompanyFragment : Fragment() {
         return view
     }
 
+    /**
+     * Método llamado cuando la vista del fragmento ha sido creada después de onCreateView.
+     * Observa y maneja el Live Data proveniente del inicio de sesión de Google.
+     *
+     * @param view La vista raíz del fragmento "CreateCompanyFragment".
+     * @param savedInstanceState La instancia de Bundle que contiene datos previamente guardados del fragmento.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.googleLoginResult.observe(viewLifecycleOwner) { result ->
@@ -56,6 +81,11 @@ class CreateCompanyFragment : Fragment() {
         }
     }
 
+    /**
+     * Configura un listener para el botón de envío.
+     *
+     * @param view La vista raíz del fragmento "CreateCompanyFragment".
+     */
     private fun onSubmitListener(view: View) {
         val submitButton = view.findViewById<Button>(R.id.submit_create_company)
         submitButton.setOnClickListener {
@@ -63,12 +93,26 @@ class CreateCompanyFragment : Fragment() {
         }
     }
 
+    /**
+     * Maneja la lógica del envió de los datos introducidos en el formulario al backend.
+     *
+     * @param view La vista raíz del fragmento "CreateCompanyFragment".
+     */
     private fun onSubmitHandler(view: View) {
         val nameEditText: TextInputEditText = view.findViewById(R.id.companyNameTextField)
         val descriptionEditText: TextInputEditText =
             view.findViewById(R.id.companyDescriptionTextField)
     }
 
+    /**
+     * Establece los textos en la vista con datos proporcionados en los argumentos.
+     *
+     * Esta función se encarga de obtener referencias a las vistas TextView dentro de la vista proporcionada y
+     * establecer los textos con los valores obtenidos de los argumentos.
+     *
+     * @param arguments Un Bundle  que contiene la información de la cuenta de Google.
+     * @param view La vista del "CreateCompanyFragment"
+     */
     private fun setTexts(arguments: Bundle, view: View) {
         // Replace texts
         val userName = view.findViewById<TextView>(R.id.tvUserName)

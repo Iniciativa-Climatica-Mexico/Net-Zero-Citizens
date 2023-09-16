@@ -78,7 +78,7 @@
             android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/userPhoneNumber"
+            android:id="@+id/user_phone_number"
             style="?attr/textInputOutlinedDenseStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/userAge"
+            android:id="@+id/user_age"
             style="?attr/textInputOutlinedDenseStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
             <AutoCompleteTextView
-                android:id="@+id/userState"
+                android:id="@+id/user_state"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Estado *"
@@ -147,7 +147,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
             <AutoCompleteTextView
-                android:id="@+id/userGender"
+                android:id="@+id/user_gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Género *"
@@ -219,7 +219,7 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/continueToCompanyRegisterForm"
+            android:id="@+id/submit_create_user"
             style="@style/Widget.Material3.Button.TonalButton"
             android:layout_width="300dp"
             android:layout_height="50dp"
