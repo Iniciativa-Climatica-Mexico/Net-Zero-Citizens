@@ -13,7 +13,7 @@ import { z } from 'zod'
  *            información de paginación
  */
 export const getAllEcoinfo = async (): Promise<Ecoinfo[]> => {
-  // await fetchEcoInfo()
+  await fetchEcoInfo()
   return await Ecoinfo.findAll()
 }
 
@@ -37,7 +37,7 @@ const fetchEcoInfo = async () => {
 
     if (response.statusText == 'OK') {
       const dataJson = await response.json()
-      const data = EcoInfoCreateSchema.parse(dataJson)
+      const data = EcoInfoApiSchema.parse(dataJson)
       updateEcoInfo(data)
     } else {
       throw new Error('Error al obtener la información de la página')
@@ -51,7 +51,7 @@ const fetchEcoInfo = async () => {
  * @brief
  * Esquema de validación de la respuesta de la API de Facebook
  */
-const EcoInfoCreateSchema = z.object({
+const EcoInfoApiSchema = z.object({
   data: z.array(
     z.object({
       attachments: z.object({
@@ -72,14 +72,15 @@ const EcoInfoCreateSchema = z.object({
  * @brief
  * Modelo de la respuesta de la API de Facebook
  */
-type EcoInfoCreateModel = z.infer<typeof EcoInfoCreateSchema>
+type EcoInfoApiModel = z.infer<typeof EcoInfoApiSchema>
 
 /**
  * @brief
  * Función que actualiza la información de ecoinfo en la base de datos
  */
-const updateEcoInfo = async (data: EcoInfoCreateModel) => {
-  data.data.forEach(async (post) => {
+const updateEcoInfo = async (data: EcoInfoApiModel) => {
+  
+  await Promise.all(data.data.map(async (post) => {
     const postId = post.id
     const exists = await Ecoinfo.findOne({ where: { postId } })
 
@@ -88,14 +89,13 @@ const updateEcoInfo = async (data: EcoInfoCreateModel) => {
       const description = post.attachments.data[0].description
       const postLink = post.attachments.data[0].url
 
-      const tempEcoInfo = {
+      const tempEcoInfoTemplate = {
         postId,
         coverImageUrl,
         description,
         postLink,
       }
-
-      await Ecoinfo.create(tempEcoInfo)
+      return Ecoinfo.create(tempEcoInfoTemplate)
     }
-  })
+  }))
 }
