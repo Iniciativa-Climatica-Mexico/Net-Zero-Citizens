@@ -38,34 +38,32 @@ struct EcoInfoCard: View {
         AsyncImage(url: URL(string: ecoInfo.coverImage ?? "")) { image in
           image
             .resizable()
-            .aspectRatio(contentMode: .fit)
-            .cornerRadius(10)
+            .scaledToFill()
+            .frame(maxWidth: .infinity, maxHeight: 250)
+            .roundedCorner(10, corners: [.topLeft, .topRight])
         } placeholder: {
-          ProgressView().frame(width: 150, height: 150)
+          ProgressView().frame(width: 150, height: 250)
         }
         HStack {
           VStack(alignment: .leading) {
-            let regexPattern = "[.!?\\s\\p{Emoji}]"
-            if let ecoText = ecoInfo.description, ecoText.count > 75 {
-              let limitedText = String(ecoText.prefix(150))
-              Text("\(limitedText) ")
-                  .font(.system(size: 12))
+            let ecoInfoText = String(ecoInfo.description ?? "")
+              .replacingOccurrences(of: "\n", with: " ")
+              Text("\(ecoInfoText) ")
+                .font(.system(size: 12)).foregroundColor(Color("BlackCustom"))
+                .multilineTextAlignment(.leading)
               Text("Ver más...")
                 .font(.system(size: 12))
-                .foregroundColor(.blue)
+                .foregroundColor(Color("BlueCustom"))
                 .onTapGesture {
-                  if let url = URL(string: ecoInfo.postLink) {
-                    UIApplication.shared.open(url)
-                  }
-                }.frame(maxWidth: .infinity, alignment: .trailing)
-            } else {
-              Text(ecoInfo.description ?? "").font(.system(size: 12))
-            }
+                if let url = URL(string: ecoInfo.postLink) {
+                  UIApplication.shared.open(url)
+                }
+              }.frame(maxWidth: .infinity, alignment: .trailing)
           }.padding()
         }
       }
     }.frame(maxWidth: 344)
       .overlay(RoundedRectangle(cornerRadius: 10)
-        .stroke(.black, lineWidth: 0.4))
+        .stroke(.black, lineWidth: 0.1))
   }
 }

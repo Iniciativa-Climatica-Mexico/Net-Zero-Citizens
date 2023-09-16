@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct EcoInfo: Codable, Hashable {
+struct EcoInfo: Codable {
   var ecoinfoId: UUID
   var postId: String
   var postLink: String
@@ -17,6 +17,6 @@ struct EcoInfo: Codable, Hashable {
   var updatedAt: String
 }
 
-struct EcoInfoContainer: Codable, Hashable {
+struct EcoInfoContainer: Codable {
   var ecoInfos: [EcoInfo]?
 }
