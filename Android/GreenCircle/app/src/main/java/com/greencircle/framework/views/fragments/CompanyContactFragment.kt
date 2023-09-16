@@ -18,6 +18,7 @@ class CompanyContactFragment : Fragment() {
 
     private val servicesFragment by lazy { CompanyServicesFragment() }
     private val contactInfoFragment by lazy { CompanyContactInfoFragment() }
+    private val companyReviewsFragment by lazy { CompanyReviewFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +55,10 @@ class CompanyContactFragment : Fragment() {
                             .hide(servicesFragment).commit()
                     }
 
-                    // TODO : Add button reviews
+                    R.id.btnReviews -> {
+                        childFragmentManager.beginTransaction().show(companyReviewsFragment)
+                            .hide(servicesFragment).commit()
+                    }
                 }
             }
         }
