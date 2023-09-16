@@ -254,25 +254,29 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayoutState"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:id="@+id/companyStateTextFiel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:hint="Estado *"
-                android:textColorHint="@color/gray_500"
-                app:boxStrokeColor="@color/blue"
-                app:endIconMode="clear_text"
-                app:endIconTint="@color/gray_500"
-                app:hintTextColor="@color/blue">
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
                 <AutoCompleteTextView
                     android:id="@+id/userState"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
+                    android:inputType="none"
                     android:importantForAccessibility="yes"
-                    android:inputType="none" />
+                    android:clickable="true"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/blue"
+                    app:hintTextColor="@color/blue"
+                    android:textColorHint="@color/gray_500"
+                    app:boxStrokeColor="@color/blue"
+                    android:layout_marginBottom="20dp"
+                    android:completionThreshold="1"
+                    android:popupBackground="@color/white"
+                    app:simpleItems="@array/state_options"
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
