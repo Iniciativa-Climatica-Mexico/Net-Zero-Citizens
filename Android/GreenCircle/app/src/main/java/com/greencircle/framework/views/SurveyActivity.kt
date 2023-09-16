@@ -1,9 +1,11 @@
 package com.greencircle.framework.views
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG
 import com.google.android.material.snackbar.Snackbar
 import com.greencircle.R
@@ -44,6 +46,14 @@ class SurveyActivity : AppCompatActivity() {
                 LENGTH_LONG,
             ).show()
         }
+
+        binding.topAppBar.setOnClickListener {
+            MaterialAlertDialogBuilder(this).setTitle("¿Quieres dejar de responder?")
+                .setMessage("Los cambios realizados no se guardarán.")
+                .setPositiveButton("Salir") { _, _ ->
+                    goToMain()
+                }.setNegativeButton("Sigue editando") { _, _ -> }.show()
+        }
         setContentView(binding.root)
     }
 
@@ -79,5 +89,12 @@ class SurveyActivity : AppCompatActivity() {
                 question.answer = Answer(null, answer, questionId)
             }
         }
+    }
+
+    private fun goToMain() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        startActivity(intent)
+        finish()
     }
 }
