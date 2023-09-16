@@ -10,30 +10,30 @@ import androidx.lifecycle.ViewModelProvider
 import com.greencircle.R
 import com.greencircle.framework.viewmodel.CreateUserViewModel
 
-/**Fragment_create_user constructor
+/**Constructor de "CreateUserFragment"
  *
- * @constructor Initializes and returns crete_user view
+ * @constructor Incializa y crea la vista del "CreateUserFragment"
  */
 class CreateUserFragment : Fragment() {
     private lateinit var viewModel: CreateUserViewModel
     private var arguments = Bundle()
 
     /**
-     * Initializes create_user fragment
+     * Inicializa el "CreateUserFragment"
      *
-     * @param savedInstanceState data and state information from the Activity
+     * @param savedInstanceState La instancia de Bundle que contiene datos previamente guardados del fragmento.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     /**
-     * Inflates layout and sets up create_user view
+     * Método que se llama cuando se crea la vista del fragmento de crear usuario.
      *
-     * @param inflater Instantiates layout xml into view objects
-     * @param container View that contains views
-     * @param savedInstanceState data and state information from the Activity/Fragment
-     * @return view create_user
+     * @param inflater El inflador de diseño que se utiliza para inflar la vista.
+     * @param container El contenedor en el que se debe colocar la vista del fragmento.
+     * @param savedInstanceState La instancia de Bundle que contiene datos previamente guardados del fragmento.
+     * @return La vista inflada para el fragmento.
      */
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,11 +59,13 @@ class CreateUserFragment : Fragment() {
     }
 
     /**
-     * Sets texts that can be displayed in the view
+     * Establece los textos en la vista con datos proporcionados en los argumentos.
      *
-     * @param arguments Arguments supplied when the fragment was initiated
-     * @param view Inflate layout create_user
-     * @return userName and userEmail as texts that can be displayed
+     * Esta función se encarga de obtener referencias a las vistas TextView dentro de la vista proporcionada y
+     * establecer los textos con los valores obtenidos de los argumentos.
+     *
+     * @param arguments Un Bundle  que contiene la información de la cuenta de Google.
+     * @param view La vista del "CreateUserFragment"
      */
     private fun setTexts(arguments: Bundle, view:View){
         val userName = view.findViewById<TextView>(R.id.tvUserName)
