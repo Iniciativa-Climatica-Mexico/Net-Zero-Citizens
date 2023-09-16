@@ -4,6 +4,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id("kotlin-android")
 
     // Klint
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
@@ -33,6 +34,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -47,7 +49,7 @@ android {
     }
 }
 
-tasks.getByPath("preBuild").dependsOn("ktlintFormat")
+tasks.getByPath("preBuild").dependsOn("ktlintCheck")
 
 ktlint {
     android.set(true)
@@ -66,10 +68,11 @@ ktlint {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.10.1")
+    implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     testImplementation("junit:junit:4.13.2")
+    testImplementation("org.mockito:mockito-core:3.12.4")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
@@ -109,4 +112,13 @@ dependencies {
 
     // Lifecycle
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+
+    // Material Components para Android.
+    implementation("com.google.android.material:material:1.9.0")
+
+    // Circle Indicator (Arregla el error "Missing classes" en el xml)
+    implementation("me.relex:circleindicator:2.1.6")
+
+    // Carousel
+    implementation("org.imaginativeworld.whynotimagecarousel:whynotimagecarousel:2.1.0")
 }
