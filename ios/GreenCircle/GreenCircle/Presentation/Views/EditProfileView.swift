@@ -1,6 +1,13 @@
+//
+//  EditProfileView.swift
+//  GreenCircle
+//
+//  Created by ITESM on 14/09/23.
+//
+
 import SwiftUI
 
-struct ProfileInformationView: View {
+struct EditProfileView: View {
     
     @ObservedObject var modelUser: UserViewModel
     
@@ -13,7 +20,7 @@ struct ProfileInformationView: View {
                     leftIcon: nil,
                     rightIcon: "pencil",
                     leftDestination: { },
-                    rightDestination: {EditProfileView(modelUser: UserViewModel()) }
+                    rightDestination: { }
                 )
                 .frame(height: 10)
                 .offset(y: -60)
@@ -74,7 +81,6 @@ struct ProfileInformationView: View {
                                 
                             
                             TextField("Nombre", text: $modelUser.contentUser.firstName)
-                                .disabled(true)
                                 .padding(.top, 3)
                                 .font(.system(size: 13))
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -90,7 +96,6 @@ struct ProfileInformationView: View {
                                 .fontWeight(.semibold)
                             
                             TextField("Primer Apellido", text: $modelUser.contentUser.lastName)
-                                .disabled(true)
                                 .padding(.top, 3)
                                 .font(.system(size: 13))
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -109,7 +114,7 @@ struct ProfileInformationView: View {
                             }, set: { newValue in
                                 modelUser.contentUser.secondLastName = newValue
                             }))
-                            .disabled(true)
+        
                             .padding(.top, 3)
                             .font(.system(size: 13))
                             .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -136,7 +141,6 @@ struct ProfileInformationView: View {
                                         }
                                     }
                                     .pickerStyle(MenuPickerStyle())
-                                    .disabled(true)
                                     .padding(.top, 3)
                                     .font(.system(size: 11))
                                     .foregroundColor(.gray)
@@ -163,7 +167,6 @@ struct ProfileInformationView: View {
                                         Text("Masculino").tag("Masculino")
                                     }
                                     .pickerStyle(MenuPickerStyle())
-                                    .disabled(true)
                                     .padding(.top, 3)
                                     .font(.system(size: 11))
                                     .foregroundColor(.gray)
@@ -182,7 +185,6 @@ struct ProfileInformationView: View {
                                 .fontWeight(.semibold)
                             
                             TextField("Correo Electrónico", text: $modelUser.contentUser.email)
-                                .disabled(true)
                                 .padding(.top, 3)
                                 .font(.system(size: 13))
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -198,7 +200,6 @@ struct ProfileInformationView: View {
                             
                             TextField("Celular", text: $modelUser.contentUser.phoneNumber)
                                 .keyboardType(.phonePad)
-                                .disabled(true)
                                 .padding(.top, 3)
                                 .font(.system(size: 13))
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -215,19 +216,17 @@ struct ProfileInformationView: View {
                                 
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 5)
-                                        .fill(Color.yellow)  
-                                        .overlay(RoundedRectangle(cornerRadius: 5)
-                                                    .stroke(Color.gray, lineWidth: 0.3))
+                                        .stroke(Color.gray, lineWidth: 0.3)
                                         .frame(height: 30)
                                     
                                     Picker("Estado", selection: $modelUser.contentUser.state) {
                                         ForEach([
                                             "Aguascalientes",
                                             "Baja California",
-                                            "Baja California Sur",
-                                            "Campeche",
-                                            "Chiapas",
-                                            "Chihuahua",
+//                                            "Baja California Sur",
+//                                            "Campeche",
+//                                            "Chiapas",
+//                                            "Chihuahua",
 //                                            "Ciudad de México",
 //                                            "Coahuila",
 //                                            "Colima",
@@ -259,7 +258,6 @@ struct ProfileInformationView: View {
                                         }
                                     }
                                     .pickerStyle(MenuPickerStyle())
-                                    .disabled(true)
                                     .padding(.top, 3)
                                     .font(.system(size: 11))
                                     .foregroundColor(.gray)
@@ -284,12 +282,12 @@ struct ProfileInformationView: View {
                 }
             }
         }
+
     }
 }
 
-struct ProfileInformationView_Previews: PreviewProvider {
+struct EditProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileInformationView(modelUser: UserViewModel())
+        EditProfileView(modelUser: UserViewModel())
     }
 }
-

@@ -46,16 +46,46 @@ struct ProfileView: View {
                         .padding(.top, 12)
                         .padding(.bottom, 2)
                 }
-                .padding(.top, 15) // Añade padding para mover el texto hacia abajo un poco
+                .padding(.top, 15)
 
-                NavigationLink("Cerrar Sesión", destination: Example2View()) //Esto va a ser con flowstacks
+                NavigationLink("Cerrar Sesión", destination: Example2View())
                     .foregroundColor(TitleBarColor.TitleBarColor)
                     .font(.system(size: 13))
                     .fontWeight(.bold)
-                    .padding(.top, 8) // Añade padding para separar el botón del texto
-                
+                    .padding(.top, 8)
+
+                // Aquí están los dos nuevos botones
+                HStack {
+                    Button(action: {
+                        // Acción del primer botón
+                    }) {
+                        Text("Mis Favoritos")
+                            .foregroundColor(.white)
+                            .padding(.vertical, 16)
+                            .padding(.horizontal)
+                            .frame(maxWidth: .infinity)
+                            .background(TitleBarColor.TitleBarColor)
+                            .cornerRadius(8)
+                    }
+                    .padding(.trailing, 4)
+                    
+                    Button(action: {
+                        // Acción del segundo botón
+                    }) {
+                        Text("Mis Datos")
+                            .foregroundColor(.white)
+                            .padding(.vertical, 16)
+                            .padding(.horizontal)
+                            .frame(maxWidth: .infinity)
+                            .background(TitleBarColor.TitleBarColor)
+                            .cornerRadius(8)
+                    }
+                    .padding(.leading, 4) // Añade padding para crear espacio entre los botones
+                }
+                .padding(.horizontal, 40) // Añade padding horizontal para que los botones no lleguen hasta el borde de la vista
+                .padding(.top, 24) // Reduciendo el padding top para acercar los botones
+
                 Spacer()
-                
             }
             .padding(.top, 150)
             .onAppear {
