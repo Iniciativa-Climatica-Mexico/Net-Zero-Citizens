@@ -76,24 +76,25 @@ type EcoInfoApiModel = z.infer<typeof EcoInfoApiSchema>
  * Función que actualiza la información de ecoinfo en la base de datos
  */
 const updateEcoInfo = async (data: EcoInfoApiModel) => {
-  
-  await Promise.all(data.data.map(async (post) => {
-    const postId = post.id
-    const exists = await Ecoinfo.findOne({ where: { postId } })
+  await Promise.all(
+    data.data.map(async (post) => {
+      const postId = post.id
+      const exists = await Ecoinfo.findOne({ where: { postId } })
 
-    if (!exists) {
-      const coverImage = post.attachments.data[0].media.image.src
-      const description = post.attachments.data[0].description
-      const postLink = post.attachments.data[0].url
+      if (!exists) {
+        const coverImage = post.attachments.data[0].media.image.src
+        const description = post.attachments.data[0].description
+        const postLink = post.attachments.data[0].url
 
-      const tempEcoInfoTemplate = {
-        postId,
-        coverImage,
-        description,
-        postLink,
+        const tempEcoInfoTemplate = {
+          postId,
+          coverImage,
+          description,
+          postLink,
+        }
+        console.log(tempEcoInfoTemplate)
+        return Ecoinfo.create(tempEcoInfoTemplate)
       }
-      console.log(tempEcoInfoTemplate)
-      return Ecoinfo.create(tempEcoInfoTemplate)
-    }
-  }))
+    })
+  )
 }
