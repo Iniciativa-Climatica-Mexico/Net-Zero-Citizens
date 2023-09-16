@@ -17,29 +17,24 @@ struct MultipleChoice: View {
       Text(question.questionText)
         .font(.headline)
       
-      ForEach(0..<question.options!.count, id: \.self) { index in
+      ForEach(0..<question.options!.count, id: \.self) { answer in
         Button(action: {
-          self.selectedOption = index
+          self.selectedOption = answer
         }) {
-          HStack {
-            Text(question.options![index])
-            Spacer()
-            if selectedOption == index {
-              Image(systemName: "checkmark.circle.fill")
-            } else {
-              Image(systemName: "circle")
-            }
-          }
+          Text(question.options![answer])
+            .frame(maxWidth: .infinity)
+            .foregroundColor(selectedOption == answer ? Color(red: 0.33, green: 0.49, blue: 0.55) : Color(red: 0.54, green: 0.54, blue: 0.54))
         }
-        //.padding(.vertical, 5)
-        .foregroundColor(.white)
-        .frame(width: 178, height: 40)
-        .background(Color(red: 0.33, green: 0.49, blue: 0.55))
-        .cornerRadius(9)
-        .offset(x: 0, y: 0)
+        .padding()
+        .clipShape(RoundedRectangle(cornerRadius: 9))
+        .overlay(
+          RoundedRectangle(cornerRadius: 9)
+            .stroke(lineWidth: 1)
+            .foregroundColor(selectedOption == answer ? Color(red: 0.33, green: 0.49, blue: 0.55) : Color(red: 0.54, green: 0.54, blue: 0.54))
+        )
+        .padding(.bottom, 4)
       }
     }
-    //.padding()
   }
 }
 

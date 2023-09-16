@@ -25,7 +25,8 @@ let sampleSurvey: SurveyModel = SurveyModel(
       options: ["5", "w Returns", "w w Range"]
     ),
     SurveyQuestion(questionType: .open, questionText: "What did you like about our service?", options: nil),
-    SurveyQuestion(questionType: .open, questionText: "What did you like about our service?", options: nil)
+    SurveyQuestion(questionType: .open, questionText: "What did you like about our service?", options: nil),
+    SurveyQuestion(questionType: .scale, questionText: "Rate our website usability from 1 to 5 (1 being the worst, 5 being the best).", options: nil)
   ]
 )
 
