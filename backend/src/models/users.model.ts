@@ -1,5 +1,16 @@
-import { db } from '../configs/database.config'
-import { DataTypes, Model } from 'sequelize'
+import {
+  Table,
+  Column,
+  Model,
+  DataType,
+  HasOne,
+  HasMany,
+  ForeignKey,
+  BelongsTo
+} from 'sequelize-typescript'
+import Company from './company.model'
+import Review from './review.model'
+import Role from './role.model'
 
 /**
  * @interface User
@@ -23,134 +34,138 @@ import { DataTypes, Model } from 'sequelize'
  * @param {date} createdAt - The user's creation date
  * @param {date} updatedAt - The user's update date
  */
-export interface User extends Model {
-  userId: string
-  roleId: number
-  companyId: number | null
-  googleId: number | null
-  facebookId: number | null
-  appleId: number | null
-  firstName: string
-  lastName: string
-  secondLastName: string
-  email: string
-  password: string | null
-  phoneNumber: string
-  age: number
-  state: string
-  sex: 'masculine' | 'femenine' | 'other' | 'no_answer'
-  profilePicture: string | null
-  createdAt?: Date
-  updatedAt?: Date
-}
 
 /**
- * @function UserModel
- * @description Create the model for the users table
+ * @brief
+ * User model
  */
+@Table({ tableName: 'USERS' })
+export default class User extends Model {
+  @Column({
+    type: DataType.UUID,
+    primaryKey: true,
+    defaultValue: DataType.UUIDV4,
+    allowNull: false,
+    field: 'USER_ID',
+  })
+  userId: string
 
-export const UsersModel = db.define<User>(
-  'USERS',
-  {
-    userId: {
-      type: DataTypes.UUID,
-      primaryKey: true,
-      defaultValue: DataTypes.UUIDV4,
-      field: 'USER_ID',
-    },
-    roleId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      field: 'ROLE_ID',
-    },
-    companyId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      field: 'COMPANY_ID',
-    },
-    googleId: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      field: 'GOOGLE_ID',
-    },
-    facebookId: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    appleId: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      field: 'APPLE_ID',
-    },
-    firstName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      field: 'FIRST_NAME',
-    },
-    lastName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      field: 'LAST_NAME',
-    },
-    secondLastName: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      field: 'SECOND_LAST_NAME',
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-      field: 'EMAIL', 
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      field: 'PASSWORD',
-    },
-    phoneNumber: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-      field: 'PHONE_NUMBER',
-    },
-    age: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      field: 'AGE',
-    },
-    state: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      field: 'STATE',
-    },
-    sex: {
-      type: DataTypes.ENUM('masculine', 'femenine', 'other', 'no_answer'),
-      allowNull: false,
-      field:'SEX',
-    },
-    profilePicture: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      field: 'PROFILE_PICTURE',
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
-      field: 'CREATED_AT',
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
-      field: 'UPDATED_AT',
-    },
-  },
-  {
-    timestamps: true,
-    createdAt: 'CREATED_AT',
-    updatedAt: 'UPDATED_AT',
-  }
-)
+  @ForeignKey(() => Role)
+  @Column({
+    type: DataType.UUID,
+    allowNull: false,
+    field: 'ROLE_ID',
+  })
+  roleId: string
 
+  @BelongsTo(() => Role) // Define the association to Role
+  role: Role // This will allow you to access the associated Role model
+
+  @ForeignKey(() => Company)
+  @Column({
+    type: DataType.UUID,
+    allowNull: true,
+    field: 'COMPANY_ID',
+    unique: 'COMPANY_ID',
+  })
+  companyId: string
+
+  @BelongsTo(() => Company)
+  company: Company | null
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+    field: 'GOOGLE_ID',
+  })
+  googleId: string | null
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+    field: 'FACEBOOK_ID',
+  })
+  facebookId: string | null
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+    field: 'APPLE_ID',
+  })
+  appleId: string | null
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    field: 'FIRST_NAME',
+  })
+  firstName: string
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    field: 'LAST_NAME',
+  })
+  lastName: string
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+    field: 'SECOND_LAST_NAME',
+  })
+  secondLastName: string | null
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    unique: true,
+    field: 'EMAIL',
+  })
+  email: string
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+    field: 'PASSWORD',
+  })
+  password: string | null
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    unique: true,
+    field: 'PHONE_NUMBER',
+  })
+  phoneNumber: string
+
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+    field: 'AGE',
+  })
+  age: number
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    field: 'STATE',
+  })
+  state: string
+
+  @Column({
+    type: DataType.ENUM('masculine', 'femenine', 'other', 'no_answer'),
+    allowNull: false,
+    field: 'SEX',
+  })
+  sex: 'masculine' | 'femenine' | 'other' | 'no_answer'
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+    field: 'PROFILE_PICTURE',
+  })
+  profilePicture: string | null
+
+  @HasMany(() => Review)
+  reviews: Review[]
+}

@@ -1,5 +1,6 @@
-import { UsersModel, User } from '../models/users.model'
+import User from '../models/users.model'
 import { PaginatedQuery, PaginationParams } from '../utils/RequestResponse'
+import Role from '../models/role.model'
 
 /**
  * @function getAllUsers
@@ -7,13 +8,37 @@ import { PaginatedQuery, PaginationParams } from '../utils/RequestResponse'
  * @returns User or Null
  */
 export const getUserInfo = async (userId: string): Promise<User | null> => {
-  return await UsersModel.findByPk(userId)
+  return await User.findByPk(userId)
+}
+
+/**
+ * @function getUserByEmailWithRole
+ * @param email User's email
+ * @returns User with role or Null
+ */
+export const getUserByEmailWithRole = async (email: string): Promise<User | null> => {
+  return await User.findOne({
+    where: { email },
+    include: [
+      {
+        model: Role,
+        as: 'role',
+        attributes: ['ROLE_ID', 'NAME']
+      }
+    ]
+  })        
 }
 
 export type UpdateUserInfoBody = {
+  roleId: string,
+  companyId?: string,
+  googleId?: string,
+  facebookId?: string,
+  appleId?: string,
   firstName: string
   lastName: string
   secondLastName?: string
+  email: string,
   phoneNumber: string
   age: number
   state: string
@@ -25,20 +50,9 @@ export const updateUserInfo = async (
   userId: string,
   newUserInfo: UpdateUserInfoBody
 ): Promise<User | null> => {
-  const allowedKeys = [
-    'firstName',
-    'lastName',
-    'secondLastName',
-    'phoneNumber',
-    'age',
-    'state',
-    'sex',
-    'profilePicture',
-  ]
-  const userInfo = await UsersModel.findByPk(userId)
+  const userInfo = await User.findByPk(userId)
   if (userInfo) {
-    await userInfo.update(newUserInfo)
-    return userInfo
+    return userInfo.update(newUserInfo)
   } else {
     return null
   }
@@ -53,10 +67,9 @@ export const updateUserCredentials = async (
   userId: string,
   newUserCredentials: UpdateUserCredentials
 ): Promise<User | null> => {
-  const userInfo = await UsersModel.findByPk(userId)
+  const userInfo = await User.findByPk(userId)
   if (userInfo) {
-    await userInfo.update(newUserCredentials)
-    return userInfo
+    return userInfo.update(newUserCredentials)
   } else {
     return null
   }

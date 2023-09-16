@@ -1,34 +1,18 @@
-import { db } from '../configs/database.config'
-import {
-  DataTypes,
-  Model,
-  InferAttributes,
-  InferCreationAttributes,
-  CreationOptional,
-} from 'sequelize'
+import { Column, DataType, Model, Table } from 'sequelize-typescript'
 
-export interface Dummy
-  extends Model<InferAttributes<Dummy>, InferCreationAttributes<Dummy>> {
-  dummyId: CreationOptional<number>
-  name: string
-  lastName: string
-  createdAt?: Date
-  updatedAt?: Date
-}
-
-export const DummiesModel = db.define<Dummy>('DUMMIES', {
-  dummyId: {
-    type: DataTypes.INTEGER,
+@Table({ tableName: 'DUMMY' })
+export default class Dummy extends Model {
+  @Column({
+    type: DataType.UUID,
     primaryKey: true,
-    autoIncrement: true,
     field: 'DUMMY_ID',
-  },
-  name: {
-    type: DataTypes.STRING,
-    field: 'NAME',
-  },
-  lastName: {
-    type: DataTypes.STRING,
-    field: 'LAST_NAME',
-  },
-})
+    defaultValue: DataType.UUIDV4,
+  })
+  dummyId: string
+
+  @Column({ type: DataType.STRING, field: 'NAME' })
+  name: string
+
+  @Column({ type: DataType.STRING, field: 'LAST_NAME' })
+  lastName: string
+}

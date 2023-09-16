@@ -11,10 +11,23 @@
   },
   "plugins": ["@typescript-eslint"],
   "rules": {
-    "indent": ["error", 2],
+    "indent": [
+      "error",
+      2,
+      {
+        "ignoredNodes": [
+          "FunctionExpression > .params[decorators.length > 0]",
+          "FunctionExpression > .params > :matches(Decorator, :not(:first-child))",
+          "ClassBody.body > PropertyDefinition[decorators.length > 0] > .key"
+        ]
+      }
+    ],
     "quotes": ["error", "single"],
     "semi": ["error", "never"],
     "no-unused-vars": ["warn", { "vars": "all", "args": "all" }],
-    "@typescript-eslint/no-unused-vars" : ["warn", { "vars": "all", "args": "all" }]
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      { "vars": "all", "args": "all" }
+    ]
   }
 }
