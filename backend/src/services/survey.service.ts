@@ -5,6 +5,7 @@ import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
 import Question from '../models/question.model'
 import QuestionOption from '../models/questionOption.model'
 import Answer from '../models/answer.model'
+import { Op } from 'sequelize'
 
 /**
  * @brief
@@ -47,7 +48,48 @@ export const getSurveyById = async (
           {
             model: QuestionOption,
             association: 'questionOptions',
-            attributes: {exclude: ['questionId']}
+            attributes: { exclude: ['questionId'] },
+          },
+        ],
+      },
+    ],
+  })
+  return s ? unwrap(s) : null
+}
+
+export const getSurveyPending = async (
+  userId: string
+): Promise<Survey | null> => {
+  const s = await Survey.findOne({
+    order: [['createdAt', 'DESC']],
+    where: {
+      endDate: null,
+    },
+    include: [
+      {
+        model: Question,
+        association: 'questions',
+        attributes: [
+          'questionId',
+          'questionText',
+          'questionType',
+          'isRequired',
+        ],
+        include: [
+          {
+            model: QuestionOption,
+            association: 'questionOptions',
+            attributes: { exclude: ['questionId'] },
+          },
+          {
+            model: Answer,
+            association: 'answers',
+            where: {
+              userId :{
+                [Op.ne]: userId
+              }
+            },
+            attributes: [],
           },
         ],
       },
@@ -103,7 +145,6 @@ export const createSurvey = async (
  * @param params Los parametros de paginación
  * @returns Una promesa con las encuestas y la información de paginación
  *
- * TODO: Hasta que quede la función de getOpenSurveys funcionando.
  */
 export const closeSurvey = async (surveyId: string): Promise<Survey | null> => {
   const s = await Survey.findByPk(surveyId)

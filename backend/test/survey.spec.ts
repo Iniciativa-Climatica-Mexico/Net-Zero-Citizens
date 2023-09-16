@@ -96,6 +96,15 @@ const testSurveyPending =   {
   title: 'Website Usability Survey',
   description: 'Survey to assess the usability of our website',
   endDate: null,
+  questions: [
+    {
+      questionId: 'ques-5555-efgh-3333',
+      questionText: 'Did you find the website easy to navigate?',
+      questionType: 'yes_no',
+      isRequired: true,
+      questionOptions: [],
+    },
+  ],
 }
 
 const testCreateSurvey: CreateSurveyReqBody = {
