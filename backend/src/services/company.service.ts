@@ -28,79 +28,30 @@ export const getAllCompanies = async <T>(
  */
 export const getCompanyById = async (id: string): Promise<Company | null> => {
   const companyScore = await getCompanyScore(id)
+  const companyProducts = await getCompanyProducts(id)
+  console.log(companyScore?.[0].getDataValue('rating'))
+  console.log(companyProducts?.[0].getDataValue('product').imageUrl)
 
-  return Company.findOne({
-    where: {
-      companyId: id,
-    },
-  })
+  return await Company.findByPk(id)
 }
 
-const getCompanyProductImages = async (
+const getCompanyProducts = async (
   id: string
-): Promise<Company[] | null> => {
-  return Company.findAll({
+): Promise<CompanyProducts[] | null> => {
+  return await CompanyProducts.findAll({
     where: {
       companyId: id,
     },
     include: [
       {
-        model: CompanyProducts,
-        required: true,
-        through: {
-          attributes: ['productId', 'companyId'],
+        model: Product,
+        attributes: {
+          exclude: ['createdAt', 'updatedAt'],
         },
-        where: {
-          companyId: id,
-        },
-        include: [
-          {
-            model: Product,
-            required: true,
-            through: {
-              attributes: [
-                'productId',
-                'name',
-                'description',
-                'imageUrl',
-                'imageAltText',
-              ],
-            },
-          },
-        ],
       },
     ],
     attributes: {
-      exclude: [
-        'userId',
-        'name',
-        'description',
-        'email',
-        'phone',
-        'street',
-        'streetNumber',
-        'city',
-        'state',
-        'zipCode',
-        'latitude',
-        'longitude',
-        'profilePicture',
-        'pdfCurriculumUrl',
-        'pdfDicCdmxUrl',
-        'pdfPeeFideUrl',
-        'pdfGuaranteeSecurityUrl',
-        'pdfActaConstitutivaUrl',
-        'pdfIneUrl',
-        'status',
-        'products',
-        'images',
-      ],
-      include: [
-        'Product.imageUrl',
-        'Product.name',
-        'Product.description',
-        'Product.imageAltText',
-      ],
+      exclude: ['createdAt', 'updatedAt'],
     },
   })
 }
