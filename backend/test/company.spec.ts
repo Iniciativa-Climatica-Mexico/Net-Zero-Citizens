@@ -54,11 +54,8 @@ const attributesToExclude = [
 ]
 
 beforeEach(async () => {
-  await initDB()
-})
-
-afterEach(async () => {
   await db.drop()
+  await initDB()
 })
 
 describe('Company Service', () => {
