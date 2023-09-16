@@ -1,7 +1,6 @@
 import chai from 'chai'
 import chaiExclude from 'chai-exclude'
 import { db, initDB } from '../src/configs/database.config'
-import { unwrap } from './utils'
 import {
   getAllCompanies,
   getCompanyById,
@@ -93,21 +92,20 @@ const attributesToExclude = [
   'createdAt',
   'updatedAt',
   'deletedAt',
+  'userId',
+  'companyId',
 ]
 
 beforeEach(async () => {
-  await initDB()
-})
-
-afterEach(async () => {
   await db.drop()
+  await initDB()
 })
 
 describe('Company Service', () => {
   it('should return all companies', async () => {
     const response = await getAllCompanies({ start: 0, pageSize: 10 })
 
-    expect(unwrap(response.rows))
+    expect(response.rows.map((company) => company.get()))
       .excludingEvery(attributesToExclude)
       .to.deep.equal(testData)
   })
@@ -115,7 +113,7 @@ describe('Company Service', () => {
   it('should return all companies with pagination', async () => {
     const response = await getAllCompanies({ start: 0, pageSize: 1 })
 
-    expect(unwrap(response.rows))
+    expect(response.rows.map((company) => company.get()))
       .excludingEvery(attributesToExclude)
       .to.deep.equal([testData[0]])
   })
@@ -123,7 +121,7 @@ describe('Company Service', () => {
   it('should return all companies with pagination', async () => {
     const response = await getAllCompanies({ start: 1, pageSize: 1 })
 
-    expect(unwrap(response.rows))
+    expect(response.rows.map((company) => company.get()))
       .excludingEvery(attributesToExclude)
       .to.deep.equal([testData[1]])
   })
@@ -138,11 +136,11 @@ describe('Company Service', () => {
       .to.deep.equal(testData[0])
   })
 
-  // it('should return null if company does not exist', async () => {
-  //   const response = await getCompanyById(
-  //     'c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7f'
-  //   )
+  it('should return null if company does not exist', async () => {
+    const response = await getCompanyById(
+      'c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7f'
+    )
 
-  //   expect(response).to.be.null
-  // })
+    expect(response).to.be.null
+  })
 })

@@ -21,20 +21,14 @@ const testData = [
     companyId: 'comp-1234-efgh-0000',
     rating: 5,
     comment: 'This is a comment',
-  }
+  },
 ]
 
-const attributesToExclude = [
-  'createdAt',
-  'updatedAt',
-]
+const attributesToExclude = ['createdAt', 'updatedAt']
 
 beforeEach(async () => {
-  await initDB()
-})
-
-afterEach(async () => {
   await db.drop()
+  await initDB()
 })
 
 describe('Review Service', () => {
