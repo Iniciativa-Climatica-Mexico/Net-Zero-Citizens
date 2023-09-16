@@ -12,7 +12,7 @@ import com.greencircle.framework.views.fragments.RegisterUserFragment
  *
  * Esta actividad permite a los usuarios registrarse en la aplicación. Se encarga de la gestión de fragmentos
  * para mostrar las diferentes pantallas relacionadas con el proceso de registro.
- *  */
+ */
 class RegisterUserActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterUserBinding
 
