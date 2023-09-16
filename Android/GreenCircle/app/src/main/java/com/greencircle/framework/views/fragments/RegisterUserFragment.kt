@@ -85,6 +85,6 @@ class RegisterUserFragment : Fragment() {
     private fun navigateToForm(arguments: Bundle? = null) {
         val createUserFragment = CreateUserFragment()
         val activity = requireActivity() as RegisterUserActivity
-        activity.replaceFragment(createUserFragment,arguments)
+        activity.replaceFragment(createUserFragment, arguments)
     }
 }

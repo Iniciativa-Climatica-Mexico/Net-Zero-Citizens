@@ -25,6 +25,11 @@ class CreateUserFragment : Fragment() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this)[CreateUserViewModel::class.java]
+        arguments = requireArguments()
+        // Google Login
+        val token: String = arguments.getString("idToken").toString()
+        viewModel.googleLogin(token)
     }
 
     /**
@@ -42,18 +47,10 @@ class CreateUserFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(
-            R.layout.fragment_create_user,
-            container, false
+            R.layout.fragment_create_user, container, false
         )
-        viewModel = ViewModelProvider(this)[CreateUserViewModel::class.java]
-        arguments = requireArguments()
 
         setTexts(arguments, view)
-
-        val token: String = arguments.getString("idToken").toString()
-
-        //Sends User token to View Model
-        viewModel.googleLogin(token)
 
         return view
     }
@@ -67,7 +64,7 @@ class CreateUserFragment : Fragment() {
      * @param arguments Un Bundle  que contiene la información de la cuenta de Google.
      * @param view La vista del "CreateUserFragment"
      */
-    private fun setTexts(arguments: Bundle, view:View){
+    private fun setTexts(arguments: Bundle, view: View) {
         val userName = view.findViewById<TextView>(R.id.tvUserName)
         val userEmail = view.findViewById<TextView>(R.id.tvUserEmail)
 
