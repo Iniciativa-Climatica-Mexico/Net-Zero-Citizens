@@ -1,7 +1,4 @@
 import Ecoinfo from '../models/ecoinfo.model'
-import { Request, Response } from 'express'
-import dotenv from 'dotenv'
-import { type } from 'os'
 import { z } from 'zod'
 
 /**
