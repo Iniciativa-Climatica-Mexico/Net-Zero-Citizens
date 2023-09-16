@@ -82,16 +82,17 @@ const updateEcoInfo = async (data: EcoInfoApiModel) => {
     const exists = await Ecoinfo.findOne({ where: { postId } })
 
     if (!exists) {
-      const coverImageUrl = post.attachments.data[0].media.image.src
+      const coverImage = post.attachments.data[0].media.image.src
       const description = post.attachments.data[0].description
       const postLink = post.attachments.data[0].url
 
       const tempEcoInfoTemplate = {
         postId,
-        coverImageUrl,
+        coverImage,
         description,
         postLink,
       }
+      console.log(tempEcoInfoTemplate)
       return Ecoinfo.create(tempEcoInfoTemplate)
     }
   }))
