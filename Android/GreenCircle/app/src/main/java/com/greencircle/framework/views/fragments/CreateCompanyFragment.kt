@@ -15,6 +15,11 @@ class CreateCompanyFragment : Fragment() {
     private var arguments = Bundle()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this)[CreateCompanyViewModel::class.java]
+        arguments = requireArguments()
+        // Google Login
+        val token: String = arguments.getString("idToken").toString()
+        viewModel.googleLogin(token)
     }
 
     override fun onCreateView(
@@ -24,20 +29,10 @@ class CreateCompanyFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(
-            R.layout.fragment_create_company,
-            container, false
+            R.layout.fragment_create_company, container, false
         )
-        viewModel = ViewModelProvider(this)[CreateCompanyViewModel::class.java]
-        arguments = requireArguments()
-
-        // Texts
-        val displayName = arguments.getString("displayName")
-        val email = arguments.getString("email")
-
-        val token: String = arguments.getString("idToken").toString()
-
-        // Google Login
-        viewModel.googleLogin(token)
+        // Set texts
+        setTexts(arguments, view)
 
         return view
     }
