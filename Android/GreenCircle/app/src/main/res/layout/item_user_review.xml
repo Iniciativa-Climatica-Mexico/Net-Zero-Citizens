@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
 
                     android:background="@color/white"
-                    android:src="@drawable/icon_delete" />
+                    android:src="@drawable/icon_more_horizontal" />
 
             </LinearLayout>
 
