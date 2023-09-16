@@ -112,7 +112,7 @@ class ReviewFormFragment : Fragment() {
     }
 
     private fun navigateToCompanyReviewFragment() {
-        val companyReviewFragment = CompanyReviewFragment()
+        val companyContactFragment = CompanyContactFragment()
         val fragmentManager = requireActivity().supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
 
@@ -123,7 +123,7 @@ class ReviewFormFragment : Fragment() {
             R.anim.slide_out_right
         )
 
-        fragmentTransaction.replace(R.id.frame_layout, companyReviewFragment)
+        fragmentTransaction.replace(R.id.frame_layout, companyContactFragment)
         fragmentTransaction.commit()
     }
 
