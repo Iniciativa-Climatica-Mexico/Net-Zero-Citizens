@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.textfield.TextInputEditText
 import com.greencircle.R
 import com.greencircle.framework.viewmodel.CreateCompanyViewModel
 
@@ -37,7 +38,7 @@ class CreateCompanyFragment : Fragment() {
         setTexts(arguments, view)
 
         // Listeners
-        onSubmit(view)
+        onSubmitListener(view)
 
         return view
     }
@@ -55,11 +56,17 @@ class CreateCompanyFragment : Fragment() {
         }
     }
 
-    private fun onSubmit(view: View) {
+    private fun onSubmitListener(view: View) {
         val submitButton = view.findViewById<Button>(R.id.submit_create_company)
         submitButton.setOnClickListener {
             Log.d("CreateCompanyFragment", "Send data to backend")
         }
+    }
+
+    private fun onSubmitHandler(view: View) {
+        val nameEditText: TextInputEditText = view.findViewById(R.id.companyNameTextField)
+        val descriptionEditText: TextInputEditText =
+            view.findViewById(R.id.companyDescriptionTextField)
     }
 
     private fun setTexts(arguments: Bundle, view: View) {
