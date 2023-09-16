@@ -25,11 +25,15 @@ class SurveyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         initializeBinding()
         initializeObservers()
-        viewModel.getQuestionList()
+        viewModel.getSurveyPending()
     }
 
     private fun initializeObservers() {
         viewModel.surveyLiveData.observe(this) { survey ->
+            if (survey == null) {
+                goToMain()
+                return@observe
+            }
             binding.SurveyTitle.text = survey.title
             loadQuestions(survey.questions)
         }
