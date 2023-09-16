@@ -47,6 +47,7 @@ export const getSurveyById = async (
           {
             model: QuestionOption,
             association: 'questionOptions',
+            attributes: {exclude: ['questionId']}
           },
         ],
       },

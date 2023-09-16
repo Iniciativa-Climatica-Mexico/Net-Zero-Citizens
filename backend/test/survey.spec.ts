@@ -46,6 +46,52 @@ const testSurveyList = [
   },
 ]
 
+const testSurveyById =   {
+  surveyId: 'surv-1234-efgh-0000',
+  title: 'Encuesta de satisfacción',
+  description: 'Encuesta para medir la satisfacción de los clientes',
+  endDate: null,
+  questions: [
+    {
+      questionId: 'ques-1234-efgh-0000',
+      questionText: '¿Qué tan satisfecho está con el servicio?',
+      questionType: 'scale',
+      isRequired: true,
+      questionOptions: [],
+    },
+    {
+      questionId: 'ques-1234-efgh-0001',
+      questionText: '¿Cómo describiría nuestro servicio?',
+      questionType: 'multiple_choice',
+      isRequired: true,
+      questionOptions: [
+        {
+          questionOptionId: 'optn-1234-efgh-0000',
+          textOption: 'Excelente',
+        },
+        {
+          questionOptionId: 'optn-1234-efgh-0001',
+          textOption: 'Bueno',
+        },
+        {
+          questionOptionId: 'optn-1234-efgh-0002',
+          textOption: 'Regular',
+        },
+        {
+          questionOptionId: 'optn-1234-efgh-0003',
+          textOption: 'Malo',
+        },
+        {
+          questionOptionId: 'optn-1234-efgh-0004',
+          textOption: 'Pésimo',
+        },
+      ],
+    },
+  ],
+}
+
+
+
 const testSurvey: CreateSurveyReqBody = {
   title: 'Encuesta de Porta',
   description: 'Encuesta de portaluppi con su portafolio',
@@ -97,7 +143,7 @@ describe('Survey Service', () => {
     const response = await getSurveyById('surv-1234-efgh-0000')
     expect(unwrap(response))
       .excludingEvery(attributesToExclude)
-      .to.deep.equal(testSurveyList[0])
+      .to.deep.equal(testSurveyById)
   })
 
   it('should return null if survey does not exist', async () => {
