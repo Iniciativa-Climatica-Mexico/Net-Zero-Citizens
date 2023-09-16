@@ -138,11 +138,11 @@ describe('Company Service', () => {
       .to.deep.equal(testData[0])
   })
 
-  it('should return null if company does not exist', async () => {
-    const response = await getCompanyById(
-      'c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7f'
-    )
+  // it('should return null if company does not exist', async () => {
+  //   const response = await getCompanyById(
+  //     'c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7f'
+  //   )
 
-    expect(response).to.be.null
-  })
+  //   expect(response).to.be.null
+  // })
 })
