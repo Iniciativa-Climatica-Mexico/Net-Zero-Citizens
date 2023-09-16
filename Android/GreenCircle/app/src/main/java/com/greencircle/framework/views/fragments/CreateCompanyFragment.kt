@@ -1,9 +1,11 @@
 package com.greencircle.framework.views.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -34,7 +36,30 @@ class CreateCompanyFragment : Fragment() {
         // Set texts
         setTexts(arguments, view)
 
+        // Listeners
+        onSubmit(view)
+
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.googleLoginResult.observe(viewLifecycleOwner) { result ->
+            // Handle the result here
+            if (result != null) {
+                Log.d("CreateCompanyFragment", "Google login success")
+                Log.d("CreateCompanyFragment", result.toString())
+            } else {
+                Log.d("CreateCompanyFragment", "Google login failed")
+            }
+        }
+    }
+
+    private fun onSubmit(view: View) {
+        val submitButton = view.findViewById<Button>(R.id.submit_create_company)
+        submitButton.setOnClickListener {
+            Log.d("CreateCompanyFragment", "Send data to backend")
+        }
     }
 
     private fun setTexts(arguments: Bundle, view: View) {
