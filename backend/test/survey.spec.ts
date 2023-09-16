@@ -47,7 +47,7 @@ const testSurveyList = [
   },
 ]
 
-const testSurveyById =   {
+const testSurveyById = {
   surveyId: 'surv-1234-efgh-0000',
   title: 'Encuesta de satisfacción',
   description: 'Encuesta para medir la satisfacción de los clientes',
@@ -91,7 +91,7 @@ const testSurveyById =   {
   ],
 }
 
-const testSurveyPending =   {
+const testSurveyPending = {
   surveyId: 'surv-5555-efgh-3333',
   title: 'Website Usability Survey',
   description: 'Survey to assess the usability of our website',
@@ -166,9 +166,11 @@ describe('Survey Service', () => {
     expect(response).to.be.null
   })
 
-  it ('should return a pending survey', async () => {
+  it('should return a pending survey', async () => {
     const response = await getSurveyPending('abcd-1234-efgh-5678')
-    expect(response).excludingEvery(attributesToExclude).to.deep.equal(testSurveyPending)
+    expect(response)
+      .excludingEvery(attributesToExclude)
+      .to.deep.equal(testSurveyPending)
   })
 
   it('should create a new survey', async () => {
