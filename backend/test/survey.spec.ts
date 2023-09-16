@@ -8,6 +8,7 @@ import {
   createSurvey,
   closeSurvey,
   CreateSurveyReqBody,
+  getSurveyPending,
 } from '../src/services/survey.service'
 import { unwrap } from './utils'
 import Survey from '../src/models/survey.model'
@@ -90,9 +91,14 @@ const testSurveyById =   {
   ],
 }
 
+const testSurveyPending =   {
+  surveyId: 'surv-5555-efgh-3333',
+  title: 'Website Usability Survey',
+  description: 'Survey to assess the usability of our website',
+  endDate: null,
+}
 
-
-const testSurvey: CreateSurveyReqBody = {
+const testCreateSurvey: CreateSurveyReqBody = {
   title: 'Encuesta de Porta',
   description: 'Encuesta de portaluppi con su portafolio',
   questions: [
@@ -135,14 +141,14 @@ describe('Survey Service', () => {
   it('should return a list of all surveys', async () => {
     const response = await getAllSurveys({ start: 0, pageSize: 10 })
     expect(unwrap(response).rows)
-      .excludingEvery(attributesToExclude)
+      .excludingEvery(attributesToExclude.concat('endDate'))
       .to.deep.equal(testSurveyList)
   })
 
   it('should return a survey by id', async () => {
     const response = await getSurveyById('surv-1234-efgh-0000')
     expect(unwrap(response))
-      .excludingEvery(attributesToExclude)
+      .excludingEvery(attributesToExclude.concat('endDate'))
       .to.deep.equal(testSurveyById)
   })
 
@@ -151,8 +157,13 @@ describe('Survey Service', () => {
     expect(response).to.be.null
   })
 
+  it ('should return a pending survey', async () => {
+    const response = await getSurveyPending('abcd-1234-efgh-5678')
+    expect(response).excludingEvery(attributesToExclude).to.deep.equal(testSurveyPending)
+  })
+
   it('should create a new survey', async () => {
-    const response = await createSurvey(testSurvey)
+    const response = await createSurvey(testCreateSurvey)
     const surveyDb = await Survey.findByPk(response.surveyId, {
       include: [
         {
@@ -167,11 +178,11 @@ describe('Survey Service', () => {
         },
       ],
     })
-    expect(unwrap(surveyDb)).containSubset(testSurvey)
+    expect(unwrap(surveyDb)).containSubset(testCreateSurvey)
   })
 
   it('should close a survey giving an endDate to the testSurvey', async () => {
-    const response = await createSurvey(testSurvey)
+    const response = await createSurvey(testCreateSurvey)
     const closedSurvey = await closeSurvey(response.surveyId)
     expect(closedSurvey?.endDate).to.not.be.null
   })
