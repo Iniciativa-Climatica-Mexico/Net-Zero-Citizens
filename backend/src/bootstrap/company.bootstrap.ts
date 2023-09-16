@@ -212,11 +212,11 @@ export default class CompanyBootstrap extends Bootstrapper {
         email: 'example9@mail.com',
         phoneNumber: '123456797',
         webPage: 'www.company9.com',
-        street: '123 Main Street',
-        streetNumber: 456,
-        city: 'Cityville',
-        state: 'Stateville',
-        zipCode: 12345,
+        street: 'San Juan Bosco',
+        streetNumber: 130,
+        city: 'Queretaro',
+        state: 'Queretaro',
+        zipCode: 76230,
         profilePicture:
           'https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcR6XZP6rdW3VhHwZSxu3u4RCWyQFHTwl_4QSRK5t0km1FCytdaWwJEoNmW8c2ju5DRR4DbxppAQvVH441I',
         pdfCurriculumURL: 'https://example.com/company9-cv.pdf',
@@ -227,7 +227,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         pdfActaConstitutivaURL:
           'https://example.com/company9-acta-constitutiva.pdf',
         pdfINEURL: 'https://example.com/company9-ine.pdf',
-        status: 'pending_approval',
+        status: 'approved',
       },
       {
         companyId: 'comp-1234-efgh-0009',
@@ -237,11 +237,11 @@ export default class CompanyBootstrap extends Bootstrapper {
         email: 'example10@mail.com',
         phoneNumber: '123456798',
         webPage: 'www.company10.com',
-        street: '123 Main Street',
-        streetNumber: 456,
-        city: 'Cityville',
-        state: 'Stateville',
-        zipCode: 12345,
+        street: 'Tabachines',
+        streetNumber: 416,
+        city: 'Queretaro',
+        state: 'Queretaro',
+        zipCode: 76100,
         profilePicture:
           'https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcR6XZP6rdW3VhHwZSxu3u4RCWyQFHTwl_4QSRK5t0km1FCytdaWwJEoNmW8c2ju5DRR4DbxppAQvVH441I',
         pdfCurriculumURL: 'https://example.com/company10-cv.pdf',
@@ -252,7 +252,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         pdfActaConstitutivaURL:
           'https://example.com/company10-acta-constitutiva.pdf',
         pdfINEURL: 'https://example.com/company10-ine.pdf',
-        status: 'pending_approval',
+        status: 'approved',
       },
     ])
   }

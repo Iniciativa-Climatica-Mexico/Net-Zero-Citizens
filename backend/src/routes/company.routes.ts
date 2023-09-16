@@ -7,6 +7,8 @@ router.get('/', controller.getAllCompanies)
 
 router.get('/pending', controller.getPendingCompanies)
 
+router.get('/geocoding', controller.getCoordinates)
+
 router.post('/pending/:companyId',controller.updateCompanyInfo)
 
 router.get('/:companyId', controller.getCompanyInfo)

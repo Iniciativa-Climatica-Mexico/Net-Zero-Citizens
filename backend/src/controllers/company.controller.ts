@@ -2,7 +2,12 @@ import Company from '../models/company.model'
 import * as CompanyService from '../services/company.service'
 import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
+const NodeGeocoder = require('node-geocoder');
 
+const geocoder = NodeGeocoder({
+  provider: 'google',
+  apiKey: process.env.GOOGLE_MAPS_API,
+});
 
 export const getCompanyInfo : RequestHandler<{ companyId: string }> =async (
   req,
@@ -97,3 +102,90 @@ export const updateCompanyInfo: RequestHandler<
     res.status(404).json({ message: 'Company not found' })
   }
 }
+
+/**
+ * @brief
+ * Función del controlador que convierte las ubicaciones
+ * de los proveedores aprovados a longitudes y latitudes
+ * @param req 
+ * @param res 
+ */
+
+interface FilteredCompany {
+  companyId: string;
+  name: string;
+  latitude: number;
+  longitude: number;
+  profilePicture: string;
+}
+
+export const getCoordinates: RequestHandler<
+  NoRecord,
+  Paginator<FilteredCompany>,
+  NoRecord,
+  PaginationParams<{ status: string }>
+> = async (req, res) => {
+  const params = {
+    start: req.query.start || 0,
+    pageSize: req.query.pageSize || 10,
+  };
+
+  // Define un tipo para la respuesta de geocodificación
+  interface GeocodeResult {
+    latitude: number;
+    longitude: number;
+  }
+
+  const companies = await CompanyService.getApprovedCompanies(params);
+
+  // Configura el geocoder con tu clave de API
+  const geocoder = NodeGeocoder({
+    provider: 'google',
+    apiKey: process.env.GOOGLE_MAPS_API,
+  });
+
+  const companiesWithCoordinates = await Promise.all(
+    companies.rows.map(async (company) => {
+      const { street, streetNumber, city, state, zipCode } = company.dataValues;
+
+      // Crea la dirección a partir de los campos de la empresa
+      const address = `${street} ${streetNumber}, ${city}, ${state}, ${zipCode}`;
+
+      try {
+        // Realiza la geocodificación
+        const geocodeResult = await geocoder.geocode(address);
+        if (geocodeResult.length > 0) {
+          const { latitude, longitude } = geocodeResult[0];
+          return {
+            companyId: company.dataValues.companyId,
+            name: company.dataValues.name,
+            latitude,
+            longitude,
+            profilePicture: company.dataValues.profilePicture,
+          };
+        }
+      } catch (error: any) {
+        console.error(`Error al geocodificar la empresa ${company.dataValues.companyId}: ${error.message}`);
+      }
+
+      // Si la geocodificación falla o no se encuentra, regresa null
+      return null;
+    })
+  );
+
+  // Filtra las empresas que no pudieron geocodificarse
+  const filteredCompanies = companiesWithCoordinates.filter((company) => company !== null);
+
+  const filteredCompaniesTyped: FilteredCompany[] = filteredCompanies.filter(
+    (company): company is FilteredCompany => company !== null
+  );
+
+  const paginator: Paginator<FilteredCompany> = {
+    rows: filteredCompaniesTyped,
+    start: 0,
+    pageSize: filteredCompanies.length,
+    total: filteredCompanies.length,
+  };
+
+  res.json(paginator);
+};

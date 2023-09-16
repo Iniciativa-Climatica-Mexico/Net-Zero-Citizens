@@ -75,3 +75,21 @@ export const updateCompanyInfo = async (
     return null
   }
 }
+
+/**
+ * @brief
+ * Regresa compañías ya aprovadas
+ * @param status
+ */
+
+export const getApprovedCompanies = async <T>(
+  params: PaginationParams<T>
+): Promise<PaginatedQuery<Company>> => {
+  return await Company.findAndCountAll({
+    limit: params.pageSize,
+    offset: params.start,
+    where: {
+      status: 'approved',
+    },
+  })
+}
