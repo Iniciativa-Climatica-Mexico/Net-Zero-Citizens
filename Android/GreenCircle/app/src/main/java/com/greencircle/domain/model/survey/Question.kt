@@ -1,4 +1,6 @@
-package com.greencircle.domain.model.Survey
+package com.greencircle.domain.model.survey
+
+import java.io.Serializable
 
 data class Question(
     val questionId: String,
@@ -6,4 +8,5 @@ data class Question(
     val questionText: String,
     val questionType: QuestionType,
     val isRequired: Boolean,
-)
+    var answer: Answer? = null,
+) : Serializable

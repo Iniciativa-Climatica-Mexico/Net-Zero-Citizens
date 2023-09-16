@@ -45,10 +45,11 @@
                 android:textSize="25dp"
                 android:textStyle="bold" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/RVQuestions"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/QuestionContainer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"/>
             <!-- Scrollable content -->
             <Button
                 android:id="@+id/BtnSubmit"

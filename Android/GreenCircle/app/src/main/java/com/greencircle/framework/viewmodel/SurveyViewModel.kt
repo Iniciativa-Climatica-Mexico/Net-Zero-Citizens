@@ -2,10 +2,10 @@ package com.greencircle.framework.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.greencircle.domain.model.Survey.Question
-import com.greencircle.domain.model.Survey.QuestionOption
-import com.greencircle.domain.model.Survey.QuestionType
-import com.greencircle.domain.model.Survey.Survey
+import com.greencircle.domain.model.survey.Question
+import com.greencircle.domain.model.survey.QuestionOption
+import com.greencircle.domain.model.survey.QuestionType
+import com.greencircle.domain.model.survey.Survey
 
 class SurveyViewModel : ViewModel() {
     val surveyLiveData = MutableLiveData<Survey>()
@@ -17,7 +17,7 @@ class SurveyViewModel : ViewModel() {
             surveyId = "Test",
             questions = arrayListOf(
                 Question(
-                    questionId = "Test",
+                    questionId = "1",
                     questionText = "¿Pregunta de ejemplo OPEN, que harias esta es una pregunta " +
                         "super larga jaja?",
                     questionType = QuestionType.open,
@@ -25,14 +25,14 @@ class SurveyViewModel : ViewModel() {
                     isRequired = true,
                 ),
                 Question(
-                    questionId = "Test",
+                    questionId = "2",
                     questionText = "Pregunta de ejemplo SCALE, que harias",
                     questionType = QuestionType.scale,
                     questionOptions = arrayListOf(),
                     isRequired = true,
                 ),
                 Question(
-                    questionId = "Test",
+                    questionId = "3",
                     questionText = "Pregunta de ejemplo MULTIPLE_CHOICE, que harias",
                     questionType = QuestionType.multiple_choice,
                     questionOptions = arrayListOf(
@@ -43,21 +43,21 @@ class SurveyViewModel : ViewModel() {
                     isRequired = false,
                 ),
                 Question(
-                    questionId = "Test",
+                    questionId = "4",
                     questionText = "Pregunta de ejemplo OPEN, que harias",
                     questionType = QuestionType.open,
                     questionOptions = arrayListOf(),
                     isRequired = true,
                 ),
                 Question(
-                    questionId = "Test",
+                    questionId = "5",
                     questionText = "Pregunta de ejemplo SCALE, que harias",
                     questionType = QuestionType.scale,
                     questionOptions = arrayListOf(),
                     isRequired = false,
                 ),
                 Question(
-                    questionId = "Test",
+                    questionId = "6",
                     questionText = "Pregunta de ejemplo MULTIPLE_CHOICE, que harias",
                     questionType = QuestionType.multiple_choice,
                     questionOptions = arrayListOf(

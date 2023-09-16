@@ -1,22 +1,24 @@
 package com.greencircle.framework.views
 
 import android.os.Bundle
-import android.view.View
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG
 import com.google.android.material.snackbar.Snackbar
+import com.greencircle.R
 import com.greencircle.databinding.ActivitySurveyBinding
-import com.greencircle.domain.model.Survey.Question
-import com.greencircle.framework.ui.adapters.QuestionsAdapter
-import com.greencircle.framework.ui.adapters.viewholders.QuestionsViewHolder
+import com.greencircle.domain.model.survey.Answer
+import com.greencircle.domain.model.survey.Question
+import com.greencircle.domain.model.survey.QuestionType
 import com.greencircle.framework.viewmodel.SurveyViewModel
+import com.greencircle.framework.views.fragments.survey.QuestionFragment
 
 class SurveyActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySurveyBinding
-    private val adapter: QuestionsAdapter = QuestionsAdapter()
-    private lateinit var data: ArrayList<Question>
+    private lateinit var data: Map<String, Question>
     private val viewModel: SurveyViewModel by viewModels()
+    private val fragmentManager = supportFragmentManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initializeBinding()
@@ -27,38 +29,55 @@ class SurveyActivity : AppCompatActivity() {
     private fun initializeObservers() {
         viewModel.surveyLiveData.observe(this) { survey ->
             binding.SurveyTitle.text = survey.title
-            setUpRecyclerView(survey.questions)
+            loadQuestions(survey.questions)
         }
     }
 
     private fun initializeBinding() {
         binding = ActivitySurveyBinding.inflate(layoutInflater)
-        binding.BtnSubmit.setOnClickListener { button ->
-            var container = binding.RVQuestions
-            var count = container.childCount
-            val answers = ArrayList<String>()
-            for (i in 0 until count) {
-                val childView: View = binding.RVQuestions.getChildAt(i)
-                val viewHolder: QuestionsViewHolder =
-                    binding.RVQuestions.getChildViewHolder(childView) as QuestionsViewHolder
-                answers.add(viewHolder.answer)
-                // do something with your child element
-            }
-            // show answers in snakbar
-            Snackbar.make(button, answers.toString(), Snackbar.LENGTH_LONG).show()
+        binding.BtnSubmit.setOnClickListener {
+            Snackbar.make(
+                binding.root,
+                getAnswers().map { ans ->
+                    "ID:${ans.questionId}, ${ans.answerText ?: ans.scaleValue}"
+                }.joinToString(separator = ";"),
+                LENGTH_LONG,
+            ).show()
         }
         setContentView(binding.root)
     }
 
-    private fun setUpRecyclerView(dataForList: ArrayList<Question>) {
-        binding.RVQuestions.setHasFixedSize(true)
-        val linearLayoutManager = LinearLayoutManager(
-            this,
-            LinearLayoutManager.VERTICAL,
-            false,
-        )
-        binding.RVQuestions.layoutManager = linearLayoutManager
-        adapter.QuestionsAdapter(dataForList, this)
-        binding.RVQuestions.adapter = adapter
+    private fun loadQuestions(questions: ArrayList<Question>) {
+        data = questions.associateBy { it.questionId }
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        Log.i("SurveyActivity", data.toString())
+        data.forEach { questionId, question ->
+            val questionFragment = QuestionFragment()
+            val args = Bundle()
+            args.putSerializable("question", question)
+            questionFragment.arguments = args
+            fragmentTransaction.add(R.id.QuestionContainer, questionFragment)
+        }
+        fragmentTransaction.commit()
+    }
+
+    private fun getAnswers(): List<Answer> {
+        return data.map { (_, question) ->
+            question.answer ?: Answer(null, null, question.questionId)
+        }
+    }
+
+    fun onQuestionAnswered(questionId: String, answer: String) {
+        val question = data.get(questionId) ?: throw Error("Question not found")
+        when (question.questionType) {
+            QuestionType.scale -> {
+                val scaleValue = answer.toInt()
+                question.answer = Answer(scaleValue, null, questionId)
+            }
+
+            else -> {
+                question.answer = Answer(null, answer, questionId)
+            }
+        }
     }
 }
