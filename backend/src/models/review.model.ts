@@ -8,6 +8,7 @@ import {
 } from 'sequelize-typescript'
 import User from './users.model'
 import Company from './company.model'
+import { Col } from 'sequelize/types/utils'
 
 @Table({ tableName: 'REVIEWS' })
 export default class Review extends Model {
@@ -24,9 +25,9 @@ export default class Review extends Model {
   @Column({
     type: DataType.UUID,
     allowNull: false,
-    field: 'USER_ID',
+    field: 'UUID',
   })
-  userId: string
+  UUID: string
 
   @BelongsTo(() => User)
   user: User
@@ -44,15 +45,19 @@ export default class Review extends Model {
 
   @Column({
     type: DataType.INTEGER,
-    allowNull: false,
-    field: 'RATING',
+    field: 'SCORE',
   })
-  rating: number
+  score: number
 
   @Column({
     type: DataType.STRING(500),
-    allowNull: false,
-    field: 'COMMENT',
+    field: 'REVIEW',
   })
-  comment: string
+  review: string
+
+  @Column({
+    type: DataType.STRING(100),
+    field: 'REVIEW_TITLE',
+  })
+  reviewTitle: string
 }

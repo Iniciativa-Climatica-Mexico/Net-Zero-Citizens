@@ -7,10 +7,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.greencircle.R
 import com.greencircle.databinding.ActivityMainBinding
 import com.greencircle.framework.views.fragments.CompanyContactFragment
-import com.greencircle.framework.views.fragments.HomeFragment
+import com.greencircle.framework.views.fragments.CompanyReviewFragment
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomNavigationView: BottomNavigationView
 
@@ -20,14 +19,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        replaceFragment(HomeFragment())
+//        replaceFragment(CompanyReviewFragment())
 
         bottomNavigationView = binding.bottomNaSvigation
 
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.ecoInfo -> {
-                    replaceFragment(HomeFragment())
+                    replaceFragment(CompanyReviewFragment())
                     true
                 }
 

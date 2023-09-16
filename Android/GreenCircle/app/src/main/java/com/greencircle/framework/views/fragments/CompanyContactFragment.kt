@@ -18,6 +18,7 @@ class CompanyContactFragment : Fragment() {
 
     private val servicesFragment by lazy { CompanyServicesFragment() }
     private val contactInfoFragment by lazy { CompanyContactInfoFragment() }
+    private val companyReviewsFragment by lazy { CompanyReviewFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +36,14 @@ class CompanyContactFragment : Fragment() {
             binding.carousel.addData(items)
         }
 
-        childFragmentManager.beginTransaction().add(R.id.fragmentContainer, servicesFragment)
-            .add(R.id.fragmentContainer, contactInfoFragment).hide(contactInfoFragment).commit()
+        childFragmentManager
+            .beginTransaction()
+            .add(R.id.fragmentContainer, servicesFragment)
+            .add(R.id.fragmentContainer, contactInfoFragment)
+            .add(R.id.fragmentContainer, companyReviewsFragment)
+            .hide(contactInfoFragment)
+            .hide(companyReviewsFragment)
+            .commit()
 
         /*
         *Boton que cambia entre los fragmentos de servicios, informacion de contacto y reviews
@@ -45,16 +52,30 @@ class CompanyContactFragment : Fragment() {
             if (isChecked) {
                 when (checkedId) {
                     R.id.btnServices -> {
-                        childFragmentManager.beginTransaction().show(servicesFragment)
-                            .hide(contactInfoFragment).commit()
+                        childFragmentManager
+                            .beginTransaction()
+                            .show(servicesFragment)
+                            .hide(contactInfoFragment)
+                            .hide(companyReviewsFragment)
+                            .commit()
                     }
 
                     R.id.btnContactInfo -> {
-                        childFragmentManager.beginTransaction().show(contactInfoFragment)
-                            .hide(servicesFragment).commit()
+                        childFragmentManager.beginTransaction()
+                            .show(contactInfoFragment)
+                            .hide(servicesFragment)
+                            .hide(companyReviewsFragment)
+                            .commit()
                     }
 
-                    // TODO : Add button reviews
+                    R.id.btnReviews -> {
+                        childFragmentManager
+                            .beginTransaction()
+                            .show(companyReviewsFragment)
+                            .hide(contactInfoFragment)
+                            .hide(servicesFragment)
+                            .commit()
+                    }
                 }
             }
         }

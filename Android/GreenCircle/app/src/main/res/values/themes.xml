@@ -3,6 +3,7 @@
     <style name="Theme.GreenCircle" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/blue</item>
+        <item name="android:textColorLink">@color/primary_900</item>
         <item name="colorPrimaryVariant">@color/primary_900</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
