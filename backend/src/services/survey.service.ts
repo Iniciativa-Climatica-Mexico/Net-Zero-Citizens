@@ -4,6 +4,7 @@ import Survey from '../models/survey.model'
 import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
 import Question from '../models/question.model'
 import QuestionOption from '../models/questionOption.model'
+import Answer from '../models/answer.model'
 
 /**
  * @brief
@@ -36,7 +37,12 @@ export const getSurveyById = async (
       {
         model: Question,
         association: 'questions',
-        attributes: ['questionId', 'questionText', 'questionType', 'isRequired'],
+        attributes: [
+          'questionId',
+          'questionText',
+          'questionType',
+          'isRequired',
+        ],
         include: [
           {
             model: QuestionOption,
@@ -62,13 +68,13 @@ export const createSurveyBodyScheme = z.object({
 })
 
 export type CreateSurveyReqBody = z.infer<typeof createSurveyBodyScheme>
+
 /**
  * @brief
  * Función del servicio que devuelve todas las encuestas cerradas de la base de datos
  * @param params Los parametros de paginación
  * @returns Una promesa con las encuestas y la información de paginación
  *
- * TODO: Verificar caul de las dos funciones es la correcta.
  */
 export const createSurvey = async (
   survey: CreateSurveyReqBody
@@ -104,5 +110,80 @@ export const closeSurvey = async (surveyId: string): Promise<Survey | null> => {
     s.endDate = new Date()
     await s.save()
   }
+  return unwrap(s)
+}
+
+export const answerSurveyBodyScheme = z.object({
+  surveyId: z.string(),
+  answers: z.array(
+    z.object({
+      questionId: z.string(),
+      scaleValue: z.number().optional(),
+      textAnswer: z.string().optional(),
+    })
+  ),
+})
+
+export type AnswerSurveyReqBody = z.infer<typeof answerSurveyBodyScheme>
+type FullAnswers = AnswerSurveyReqBody & { userId: string }
+
+export const answerSurvey = async (answers: FullAnswers): Promise<Answer[]> => {
+  const processedAnswers = answers.answers.map((a) => {
+    const processedAns = { ...a, userId: answers.userId }
+    return processedAns
+  })
+  const surveyId = answers.surveyId
+  const survey = await Survey.findByPk(surveyId, {
+    include: [
+      {
+        model: Question,
+        association: 'questions',
+        attributes: ['questionId', 'questionType', 'isRequired'],
+        include: [
+          {
+            model: QuestionOption,
+            association: 'questionOptions',
+          },
+        ],
+      },
+    ],
+  })
+  if (!survey) throw new Error('Survey not found')
+
+  const answersToInsert: typeof processedAnswers = []
+  const questions = survey.questions
+  for (const question of questions) {
+    const ans = processedAnswers.find(
+      (a) => a.questionId === question.questionId
+    )
+
+    if (!ans) {
+      if (question.isRequired) {
+        throw new Error('Answer is required')
+      } else {
+        continue
+      }
+    }
+
+    if (question.questionType === 'multiple_choice') {
+      if (ans.scaleValue) throw new Error('Scale value not allowed')
+      if (!ans.textAnswer) throw new Error('Text answer is required')
+      const isValidOption = question.questionOptions.some(
+        (option) => option.textOption === ans.textAnswer
+      )
+      if (!isValidOption) throw new Error('Invalid option')
+    } else if (question.questionType === 'scale') {
+      if (ans.textAnswer) throw new Error('Text answer not allowed')
+      if (!ans.scaleValue) throw new Error('Scale value is required')
+    } else if (question.questionType === 'open') {
+      if (ans.scaleValue) throw new Error('Scale value not allowed')
+      if (!ans.textAnswer) throw new Error('Text answer is required')
+    } else {
+      throw new Error('Invalid question type')
+    }
+    answersToInsert.push(ans)
+  }
+
+  const s = await Answer.bulkCreate(answersToInsert)
   return unwrap(s)
 }
