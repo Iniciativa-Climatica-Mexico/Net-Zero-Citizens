@@ -51,6 +51,7 @@
                 android:layout_height="match_parent" />
             <!-- Scrollable content -->
             <Button
+                android:id="@+id/BtnSubmit"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:text="Enviar"

@@ -5,4 +5,5 @@ data class Question(
     val questionOptions: List<QuestionOption>,
     val questionText: String,
     val questionType: QuestionType,
+    val isRequired: Boolean,
 )

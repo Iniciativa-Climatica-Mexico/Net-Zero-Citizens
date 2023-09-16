@@ -12,21 +12,24 @@ class SurveyViewModel : ViewModel() {
 
     fun getQuestionList() {
         val mockData = Survey(
-            title = "Encuesta Validar",
+            title = "Encuesta Validar probando lineas largas de titulo",
             description = "Esta es una prueba para conseguir datos",
             surveyId = "Test",
             questions = arrayListOf(
                 Question(
                     questionId = "Test",
-                    questionText = "Pregunta de ejemplo OPEN, que harias",
+                    questionText = "¿Pregunta de ejemplo OPEN, que harias esta es una pregunta " +
+                        "super larga jaja?",
                     questionType = QuestionType.open,
                     questionOptions = arrayListOf(),
+                    isRequired = true,
                 ),
                 Question(
                     questionId = "Test",
                     questionText = "Pregunta de ejemplo SCALE, que harias",
                     questionType = QuestionType.scale,
                     questionOptions = arrayListOf(),
+                    isRequired = true,
                 ),
                 Question(
                     questionId = "Test",
@@ -37,18 +40,21 @@ class SurveyViewModel : ViewModel() {
                         QuestionOption("id2", "Opción 2"),
                         QuestionOption("id3", "Opción 3"),
                     ),
+                    isRequired = false,
                 ),
                 Question(
                     questionId = "Test",
                     questionText = "Pregunta de ejemplo OPEN, que harias",
                     questionType = QuestionType.open,
                     questionOptions = arrayListOf(),
+                    isRequired = true,
                 ),
                 Question(
                     questionId = "Test",
                     questionText = "Pregunta de ejemplo SCALE, que harias",
                     questionType = QuestionType.scale,
                     questionOptions = arrayListOf(),
+                    isRequired = false,
                 ),
                 Question(
                     questionId = "Test",
@@ -59,6 +65,7 @@ class SurveyViewModel : ViewModel() {
                         QuestionOption("id2", "Opción 2"),
                         QuestionOption("id3", "Opción 3"),
                     ),
+                    isRequired = true,
                 ),
             ),
         )
