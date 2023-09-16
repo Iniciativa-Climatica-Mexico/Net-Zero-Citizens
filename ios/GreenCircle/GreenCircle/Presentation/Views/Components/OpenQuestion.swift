@@ -9,17 +9,28 @@ import SwiftUI
 
 struct OpenQuestion: View {
   @State private var text = ""
-  private let characterLimit = 250
+  private let characterLimit = 255
   
   let question: SurveyQuestion
   
   var body: some View {
-    VStack {
+    VStack(alignment: .leading) {
       Text(question.questionText)
-      TextField("Refrigerador", text: $text, axis: .vertical)
+        .font(.headline)
+      TextField("Respuesta", text: $text, axis: .vertical)
         .lineLimit(5, reservesSpace: true)
+        .multilineTextAlignment(.leading)
         .textFieldStyle(.roundedBorder)
-        .padding()
     }
+  }
+}
+
+struct OpenQuestion_Previews: PreviewProvider {
+  static var previews: some View {
+    OpenQuestion(question: SurveyQuestion (
+      questionType: .open,
+      questionText: "What did you like about our service?",
+      options: nil
+    ))
   }
 }

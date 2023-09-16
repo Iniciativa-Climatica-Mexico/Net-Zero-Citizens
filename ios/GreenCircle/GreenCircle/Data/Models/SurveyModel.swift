@@ -8,6 +8,7 @@
 import Foundation
 
 struct SurveyModel {
+  
     let title: String
     let description: String
     let questions: [SurveyQuestion]
@@ -16,7 +17,7 @@ struct SurveyModel {
 struct SurveyQuestion: Hashable {
     let questionType: QuestionType
     let questionText: String
-    let options: [String]? // Only for multiple-choice questions
+    let options: [String]?
     
     enum QuestionType {
         case open

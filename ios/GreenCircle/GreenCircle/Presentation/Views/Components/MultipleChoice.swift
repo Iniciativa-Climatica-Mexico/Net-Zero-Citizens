@@ -31,9 +31,24 @@ struct MultipleChoice: View {
             }
           }
         }
-        .padding(.vertical, 5)
+        //.padding(.vertical, 5)
+        .foregroundColor(.white)
+        .frame(width: 178, height: 40)
+        .background(Color(red: 0.33, green: 0.49, blue: 0.55))
+        .cornerRadius(9)
+        .offset(x: 0, y: 0)
       }
     }
-    .padding()
+    //.padding()
+  }
+}
+
+struct MultipleChoice_Previews: PreviewProvider {
+  static var previews: some View {
+    MultipleChoice(question: SurveyQuestion(
+      questionType: .multipleChoice,
+      questionText: "Which of the following features do you find most useful?",
+      options: ["Fast Delivery", "Easy Returns", "Wide Product Range"]
+    ))
   }
 }

@@ -14,9 +14,6 @@ struct SurveyView: View {
     NavigationView {
       ScrollView {
         VStack(alignment: .leading) {
-          Text(survey.title)
-            .font(.headline)
-            .padding(.bottom, 1)
           Text(survey.description)
             .font(.subheadline)
             .padding(.bottom)
@@ -29,12 +26,24 @@ struct SurveyView: View {
               ScaleQuestion(question: question)
             case .multipleChoice:
               MultipleChoice(question: question)
-            }
-          }
-        } .padding(8)
-      }
+            } // Case
+          } // For
+          
+          HStack {
+            Spacer()
+            SendButton()
+            Spacer()
+          } // HStack
+          .frame(maxWidth: .infinity)
+          .padding()
+          
+        } //VStack
+        .padding([.leading, .trailing])
+        
+      } // ScrollView
       .navigationBarTitle(Text(survey.title))
-    }
+      
+    } // Navigation View
   }
 }
 

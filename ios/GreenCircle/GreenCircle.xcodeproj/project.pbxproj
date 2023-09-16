@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		691036E52AB414130086C2C8 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691036E42AB414130086C2C8 /* HomeView.swift */; };
 		691036E72AB416500086C2C8 /* SecondView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691036E62AB416500086C2C8 /* SecondView.swift */; };
+		697A8EB42AB5232E00D260EE /* SendBotton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697A8EB32AB5232E00D260EE /* SendBotton.swift */; };
 		699074992AB3745B0049B36D /* SurveyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699074982AB3745B0049B36D /* SurveyModel.swift */; };
 		69F112DA2AB25A570067AC61 /* SurveyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F112D92AB25A570067AC61 /* SurveyView.swift */; };
 		69F112DF2AB267F80067AC61 /* OpenQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F112DE2AB267F80067AC61 /* OpenQuestion.swift */; };
@@ -50,6 +51,7 @@
 /* Begin PBXFileReference section */
 		691036E42AB414130086C2C8 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		691036E62AB416500086C2C8 /* SecondView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondView.swift; sourceTree = "<group>"; };
+		697A8EB32AB5232E00D260EE /* SendBotton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendBotton.swift; sourceTree = "<group>"; };
 		699074982AB3745B0049B36D /* SurveyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyModel.swift; sourceTree = "<group>"; };
 		69F112D92AB25A570067AC61 /* SurveyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyView.swift; sourceTree = "<group>"; };
 		69F112DE2AB267F80067AC61 /* OpenQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenQuestion.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				69F112DE2AB267F80067AC61 /* OpenQuestion.swift */,
 				69F112E62AB2C9B00067AC61 /* ScaleQuestion.swift */,
 				69F112E82AB2C9F10067AC61 /* MultipleChoice.swift */,
+				697A8EB32AB5232E00D260EE /* SendBotton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -419,6 +422,7 @@
 				6C4452B82AA6EF8500BE5930 /* GreenCircleApp.swift in Sources */,
 				69F112DA2AB25A570067AC61 /* SurveyView.swift in Sources */,
 				69F112E72AB2C9B00067AC61 /* ScaleQuestion.swift in Sources */,
+				697A8EB42AB5232E00D260EE /* SendBotton.swift in Sources */,
 				69F112E52AB2C8F80067AC61 /* SampleSurveyData.swift in Sources */,
 				699074992AB3745B0049B36D /* SurveyModel.swift in Sources */,
 				69F112E92AB2C9F10067AC61 /* MultipleChoice.swift in Sources */,
@@ -581,7 +585,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"GreenCircle/Preview Content\"";
-				DEVELOPMENT_TEAM = 3YA9576WH5;
+				DEVELOPMENT_TEAM = 2ZB58A48UM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -610,7 +614,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"GreenCircle/Preview Content\"";
-				DEVELOPMENT_TEAM = 3YA9576WH5;
+				DEVELOPMENT_TEAM = 2ZB58A48UM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
