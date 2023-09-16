@@ -10,47 +10,58 @@ import SwiftUI
 
 struct EcoInfoView: View {
   @State var isPressedSeeMore: [Int: Bool] = [:]
+  @StateObject var ecoInfoViewModel = EcoInfoViewModel()
 
   var body: some View {
     NavigationStack {
       ScrollView {
         LazyVStack {
-          ForEach(1...5, id: \.self) { localKey in
-            EcoInfoCard(isPressedSeeMore: $isPressedSeeMore, keyInt: localKey)
+          ForEach(ecoInfoViewModel.ecoInfoArray, id: \.ecoinfoId) { ecoInfo in
+            EcoInfoCard(isPressedSeeMore: $isPressedSeeMore, ecoInfo: ecoInfo)
           }
         }
-      }.navigationTitle("Eco-Info")
+      }.navigationTitle("Últimas noticias")
+    }.onAppear {
+      Task {
+        await ecoInfoViewModel.fetchAllEcoInfo()
+      }
     }
   }
 }
 
 struct EcoInfoCard: View {
   @Binding var isPressedSeeMore: [Int: Bool]
-  let keyInt: Int
+  let ecoInfo: EcoInfo
   var body: some View {
     ZStack {
       VStack {
-        Image(systemName: "star.fill")
-          .resizable()
-          .foregroundColor(.gray)
-          .frame(width: 150, height: 150)
-          .padding()
+        AsyncImage(url: URL(string: ecoInfo.coverImage ?? "")) { image in
+          image
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .cornerRadius(10)
+        } placeholder: {
+          ProgressView().frame(width: 150, height: 150)
+        }
         HStack {
-          VStack {
-            Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non scelerisque ligula.")
-              .font(.system(size: 12))
-          }.padding()
-          VStack(alignment: .trailing) {
-            Text("Ver más")
-              .font(.system(size: 12))
-              .foregroundColor(isPressedSeeMore[keyInt] == true ? .black : .blue)
-              .onTapGesture {
-                for (key, _) in (isPressedSeeMore.filter { $0.key != keyInt }) {
-                  isPressedSeeMore[key] = false
-                }
-                isPressedSeeMore[keyInt] = true
+          VStack(alignment: .leading) {
+            let regexPattern = "[.!?\\s\\p{Emoji}]"
+            if let ecoText = ecoInfo.description, ecoText.count > 75 {
+              let limitedText = String(ecoText.prefix(150))
+              Text("\(limitedText) ")
+                  .font(.system(size: 12))
+              Text("Ver más...")
+                .font(.system(size: 12))
+                .foregroundColor(.blue)
+                .onTapGesture {
+                  if let url = URL(string: ecoInfo.postLink) {
+                    UIApplication.shared.open(url)
+                  }
+                }.frame(maxWidth: .infinity, alignment: .trailing)
+            } else {
+              Text(ecoInfo.description ?? "").font(.system(size: 12))
             }
-          }
+          }.padding()
         }
       }
     }.frame(maxWidth: 344)

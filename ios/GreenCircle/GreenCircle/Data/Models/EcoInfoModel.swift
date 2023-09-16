@@ -7,11 +7,16 @@
 
 import Foundation
 
-struct EcoInfo: Codable {
-  var ecoInfoId: UUID
+struct EcoInfo: Codable, Hashable {
+  var ecoinfoId: UUID
   var postId: String
-  var coverImageUrl: String?
+  var postLink: String
+  var coverImage: String?
   var description: String?
   var createdAt: String
   var updatedAt: String
+}
+
+struct EcoInfoContainer: Codable, Hashable {
+  var ecoInfos: [EcoInfo]?
 }

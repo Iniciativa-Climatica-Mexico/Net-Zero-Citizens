@@ -20,6 +20,7 @@
 		6CB498242AB0DECC00B6560C /* PaginatedQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB498232AB0DECC00B6560C /* PaginatedQuery.swift */; };
 		6CB498272AB0E07600B6560C /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 6CB498262AB0E07600B6560C /* Alamofire */; };
 		6CB4982A2AB0FAA400B6560C /* CustomDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB498292AB0FAA400B6560C /* CustomDateFormatter.swift */; };
+		C417D9AC2AB538AB00B80B85 /* EcoInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C417D9AB2AB538AB00B80B85 /* EcoInfoViewModel.swift */; };
 		C483FD832AB39F7100A9E85A /* EcoInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483FD822AB39F7100A9E85A /* EcoInfoModel.swift */; };
 		C483FD852AB3A12500A9E85A /* BibliographiesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483FD842AB3A12500A9E85A /* BibliographiesModel.swift */; };
 		C483FD872AB3A34500A9E85A /* EcoInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483FD862AB3A34500A9E85A /* EcoInfoRepository.swift */; };
@@ -60,6 +61,7 @@
 		6C9761862AB2B65C0046DB50 /* DummyRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyRepository.swift; sourceTree = "<group>"; };
 		6CB498232AB0DECC00B6560C /* PaginatedQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginatedQuery.swift; sourceTree = "<group>"; };
 		6CB498292AB0FAA400B6560C /* CustomDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDateFormatter.swift; sourceTree = "<group>"; };
+		C417D9AB2AB538AB00B80B85 /* EcoInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoInfoViewModel.swift; sourceTree = "<group>"; };
 		C483FD822AB39F7100A9E85A /* EcoInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoInfoModel.swift; sourceTree = "<group>"; };
 		C483FD842AB3A12500A9E85A /* BibliographiesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibliographiesModel.swift; sourceTree = "<group>"; };
 		C483FD862AB3A34500A9E85A /* EcoInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoInfoRepository.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 		6C4452E62AA6F08F00BE5930 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				C417D9AB2AB538AB00B80B85 /* EcoInfoViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -415,6 +418,7 @@
 				6C4452BA2AA6EF8500BE5930 /* ContentView.swift in Sources */,
 				6C9761872AB2B65C0046DB50 /* DummyRepository.swift in Sources */,
 				6C4452B82AA6EF8500BE5930 /* GreenCircleApp.swift in Sources */,
+				C417D9AC2AB538AB00B80B85 /* EcoInfoViewModel.swift in Sources */,
 				C483FD892AB3A58E00A9E85A /* fetchAllEcoInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

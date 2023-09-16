@@ -7,19 +7,19 @@
 
 import Foundation
 
-protocol FetchAllEcoInfoUseCase {
-  func fetchAllEcoInfo() async -> PaginatedQuery<EcoInfo>?
+protocol FetchAllEcoInfoUseProtocol {
+  func fetchAllEcoInfo() async -> [EcoInfo]?
 }
 
-class FetchAllEcoInfoUseCaseImpl: FetchAllEcoInfoUseCase {
+class FetchAllEcoInfoUseCase: FetchAllEcoInfoUseProtocol {
   let ecoInfoRepository: EcoInfoRepository
 
-  static let shared = FetchAllEcoInfoUseCaseImpl()
+  static let shared = FetchAllEcoInfoUseCase()
   init(ecoInfoRepository: EcoInfoRepository = EcoInfoRepository.shared) {
     self.ecoInfoRepository = ecoInfoRepository
   }
 
-  func fetchAllEcoInfo() async -> PaginatedQuery<EcoInfo>? {
+  func fetchAllEcoInfo() async -> [EcoInfo]? {
     return await ecoInfoRepository.fetchAllEcoInfo()
   }
 }
