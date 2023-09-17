@@ -16,3 +16,5 @@ export type PaginatedQuery<T> = {
   rows: T[]
   count: number
 }
+
+export type DeepPartial<T> = Partial<{ [P in keyof T]: DeepPartial<T[P]> }>
