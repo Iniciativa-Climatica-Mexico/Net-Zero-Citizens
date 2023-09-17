@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		654B58C12AB7ACD600057880 /* UpdateUserDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654B58C02AB7ACD600057880 /* UpdateUserDataUseCase.swift */; };
 		657A83462AB652F90022F62C /* CustomDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657A83452AB652F90022F62C /* CustomDateFormatter.swift */; };
 		657A83492AB670E30022F62C /* LocalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657A83482AB670E30022F62C /* LocalService.swift */; };
 		6C4452B82AA6EF8500BE5930 /* GreenCircleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4452B72AA6EF8500BE5930 /* GreenCircleApp.swift */; };
@@ -49,6 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		654B58C02AB7ACD600057880 /* UpdateUserDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserDataUseCase.swift; sourceTree = "<group>"; };
 		657A83452AB652F90022F62C /* CustomDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDateFormatter.swift; sourceTree = "<group>"; };
 		657A83482AB670E30022F62C /* LocalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalService.swift; sourceTree = "<group>"; };
 		6C4452B42AA6EF8500BE5930 /* GreenCircle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GreenCircle.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -238,6 +240,7 @@
 			isa = PBXGroup;
 			children = (
 				B3827F002AACF9A800AC7213 /* FetchUserDataUseCase.swift */,
+				654B58C02AB7ACD600057880 /* UpdateUserDataUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -408,6 +411,7 @@
 				6C4452BA2AA6EF8500BE5930 /* ContentView.swift in Sources */,
 				B34AC9A82AA93C7500CE97AF /* Example2View.swift in Sources */,
 				B35DBF342AB27A93006C4BB2 /* ProfileInformationView.swift in Sources */,
+				654B58C12AB7ACD600057880 /* UpdateUserDataUseCase.swift in Sources */,
 				657A83462AB652F90022F62C /* CustomDateFormatter.swift in Sources */,
 				B3E8EDDA2AA91E170050B051 /* TitleBarView.swift in Sources */,
 				B3827F012AACF9A800AC7213 /* FetchUserDataUseCase.swift in Sources */,

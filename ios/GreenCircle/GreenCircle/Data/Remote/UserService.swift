@@ -69,8 +69,13 @@ class UserService {
     func UpdateUserData(url: URL, updatedUserData: User) async -> User? {
         do {
             let requestData = try JSONEncoder().encode(updatedUserData)
-
-            let taskRequest = AF.request(url, method: .put, parameters: nil, encoding: JSONEncoding.default, headers: headers).validate()
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "PUT"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = requestData
+            
+            let taskRequest = AF.request(request).validate()
             taskRequest.uploadProgress { progress in
                 print("Upload Progress: \(progress.fractionCompleted)")
             }
@@ -100,6 +105,7 @@ class UserService {
             return nil
         }
     }
+
 
 
         // Update user credentials

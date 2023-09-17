@@ -12,28 +12,6 @@ import Company from './company.model'
 import Review from './review.model'
 import Role from './role.model'
 
-/**
- * @interface User
- * @description User interface
- * @param {string} userId - The user's id
- * @param {number} roleId - The user's role id
- * @param {number} companyId - The user's company id
- * @param {number} googleId - The user's google id
- * @param {number} facebookId - The user's facebook id
- * @param {number} appleId - The user's apple id
- * @param {string} firstName - The user's first name
- * @param {string} lastName - The user's last name
- * @param {string} secondLastName - The user's second last name
- * @param {string} email - The user's email
- * @param {string} password - The user's password
- * @param {string} phoneNumber - The user's phone number
- * @param {number} age - The user's age
- * @param {string} state - The user's state
- * @param {enum} sex - The user's sex
- * @param {string} profilePicture - The user's profile picture url
- * @param {date} createdAt - The user's creation date
- * @param {date} updatedAt - The user's update date
- */
 
 /**
  * @brief

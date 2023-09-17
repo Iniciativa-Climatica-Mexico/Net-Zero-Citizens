@@ -5,35 +5,13 @@
 //  Created by Frida Bailleres on 07/09/23.
 //
 
-//import Foundation
-//
-//class ProfileViewModel: ObservableObject {
-//
-//    private let fetchUserDataUseCase: FetchUserDataUseCase
-//
-//    @Published var user: User?
-//    @Published var error: Error?
-//
-//    init(fetchUserDataUseCase: FetchUserDataUseCase) {
-//        self.fetchUserDataUseCase = fetchUserDataUseCase
-//    }
-//
-//    func fetchUserData() {
-//        fetchUserDataUseCase.execute { user, error in
-//            DispatchQueue.main.async {
-//                self.user = user
-//                self.error = error
-//            }
-//        }
-//    }
-//}
-
 import Foundation
 
 /// Implementación de view model de modelo de Compañía
 class UserViewModel: ObservableObject {
     /// Caso de uso para hacer fetch de los datos de compañía
     private let fetchUserInfoUseCase: FetchUserInfoUseCase
+    private let updateUserDataUseCase: UpdateUserDataUseCaseProtocol
     
     /// La compañía puede cambiar en la vista (se construye .onAppear())
     @Published var contentUser: User = User(
@@ -57,27 +35,35 @@ class UserViewModel: ObservableObject {
         updatedAt: Date()
         )
     /// Para implementar el caso de uso en la vista que llame al ViewModel Compañía
-    init(fetchUserInfoUseCase: FetchUserInfoUseCase = FetchUserInfoUseCaseImpl.shared) {
+    init(
+        fetchUserInfoUseCase: FetchUserInfoUseCase = FetchUserInfoUseCaseImpl.shared,
+        updateUserDataUseCase: UpdateUserDataUseCaseProtocol = UpdateUserDataUseCase()
+    ) {
         self.fetchUserInfoUseCase = fetchUserInfoUseCase
+        self.updateUserDataUseCase = updateUserDataUseCase
     }
+
     @MainActor
     /// Obtener información de la compañía mediante el caso de uso
     /// Actualización de la compañía si existe el UUID en base de datos
     
-//    func fetchUserById(idUser: String) async {
-//        let resultUser = await fetchUserInfoUseCase.fetchUserById(id: idUser)
-//        if let resultUser = resultUser {
-//            contentUser = resultUser
-//        }
-//    }
-    
     func fetchUserById(idUser: String) async {
         let resultUser = await fetchUserInfoUseCase.fetchUserById(id: idUser)
         if let resultUser = resultUser {
-            print("Usuario recibido: \(resultUser)") // Añade esto para ayudarte a depurar
+            print("Usuario recibido: \(resultUser)")
             contentUser = resultUser
         } else {
             print("No se pudo obtener el usuario")
         }
     }
+    
+    func updateUserData(updatedUserData: User, userId: String) async {
+            let resultUser = await updateUserDataUseCase.execute(updatedUserData: updatedUserData, userId: userId)
+            if let resultUser = resultUser {
+                print("Usuario actualizado: \(resultUser)")
+                contentUser = resultUser
+            } else {
+                print("No se pudo actualizar el usuario")
+            }
+        }
 }

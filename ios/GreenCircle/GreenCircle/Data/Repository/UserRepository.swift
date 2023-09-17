@@ -53,4 +53,13 @@ class UserRepository: UserAPIProtocol {
     func fetchUserById(userId: String) async -> User? {
         return await backEndService.fetchUserById(url: URL(string: "\(ApiUser.base)/\(ApiUser.Routes.user)/\(userId)")!)
       }
+    
+    func updateUserData(updatedUserData: User, userId: String) async -> User? {
+        return await backEndService.UpdateUserData(url: URL(string: "\(ApiUser.base)/\(ApiUser.Routes.user)/\(userId)")!, updatedUserData: updatedUserData)
+    }
+
+//        // Update user credentials
+//        func UpdateUserCredentials(userId: String, newUserCredentials: Credentials) async -> User? {
+//            return await backEndService.UpdateUserCredentials(userId: userId, newUserCredentials: newUserCredentials)
+//        }
 }
