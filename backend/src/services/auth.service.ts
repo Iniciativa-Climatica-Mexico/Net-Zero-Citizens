@@ -14,7 +14,8 @@ export type Payload = {
   last_name: string,
   uuid: string,
   email: string,
-  roles: string[],
+  picture?: string,
+  roles: string,
   googleId?: string,
   login_type?: string,
   created_at?: number,
@@ -27,6 +28,12 @@ export type Payload = {
 export type TokenPair = {
   authToken: string, 
   refreshToken: string
+}
+
+export type AuthResponse = {
+  tokens?: TokenPair | null,
+  user?: Payload | null,
+  error?: string | null
 }
 
 /**
@@ -64,41 +71,47 @@ const blackListToken = async (tokenId: string): Promise<void> => {
  * @brief
  * Función iniciar sesión con Google
  * @param googleToken token de Google con la información del usuario
- * @returns {authToken, refreshToken} objeto con los tokens generados
+ * @returns {authToken, refreshToken, user} objeto con los tokens generados
 */
-export const googleLogin = async (googleToken: string): Promise<TokenPair | null> => {
+export const googleLogin = async (googleToken: string): Promise<AuthResponse | null> => {
   // Verificar el token de Google
-  // const data = await verifyGoogleToken(googleToken)
-  // if(!data) return null
+  try {
+    const data = await verifyGoogleToken(googleToken)
+    if(!data) return null
 
-  const emailFromGoogleDummy = 'john.doe@example.com'
-  const user = await UserService.getUserByEmailWithRole(emailFromGoogleDummy)
+    const user = await UserService.getUserByEmailWithRole(data.email)
 
-  // TODO Registrar cliente
-  if(!user) console.log('Register user')
+    // TODO Registrar cliente
+    if(!user) console.log('Register user')
 
-  // Si ya está registrado, crear un Payload con la información del usuario
-  const dummyUser: Payload = {
-    first_name: '',
-    last_name:  '',
-    uuid: '',
-    email: '',
-    login_type: 'google',
-    roles: [],
-    googleId: googleToken
+    // Si ya está registrado, crear un Payload con la información del usuario
+    const userPayload: Payload = {
+      first_name: '',
+      last_name:  '',
+      uuid: '',
+      email: '',
+      login_type: 'google',
+      picture: data.picture,
+      roles: '',
+    }
+    if(user) {
+      userPayload.first_name = user.firstName
+      userPayload.last_name = user.lastName
+      userPayload.uuid = user.userId
+      userPayload.email = user.email
+      userPayload.roles = user.role.dataValues.NAME
+    }
+
+    const tokens = await createTokens(userPayload)
+    if(!tokens) return null
+
+    return {
+      tokens: tokens,
+      user: userPayload
+    }
+  } catch(error) {
+    return null
   }
-  if(user) {
-    dummyUser.first_name = user.firstName
-    dummyUser.last_name = user.lastName
-    dummyUser.uuid = user.userId
-    dummyUser.email = user.email
-    dummyUser.roles.push(user.role.dataValues.NAME)
-  }
-  
-  const tokens = await createTokens(dummyUser)
-  if(!tokens) return null
-
-  return tokens
 }
 
 /**
@@ -204,22 +217,31 @@ export const verifyToken = (token: string, type: TokenType): Payload | null => {
  * @param token Token a verificar
  * @returns Payload con la información del token
 */
-export const verifyGoogleToken = async(token: string): Promise<Payload> => {
-  const ticket = await client.verifyIdToken({
-    idToken: token,
-    audience: process.env.GOOGLE_CLIENT_ID,
-  })
+export const verifyGoogleToken = async(token: string): Promise<Payload | null> => {
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    })
 
-  const payload = ticket.getPayload()
+    const payload = ticket.getPayload()
 
-  if(!payload) throw new Error('Invalid Google token')
+    if(!payload) throw new Error('Invalid Google token')
 
-  return {
-    first_name: payload.given_name!,
-    last_name: payload.family_name!,
-    uuid: payload.sub!,
-    email: payload.email!,
-    roles: [],
-    login_type: 'google'
+    console.log(payload)
+
+    return {
+      first_name: payload.given_name!,
+      last_name: payload.family_name!,
+      uuid: payload.sub!,
+      email: payload.email!,
+      picture: payload.picture!,
+      roles: 'CUSTOMER_ROLE_ID',
+      login_type: 'google',
+      googleId: payload.sub!
+    }
+  } catch(error) {
+    console.log(error)
+    return null
   }
 }

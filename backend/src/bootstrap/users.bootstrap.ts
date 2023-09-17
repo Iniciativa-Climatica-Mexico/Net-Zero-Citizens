@@ -26,6 +26,17 @@ export default class UserBootstrap extends Bootstrapper {
         gender: 'femenine',
         roleId: 'CUSTOMER_ROLE_ID',
       },
+      {
+        userId: 'abcd-1234-efgh-1902',
+        firstName: 'Sergio',
+        lastName: 'Garnica González',
+        email: 'a01704025@tec.mx',
+        phoneNumber: '4424396065',
+        age: 22,
+        state: 'QRO',
+        gender: 'masculine',
+        roleId: 'ADMIN_ROLE_ID',
+      },
     ])
   }
 }

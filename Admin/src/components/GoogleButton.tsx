@@ -7,7 +7,9 @@ const GoogleButton = () => {
       onClick={() => signIn("google")}
     >
       <GoogleLogo />
-      <div>Sign in with Google</div>
+      <div>   
+        Sign in with Google  
+      </div>
     </button>
   );
 };

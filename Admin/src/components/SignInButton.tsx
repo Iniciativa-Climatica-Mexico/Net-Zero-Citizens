@@ -2,6 +2,7 @@
 import React from 'react'
 
 import {signIn,signOut,useSession} from "next-auth/react"
+import GoogleButton from "../components/GoogleButton";
 
 const SignInButton = () => {
     const {data: session} = useSession();
@@ -20,7 +21,7 @@ const SignInButton = () => {
      }
   return  (
     <button onClick={() => signIn()} className="text-green-600 ml-auto">
-        Sign In
+        <GoogleButton/>
     </button>
   )
   
