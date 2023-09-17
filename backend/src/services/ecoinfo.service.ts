@@ -92,7 +92,6 @@ const updateEcoInfo = async (data: EcoInfoApiModel) => {
           description,
           postLink,
         }
-        console.log(tempEcoInfoTemplate)
         return Ecoinfo.create(tempEcoInfoTemplate)
       }
     })

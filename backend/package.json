@@ -5,7 +5,7 @@
     "start": "yarn build && node .dist/index.js",
     "build": "tsc",
     "dev": "nodemon index.ts",
-    "test": "ts-mocha test/**/*.spec.ts"
+    "test": "ts-mocha test/**/*.spec.ts -r dotenv/config"
   },
   "devDependencies": {
     "@types/chai": "^4.3.6",

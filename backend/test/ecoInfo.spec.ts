@@ -10,7 +10,7 @@ const { expect } = chai
 
 const testData = [
   {
-    ecoinfoId: 'eco-1234-efgh-0000',
+    ecoinfoId: '550e8400-e29b-41d4-a716-446655440000',
     postId: 'post-1234-efgh-0000',
     postLink: 'https://www.facebook.com/iniciativaclima',
     coverImage:
@@ -19,7 +19,7 @@ const testData = [
       '59% de los municipios de México sean sumamente vulnerables al cambio climático. Ruta Emisiones Netas Cero una propuesta que busca guiar las acciones de México y alcanzar el “cero neto” en 2050.',
   },
   {
-    ecoinfoId: 'eco-1234-efgh-0001',
+    ecoinfoId: 'f47ac10b-58cc-4372-a567-0e02b2c3d479',
     postId: 'post-1234-efgh-0001',
     postLink: 'https://www.facebook.com/iniciativaclima',
     coverImage:
@@ -28,7 +28,7 @@ const testData = [
       '!!AUMENTA pobreza energética en la República mexicana; 45 mil localidades carecen de energía. ☀️',
   },
   {
-    ecoinfoId: 'eco-1234-efgh-0002',
+    ecoinfoId: 'a1b2c3d4-e5f6-7890-a1b2-3456789cdef0',
     postId: 'post-1234-efgh-0002',
     postLink: 'https://www.facebook.com/iniciativaclima',
     coverImage:
@@ -37,7 +37,7 @@ const testData = [
       'La arquitectura regenerativa representa la posibilidad de repensar los espacios comunes y comprender que los territorios, son sistemas que incluyen lo geológico, orográfico, hidrológico, biológico y, también, lo comunitario y cultural. ',
   },
   {
-    ecoinfoId: 'eco-1234-efgh-0003',
+    ecoinfoId: '9e10f11a-12b3-45c6-d7e8-9f0123456789',
     postId: 'post-1234-efgh-0003',
     postLink: 'https://www.facebook.com/iniciativaclima',
     coverImage:
@@ -48,11 +48,8 @@ const testData = [
 ]
 
 before(async () => {
+  await db.drop()
   await initDB()
-})
-
-after(async () => {
-  await db.close()
 })
 
 describe('Ecoinfo', () => {
