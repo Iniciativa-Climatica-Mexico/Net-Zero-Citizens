@@ -9,7 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.greencircle.R
 import com.greencircle.framework.viewmodel.CreateUserViewModel
 
@@ -56,6 +56,7 @@ class CreateUserFragment : Fragment() {
         setTexts(arguments, view)
 
         onSubmitListener(view)
+        onSubmitHandler(view)
 
         return view
     }
@@ -98,15 +99,28 @@ class CreateUserFragment : Fragment() {
      * @param view La vista raíz del fragmento "CreateUserFragment".
      */
     private fun onSubmitHandler(view: View) {
-        val phoneNumberEditText: TextInputEditText = view.findViewById(R.id.user_phone_number)
-        val ageEditText: TextInputEditText = view.findViewById(R.id.user_age)
+        val phoneInputLayout: TextInputLayout = view.findViewById(R.id.userPhoneTextField)
+        val ageInputLayout: TextInputLayout = view.findViewById(R.id.userAgeTextFIeld)
+        val stateInputLayout: TextInputLayout = view.findViewById(R.id.userStateTextField)
+        val genderInputLayout: TextInputLayout = view.findViewById(R.id.userGenderTextField)
+
+        val phone = phoneInputLayout.editText?.text.toString()
+        val age = ageInputLayout.editText?.text.toString()
+        val state = stateInputLayout.editText?.text.toString()
+        val gender = genderInputLayout.editText?.text.toString()
+
+        Log.d("CreateUserFragment", "Send data to backend")
+        Log.d("CreateUserFragment", "Phone: $phone")
+        Log.d("CreateUserFragment", "Age: $age")
+        Log.d("CreateUserFragment", "State: $state")
+        Log.d("CreateUserFragment", "Gender: $gender")
     }
 
     /**
      * Establece los textos en la vista con datos proporcionados en los argumentos.
      *
-     * Esta función se encarga de obtener referencias a las vistas TextView dentro de la vista proporcionada y
-     * establecer los textos con los valores obtenidos de los argumentos.
+     * Esta función se encarga de obtener referencias a las vistas TextView dentro de la vista
+     * proporcionada y establecer los textos con los valores obtenidos de los argumentos.
      *
      * @param arguments Un Bundle  que contiene la información de la cuenta de Google.
      * @param view La vista del "CreateUserFragment"
