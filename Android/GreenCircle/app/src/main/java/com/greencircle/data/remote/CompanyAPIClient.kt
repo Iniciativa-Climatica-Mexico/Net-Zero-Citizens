@@ -1,15 +1,17 @@
 package com.greencircle.data.remote
 
 import android.util.Log
-import com.greencircle.data.remote.models.Company
 
 class CompanyAPIClient {
     private lateinit var api: CompanyAPIService
 
     class CompanyAPIClient()
 
-    suspend fun createCompany(company: Company): CompanyAPIService.CreateCompanyResponse? {
-        api = CompanyNetworkModel()
+    suspend fun createCompany(
+        company: CompanyAPIService.CreateCompanyRequest,
+        authToken: String
+    ): CompanyAPIService.CreateCompanyResponse? {
+        api = CompanyNetworkModel(authToken)
         Log.d("CreateCompany", "Fetching data from API")
         return try {
             val response = api.createCompany(company)

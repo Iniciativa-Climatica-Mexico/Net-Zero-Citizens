@@ -11,6 +11,10 @@ interface CompanyAPIService {
         val error: String?
     )
 
+    data class CreateCompanyRequest(
+        val company: Company
+    )
+
     @POST("company/create")
-    suspend fun createCompany(@Body request: Company): CreateCompanyResponse
+    suspend fun createCompany(@Body request: CreateCompanyRequest): CreateCompanyResponse
 }

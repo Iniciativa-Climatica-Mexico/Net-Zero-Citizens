@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.greencircle.data.remote.CompanyAPIService
 import com.greencircle.data.remote.models.AuthResponse
-import com.greencircle.data.remote.models.Company
 import com.greencircle.domain.model.CreateCompanyRequirement
 import com.greencircle.domain.usecase.GoogleAuthRequirement
 import kotlinx.coroutines.Dispatchers
@@ -38,9 +37,10 @@ class CreateCompanyViewModel : ViewModel() {
         }
     }
 
-    fun createCompany(company: Company) {
+    fun createCompany(company: CompanyAPIService.CreateCompanyRequest, authToken: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val result: CompanyAPIService.CreateCompanyResponse? = createCompanyRequirement(company)
+            val result: CompanyAPIService.CreateCompanyResponse? =
+                createCompanyRequirement(company, authToken)
             Log.d("CreateCompanyViewModel", result.toString())
         }
     }
