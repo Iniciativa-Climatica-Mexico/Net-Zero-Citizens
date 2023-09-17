@@ -49,6 +49,7 @@ export const createCompany: RequestHandler<
   NoRecord
   > = async (req, res) => {
     try {
+      console.log(req.body)
       if(!req.body.company) res.status(400).json({ companyId: '', error: 'Missing company data'})
       const company = req.body.company
       const newCompany = await CompanyService.createCompany(company)    
