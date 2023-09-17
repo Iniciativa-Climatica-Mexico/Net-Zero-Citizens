@@ -20,7 +20,7 @@ export type UserType = {
   secondLastName?: string | null,
   email: string,
   password?: string | null,
-  phoneNumber: string,
+  phoneNumber: string | null,
   age: number,
   state: string,
   gender: string,

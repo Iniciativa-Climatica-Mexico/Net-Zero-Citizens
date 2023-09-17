@@ -13,6 +13,7 @@ class AuthAPIClient {
         return try {
             val body = AuthAPIService.GoogleLoginRequest(token)
             val response = api.googleLogin(body)
+            Log.d("CreateCompany", "Response: $response")
             response
         } catch (e: Exception) {
             e.printStackTrace()
