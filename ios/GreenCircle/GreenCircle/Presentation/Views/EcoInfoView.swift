@@ -15,12 +15,21 @@ struct EcoInfoView: View {
   var body: some View {
     NavigationStack {
       ScrollView {
+        VStack(alignment: .leading) {
+          HStack {
+            Text("Últimas noticias")
+              .font(.system(size: 25))
+              .foregroundColor(Color("MainText")).bold()
+            Spacer()
+          }.padding(EdgeInsets(top: 17, leading: 15, bottom: 7, trailing: 0))
+        }
         LazyVStack {
           ForEach(ecoInfoViewModel.ecoInfoArray, id: \.ecoinfoId) { ecoInfo in
             EcoInfoCard(isPressedSeeMore: $isPressedSeeMore, ecoInfo: ecoInfo)
           }
         }.padding(.top, 8)
-      }.navigationTitle("Últimas noticias")
+      }.navigationTitle("Eco Info")
+        .navigationBarTitleDisplayMode(.inline)
     }.onAppear {
       Task {
         await ecoInfoViewModel.fetchAllEcoInfo()
