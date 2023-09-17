@@ -156,7 +156,6 @@ export const closeSurvey = async (surveyId: string): Promise<Survey | null> => {
 }
 
 export const answerSurveyBodyScheme = z.object({
-  surveyId: z.string(),
   answers: z.array(
     z.object({
       questionId: z.string(),
@@ -167,7 +166,7 @@ export const answerSurveyBodyScheme = z.object({
 })
 
 export type AnswerSurveyReqBody = z.infer<typeof answerSurveyBodyScheme>
-type FullAnswers = AnswerSurveyReqBody & { userId: string }
+type FullAnswers = AnswerSurveyReqBody & { userId: string, surveyId: string } 
 
 export const answerSurvey = async (answers: FullAnswers): Promise<Answer[]> => {
   const processedAnswers = answers.answers.map((a) => {
