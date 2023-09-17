@@ -106,13 +106,18 @@ export const updateUserInfo: RequestHandler<
   UserService.UpdateUserInfoBody
 > = async (req, res) => {
   const userId = req.params.userId
-  const userInfo = await UserService.getUserInfo(userId)
+  try {
+    const userInfo = await UserService.getUserInfo(userId)
 
-  if (userInfo) {
-    await UserService.updateUserInfo(userId, req.body)
-    res.status(201).json({ message: 'User updated' })
-  } else {
-    res.status(404).json({ message: 'User not found' })
+    if (userInfo) {
+      await UserService.updateUserInfo(userId, req.body)
+      res.status(201).json({ message: 'User updated' })
+    } else {
+      res.status(404).json({ message: 'User not found' })
+    }
+  } catch(error) {
+    console.log(error)
+    res.status(400).json({ message: 'Error updating user' })
   }
 }
 
@@ -122,18 +127,24 @@ export const updateUserCredentials: RequestHandler<
   UserService.UpdateUserCredentials
 > = async (req, res) => {
   const userId = req.params.userId
-  const userInfo = await UserService.getUserInfo(userId)
 
-  if (!userId || !userInfo) {
-    res.status(400).json({ message: 'User not found' })
-    return
-  }
+  try {
+    const userInfo = await UserService.getUserInfo(userId)
+    
+    if (!userId || !userInfo) {
+      res.status(400).json({ message: 'User not found' })
+      return
+    }
 
-  if (userInfo) {
-    await UserService.updateUserCredentials(userId, req.body)
-    res.status(201).json({ message: 'User credentials updated' })
-  } else {
-    res.status(404).json({ message: 'User not found' })
+    if (userInfo) {
+      await UserService.updateUserCredentials(userId, req.body)
+      res.status(201).json({ message: 'User credentials updated' })
+    } else {
+      res.status(404).json({ message: 'User not found' })
+    }
+  } catch (error) {
+    console.log(error)
+    res.status(400).json({ message: 'Error updating user credentials' })
   }
 }
 
