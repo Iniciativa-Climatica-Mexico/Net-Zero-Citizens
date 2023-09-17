@@ -8,25 +8,74 @@
 import Foundation
 
 let sampleSurvey: SurveyModel = SurveyModel(
+  
+  surveyId: "surv-012",
   title: "Customer Feedback",
   description: "Please provide feedback on our services.",
   questions: [
-    SurveyQuestion(questionType: .open, questionText: "What did you like about our service?", options: nil),
-    SurveyQuestion(questionType: .scale, questionText: "Rate our website usability from 1 to 5 (1 being the worst, 5 being the best).", options: nil),
     SurveyQuestion(
-      questionType: .multipleChoice,
-      questionText: "Which of the following features do you find most useful?",
-      options: ["Fast Delivery", "Easy Returns", "Wide Product Range"]
+      questionId: "qst-001",
+      questionOptions: [],
+      questionText: "What did you like about our service?",
+      questionType: .open,
+      isRequired: true
     ),
-    SurveyQuestion(questionType: .open, questionText: "Any additional comments or suggestions?", options: nil),
     SurveyQuestion(
-      questionType: .multipleChoice,
-      questionText: "Which of the following features do you find most useful?",
-      options: ["5", "w Returns", "w w Range"]
+      questionId: "qst-002",
+      questionOptions: [],
+      questionText: "Rate our website usability from 1 to 5 (1 being the worst, 5 being the best).",
+      questionType: .scale,
+      isRequired: true
     ),
-    SurveyQuestion(questionType: .open, questionText: "What did you like about our service?", options: nil),
-    SurveyQuestion(questionType: .open, questionText: "What did you like about our service?", options: nil),
-    SurveyQuestion(questionType: .scale, questionText: "Rate our website usability from 1 to 5 (1 being the worst, 5 being the best).", options: nil)
+    SurveyQuestion(
+      questionId: "qst-003",
+      questionOptions: [
+        QuestionOption(questionOptionId: "opt-001", textOption: "Fast Delivery"),
+        QuestionOption(questionOptionId: "opt-002", textOption: "Easy Returns"),
+        QuestionOption(questionOptionId: "opt-003", textOption: "Wide Product Range"),
+      ],
+      questionText: "Which of the following features do you find most useful?",
+      questionType: .multiple_choice,
+      isRequired: false
+    ),
+    SurveyQuestion(
+      questionId: "qst-004",
+      questionOptions: [],
+      questionText: "Any additional comments or suggestions?",
+      questionType: .open,
+      isRequired: false
+    ),
+    SurveyQuestion(
+      questionId: "qst-005",
+      questionOptions: [
+        QuestionOption(questionOptionId: "opt-004", textOption: "5"),
+        QuestionOption(questionOptionId: "opt-005", textOption: "w Returns"),
+        QuestionOption(questionOptionId: "opt-006", textOption: "w w Range"),
+      ],
+      questionText: "Which of the following features do you find most useful?",
+      questionType: .multiple_choice,
+      isRequired: false
+    ),
+    SurveyQuestion(
+      questionId: "qst-006",
+      questionOptions: [],
+      questionText: "What did you like about our service?",
+      questionType: .open,
+      isRequired: true
+    ),
+    SurveyQuestion(
+      questionId: "qst-007",
+      questionOptions: [],
+      questionText: "What did you like about our service?",
+      questionType: .open,
+      isRequired: true
+    ),
+    SurveyQuestion(
+      questionId: "qst-008",
+      questionOptions: [],
+      questionText: "Rate our website usability from 1 to 5 (1 being the worst, 5 being the best).",
+      questionType: .scale,
+      isRequired: true
+    )
   ]
 )
-

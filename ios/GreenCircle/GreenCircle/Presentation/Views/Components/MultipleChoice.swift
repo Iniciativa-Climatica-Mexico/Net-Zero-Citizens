@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct MultipleChoice: View {
   @Binding var question: SurveyQuestion
   

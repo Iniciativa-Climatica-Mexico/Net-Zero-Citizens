@@ -11,6 +11,10 @@
 		691036E72AB416500086C2C8 /* SecondView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691036E62AB416500086C2C8 /* SecondView.swift */; };
 		697A8EB42AB5232E00D260EE /* SendButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697A8EB32AB5232E00D260EE /* SendButton.swift */; };
 		699074992AB3745B0049B36D /* SurveyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699074982AB3745B0049B36D /* SurveyModel.swift */; };
+		69C6541C2AB6C389004DB330 /* Survey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C6541B2AB6C389004DB330 /* Survey.swift */; };
+		69C6541E2AB6C3DB004DB330 /* SurveyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C6541D2AB6C3DB004DB330 /* SurveyViewModel.swift */; };
+		69C654202AB6C48D004DB330 /* SurveyRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C6541F2AB6C48D004DB330 /* SurveyRepository.swift */; };
+		69C654222AB6C4B8004DB330 /* SurveyRequirement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C654212AB6C4B8004DB330 /* SurveyRequirement.swift */; };
 		69F112DA2AB25A570067AC61 /* SurveyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F112D92AB25A570067AC61 /* SurveyView.swift */; };
 		69F112DF2AB267F80067AC61 /* OpenQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F112DE2AB267F80067AC61 /* OpenQuestion.swift */; };
 		69F112E52AB2C8F80067AC61 /* SampleSurveyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F112E42AB2C8F80067AC61 /* SampleSurveyData.swift */; };
@@ -53,6 +57,10 @@
 		691036E62AB416500086C2C8 /* SecondView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondView.swift; sourceTree = "<group>"; };
 		697A8EB32AB5232E00D260EE /* SendButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendButton.swift; sourceTree = "<group>"; };
 		699074982AB3745B0049B36D /* SurveyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyModel.swift; sourceTree = "<group>"; };
+		69C6541B2AB6C389004DB330 /* Survey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Survey.swift; path = GreenCircle/Presentation/Views/Survey.swift; sourceTree = SOURCE_ROOT; };
+		69C6541D2AB6C3DB004DB330 /* SurveyViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SurveyViewModel.swift; path = GreenCircle/Presentation/ViewModels/SurveyViewModel.swift; sourceTree = SOURCE_ROOT; };
+		69C6541F2AB6C48D004DB330 /* SurveyRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SurveyRepository.swift; path = GreenCircle/Data/Repository/SurveyRepository.swift; sourceTree = SOURCE_ROOT; };
+		69C654212AB6C4B8004DB330 /* SurveyRequirement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SurveyRequirement.swift; sourceTree = "<group>"; };
 		69F112D92AB25A570067AC61 /* SurveyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyView.swift; sourceTree = "<group>"; };
 		69F112DE2AB267F80067AC61 /* OpenQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenQuestion.swift; sourceTree = "<group>"; };
 		69F112E42AB2C8F80067AC61 /* SampleSurveyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleSurveyData.swift; sourceTree = "<group>"; };
@@ -143,13 +151,13 @@
 		6C4452B62AA6EF8500BE5930 /* GreenCircle */ = {
 			isa = PBXGroup;
 			children = (
-				6C4452E42AA6F06D00BE5930 /* Utils */,
 				6C4452E32AA6F06700BE5930 /* Data */,
 				6C4452E22AA6F05F00BE5930 /* Domain */,
 				6C4452E12AA6F04D00BE5930 /* Presentation */,
 				6C4452B72AA6EF8500BE5930 /* GreenCircleApp.swift */,
 				6C4452B92AA6EF8500BE5930 /* ContentView.swift */,
 				6C4452BB2AA6EF8600BE5930 /* Assets.xcassets */,
+				6C4452E42AA6F06D00BE5930 /* Utils */,
 				6C4452BD2AA6EF8600BE5930 /* Preview Content */,
 			);
 			path = GreenCircle;
@@ -220,6 +228,7 @@
 			children = (
 				69F112DB2AB260320067AC61 /* Components */,
 				69F112D92AB25A570067AC61 /* SurveyView.swift */,
+				69C6541B2AB6C389004DB330 /* Survey.swift */,
 				691036E42AB414130086C2C8 /* HomeView.swift */,
 				691036E62AB416500086C2C8 /* SecondView.swift */,
 			);
@@ -229,6 +238,7 @@
 		6C4452E62AA6F08F00BE5930 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				69C6541D2AB6C3DB004DB330 /* SurveyViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -236,6 +246,7 @@
 		6C4452E72AA6F09500BE5930 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				69C654212AB6C4B8004DB330 /* SurveyRequirement.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -253,6 +264,7 @@
 			isa = PBXGroup;
 			children = (
 				6C9761862AB2B65C0046DB50 /* DummyRepository.swift */,
+				69C6541F2AB6C48D004DB330 /* SurveyRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -411,13 +423,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69C6541E2AB6C3DB004DB330 /* SurveyViewModel.swift in Sources */,
 				6C9761832AB2B45D0046DB50 /* DummyModel.swift in Sources */,
 				691036E52AB414130086C2C8 /* HomeView.swift in Sources */,
 				6CB498242AB0DECC00B6560C /* PaginatedQuery.swift in Sources */,
+				69C6541C2AB6C389004DB330 /* Survey.swift in Sources */,
+				69C654222AB6C4B8004DB330 /* SurveyRequirement.swift in Sources */,
 				6C9761812AB2B2920046DB50 /* NetworkAPIService.swift in Sources */,
 				6CB4982A2AB0FAA400B6560C /* CustomDateFormatter.swift in Sources */,
 				6C4452BA2AA6EF8500BE5930 /* ContentView.swift in Sources */,
 				691036E72AB416500086C2C8 /* SecondView.swift in Sources */,
+				69C654202AB6C48D004DB330 /* SurveyRepository.swift in Sources */,
 				6C9761872AB2B65C0046DB50 /* DummyRepository.swift in Sources */,
 				6C4452B82AA6EF8500BE5930 /* GreenCircleApp.swift in Sources */,
 				69F112DA2AB25A570067AC61 /* SurveyView.swift in Sources */,

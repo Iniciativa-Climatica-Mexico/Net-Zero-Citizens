@@ -37,7 +37,7 @@ class NetworkAPIService {
     }
   }
 
-  func getPendingSurvey(url: URL) async -> SurveyModel {
+  func getPendingSurvey(url: URL) async -> SurveyModel? {
     let requestTask = AF.request(url, method: .get).validate()
     let response = await requestTask.serializingData().response
 

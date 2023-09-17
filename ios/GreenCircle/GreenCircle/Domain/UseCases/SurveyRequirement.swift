@@ -8,11 +8,15 @@
 import Foundation
 
 protocol SurveyRequirementProtocol {
-    func getSurvey() async -> SurveyModel
+    func getSurvey() async -> SurveyModel?
 }
 
 class SurveyRequirement: SurveyRequirementProtocol {
-    let surveyRepository = SurveyRepository
+  func getSurvey() async -> SurveyModel? {
+    <#code#>
+  }
+  
+  let surveyRepository = SurveyRepository().self
 
     static let shared = SurveyRequirement()
     init(surveyRepository: SurveyRepository = SurveyRepository.shared) {
@@ -20,6 +24,6 @@ class SurveyRequirement: SurveyRequirementProtocol {
     }
 
     func getSurvey() async -> SurveyModel {
-        return await surveyRepository.getSurvey()
+      return await surveyRepository.getSurvey() ?? <#default value#>!
     }
 }
