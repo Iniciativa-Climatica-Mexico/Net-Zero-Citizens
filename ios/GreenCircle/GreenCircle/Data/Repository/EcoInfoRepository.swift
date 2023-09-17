@@ -28,7 +28,7 @@ class EcoInfoRepository: EcoInfoApiProtocol {
   }
   ///  Fetch toda la ecoInfo del  backend
   ///  - Parameter url: ruta al endpoint
-  ///  - Returns EcoInfo decoded o error
+  ///  - Returns: [EcoInfo]?  decoded o error
   func fetchAllEcoInfo() async -> [EcoInfo]? {
     return
       await service

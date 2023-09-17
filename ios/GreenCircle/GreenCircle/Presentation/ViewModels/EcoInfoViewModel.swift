@@ -9,12 +9,12 @@ import Foundation
 
 class EcoInfoViewModel: ObservableObject {
 
-  private let fetchEcoInfoUseCase: FetchAllEcoInfoUseProtocol
+  private let fetchEcoInfoUseCase: FetchAllEcoInfoUseCaseProtocol
 
   @Published var ecoInfoArray: [EcoInfo] = []
 
   /// Constructor para inicializar arquitectura hasta llegar a network
-  init(fetchEcoInfoUseCase: FetchAllEcoInfoUseProtocol = FetchAllEcoInfoUseCase.shared) {
+  init(fetchEcoInfoUseCase: FetchAllEcoInfoUseCaseProtocol = FetchAllEcoInfoUseCase.shared) {
     self.fetchEcoInfoUseCase = fetchEcoInfoUseCase
   }
 

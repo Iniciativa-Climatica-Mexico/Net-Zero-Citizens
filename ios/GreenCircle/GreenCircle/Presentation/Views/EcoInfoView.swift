@@ -19,8 +19,15 @@ struct EcoInfoView: View {
           ForEach(ecoInfoViewModel.ecoInfoArray, id: \.ecoinfoId) { ecoInfo in
             EcoInfoCard(isPressedSeeMore: $isPressedSeeMore, ecoInfo: ecoInfo)
           }
-        }
+        }.padding(.top, 5)
       }.navigationTitle("Últimas noticias")
+        .foregroundColor(.white)
+        .background(NavigationConfigurator (statusBarStyle: UIColor(Color("BlueCustom"))){ nconf in
+          nconf.navigationBar.barTintColor = UIColor(Color("BlueCustom"))
+          nconf.navigationBar.backgroundColor = UIColor(Color("BlueCustom"))
+          nconf.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+          nconf.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+      })
     }.onAppear {
       Task {
         await ecoInfoViewModel.fetchAllEcoInfo()

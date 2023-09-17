@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol FetchAllEcoInfoUseProtocol {
+protocol FetchAllEcoInfoUseCaseProtocol {
   func fetchAllEcoInfo() async -> [EcoInfo]?
 }
 
-class FetchAllEcoInfoUseCase: FetchAllEcoInfoUseProtocol {
+class FetchAllEcoInfoUseCase: FetchAllEcoInfoUseCaseProtocol {
   let ecoInfoRepository: EcoInfoRepository
 
   static let shared = FetchAllEcoInfoUseCase()
@@ -19,9 +19,9 @@ class FetchAllEcoInfoUseCase: FetchAllEcoInfoUseProtocol {
     self.ecoInfoRepository = ecoInfoRepository
   }
 
-  /// Trim the limit text where a whitespace is found or length is 150
-  /// - Parameters: string of description and int of max length
-  /// - Returns: The trimmed string
+  /// Corte del string donde se encuentra un espacio o la longitud es 150
+  /// - Parameters: string de la descripción y entero con máximo de longitud
+  /// - Returns: El string cortado
   func limitText(ecoText: String, maxLength: Int) -> String {
     if ecoText.count <= maxLength {
       return ecoText
@@ -34,6 +34,8 @@ class FetchAllEcoInfoUseCase: FetchAllEcoInfoUseProtocol {
     return limitedText
   }
 
+  /// Obtener toda la información que conforma al modelo EcoInfo
+  /// - Returns: [EcoInfo]?
   func fetchAllEcoInfo() async -> [EcoInfo]? {
     if var resultEcoInfo = await ecoInfoRepository.fetchAllEcoInfo() {
       resultEcoInfo = resultEcoInfo.map { ecoInfo in
