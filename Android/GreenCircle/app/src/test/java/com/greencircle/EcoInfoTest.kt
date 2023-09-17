@@ -1,10 +1,15 @@
 package com.greencircle
 
+import com.greencircle.data.remote.EcoInfoAPI
+import com.greencircle.data.repository.EcoInfoRepository
 import com.greencircle.domain.model.EcoInfo
 import java.sql.Time
 import java.util.UUID
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
 
 class EcoInfoTest {
     @Test
@@ -65,5 +70,36 @@ class EcoInfoTest {
         )
 
         assertEquals(ecoInfo, ecoInfo2)
+    }
+
+    @Test
+    fun testGetEcoInfoFromApi() = runBlocking {
+        val apiMock = mock(EcoInfoAPI::class.java)
+        `when`(apiMock.getEcoInfo()).thenReturn(listOf())
+
+        val repo = EcoInfoRepository(apiMock)
+        val result = repo.getEcoInfoFromApi()
+
+        assertEquals(result.isEmpty(), true)
+    }
+
+    @Test
+    fun testEcoInfoGetApiWithMockData() = runBlocking {
+        val apiMock = mock(EcoInfoAPI::class.java)
+        val mockEcoInfo = EcoInfo(
+            ecoinfoId = UUID.randomUUID(),
+            postId = "this-is-a-post-id",
+            postUrl = "https://example.com/post",
+            coverImageUrl = "https://example.com/image.jpg",
+            description = "Sample description",
+            createdAt = Time(System.currentTimeMillis()),
+            updatedAt = Time(System.currentTimeMillis())
+        )
+        `when`(apiMock.getEcoInfo()).thenReturn(listOf(mockEcoInfo))
+
+        val repo = EcoInfoRepository(apiMock)
+        val result = repo.getEcoInfoFromApi()
+
+        assertEquals(listOf(mockEcoInfo), result)
     }
 }
