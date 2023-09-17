@@ -1,16 +1,17 @@
 {
-  "env": {
-    "browser": true,
-    "es2021": true
-  },
-  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  "root": true,
   "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaVersion": "latest",
-    "sourceType": "module"
-  },
   "plugins": ["@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "ignorePatterns": "*.config.js",
   "rules": {
+    // Tus reglas personalizadas aquí
+    "react/react-in-jsx-scope": "off", // No es necesario importar React cuando se usa Next.js
+    "jsx-a11y/anchor-is-valid": "off", // No es necesario que los enlaces tengan una referencia
     "indent": [
       "error",
       2,

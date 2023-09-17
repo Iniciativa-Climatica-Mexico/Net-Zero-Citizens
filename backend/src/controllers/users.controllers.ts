@@ -1,7 +1,5 @@
 import * as UserService from '../services/users.service'
-import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
-import { User, UsersModel } from '../models/users.model'
 
 /**
  * @function getUserInfo
