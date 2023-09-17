@@ -1,5 +1,5 @@
 import Company from '../models/company.model'
-import CompanyProduct from '../models/companyProduct.model'
+import CompanyProduct from '../models/companyProducts.model'
 import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
 
 // TYPES
@@ -12,10 +12,10 @@ export type CompanyType = {
   name: string,
   description: string,
   email: string,
-  phoneNumber: string,
+  phone: string,
   webPage?: string | null,
   street: string,
-  streetNumber: number,
+  streetNumber: string,
   city: string,
   state: string,
   zipCode: number,
