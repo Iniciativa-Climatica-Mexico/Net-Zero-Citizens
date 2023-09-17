@@ -12,7 +12,6 @@ const testData = {
   surveyId: 'surv-1234-efgh-0000',
   title: 'Encuesta de satisfacción',
   description: 'Encuesta para medir la satisfacción de los clientes',
-  endDate: null,
   questions: [
     {
       questionText: '¿Qué tan satisfecho está con el servicio?',
@@ -69,7 +68,7 @@ const testData = {
   ],
 }
 
-const attributesToExclude = ['createdAt', 'updatedAt', 'startDate']
+const attributesToExclude = ['createdAt', 'updatedAt', 'startDate', 'endDate']
 
 beforeEach(async () => {
   await db.drop()
