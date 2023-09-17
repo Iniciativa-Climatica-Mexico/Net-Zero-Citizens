@@ -2,17 +2,15 @@ import {
   Table,
   Column,
   Model,
+  ForeignKey,
   DataType,
   HasOne,
   HasMany,
-  ForeignKey,
-  BelongsTo
+  BelongsTo,
 } from 'sequelize-typescript'
+import Role from './role.model'
 import Company from './company.model'
 import Review from './review.model'
-import Role from './role.model'
-
-type Gender = 'masculine' | 'femenine' | 'other' | 'no_answer'
 
 /**
  * @interface User
@@ -31,7 +29,7 @@ type Gender = 'masculine' | 'femenine' | 'other' | 'no_answer'
  * @param {string} phoneNumber - The user's phone number
  * @param {number} age - The user's age
  * @param {string} state - The user's state
- * @param {enum} gender - The user's gender
+ * @param {enum} sex - The user's sex
  * @param {string} profilePicture - The user's profile picture url
  * @param {date} createdAt - The user's creation date
  * @param {date} updatedAt - The user's update date
@@ -39,7 +37,7 @@ type Gender = 'masculine' | 'femenine' | 'other' | 'no_answer'
 
 /**
  * @brief
- * El modelo representa la tabla USERS
+ * User model
  */
 @Table({ tableName: 'USERS' })
 export default class User extends Model {
@@ -48,7 +46,7 @@ export default class User extends Model {
     primaryKey: true,
     defaultValue: DataType.UUIDV4,
     allowNull: false,
-    field: 'UUID',
+    field: 'USER_ID',
   })
   userId: string
 
@@ -57,23 +55,24 @@ export default class User extends Model {
     type: DataType.UUID,
     allowNull: false,
     field: 'ROLE_ID',
+    defaultValue: DataType.UUIDV4,
   })
   roleId: string
 
-  @BelongsTo(() => Role) // Define the association to Role
-  role: Role // This will allow you to access the associated Role model
+  @BelongsTo(() => Role)
+  role: Role
 
   @ForeignKey(() => Company)
   @Column({
     type: DataType.UUID,
     allowNull: true,
     field: 'COMPANY_ID',
-    unique: 'COMPANY_ID',
+    defaultValue: DataType.UUIDV4,
   })
-  companyId: string
+  companyId: string | null
 
   @BelongsTo(() => Company)
-  company: Company | null
+  company: Company
 
   @Column({
     type: DataType.STRING,
@@ -159,7 +158,7 @@ export default class User extends Model {
     allowNull: false,
     field: 'GENDER',
   })
-  gender: Gender
+  gender: 'masculine' | 'femenine' | 'other' | 'no_answer'
 
   @Column({
     type: DataType.STRING,
