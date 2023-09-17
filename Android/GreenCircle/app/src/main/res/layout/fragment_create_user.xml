@@ -78,7 +78,7 @@
             android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/userPhoneNumber"
+            android:id="@+id/userPhoneTextField"
             style="?attr/textInputOutlinedDenseStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/userAge"
+            android:id="@+id/userAgeTextFIeld"
             style="?attr/textInputOutlinedDenseStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -118,7 +118,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayoutState"
+            android:id="@+id/userStateTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
@@ -132,16 +132,20 @@
                 android:importantForAccessibility="yes"
                 android:clickable="true"
                 android:layout_gravity="center_vertical"
+                android:textColor="@color/blue"
                 app:hintTextColor="@color/blue"
                 android:textColorHint="@color/gray_500"
                 app:boxStrokeColor="@color/blue"
                 android:layout_marginBottom="20dp"
+                android:completionThreshold="1"
+                android:popupBackground="@color/white"
+                app:simpleItems="@array/state_options"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayoutGender"
+            android:id="@+id/userGenderTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
@@ -155,10 +159,14 @@
                 android:importantForAccessibility="yes"
                 android:clickable="true"
                 android:layout_gravity="center_vertical"
+                android:textColor="@color/blue"
                 app:hintTextColor="@color/blue"
                 android:textColorHint="@color/gray_500"
                 app:boxStrokeColor="@color/blue"
-
+                android:layout_marginBottom="20dp"
+                android:completionThreshold="1"
+                android:popupBackground="@color/white"
+                app:simpleItems="@array/gender_options"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -219,7 +227,7 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/continueToCompanyRegisterForm"
+            android:id="@+id/submit_create_user"
             style="@style/Widget.Material3.Button.TonalButton"
             android:layout_width="300dp"
             android:layout_height="50dp"

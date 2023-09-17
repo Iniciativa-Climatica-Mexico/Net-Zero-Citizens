@@ -1,5 +1,5 @@
 import Company from '../models/company.model'
-import CompanyProduct from '../models/companyProduct.model'
+import CompanyProduct from '../models/companyProducts.model'
 import * as CompanyService from '../services/company.service'
 import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'

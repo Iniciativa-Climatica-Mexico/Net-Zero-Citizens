@@ -1,120 +1,127 @@
 import chai from 'chai'
 import chaiExclude from 'chai-exclude'
 import { db, initDB } from '../src/configs/database.config'
-import { getAllCompanies, createCompany, addProduct } from '../src/services/company.service'
-import { unwrap } from './utils'
+import {
+  getAllCompanies,
+} from '../src/services/company.service'
 
 chai.use(chaiExclude)
 
 const { expect } = chai
+
 const testData = [
   {
-    companyId: 'comp-1234-efgh-0000',
+    companyId: 'c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
+    userId: 'abcd-1234-efgh-5678',
     name: 'Company 1',
     description: 'Company 1 description',
-    email: 'example1@mail.com',
-    phoneNumber: '123456789',
-    webPage: 'www.company1.com',
+    email: 'company@outlook.com',
+    phone: '1234567890',
+    webPage: 'https://www.company1.com',
     street: 'Company 1 street',
-    streetNumber: 1,
-    city: 'Company 1 city',
-    state: 'Company 1 state',
-    zipCode: 12345,
-    latitude: 1.111111,
-    longitude: 1.111111,
-    profilePicture: 'https://picsum.photos/200',
-    pdfCurriculumUrl: 'https://picsum.photos/200',
-    pdfDicCdmxUrl: 'https://picsum.photos/200',
-    pdfPeeFideUrl: 'https://picsum.photos/200',
-    pdfGuaranteeSecurityUrl: 'https://picsum.photos/200',
-    pdfActaConstitutivaUrl: 'https://picsum.photos/200',
-    pdfIneUrl: 'https://picsum.photos/200',
+    streetNumber: 123,
+    city: 'Puebla',
+    state: 'Puebla',
+    zipCode: 72000,
+    latitude: 19.041296,
+    longitude: -98.206199,
+    profilePicture: 'https://www.company1.com/profilePicture.png',
+    pdfCurriculumUrl: 'https://www.company1.com/pdfCurriculum.pdf',
+    pdfDicCdmxUrl: 'https://www.company1.com/pdfDicCdmx.pdf',
+    pdfPeeFideUrl: 'https://www.company1.com/pdfPeeFide.pdf',
+    pdfGuaranteeSecurityUrl:
+      'https://www.company1.com/pdfGuaranteeSecurity.pdf',
+    pdfActaConstitutivaUrl: 'https://www.company1.com/pdfActaConstitutiva.pdf',
+    pdfIneUrl: 'https://www.company1.com/pdfIne.pdf',
     status: 'approved',
   },
   {
-    companyId: 'comp-5678-efgh-0000',
+    companyId: 'a2b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
+    userId: 'abcd-1234-efgh-5678',
     name: 'Company 2',
     description: 'Company 2 description',
-    email: 'example2@mail.com',
-    phoneNumber: '123456780',
-    webPage: null,
+    email: 'company2@outlook.com',
+    phone: '0123456789',
+    webPage: 'https://www.company2.com',
     street: 'Company 2 street',
-    streetNumber: 2,
-    city: 'Company 2 city',
-    state: 'Company 2 state',
-    zipCode: 12346,
-    latitude: 0.111111,
-    longitude: 1.111111,
-    profilePicture: null,
-    pdfCurriculumUrl: 'https://picsum.photos/100',
-    pdfDicCdmxUrl: null,
-    pdfPeeFideUrl: null,
-    pdfGuaranteeSecurityUrl: 'https://picsum.photos/100',
-    pdfActaConstitutivaUrl: 'https://picsum.photos/100',
-    pdfIneUrl: 'https://picsum.photos/100',
+    streetNumber: 123,
+    city: 'Queretaro',
+    state: 'Queretaro',
+    zipCode: 76152,
+    latitude: 20.041296,
+    longitude: -120.206199,
+    profilePicture: 'https://www.company2.com/profilePicture.png',
+    pdfCurriculumUrl: 'https://www.company2.com/pdfCurriculum.pdf',
+    pdfDicCdmxUrl: 'https://www.company2.com/pdfDicCdmx.pdf',
+    pdfPeeFideUrl: 'https://www.company2.com/pdfPeeFide.pdf',
+    pdfGuaranteeSecurityUrl:
+      'https://www.company2.com/pdfGuaranteeSecurity.pdf',
+    pdfActaConstitutivaUrl: 'https://www.company2.com/pdfActaConstitutiva.pdf',
+    pdfIneUrl: 'https://www.company2.com/pdfIne.pdf',
+    status: 'rejected',
+  },
+  {
+    companyId: 'a2c0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
+    userId: 'abcd-1234-efgh-5679',
+    name: 'Company 3',
+    description: 'Company 3 description',
+    email: 'company3@outlook.com',
+    phone: '0123456789',
+    webPage: 'https://www.company3.com',
+    street: 'Company 3 street',
+    streetNumber: 123,
+    city: 'Queretaro',
+    state: 'Queretaro',
+    zipCode: 76152,
+    latitude: 20.041296,
+    longitude: -120.206199,
+    profilePicture: 'https://www.company3.com/profilePicture.png',
+    pdfCurriculumUrl: 'https://www.company3.com/pdfCurriculum.pdf',
+    pdfDicCdmxUrl: 'https://www.company3.com/pdfDicCdmx.pdf',
+    pdfPeeFideUrl: 'https://www.company3.com/pdfPeeFide.pdf',
+    pdfGuaranteeSecurityUrl:
+      'https://www.company3.com/pdfGuaranteeSecurity.pdf',
+    pdfActaConstitutivaUrl: 'https://www.company3.com/pdfActaConstitutiva.pdf',
+    pdfIneUrl: 'https://www.company3.com/pdfIne.pdf',
     status: 'pending_approval',
   },
 ]
 
-const newCompany = {
-  companyId: 'comp-5678-efgh-0001',
-  name: 'Company 3',
-  description: 'Company 3 description',
-  email: 'example3@mail.com',
-  phoneNumber: '523456780',
-  webPage: null,
-  street: 'Company 2 street',
-  streetNumber: 2,
-  city: 'Company 3 city',
-  state: 'Company 3 state',
-  zipCode: 12346,
-  latitude: 0.111121,
-  longitude: 1.111211,
-  profilePicture: null,
-  pdfCurriculumUrl: 'https://picsum.photos/300',
-  pdfDicCdmxUrl: null,
-  pdfPeeFideUrl: null,
-  pdfGuaranteeSecurityUrl: 'https://picsum.photos/300',
-  pdfActaConstitutivaUrl: 'https://picsum.photos/300',
-  pdfIneUrl: 'https://picsum.photos/300',
-  status: 'pending_approval'
-}
-
-const companyProduct = {
-  companyId: 'comp-1234-efgh-0000',
-  productId: 'prod-1234-efgh-0000',
-  pdfProductCertificationUrl: 'https://picsum.photos/200',
-}
-
 const attributesToExclude = [
-  'companyProductId',
   'createdAt',
   'updatedAt',
+  'deletedAt',
+  'userId',
+  'companyId',
 ]
 
 beforeEach(async () => {
+  await db.drop()
   await initDB()
 })
 
-afterEach(async () => {
-  await db.drop()
-})
-
 describe('Company Service', () => {
-  it('should return a list of all companies', async () => {
+  it('should return all companies', async () => {
     const response = await getAllCompanies({ start: 0, pageSize: 10 })
-    expect(unwrap(response).rows)
-      .excluding(attributesToExclude)
+
+    expect(response.rows.map((company) => company.get()))
+      .excludingEvery(attributesToExclude)
       .to.deep.equal(testData)
   })
 
-  it('should create a new company', async () => {
-    const res = await createCompany(newCompany)
-    expect(unwrap(res)).excluding(attributesToExclude).to.deep.equal(newCompany)
+  it('should return all companies with pagination', async () => {
+    const response = await getAllCompanies({ start: 0, pageSize: 1 })
+
+    expect(response.rows.map((company) => company.get()))
+      .excludingEvery(attributesToExclude)
+      .to.deep.equal([testData[0]])
   })
 
-  it('should add a product to a company', async () => {
-    const res = await addProduct(companyProduct)
-    expect(unwrap(res)).excluding(attributesToExclude).to.deep.equal(companyProduct)
+  it('should return all companies with pagination', async () => {
+    const response = await getAllCompanies({ start: 1, pageSize: 1 })
+
+    expect(response.rows.map((company) => company.get()))
+      .excludingEvery(attributesToExclude)
+      .to.deep.equal([testData[1]])
   })
 })
