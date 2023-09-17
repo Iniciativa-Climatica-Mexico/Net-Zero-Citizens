@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputLayout
 import com.greencircle.R
+import com.greencircle.data.remote.CompanyAPIService
 import com.greencircle.data.remote.models.Company
 import com.greencircle.framework.viewmodel.CreateCompanyViewModel
 import com.greencircle.framework.views.MainActivity
@@ -23,6 +24,7 @@ import com.greencircle.framework.views.MainActivity
 class CreateCompanyFragment : Fragment() {
     private lateinit var viewModel: CreateCompanyViewModel
     private var arguments = Bundle()
+    private lateinit var authToken: String
 
     /**
      * Inicializa el "CreateCompanyFragment"
@@ -76,8 +78,7 @@ class CreateCompanyFragment : Fragment() {
         viewModel.googleLoginResult.observe(viewLifecycleOwner) { result ->
             // Handle the result here
             if (result != null) {
-                Log.d("CreateCompanyFragment", "Google login success")
-                Log.d("CreateCompanyFragment", result.toString())
+                authToken = result.tokens.authToken
             } else {
                 Log.d("CreateCompanyFragment", "Google login failed")
             }
@@ -147,7 +148,9 @@ class CreateCompanyFragment : Fragment() {
             "test4"
         )
 
-        viewModel.createCompany(companyData)
+        val createCompanyRequest = CompanyAPIService.CreateCompanyRequest(companyData)
+
+        viewModel.createCompany(createCompanyRequest, authToken)
         navigateToHome()
     }
 
