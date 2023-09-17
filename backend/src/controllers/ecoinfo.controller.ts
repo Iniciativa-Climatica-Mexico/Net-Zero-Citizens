@@ -13,16 +13,16 @@ import Ecoinfo from '../models/ecoinfo.model'
  */
 export const getAllEcoinfos: RequestHandler<
   NoRecord,
-  Ecoinfo[] | { message: string },
+  Ecoinfo[] | { error: string },
   NoRecord,
   NoRecord
-> = async (req, res) => {
+> = async (_req, res) => {
   try {
     const ecoinfos: Ecoinfo[] = await EcoinfoService.getAllEcoinfo()
     res.json(ecoinfos)
   } catch (err) {
     res
       .status(500)
-      .json({ message: 'Error al obtener la información de ecoinfo' })
+      .json({ error: 'Error al obtener la información de ecoinfo' })
   }
 }
