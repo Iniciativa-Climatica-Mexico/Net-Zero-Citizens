@@ -11,7 +11,7 @@ struct ContentView: View {
     var body: some View {
         VStack {
             NavigationView {
-                ProfileInformationView(modelUser: UserViewModel())
+                ProfileView(modelUser: UserViewModel())
                 
             }
             

@@ -21,9 +21,8 @@ class UserService {
     ///     - url: Backend url para obtener datos
     ///  - Returns: Modelo de compañía o error en cualquier otro caso no válido
     func fetchUserById(url: URL) async -> User? {
-        guard let token = localService.getToken() else {
-            return nil
-        }
+        // Usando el nuevo authToken hardcodeado
+        let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdF9uYW1lIjoiSm9obiIsImxhc3RfbmFtZSI6IkRvZSIsInV1aWQiOiJhYmNkLTEyMzQtZWZnaC01Njc4IiwiZW1haWwiOiJqb2huLmRvZUBleGFtcGxlLmNvbSIsImxvZ2luX3R5cGUiOiJnb29nbGUiLCJyb2xlcyI6WyJhZG1pbiJdLCJnb29nbGVJZCI6IjAxMjM0NTY3ODkiLCJpYXQiOjE2OTQ5MTMxMTMsImV4cCI6MTY5NDkxMzQxM30.PJDLHjiX34iOAAKmKJG3jMbFjWn5SB22rpYiw94D36Y"
 
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(token)",
@@ -31,20 +30,34 @@ class UserService {
         ]
 
         let taskRequest = AF.request(url, method: .get, headers: headers).validate()
+        print("Request")
+        print(taskRequest)
+        print("URL: \(url.absoluteString)")
+
         let response = await taskRequest.serializingData().response
+        print("Response")
+        print(response)
 
         switch response.result {
         case .success(let data):
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601WithFractionalSeconds
+            if let jsonString = String(data: data, encoding: .utf8) {
+                  print("JSON received: \(jsonString)")
+              }
             do {
-                return try JSONDecoder().decode(User.self, from: data)
-            } catch {
-                // Log the error to help with debugging
-                print("Failed to decode JSON: \(error)")
-                return nil
-            }
+                        let decoder = JSONDecoder()
+                        decoder.dateDecodingStrategy = .iso8601WithFractionalSeconds
+                        return try decoder.decode(User.self, from: data)
+                    } catch {
+                        // Log the error to help with debugging
+                        print("Failed to decode JSON: \(error)")
+                        return nil
+                    }
         case .failure(let error):
             // Log the error to help with debugging
             print("HTTP request failed: \(error)")
+            print("error aqui jajajaj")
             debugPrint(error.localizedDescription)
             return nil
         }

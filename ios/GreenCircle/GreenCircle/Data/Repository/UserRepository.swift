@@ -21,7 +21,7 @@ import Alamofire
 struct ApiUser {
     static let base = "http://localhost:3000/api/v1"
     struct Routes {
-        static let user = "/users"
+        static let user = "users"
     }
 }
 

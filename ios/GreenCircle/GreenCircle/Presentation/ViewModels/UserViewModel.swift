@@ -38,7 +38,7 @@ class UserViewModel: ObservableObject {
     /// La compañía puede cambiar en la vista (se construye .onAppear())
     @Published var contentUser: User = User(
         userId:"",
-        roleId: 0,
+        roleId: "",
         companyId:"",
         googleId: "",
         facebookId: "",
@@ -53,11 +53,8 @@ class UserViewModel: ObservableObject {
         state: "",
         sex: "",
         profilePicture: "",
-        createdAt: "",
-        updatedAt: "",
-        CREATED_AT: "",
-        UPDATED_AT: ""
-
+        createdAt: Date(),
+        updatedAt: Date()
         )
     /// Para implementar el caso de uso en la vista que llame al ViewModel Compañía
     init(fetchUserInfoUseCase: FetchUserInfoUseCase = FetchUserInfoUseCaseImpl.shared) {

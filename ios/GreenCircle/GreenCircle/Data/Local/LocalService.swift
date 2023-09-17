@@ -9,7 +9,7 @@ import Foundation
 
 class LocalService {
     static let shared = LocalService()
-    private let TOKEN_KEY = "authToken"
+    private let TOKEN_KEY = "userToken"
 
     func getToken() -> String? {
         return UserDefaults.standard.string(forKey: TOKEN_KEY)

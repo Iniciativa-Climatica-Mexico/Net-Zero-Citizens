@@ -90,7 +90,7 @@ struct ProfileView: View {
             .padding(.top, 150)
             .onAppear {
                 Task {
-                    await modelUser.fetchUserById(idUser: "1")
+                    await modelUser.fetchUserById(idUser: "abcd-1234-efgh-5679")
                 }
             }
     }

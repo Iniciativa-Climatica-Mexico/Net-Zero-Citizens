@@ -280,7 +280,7 @@ struct ProfileInformationView: View {
             }
             .onAppear {
                 Task {
-                    await modelUser.fetchUserById(idUser: "1")
+                    await modelUser.fetchUserById(idUser: "abcd-1234-efgh-5679")
                 }
             }
         }

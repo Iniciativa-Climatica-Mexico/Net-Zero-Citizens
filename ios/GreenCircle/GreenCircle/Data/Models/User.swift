@@ -8,9 +8,8 @@
 import Foundation
 
 struct User: Codable {
-    
     let userId: String
-    let roleId: Int
+    let roleId: String
     let companyId: String?
     let googleId: String?
     let facebookId: String?
@@ -25,8 +24,6 @@ struct User: Codable {
     var state: String
     var sex: String
     var profilePicture: String?
-    let createdAt: String
-    let updatedAt: String
-    let CREATED_AT: String
-    let UPDATED_AT: String
+    let createdAt: Date
+    let updatedAt: Date
 }
