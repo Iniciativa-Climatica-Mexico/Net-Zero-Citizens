@@ -9,18 +9,18 @@ struct ProfileInformationView: View {
             //Title Bar
             VStack {
                 TitleBarView(
-                    title: "Mis datos",
+                    title: "Mis Datos",
                     leftIcon: nil,
                     rightIcon: "pencil",
-                    leftDestination: { },
-                    rightDestination: {EditProfileView(modelUser: UserViewModel()) }
+                    leftDestination: {  },
+                    rightDestination: { EditProfileView(modelUser: UserViewModel()) }
                 )
                 .frame(height: 10)
+                .navigationBarBackButtonHidden(true)
                 .offset(y: -60)
                 
                 Spacer() // Esto empuja el TitleBarView hacia arriba
             }
-            
             //Content
             VStack {
                 VStack {
@@ -28,8 +28,9 @@ struct ProfileInformationView: View {
                         Text(modelUser.contentUser.firstName)
                             .foregroundColor(Color.black)
                             .font(.system(size: 16))
-                            .bold()
+                            .fontWeight(.semibold)
                             .padding(.top, 12)
+                            .padding(.bottom, 2)
                         
                         Text(modelUser.contentUser.lastName)
                             .foregroundColor(Color.black)
@@ -52,13 +53,16 @@ struct ProfileInformationView: View {
                 Button(action: {
                     // Acción del primer botón
                 }) {
-                    Text("Editar")
-                        .foregroundColor(.white)
-                        .padding(.vertical, 10) // Reduce el padding vertical para hacer el botón menos largo
-                        .padding(.horizontal)
-                        .frame(maxWidth: .infinity)
-                        .background(TitleBarColor.TitleBarColor)
-                        .cornerRadius(8)
+
+                    NavigationLink(destination: EditProfileView(modelUser: UserViewModel())) {
+                           Text("Editar")
+                            .foregroundColor(.white)
+                            .padding(.vertical, 10) // Reduce el padding vertical para hacer el botón menos largo
+                            .padding(.horizontal)
+                            .frame(maxWidth: .infinity)
+                            .background(TitleBarColor.TitleBarColor)
+                            .cornerRadius(8)
+                       }
                 }
                 .padding(.top, 16) // Aumenta el padding superior para separarlo más del botón de "Cerrar sesión"
                 .padding(.horizontal, 130) // Añade padding horizontal para hacer el botón menos ancho
@@ -68,7 +72,7 @@ struct ProfileInformationView: View {
                         Group {
                             Text("Nombre")
                                  .padding(.top, 16)
-                                 .foregroundColor(.black)
+                                 .foregroundColor(Color("GreenColor"))
                                  .font(.system(size: 13))
                                  .fontWeight(.semibold)
                                 
@@ -85,7 +89,7 @@ struct ProfileInformationView: View {
                         Group {
                             Text("Primer Apellido")
                                 .padding(.top, 16)
-                                .foregroundColor(.black)
+                                .foregroundColor(Color("GreenColor"))
                                 .font(.system(size: 13))
                                 .fontWeight(.semibold)
                             
@@ -100,7 +104,7 @@ struct ProfileInformationView: View {
                         Group {
                             Text("Segundo Apellido")
                                 .padding(.top, 16)
-                                .foregroundColor(.black)
+                                .foregroundColor(Color("GreenColor"))
                                 .font(.system(size: 13))
                                 .fontWeight(.semibold)
                             
@@ -121,13 +125,15 @@ struct ProfileInformationView: View {
                             VStack(alignment: .leading) {
                                 Text("Edad")
                                     .padding(.top, 16)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(Color("GreenColor"))
                                     .font(.system(size: 13))
                                     .fontWeight(.semibold)
                                 
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 5)
-                                        .stroke(Color.gray, lineWidth: 0.3)
+                                        .fill(Color("GrayColor"))
+                                        .overlay(RoundedRectangle(cornerRadius: 5)
+                                                    .stroke(Color.gray, lineWidth: 0.1))
                                         .frame(height: 30)
                                     
                                     Picker("Edad", selection: $modelUser.contentUser.age) {
@@ -138,8 +144,8 @@ struct ProfileInformationView: View {
                                     .pickerStyle(MenuPickerStyle())
                                     .disabled(true)
                                     .padding(.top, 3)
-                                    .font(.system(size: 11))
-                                    .foregroundColor(.gray)
+                                    .font(.system(size: 10))
+                                    .padding(.leading, -15)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .padding(.horizontal, 10)
                                 }
@@ -149,13 +155,15 @@ struct ProfileInformationView: View {
                             VStack(alignment: .leading) {
                                 Text("Sexo")
                                     .padding(.top, 16)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(Color("GreenColor"))
                                     .font(.system(size: 13))
                                     .fontWeight(.semibold)
                                 
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 5)
-                                        .stroke(Color.gray, lineWidth: 0.3)
+                                        .fill(Color("GrayColor"))
+                                        .overlay(RoundedRectangle(cornerRadius: 5)
+                                                    .stroke(Color.gray, lineWidth: 0.1))
                                         .frame(height: 30)
                                     
                                     Picker("Sexo", selection: $modelUser.contentUser.sex) {
@@ -166,7 +174,7 @@ struct ProfileInformationView: View {
                                     .disabled(true)
                                     .padding(.top, 3)
                                     .font(.system(size: 11))
-                                    .foregroundColor(.gray)
+                                    .padding(.leading, -15)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .padding(.horizontal, 10)
                                 }
@@ -177,7 +185,7 @@ struct ProfileInformationView: View {
                         Group {
                             Text("Correo Electrónico")
                                 .padding(.top, 16)
-                                .foregroundColor(.black)
+                                .foregroundColor(Color("GreenColor"))
                                 .font(.system(size: 13))
                                 .fontWeight(.semibold)
                             
@@ -192,7 +200,7 @@ struct ProfileInformationView: View {
                         Group {
                             Text("Celular")
                                 .padding(.top, 16)
-                                .foregroundColor(.black)
+                                .foregroundColor(Color("GreenColor"))
                                 .font(.system(size: 13))
                                 .fontWeight(.semibold)
                             
@@ -209,15 +217,15 @@ struct ProfileInformationView: View {
                             VStack(alignment: .leading) {
                                 Text("Estado")
                                     .padding(.top, 16)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(Color("GreenColor"))
                                     .font(.system(size: 13))
                                     .fontWeight(.semibold)
                                 
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 5)
-                                        .fill(Color.yellow)  
+                                        .fill(Color("GrayColor"))
                                         .overlay(RoundedRectangle(cornerRadius: 5)
-                                                    .stroke(Color.gray, lineWidth: 0.3))
+                                                    .stroke(Color.gray, lineWidth: 0.1))
                                         .frame(height: 30)
                                     
                                     Picker("Estado", selection: $modelUser.contentUser.state) {
@@ -261,8 +269,8 @@ struct ProfileInformationView: View {
                                     .pickerStyle(MenuPickerStyle())
                                     .disabled(true)
                                     .padding(.top, 3)
+                                    .padding(.leading, -15)
                                     .font(.system(size: 11))
-                                    .foregroundColor(.gray)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .padding(.horizontal, 10)
                                 }

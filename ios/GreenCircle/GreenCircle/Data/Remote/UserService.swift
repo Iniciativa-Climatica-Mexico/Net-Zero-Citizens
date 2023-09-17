@@ -22,7 +22,8 @@ class UserService {
     ///  - Returns: Modelo de compañía o error en cualquier otro caso no válido
     func fetchUserById(url: URL) async -> User? {
         // Usando el nuevo authToken hardcodeado
-        let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdF9uYW1lIjoiSm9obiIsImxhc3RfbmFtZSI6IkRvZSIsInV1aWQiOiJhYmNkLTEyMzQtZWZnaC01Njc4IiwiZW1haWwiOiJqb2huLmRvZUBleGFtcGxlLmNvbSIsImxvZ2luX3R5cGUiOiJnb29nbGUiLCJyb2xlcyI6WyJhZG1pbiJdLCJnb29nbGVJZCI6IjAxMjM0NTY3ODkiLCJpYXQiOjE2OTQ5MTMxMTMsImV4cCI6MTY5NDkxMzQxM30.PJDLHjiX34iOAAKmKJG3jMbFjWn5SB22rpYiw94D36Y"
+        let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdF9uYW1lIjoiSm9obiIsImxhc3RfbmFtZSI6IkRvZSIsInV1aWQiOiJhYmNkLTEyMzQtZWZnaC01Njc4IiwiZW1haWwiOiJqb2huLmRvZUBleGFtcGxlLmNvbSIsImxvZ2luX3R5cGUiOiJnb29nbGUiLCJyb2xlcyI6WyJhZG1pbiJdLCJnb29nbGVJZCI6IjAxMjM0NTY3ODkiLCJpYXQiOjE2OTQ5ODYwNjksImV4cCI6MTY5NDk4NjM2OX0.tG0AfaW16YdDjIpFcCafAZiUdUxKIMHYZtXfg8VGneE"
+        
 
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(token)",

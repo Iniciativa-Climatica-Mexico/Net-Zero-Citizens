@@ -32,12 +32,24 @@ struct ProfileView: View {
 
             
             VStack {
+                
+                AsyncImage(url: URL(string: "https://example.com/icon.png")) { image in
+                    image.resizable()
+                } placeholder: {
+                    ProgressView()
+                }
+                .frame(width: 50, height: 50)
+                .padding(.top, 12)
+                .padding(.bottom, 2)
+                
                 HStack {
+                    
                     Text(modelUser.contentUser.firstName)
                         .foregroundColor(Color.black)
                         .font(.system(size: 16))
-                        .bold()
+                        .fontWeight(.semibold)
                         .padding(.top, 12)
+                        .padding(.bottom, 2)
                     
                     Text(modelUser.contentUser.lastName)
                         .foregroundColor(Color.black)
@@ -72,15 +84,19 @@ struct ProfileView: View {
                     Button(action: {
                         // Acción del segundo botón
                     }) {
-                        Text("Mis Datos")
-                            .foregroundColor(.white)
-                            .padding(.vertical, 16)
-                            .padding(.horizontal)
-                            .frame(maxWidth: .infinity)
-                            .background(TitleBarColor.TitleBarColor)
-                            .cornerRadius(8)
+
+                        NavigationLink(destination:  ProfileInformationView(modelUser: UserViewModel())) {
+                               Text("Mis Datos")
+                                .foregroundColor(.white)
+                                .padding(.vertical, 16)
+                                .padding(.horizontal)
+                                .frame(maxWidth: .infinity)
+                                .background(TitleBarColor.TitleBarColor)
+                                .cornerRadius(8)
+                           }
                     }
                     .padding(.leading, 4) // Añade padding para crear espacio entre los botones
+                    
                 }
                 .padding(.horizontal, 40) // Añade padding horizontal para que los botones no lleguen hasta el borde de la vista
                 .padding(.top, 24) // Reduciendo el padding top para acercar los botones
