@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SurveyModel: Codable {
+struct SurveyModel: Codable  {
   let surveyId: String
   let title: String
   let description: String

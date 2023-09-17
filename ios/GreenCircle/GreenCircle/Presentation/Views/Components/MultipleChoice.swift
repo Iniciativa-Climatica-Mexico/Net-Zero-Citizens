@@ -41,10 +41,15 @@ struct MultipleChoice: View {
 struct MultipleChoice_Previews: PreviewProvider {
   static var previews: some View {
     MultipleChoice(question: .constant(SurveyQuestion (
-      questionType: .multipleChoice,
+      questionId: "qst-003",
+      questionOptions: [
+        QuestionOption(questionOptionId: "opt-001", textOption: "Fast Delivery"),
+        QuestionOption(questionOptionId: "opt-002", textOption: "Easy Returns"),
+        QuestionOption(questionOptionId: "opt-003", textOption: "Wide Product Range"),
+      ],
       questionText: "Which of the following features do you find most useful?",
-      options: ["Fast Delivery", "Easy Returns", "Wide Product Range"],
-      response: nil
+      questionType: .multiple_choice,
+      isRequired: false
     )))
   }
 }

@@ -40,10 +40,11 @@ struct ScaleQuestion: View {
 struct ScaleQuestion_Previews: PreviewProvider {
   static var previews: some View {
     ScaleQuestion(question: .constant(SurveyQuestion (
-      questionType: .scale,
+      questionId: "qst-002",
+      questionOptions: [],
       questionText: "Rate our website usability from 1 to 5 (1 being the worst, 5 being the best).",
-      options: nil,
-      response: nil
+      questionType: .scale,
+      isRequired: true
     )))
   }
 }

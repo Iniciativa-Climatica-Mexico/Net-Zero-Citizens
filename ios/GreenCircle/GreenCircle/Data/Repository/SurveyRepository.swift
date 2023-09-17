@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 class SurveyApi {
   static let base = "http://localhost:3000/api/v1"
@@ -15,14 +16,18 @@ class SurveyApi {
 }
 
 protocol SurveyApiProtocol {
-  func getSurvey() async -> SurveyModel?
+  func getPendingSurvey() async -> SurveyModel?
 }
 
 class SurveyRepository: SurveyApiProtocol {
-  let service = NetworkAPIService.shared
+  let service: NetworkAPIService
   static let shared = SurveyRepository()
   
-  func getSurvey() async -> SurveyModel? {
+  init(service: NetworkAPIService = NetworkAPIService.shared) {
+    self.service = service
+  }
+  
+  func getPendingSurvey() async -> SurveyModel? {
     let userId = "A01708302"
     let surveyRoute = SurveyApi.Routes.survey.replacingOccurrences(of: ":userId", with: userId)
     return await service.getPendingSurvey(url: URL(string: "\(Api.base)\(surveyRoute)")!)
