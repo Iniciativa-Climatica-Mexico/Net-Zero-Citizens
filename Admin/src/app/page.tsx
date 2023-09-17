@@ -5,7 +5,6 @@ import {
   useEffect
 } from 'react'
 import { getPendingCompanies } from '@/api/v1/company'
-
 import {
   Avatar,
   AvatarImage
@@ -22,8 +21,10 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
+import { CellAction } from '@/components/cellAction'
+
 interface Company {
-  companyId: number
+  companyId: string
   name: string
   location: string
   profilePicture: string
@@ -32,7 +33,10 @@ interface Company {
   street: string,
   zipCode: string,
   status: 'approved' | 'pending_approval' | 'rejected'
-  email: string
+  email: string,
+  phoneNumber: string
+  webPage: string
+  description: string
 }
 
 export default function Home() {
@@ -107,6 +111,9 @@ export default function Home() {
                   >
                     Pendiente
                   </div>
+                </TableCell>
+                <TableCell className='text-right'>
+                  <CellAction companyId={company.companyId} fetchPending={fetchPending} company={company} />
                 </TableCell>
               </TableRow>
             ))}

@@ -17,4 +17,30 @@ export const getPendingCompanies = async () => {
   }
 }
 
+export type UpdateCompanyInfoBody = {
+  name: string
+  description: string
+  location: string
+  profilePicture: string
+  status: 'approved' | 'pending_approval' | 'rejected'
+  phoneNumber: string
+  webPage: string
+}
+
+export const updateCompany = async (
+  companyId: string,
+  updateInfo: UpdateCompanyInfoBody
+) => {
+  try {
+    const response = await axios.post(
+      `${backendBaseUrl}/api/v1/company/pending/${companyId}`,
+      updateInfo
+    )
+    console.log(response.data)
+    return response.data
+  } catch (error) {
+    console.error('Error updating company:', error)
+    throw error
+  }
+}
 
