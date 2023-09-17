@@ -50,7 +50,6 @@ export const getPendingCompanies = async <T>(
 export type UpdateCompanyInfoBody = {
   name: string
   description: string
-  location: string
   profilePicture: string
   status: 'approved' | 'pending_approval' | 'rejected'
   phoneNumber: string

@@ -4,6 +4,9 @@ import { db, initDB } from '../src/configs/database.config'
 import {
   getAllCompanies,
   getPendingCompanies,
+  getCompanyInfo,
+  updateCompanyInfo,
+  UpdateCompanyInfoBody,
 } from '../src/services/company.service'
 import { unwrap } from './utils'
 
@@ -285,13 +288,45 @@ describe('Company Service', () => {
       .excluding(attributesToExclude)
       .to.deep.equal(testData)
   })
-})
 
-describe('Company Service', () => {
   it('should return a list of all pending companies', async () => {
+    // Call the GET function
     const response = await getPendingCompanies({ start: 0, pageSize: 10 })
+    // Check if the GET function was successful
     expect(unwrap(response).rows)
       .excluding(attributesToExclude)
       .to.deep.equal(testData)
+  })
+
+  it('should update company information', async () => {
+    // Define the updated information
+    const updatedInfo: UpdateCompanyInfoBody = {
+      name: 'Updated Company Name',
+      description: 'Updated Company description',
+      profilePicture: 'updated-image-url',
+      status: 'approved',
+      phoneNumber: '9876543210',
+      webPage: 'www.updatedcompany.com',
+    }
+
+    // Call the updateCompanyInfo function
+    const updatedCompany = await updateCompanyInfo(
+      testData[0].companyId,
+      updatedInfo
+    )
+
+    // Check if the company was updated successfully
+    expect(updatedCompany).to.not.be.null
+
+    // Fetch the updated company from the database
+    const fetchedUpdatedCompany = await getCompanyInfo(testData[0].companyId)
+
+    // Check if the company information matches the updatedInfo
+    expect(fetchedUpdatedCompany?.toJSON())
+      .excluding(['createdAt', 'updatedAt'])
+      .to.deep.equal({
+        ...testData[0],
+        ...updatedInfo,
+      })
   })
 })
