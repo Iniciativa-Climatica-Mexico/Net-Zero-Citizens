@@ -70,7 +70,6 @@ class CreateUserFragment : Fragment() {
         viewModel.googleLoginResult.observe(viewLifecycleOwner) { result ->
             // Handle the result here
             if (result != null) {
-                Log.d("CreateUserFragment", "Google login success")
                 Log.d("CreateUserFragment", result.toString())
             } else {
                 Log.d("CreateUserFragment", "Google login failed")

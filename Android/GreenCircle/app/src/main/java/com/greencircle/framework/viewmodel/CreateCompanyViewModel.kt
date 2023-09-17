@@ -1,6 +1,5 @@
 package com.greencircle.framework.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -41,7 +40,6 @@ class CreateCompanyViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             val result: CompanyAPIService.CreateCompanyResponse? =
                 createCompanyRequirement(company, authToken)
-            Log.d("CreateCompanyViewModel", result.toString())
         }
     }
 }
