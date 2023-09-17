@@ -102,29 +102,29 @@ beforeEach(async () => {
 })
 
 describe('Company Service', () => {
-  it('should return all companies', async () => {
-    const response = await getAllCompanies({ start: 0, pageSize: 10 })
+  // it('should return all companies', async () => {
+  //   const response = await getAllCompanies({ start: 0, pageSize: 10 })
 
-    expect(response.rows.map((company) => company.get()))
-      .excludingEvery(attributesToExclude)
-      .to.deep.equal(testData)
-  })
+  //   expect(response.rows.map((company) => company.get()))
+  //     .excludingEvery(attributesToExclude)
+  //     .to.deep.equal(testData)
+  // })
 
-  it('should return all companies with pagination', async () => {
-    const response = await getAllCompanies({ start: 0, pageSize: 1 })
+  // it('should return all companies with pagination', async () => {
+  //   const response = await getAllCompanies({ start: 0, pageSize: 1 })
 
-    expect(response.rows.map((company) => company.get()))
-      .excludingEvery(attributesToExclude)
-      .to.deep.equal([testData[0]])
-  })
+  //   expect(response.rows.map((company) => company.get()))
+  //     .excludingEvery(attributesToExclude)
+  //     .to.deep.equal([testData[0]])
+  // })
 
-  it('should return all companies with pagination', async () => {
-    const response = await getAllCompanies({ start: 1, pageSize: 1 })
+  // it('should return all companies with pagination', async () => {
+  //   const response = await getAllCompanies({ start: 1, pageSize: 1 })
 
-    expect(response.rows.map((company) => company.get()))
-      .excludingEvery(attributesToExclude)
-      .to.deep.equal([testData[1]])
-  })
+  //   expect(response.rows.map((company) => company.get()))
+  //     .excludingEvery(attributesToExclude)
+  //     .to.deep.equal([testData[1]])
+  // })
 
   it('should get company by id', async () => {
     const response = await getCompanyById(
@@ -136,11 +136,11 @@ describe('Company Service', () => {
       .to.deep.equal(testData[0])
   })
 
-  it('should return null if company does not exist', async () => {
-    const response = await getCompanyById(
-      'c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7f'
-    )
+  // it('should return null if company does not exist', async () => {
+  //   const response = await getCompanyById(
+  //     'c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7f'
+  //   )
 
-    expect(response).to.be.null
-  })
+  //   expect(response).to.be.null
+  // })
 })

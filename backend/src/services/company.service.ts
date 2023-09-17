@@ -30,7 +30,7 @@ export const getCompanyById = async (id: string): Promise<Company | null> => {
   const companyScore = await getCompanyScore(id)
   const companyProducts = await getCompanyProducts(id)
   console.log(companyScore?.[0].getDataValue('rating'))
-  console.log(companyProducts?.[0].getDataValue('product').imageUrl)
+  console.log(companyProducts)
 
   return await Company.findByPk(id)
 }
