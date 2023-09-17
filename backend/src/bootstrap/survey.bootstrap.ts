@@ -222,11 +222,6 @@ export default class SurveysBootstrapper extends Bootstrapper {
               },
             ],
             answers: [
-              // {
-              //   answerId: 'answ-1234-efgh-3337',
-              //   userId: 'abcd-1234-efgh-5678',
-              //   answerText: 'Excelente',
-              // },
               {
                 answerId: 'answ-1234-efgh-3338',
                 userId: 'abcd-1234-efgh-5679',
