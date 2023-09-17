@@ -78,7 +78,7 @@
             android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/user_phone_number"
+            android:id="@+id/userPhoneTextField"
             style="?attr/textInputOutlinedDenseStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/user_age"
+            android:id="@+id/userAgeTextFIeld"
             style="?attr/textInputOutlinedDenseStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -118,13 +118,13 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayoutState"
+            android:id="@+id/userStateTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
             <AutoCompleteTextView
-                android:id="@+id/user_state"
+                android:id="@+id/userState"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Estado *"
@@ -132,22 +132,26 @@
                 android:importantForAccessibility="yes"
                 android:clickable="true"
                 android:layout_gravity="center_vertical"
+                android:textColor="@color/blue"
                 app:hintTextColor="@color/blue"
                 android:textColorHint="@color/gray_500"
                 app:boxStrokeColor="@color/blue"
                 android:layout_marginBottom="20dp"
+                android:completionThreshold="1"
+                android:popupBackground="@color/white"
+                app:simpleItems="@array/state_options"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayoutGender"
+            android:id="@+id/userGenderTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
             <AutoCompleteTextView
-                android:id="@+id/user_gender"
+                android:id="@+id/userGender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Género *"
@@ -155,10 +159,14 @@
                 android:importantForAccessibility="yes"
                 android:clickable="true"
                 android:layout_gravity="center_vertical"
+                android:textColor="@color/blue"
                 app:hintTextColor="@color/blue"
                 android:textColorHint="@color/gray_500"
                 app:boxStrokeColor="@color/blue"
-
+                android:layout_marginBottom="20dp"
+                android:completionThreshold="1"
+                android:popupBackground="@color/white"
+                app:simpleItems="@array/gender_options"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
