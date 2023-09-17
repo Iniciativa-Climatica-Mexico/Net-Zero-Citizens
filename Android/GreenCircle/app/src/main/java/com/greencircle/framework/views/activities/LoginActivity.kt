@@ -8,10 +8,12 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.greencircle.R
 import com.greencircle.databinding.ActivityLoginBinding
+import com.greencircle.framework.viewmodel.LoginViewModel
 import com.greencircle.framework.views.MainActivity
 import com.greencircle.utils.AuthUtils
 
@@ -55,6 +57,9 @@ class LoginActivity : AppCompatActivity() {
                 // Handle the case where the user canceled the operation
             }
         }
+    //obtener los argumentos del account y mandarlos a un nuevo fragment
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +72,19 @@ class LoginActivity : AppCompatActivity() {
 
         // Google Login
         authUtils.googleLoginListener(binding, this, googleSignInActivityResult)
+
+        // Login
+        var viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
+        var arguments = requireArguments()
+        val token: String = arguments.getString("idToken").toString()
+        viewModel.googleLogin(token)
+        val refreshToken: String = arguments.getString("refreshToken").toString()
+        viewModel.googleLogin(token)
+        val firstName: String = arguments.getString("firstName").toString()
+
+        val lastName: String = arguments.getString("lastName").toString()
+        val email: String = arguments.getString("email").toString()
+        val photoUrl: String = arguments.getString("photoUrl").toString()
     }
 
     // On Click Listener Method
