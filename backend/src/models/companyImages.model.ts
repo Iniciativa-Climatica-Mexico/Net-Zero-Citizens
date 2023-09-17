@@ -4,11 +4,11 @@ import {
   Model,
   DataType,
   BelongsTo,
-  ForeignKey
+  ForeignKey,
 } from 'sequelize-typescript'
 import Company from './company.model'
 
-@Table({ tableName: 'COMPANY_PRODUCTS' })
+@Table({ tableName: 'COMPANY_IMAGES' })
 export default class CompanyImages extends Model {
   @Column({
     type: DataType.UUID,
