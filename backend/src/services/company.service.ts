@@ -22,7 +22,9 @@ export const getAllCompanies = async <T>(
 
 /**
  * @brief
- * Obtiene un proveedor por su id y lo devuelve en la respuesta
+ * Obtiene un proveedor por su id y lo devuelve en la respuesta. Si no
+ * existe el proveedor, devuelve null. Añade la puntuación media del proveedor
+ * y los productos que vende
  * @param id Id del proveedor a buscar
  * @returns Promise<Company | Null> Proveedor con el id especificado
  */
