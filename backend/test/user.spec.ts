@@ -8,71 +8,59 @@ chai.use(chaiExclude)
 
 const { expect } = chai
 
-const user = {
-  userId: 'abcd-1234-efgh-5678',
-  firstName: 'John',
-  lastName: 'Doe',
-  email: 'john.doe@example.com',
-  phoneNumber: '1234567890',
-  age: 30,
-  state: 'NY',
-  gender: 'masculine',
-  roleId: 'ADMIN_ROLE_ID',
-}
-
 const testData = [
   {
     userId: 'abcd-1234-efgh-5678',
     roleId: 'ADMIN_ROLE_ID',
-    companyId: null,
-    googleId: null,
-    facebookId: null,
-    appleId: null,
     firstName: 'John',
     lastName: 'Doe',
-    secondLastName: null,
-    password: null,
     email: 'john.doe@example.com',
     phoneNumber: '1234567890',
     age: 30,
     state: 'NY',
     gender: 'masculine',
+    companyId: null,
+    googleId: null,
+    facebookId: null,
+    appleId: null,
+    secondLastName: null,
+    password: null,
     profilePicture: null,
   },
   {
     userId: 'abcd-1234-efgh-5679',
     roleId: 'CUSTOMER_ROLE_ID',
-    companyId: null,
-    googleId: null,
-    facebookId: null,
-    appleId: null,
     firstName: 'Jane',
     lastName: 'Doe',
-    secondLastName: null,
     email: 'jane.doe@example.com',
-    password: null,
     phoneNumber: '0987654321',
     age: 25,
     state: 'CA',
     gender: 'femenine',
+    companyId: null,
+    googleId: null,
+    facebookId: null,
+    appleId: null,
+    secondLastName: null,
+    password: null,
     profilePicture: null,
   },
   {
     userId: 'abcd-1234-efgh-1902',
     roleId: 'ADMIN_ROLE_ID',
-    companyId: null,
-    googleId: null,
-    facebookId: null,
-    appleId: null,
     firstName: 'Sergio',
     lastName: 'Garnica González',
-    secondLastName: null,
     email: 'a01704025@tec.mx',
-    password: null,
     phoneNumber: '4424396065',
     age: 22,
     state: 'QRO',
     gender: 'masculine',
+    companyId: null,
+    googleId: null,
+    facebookId: null,
+    appleId: null,
+    secondLastName: null,
+    password: null,
     profilePicture: null,
   },
 
@@ -127,7 +115,7 @@ describe('UserService', () => {
     expect(res).to.be.null
   }) 
   it('should get a user by email with role', async () => {
-    const res = await UserService.getUserByEmailWithRole(user.email)
+    const res = await UserService.getUserByEmailWithRole('john.doe@example.com')
     expect(res?.userId).to.equal('abcd-1234-efgh-5678')
     expect(res?.roleId).to.equal('ADMIN_ROLE_ID')
     expect(res?.role.dataValues.ROLE_ID).to.equal('ADMIN_ROLE_ID')
