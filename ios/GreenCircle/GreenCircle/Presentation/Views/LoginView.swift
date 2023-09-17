@@ -19,7 +19,8 @@ func handleSignInButton() {
     }
     // If sign in succeeded, display the app's main content View.
     print(
-      result.user.profile!.name
+      result.user.profile!.name,
+      result.user.profile!.email
     )
   }
 }
@@ -31,52 +32,44 @@ struct LoginView: View {
   @State var name = ""
   
   var body: some View {
-    VStack {
-      VStack(alignment: .leading) {
-        Image(systemName: "leaf")
-          .font(.largeTitle)
-          .foregroundColor(.green)
-        Text("Inicia sesión con tu cuenta")
-          .font(.system(size: 52))
-          .bold()
-          .padding(.bottom)
-        Text("Nos da gusto verte de nuevo")
-      }
-      .padding(.horizontal)
-      .frame(alignment: .leading)
+    ZStack{
       
-      Spacer(minLength: 80)
+      BackgroundView()
       
-      Rectangle()
-        .fill(.gray)
-        .opacity(0.1)
-        .cornerRadius(40, corners: [.topLeft, .topRight])
-        .edgesIgnoringSafeArea(.bottom)
-        .overlay {
-          VStack(spacing: 45) {
-            Spacer()
-            GoogleSignInButton(style: .wide){
-              handleSignInButton()
-              goForm()
-            }
-            .padding(.horizontal)
-            
-            Spacer()
-            Divider().padding(.horizontal)
-            
-            HStack {
-              Text("¿No tienes una cuenta?")
-              Spacer()
-              LinkButton("Regístrate", buttonColor: .blue){}
-            }.padding(.horizontal)
-            
-            LinkButton("Soy Proveedor", buttonColor: .blue, action: {})
-              .padding(.bottom)
+      VStack(spacing: 40) {
+        HeaderView(
+          title: "Inicia sesión con tu cuenta",
+          subTitle: "Nos da gusto verte")
+        
+        Spacer()
+        
+        VStack {
+          GoogleSignInButton(style: .wide){
+            handleSignInButton()
+            goForm()
           }
         }
+        .padding(.horizontal)
+        
+        Spacer()
+        
+        Divider().padding(.horizontal)
+        
+        HStack {
+          Text("¿No tienes una cuenta?")
+          Spacer()
+          LinkButton("Regístrate", buttonColor: .blue){
+            goUserRegister()
+          }
+        }.padding(.horizontal)
+        
+        LinkButton("Soy Proveedor", buttonColor: .blue, action: {})
+          .padding(.bottom)
+      }.foregroundColor(Color("MainText"))
     }
   }
 }
+
 
 struct LoginView_Previews: PreviewProvider {
   static var previews: some View {
@@ -84,4 +77,36 @@ struct LoginView_Previews: PreviewProvider {
   }
 }
 
+struct HeaderView: View {
+  var title: String
+  var subTitle: String = ""
+  
+  var body: some View {
+    VStack(alignment: .leading) {
+      Image(systemName: "leaf")
+        .font(.largeTitle)
+        .foregroundColor(.green)
+      Text(title)
+        .font(.system(size: 45, weight: .bold))
+        .padding(.vertical)
+      Text(subTitle)
+        .font(.system(size: 24))
+      Spacer()
+    }
+    .padding(.horizontal)
+    .frame(maxWidth: .infinity,
+           maxHeight: 250,
+           alignment: .leading)
+  }
+}
 
+struct BackgroundView: View {
+  var body: some View {
+    Rectangle()
+      .fill(.gray)
+      .opacity(0.1)
+      .cornerRadius(40, corners: [.topLeft, .topRight])
+      .edgesIgnoringSafeArea(.bottom)
+      .padding(.top, 300)
+  }
+}

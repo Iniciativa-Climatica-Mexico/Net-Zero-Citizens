@@ -12,49 +12,41 @@ struct UserRegisterView: View {
   var goLogin: () -> Void
   
   var body: some View {
-    VStack {
-      VStack(alignment: .leading) {
-        Image(systemName: "leaf")
-          .font(.largeTitle)
-          .foregroundColor(.green)
+    ZStack{
+      
+      BackgroundView()
+      
+      VStack(spacing: 40) {
+        HeaderView(
+          title: "Crear cuenta",
+          subTitle: "Regístrate con tu cuenta preferida")
         
-        Text("Crear cuenta")
-          .font(.system(size: 52))
-          .bold()
-          .padding(.bottom)
-        Text("Registrate con tu cuenta preferida")
-      }
-      .frame(maxWidth: .infinity, alignment: .leading)
-      .padding(.horizontal)
-      
-      Spacer(minLength: 80)
-      
-      Rectangle()
-        .fill(.gray)
-        .opacity(0.1)
-        .cornerRadius(40, corners: [.topLeft, .topRight])
-        .edgesIgnoringSafeArea(.bottom)
-        .overlay {
-          VStack(spacing: 45) {
-            GoogleSignInButton(style: .wide){}
-              .padding(.horizontal, 40)
-              .padding(.top, 120)
-            
-            Spacer()
-            Divider()
-              .padding(.horizontal)
-            
-            HStack {
-              Text("¿Ya tienes una cuenta?")
-              Spacer()
-              LinkButton("Inicia Sesión", buttonColor: .blue){}
-            }.padding(.horizontal, 30)
-            
-            LinkButton("Aviso de privacidad", buttonColor: .blue){}
-            
+        Spacer()
+        
+        VStack {
+          GoogleSignInButton(style: .wide){
           }
         }
-    }
+        .padding(.horizontal)
+        
+        Spacer()
+        
+        Divider().padding(.horizontal)
+        
+        HStack {
+          Text("¿Ya tienes una cuenta?")
+          Spacer()
+          LinkButton("Inicia Sesión", buttonColor: .blue){
+            goLogin()
+          }
+        }.padding(.horizontal)
+        
+        LinkButton("Aviso de privacidad",
+                   buttonColor: .blue, action: {})
+          .padding(.bottom)
+      }
+      
+    }.foregroundColor(Color("MainText"))
   }
 }
 
