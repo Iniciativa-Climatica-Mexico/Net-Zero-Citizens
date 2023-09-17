@@ -10,7 +10,7 @@ class CompanyReviewViewHolder(private var binding: ItemCompanyReviewBinding) :
 
     fun bind(item: CompanyReview, context: Context) {
         val name = item.user.firstName + " " + item.user.lastName
-        val rating = item.rating.toString() + "/5"
+        val rating = item.rating.toString() + "de 5"
         val date = item.updatedAt.slice(0..9)
         binding.reviewCardName.text = name
         binding.reviewCardTitle.text = item.reviewTitle
