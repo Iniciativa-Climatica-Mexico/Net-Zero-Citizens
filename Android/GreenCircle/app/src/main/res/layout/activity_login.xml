@@ -81,7 +81,9 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:gravity="start"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
 
                 <TextView
                     style="@style/Widget.Material3.Button.TextButton"
@@ -90,7 +92,8 @@
                     android:layout_weight="1"
                     android:text="¿No tienes una cuenta?"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:gravity="start"/>
 
                 <Button
                     android:id="@+id/login_register_user"
@@ -101,7 +104,8 @@
                     android:text="Regístrate"
                     android:textColorLink="@color/blue"
                     android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:gravity="end"/>
             </LinearLayout>
 
             <Button
