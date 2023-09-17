@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.greencircle.data.remote.CompanyAPIService
 import com.greencircle.data.remote.models.AuthResponse
+import com.greencircle.domain.model.CreateCompanyRequirement
 import com.greencircle.domain.usecase.GoogleAuthRequirement
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,6 +19,8 @@ import kotlinx.coroutines.launch
  */
 class CreateCompanyViewModel : ViewModel() {
     private val googleAuthRequirement = GoogleAuthRequirement()
+    private val createCompanyRequirement = CreateCompanyRequirement()
+
     private val _googleLoginResult = MutableLiveData<AuthResponse?>()
     val googleLoginResult: LiveData<AuthResponse?> = _googleLoginResult
 
@@ -29,6 +33,13 @@ class CreateCompanyViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             val result: AuthResponse? = googleAuthRequirement(token)
             _googleLoginResult.postValue(result)
+        }
+    }
+
+    fun createCompany(company: CompanyAPIService.CreateCompanyRequest, authToken: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result: CompanyAPIService.CreateCompanyResponse? =
+                createCompanyRequirement(company, authToken)
         }
     }
 }

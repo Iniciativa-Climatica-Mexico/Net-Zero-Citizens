@@ -10,11 +10,10 @@ class AuthAPIClient {
 
     suspend fun googleLogin(token: String): AuthResponse? {
         api = AuthNetworkModel()
-        Log.d("AuthAPIClient", "Fetching data from API")
         return try {
             val body = AuthAPIService.GoogleLoginRequest(token)
             val response = api.googleLogin(body)
-            Log.d("AuthAPIClient", "Res: $response")
+            Log.d("CreateCompany", "Response: $response")
             response
         } catch (e: Exception) {
             e.printStackTrace()

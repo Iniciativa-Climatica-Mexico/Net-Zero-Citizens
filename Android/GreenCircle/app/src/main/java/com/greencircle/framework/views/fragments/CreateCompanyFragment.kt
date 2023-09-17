@@ -1,5 +1,6 @@
 package com.greencircle.framework.views.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,7 +12,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputLayout
 import com.greencircle.R
+import com.greencircle.data.remote.CompanyAPIService
+import com.greencircle.data.remote.models.Company
 import com.greencircle.framework.viewmodel.CreateCompanyViewModel
+import com.greencircle.framework.views.MainActivity
 
 /**Constructor de "CreateCompanyFragment"
  *
@@ -20,6 +24,7 @@ import com.greencircle.framework.viewmodel.CreateCompanyViewModel
 class CreateCompanyFragment : Fragment() {
     private lateinit var viewModel: CreateCompanyViewModel
     private var arguments = Bundle()
+    private lateinit var authToken: String
 
     /**
      * Inicializa el "CreateCompanyFragment"
@@ -73,8 +78,7 @@ class CreateCompanyFragment : Fragment() {
         viewModel.googleLoginResult.observe(viewLifecycleOwner) { result ->
             // Handle the result here
             if (result != null) {
-                Log.d("CreateCompanyFragment", "Google login success")
-                Log.d("CreateCompanyFragment", result.toString())
+                authToken = result.tokens.authToken
             } else {
                 Log.d("CreateCompanyFragment", "Google login failed")
             }
@@ -126,17 +130,28 @@ class CreateCompanyFragment : Fragment() {
         val zipCode = zipCodeInputLayout.editText?.text.toString()
 
         // Send the data to the backend
-        Log.d("CreateCompanyFragment", "Send data to backend")
-        Log.d("CreateCompanyFragment", "Name: $name")
-        Log.d("CreateCompanyFragment", "Description: $description")
-        Log.d("CreateCompanyFragment", "Email: $email")
-        Log.d("CreateCompanyFragment", "Phone: $phone")
-        Log.d("CreateCompanyFragment", "Website: $website")
-        Log.d("CreateCompanyFragment", "Street: $street")
-        Log.d("CreateCompanyFragment", "Street Number: $streetNumber")
-        Log.d("CreateCompanyFragment", "City: $city")
-        Log.d("CreateCompanyFragment", "State: $state")
-        Log.d("CreateCompanyFragment", "Zip Code: $zipCode")
+        val companyData: Company = Company(
+            "abcd-1234-efgh-1902",
+            name,
+            description,
+            email,
+            phone,
+            website,
+            street,
+            streetNumber,
+            city,
+            state,
+            zipCode,
+            "test1",
+            "test2",
+            "test3",
+            "test4"
+        )
+
+        val createCompanyRequest = CompanyAPIService.CreateCompanyRequest(companyData)
+
+        viewModel.createCompany(createCompanyRequest, authToken)
+        navigateToHome()
     }
 
     /**
@@ -155,5 +170,10 @@ class CreateCompanyFragment : Fragment() {
 
         userName.text = arguments.getString("displayName")
         userEmail.text = arguments.getString("email")
+    }
+
+    private fun navigateToHome() {
+        var intent: Intent = Intent(requireContext(), MainActivity::class.java)
+        startActivity(intent)
     }
 }

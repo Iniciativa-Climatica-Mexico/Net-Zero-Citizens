@@ -19,8 +19,8 @@ export type CompanyType = {
   city: string,
   state: string,
   zipCode: number,
-  latitude: number,
-  longitude: number,
+  latitude?: number | null,
+  longitude?: number | null,
   profilePicture?: string | null,
   pdfCurriculumUrl: string,
   pdfDicCdmxUrl?: string | null,
@@ -28,7 +28,7 @@ export type CompanyType = {
   pdfGuaranteeSecurityUrl: string,
   pdfActaConstitutivaUrl: string,
   pdfIneUrl: string,
-  status: string,
+  status?: string,
 }
 
 /**

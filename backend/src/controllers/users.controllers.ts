@@ -13,7 +13,7 @@ import { RequestHandler } from 'express'
  */
 export const getAllUsers: RequestHandler<
   NoRecord,
-  Paginator<User>,
+  Paginator<User> | { error: string },
   NoRecord,
   PaginationParams<{ name?: string }>
 > = async (req, res) => {
@@ -25,13 +25,17 @@ export const getAllUsers: RequestHandler<
     },
   }
 
-  const users = await UserService.getAllUsers(params)
-  res.json({
-    rows: users.rows,
-    start: params.start,
-    pageSize: params.pageSize,
-    total: users.count,
-  })
+  try {
+    const users = await UserService.getAllUsers(params)
+    res.json({
+      rows: users.rows,
+      start: params.start,
+      pageSize: params.pageSize,
+      total: users.count,
+    })
+  } catch (error) {
+    res.status(400).json({ error: 'Error getting users' })
+  }
 }
 
 
@@ -77,10 +81,14 @@ export const getUserInfo: RequestHandler<{ userId: string }> = async (
   const userId = req.params.userId
   const userInfo = await UserService.getUserInfo(userId)
 
-  if (userInfo) {
-    res.json(userInfo)
-  } else {
-    res.status(200).status(404).json({ error: 'User not found' })
+  try {
+    if (userInfo) {
+      res.json(userInfo)
+    } else {
+      res.status(200).status(404).json({ error: 'User not found' })
+    }
+  } catch (error) {
+    res.status(400).json({ error: 'Error getting user' })
   }
 }
 
@@ -106,13 +114,18 @@ export const updateUserInfo: RequestHandler<
   UserService.UpdateUserInfoBody
 > = async (req, res) => {
   const userId = req.params.userId
-  const userInfo = await UserService.getUserInfo(userId)
+  try {
+    const userInfo = await UserService.getUserInfo(userId)
 
-  if (userInfo) {
-    await UserService.updateUserInfo(userId, req.body)
-    res.status(201).json({ message: 'User updated' })
-  } else {
-    res.status(404).json({ message: 'User not found' })
+    if (userInfo) {
+      await UserService.updateUserInfo(userId, req.body)
+      res.status(201).json({ message: 'User updated' })
+    } else {
+      res.status(404).json({ message: 'User not found' })
+    }
+  } catch(error) {
+    console.log(error)
+    res.status(400).json({ message: 'Error updating user' })
   }
 }
 
@@ -122,18 +135,24 @@ export const updateUserCredentials: RequestHandler<
   UserService.UpdateUserCredentials
 > = async (req, res) => {
   const userId = req.params.userId
-  const userInfo = await UserService.getUserInfo(userId)
 
-  if (!userId || !userInfo) {
-    res.status(400).json({ message: 'User not found' })
-    return
-  }
+  try {
+    const userInfo = await UserService.getUserInfo(userId)
+    
+    if (!userId || !userInfo) {
+      res.status(400).json({ message: 'User not found' })
+      return
+    }
 
-  if (userInfo) {
-    await UserService.updateUserCredentials(userId, req.body)
-    res.status(201).json({ message: 'User credentials updated' })
-  } else {
-    res.status(404).json({ message: 'User not found' })
+    if (userInfo) {
+      await UserService.updateUserCredentials(userId, req.body)
+      res.status(201).json({ message: 'User credentials updated' })
+    } else {
+      res.status(404).json({ message: 'User not found' })
+    }
+  } catch (error) {
+    console.log(error)
+    res.status(400).json({ message: 'Error updating user credentials' })
   }
 }
 
