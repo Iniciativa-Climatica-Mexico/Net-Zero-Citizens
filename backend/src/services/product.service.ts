@@ -1,4 +1,4 @@
-import Product from '../models/product.model'
+import Product from '../models/products.model'
 import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
 
 /**

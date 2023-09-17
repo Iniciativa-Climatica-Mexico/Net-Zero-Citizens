@@ -10,22 +10,27 @@ const { expect } = chai
 
 const testData = [
   {
-    productId: 'prod-1234-efgh-0000',
-    name: 'Sistemas Fotovoltaicos',	
-    description: 'Descripcion de Sistemas Fotovoltaicos ABC',
-    imageUrl: 'https://picsum.photos/100',
-    altText: 'Panel Solar XYZ alt text',
+    name: 'Product 1',
+    description: 'Product 1 description',
+    imageUrl: 'https://www.product1.com/image.png',
+    imageAltText: 'Product 1 Image',
   },
   {
-    productId: 'prod-1235-efgh-0000',
-    name: 'Calentador Solar',
-    description: 'Descripcion de Calentador Solar ABC',
-    imageUrl: 'https://picsum.photos/200',
-    altText: 'Calentador Solar XYZ alt text',
+    name: 'Product 2',
+    description: 'Product 2 description',
+    imageUrl: 'https://www.product2.com/image.png',
+    imageAltText: 'Product 2 Image',
+  },
+  {
+    name: 'Product 3',
+    description: 'Product 3 description',
+    imageUrl: 'https://www.product3.com/image.png',
+    imageAltText: 'Product 3 Image',
   },
 ]
 
 const attributesToExclude = [
+  'productId',
   'createdAt',
   'updatedAt',
 ]

@@ -14,7 +14,7 @@ const testData: AuthService.Payload = {
   last_name: 'Doe',
   uuid: '123456789',
   email: 'john@doe',
-  roles: ['admin', 'user'],
+  roles: 'admin',
   login_type: 'google',
 } 
 

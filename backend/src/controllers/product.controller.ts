@@ -1,4 +1,4 @@
-import Product from '../models/product.model'
+import Product from '../models/products.model'
 import * as ProductService from '../services/product.service'
 import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'

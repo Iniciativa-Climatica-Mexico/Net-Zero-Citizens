@@ -1,4 +1,4 @@
-import CompanyImage from '../models/companyImage.model'
+import CompanyImage from '../models/companyImages.model'
 
 // TYPES
 export type CompanyImageType = {

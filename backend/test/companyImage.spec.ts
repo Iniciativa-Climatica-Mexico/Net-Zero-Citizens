@@ -8,7 +8,7 @@ chai.use(chaiExclude)
 const { expect } = chai
 
 const data: CompanyImageService.CompanyImageType = {
-  companyId: 'comp-1234-efgh-0000',
+  companyId: 'c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
   imageUrl: 'https://image.url/454656',
   altText: 'Image Alt Text'
 }   
