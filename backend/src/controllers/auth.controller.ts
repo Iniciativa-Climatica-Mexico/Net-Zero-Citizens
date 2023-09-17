@@ -13,7 +13,6 @@ export const googleLogin: RequestHandler<
   AuthService.AuthResponse,
   { googleToken: string },
   NoRecord> = async (req, res) => {
-    console.log('GOOGLE LOGIN')
     let authResponse: AuthService.AuthResponse = {tokens: null, user: null, error: null}
     // Verificar que el token se haya mandado
     if(!req.body.googleToken) {
