@@ -54,10 +54,7 @@ class CreateUserFragment : Fragment() {
         )
 
         setTexts(arguments, view)
-
         onSubmitListener(view)
-        onSubmitHandler(view)
-
         return view
     }
 
@@ -89,7 +86,7 @@ class CreateUserFragment : Fragment() {
     private fun onSubmitListener(view: View) {
         val submitButton = view.findViewById<Button>(R.id.submit_create_user)
         submitButton.setOnClickListener {
-            Log.d("CreateUserFragment", "Send data to backend")
+            onSubmitHandler(view)
         }
     }
 
