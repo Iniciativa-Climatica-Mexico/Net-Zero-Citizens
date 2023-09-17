@@ -6,19 +6,14 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG
-import com.google.android.material.snackbar.Snackbar
 import com.greencircle.R
 import com.greencircle.databinding.ActivitySurveyBinding
-import com.greencircle.domain.model.survey.Answer
 import com.greencircle.domain.model.survey.Question
-import com.greencircle.domain.model.survey.QuestionType
 import com.greencircle.framework.viewmodel.SurveyViewModel
 import com.greencircle.framework.views.fragments.survey.QuestionFragment
 
 class SurveyActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySurveyBinding
-    private lateinit var data: Map<String, Question>
     private val viewModel: SurveyViewModel by viewModels()
     private val fragmentManager = supportFragmentManager
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,23 +29,42 @@ class SurveyActivity : AppCompatActivity() {
                 goToMain()
                 return@observe
             }
+            Log.i("Salida", survey.toString())
             binding.SurveyTitle.text = survey.title
             loadQuestions(survey.questions)
+        }
+        viewModel.submitStatusLiveData.observe(this) { status ->
+            when (status) {
+                SurveyViewModel.SubmitStatus.success -> {
+                    MaterialAlertDialogBuilder(this).setTitle("¡Gracias por responder!")
+                        .setMessage("Tus respuestas han sido enviadas.")
+                        .setPositiveButton("Aceptar") { _, _ -> goToMain() }.show()
+                }
+
+                SurveyViewModel.SubmitStatus.validationError -> {
+                    MaterialAlertDialogBuilder(this).setTitle("Faltan preguntas")
+                        .setMessage(
+                            "No puedes enviar sin antes haber termiando " +
+                                "de llenar todas las preguntas obligatorias.",
+                        )
+                        .setPositiveButton("Seguir") { _, _ -> }.show()
+                }
+
+                SurveyViewModel.SubmitStatus.error -> {
+                    MaterialAlertDialogBuilder(this).setTitle("Error")
+                        .setMessage("No se pudieron enviar tus respuestas. Inténtalo más tarde.")
+                        .setPositiveButton("Aceptar") { _, _ -> goToMain() }.show()
+                }
+            }
         }
     }
 
     private fun initializeBinding() {
         binding = ActivitySurveyBinding.inflate(layoutInflater)
         binding.BtnSubmit.setOnClickListener {
-            Snackbar.make(
-                binding.root,
-                getAnswers().map { ans ->
-                    "ID:${ans.questionId}, ${ans.answerText ?: ans.scaleValue}"
-                }.joinToString(separator = ";"),
-                LENGTH_LONG,
-            ).show()
+            Log.i("Salida", viewModel.surveyLiveData.value.toString())
+            viewModel.submitAnswers()
         }
-
         binding.topAppBar.setOnClickListener {
             MaterialAlertDialogBuilder(this).setTitle("¿Quieres dejar de responder?")
                 .setMessage("Los cambios realizados no se guardarán.")
@@ -62,10 +76,8 @@ class SurveyActivity : AppCompatActivity() {
     }
 
     private fun loadQuestions(questions: ArrayList<Question>) {
-        data = questions.associateBy { it.questionId }
         val fragmentTransaction = fragmentManager.beginTransaction()
-        Log.i("SurveyActivity", data.toString())
-        data.forEach { questionId, question ->
+        questions.forEach { question ->
             val questionFragment = QuestionFragment()
             val args = Bundle()
             args.putSerializable("question", question)
@@ -75,24 +87,8 @@ class SurveyActivity : AppCompatActivity() {
         fragmentTransaction.commit()
     }
 
-    private fun getAnswers(): List<Answer> {
-        return data.map { (_, question) ->
-            question.answer ?: Answer(null, null, question.questionId)
-        }
-    }
-
     fun onQuestionAnswered(questionId: String, answer: String) {
-        val question = data.get(questionId) ?: throw Error("Question not found")
-        when (question.questionType) {
-            QuestionType.scale -> {
-                val scaleValue = answer.toInt()
-                question.answer = Answer(scaleValue, null, questionId)
-            }
-
-            else -> {
-                question.answer = Answer(null, answer, questionId)
-            }
-        }
+        viewModel.onQuestionAnswered(questionId, answer)
     }
 
     private fun goToMain() {

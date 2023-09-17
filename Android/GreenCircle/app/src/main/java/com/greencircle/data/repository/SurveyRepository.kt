@@ -1,6 +1,7 @@
 package com.greencircle.data.repository
 
 import com.greencircle.data.remote.SurveyAPIClient
+import com.greencircle.domain.model.survey.Answer
 import com.greencircle.domain.model.survey.Question
 import com.greencircle.domain.model.survey.QuestionOption
 import com.greencircle.domain.model.survey.QuestionType
@@ -67,7 +68,13 @@ class SurveyRepository {
                 ),
             ),
         )
-        return null
-//        return apiSurvey.getSurveyPending(bearerToken)
+//        return mockData
+        // get id
+        return apiSurvey.getSurveyPending("abcd-1234-efgh-5678")
+    }
+
+    suspend fun submitAnswers(surveyId: String, answers: List<Answer>) {
+        // send answers to server
+        apiSurvey.submitAnswers("abcd-1234-efgh-5678", surveyId, answers)
     }
 }

@@ -1,8 +1,11 @@
 package com.greencircle.framework.views.fragments.survey
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableStringBuilder
 import android.text.TextWatcher
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,25 +23,15 @@ import com.greencircle.domain.model.survey.QuestionType
 import com.greencircle.framework.views.SurveyActivity
 
 class QuestionFragment : Fragment() {
-    private lateinit var questionId: String
-    private lateinit var questionText: String
-    private lateinit var questionType: QuestionType
-    lateinit var questionOptions: List<String>
+    lateinit var question: Question
     private lateinit var answerField: AnswerField
     lateinit var binding: FragmentQuestionBinding
     lateinit var activity: SurveyActivity
-
-    //    private lateinit var surveyActivity: SurveyActivity
-    var answer: String = ""
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             val question = it.getSerializable("question") as Question
-            questionId = question.questionId
-            questionText = question.questionText
-            questionType = question.questionType
-            questionOptions = question.questionOptions.map { q -> q.textOption }
+            this.question = question
         }
     }
 
@@ -47,14 +40,26 @@ class QuestionFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentQuestionBinding.inflate(inflater, container, false)
-        binding.QuestionText.text = questionText
-        val callback = { answer: String ->
-            this.activity.onQuestionAnswered(questionId, answer)
+        // add red * at the end of title if question is required
+        if (question.isRequired) {
+            val span = SpannableStringBuilder(question.questionText + " *")
+            span.setSpan(
+                ForegroundColorSpan(Color.RED),
+                span.length - 1,
+                span.length,
+                0,
+            )
+            binding.QuestionText.text = span
+        } else {
+            binding.QuestionText.text = question.questionText
         }
 
-        answerField = when (questionType) {
+        val callback = { answer: String ->
+            this.activity.onQuestionAnswered(question.questionId, answer)
+        }
+
+        answerField = when (question.questionType) {
             QuestionType.open -> OpenAnswerField(this, callback)
             QuestionType.scale -> ScaleAnswerField(this, callback)
             QuestionType.multiple_choice -> MultipleChoiceAnswerField(this, callback)
@@ -157,14 +162,14 @@ class MultipleChoiceAnswerField(parent: QuestionFragment, callback: (String) -> 
             parent.binding.AnswerFieldContainer,
             true,
         )
-        parent.questionOptions.forEach { option ->
+        parent.question.questionOptions.forEach { option ->
             ItemMultipleChoiceAnswerOptionBinding.inflate(
                 LayoutInflater.from(context),
                 binding.AnswerField,
                 true,
             ).apply {
                 this.root.id = generateViewId()
-                this.questionOption.text = option
+                this.questionOption.text = option.textOption
             }
             val divider = View(context)
             binding.AnswerField.addView(divider)
