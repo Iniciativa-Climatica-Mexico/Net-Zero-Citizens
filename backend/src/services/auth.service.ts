@@ -79,10 +79,27 @@ export const googleLogin = async (googleToken: string): Promise<AuthResponse | n
     const data = await verifyGoogleToken(googleToken)
     if(!data) return null
 
-    const user = await UserService.getUserByEmailWithRole(data.email)
+    let user = await UserService.getUserByEmailWithRole(data.email)
 
-    // TODO Registrar cliente
-    if(!user) console.log('Register user')
+    // Registrar cliente
+    if(!user) {
+      user = await UserService.createUser({
+        firstName: data.first_name,
+        lastName: data.last_name,
+        email: data.email,
+        googleId: data.googleId,
+        roleId: 'CUSTOMER_ROLE_ID',
+        phoneNumber: null,
+        age: 0,
+        state: '',
+        gender: 'no_answer',
+        profilePicture: data.picture,
+        companyId: null,
+      })
+      if(user) user = await UserService.getUserByEmailWithRole(data.email)
+    }
+
+    console.log(user)
 
     // Si ya está registrado, crear un Payload con la información del usuario
     const userPayload: Payload = {
@@ -102,6 +119,8 @@ export const googleLogin = async (googleToken: string): Promise<AuthResponse | n
       userPayload.roles = user.role.dataValues.NAME
     }
 
+    console.log(user)
+
     const tokens = await createTokens(userPayload)
     if(!tokens) return null
 
@@ -110,6 +129,7 @@ export const googleLogin = async (googleToken: string): Promise<AuthResponse | n
       user: userPayload
     }
   } catch(error) {
+    console.log(error)
     return null
   }
 }
