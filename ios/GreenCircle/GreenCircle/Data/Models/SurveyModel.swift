@@ -9,19 +9,21 @@ import Foundation
 
 struct SurveyModel {
   
-    let title: String
-    let description: String
-    let questions: [SurveyQuestion]
+  let title: String
+  let description: String
+  var questions: [SurveyQuestion]
 }
 
-struct SurveyQuestion: Hashable {
-    let questionType: QuestionType
-    let questionText: String
-    let options: [String]?
-    
-    enum QuestionType {
-        case open
-        case scale
-        case multipleChoice
-    }
+struct SurveyQuestion: Identifiable, Hashable {
+  let id = UUID()
+  let questionType: QuestionType
+  let questionText: String
+  let options: [String]?
+  var response: String?
+  
+  enum QuestionType {
+    case open
+    case scale
+    case multipleChoice
+  }
 }

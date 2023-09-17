@@ -8,19 +8,22 @@
 import SwiftUI
 
 struct SendButton: View {
+  var action: () -> Void
+  
   var body: some View {
     Button("Enviar") {
-      print("Button pressed!")
+     action()
     }
     .buttonStyle(GrowingButton())
   }
 }
 
-struct SendBotton_Previews: PreviewProvider {
+struct SendButton_Previews: PreviewProvider {
   static var previews: some View {
-    SendButton()
+    SendButton(action: {})
   }
 }
+
 
 struct GrowingButton: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {

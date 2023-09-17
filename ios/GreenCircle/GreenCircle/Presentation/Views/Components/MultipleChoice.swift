@@ -7,10 +7,10 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct MultipleChoice: View {
-  let question: SurveyQuestion
-  
-  @State private var selectedOption: Int = -1
+  @Binding var question: SurveyQuestion
   
   var body: some View {
     VStack(alignment: .leading) {
@@ -19,18 +19,20 @@ struct MultipleChoice: View {
       
       ForEach(0..<question.options!.count, id: \.self) { answer in
         Button(action: {
-          self.selectedOption = answer
+          question.response = question.options![answer]
         }) {
-          Text(question.options![answer])
-            .frame(maxWidth: .infinity)
-            .foregroundColor(selectedOption == answer ? Color(red: 0.33, green: 0.49, blue: 0.55) : Color(red: 0.54, green: 0.54, blue: 0.54))
+          HStack {
+            Text(question.options![answer])
+              .frame(maxWidth: .infinity, alignment: .leading)
+              .foregroundColor(question.response == question.options![answer] ? Color.blue : Color.black)
+          }
+          .padding()
+          .background(question.response == question.options![answer] ? Color.yellow : Color.clear)
         }
-        .padding()
         .clipShape(RoundedRectangle(cornerRadius: 9))
         .overlay(
           RoundedRectangle(cornerRadius: 9)
             .stroke(lineWidth: 1)
-            .foregroundColor(selectedOption == answer ? Color(red: 0.33, green: 0.49, blue: 0.55) : Color(red: 0.54, green: 0.54, blue: 0.54))
         )
         .padding(.bottom, 4)
       }
@@ -40,10 +42,12 @@ struct MultipleChoice: View {
 
 struct MultipleChoice_Previews: PreviewProvider {
   static var previews: some View {
-    MultipleChoice(question: SurveyQuestion(
+    MultipleChoice(question: .constant(SurveyQuestion (
       questionType: .multipleChoice,
       questionText: "Which of the following features do you find most useful?",
-      options: ["Fast Delivery", "Easy Returns", "Wide Product Range"]
-    ))
+      options: ["Fast Delivery", "Easy Returns", "Wide Product Range"],
+      response: nil
+    )))
   }
 }
+

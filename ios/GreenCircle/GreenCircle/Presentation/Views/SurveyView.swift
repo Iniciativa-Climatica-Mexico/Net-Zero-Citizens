@@ -8,7 +8,14 @@
 import SwiftUI
 
 struct SurveyView: View {
-  let survey: SurveyModel
+  @State private var responses: [SurveyQuestion] = []
+  @State private var survey: SurveyModel // Declarar survey como una propiedad de estado
+  @State private var isSendButtonPressed = false // Agregar una propiedad para rastrear si se presionó el botón "Enviar"
+  @State private var showAlert = false
+  
+  init(survey: SurveyModel) {
+    self._survey = State(initialValue: survey) // Inicializar survey como una propiedad de estado
+  }
   
   var body: some View {
     NavigationView {
@@ -18,34 +25,39 @@ struct SurveyView: View {
             .font(.subheadline)
             .padding(.bottom)
           
-          ForEach(survey.questions, id: \.self) { question in
+          ForEach($survey.questions) { $question in // Usar $survey para enlazar a la propiedad de estado
             switch question.questionType {
             case .open:
-              OpenQuestion(question: question)
+              OpenQuestion(question: $question)
             case .scale:
-              ScaleQuestion(question: question)
+              ScaleQuestion(question: $question)
             case .multipleChoice:
-              MultipleChoice(question: question)
-            } // Case
-          } // For
+              MultipleChoice(question: $question)
+            }
+          }
           
           HStack {
             Spacer()
-            SendButton()
+            SendButton(action: {
+              self.responses = self.survey.questions
+              print(self.responses)
+              
+              })
             Spacer()
-          } // HStack
+          }
           .frame(maxWidth: .infinity)
           .padding()
           
-        } //VStack
+        }
         .padding([.leading, .trailing])
         
-      } // ScrollView
+      }
       .navigationBarTitle(Text(survey.title))
       
-    } // Navigation View
+    }
   }
 }
+
 
 struct Previews_SurveyView_Previews: PreviewProvider {
   static var previews: some View {
