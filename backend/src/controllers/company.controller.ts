@@ -13,7 +13,7 @@ import { RequestHandler } from 'express'
  */
 export const getAllCompanies: RequestHandler<
   NoRecord,
-  Paginator<Company>,
+  Paginator<Company> | { error: string },
   NoRecord,
   PaginationParams<{ name?: string }>
 > = async (req, res) => {
@@ -25,11 +25,15 @@ export const getAllCompanies: RequestHandler<
     },
   }
 
-  const companies = await CompanyService.getAllCompanies(params)
-  res.json({
-    rows: companies.rows,
-    start: params.start,
-    pageSize: params.pageSize,
-    total: companies.count,
-  })
+  try {
+    const companies = await CompanyService.getAllCompanies(params)
+    res.json({
+      rows: companies.rows,
+      start: params.start,
+      pageSize: params.pageSize,
+      total: companies.count,
+    })
+  } catch (error) {
+    res.status(400).json({ error: 'Error getting users' })
+  }
 }
