@@ -73,6 +73,7 @@
 		C483FD862AB3A34500A9E85A /* EcoInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoInfoRepository.swift; sourceTree = "<group>"; };
 		C483FD882AB3A58E00A9E85A /* fetchAllEcoInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fetchAllEcoInfo.swift; sourceTree = "<group>"; };
 		C483FD8A2AB3AC6500A9E85A /* EcoInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoInfoView.swift; sourceTree = "<group>"; };
+		C4E16FE62AB7806700EF4545 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +125,7 @@
 		6C4452B62AA6EF8500BE5930 /* GreenCircle */ = {
 			isa = PBXGroup;
 			children = (
+				C4E16FE62AB7806700EF4545 /* Info.plist */,
 				6C4452E42AA6F06D00BE5930 /* Utils */,
 				6C4452E32AA6F06700BE5930 /* Data */,
 				6C4452E22AA6F05F00BE5930 /* Domain */,
@@ -593,9 +595,11 @@
 				DEVELOPMENT_TEAM = 3YA9576WH5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GreenCircle/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -622,9 +626,11 @@
 				DEVELOPMENT_TEAM = 3YA9576WH5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GreenCircle/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -8,47 +8,25 @@
 import Foundation
 import SwiftUI
 
-class MyNavigationController: UINavigationController {
-  override var preferredStatusBarStyle: UIStatusBarStyle {
-    return .lightContent
-  }
-}
-class ViewController: UIViewController {
-  override var preferredStatusBarStyle: UIStatusBarStyle {
-    return .lightContent
-  }
-}
+struct NavBarTheme: ViewModifier {
+  @Environment(\.colorScheme) var colorScheme
+  @State private var isScrolling = false
 
-class RootViewController: UIViewController {
-  override var childForStatusBarStyle: UIViewController? {
-    return self.children.first
-  }
-  override var preferredStatusBarStyle: UIStatusBarStyle {
-    return .lightContent
-  }
-}
+  func body(content: Content) -> some View {
+    content.onAppear {
+      let appearance = UINavigationBarAppearance()
+      appearance.backgroundColor = colorScheme == .light ? UIColor(Color("BlueCustom")) : UIColor(Color("BlueCustom"))
+      appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+      appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
 
-struct NavigationConfigurator: UIViewControllerRepresentable {
-  var configure: (UINavigationController) -> Void = { _ in }
-  var statusBarStyle: UIColor
-
-  init(statusBarStyle: UIColor, configure: @escaping (UINavigationController) -> Void = { _ in }) {
-    self.statusBarStyle = statusBarStyle
-    self.configure = configure
-  }
-  func makeUIViewController(context:
-                            UIViewControllerRepresentableContext<NavigationConfigurator>) -> UIViewController {
-  let controller = UIViewController()
-
-    DispatchQueue.main.async {
-      if let nconf = controller.navigationController {
-        self.configure(nconf)
-      }
+      UINavigationBar.appearance().scrollEdgeAppearance = appearance
+      UINavigationBar.appearance().standardAppearance = appearance
     }
-    return controller
   }
-  func updateUIViewController(_ uiViewController: UIViewController,
-                              context: UIViewControllerRepresentableContext<NavigationConfigurator>) {
-  self.configure(uiViewController.navigationController ?? UINavigationController())
+}
+
+extension View {
+  func applyNavBarTheme() -> some View {
+    self.modifier(NavBarTheme())
   }
 }

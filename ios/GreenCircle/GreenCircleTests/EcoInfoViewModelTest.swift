@@ -25,9 +25,7 @@ struct EcoInfoViewModelTestStruct {
       let filteredEcoInfo = resultEcoInfo.filter { ecoInfo in
         if toSearch.prefix(1) == "N" {
           return ecoInfo.description == toSearch
-        }
-
-        else if toSearch.prefix(1) == "p" {
+        } else if toSearch.prefix(1) == "p" {
           return ecoInfo.coverImage == toSearch
         }
          return false
