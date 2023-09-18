@@ -5,5 +5,5 @@ import java.io.Serializable
 data class Answer(
     val scaleValue: Int?,
     val answerText: String?,
-    val questionId: String,
+    val questionId: String?,
 ) : Serializable
