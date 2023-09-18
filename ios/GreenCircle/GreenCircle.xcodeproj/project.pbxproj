@@ -29,6 +29,7 @@
 		C483FD872AB3A34500A9E85A /* EcoInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483FD862AB3A34500A9E85A /* EcoInfoRepository.swift */; };
 		C483FD892AB3A58E00A9E85A /* fetchAllEcoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483FD882AB3A58E00A9E85A /* fetchAllEcoInfo.swift */; };
 		C483FD8B2AB3AC6500A9E85A /* EcoInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483FD8A2AB3AC6500A9E85A /* EcoInfoView.swift */; };
+		C48480C92AB8934E0004FD41 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48480C82AB8934E0004FD41 /* TabBarView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		C483FD862AB3A34500A9E85A /* EcoInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoInfoRepository.swift; sourceTree = "<group>"; };
 		C483FD882AB3A58E00A9E85A /* fetchAllEcoInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fetchAllEcoInfo.swift; sourceTree = "<group>"; };
 		C483FD8A2AB3AC6500A9E85A /* EcoInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoInfoView.swift; sourceTree = "<group>"; };
+		C48480C82AB8934E0004FD41 /* TabBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		C4E16FE62AB7806700EF4545 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -203,6 +205,7 @@
 		6C4452E52AA6F08700BE5930 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C48480C82AB8934E0004FD41 /* TabBarView.swift */,
 				C483FD8A2AB3AC6500A9E85A /* EcoInfoView.swift */,
 			);
 			path = Views;
@@ -420,6 +423,7 @@
 			files = (
 				6C9761832AB2B45D0046DB50 /* DummyModel.swift in Sources */,
 				C483FD872AB3A34500A9E85A /* EcoInfoRepository.swift in Sources */,
+				C48480C92AB8934E0004FD41 /* TabBarView.swift in Sources */,
 				C483FD8B2AB3AC6500A9E85A /* EcoInfoView.swift in Sources */,
 				C483FD832AB39F7100A9E85A /* EcoInfoModel.swift in Sources */,
 				6CB498242AB0DECC00B6560C /* PaginatedQuery.swift in Sources */,

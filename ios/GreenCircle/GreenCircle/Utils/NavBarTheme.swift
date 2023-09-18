@@ -10,8 +10,11 @@ import SwiftUI
 
 struct NavBarTheme: ViewModifier {
   @Environment(\.colorScheme) var colorScheme
-  @State private var isScrolling = false
 
+  /// Apply the NavBar appearance when on appear of a view
+  /// Usage: AnyView().
+  /// applyNavBarTheme()
+  /// - Returns: View of standard NavBar
   func body(content: Content) -> some View {
     content.onAppear {
       let appearance = UINavigationBarAppearance()
