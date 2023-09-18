@@ -21,7 +21,9 @@ class UserReviewFragment : Fragment() {
     private lateinit var viewModel: UserReviewViewModel
     private lateinit var recyclerView: RecyclerView
     private val adapter: UserReviewAdapter = UserReviewAdapter()
+
     private lateinit var data: ArrayList<UserReview>
+    private var userId: String = arguments?.getString("userId") ?: "abcd-1234-efgh-5678"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,7 +35,7 @@ class UserReviewFragment : Fragment() {
         val root: View = binding.root
         data = ArrayList()
 
-        viewModel.setUUID("abcd-1234-efgh-5678")
+        viewModel.setUUID(userId)
         viewModel.getUserReviewsList()
 
         initializeComponents(root)
