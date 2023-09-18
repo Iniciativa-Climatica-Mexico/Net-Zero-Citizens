@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.greencircle.R
 import com.greencircle.databinding.ActivityMainBinding
+import com.greencircle.framework.views.fragments.CatalogueFragment
 import com.greencircle.framework.views.fragments.HomeFragment
-import com.greencircle.framework.views.fragments.ProfileFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.proveedores -> {
-                    replaceFragment(ProfileFragment())
+                    replaceFragment(CatalogueFragment())
                     true
                 }
 

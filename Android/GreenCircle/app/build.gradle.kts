@@ -6,7 +6,7 @@ plugins {
     id("kotlin-kapt")
 
     // Klint
-    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    id("org.jlleitschuh.gradle.ktlint") version "11.6.0"
 
     // App Sweep
     id("com.guardsquare.appsweep") version "latest.release"
@@ -29,7 +29,8 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
             )
         }
     }
