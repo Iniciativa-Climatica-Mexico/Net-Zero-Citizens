@@ -25,20 +25,35 @@ export default async function SurveyReport(props: SurveyReportProps) {
               <div className="flex">
                 <div className="pl-20 w-1/2">
                   <QuestionComponent key={index} {...question} />
-                  <h3 className="text-black font-extrabold text-3xl pt-64 pb-2">
+                  <h3 className="text-black font-extrabold text-3xl pt-52 pb-6">
                     Total de respuestas
                   </h3>
-                  <div className="bg-zinc-900 text-white rounded-full text-xl font-semibold p-2 px-4 inline-block">
-                    {question.answers
-                      .map((ans) => ans.count)
-                      .reduce((prev, curr) => (prev += curr))}
-                  </div>
+                  <table className="table-fixed border-collapse rounded-lg border border-slate-400">
+                    <thead>
+                      <tr>
+                        <th className="px-10 py-4 border border-slate-400">
+                          Número de respuestas
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td className="text-center p-4 border border-slate-400">
+                          <div className="bg-zinc-900 text-white rounded-full text-xl font-semibold p-2 px-4 inline-block">
+                            {question.answers
+                              .map((ans) => ans.count)
+                              .reduce((prev, curr) => (prev += curr))}
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
                 <div className="pt-20 w-1/2">
                   <h2 className="text-black font-extrabold text-4xl">
                     Desglose de respuestas
                   </h2>
-                  <div className="w-3/4">
+                  <div className="w-2/3">
                     {question.questionType != 'open' && (
                       <ScaleChart
                         {...{
