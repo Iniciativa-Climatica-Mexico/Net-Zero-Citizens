@@ -19,6 +19,10 @@ export default class RolesBootstrap extends Bootstrapper {
       {
         roleId: 'ICM_ROLE_ID',
         name: 'icm'
+      },
+      {
+        roleId: 'NEW_USER_ROLE_ID',
+        name: 'new_user'
       }
     ])
   }
