@@ -34,15 +34,14 @@ class EcoInfoAdapter(private val ecoInfoList: List<EcoInfo>) :
      * @since 1.0.0
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EcoInfoViewHolder {
-        val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.card_layout, parent, false)
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.card_layout, parent, false)
 
         return EcoInfoViewHolder(itemView)
     }
 
     /**
-     * Se encarga de asignar los valores de cada EcoInfo a cada 
-     * elemento de la lista
+     * Se encarga de asignar los valores de cada EcoInfo a cada elemento de la lista
      * @param holder ViewHolder que contiene los elementos de la lista
      * @param position Posición del elemento en la lista
      * @return EcoInfoViewHolder con los valores asignados
@@ -51,9 +50,7 @@ class EcoInfoAdapter(private val ecoInfoList: List<EcoInfo>) :
     override fun onBindViewHolder(holder: EcoInfoViewHolder, position: Int) {
         val currentItem = ecoInfoList[position]
 
-        Glide.with(holder.itemView.context)
-            .load(currentItem.coverImageUrl)
-            .into(holder.imageView)
+        Glide.with(holder.itemView.context).load(currentItem.coverImageUrl).into(holder.imageView)
 
         holder.descriptionTextView.text = currentItem.description
 
