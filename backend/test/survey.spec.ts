@@ -18,7 +18,6 @@ import Survey from '../src/models/survey.model'
 import Question from '../src/models/question.model'
 import QuestionOption from '../src/models/questionOption.model'
 import Answer from '../src/models/answer.model'
-import { create } from 'domain'
 
 chai.use(chaiExclude)
 chai.use(chaiSubset)
