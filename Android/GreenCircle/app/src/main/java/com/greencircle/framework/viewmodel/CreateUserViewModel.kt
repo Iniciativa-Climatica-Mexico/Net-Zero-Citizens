@@ -36,6 +36,12 @@ class CreateUserViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Actualiza la información de un usuario.
+     *
+     * @param userId El ID del usuario que se va a actualizar.
+     * @param userInfo La información actualizada del usuario.
+     */
     fun updateUser(userId: String, userInfo: UserAPIService.UpdateUserRequest) {
         viewModelScope.launch(Dispatchers.IO) {
             val result: UserAPIService.UpdateUserResponse? =
