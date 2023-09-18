@@ -17,17 +17,16 @@ interface Company {
   name: string
   location: string
   profilePicture: string
-  state: string,
-  city: string,
-  street: string,
-  zipCode: string,
+  state: string
+  city: string
+  street: string
+  zipCode: string
   status: 'approved' | 'pending_approval' | 'rejected'
-  email: string,
+  email: string
   phoneNumber: string
   webPage: string
   description: string
 }
-
 
 const theme = createTheme({
   palette: {
@@ -48,12 +47,15 @@ interface cellActionProps {
   company: Company
 }
 
-export const CellAction = ({companyId, fetchPending, company}:cellActionProps) => {
-
+export const CellAction = ({
+  companyId,
+  fetchPending,
+  company,
+}: cellActionProps) => {
   /**
-     * @brief Function that allows admin to accept a specific company
-     * @param company
-     * @param companyId
+   * @brief Function that allows admin to accept a specific company
+   * @param company
+   * @param companyId
    */
   const handleAccept = async (company: Company, companyId: string) => {
     try {
@@ -61,7 +63,6 @@ export const CellAction = ({companyId, fetchPending, company}:cellActionProps) =
       const updatedCompanyInfo: UpdateCompanyInfoBody = {
         name: company.name,
         description: company.description,
-        location: company.location,
         profilePicture: company.profilePicture,
         status: 'approved',
         phoneNumber: company.phoneNumber,
@@ -69,7 +70,6 @@ export const CellAction = ({companyId, fetchPending, company}:cellActionProps) =
       }
 
       await updateCompany(companyId, updatedCompanyInfo)
-
     } catch (error) {
       console.error('Error accepting company:', error)
     } finally {
@@ -81,16 +81,12 @@ export const CellAction = ({companyId, fetchPending, company}:cellActionProps) =
     <ThemeProvider theme={theme}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <MoreHorizIcon
-            onClick={() => {
-            }}
-            className='cursor-pointer'
-          />
+          <MoreHorizIcon onClick={() => {}} className="cursor-pointer" />
         </DropdownMenuTrigger>
-        <DropdownMenuContent align='end'>
-          <DropdownMenuLabel>Acciones</DropdownMenuLabel>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Acciones rápidas</DropdownMenuLabel>
           <DropdownMenuItem onClick={() => handleAccept(company, companyId)}>
-            <CheckCircleOutlineIcon className='mr-1.5' />
+            <CheckCircleOutlineIcon className="mr-1.5" />
             Aceptar
           </DropdownMenuItem>
         </DropdownMenuContent>
