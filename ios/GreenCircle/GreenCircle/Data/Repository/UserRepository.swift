@@ -22,6 +22,7 @@ struct ApiUser {
     static let base = "http://localhost:3000/api/v1"
     struct Routes {
         static let user = "users"
+        static let credentials = "users/credentials"
     }
 }
 
@@ -33,6 +34,8 @@ protocol UserAPIProtocol {
     ///  - Parameters: UUID
     ///  - Returns: Modelo de Compañía
     func fetchUserById(userId: String) async -> User?
+    func updateUserData(updatedUserData: User, userId: String) async -> User?
+    func updateUserCredentials(userId: String, newUserCredentials: Credentials) async -> User?;
 }
 
 /// Implementación de repoitorio de Compañía con singleton
@@ -58,8 +61,8 @@ class UserRepository: UserAPIProtocol {
         return await backEndService.UpdateUserData(url: URL(string: "\(ApiUser.base)/\(ApiUser.Routes.user)/\(userId)")!, updatedUserData: updatedUserData)
     }
 
-//        // Update user credentials
-//        func UpdateUserCredentials(userId: String, newUserCredentials: Credentials) async -> User? {
-//            return await backEndService.UpdateUserCredentials(userId: userId, newUserCredentials: newUserCredentials)
-//        }
+    func updateUserCredentials(userId: String, newUserCredentials: Credentials) async -> User? {
+        let url = URL(string: "\(ApiUser.base)/\(ApiUser.Routes.credentials)/\(userId)")!
+        return await backEndService.UpdateUserCredentials(url: url, newUserCredentials: newUserCredentials)
+    }
 }

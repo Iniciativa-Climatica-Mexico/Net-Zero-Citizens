@@ -9,6 +9,7 @@ import Foundation
 
 protocol UpdateUserDataUseCaseProtocol {
     func execute(updatedUserData: User, userId: String) async -> User?
+    func updateCredentials(userId: String, newUserCredentials: Credentials) async -> User?
 }
 
 final class UpdateUserDataUseCase: UpdateUserDataUseCaseProtocol {
@@ -20,5 +21,9 @@ final class UpdateUserDataUseCase: UpdateUserDataUseCaseProtocol {
 
     func execute(updatedUserData: User, userId: String) async -> User? {
         return await userRepository.updateUserData(updatedUserData: updatedUserData, userId: userId)
+    }
+
+    func updateCredentials(userId: String, newUserCredentials: Credentials) async -> User? {
+        return await userRepository.updateUserCredentials(userId: userId, newUserCredentials: newUserCredentials)
     }
 }

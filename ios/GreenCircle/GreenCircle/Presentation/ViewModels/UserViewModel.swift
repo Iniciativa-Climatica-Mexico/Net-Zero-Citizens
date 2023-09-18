@@ -38,6 +38,7 @@ class UserViewModel: ObservableObject {
     init(
         fetchUserInfoUseCase: FetchUserInfoUseCase = FetchUserInfoUseCaseImpl.shared,
         updateUserDataUseCase: UpdateUserDataUseCaseProtocol = UpdateUserDataUseCase()
+        
     ) {
         self.fetchUserInfoUseCase = fetchUserInfoUseCase
         self.updateUserDataUseCase = updateUserDataUseCase
@@ -66,4 +67,14 @@ class UserViewModel: ObservableObject {
                 print("No se pudo actualizar el usuario")
             }
         }
+    
+    func updateUserCredentials(userId: String, newUserCredentials: Credentials) async {
+           let resultUser = await updateUserDataUseCase.updateCredentials(userId: userId, newUserCredentials: newUserCredentials)
+           if let resultUser = resultUser {
+               print("Credenciales del usuario actualizadas: \(resultUser)")
+               contentUser = resultUser
+           } else {
+               print("No se pudo actualizar las credenciales del usuario")
+           }
+       }
 }
