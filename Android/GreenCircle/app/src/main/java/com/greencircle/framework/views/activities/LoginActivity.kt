@@ -20,6 +20,9 @@ import com.greencircle.utils.AuthUtils
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private val authUtils = AuthUtils()
+    private val viewModel: LoginViewModel by lazy {
+        ViewModelProvider(this).get(LoginViewModel::class.java)
+    }
 
     private val registerCompanyActivityResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -47,6 +50,7 @@ class LoginActivity : AppCompatActivity() {
                     try {
                         val account = task.getResult(ApiException::class.java)
                         Log.d("Test", "${account.idToken}")
+                        viewModel.googleLogin(account.idToken!!)
                     } catch (e: ApiException) {
                         Toast.makeText(
                             applicationContext, "Something went wrong", Toast.LENGTH_SHORT
@@ -72,19 +76,6 @@ class LoginActivity : AppCompatActivity() {
 
         // Google Login
         authUtils.googleLoginListener(binding, this, googleSignInActivityResult)
-
-        // Login
-        var viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
-        var arguments = requireArguments()
-        val token: String = arguments.getString("idToken").toString()
-        viewModel.googleLogin(token)
-        val refreshToken: String = arguments.getString("refreshToken").toString()
-        viewModel.googleLogin(token)
-        val firstName: String = arguments.getString("firstName").toString()
-
-        val lastName: String = arguments.getString("lastName").toString()
-        val email: String = arguments.getString("email").toString()
-        val photoUrl: String = arguments.getString("photoUrl").toString()
     }
 
     // On Click Listener Method
