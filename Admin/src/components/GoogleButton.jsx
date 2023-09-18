@@ -1,12 +1,18 @@
 'use client'
+import { saveTokensFromSession, deleteTokens } from '@/utils/authUtils'
 import {signIn, signOut, useSession} from 'next-auth/react'
 
 const GoogleButton = () => {
   const {data: session} = useSession()
 
   if(session && session.user){
+
+    saveTokensFromSession(session)
     return(
-      <button  onClick = {() => signOut()} className='text-red-600'>
+      <button  onClick = {() => {
+        signOut()
+        deleteTokens()
+      }} className='text-red-600'>
         Salir
       </button> 
     )

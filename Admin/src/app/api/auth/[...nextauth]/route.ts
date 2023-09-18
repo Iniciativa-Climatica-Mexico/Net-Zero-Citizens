@@ -16,9 +16,22 @@ const handler = nextAuth({
     async jwt({ token, account }) {
       if(!token || !account) return token
       const res: AuthResponse | null = await googleLogin(`${SERVER_BASE_URL}/auth/login/google`, account.id_token as string)
-      console.log(res)
+      if(res) {
+        console.log(res.tokens)
+        token.authToken = res.tokens?.authToken
+        token.refreshToken = res.tokens?.refreshToken
+      }
+      // console.log(token)
       return token
     },
+    async session({session, token}) {
+      if(!token) return session
+      
+      if(token.authToken) session.authToken = token.authToken
+      if(token.refreshToken) session.refreshToken = token.refreshToken
+
+      return session
+    }
   }
 })
 
