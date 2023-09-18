@@ -22,8 +22,8 @@ class UpdateReviewFragment : Fragment() {
     private lateinit var viewModel: UpdateReviewViewModel
 
     private var rating: Float = 0.0f
-    private var reviewTitle: String = arguments?.getString("title") ?: ""
-    private var review: String = arguments?.getString("review") ?: ""
+    private var reviewTitle: String = ""
+    private var review: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,7 +35,7 @@ class UpdateReviewFragment : Fragment() {
         _binding = FragmentEditUserReviewBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        initializeRatingBar()
+        initializeComponents()
         initializeRatingBarListener()
         initializePublishReviewButton()
 
@@ -47,9 +47,13 @@ class UpdateReviewFragment : Fragment() {
         _binding = null
     }
 
-    private fun initializeRatingBar() {
+    private fun initializeComponents() {
         rating = arguments?.getFloat("score") ?: 0.0f
+        reviewTitle = arguments?.getString("title") ?: ""
+        review = arguments?.getString("review") ?: ""
         binding.ratingBar.rating = rating
+        binding.titleInput.setText(reviewTitle)
+        binding.reviewInput.setText(review)
     }
 
     private fun initializeRatingBarListener() {
@@ -135,7 +139,7 @@ class UpdateReviewFragment : Fragment() {
 
         Toast.makeText(
             requireContext(),
-            getString(R.string.review_submit_toast),
+            getString(R.string.update_review_submit_toast),
             Toast.LENGTH_SHORT
         ).show()
 
@@ -155,7 +159,6 @@ class UpdateReviewFragment : Fragment() {
 
     private fun initializePublishReviewButton() {
         val publishReviewButton = binding.publishReviewButton
-
         publishReviewButton.setOnClickListener { publishUpdatedReview() }
     }
 }

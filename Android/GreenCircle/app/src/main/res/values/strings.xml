@@ -21,6 +21,7 @@
     <string name="review_comment_section_optional">(Opcional)</string>
     <string name="review_comment_section_desc">Tus comentarios ayudan a otros usuarios a conocer mejor a un proveedor</string>
     <string name="review_submit_toast">Tu reseña se ha registrado exitosamente</string>
+    <string name="update_review_submit_toast">Tu reseña se ha actualizado exitosamente</string>
     <string name="no_reviews_to_display">No hay reseñas para este proveedor ¡Sé el primero en escribir una!</string>
     <string name="no_review_form_review_error">Ingresa una opinión</string>
     <string name="no_title_form_review_error">Ingresa un título para la opinión</string>
