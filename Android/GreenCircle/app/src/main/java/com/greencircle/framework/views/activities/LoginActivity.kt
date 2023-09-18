@@ -1,5 +1,6 @@
 package com.greencircle.framework.views.activities
 
+import ViewModelFactory
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -7,8 +8,8 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.greencircle.R
@@ -20,8 +21,8 @@ import com.greencircle.utils.AuthUtils
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private val authUtils = AuthUtils()
-    private val viewModel: LoginViewModel by lazy {
-        ViewModelProvider(this).get(LoginViewModel::class.java)
+    private val viewModel: LoginViewModel by viewModels {
+        ViewModelFactory(applicationContext)
     }
 
     private val registerCompanyActivityResult =
@@ -61,9 +62,7 @@ class LoginActivity : AppCompatActivity() {
                 // Handle the case where the user canceled the operation
             }
         }
-    //obtener los argumentos del account y mandarlos a un nuevo fragment
-
-
+    // obtener los argumentos del account y mandarlos a un nuevo fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
