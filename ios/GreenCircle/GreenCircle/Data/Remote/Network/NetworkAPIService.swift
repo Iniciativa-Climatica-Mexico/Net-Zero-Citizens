@@ -44,13 +44,13 @@ class NetworkAPIService {
       "phoneNumber": user.phone!,
       "age": user.age!,
       "gender": user.gender!,
-      "state": user.state!
+      "state": user.state!,
+      "roleId": "CUSTOMER_ROLE_ID"
     ]
     let headers: HTTPHeaders = [.authorization(bearerToken: authToken)]
     let requestTask = AF.request(url, method: .put,
                                  parameters: params,
                                  headers: headers).validate()
     let response = await requestTask.serializingData().response
-    print(response.result)
   }
 }

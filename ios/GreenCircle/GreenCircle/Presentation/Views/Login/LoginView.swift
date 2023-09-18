@@ -11,6 +11,7 @@ import SwiftUI
 struct LoginView: View {
   var goUserRegister: () -> Void
   var goForm: () -> Void
+  var goMainMenu: () -> Void
   
   @StateObject var viewModel = LoginViewModel()
   @EnvironmentObject var user: UserData
@@ -30,9 +31,13 @@ struct LoginView: View {
         VStack {
           GoogleSignInButton(style: .wide){
             Task {
-              await viewModel
+              let new_user = await viewModel
                 .handleGoogleSignIn(userData: user)
-              goForm()
+              if new_user {
+                goForm()
+              } else {
+                goMainMenu()
+              }
             }
           }
         }
@@ -60,7 +65,9 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
   static var previews: some View {
-    LoginView(goUserRegister: {}, goForm: {})
+    LoginView(goUserRegister: {},
+              goForm: {},
+              goMainMenu: {})
   }
 }
 

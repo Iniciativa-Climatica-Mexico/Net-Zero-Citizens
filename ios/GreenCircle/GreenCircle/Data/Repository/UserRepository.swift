@@ -42,7 +42,6 @@ class UserRepository: UserRepositoryProtocol {
         .replacingOccurrences(
           of: ":id",
           with: user.id))!
-    print(url)
     await nService.putUser(url: url,
                            authToken: authToken,
                            user: user)

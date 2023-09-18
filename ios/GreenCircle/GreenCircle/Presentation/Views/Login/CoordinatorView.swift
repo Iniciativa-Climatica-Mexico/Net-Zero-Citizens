@@ -25,7 +25,8 @@ struct CoordinatorView: View {
       switch screen {
       case .login:
         LoginView(goUserRegister: {routes.presentCover(.userRegister)},
-                  goForm: {routes.presentCover(.userRegisterForm)})
+                  goForm: {routes.presentCover(.userRegisterForm)},
+                  goMainMenu: {routes.presentCover(.mainMenuView)})
         
       case .userRegister:
         UserRegisterView(goLogin: {routes.goBackToRoot()})

@@ -11,10 +11,15 @@ class LoginViewModel: ObservableObject {
   var useCase = GoogleSignInUseCase.shared
   
   @MainActor
-  func handleGoogleSignIn(userData: UserData) async {
+  func handleGoogleSignIn(userData: UserData) async -> Bool {
     let res = await useCase.handleSignInButton()!
 
     userData.user = res.user
     userData.tokens = res.tokens
+    
+    if res.user.roles == "new_user" {
+      return true
+    }
+    return false
   }
 }
