@@ -20,6 +20,7 @@ struct SurveyQuestion: Codable {
   let questionText: String
   let questionType: QuestionType
   let isRequired: Bool
+  let answer: Answer? = nil
   
   enum QuestionType: Codable {
     case open
@@ -31,4 +32,10 @@ struct SurveyQuestion: Codable {
 struct QuestionOption: Codable {
   let questionOptionId: String
   let textOption: String
+}
+
+struct Answer {
+  let scaleValue: Int?
+  let answerText: String?
+  let questionId: String?
 }
