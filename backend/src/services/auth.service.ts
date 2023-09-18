@@ -88,7 +88,7 @@ export const googleLogin = async (googleToken: string): Promise<AuthResponse | n
         lastName: data.last_name,
         email: data.email,
         googleId: data.googleId,
-        roleId: 'CUSTOMER_ROLE_ID',
+        roleId: 'NEW_USER_ROLE_ID',
         phoneNumber: null,
         age: 0,
         state: '',
