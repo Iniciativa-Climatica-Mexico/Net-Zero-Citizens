@@ -178,7 +178,7 @@ jobs:
         run: |
           echo "${{ secrets.FIREBASE_ACCOUNT }}" | gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.GPG_PASSPHRASE }}" --output Android/GreenCircle/app/google-services.json google-services.json.gpg
 
-        working-directory: Android/GreenCircle
+        working-directory: Android/GreenCircle/app
 
       - name: Set up JDK
         uses: actions/setup-java@v3
