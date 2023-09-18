@@ -43,6 +43,11 @@ class UpdateReviewFragment : Fragment() {
         return root
     }
 
+    override fun onStart() {
+        super.onStart()
+        initializeComponents()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
