@@ -24,6 +24,11 @@ struct ProfileInformationView: View {
             //Content
             VStack {
                 VStack {
+                    
+                    Image("Sun")
+                    .resizable() // Hacer que la imagen sea redimensionable
+                    .frame(width: 100, height: 100)
+                    
                     HStack {
                         Text(modelUser.contentUser.firstName)
                             .foregroundColor(Color.black)
@@ -39,8 +44,7 @@ struct ProfileInformationView: View {
                             .padding(.top, 12)
                             .padding(.bottom, 2)
                     }
-                    .padding(.top, 15) // Añade padding para mover el texto hacia abajo un poco
-
+                   
                     NavigationLink("Cerrar Sesión", destination: Example2View()) //Esto va a ser con flowstacks
                         .foregroundColor(TitleBarColor.TitleBarColor)
                         .font(.system(size: 13))
@@ -48,7 +52,7 @@ struct ProfileInformationView: View {
                         .padding(.top, 8) // Añade padding para separar el botón del texto
                     
                 }
-                .padding(.top, 150)
+                .padding(.top, 70)
                 
                 Button(action: {
                     // Acción del primer botón
@@ -129,26 +133,20 @@ struct ProfileInformationView: View {
                                     .font(.system(size: 13))
                                     .fontWeight(.semibold)
                                 
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .fill(Color("GrayColor"))
-                                        .overlay(RoundedRectangle(cornerRadius: 5)
-                                                    .stroke(Color.gray, lineWidth: 0.1))
-                                        .frame(height: 30)
-                                    
-                                    Picker("Edad", selection: $modelUser.contentUser.age) {
-                                        ForEach(0..<100) { i in
-                                            Text("\(i)").tag(i)
+                                TextField("Edad", text: Binding(
+                                    get: { String(modelUser.contentUser.age) }, // Convierte Int a String
+                                    set: { newValue in
+                                        if let newAge = Int(newValue) {
+                                            modelUser.contentUser.age = newAge
                                         }
                                     }
-                                    .pickerStyle(MenuPickerStyle())
-                                    .disabled(true)
-                                    .padding(.top, 3)
-                                    .font(.system(size: 10))
-                                    .padding(.leading, -15)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(.horizontal, 10)
-                                }
+                                ))
+                                .keyboardType(.numberPad)
+                                .padding(.top, 3)
+                                .font(.system(size: 13))
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .foregroundColor(.gray)
+                                .disabled(true)
                             }
                             .padding(.trailing, 16) // Añade un padding para separar los dos VStack
                             
@@ -159,25 +157,13 @@ struct ProfileInformationView: View {
                                     .font(.system(size: 13))
                                     .fontWeight(.semibold)
                                 
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .fill(Color("GrayColor"))
-                                        .overlay(RoundedRectangle(cornerRadius: 5)
-                                                    .stroke(Color.gray, lineWidth: 0.1))
-                                        .frame(height: 30)
-                                    
-                                    Picker("Sexo", selection: $modelUser.contentUser.sex) {
-                                        Text("Femenino").tag("Femenino")
-                                        Text("Masculino").tag("Masculino")
-                                    }
-                                    .pickerStyle(MenuPickerStyle())
+                                TextField("Sexo", text: $modelUser.contentUser.sex)
+                                    .keyboardType(.phonePad)
                                     .disabled(true)
                                     .padding(.top, 3)
-                                    .font(.system(size: 11))
-                                    .padding(.leading, -15)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(.horizontal, 10)
-                                }
+                                    .font(.system(size: 13))
+                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                    .foregroundColor(.gray)
                             }
                         }
 
@@ -221,59 +207,13 @@ struct ProfileInformationView: View {
                                     .font(.system(size: 13))
                                     .fontWeight(.semibold)
                                 
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .fill(Color("GrayColor"))
-                                        .overlay(RoundedRectangle(cornerRadius: 5)
-                                                    .stroke(Color.gray, lineWidth: 0.1))
-                                        .frame(height: 30)
-                                    
-                                    Picker("Estado", selection: $modelUser.contentUser.state) {
-                                        ForEach([
-                                            "Aguascalientes",
-                                            "Baja California",
-                                            "Baja California Sur",
-                                            "Campeche",
-                                            "Chiapas",
-                                            "Chihuahua",
-//                                            "Ciudad de México",
-//                                            "Coahuila",
-//                                            "Colima",
-//                                            "Durango",
-//                                            "Estado de México",
-//                                            "Guanajuato",
-//                                            "Guerrero",
-//                                            "Hidalgo",
-//                                            "Jalisco",
-//                                            "Michoacán",
-//                                            "Morelos",
-//                                            "Nayarit",
-//                                            "Nuevo León",
-//                                            "Oaxaca",
-//                                            "Puebla",
-//                                            "Querétaro",
-//                                            "Quintana Roo",
-//                                            "San Luis Potosí",
-//                                            "Sinaloa",
-//                                            "Sonora",
-//                                            "Tabasco",
-//                                            "Tamaulipas",
-//                                            "Tlaxcala",
-//                                            "Veracruz",
-//                                            "Yucatán",
-//                                            "Zacatecas"
-                                        ], id: \.self) { estado in
-                                            Text(estado).tag(estado)
-                                        }
-                                    }
-                                    .pickerStyle(MenuPickerStyle())
+                                TextField("Estado", text: $modelUser.contentUser.state)
+                                    .keyboardType(.phonePad)
                                     .disabled(true)
                                     .padding(.top, 3)
-                                    .padding(.leading, -15)
-                                    .font(.system(size: 11))
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(.horizontal, 10)
-                                }
+                                    .font(.system(size: 13))
+                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                    .foregroundColor(.gray)
                             }
                         }
 

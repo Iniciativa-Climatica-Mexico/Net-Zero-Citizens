@@ -17,6 +17,8 @@ struct ProfileView: View {
             
             //Title Bar
             VStack {
+                
+                
                 TitleBarView(
                     title: "Mi Perfil",
                     leftIcon: nil,
@@ -33,14 +35,10 @@ struct ProfileView: View {
             
             VStack {
                 
-                AsyncImage(url: URL(string: "https://example.com/icon.png")) { image in
-                    image.resizable()
-                } placeholder: {
-                    ProgressView()
-                }
-                .frame(width: 50, height: 50)
-                .padding(.top, 12)
-                .padding(.bottom, 2)
+                Image("Sun")
+                .resizable() // Hacer que la imagen sea redimensionable
+                .frame(width: 100, height: 100)
+            
                 
                 HStack {
                     
@@ -48,23 +46,23 @@ struct ProfileView: View {
                         .foregroundColor(Color.black)
                         .font(.system(size: 16))
                         .fontWeight(.semibold)
-                        .padding(.top, 12)
+                        .padding(.top, 10)
                         .padding(.bottom, 2)
                     
                     Text(modelUser.contentUser.lastName)
                         .foregroundColor(Color.black)
                         .font(.system(size: 16))
                         .fontWeight(.semibold)
-                        .padding(.top, 12)
+                        .padding(.top, 10)
                         .padding(.bottom, 2)
                 }
-                .padding(.top, 15)
+                
 
                 NavigationLink("Cerrar Sesión", destination: Example2View())
                     .foregroundColor(TitleBarColor.TitleBarColor)
                     .font(.system(size: 13))
                     .fontWeight(.bold)
-                    .padding(.top, 8)
+                    .padding(.top, 4)
 
                 // Aquí están los dos nuevos botones
                 HStack {
@@ -103,7 +101,7 @@ struct ProfileView: View {
 
                 Spacer()
             }
-            .padding(.top, 150)
+            .padding(.top, 70)
             .onAppear {
                 Task {
                     await modelUser.fetchUserById(idUser: "abcd-1234-efgh-5679")

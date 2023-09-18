@@ -32,6 +32,11 @@ struct EditProfileView: View {
             //Content
             VStack {
                 VStack {
+                    
+                    Image("Sun")
+                    .resizable() // Hacer que la imagen sea redimensionable
+                    .frame(width: 100, height: 100)
+                    
                     HStack {
                         Text(modelUser.contentUser.firstName)
                             .foregroundColor(Color.black)
@@ -47,7 +52,7 @@ struct EditProfileView: View {
                             .padding(.top, 12)
                             .padding(.bottom, 2)
                     }
-                    .padding(.top, 15) // Añade padding para mover el texto hacia abajo un poco
+                  
 
                     NavigationLink("Cerrar Sesión", destination: Example2View()) //Esto va a ser con flowstacks
                         .foregroundColor(TitleBarColor.TitleBarColor)
@@ -56,7 +61,7 @@ struct EditProfileView: View {
                         .padding(.top, 8) // Añade padding para separar el botón del texto
                     
                 }
-                .padding(.top, 150)
+                .padding(.top, 70)
                 
 
                 ScrollView {
@@ -181,6 +186,7 @@ struct EditProfileView: View {
                                 
                         }
                         
+                        
                         Group {
                             Text("Celular")
                                 .padding(.top, 16)
@@ -280,7 +286,31 @@ struct EditProfileView: View {
                         .padding(.trailing, 4)
                         
                         Button(action: {
-                            // Acción del segundo botón
+                            Task {
+                                let updatedUser = User(
+                                    userId: modelUser.contentUser.userId,
+                                    roleId: modelUser.contentUser.roleId,
+                                    companyId: modelUser.contentUser.companyId,
+                                    googleId: modelUser.contentUser.googleId,
+                                    facebookId: modelUser.contentUser.facebookId,
+                                    appleId: modelUser.contentUser.appleId,
+                                    firstName: modelUser.contentUser.firstName,
+                                    lastName: modelUser.contentUser.lastName,
+                                    secondLastName: modelUser.contentUser.secondLastName,
+                                    email: modelUser.contentUser.email,
+                                    password: modelUser.contentUser.password,
+                                    phoneNumber: modelUser.contentUser.phoneNumber,
+                                    age: modelUser.contentUser.age,
+                                    state: modelUser.contentUser.state,
+                                    sex: modelUser.contentUser.sex,
+                                    profilePicture: modelUser.contentUser.profilePicture,
+                                    createdAt: modelUser.contentUser.createdAt,
+                                    updatedAt: Date()
+                                    
+                                    
+                                )
+                                await modelUser.updateUserData(updatedUserData: updatedUser, userId: "abcd-1234-efgh-5679")
+                            }
                         }) {
                             Text("Guardar")
                                 .foregroundColor(.white)

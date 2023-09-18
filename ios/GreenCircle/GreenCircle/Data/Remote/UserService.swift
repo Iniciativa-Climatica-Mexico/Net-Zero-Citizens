@@ -20,7 +20,7 @@ class UserService {
         let password: String
     }
     
-    private let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdF9uYW1lIjoiSm9obiIsImxhc3RfbmFtZSI6IkRvZSIsInV1aWQiOiJhYmNkLTEyMzQtZWZnaC01Njc4IiwiZW1haWwiOiJqb2huLmRvZUBleGFtcGxlLmNvbSIsImxvZ2luX3R5cGUiOiJnb29nbGUiLCJyb2xlcyI6WyJhZG1pbiJdLCJnb29nbGVJZCI6ImEiLCJpYXQiOjE2OTQ5ODU1NzEsImV4cCI6MTY5NDk4NTg3MX0.sbbV_CEYLsA5mHEQULoILtl1hfTxM4Duw8-illcnXKE"
+    private let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdF9uYW1lIjoiSm9obiIsImxhc3RfbmFtZSI6IkRvZSIsInV1aWQiOiJhYmNkLTEyMzQtZWZnaC01Njc4IiwiZW1haWwiOiJqb2huLmRvZUBleGFtcGxlLmNvbSIsImxvZ2luX3R5cGUiOiJnb29nbGUiLCJyb2xlcyI6WyJhZG1pbiJdLCJnb29nbGVJZCI6IjAxMjM0NTY3ODkiLCJpYXQiOjE2OTUwMDg3MTQsImV4cCI6MTY5NTAwOTAxNH0.4wgpDYVfZ0YGFe0d6XvQlUpsc66t5i0MNZyc7dzbJL4"
     
     private let headers: HTTPHeaders
 
