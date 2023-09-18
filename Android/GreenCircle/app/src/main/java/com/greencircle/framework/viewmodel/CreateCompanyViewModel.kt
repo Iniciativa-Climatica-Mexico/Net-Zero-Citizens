@@ -36,8 +36,15 @@ class CreateCompanyViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Crea una empresa utilizando la información proporcionada y el token de autenticación.
+     *
+     * @param company La información de la empresa que se va a crear.
+     * @param authToken El token de autenticación necesario para realizar la creación de la empresa.
+     */
     fun createCompany(company: CompanyAPIService.CreateCompanyRequest, authToken: String) {
         viewModelScope.launch(Dispatchers.IO) {
+            // Invoca el modelo de dominio para crear la empresa.
             val result: CompanyAPIService.CreateCompanyResponse? =
                 createCompanyRequirement(company, authToken)
         }
