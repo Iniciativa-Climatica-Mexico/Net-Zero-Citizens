@@ -98,11 +98,63 @@ const testSurveyPending = {
   endDate: null,
   questions: [
     {
-      questionId: 'ques-5555-efgh-3333',
+      questionId: 'ques-5555-efgh-3330',
       questionText: 'Did you find the website easy to navigate?',
-      questionType: 'yes_no',
+      questionType: 'multiple_choice',
       isRequired: true,
+      questionOptions: [
+        {
+          questionOptionId: 'optn-5555-efgh-3330',
+          textOption: 'Yes',
+        },
+        {
+          questionOptionId: 'optn-5555-efgh-3331',
+          textOption: 'No',
+        },
+      ],
+    },
+    {
+      questionId: 'ques-5678-abcd-3331',
+      questionText: 'What features would you like to see in our product?',
+      questionType: 'open',
+      isRequired: false,
       questionOptions: [],
+    },
+    {
+      questionId: 'ques-5678-abcd-3332',
+      questionText:
+        'On a scale of 1 to 10, how likely are you to recommend our product?',
+      questionType: 'scale',
+      questionOptions: [],
+      isRequired: true,
+    },
+    {
+      questionId: 'ques-1234-efgh-3333',
+      questionText: '¿Cómo describiría nuestro servicio?',
+      questionType: 'multiple_choice',
+      isRequired: true,
+      questionOptions: [
+        {
+          questionOptionId: 'optn-1234-efgh-3332',
+          textOption: 'Excelente',
+        },
+        {
+          questionOptionId: 'optn-1234-efgh-3333',
+          textOption: 'Bueno',
+        },
+        {
+          questionOptionId: 'optn-1234-efgh-3334',
+          textOption: 'Regular',
+        },
+        {
+          questionOptionId: 'optn-1234-efgh-3335',
+          textOption: 'Malo',
+        },
+        {
+          questionOptionId: 'optn-1234-efgh-3336',
+          textOption: 'Pésimo',
+        },
+      ],
     },
   ],
 }

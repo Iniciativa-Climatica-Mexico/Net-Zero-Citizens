@@ -98,7 +98,7 @@ export const getSurveyPending = async (
   )
   const alreadyAnswered = pool.some((length) => length > 0)
   if (alreadyAnswered) return null
-  return survey
+  return unwrap(survey)
 }
 
 export const createSurveyBodyScheme = z.object({
