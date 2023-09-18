@@ -4,9 +4,18 @@ import com.greencircle.data.remote.models.Company
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
+/**
+ * Clase de prueba para la funcionalidad relacionada con la clase [Company].
+ *
+ * Esta clase de prueba contiene métodos de prueba para evaluar la creación de objetos [Company] y la igualdad entre ellos.
+ */
 class CompanyTest {
+
+    /**
+     * Prueba la creación de un objeto [Company] y verifica la integridad de los datos.
+     */
     @Test
-    fun testCreateCompany() {
+    fun testCreateCompanyInstantiation() {
         val userId = "efgh-1234-hijk-5678"
         val name = "CompanyTest"
         val description = "CompanyTest description"
@@ -59,6 +68,9 @@ class CompanyTest {
         assertEquals(pdfIneUrl, company.pdfIneUrl)
     }
 
+    /**
+     * Prueba la igualdad entre dos objetos [Company] con los mismos valores.
+     */
     @Test
     fun testEquals() {
         val userId = "efgh-1234-hijk-5678"
