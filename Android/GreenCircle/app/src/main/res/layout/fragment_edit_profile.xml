@@ -9,7 +9,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -60,11 +62,11 @@
                 android:id="@+id/profileImage"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginTop="20dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/pp_icon"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/circle_background"
                 android:scaleType="centerCrop"
-                android:background="@drawable/circle_background" />
+                android:src="@drawable/pp_icon" />
 
             <TextView
                 android:id="@+id/username"
@@ -183,42 +185,6 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Contrasena"
-                    android:layout_marginHorizontal="30dp"
-                    android:layout_marginTop="20dp"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:id="@+id/inputContrasena"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPassword"
-                        />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Confirmar Contrasena"
-                    android:layout_marginHorizontal="30dp"
-                    android:layout_marginTop="20dp"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:id="@+id/inputContrasenaConfirmar"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPassword"
-                        />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/inputTelefono"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:hint="Telefono"
                     android:layout_marginHorizontal="30dp"
                     android:layout_marginTop="20dp"
@@ -226,6 +192,7 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
+                        android:id="@+id/inputTelefono"
                         android:layout_height="wrap_content"
                         android:inputType="number"
                         />
@@ -234,7 +201,6 @@
 
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/inputEstado"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Estado"
@@ -244,31 +210,40 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
+                        android:id="@+id/inputEstado"
                         android:layout_height="wrap_content"
-                        android:inputType="textPassword"
+                        android:inputType="text"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <Button
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_corner"
-                    android:text="Editar"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginHorizontal="70dp"
-                    android:textAllCaps="false"/>
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp">
 
-
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_corner"
+                        android:text="Cancelar "
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:textAllCaps="false"/>
+                    <Button
+                        android:id="@+id/editarPerfilButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_corner"
+                        android:text="Guardar"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:layout_marginLeft="20dp"
+                        android:textAllCaps="false"/>
+                </LinearLayout>
             </LinearLayout>
-
-
-
-
-
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

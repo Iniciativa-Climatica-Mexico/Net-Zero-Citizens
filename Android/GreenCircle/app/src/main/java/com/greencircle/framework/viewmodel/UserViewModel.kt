@@ -32,8 +32,8 @@ class UserViewModel : ViewModel() {
         }
     }
 
-    fun updateUser(user: User){
-        viewModelScope.launch(Dispatchers.IO){
+    fun updateUser(user: User) {
+        viewModelScope.launch(Dispatchers.IO) {
             val response = editUserRequirement(userId, user)
         }
     }

@@ -45,6 +45,12 @@ class EditProfileFragment : Fragment() {
             val name = user.firstName + " " + user.lastName
             binding.username.text = name
             binding.inputNombre.setText(user.firstName)
+            binding.inputPrimerApellido.setText(user.lastName)
+            binding.inputSegundoApellido.setText(user.secondLastName)
+            binding.inputEdad.setText(user.age.toString())
+            binding.inputSexo.setText(user.sex)
+            binding.inputTelefono.setText(user.phoneNumber)
+            binding.inputEstado.setText(user.state)
             // binding.profileImage.setImageResource(user.profilePicture)
         }
     }
