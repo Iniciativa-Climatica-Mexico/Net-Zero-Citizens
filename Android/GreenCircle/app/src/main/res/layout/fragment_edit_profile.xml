@@ -97,7 +97,6 @@
                 android:layout_marginTop="20dp">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputNombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nombre"
@@ -107,13 +106,13 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
+                    android:id="@+id/inputNombre"
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/inputPrimerApellido"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Primer Apellido"
@@ -123,13 +122,13 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
+                        android:id="@+id/inputPrimerApellido"
                         android:layout_height="wrap_content"
                         android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/inputSegundoApellido"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Segundo Apellido"
@@ -139,6 +138,7 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
+                        android:id="@+id/inputSegundoApellido"
                         android:layout_height="wrap_content"
                         android:inputType="text"
                         />
@@ -147,7 +147,6 @@
 
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/inputEdad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Edad"
@@ -157,6 +156,7 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
+                        android:id="@+id/inputEdad"
                         android:layout_height="wrap_content"
                         android:inputType="number"
                         />
@@ -164,7 +164,6 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/inputSexo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Sexo"
@@ -174,6 +173,7 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
+                        android:id="@+id/inputSexo"
                         android:layout_height="wrap_content"
                         android:inputType="text"
                         />
@@ -181,7 +181,6 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/inputContrasena"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Contrasena"
@@ -191,6 +190,7 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
+                        android:id="@+id/inputContrasena"
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
                         />
@@ -198,7 +198,6 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/inputContrasenaConfirmar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Confirmar Contrasena"
@@ -208,6 +207,7 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
+                        android:id="@+id/inputContrasenaConfirmar"
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
                         />

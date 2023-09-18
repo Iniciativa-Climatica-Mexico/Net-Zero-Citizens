@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.greencircle.R
 import com.greencircle.databinding.FragmentProfileBinding
 import com.greencircle.domain.model.User
 import com.greencircle.framework.viewmodel.UserViewModel
@@ -26,6 +27,7 @@ class ProfileFragment : Fragment() {
         viewModel.setUserId("abcd-1234-efgh-5678")
         viewModel.getUser()
         InitializeObservers()
+        InitializeEditarPerfilButton()
         return root
     }
     private fun InitializeObservers() {
@@ -33,6 +35,15 @@ class ProfileFragment : Fragment() {
             user = it
             setUserData()
         })
+    }
+
+    private fun InitializeEditarPerfilButton() {
+        binding.editarPerfilButton.setOnClickListener {
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.frame_layout, EditProfileFragment())
+            transaction.addToBackStack("editProfileFragment")
+            transaction.commit()
+        }
     }
 
     private fun setUserData() {
