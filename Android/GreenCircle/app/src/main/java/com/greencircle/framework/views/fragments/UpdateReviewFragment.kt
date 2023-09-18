@@ -22,8 +22,8 @@ class UpdateReviewFragment : Fragment() {
     private lateinit var viewModel: UpdateReviewViewModel
 
     private var rating: Float = 0.0f
-    private var reviewTitle: String = ""
-    private var review: String = ""
+    private var reviewTitle: String = arguments?.getString("title") ?: ""
+    private var review: String = arguments?.getString("review") ?: ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,7 +48,7 @@ class UpdateReviewFragment : Fragment() {
     }
 
     private fun initializeRatingBar() {
-        rating = arguments?.getFloat("rating") ?: 0.0f
+        rating = arguments?.getFloat("score") ?: 0.0f
         binding.ratingBar.rating = rating
     }
 
@@ -61,7 +61,7 @@ class UpdateReviewFragment : Fragment() {
     private fun setTextInputError(textField: TextInputLayout, errorMessage: String) {
         textField.isErrorEnabled = true
         textField.error = errorMessage
-        // TODO: initializeTextWatchers()
+        initializeTextWatchers()
     }
 
     private fun clearTextFieldsErrors() {

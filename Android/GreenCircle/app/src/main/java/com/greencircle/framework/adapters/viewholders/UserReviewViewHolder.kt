@@ -24,12 +24,12 @@ class UserReviewViewHolder(private var binding: ItemUserReviewBinding) :
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.update_review -> {
-                        // Handle menu item 1 click
+                        navigateToUpdateReviewFormFragment()
                         true
                     }
 
                     R.id.delete_review -> {
-                        // Handle menu item 2 click
+                        // TODO: Handle menu item 2 click
                         true
                     }
 
