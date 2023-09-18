@@ -96,7 +96,7 @@ export default class SurveysBootstrapper extends Bootstrapper {
           {
             questionId: 'ques-5678-abcd-1111',
             questionText: 'What features would you like to see in our product?',
-            questionType: 'text',
+            questionType: 'open',
             isRequired: false,
           },
           {
@@ -108,12 +108,12 @@ export default class SurveysBootstrapper extends Bootstrapper {
               {
                 answerId: 'answ-5678-abcd-1111',
                 userId: 'abcd-1234-efgh-5678',
-                scaleValue: 8,
+                scaleValue: 3,
               },
               {
                 answerId: 'answ-5678-abcd-1112',
                 userId: 'abcd-1234-efgh-5679',
-                scaleValue: 9,
+                scaleValue: 5,
               },
             ],
           },
@@ -128,7 +128,17 @@ export default class SurveysBootstrapper extends Bootstrapper {
           {
             questionId: 'ques-9876-dcba-2222',
             questionText: 'Do you feel valued in your role?',
-            questionType: 'yes_no',
+            questionType: 'multiple_choice',
+            questionOptions: [
+              {
+                questionOptionId: 'optn-9876-dcba-2220',
+                textOption: 'Yes',
+              },
+              {
+                questionOptionId: 'optn-9876-dcba-2221',
+                textOption: 'No',
+              },
+            ],
             answers: [
               {
                 answerId: 'answ-9876-dcba-2222',
@@ -145,14 +155,77 @@ export default class SurveysBootstrapper extends Bootstrapper {
         description: 'Survey to assess the usability of our website',
         questions: [
           {
-            questionId: 'ques-5555-efgh-3333',
+            questionId: 'ques-5555-efgh-3330',
             questionText: 'Did you find the website easy to navigate?',
-            questionType: 'yes_no',
+            questionType: 'multiple_choice',
+            questionOptions: [
+              {
+                questionOptionId: 'optn-5555-efgh-3330',
+                textOption: 'Yes',
+              },
+              {
+                questionOptionId: 'optn-5555-efgh-3331',
+                textOption: 'No',
+              },
+            ],
             answers: [
               {
-                answerId: 'answ-5555-efgh-3332',
+                answerId: 'answ-5555-efgh-3330',
                 userId: 'abcd-1234-efgh-5679',
                 answerText: 'No',
+              },
+            ],
+          },          
+          {
+            questionId: 'ques-5678-abcd-3331',
+            questionText: 'What features would you like to see in our product?',
+            questionType: 'open',
+            isRequired: false,
+          },
+          {
+            questionId: 'ques-5678-abcd-3332',
+            questionText:
+              'On a scale of 1 to 10, how likely are you to recommend our product?',
+            questionType: 'scale',
+            answers: [
+              {
+                answerId: 'answ-5678-abcd-3331',
+                userId: 'abcd-1234-efgh-5679',
+                scaleValue: 5,
+              },
+            ],
+          },
+          {
+            questionId: 'ques-1234-efgh-3333',
+            questionText: '¿Cómo describiría nuestro servicio?',
+            questionType: 'multiple_choice',
+            questionOptions: [
+              {
+                questionOptionId: 'optn-1234-efgh-3332',
+                textOption: 'Excelente',
+              },
+              {
+                questionOptionId: 'optn-1234-efgh-3333',
+                textOption: 'Bueno',
+              },
+              {
+                questionOptionId: 'optn-1234-efgh-3334',
+                textOption: 'Regular',
+              },
+              {
+                questionOptionId: 'optn-1234-efgh-3335',
+                textOption: 'Malo',
+              },
+              {
+                questionOptionId: 'optn-1234-efgh-3336',
+                textOption: 'Pésimo',
+              },
+            ],
+            answers: [
+              {
+                answerId: 'answ-1234-efgh-3338',
+                userId: 'abcd-1234-efgh-5679',
+                answerText: 'Bueno',
               },
             ],
           },

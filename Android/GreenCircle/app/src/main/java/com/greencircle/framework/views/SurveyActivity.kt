@@ -1,64 +1,100 @@
 package com.greencircle.framework.views
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.View
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.greencircle.R
 import com.greencircle.databinding.ActivitySurveyBinding
-import com.greencircle.domain.model.Survey.Question
-import com.greencircle.framework.ui.adapters.QuestionsAdapter
-import com.greencircle.framework.ui.adapters.viewholders.QuestionsViewHolder
+import com.greencircle.domain.model.survey.Question
 import com.greencircle.framework.viewmodel.SurveyViewModel
+import com.greencircle.framework.views.fragments.survey.QuestionFragment
 
 class SurveyActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySurveyBinding
-    private val adapter: QuestionsAdapter = QuestionsAdapter()
-    private lateinit var data: ArrayList<Question>
     private val viewModel: SurveyViewModel by viewModels()
+    private val fragmentManager = supportFragmentManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initializeBinding()
         initializeObservers()
-        viewModel.getQuestionList()
+        viewModel.getSurveyPending()
     }
 
     private fun initializeObservers() {
         viewModel.surveyLiveData.observe(this) { survey ->
+            if (survey == null) {
+                goToMain()
+                return@observe
+            }
+            Log.i("Salida", survey.toString())
             binding.SurveyTitle.text = survey.title
-            setUpRecyclerView(survey.questions)
+            loadQuestions(survey.questions)
+        }
+        viewModel.submitStatusLiveData.observe(this) { status ->
+            when (status) {
+                SurveyViewModel.SubmitStatus.success -> {
+                    MaterialAlertDialogBuilder(this).setTitle("¡Gracias por responder!")
+                        .setMessage("Tus respuestas han sido enviadas.")
+                        .setPositiveButton("Aceptar") { _, _ -> goToMain() }.show()
+                }
+
+                SurveyViewModel.SubmitStatus.validationError -> {
+                    MaterialAlertDialogBuilder(this).setTitle("Faltan preguntas")
+                        .setMessage(
+                            "No puedes enviar sin antes haber termiando " +
+                                "de llenar todas las preguntas obligatorias.",
+                        )
+                        .setPositiveButton("Seguir") { _, _ -> }.show()
+                }
+
+                SurveyViewModel.SubmitStatus.error -> {
+                    MaterialAlertDialogBuilder(this).setTitle("Error")
+                        .setMessage("No se pudieron enviar tus respuestas. Inténtalo más tarde.")
+                        .setPositiveButton("Aceptar") { _, _ -> goToMain() }.show()
+                }
+            }
         }
     }
 
     private fun initializeBinding() {
         binding = ActivitySurveyBinding.inflate(layoutInflater)
-        binding.BtnSubmit.setOnClickListener { button ->
-            var container = binding.RVQuestions
-            var count = container.childCount
-            val answers = ArrayList<String>()
-            for (i in 0 until count) {
-                val childView: View = binding.RVQuestions.getChildAt(i)
-                val viewHolder: QuestionsViewHolder =
-                    binding.RVQuestions.getChildViewHolder(childView) as QuestionsViewHolder
-                answers.add(viewHolder.answer)
-                // do something with your child element
-            }
-            // show answers in snakbar
-            Snackbar.make(button, answers.toString(), Snackbar.LENGTH_LONG).show()
+        binding.BtnSubmit.setOnClickListener {
+            Log.i("Salida", viewModel.surveyLiveData.value.toString())
+            viewModel.submitAnswers()
+        }
+        binding.topAppBar.setOnClickListener {
+            MaterialAlertDialogBuilder(this).setTitle("¿Quieres dejar de responder?")
+                .setMessage("Los cambios realizados no se guardarán.")
+                .setPositiveButton("Salir") { _, _ ->
+                    goToMain()
+                }.setNegativeButton("Sigue editando") { _, _ -> }.show()
         }
         setContentView(binding.root)
     }
 
-    private fun setUpRecyclerView(dataForList: ArrayList<Question>) {
-        binding.RVQuestions.setHasFixedSize(true)
-        val linearLayoutManager = LinearLayoutManager(
-            this,
-            LinearLayoutManager.VERTICAL,
-            false,
-        )
-        binding.RVQuestions.layoutManager = linearLayoutManager
-        adapter.QuestionsAdapter(dataForList, this)
-        binding.RVQuestions.adapter = adapter
+    private fun loadQuestions(questions: ArrayList<Question>) {
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        questions.forEach { question ->
+            val questionFragment = QuestionFragment()
+            val args = Bundle()
+            args.putSerializable("question", question)
+            questionFragment.arguments = args
+            fragmentTransaction.add(R.id.QuestionContainer, questionFragment)
+        }
+        fragmentTransaction.commit()
+    }
+
+    fun onQuestionAnswered(questionId: String, answer: String) {
+        viewModel.onQuestionAnswered(questionId, answer)
+    }
+
+    private fun goToMain() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        startActivity(intent)
+        finish()
     }
 }

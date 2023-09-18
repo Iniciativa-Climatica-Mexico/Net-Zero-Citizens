@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:text="Question Text Placeholder"
-        android:textSize="15dp"
         android:paddingVertical="10dp"
         android:textColor="@color/gray_900"
         android:textStyle="bold" />

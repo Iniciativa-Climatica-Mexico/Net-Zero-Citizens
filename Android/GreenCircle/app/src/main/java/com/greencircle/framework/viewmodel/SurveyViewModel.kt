@@ -1,74 +1,82 @@
 package com.greencircle.framework.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.greencircle.domain.model.Survey.Question
-import com.greencircle.domain.model.Survey.QuestionOption
-import com.greencircle.domain.model.Survey.QuestionType
-import com.greencircle.domain.model.Survey.Survey
+import androidx.lifecycle.viewModelScope
+import com.greencircle.domain.model.survey.Answer
+import com.greencircle.domain.model.survey.QuestionType
+import com.greencircle.domain.model.survey.Survey
+import com.greencircle.domain.usecase.SurveyRequirement
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class SurveyViewModel : ViewModel() {
-    val surveyLiveData = MutableLiveData<Survey>()
+    enum class SubmitStatus {
+        success, validationError, error,
+    }
 
-    fun getQuestionList() {
-        val mockData = Survey(
-            title = "Encuesta Validar probando lineas largas de titulo",
-            description = "Esta es una prueba para conseguir datos",
-            surveyId = "Test",
-            questions = arrayListOf(
-                Question(
-                    questionId = "Test",
-                    questionText = "¿Pregunta de ejemplo OPEN, que harias esta es una pregunta " +
-                        "super larga jaja?",
-                    questionType = QuestionType.open,
-                    questionOptions = arrayListOf(),
-                    isRequired = true,
-                ),
-                Question(
-                    questionId = "Test",
-                    questionText = "Pregunta de ejemplo SCALE, que harias",
-                    questionType = QuestionType.scale,
-                    questionOptions = arrayListOf(),
-                    isRequired = true,
-                ),
-                Question(
-                    questionId = "Test",
-                    questionText = "Pregunta de ejemplo MULTIPLE_CHOICE, que harias",
-                    questionType = QuestionType.multiple_choice,
-                    questionOptions = arrayListOf(
-                        QuestionOption("id1", "Opción 1"),
-                        QuestionOption("id2", "Opción 2"),
-                        QuestionOption("id3", "Opción 3"),
-                    ),
-                    isRequired = false,
-                ),
-                Question(
-                    questionId = "Test",
-                    questionText = "Pregunta de ejemplo OPEN, que harias",
-                    questionType = QuestionType.open,
-                    questionOptions = arrayListOf(),
-                    isRequired = true,
-                ),
-                Question(
-                    questionId = "Test",
-                    questionText = "Pregunta de ejemplo SCALE, que harias",
-                    questionType = QuestionType.scale,
-                    questionOptions = arrayListOf(),
-                    isRequired = false,
-                ),
-                Question(
-                    questionId = "Test",
-                    questionText = "Pregunta de ejemplo MULTIPLE_CHOICE, que harias",
-                    questionType = QuestionType.multiple_choice,
-                    questionOptions = arrayListOf(
-                        QuestionOption("id1", "Opción 1"),
-                        QuestionOption("id2", "Opción 2"),
-                        QuestionOption("id3", "Opción 3"),
-                    ),
-                    isRequired = true,
-                ),
-            ),
-        )
-        surveyLiveData.postValue(mockData)
+    val surveyLiveData = MutableLiveData<Survey?>()
+    val submitStatusLiveData = MutableLiveData<SubmitStatus>()
+    val surveyPendingRequirement = SurveyRequirement()
+    fun getSurveyPending() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val data = surveyPendingRequirement.getSurveyPending()
+            Log.d("Salida", data?.toString() ?: "null")
+            CoroutineScope(Dispatchers.Main).launch {
+                surveyLiveData.postValue(data)
+            }
+        }
+    }
+
+    fun submitAnswers() {
+        try {
+            val survey = surveyLiveData.value
+            if (survey == null) {
+                Log.i("Salida", "Survey is null")
+                submitStatusLiveData.postValue(SubmitStatus.error)
+                return
+            }
+            val answers = survey.questions.map { question ->
+                // chech that all requiered questions are answered
+                if (question.isRequired && question.answer == null) {
+                    submitStatusLiveData.postValue(SubmitStatus.validationError)
+                    return
+                } else {
+                    return@map question.answer
+                }
+            }.filterNotNull()
+
+            Log.i("Salida", answers.toString())
+            viewModelScope.launch(Dispatchers.IO) {
+                surveyPendingRequirement.submitAnswers(survey.surveyId, answers)
+                CoroutineScope(Dispatchers.Main).launch {
+                    submitStatusLiveData.postValue(SubmitStatus.success)
+                }
+            }
+        } catch (e: Exception) {
+            Log.i("Salida", e.toString())
+            submitStatusLiveData.postValue(SubmitStatus.error)
+        }
+    }
+
+    fun onQuestionAnswered(questionId: String, answer: String) {
+        val question = surveyLiveData.value?.questions?.find { it.questionId == questionId }
+        if (question == null) {
+            Log.i("Salida", "Question not found")
+            return
+        }
+
+        when (question.questionType) {
+            QuestionType.scale -> {
+                val scaleValue = answer.toInt()
+                question.answer = Answer(scaleValue, null, questionId)
+            }
+
+            else -> {
+                question.answer = Answer(null, answer, questionId)
+            }
+        }
     }
 }

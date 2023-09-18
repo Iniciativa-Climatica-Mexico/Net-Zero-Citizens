@@ -5,7 +5,6 @@ import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
 import Question from '../models/question.model'
 import QuestionOption from '../models/questionOption.model'
 import Answer from '../models/answer.model'
-import { Op } from 'sequelize'
 
 /**
  * @brief
@@ -60,7 +59,7 @@ export const getSurveyById = async (
 export const getSurveyPending = async (
   userId: string
 ): Promise<Survey | null> => {
-  const s = await Survey.findOne({
+  const survey = await Survey.findOne({
     order: [['createdAt', 'DESC']],
     where: {
       endDate: null,
@@ -81,21 +80,25 @@ export const getSurveyPending = async (
             association: 'questionOptions',
             attributes: { exclude: ['questionId'] },
           },
-          {
-            model: Answer,
-            association: 'answers',
-            where: {
-              userId :{
-                [Op.ne]: userId
-              }
-            },
-            attributes: [],
-          },
         ],
       },
     ],
   })
-  return s ? unwrap(s) : null
+  if (!survey) return null
+
+  const pool = await Promise.all(
+    survey.questions.map(async (question) => {
+      const answers = await question.$get('answers', {
+        where: {
+          userId,
+        },
+      })
+      return answers.length
+    })
+  )
+  const alreadyAnswered = pool.some((length) => length > 0)
+  if (alreadyAnswered) return null
+  return survey
 }
 
 export const createSurveyBodyScheme = z.object({
@@ -156,24 +159,25 @@ export const closeSurvey = async (surveyId: string): Promise<Survey | null> => {
 }
 
 export const answerSurveyBodyScheme = z.object({
-  surveyId: z.string(),
   answers: z.array(
     z.object({
       questionId: z.string(),
       scaleValue: z.number().optional(),
-      textAnswer: z.string().optional(),
+      answerText: z.string().optional(),
     })
   ),
 })
 
 export type AnswerSurveyReqBody = z.infer<typeof answerSurveyBodyScheme>
-type FullAnswers = AnswerSurveyReqBody & { userId: string }
+type FullAnswers = AnswerSurveyReqBody & { userId: string; surveyId: string }
 
 export const answerSurvey = async (answers: FullAnswers): Promise<Answer[]> => {
   const processedAnswers = answers.answers.map((a) => {
     const processedAns = { ...a, userId: answers.userId }
     return processedAns
   })
+
+  console.log(processedAnswers)
   const surveyId = answers.surveyId
   const survey = await Survey.findByPk(surveyId, {
     include: [
@@ -209,17 +213,17 @@ export const answerSurvey = async (answers: FullAnswers): Promise<Answer[]> => {
 
     if (question.questionType === 'multiple_choice') {
       if (ans.scaleValue) throw new Error('Scale value not allowed')
-      if (!ans.textAnswer) throw new Error('Text answer is required')
+      if (!ans.answerText) throw new Error('Text answer is required')
       const isValidOption = question.questionOptions.some(
-        (option) => option.textOption === ans.textAnswer
+        (option) => option.textOption === ans.answerText
       )
       if (!isValidOption) throw new Error('Invalid option')
     } else if (question.questionType === 'scale') {
-      if (ans.textAnswer) throw new Error('Text answer not allowed')
+      if (ans.answerText) throw new Error('Text answer not allowed')
       if (!ans.scaleValue) throw new Error('Scale value is required')
     } else if (question.questionType === 'open') {
       if (ans.scaleValue) throw new Error('Scale value not allowed')
-      if (!ans.textAnswer) throw new Error('Text answer is required')
+      if (!ans.answerText) throw new Error('Text answer is required')
     } else {
       throw new Error('Invalid question type')
     }

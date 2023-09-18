@@ -1,4 +1,4 @@
-package com.greencircle.domain.model.Survey
+package com.greencircle.domain.model.survey
 
 data class Survey(
     val description: String,

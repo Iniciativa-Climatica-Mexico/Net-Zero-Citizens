@@ -119,24 +119,22 @@ export const closeSurvey: RequestHandler<
   }
 }
 
-// temporary until mered with Auth
-type Token = {
-  uuid: string
-}
-
 export const answerSurvey: RequestHandler<
-  NoRecord,
+  { userId: string; surveyId: string },
   Answer[] | { message: string },
   undefined,
   NoRecord
 > = async (req, res) => {
   try {
     const answerData = SurveyService.answerSurveyBodyScheme.parse(req.body)
-    const req2 = req as typeof req & { user: Token }
-
-    const userId = req2?.user?.uuid || 'abcd-1234-efgh-5678'
-    const answer = await SurveyService.answerSurvey({ ...answerData, userId })
-    res.json(answer)
+    const userId = req.params.userId
+    const surveyId = req.params.surveyId
+    const answers = await SurveyService.answerSurvey({
+      ...answerData,
+      userId,
+      surveyId,
+    })
+    res.json(answers)
   } catch (err) {
     res.status(500).json({ message: 'Error creating answer' })
   }
