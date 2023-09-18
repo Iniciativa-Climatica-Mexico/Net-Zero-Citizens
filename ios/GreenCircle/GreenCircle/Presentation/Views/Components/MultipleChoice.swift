@@ -8,29 +8,28 @@
 import SwiftUI
 
 struct MultipleChoice: View {
-  @Binding var question: SurveyQuestion
+  var question: SurveyQuestion
+  @State private var isSelected: Int = -1
   
   var body: some View {
     VStack(alignment: .leading) {
       Text(question.questionText)
         .font(.headline)
       
-      ForEach(0..<question.options!.count, id: \.self) { answer in
+      ForEach(0..<question.questionOptions.count, id: \.self) { answer in
         Button(action: {
-          question.response = question.options![answer]
+          self.isSelected = answer
         }) {
-          HStack {
-            Text(question.options![answer])
-              .frame(maxWidth: .infinity, alignment: .leading)
-              .foregroundColor(question.response == question.options![answer] ? Color.blue : Color.black)
-          }
-          .padding()
-          .background(question.response == question.options![answer] ? Color.yellow : Color.clear)
+          Text(question.questionOptions[answer].textOption)
+            .frame(maxWidth: .infinity)
+            .foregroundColor(isSelected == answer ? Color(red: 0.33, green: 0.49, blue: 0.55) : Color(red: 0.54, green: 0.54, blue: 0.54))
         }
+        .padding()
         .clipShape(RoundedRectangle(cornerRadius: 9))
         .overlay(
           RoundedRectangle(cornerRadius: 9)
-            .stroke(lineWidth: 1)
+            .stroke(lineWidth: isSelected == answer ? 2 : 1)
+            .foregroundColor(isSelected == answer ? Color(red: 0.33, green: 0.49, blue: 0.55) : Color(red: 0.54, green: 0.54, blue: 0.54))
         )
         .padding(.bottom, 4)
       }
@@ -38,9 +37,10 @@ struct MultipleChoice: View {
   }
 }
 
+
 struct MultipleChoice_Previews: PreviewProvider {
   static var previews: some View {
-    MultipleChoice(question: .constant(SurveyQuestion (
+    MultipleChoice(question: SurveyQuestion (
       questionId: "qst-003",
       questionOptions: [
         QuestionOption(questionOptionId: "opt-001", textOption: "Fast Delivery"),
@@ -50,7 +50,7 @@ struct MultipleChoice_Previews: PreviewProvider {
       questionText: "Which of the following features do you find most useful?",
       questionType: .multiple_choice,
       isRequired: false
-    )))
+    ))
   }
 }
 

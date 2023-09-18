@@ -8,30 +8,31 @@
 import SwiftUI
 
 struct ScaleQuestion: View {
-  @Binding var question: SurveyQuestion
+  var question: SurveyQuestion
+  @State private var isSelected: Int = -1
   
   var body: some View {
     VStack(alignment: .leading) {
       Text(question.questionText)
         .font(.headline)
-      Text("Scale Question: Rate from 1 to 5")
-        .font(.subheadline)
-      ForEach(1..<6, id: \.self) { rating in
-        Button(action: {
-          question.response = String(rating)
-        }) {
-          Text("\(rating)")
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .foregroundColor(question.response == String(rating) ? Color.blue : Color.black)
+      HStack {
+        ForEach(1..<6, id: \.self) { rating in
+          Button(action: {
+            self.isSelected = rating
+          }) {
+            Text("\(rating)")
+              .frame(width: 30, height: 30)
+              .foregroundColor(isSelected == rating ? Color(red: 0.33, green: 0.49, blue: 0.55) : Color(red: 0.54, green: 0.54, blue: 0.54))
+          }
+          .padding()
+          .clipShape(RoundedRectangle(cornerRadius: 9))
+          .overlay(
+            RoundedRectangle(cornerRadius: 9)
+              .stroke(lineWidth: isSelected == rating ? 2 : 1)
+              .foregroundColor(isSelected == rating ? Color(red: 0.33, green: 0.49, blue: 0.55) : Color(red: 0.54, green: 0.54, blue: 0.54))
+          )
+          .padding(.bottom, 4)
         }
-        .padding()
-        .background(question.response == String(rating) ? Color.yellow : Color.clear)
-        .clipShape(RoundedRectangle(cornerRadius: 9))
-        .overlay(
-          RoundedRectangle(cornerRadius: 9)
-            .stroke(lineWidth: 1)
-        )
-        .padding(.bottom, 4)
       }
     }
   }
@@ -39,13 +40,13 @@ struct ScaleQuestion: View {
 
 struct ScaleQuestion_Previews: PreviewProvider {
   static var previews: some View {
-    ScaleQuestion(question: .constant(SurveyQuestion (
+    ScaleQuestion(question: SurveyQuestion (
       questionId: "qst-002",
       questionOptions: [],
       questionText: "Rate our website usability from 1 to 5 (1 being the worst, 5 being the best).",
       questionType: .scale,
       isRequired: true
-    )))
+    ))
   }
 }
 

@@ -8,59 +8,51 @@
 import SwiftUI
 
 struct SurveyView: View {
-  @State private var responses: [SurveyQuestion] = []
-  @State private var survey: SurveyModel // Declarar survey como una propiedad de estado
-  @State private var isSendButtonPressed = false // Agregar una propiedad para rastrear si se presionó el botón "Enviar"
-  @State private var showAlert = false
-  
-  init(survey: SurveyModel) {
-    self._survey = State(initialValue: survey) // Inicializar survey como una propiedad de estado
-  }
+  @StateObject var vm = SurveyViewModel()
   
   var body: some View {
     NavigationView {
       ScrollView {
         VStack(alignment: .leading) {
-          Text(survey.description)
+          TitleBarView(title: "Example 2",
+                       leftIcon: "chevron.left",
+                       rightIcon: nil,
+                       leftDestination: { SurveyView() },
+                       rightDestination: { })
+          .navigationBarBackButtonHidden(true)
+          .offset(y: -60)
+          Text(vm.survey.description)
             .font(.subheadline)
             .padding(.bottom)
           
-          ForEach($survey.questions) { $question in // Usar $survey para enlazar a la propiedad de estado
+          ForEach(vm.survey.questions, id: \.self) { question in
             switch question.questionType {
             case .open:
-              OpenQuestion(question: $question)
+              OpenQuestion(question: question)
+                .padding(.bottom, 15)
             case .scale:
-              ScaleQuestion(question: $question)
-            case .multipleChoice:
-              MultipleChoice(question: $question)
+              ScaleQuestion(question: question)
+                .padding(.bottom, 15)
+            case .multiple_choice:
+              MultipleChoice(question: question)
+                .padding(.bottom, 15)
             }
           }
-          
-          HStack {
-            Spacer()
-            SendButton(action: {
-              self.responses = self.survey.questions
-              print(self.responses)
-              
-              })
-            Spacer()
-          }
-          .frame(maxWidth: .infinity)
-          .padding()
-          
         }
-        .padding([.leading, .trailing])
-        
+        .padding([.leading, .trailing], 22)
       }
-      .navigationBarTitle(Text(survey.title))
-      
+      .navigationBarTitle(Text(vm.survey.title))
+    }
+    .onAppear {
+      Task {
+        await vm.getPendingSurvey()
+      }
     }
   }
 }
 
-
 struct Previews_SurveyView_Previews: PreviewProvider {
   static var previews: some View {
-    SurveyView(survey: sampleSurvey)
+    SurveyView()
   }
 }

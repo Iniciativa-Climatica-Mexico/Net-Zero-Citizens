@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct OpenQuestion: View {
-  @Binding var question: SurveyQuestion
+  var question: SurveyQuestion
   @State var text = ""
   
   var body: some View {
@@ -25,13 +25,13 @@ struct OpenQuestion: View {
 
 struct OpenQuestion_Previews: PreviewProvider {
   static var previews: some View {
-    OpenQuestion(question: .constant(SurveyQuestion (
+    OpenQuestion(question: SurveyQuestion (
       questionId: "qst-002",
       questionOptions: [],
       questionText: "What did you like about our service?",
       questionType: .open,
       isRequired: true
-    )))
+    ))
   }
 }
 

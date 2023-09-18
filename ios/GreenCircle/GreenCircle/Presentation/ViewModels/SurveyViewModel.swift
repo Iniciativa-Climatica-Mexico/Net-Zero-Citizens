@@ -18,8 +18,7 @@ class SurveyViewModel: ObservableObject {
   
   @MainActor
   func getPendingSurvey() async {
-    guard let survey = await getPendingSurveyUseCase.getPendingSurvey() else { return }
-    self.survey = survey
+    self.survey = await getPendingSurveyUseCase.getPendingSurvey()!
   }
   
 }

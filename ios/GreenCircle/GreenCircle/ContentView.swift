@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
   var body: some View {
-    SurveyView(survey: sampleSurvey)
+    SurveyView()
     /*
      VStack {
      Image(systemName: "globe")

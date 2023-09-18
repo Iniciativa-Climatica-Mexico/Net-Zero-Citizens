@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 class SurveyApi {
-  static let base = "http://localhost:3000/api/v1"
+  static let base = "http://localhost:5050/api/v1"
   struct Routes {
     static let survey = "/survey/pending/:userId"
   }
@@ -30,7 +30,7 @@ class SurveyRepository: SurveyApiProtocol {
   func getPendingSurvey() async -> SurveyModel? {
     let userId = "A01708302"
     let surveyRoute = SurveyApi.Routes.survey.replacingOccurrences(of: ":userId", with: userId)
-    return await service.getPendingSurvey(url: URL(string: "\(Api.base)\(surveyRoute)")!)
+    return await service.getPendingSurvey(url: URL(string: "\(SurveyApi.base)\(surveyRoute)")!)
   }
   
 }

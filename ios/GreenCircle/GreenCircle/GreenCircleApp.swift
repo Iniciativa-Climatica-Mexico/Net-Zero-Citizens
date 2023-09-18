@@ -13,7 +13,7 @@ struct GreenCircleApp: App {
   
   var body: some Scene {
     WindowGroup {
-      SurveyView(survey: sampleSurvey)
+      SurveyView()
     }
   }
 }
