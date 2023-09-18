@@ -27,3 +27,8 @@ struct User: Codable {
     let createdAt: Date
     let updatedAt: Date
 }
+
+struct Credentials: Codable {
+    let email: String
+    let password: String
+}
