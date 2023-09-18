@@ -108,14 +108,14 @@ class CreateUserFragment : Fragment() {
         val state = stateInputLayout.editText?.text.toString()
         val gender = genderInputLayout.editText?.text.toString()
 
-        val userInfo: UserAPIService.UpdateUserRequest = UserAPIService.UpdateUserRequest (
+        val userInfo: UserAPIService.UpdateUserRequest = UserAPIService.UpdateUserRequest(
             phone,
             age,
             state,
             gender
         )
 
-        viewModel.updateUser("abcd-1234-efgh-1902",userInfo)
+        viewModel.updateUser("abcd-1234-efgh-1902", userInfo)
         navigateToHome()
     }
 

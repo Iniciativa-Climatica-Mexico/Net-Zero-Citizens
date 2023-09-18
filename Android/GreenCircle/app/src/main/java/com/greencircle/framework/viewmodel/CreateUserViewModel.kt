@@ -36,7 +36,7 @@ class CreateUserViewModel : ViewModel() {
         }
     }
 
-    fun updateUser(userId: String, userInfo: UserAPIService.UpdateUserRequest){
+    fun updateUser(userId: String, userInfo: UserAPIService.UpdateUserRequest) {
         viewModelScope.launch(Dispatchers.IO) {
             val result: UserAPIService.UpdateUserResponse? =
                 updateUserRequirement(userId, userInfo)
