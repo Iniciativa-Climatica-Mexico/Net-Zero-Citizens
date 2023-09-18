@@ -16,4 +16,14 @@ class UserAPIClient {
             null
         }
     }
+
+    suspend fun updateUser(userId: String, user: User): User? {
+        api = UserNetworkModuleDI()
+        return try {
+            api.updateUser(userId, user)
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
 }

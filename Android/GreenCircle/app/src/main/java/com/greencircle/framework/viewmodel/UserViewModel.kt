@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.greencircle.domain.model.User
+import com.greencircle.domain.usecase.EditUserRequirement
 import com.greencircle.domain.usecase.UserListRequirement
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -13,6 +14,7 @@ import kotlinx.coroutines.launch
 class UserViewModel : ViewModel() {
     val userLiveData = MutableLiveData<User>()
     private val userListRequirement = UserListRequirement()
+    private val editUserRequirement = EditUserRequirement()
     private lateinit var userId: String
     fun setUserId(userId: String) {
         this.userId = userId
@@ -27,6 +29,12 @@ class UserViewModel : ViewModel() {
                     userLiveData.postValue(result!!)
                 }
             }
+        }
+    }
+
+    fun updateUser(user: User){
+        viewModelScope.launch(Dispatchers.IO){
+            val response = editUserRequirement(userId, user)
         }
     }
 }

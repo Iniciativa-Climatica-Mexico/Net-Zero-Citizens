@@ -10,4 +10,9 @@ class UserRepository {
         Log.d("prueba", response.toString())
         return response
     }
+
+    suspend fun updateUser(userId: String, user: User): User? {
+        val response = api.updateUser(userId, user)
+        return response
+    }
 }
