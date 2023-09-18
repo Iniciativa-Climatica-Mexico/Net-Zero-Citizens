@@ -50,7 +50,11 @@ interface cellActionProps {
 
 export const CellAction = ({companyId, fetchPending, company}:cellActionProps) => {
 
-  // Function to handle the click of the "Accept" button
+  /**
+     * @brief Function that allows admin to accept a specific company
+     * @param company
+     * @param companyId
+   */
   const handleAccept = async (company: Company, companyId: string) => {
     try {
       // Create an object with the updated status
@@ -64,14 +68,11 @@ export const CellAction = ({companyId, fetchPending, company}:cellActionProps) =
         webPage: company.webPage,
       }
 
-      console.log(updatedCompanyInfo)
-
       await updateCompany(companyId, updatedCompanyInfo)
 
     } catch (error) {
       console.error('Error accepting company:', error)
     } finally {
-
       fetchPending()
     }
   }
