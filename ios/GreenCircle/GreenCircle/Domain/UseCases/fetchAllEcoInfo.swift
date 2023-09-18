@@ -22,16 +22,16 @@ class FetchAllEcoInfoUseCase: FetchAllEcoInfoUseCaseProtocol {
   /// Corte del string donde se encuentra un espacio o la longitud es 150
   /// - Parameters: string de la descripción y entero con máximo de longitud
   /// - Returns: El string cortado
-  func limitText(ecoText: String, maxLength: Int) -> String {
+  func truncateText(ecoText: String, maxLength: Int) -> String {
     if ecoText.count <= maxLength {
       return ecoText
     }
-    var limitedText = String(ecoText.prefix(maxLength))
+    var tuncatedText = String(ecoText.prefix(maxLength))
 
-    if let lastNonSpaceIndex = limitedText.lastIndex(where: { !$0.isWhitespace }) {
-      limitedText = String(limitedText[...lastNonSpaceIndex])
+    if let lastNonSpaceIndex = tuncatedText.lastIndex(where: { !$0.isWhitespace }) {
+      tuncatedText = String(tuncatedText[...lastNonSpaceIndex])
     }
-    return limitedText
+    return tuncatedText
   }
 
   /// Obtener toda la información que conforma al modelo EcoInfo
@@ -46,7 +46,7 @@ class FetchAllEcoInfoUseCase: FetchAllEcoInfoUseCaseProtocol {
         if (modifiedEcoInfo.coverImage ?? "").isEmpty {
           modifiedEcoInfo.coverImage = "person.crop.circle.badge.xmark"
         }
-        modifiedEcoInfo.description = limitText(ecoText: modifiedEcoInfo.description ?? "", maxLength: 150)
+        modifiedEcoInfo.description = truncateText(ecoText: modifiedEcoInfo.description ?? "", maxLength: 150)
         return modifiedEcoInfo
       }
       return resultEcoInfo
