@@ -187,6 +187,8 @@ jobs:
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
         working-directory: Android/GreenCircle
+        env:
+          GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
 
       - name: Restore cache
         uses: actions/cache@v2
