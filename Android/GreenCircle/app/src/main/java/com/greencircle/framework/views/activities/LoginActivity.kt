@@ -1,5 +1,6 @@
 package com.greencircle.framework.views.activities
 
+import ViewModelFactory
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -7,17 +8,22 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.greencircle.R
 import com.greencircle.databinding.ActivityLoginBinding
+import com.greencircle.framework.viewmodel.LoginViewModel
 import com.greencircle.framework.views.MainActivity
 import com.greencircle.utils.AuthUtils
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private val authUtils = AuthUtils()
+    private val viewModel: LoginViewModel by viewModels {
+        ViewModelFactory(applicationContext)
+    }
 
     private val registerCompanyActivityResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -45,6 +51,7 @@ class LoginActivity : AppCompatActivity() {
                     try {
                         val account = task.getResult(ApiException::class.java)
                         Log.d("Test", "${account.idToken}")
+                        viewModel.googleLogin(account.idToken!!)
                     } catch (e: ApiException) {
                         Toast.makeText(
                             applicationContext, "Something went wrong", Toast.LENGTH_SHORT
@@ -55,6 +62,7 @@ class LoginActivity : AppCompatActivity() {
                 // Handle the case where the user canceled the operation
             }
         }
+    // obtener los argumentos del account y mandarlos a un nuevo fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
