@@ -169,7 +169,10 @@ export const answerSurveyBodyScheme = z.object({
 })
 
 export type AnswerSurveyReqBody = z.infer<typeof answerSurveyBodyScheme>
-type FullAnswers = AnswerSurveyReqBody & { userId: string; surveyId: string }
+export type FullAnswers = AnswerSurveyReqBody & {
+  userId: string
+  surveyId: string
+}
 
 export const answerSurvey = async (answers: FullAnswers): Promise<Answer[]> => {
   const processedAnswers = answers.answers.map((a) => {
@@ -177,7 +180,6 @@ export const answerSurvey = async (answers: FullAnswers): Promise<Answer[]> => {
     return processedAns
   })
 
-  console.log(processedAnswers)
   const surveyId = answers.surveyId
   const survey = await Survey.findByPk(surveyId, {
     include: [
@@ -194,7 +196,23 @@ export const answerSurvey = async (answers: FullAnswers): Promise<Answer[]> => {
       },
     ],
   })
+
   if (!survey) throw new Error('Survey not found')
+  if (survey.endDate != null) throw new Error('Survey is closed')
+
+  const pool = await Promise.all(
+    survey.questions.map(async (question) => {
+      const answersDb = await Answer.findAll({
+        where: {
+          questionId: question.questionId,
+          userId: answers.userId,
+        },
+      })
+      return answersDb.length
+    })
+  )
+  const alreadyAnswered = pool.some((length) => length > 0)
+  if (alreadyAnswered) throw new Error('User has already answered the survey')
 
   const answersToInsert: typeof processedAnswers = []
   const questions = survey.questions

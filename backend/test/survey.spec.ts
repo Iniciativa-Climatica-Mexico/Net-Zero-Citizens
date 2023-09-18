@@ -1,6 +1,7 @@
 import chai from 'chai'
 import chaiExclude from 'chai-exclude'
 import chaiSubset from 'chai-subset'
+import chaiAsPromised from 'chai-as-promised'
 import { db, initDB } from '../src/configs/database.config'
 import {
   getAllSurveys,
@@ -9,14 +10,19 @@ import {
   closeSurvey,
   CreateSurveyReqBody,
   getSurveyPending,
+  answerSurvey,
+  FullAnswers,
 } from '../src/services/survey.service'
 import { unwrap } from './utils'
 import Survey from '../src/models/survey.model'
 import Question from '../src/models/question.model'
 import QuestionOption from '../src/models/questionOption.model'
+import Answer from '../src/models/answer.model'
+import { create } from 'domain'
 
 chai.use(chaiExclude)
 chai.use(chaiSubset)
+chai.use(chaiAsPromised)
 
 const { expect } = chai
 
@@ -191,6 +197,29 @@ const testCreateSurvey: CreateSurveyReqBody = {
   ],
 }
 
+const testAnswer: FullAnswers = {
+  surveyId: 'surv-5555-efgh-3333',
+  userId: 'abcd-1234-efgh-5678',
+  answers: [
+    {
+      questionId: 'ques-5555-efgh-3330',
+      answerText: 'No',
+    },
+    {
+      questionId: 'ques-5678-abcd-3331',
+      answerText: 'Hola',
+    },
+    {
+      questionId: 'ques-5678-abcd-3332',
+      scaleValue: 5,
+    },
+    {
+      questionId: 'ques-1234-efgh-3333',
+      answerText: 'Bueno',
+    },
+  ],
+}
+
 const attributesToExclude = ['createdAt', 'updatedAt', 'startDate']
 
 beforeEach(async () => {
@@ -248,5 +277,32 @@ describe('Survey Service', () => {
     const response = await createSurvey(testCreateSurvey)
     const closedSurvey = await closeSurvey(response.surveyId)
     expect(closedSurvey?.endDate).to.not.be.null
+  })
+})
+
+describe('Answer Service', () => {
+  it('should throw if survey is closed', async () => {
+    await closeSurvey(testAnswer.surveyId)
+    expect(answerSurvey(testAnswer)).to.be.rejectedWith('Survey is closed')
+  })
+
+  it('should throw if user has already answered the survey', async () => {
+    await answerSurvey(testAnswer)
+    expect(answerSurvey(testAnswer)).to.be.rejectedWith(
+      'User has already answered the survey'
+    )
+  })
+
+  it('should create an answer to a survey', async () => {
+    await answerSurvey(testAnswer)
+    const answerDb = await Answer.findAll({
+      where: {
+        userId: testAnswer.userId,
+      },
+    })
+    console.log(unwrap(answerDb))
+    expect(unwrap(answerDb))
+      .excludingEvery(attributesToExclude)
+      .containSubset(testAnswer.answers)
   })
 })
