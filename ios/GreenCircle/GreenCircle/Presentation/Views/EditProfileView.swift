@@ -9,7 +9,6 @@ import SwiftUI
 
 struct EditProfileView: View {
     @ObservedObject var modelUser: UserViewModel
-    @State private var isShowingProfileView = false
 
     var body: some View {
         ZStack {
@@ -274,7 +273,7 @@ struct EditProfileView: View {
                                     createdAt: modelUser.contentUser.createdAt,
                                     updatedAt: Date()
                                     
-                            
+                                
                                 )
                                 await modelUser.updateUserData(updatedUserData: updatedUser, userId: "abcd-1234-efgh-5679")
                             
@@ -315,6 +314,6 @@ struct EditProfileView: View {
 
 struct EditProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        EditProfileView(modelUser: UserViewModel())
+        ProfileView(modelUser: UserViewModel())
     }
 }

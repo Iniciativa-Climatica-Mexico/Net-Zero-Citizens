@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ProfileView: View {
     @ObservedObject var modelUser: UserViewModel
+    
     var body: some View {
         ZStack {
             // Title Bar
@@ -20,7 +21,7 @@ struct ProfileView: View {
                     leftIcon: nil,
                     rightIcon: "person.fill",
                     leftDestination: {  },
-                    rightDestination: { ProfileInformationView(modelUser: UserViewModel()) }
+                    rightDestination: { EditProfileView(modelUser: UserViewModel()) }
                 )
                 .frame(height: 10)
                 .offset(y: -60)
@@ -69,11 +70,10 @@ struct ProfileView: View {
                     }
                     .padding(.trailing, 4)
                     Button(action: {
-                        // Acción del segundo botón
                     }) {
 
-                        NavigationLink(destination:  ProfileInformationView(modelUser: UserViewModel())) {
-                               Text("Mis Datos")
+                        NavigationLink(destination:  EditProfileView(modelUser: UserViewModel())) {
+                               Text("Editar perfil")
                                 .foregroundColor(.white)
                                 .padding(.vertical, 16)
                                 .padding(.horizontal)
