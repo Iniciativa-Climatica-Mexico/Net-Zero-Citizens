@@ -29,7 +29,9 @@ struct CoordinatorView: View {
                   goMainMenu: {routes.presentCover(.mainMenuView)})
         
       case .userRegister:
-        UserRegisterView(goLogin: {routes.goBackToRoot()})
+        UserRegisterView(goLogin: {routes.goBackToRoot()},
+                         goForm: {routes.presentCover(.userRegisterForm)},
+                         goMainMenu: {routes.presentCover(.mainMenuView)})
         
       case .userRegisterForm:
         UserRegisterFormView(goMainMenu: {routes.presentCover(.mainMenuView)})

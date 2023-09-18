@@ -9,7 +9,11 @@ import SwiftUI
 import GoogleSignInSwift
 
 struct UserRegisterView: View {
+  @EnvironmentObject var userData: UserData
+  @ObservedObject var viewModel = UserRegisterViewModel()
   var goLogin: () -> Void
+  var goForm: () -> Void
+  var goMainMenu: () -> Void
   
   var body: some View {
     ZStack{
@@ -25,6 +29,15 @@ struct UserRegisterView: View {
         
         VStack {
           GoogleSignInButton(style: .wide){
+            Task {
+              let new_user = await viewModel
+                .handleGoogleSignIn(userData: userData)
+              if new_user {
+                goForm()
+              } else {
+                goMainMenu()
+              }
+            }
           }
         }
         .padding(.horizontal)
@@ -52,6 +65,6 @@ struct UserRegisterView: View {
 
 struct RegisterView_Previews: PreviewProvider {
   static var previews: some View {
-    UserRegisterView{()}
+    UserRegisterView(goLogin: {}, goForm: {}, goMainMenu: {})
   }
 }
