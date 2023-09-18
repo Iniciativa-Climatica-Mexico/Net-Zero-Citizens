@@ -8,8 +8,8 @@
 import Foundation
 
 struct CompanyImages: Codable {
-    var companyImageId: UUID
-    var companyId: String?
-    var imageUrl: String?
-    var altText: String?
+  var companyImageId: UUID
+  var companyId: String
+  var imageUrl: String?
+  var altText: String?
 }

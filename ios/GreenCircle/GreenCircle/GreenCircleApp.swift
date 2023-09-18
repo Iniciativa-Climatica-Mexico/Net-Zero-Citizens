@@ -12,7 +12,8 @@ struct GreenCircleApp: App {
   var body: some Scene {
     WindowGroup {
       // ContentView()
-        ContactCompanyView()
+      ContactCompanyView()
+        .applyNavBarTheme()
     }
   }
 }

@@ -8,10 +8,10 @@
 import Foundation
 
 struct CompanyProducts: Codable {
-    var companyProductId: UUID
-    var productId: UUID
-    var companyId: UUID
-    var pdfProductCertificationUrl: String
-    var createdAt: String  // Check
-    var updatedAt: String // Check
+  var companyProductId: UUID
+  var productId: UUID
+  var companyId: UUID
+  var pdfProductCertificationUrl: String
+  var createdAt: String  // Check
+  var updatedAt: String // Check
 }
