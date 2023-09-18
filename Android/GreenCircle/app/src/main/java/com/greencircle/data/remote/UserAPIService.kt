@@ -42,7 +42,7 @@ interface UserAPIService {
      *
      * @param userId El ID del usuario que se va a actualizar.
      * @param request La solicitud de actualización que contiene los nuevos datos del usuario.
-     * @return Un objeto [UpdateUserResponse] que contiene información sobre la actualización realizada.
+     * @return Un objeto [UpdateUserResponse] que puede contener el id del nuevo usuario y un mensaje.
      */
     @PUT("users/{userId}")
     suspend fun updateUser(

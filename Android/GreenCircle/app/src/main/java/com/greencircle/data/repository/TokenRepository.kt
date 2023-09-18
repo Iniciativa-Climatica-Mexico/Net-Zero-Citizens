@@ -2,6 +2,11 @@ package com.greencircle.data.repository
 
 import android.content.SharedPreferences
 
+/**
+ * Repositorio para gestionar operaciones relacionadas con el manejo de tokens.
+ *
+ * Este repositorio proporciona métodos para guardar y recuperar tokens.
+ */
 class TokenRepository(private val sharedPreferences: SharedPreferences) {
     private val authTokenKey: String = "auth_token"
     private val refreshTokenKey: String = "refresh_token"

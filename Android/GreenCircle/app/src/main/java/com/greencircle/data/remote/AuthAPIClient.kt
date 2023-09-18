@@ -3,6 +3,9 @@ package com.greencircle.data.remote
 import android.util.Log
 import com.greencircle.data.remote.models.AuthResponse
 
+/**
+ * Cliente para realizar operaciones relacionadas con el AuthService de Google.
+ */
 class AuthAPIClient {
     private lateinit var api: AuthAPIService
 
