@@ -9,5 +9,5 @@ class UserRepository {
         userId: String,
         userInfo: UserAPIService.UpdateUserRequest
     ): UserAPIService.UpdateUserResponse? =
-        apiUser.updateUser(userId,userInfo)
+        apiUser.updateUser(userId, userInfo)
 }
