@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.greencircle.R
 import com.greencircle.databinding.FragmentCompanyReviewBinding
 import com.greencircle.domain.model.CompanyReview
-import com.greencircle.framework.adapters.CompanyReviewAdapter
+import com.greencircle.framework.ui.adapters.CompanyReviewAdapter
 import com.greencircle.framework.viewmodel.CompanyReviewViewModel
 
 class CompanyReviewFragment : Fragment() {

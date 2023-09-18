@@ -10,8 +10,8 @@ object CompanyNetworkModuleDI {
     private val okHttpClient = OkHttpClient()
 
     operator fun invoke(): CompanyAPIService {
-        return Retrofit.Builder().
-            baseUrl(Constants.BASE_URL)
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(gsonFactory)
             .build()

@@ -1,4 +1,4 @@
-package com.greencircle.framework.adapters.viewholders
+package com.greencircle.framework.ui.adapters.viewholders
 
 import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
