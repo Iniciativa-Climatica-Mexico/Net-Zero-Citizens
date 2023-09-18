@@ -40,4 +40,12 @@ class ReviewRepository {
         Log.d("PUT", response.toString())
         return response
     }
+
+    suspend fun deleteReview(
+        reviewId: String
+    ): Response<ResponseBody>? {
+        val response = api.deleteReview(reviewId)
+        Log.d("DELETE", response.toString())
+        return response
+    }
 }

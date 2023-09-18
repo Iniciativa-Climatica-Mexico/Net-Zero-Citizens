@@ -61,4 +61,17 @@ class ReviewAPIClient {
             null
         }
     }
+
+    suspend fun deleteReview(
+        reviewId: String
+    ): Response<ResponseBody>? {
+        api = ReviewNetworkModuleDI()
+        return try {
+            api.deleteReview(reviewId)
+        } catch (e: java.lang.Exception) {
+            Log.d("customErr", e.toString())
+            e.printStackTrace()
+            null
+        }
+    }
 }

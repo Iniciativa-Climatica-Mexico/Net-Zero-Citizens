@@ -6,6 +6,7 @@ import com.greencircle.domain.model.UserReviewObject
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -34,5 +35,10 @@ interface ReviewAPIService {
     suspend fun updateReview(
         @Path("reviewId") reviewId: String,
         @Body review: ReviewBase
+    ): Response<ResponseBody>
+
+    @DELETE("review/{reviewId}")
+    suspend fun deleteReview(
+        @Path("reviewId") reviewId: String
     ): Response<ResponseBody>
 }
