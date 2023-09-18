@@ -3,8 +3,6 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Providers from '../components/Providers'
 const inter = Inter({ subsets: ['latin'] })
-import { cookies } from 'next/headers'
-import { ClientCookiesProvider } from '../components/CookiesProvider'
 
 
 export const metadata: Metadata = {
@@ -20,11 +18,9 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <ClientCookiesProvider value={cookies().getAll()}>
-          <Providers>
-            {children}
-          </Providers>
-        </ClientCookiesProvider>
+        <Providers>
+          {children}
+        </Providers>
       </body>  
     </html>
   )
