@@ -6,8 +6,10 @@ const GoogleButton = () => {
   const {data: session} = useSession()
 
   if(session && session.user){
+    console.log(session)
 
     saveTokensFromSession(session)
+    
     return(
       <button  onClick = {() => {
         signOut()
