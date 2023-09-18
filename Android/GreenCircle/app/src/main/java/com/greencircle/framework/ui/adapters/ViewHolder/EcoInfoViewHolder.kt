@@ -8,7 +8,9 @@ import com.greencircle.R
 
 /**
  * ViewHolder para el RecyclerView de EcoInfo
+ * @constuctor Crea un ViewHolder para el RecyclerView de EcoInfo
  * @property imageView ImageView Imagen del post
+ * @since 1.0.0
  */
 class EcoInfoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val imageView: ImageView = itemView.findViewById(R.id.postImageView)

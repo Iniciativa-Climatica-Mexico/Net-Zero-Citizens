@@ -10,6 +10,12 @@ import com.greencircle.R
 import com.greencircle.domain.model.EcoInfo
 import com.greencircle.framework.ui.adapters.ViewHolder.EcoInfoViewHolder
 
+/**
+ * Adaptador para la lista de EcoInfo
+ * @constructor Crea un adaptador para la lista de EcoInfo
+ * @property ecoInfoList Lista de EcoInfo
+ * @since 1.0.0
+ */
 class EcoInfoAdapter(private val ecoInfoList: List<EcoInfo>) :
     RecyclerView.Adapter<EcoInfoViewHolder>() {
 
@@ -35,7 +41,8 @@ class EcoInfoAdapter(private val ecoInfoList: List<EcoInfo>) :
     }
 
     /**
-     * Se encarga de asignar los valores de cada EcoInfo a cada elemento de la lista
+     * Se encarga de asignar los valores de cada EcoInfo a cada 
+     * elemento de la lista
      * @param holder ViewHolder que contiene los elementos de la lista
      * @param position Posición del elemento en la lista
      * @return EcoInfoViewHolder con los valores asignados
