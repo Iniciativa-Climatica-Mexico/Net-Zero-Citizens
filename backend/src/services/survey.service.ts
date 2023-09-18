@@ -158,6 +158,10 @@ export const closeSurvey = async (surveyId: string): Promise<Survey | null> => {
   return unwrap(s)
 }
 
+/**
+ * @brief
+ * Schema para validar el body de la petición de contestar una encuesta
+ */
 export const answerSurveyBodyScheme = z.object({
   answers: z.array(
     z.object({
@@ -168,16 +172,20 @@ export const answerSurveyBodyScheme = z.object({
   ),
 })
 
-export type AnswerSurveyReqBody = z.infer<typeof answerSurveyBodyScheme>
+type AnswerSurveyReqBody = z.infer<typeof answerSurveyBodyScheme>
 type FullAnswers = AnswerSurveyReqBody & { userId: string; surveyId: string }
 
+/**
+ * Función del servicio que crea respuestas a una encuesta 
+ * @param answers Lista de respuestas y el id de la encuesta y el usuario
+ * @returns Un arreglo de las respuestas creadas
+ */
 export const answerSurvey = async (answers: FullAnswers): Promise<Answer[]> => {
   const processedAnswers = answers.answers.map((a) => {
     const processedAns = { ...a, userId: answers.userId }
     return processedAns
   })
 
-  console.log(processedAnswers)
   const surveyId = answers.surveyId
   const survey = await Survey.findByPk(surveyId, {
     include: [

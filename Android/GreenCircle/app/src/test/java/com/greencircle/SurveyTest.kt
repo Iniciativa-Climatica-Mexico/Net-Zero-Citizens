@@ -7,7 +7,13 @@ import com.greencircle.domain.model.survey.QuestionType
 import com.greencircle.domain.model.survey.Survey
 import org.junit.Test
 
+/**
+ * Pruebas unitarias para la clase Survey
+ */
 class SurveyTest {
+    /**
+     * Prueba que se pueda crear una encuesta válida
+     */
     @Test
     fun validSurvey() {
         val json = """

@@ -9,7 +9,13 @@ import org.junit.Assert.assertNull
 import org.junit.Assert.assertThrows
 import org.junit.Test
 
+/**
+ * Pruebas unitarias para la clase Question
+ */
 class QuestionTest {
+    /**
+     * Prueba que se pueda crear una pregunta válida
+     */
     @Test
     fun validQuestion() {
         val json = """
@@ -43,6 +49,9 @@ class QuestionTest {
         )
     }
 
+    /**
+     * Prueba que un valor invalido en questionType genere un valor nulo
+     */
     @Test
     fun invalidQuestionData() {
         val json = """
@@ -67,6 +76,9 @@ class QuestionTest {
         assertNull(question.questionType)
     }
 
+    /**
+     * Prueba que un json invalido genere una excepción
+     */
     @Test
     fun invalidQuestionJson() {
         val json = """

@@ -6,7 +6,13 @@ import com.greencircle.domain.model.survey.Answer
 import org.junit.Assert.assertThrows
 import org.junit.Test
 
+/**
+ * Pruebas unitarias para la clase Answer
+ */
 class AnswerTest {
+    /**
+     * Prueba que se pueda crear una respuesta válida
+     */
     @Test
     fun validAnswer() {
         val json = """
@@ -24,6 +30,9 @@ class AnswerTest {
         assert(answer.questionId == "testId")
     }
 
+    /**
+     * Prueba que un valor invalido en scaleValue genere una excepción
+     */
     @Test
     fun invalidAnswerData() {
         val json = """
@@ -38,6 +47,9 @@ class AnswerTest {
         }
     }
 
+    /**
+     * Prueba que un json invalido genere una excepción
+     */
     @Test
     fun invalidAnswerJson() {
         val json = """

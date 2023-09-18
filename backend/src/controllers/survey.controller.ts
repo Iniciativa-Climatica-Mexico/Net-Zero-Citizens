@@ -40,8 +40,7 @@ export const getAllSurveys: RequestHandler<
  * Función del controlador que devuelve una encuesta por su id
  * de la base de datos
  * @param req La request HTTP al servidor
- * @param res Un objeto paginador con las encuestas y la
- *          información de paginación
+ * @param res Un objeto de la encuesta
  *
  */
 export const getSurveyById: RequestHandler<
@@ -56,6 +55,13 @@ export const getSurveyById: RequestHandler<
   res.json(survey || undefined)
 }
 
+/**
+ * @brief
+ * Función del controlador que devuelve la ultima encuesta no cerrada
+ * si el usuario aun no la ha contestado
+ * @param req La request HTTP al servidor
+ * @param res Un objeto de la encuesta
+ */
 export const getSurveyPending: RequestHandler<
   { userId: string },
   Survey | null | { message: string },
@@ -75,10 +81,7 @@ export const getSurveyPending: RequestHandler<
  * @brief
  * Función del controlador que crea una encuesta en la base de datos
  * @param req La request HTTP al servidor
- * @param res Un objeto paginador con las encuestas y la
- *         información de paginación
- *
- * TODO: Verificar caul de las dos funciones es la correcta del servicio.
+ * @param res El objeto de la encuesta creada
  */
 export const createSurvey: RequestHandler<
   NoRecord,
@@ -100,8 +103,7 @@ export const createSurvey: RequestHandler<
  * @brief
  * Función del controlador que cierra la encuesta y la actualiza en la base de datos
  * @param req La request HTTP al servidor
- * @param res Un objeto paginador con las encuestas y la
- *        información de paginación
+ * @param res Estatus 200 si la encuesta se cierra correctamente, 404 si no se encuentra
  */
 export const closeSurvey: RequestHandler<
   { surveyId: string },
@@ -119,6 +121,13 @@ export const closeSurvey: RequestHandler<
   }
 }
 
+/**
+ * @brief
+ * Función del controlador que crea respuestas a una encuesta 
+ * de parte de un usuario en la base de datos
+ * @param req La request HTTP al servidor
+ * @param res Un arreglo de las respuestas creadas
+ */
 export const answerSurvey: RequestHandler<
   { userId: string; surveyId: string },
   Answer[] | { message: string },
