@@ -1,7 +1,7 @@
 
 'use client'
-import { useSession } from 'next-auth/react'
-import GoogleButton from '@/components/GoogleButton'
+import { signOut, useSession} from 'next-auth/react'
+import { deleteTokens } from '@/utils/authUtils'
 import 'bootstrap/dist/css/bootstrap.min.css' 
 
 export default function Home() {
@@ -12,15 +12,21 @@ export default function Home() {
       <figure className="bg-neutral-50 shadow rounded-3xl p-10 w-96">
         <header className='mb-5'>
           <h1 className='txt-900 text-2xl font-semibold mb-3'>
-            {session ? `Bienvenido ${session?.user?.name}` : 'Inicia sesión con tu cuenta'}
+            Home
           </h1>
-          <p className='text-sm font-normal'>Nos da gusto verte de regreso</p>  
+          <p className='text-sm font-normal'>{session ? `Bienvenido ${session?.user?.first_name}` : ''}</p>  
         </header>
         <div className='mt-5'>
-          <GoogleButton />
+          {session && session.user && (
+            <button  onClick = {() => {
+              signOut()
+              deleteTokens()
+            }} className='text-red-600'>
+              Salir
+            </button> 
+          )}
         </div>
       </figure>
-      <a href="#" className='text-gray-500'>Aviso de Privacidad</a>
     </main>
   )
 }
