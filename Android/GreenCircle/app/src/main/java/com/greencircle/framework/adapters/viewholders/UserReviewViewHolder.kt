@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.PopupMenu
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.greencircle.R
 import com.greencircle.databinding.ItemUserReviewBinding
@@ -58,20 +59,21 @@ class UserReviewViewHolder(private var binding: ItemUserReviewBinding) :
         bundle.putString("review", review)
         bundle.putFloat("score", score)
 
-        val updateReviewFormFragment = UpdateReviewFragment()
-        updateReviewFormFragment.arguments = bundle
-        val fragmentManager = requireActivity().supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
+        val updateReviewFragment = UpdateReviewFragment()
+        updateReviewFragment.arguments = bundle
+        val fragmentManager = (itemView.context as? AppCompatActivity)?.supportFragmentManager
 
-        fragmentTransaction.setCustomAnimations(
+        val fragmentTransaction = fragmentManager?.beginTransaction()
+
+        fragmentTransaction?.setCustomAnimations(
             R.anim.slide_in_right,
             R.anim.slide_out_left,
             R.anim.slide_in_left,
             R.anim.slide_out_right
         )
 
-        fragmentTransaction.replace(R.id.frame_layout, reviewFormFragment)
-        fragmentTransaction.addToBackStack("Review Form")
-        fragmentTransaction.commit()
+        fragmentTransaction?.replace(R.id.frame_layout, updateReviewFragment)
+        fragmentTransaction?.addToBackStack("Review Form")
+        fragmentTransaction?.commit()
     }
 }
