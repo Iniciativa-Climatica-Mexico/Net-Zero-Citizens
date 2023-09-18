@@ -52,6 +52,7 @@ class LoginActivity : AppCompatActivity() {
                         val account = task.getResult(ApiException::class.java)
                         Log.d("Test", "${account.idToken}")
                         viewModel.googleLogin(account.idToken!!)
+                        navigateToHome()
                     } catch (e: ApiException) {
                         Toast.makeText(
                             applicationContext, "Something went wrong", Toast.LENGTH_SHORT
