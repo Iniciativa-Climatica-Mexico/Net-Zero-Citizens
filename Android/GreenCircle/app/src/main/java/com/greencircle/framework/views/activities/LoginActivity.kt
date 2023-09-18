@@ -18,6 +18,11 @@ import com.greencircle.framework.viewmodel.LoginViewModel
 import com.greencircle.framework.views.MainActivity
 import com.greencircle.utils.AuthUtils
 
+/**
+ * Actividad principal para la autenticación y registro de usuarios.
+ *
+ * Esta actividad permite a los usuarios autenticarse con Google, registrarse como empresas o usuarios individuales, y navegar a la pantalla principal de la aplicación.
+ */
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private val authUtils = AuthUtils()
@@ -63,14 +68,18 @@ class LoginActivity : AppCompatActivity() {
                 // Handle the case where the user canceled the operation
             }
         }
-    // obtener los argumentos del account y mandarlos a un nuevo fragment
 
+    /**
+     * Método llamado cuando se crea la actividad.
+     *
+     * @param savedInstanceState El estado guardado de la actividad.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Listener Methods
+        // Configuración de los listeners para los botones de registro de empresa y usuario
         registerCompanyOnClickListener()
         registerUserOnClickListener()
 
@@ -78,7 +87,7 @@ class LoginActivity : AppCompatActivity() {
         authUtils.googleLoginListener(binding, this, googleSignInActivityResult)
     }
 
-    // On Click Listener Method
+    // Métodos para los listeners de los botones de registro
     private fun registerCompanyOnClickListener() {
         val registerCompanyButton = binding.root.findViewById<View>(R.id.login_register_company)
         registerCompanyButton.setOnClickListener {
@@ -93,7 +102,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    // Navigation Methods
+    // Métodos de navegación
     private fun navigateToHome() {
         var intent: Intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
