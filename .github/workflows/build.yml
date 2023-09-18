@@ -176,7 +176,7 @@ jobs:
 
       - name: Decrypt google-service.json
         run: |
-          echo "${{ secrets.FIREBASE_ACCOUNT }}" | gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.GPG_PASSPHRASE }}" --output Android/GreenCircle/app/google-services.json google-services.json.gpg
+          echo "${{ secrets.FIREBASE_ACCOUNT }}" | gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.GPG_PASSPHRASE }}" --output google-services.json ../google-services.json.gpg
 
         working-directory: Android/GreenCircle/app
 
