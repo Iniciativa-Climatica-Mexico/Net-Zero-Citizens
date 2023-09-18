@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.greencircle.R
 import com.greencircle.databinding.FragmentCompanyServicesBinding
+import com.greencircle.domain.model.Product
 import com.greencircle.domain.model.ServiceItem
 import com.greencircle.framework.ui.adapters.ServiceAdapter
 import com.greencircle.framework.viewmodel.CompanyServicesViewModel
@@ -38,10 +39,13 @@ class CompanyServicesFragment : Fragment() {
         val root: View = binding.root
         initializeComponents(root)
 
-        val data = viewModel.createMOckServicesList()
+        val data = arguments?.getSerializable("Services") as ArrayList<Product>
+
+        val dataAdapted = adapToServiceCard(data)
+
         initializeObservers()
-        Log.d("Salida", data.results.toString())
-        setUpRecyclerView(data.results)
+        Log.d("Salida", "Data: $data")
+        setUpRecyclerView(dataAdapted)
 
         return root
     }
@@ -83,5 +87,20 @@ class CompanyServicesFragment : Fragment() {
         adapter = ServiceAdapter() // Initialize the adapter
         adapter.initServiceAdapter(dataForList, requireContext())
         recyclerView.adapter = adapter
+    }
+
+    private fun adapToServiceCard(dataToAdapt: ArrayList<Product>): ArrayList<ServiceItem> {
+        val adaptedData = ArrayList<ServiceItem>()
+        for (item in dataToAdapt) {
+            adaptedData.add(
+                ServiceItem(
+                    productId = item.productId,
+                    name = item.name,
+                    description = item.description,
+                    imgUrl = item.imageUrl,
+                )
+            )
+        }
+        return adaptedData
     }
 }

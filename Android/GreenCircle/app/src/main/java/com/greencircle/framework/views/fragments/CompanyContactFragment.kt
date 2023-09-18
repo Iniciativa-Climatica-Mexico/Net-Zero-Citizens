@@ -54,12 +54,18 @@ class CompanyContactFragment : Fragment() {
             bundle.putString("Direction", direction)
             contactInfoFragment.arguments = bundle
 
+            // bundle para pasar los servicios a CompanyServicesFragment
+            val bundleServices = Bundle()
+            bundleServices.putSerializable("Services", companyData?.products)
+            servicesFragment.arguments = bundleServices
+
             childFragmentManager.beginTransaction().add(R.id.fragmentContainer, servicesFragment)
                 .add(R.id.fragmentContainer, contactInfoFragment)
                 .add(R.id.fragmentContainer, companyReviewsFragment).hide(contactInfoFragment)
                 .hide(companyReviewsFragment).commit()
         }
 
+        // Obtiene los datos de la empresa
         viewModel.getCompanyData()
 
         /*

@@ -28,11 +28,6 @@ class CompanyContactInfoFragment : Fragment() {
         return binding.root
     }
 
-    override fun onStart() {
-        super.onStart()
-        arguments?.toString()?.let { Log.d("ArgumentsCheck:OnStart", it) }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

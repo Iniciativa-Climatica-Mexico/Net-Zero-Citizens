@@ -1,6 +1,7 @@
 package com.greencircle.domain.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 import java.util.UUID
 
 /**
@@ -21,4 +22,4 @@ data class Product(
     @SerializedName("imageUrl") val imageUrl: String,
     @SerializedName("imageAltText") val imageAltText: String,
     @SerializedName("companies") val companies: List<Companies>,
-)
+) : Serializable
