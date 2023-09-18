@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
-import androidx.fragment.app.FragmentActivity
 import com.greencircle.R
 import com.greencircle.databinding.ItemUserReviewBinding
 import com.greencircle.domain.model.UserReview
