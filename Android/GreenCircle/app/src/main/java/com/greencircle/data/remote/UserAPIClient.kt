@@ -25,6 +25,7 @@ class UserAPIClient {
         return try {
             // Realiza la actualización del usuario llamando al método en la API.
             val response = api.updateUser(userId, userInfo)
+            Log.d("UserAPIClient", "Response: $response")
             response
         } catch (e: Exception) {
             // Maneja cualquier excepción que pueda ocurrir durante la actualización.
