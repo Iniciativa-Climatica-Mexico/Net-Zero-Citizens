@@ -46,6 +46,7 @@ class NetworkAPIService {
     switch response.result {
     case .success(let data):
       do {
+        print(try NetworkAPIService.decoder.decode(Company.self, from: data))
         return
           try NetworkAPIService
           .decoder

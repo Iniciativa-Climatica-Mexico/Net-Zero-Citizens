@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CompanyImages: Codable {
+struct CompanyImages: Codable, Hashable {
   var companyImageId: UUID
   var companyId: String
   var imageUrl: String?
