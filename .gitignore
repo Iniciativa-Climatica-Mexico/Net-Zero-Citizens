@@ -12,7 +12,7 @@
 .idea/libraries
 
 # XCode
-**/*.plist
+/**/*.plist
 
 ### Node JS ###
 # dependencies
