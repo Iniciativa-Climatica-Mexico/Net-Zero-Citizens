@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.greencircle.databinding.FragmentRegisterCompanyBinding
+import com.greencircle.framework.views.MainActivity
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
 import com.greencircle.utils.AuthUtils
 
@@ -88,5 +89,10 @@ class RegisterCompanyFragment : Fragment() {
         val createCompanyFragment = CreateCompanyFragment()
         val activity = requireActivity() as RegisterCompanyActivity
         activity.replaceFragment(createCompanyFragment, arguments)
+    }
+
+    private fun navigateToHome() {
+        var intent: Intent = Intent(requireContext(), MainActivity::class.java)
+        startActivity(intent)
     }
 }

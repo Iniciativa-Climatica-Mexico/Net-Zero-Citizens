@@ -78,7 +78,11 @@ class CreateCompanyFragment : Fragment() {
         viewModel.googleLoginResult.observe(viewLifecycleOwner) { result ->
             // Handle the result here
             if (result != null) {
-                authToken = result.tokens.authToken
+                if (result.user.roles != "new_user") {
+                    navigateToHome()
+                } else {
+                    authToken = result.tokens.authToken
+                }
             } else {
                 Log.d("CreateCompanyFragment", "Google login failed")
             }

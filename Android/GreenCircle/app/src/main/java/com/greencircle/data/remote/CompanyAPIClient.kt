@@ -14,6 +14,7 @@ class CompanyAPIClient {
         api = CompanyNetworkModel(authToken)
         return try {
             val response = api.createCompany(company)
+            Log.d("CreateCompany", "Response: $response")
             response
         } catch (e: Exception) {
             e.printStackTrace()
