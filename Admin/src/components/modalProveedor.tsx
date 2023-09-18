@@ -17,7 +17,6 @@ import { Button } from './ui/button'
 interface Company {
     companyId: string
     name: string
-    location: string
     profilePicture: string
     state: string,
     city: string,
@@ -71,7 +70,6 @@ export default function ModalProveedor({ setIsModalOpen, selectedCompany, fetchP
       const updatedCompanyInfo: UpdateCompanyInfoBody = {
         name: company.name,
         description: company.description,
-        location: company.location,
         profilePicture: company.profilePicture,
         status: 'approved',
         phoneNumber: company.phoneNumber,
@@ -82,6 +80,32 @@ export default function ModalProveedor({ setIsModalOpen, selectedCompany, fetchP
 
     } catch (error) {
       console.error('Error accepting company:', error)
+    } finally {
+      setIsModalOpen(false)
+      fetchPending()
+    }
+  }
+  /**
+     * @brief Function that allows admin to reject a specific company
+     * @param company
+     * @param companyId
+   */
+  const handleReject = async (company: Company, companyId: string) => {
+    try {
+      // Create an object with the updated status
+      const updatedCompanyInfo: UpdateCompanyInfoBody = {
+        name: company.name,
+        description: company.description,
+        profilePicture: company.profilePicture,
+        status: 'rejected',
+        phoneNumber: company.phoneNumber,
+        webPage: company.webPage,
+      }
+
+      // Call the updateCompany function with the updated information
+      await updateCompany(companyId, updatedCompanyInfo)
+    } catch (error) {
+      console.error('Error rejecting company:', error)
     } finally {
       setIsModalOpen(false)
       fetchPending()
@@ -202,7 +226,7 @@ export default function ModalProveedor({ setIsModalOpen, selectedCompany, fetchP
             </p>
             <footer className='flex gap-x-3'>
               <Button onClick={() => handleAccept(selectedCompany, selectedCompany.companyId)} variant='default'>Aprobar</Button>
-              <Button variant='outline'>Rechazar</Button>
+              <Button onClick={() => handleReject(selectedCompany, selectedCompany.companyId)} variant='outline'>Rechazar</Button>
             </footer>
           </section>
         </article>

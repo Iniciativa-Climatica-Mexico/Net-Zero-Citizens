@@ -1,7 +1,9 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
-import CheckCircleOutlineIcon from './../../node_modules/@mui/icons-material/CheckCircleOutline'
-import MoreHorizIcon from './../../node_modules/@mui/icons-material/MoreHoriz'
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
+import CancelIcon from '@mui/icons-material/Cancel'
+
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 
 import {
   DropdownMenu,
@@ -15,7 +17,6 @@ import { updateCompany, UpdateCompanyInfoBody } from '@/api/v1/company'
 interface Company {
   companyId: string
   name: string
-  location: string
   profilePicture: string
   state: string,
   city: string,
@@ -43,12 +44,13 @@ const theme = createTheme({
 })
 
 interface cellActionProps {
+  setIsModalOpen: (value: boolean) => void;
   companyId: string
   fetchPending: () => void
   company: Company
 }
 
-export const CellAction = ({companyId, fetchPending, company}:cellActionProps) => {
+export const CellAction = ({setIsModalOpen, companyId, fetchPending, company}:cellActionProps) => {
 
   /**
      * @brief Function that allows admin to accept a specific company
@@ -61,7 +63,6 @@ export const CellAction = ({companyId, fetchPending, company}:cellActionProps) =
       const updatedCompanyInfo: UpdateCompanyInfoBody = {
         name: company.name,
         description: company.description,
-        location: company.location,
         profilePicture: company.profilePicture,
         status: 'approved',
         phoneNumber: company.phoneNumber,
@@ -77,6 +78,33 @@ export const CellAction = ({companyId, fetchPending, company}:cellActionProps) =
     }
   }
 
+  /**
+     * @brief Function that allows admin to reject a specific company
+     * @param company
+     * @param companyId
+   */
+  const handleReject = async (company: Company, companyId: string) => {
+    try {
+      // Create an object with the updated status
+      const updatedCompanyInfo: UpdateCompanyInfoBody = {
+        name: company.name,
+        description: company.description,
+        profilePicture: company.profilePicture,
+        status: 'rejected',
+        phoneNumber: company.phoneNumber,
+        webPage: company.webPage,
+      }
+
+      // Call the updateCompany function with the updated information
+      await updateCompany(companyId, updatedCompanyInfo)
+    } catch (error) {
+      console.error('Error rejecting company:', error)
+    } finally {
+      setIsModalOpen(false)
+      fetchPending()
+    }
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <DropdownMenu>
@@ -88,10 +116,14 @@ export const CellAction = ({companyId, fetchPending, company}:cellActionProps) =
           />
         </DropdownMenuTrigger>
         <DropdownMenuContent align='end'>
-          <DropdownMenuLabel>Acciones</DropdownMenuLabel>
+          <DropdownMenuLabel>Acciones rápidas</DropdownMenuLabel>
           <DropdownMenuItem onClick={() => handleAccept(company, companyId)}>
             <CheckCircleOutlineIcon className='mr-1.5' />
             Aceptar
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleReject(company, companyId)}>
+            <CancelIcon className='mr-1.5' />
+            Rechazar
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

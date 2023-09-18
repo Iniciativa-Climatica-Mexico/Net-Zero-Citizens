@@ -182,7 +182,7 @@ export default function Home() {
                   </div>
                 </TableCell>
                 <TableCell className='text-right'>
-                  <CellAction companyId={company.companyId} fetchPending={fetchPending} company={company} />
+                  <CellAction setIsModalOpen={setIsModalOpen} companyId={company.companyId} fetchPending={fetchPending} company={company} />
                 </TableCell>
               </TableRow>
             ))}
