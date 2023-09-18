@@ -7,83 +7,58 @@
 
 import SwiftUI
 
-let genders = ["Masculino", "Femenino", "Otro"]
-let states = [
-  "Aguascalientes",
-  "Baja California",
-  "Baja California Sur",
-  "Campeche",
-  "Chiapas",
-  "Chihuahua",
-  "Coahuila",
-  "Colima",
-  "Durango",
-  "Guanajuato",
-  "Guerrero",
-  "Hidalgo",
-  "Jalisco",
-  "Ciudad de México (CDMX)",
-  "Estado de México",
-  "Michoacán",
-  "Morelos",
-  "Nayarit",
-  "Nuevo León",
-  "Oaxaca",
-  "Puebla",
-  "Querétaro",
-  "Quintana Roo",
-  "San Luis Potosí",
-  "Sinaloa",
-  "Sonora",
-  "Tabasco",
-  "Tamaulipas",
-  "Tlaxcala",
-  "Veracruz",
-  "Yucatán",
-  "Zacatecas"
-]
-
 struct UserRegisterFormView: View {
-
+  @ObservedObject var viewModel =
+  UserRegisterFormViewModel()
+  @EnvironmentObject var userData: UserData
   
-  @State var phone = ""
-  @State var age = ""
-  @State var state = ""
-  @State var gender = ""
-  @State var privacy = false
+  var goMainMenu: () -> Void
   
   var body: some View {
     VStack {
-      UserRegisterHeaderView()
+      UserRegisterHeaderView(
+        mail: userData.user!.email,
+        name: "\(userData.user!.first_name) \(userData.user!.last_name)")
       Spacer()
       VStack(alignment: .leading, spacing: 10) {
         Text("Completa tu registro por favor")
           .font(.system(size: 24))
-        InputFormView(bindingValue: $phone,
+        InputFormView(bindingValue: $viewModel.phone,
                       label: "Teléfono",
                       prompt: "123-456-7890")
         .keyboardType(.phonePad)
-        InputFormView(bindingValue: $age,
+        InputFormView(bindingValue: $viewModel.age,
                       label: "Edad",
                       prompt: "Ingresa tu edad...")
         .keyboardType(.numberPad)
-        PickerFormView(selectedOption: $state,
+        PickerFormView(selectedOption: $viewModel.state,
                        label: "Estado",
-                       options: states)
-        PickerFormView(selectedOption: $gender,
+                       options: viewModel.states)
+        PickerFormView(selectedOption: $viewModel.gender,
                        label: "Género",
-                       options: genders)
+                       options: viewModel.genders)
         HStack {
           HStack {
             Text("Acepto las")
             LinkButton("políticas de privacidad", buttonColor: .blue){}
           }.frame(width: 270)
-
-          Toggle("", isOn: $privacy)
+          
+          Toggle("", isOn: $viewModel.privacy)
         }
       }.padding(.horizontal)
       Spacer()
-      MainButton("Continuar", action: {})
+      MainButton("Continuar", action: {
+        Task {
+          let success = await viewModel
+            .putUserInformation(userData: userData)
+          if(success) {
+            goMainMenu()
+          }
+        }
+      }).alert("Oops! Algo salió mal",
+               isPresented: $viewModel.showAlert) {
+        Button("Ok", role: .cancel){}
+      }
       Spacer()
       
     }
@@ -92,20 +67,30 @@ struct UserRegisterFormView: View {
 }
 
 struct UserRegisterFormView_Previews: PreviewProvider {
+  
   static var previews: some View {
-    UserRegisterFormView()
+    UserRegisterFormView(goMainMenu: {})
+      .environmentObject(UserData(
+        User(first_name: "Ricardo",
+             last_name: "Fernandez",
+             uuid: "1",
+             email: "ricardo@mail.com",
+             login_type: "google",
+             picture: "picture",
+             roles: "new_user")))
   }
 }
 
 struct UserRegisterHeaderView: View {
-  var mail = "ricardo@email.com"
+  var mail: String
+  var name: String
   
   var body: some View {
     VStack(alignment: .leading, spacing: 10) {
       Image(systemName: "leaf")
         .font(.largeTitle)
         .foregroundColor(.green)
-      Text("Bienvenido, Ricardo Fernández")
+      Text("Bienvenido, \(name)")
         .font(.system(size: 40, weight: .bold))
       VStack(alignment: .leading) {
         Text("Te registraste con el correo")

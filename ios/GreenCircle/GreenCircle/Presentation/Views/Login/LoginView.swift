@@ -13,6 +13,7 @@ struct LoginView: View {
   var goForm: () -> Void
   
   @StateObject var viewModel = LoginViewModel()
+  @EnvironmentObject var user: UserData
   
   var body: some View {
     ZStack{
@@ -28,8 +29,11 @@ struct LoginView: View {
         
         VStack {
           GoogleSignInButton(style: .wide){
-            viewModel.handleGoogleSignIn()
-            goForm()
+            Task {
+              await viewModel
+                .handleGoogleSignIn(userData: user)
+              goForm()
+            }
           }
         }
         .padding(.horizontal)

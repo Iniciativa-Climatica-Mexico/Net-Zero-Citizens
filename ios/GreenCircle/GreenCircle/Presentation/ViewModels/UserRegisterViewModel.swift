@@ -10,7 +10,7 @@ import Foundation
 class UserRegisterViewModel: ObservableObject {
   var useCase = GoogleSignInUseCase()
   
-  func handleGoogleSignIn() {
-    useCase.handleSignInButton()
-  }
+//  func handleGoogleSignIn() {
+//    useCase.handleSignInButton()
+//  }
 }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6C00A8682AB7C06600E34A8A /* AuthResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C00A8672AB7C06600E34A8A /* AuthResponseModel.swift */; };
+		6C00A86B2AB7C5A300E34A8A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 6C00A86A2AB7C5A300E34A8A /* Alamofire */; };
 		6C4452B82AA6EF8500BE5930 /* GreenCircleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4452B72AA6EF8500BE5930 /* GreenCircleApp.swift */; };
 		6C4452BA2AA6EF8500BE5930 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4452B92AA6EF8500BE5930 /* ContentView.swift */; };
 		6C4452BC2AA6EF8600BE5930 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C4452BB2AA6EF8600BE5930 /* Assets.xcassets */; };
@@ -14,6 +16,11 @@
 		6C4452C92AA6EF8600BE5930 /* GreenCircleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4452C82AA6EF8600BE5930 /* GreenCircleTests.swift */; };
 		6C4452D32AA6EF8600BE5930 /* GreenCircleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4452D22AA6EF8600BE5930 /* GreenCircleUITests.swift */; };
 		6C4452D52AA6EF8600BE5930 /* GreenCircleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4452D42AA6EF8600BE5930 /* GreenCircleUITestsLaunchTests.swift */; };
+		6C5F19C72AB7BBEF007D3D44 /* NetworkAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5F19C62AB7BBEF007D3D44 /* NetworkAPIService.swift */; };
+		6C5F19CA2AB7BC6A007D3D44 /* CustomDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5F19C92AB7BC6A007D3D44 /* CustomDateFormatter.swift */; };
+		6C5F19CC2AB7BC7D007D3D44 /* PaginatedQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5F19CB2AB7BC7D007D3D44 /* PaginatedQuery.swift */; };
+		6C5F19CE2AB7BCAA007D3D44 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5F19CD2AB7BCAA007D3D44 /* UserRepository.swift */; };
+		6C5F19D02AB7BEC5007D3D44 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5F19CF2AB7BEC5007D3D44 /* UserModel.swift */; };
 		6CB4982C2AB102CD00B6560C /* CoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB4982B2AB102CD00B6560C /* CoordinatorView.swift */; };
 		6CB4982E2AB102D300B6560C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB4982D2AB102D300B6560C /* LoginView.swift */; };
 		6CB498312AB1031A00B6560C /* FlowStacks in Frameworks */ = {isa = PBXBuildFile; productRef = 6CB498302AB1031A00B6560C /* FlowStacks */; };
@@ -29,6 +36,8 @@
 		6CD917CE2AB792E600C65C87 /* GoogleSignInUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD917CD2AB792E600C65C87 /* GoogleSignInUseCase.swift */; };
 		6CD917D02AB793FB00C65C87 /* UserRegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD917CF2AB793FB00C65C87 /* UserRegisterViewModel.swift */; };
 		6CD917D22AB7945A00C65C87 /* UserRegisterFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD917D12AB7945A00C65C87 /* UserRegisterFormViewModel.swift */; };
+		6CE4843D2AB889810015CAC2 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE4843C2AB889810015CAC2 /* UserData.swift */; };
+		6CE4843F2AB8AD020015CAC2 /* UserRegisterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE4843E2AB8AD020015CAC2 /* UserRegisterUseCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +58,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6C00A8672AB7C06600E34A8A /* AuthResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponseModel.swift; sourceTree = "<group>"; };
 		6C4452B42AA6EF8500BE5930 /* GreenCircle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GreenCircle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C4452B72AA6EF8500BE5930 /* GreenCircleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreenCircleApp.swift; sourceTree = "<group>"; };
 		6C4452B92AA6EF8500BE5930 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -59,6 +69,11 @@
 		6C4452CE2AA6EF8600BE5930 /* GreenCircleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GreenCircleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C4452D22AA6EF8600BE5930 /* GreenCircleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreenCircleUITests.swift; sourceTree = "<group>"; };
 		6C4452D42AA6EF8600BE5930 /* GreenCircleUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreenCircleUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		6C5F19C62AB7BBEF007D3D44 /* NetworkAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAPIService.swift; sourceTree = "<group>"; };
+		6C5F19C92AB7BC6A007D3D44 /* CustomDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDateFormatter.swift; sourceTree = "<group>"; };
+		6C5F19CB2AB7BC7D007D3D44 /* PaginatedQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginatedQuery.swift; sourceTree = "<group>"; };
+		6C5F19CD2AB7BCAA007D3D44 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		6C5F19CF2AB7BEC5007D3D44 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		6CB4982B2AB102CD00B6560C /* CoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorView.swift; sourceTree = "<group>"; };
 		6CB4982D2AB102D300B6560C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		6CB498372AB10B0800B6560C /* CornerRadiusExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRadiusExtension.swift; sourceTree = "<group>"; };
@@ -72,6 +87,8 @@
 		6CD917CD2AB792E600C65C87 /* GoogleSignInUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInUseCase.swift; sourceTree = "<group>"; };
 		6CD917CF2AB793FB00C65C87 /* UserRegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegisterViewModel.swift; sourceTree = "<group>"; };
 		6CD917D12AB7945A00C65C87 /* UserRegisterFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegisterFormViewModel.swift; sourceTree = "<group>"; };
+		6CE4843C2AB889810015CAC2 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		6CE4843E2AB8AD020015CAC2 /* UserRegisterUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegisterUseCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +97,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6CB498362AB1077700B6560C /* GoogleSignInSwift in Frameworks */,
+				6C00A86B2AB7C5A300E34A8A /* Alamofire in Frameworks */,
 				6CB498312AB1031A00B6560C /* FlowStacks in Frameworks */,
 				6CB498342AB1077700B6560C /* GoogleSignIn in Frameworks */,
 			);
@@ -225,6 +243,7 @@
 				6CD917CB2AB7927400C65C87 /* LoginViewModel.swift */,
 				6CD917CF2AB793FB00C65C87 /* UserRegisterViewModel.swift */,
 				6CD917D12AB7945A00C65C87 /* UserRegisterFormViewModel.swift */,
+				6CE4843C2AB889810015CAC2 /* UserData.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -233,6 +252,7 @@
 			isa = PBXGroup;
 			children = (
 				6CD917CD2AB792E600C65C87 /* GoogleSignInUseCase.swift */,
+				6CE4843E2AB8AD020015CAC2 /* UserRegisterUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -240,6 +260,8 @@
 		6C4452E82AA6F09D00BE5930 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6C5F19CF2AB7BEC5007D3D44 /* UserModel.swift */,
+				6C00A8672AB7C06600E34A8A /* AuthResponseModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -247,6 +269,7 @@
 		6C4452E92AA6F0A800BE5930 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				6C5F19CD2AB7BCAA007D3D44 /* UserRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -254,8 +277,19 @@
 		6C4452EA2AA6F0AE00BE5930 /* Remote */ = {
 			isa = PBXGroup;
 			children = (
+				6C5F19C52AB7BBE4007D3D44 /* Network */,
 			);
 			path = Remote;
+			sourceTree = "<group>";
+		};
+		6C5F19C52AB7BBE4007D3D44 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				6C5F19C62AB7BBEF007D3D44 /* NetworkAPIService.swift */,
+				6C5F19C92AB7BC6A007D3D44 /* CustomDateFormatter.swift */,
+				6C5F19CB2AB7BC7D007D3D44 /* PaginatedQuery.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		6CB498392AB12C1A00B6560C /* Components */ = {
@@ -287,6 +321,7 @@
 				6CB498302AB1031A00B6560C /* FlowStacks */,
 				6CB498332AB1077700B6560C /* GoogleSignIn */,
 				6CB498352AB1077700B6560C /* GoogleSignInSwift */,
+				6C00A86A2AB7C5A300E34A8A /* Alamofire */,
 			);
 			productName = GreenCircle;
 			productReference = 6C4452B42AA6EF8500BE5930 /* GreenCircle.app */;
@@ -363,6 +398,7 @@
 			packageReferences = (
 				6CB4982F2AB1031A00B6560C /* XCRemoteSwiftPackageReference "FlowStacks" */,
 				6CB498322AB1077700B6560C /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				6C00A8692AB7C5A300E34A8A /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 6C4452B52AA6EF8500BE5930 /* Products */;
 			projectDirPath = "";
@@ -407,16 +443,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				6CD917CA2AB7920700C65C87 /* UserRegisterFormView.swift in Sources */,
+				6C5F19CA2AB7BC6A007D3D44 /* CustomDateFormatter.swift in Sources */,
+				6C5F19CE2AB7BCAA007D3D44 /* UserRepository.swift in Sources */,
 				6C4452BA2AA6EF8500BE5930 /* ContentView.swift in Sources */,
+				6C00A8682AB7C06600E34A8A /* AuthResponseModel.swift in Sources */,
+				6CE4843F2AB8AD020015CAC2 /* UserRegisterUseCase.swift in Sources */,
 				6CD917D02AB793FB00C65C87 /* UserRegisterViewModel.swift in Sources */,
+				6C5F19CC2AB7BC7D007D3D44 /* PaginatedQuery.swift in Sources */,
 				6CD917CE2AB792E600C65C87 /* GoogleSignInUseCase.swift in Sources */,
 				6CD917CC2AB7927400C65C87 /* LoginViewModel.swift in Sources */,
+				6CE4843D2AB889810015CAC2 /* UserData.swift in Sources */,
 				6CB4982C2AB102CD00B6560C /* CoordinatorView.swift in Sources */,
+				6C5F19C72AB7BBEF007D3D44 /* NetworkAPIService.swift in Sources */,
 				6CB498452AB29A9900B6560C /* MainMenuView.swift in Sources */,
 				6CBF705C2AB6E7F200C1F5C1 /* MainButton.swift in Sources */,
 				6CB4982E2AB102D300B6560C /* LoginView.swift in Sources */,
 				6CB4983E2AB1367700B6560C /* UserRegisterView.swift in Sources */,
 				6CD917D22AB7945A00C65C87 /* UserRegisterFormViewModel.swift in Sources */,
+				6C5F19D02AB7BEC5007D3D44 /* UserModel.swift in Sources */,
 				6CB4983C2AB12C5800B6560C /* LinkButton.swift in Sources */,
 				6CB498382AB10B0800B6560C /* CornerRadiusExtension.swift in Sources */,
 				6C4452B82AA6EF8500BE5930 /* GreenCircleApp.swift in Sources */,
@@ -742,6 +786,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		6C00A8692AB7C5A300E34A8A /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		6CB4982F2AB1031A00B6560C /* XCRemoteSwiftPackageReference "FlowStacks" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/johnpatrickmorgan/FlowStacks";
@@ -761,6 +813,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		6C00A86A2AB7C5A300E34A8A /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6C00A8692AB7C5A300E34A8A /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
 		6CB498302AB1031A00B6560C /* FlowStacks */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6CB4982F2AB1031A00B6560C /* XCRemoteSwiftPackageReference "FlowStacks" */;

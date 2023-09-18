@@ -10,17 +10,20 @@ import SwiftUI
 import GoogleSignIn
 
 class GoogleSignInUseCase {
-  func handleSignInButton() {
-    guard let presentingViewController = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController else {return}
+  let repository = UserRepository.shared
+  static let shared = GoogleSignInUseCase()
+  
+  @MainActor
+  func handleSignInButton() async -> AuthResponse? {
+    guard let presentingViewController = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController else {return nil}
     
-    GIDSignIn.sharedInstance.signIn(withPresenting: presentingViewController) { signInResult, error in
-      guard let result = signInResult else {
-        // Inspect error
-        return
-      }
-      // If sign in succeeded, display the app's main content View.
-      print(result)
-      return
+    do {
+      let res = try await GIDSignIn.sharedInstance.signIn(withPresenting: presentingViewController)
+      
+      return await repository
+        .postGoogleLogin(googleToken: res.user.idToken!.tokenString)
+    } catch {
+      return nil
     }
   }
 }

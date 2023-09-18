@@ -13,6 +13,7 @@ struct GreenCircleApp: App {
   var body: some Scene {
     WindowGroup {
       CoordinatorView()
+        .environmentObject(UserData())
         .onOpenURL { url in
           GIDSignIn.sharedInstance.handle(url)
         }

@@ -8,9 +8,13 @@
 import Foundation
 
 class LoginViewModel: ObservableObject {
-  var useCase = GoogleSignInUseCase()
+  var useCase = GoogleSignInUseCase.shared
   
-  func handleGoogleSignIn() {
-    useCase.handleSignInButton()
+  @MainActor
+  func handleGoogleSignIn(userData: UserData) async {
+    let res = await useCase.handleSignInButton()!
+
+    userData.user = res.user
+    userData.tokens = res.tokens
   }
 }
