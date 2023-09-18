@@ -2,6 +2,29 @@ import axios from 'axios'
 
 const backendBaseUrl = 'http://localhost:3000'
 
+export interface Company {
+  companyId: string
+  name: string
+  profilePicture: string
+  state: string,
+  city: string,
+  street: string,
+  zipCode: string,
+  status: 'approved' | 'pending_approval' | 'rejected'
+  email: string,
+  phoneNumber: string
+  webPage: string
+  description: string
+  createdAt: string
+  streetNumber: number
+  pdfCurriculumURL: string
+  pdfDicCdmxURL: string
+  pdfPeeFideURL: string
+  pdfGuaranteeSecurityURL: string
+  pdfActaConstitutivaURL: string
+  pdfINEURL: string
+}
+
 /**
  * @brief
  * Funcion que regresa los proveedores pendientes por aprobar
@@ -41,3 +64,6 @@ export const updateCompany = async (
     throw error
   }
 }
+
+
+

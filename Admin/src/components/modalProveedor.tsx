@@ -1,56 +1,28 @@
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+/**
+ * Represents a modal component that includes company info and allows admin to accpet or reject a comapny
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <ModalProveedor selectedCompany={selectedCompany} setIsModalOpen={setIsModalOpen}fetchPending={fetchPending} />
+ * ```
+ */
 
+import { ThemeProvider } from '@mui/material/styles'
+import { Theme } from '@/api/v1/material'
 import Image from 'next/image'
 
-import { updateCompany, UpdateCompanyInfoBody } from '@/api/v1/company'
+import { Company, updateCompany, UpdateCompanyInfoBody } from '@/api/v1/company'
 
-import CloseIcon from './../../node_modules/@mui/icons-material/Close'
-import PhoneIcon from './../../node_modules/@mui/icons-material/Phone'
-import BusinessIcon from './../../node_modules/@mui/icons-material/Business'
-import LanguageIcon from './../../node_modules/@mui/icons-material/Language'
-import PlaceIcon from './../../node_modules/@mui/icons-material/Place'
+import CloseIcon from '@mui/icons-material/Close'
+import PhoneIcon from '@mui/icons-material/Phone'
+import BusinessIcon from '@mui/icons-material/Business'
+import LanguageIcon from '@mui/icons-material/Language'
+import PlaceIcon from '@mui/icons-material/Place'
 import FileOpenIcon from '@mui/icons-material/FileOpen'
 
 import { Separator } from './ui/separator'
 import { Button } from './ui/button'
-
-interface Company {
-    companyId: string
-    name: string
-    location: string
-    profilePicture: string
-    state: string,
-    city: string,
-    street: string,
-    zipCode: string,
-    status: 'approved' | 'pending_approval' | 'rejected'
-    email: string,
-    phoneNumber: string
-    webPage: string
-    description: string
-    createdAt: string
-    streetNumber: number
-    pdfCurriculumURL: string
-    pdfDicCdmxURL: string
-    pdfPeeFideURL: string
-    pdfGuaranteeSecurityURL: string
-    pdfActaConstitutivaURL: string
-    pdfINEURL: string
-  }
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#333333',
-    },
-    secondary: {
-      main: '#589A74',
-    },
-    info: {
-      main: '#FFFFFF',
-    },
-  },
-})
 
 interface ModalProveedorProps {
     setIsModalOpen: (value: boolean) => void;
@@ -65,13 +37,11 @@ export default function ModalProveedor({ setIsModalOpen, selectedCompany, fetchP
      * @param company
      * @param companyId
    */
-  const handleAccept = async (company: Company, companyId: string) => {
+  const handleAccept = async (company: Company, companyId: string)  => {
     try {
-      // Create an object with the updated status
       const updatedCompanyInfo: UpdateCompanyInfoBody = {
         name: company.name,
         description: company.description,
-        location: company.location,
         profilePicture: company.profilePicture,
         status: 'approved',
         phoneNumber: company.phoneNumber,
@@ -109,7 +79,7 @@ export default function ModalProveedor({ setIsModalOpen, selectedCompany, fetchP
 
   return (
     <div className='bg h-screen flex flex-col items-end'>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={Theme}>
         <CloseIcon
           color='info'
           className='cursor-pointer mb-2'

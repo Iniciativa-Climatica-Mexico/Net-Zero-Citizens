@@ -1,7 +1,18 @@
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+/**
+ * Represents a component that allows admin to make quick actions from the table
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <CellAction companyId={company.companyId} fetchPending={fetchPending} company={company} />
+ * ```
+ */
 
-import CheckCircleOutlineIcon from './../../node_modules/@mui/icons-material/CheckCircleOutline'
-import MoreHorizIcon from './../../node_modules/@mui/icons-material/MoreHoriz'
+import { ThemeProvider } from '@mui/material/styles'
+import { Theme } from '@/api/v1/material'
+
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 
 import {
   DropdownMenu,
@@ -10,37 +21,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { updateCompany, UpdateCompanyInfoBody } from '@/api/v1/company'
+import { Company, updateCompany, UpdateCompanyInfoBody } from '@/api/v1/company'
 
-interface Company {
-  companyId: string
-  name: string
-  location: string
-  profilePicture: string
-  state: string,
-  city: string,
-  street: string,
-  zipCode: string,
-  status: 'approved' | 'pending_approval' | 'rejected'
-  email: string,
-  phoneNumber: string
-  webPage: string
-  description: string
-}
-
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#589A74',
-    },
-    secondary: {
-      main: '#589A74',
-      light: '#F5EBFF',
-      contrastText: '#47008F',
-    },
-  },
-})
 
 interface cellActionProps {
   companyId: string
@@ -57,11 +39,9 @@ export const CellAction = ({companyId, fetchPending, company}:cellActionProps) =
    */
   const handleAccept = async (company: Company, companyId: string) => {
     try {
-      // Create an object with the updated status
       const updatedCompanyInfo: UpdateCompanyInfoBody = {
         name: company.name,
         description: company.description,
-        location: company.location,
         profilePicture: company.profilePicture,
         status: 'approved',
         phoneNumber: company.phoneNumber,
@@ -78,7 +58,7 @@ export const CellAction = ({companyId, fetchPending, company}:cellActionProps) =
   }
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={Theme}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <MoreHorizIcon
