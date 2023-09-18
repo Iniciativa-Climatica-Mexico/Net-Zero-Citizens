@@ -2,7 +2,6 @@
 export function sum(a: number, b: number): number {
   return a + b
 }
-<<<<<<< HEAD
 
 export function scaleGenerator(
   color: string,
@@ -31,11 +30,10 @@ export function scaleGenerator(
     const red = Math.round((1 - alpha) * baseColorRed + alpha * colorRed)
     const green = Math.round((1 - alpha) * baseColorGreen + alpha * colorGreen)
     const blue = Math.round((1 - alpha) * baseColorBlue + alpha * colorBlue)
-    const color = `#${red.toString(16)}${green.toString(16)}${blue.toString(16)}`
+    const color = `#${red.toString(16)}${green.toString(16)}${blue.toString(
+      16
+    )}`
     colors.push(color)
   }
   return colors
 }
-=======
-  
->>>>>>> 4f43b1993cf382ef75e350a59cfbb64708451f03
