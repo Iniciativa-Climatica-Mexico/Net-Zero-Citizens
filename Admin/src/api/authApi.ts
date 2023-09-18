@@ -2,7 +2,14 @@ import nextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google"
 import { apiV1Url } from "@/utils/constants";
 
-async function getToken() {
+
+window.onload =  function() {
+    let jwt = null;
+   
+    onLogin(){
+      jwt = await login()
+    }
+
     fetch( apiV1Url+'/auth/login/google', {
         method: 'POST',
         headers: {
