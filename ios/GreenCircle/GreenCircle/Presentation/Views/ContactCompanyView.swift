@@ -24,11 +24,10 @@ struct TabViewImagesProducts: View {
               .onAppear {
                 descriptionBind[index] = product.description
                 nameBind[index] = product.name
-              }
+              }.frame(maxWidth: 100, maxHeight: 100)
           }
       }
       .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-
       HStack(spacing: 7) {
          ForEach(productImages.contentCompany.products!, id: \.self) { _ in
            Circle()
@@ -36,13 +35,13 @@ struct TabViewImagesProducts: View {
            .frame(width: 7, height: 7)
            
          }
-      }
-      .padding()
-      }
-      .frame(maxHeight: 180)
-      .padding(.top, 15)
-      if bindImageToDescription {
+        }
+      }.frame(maxHeight: bindImageToDescription ? 190 : 190)
+      .padding(.top, 10)
+    if bindImageToDescription {
+      ZStack {
         ContactCompanyProductView(productDescription: descriptionBind[index] ?? "", productName: nameBind[index] ?? "")
+        }
       }
     }
 }
@@ -55,11 +54,12 @@ struct ContactCompanyProductView: View {
       Text(productName)
         .foregroundColor(Color("BlackCustom"))
         .font(.system(size: 16)).bold()
-      Text(productDescription)
-        .foregroundColor(Color("BlackCustom"))
-        .font(.system(size: 14))
-        .bold()
-        .padding(EdgeInsets(top: 5, leading: 0, bottom: 6, trailing: 0))
+      VStack {
+        Text(productDescription)
+          .foregroundColor(Color("BlackCustom"))
+          .font(.system(size: 12))
+          .padding(EdgeInsets(top: 5, leading: 0, bottom: 6, trailing: 0))
+      }
       Spacer()
     }.padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
   }
@@ -211,7 +211,7 @@ struct ContactCompanyView: View {
                     image
                       .resizable()
                       .scaledToFill()
-                      .frame(maxWidth: .infinity, maxHeight: 170)
+                      .frame(maxWidth: .infinity, maxHeight: bindImageToDescription ? 165 : 165)
                       .roundedCorner(10, corners: [.bottomLeft, .bottomRight])
                   case .failure:
                     Text("Failed to load Image!!")
@@ -227,29 +227,26 @@ struct ContactCompanyView: View {
               CustomButtonOption(isPressed: $isPressed, content: "Contacto")
               CustomButtonOption(isPressed: $isPressed, content: "Reviews")
             }
-            Spacer()
             TabViewImagesProducts(productImages: contactCompanyViewModel, bindImageToDescription: $bindImageToDescription)
-            Spacer()
             ForEach(Array(isPressed.keys), id: \.self) { key in
               if let value: Bool = isPressed[key], value == true {
-                if key == "Producto" {
-                  Text("dapmdadas").onAppear {
-                    bindImageToDescription = true
+                  if key == "Producto" {
+                    Text("").onAppear {
+                      bindImageToDescription = true
+                    }
                   }
-                }
-                if key == "Contacto" {
-                  ContactCompanyComponentView(modelCompany: contactCompanyViewModel).onAppear {
-                    bindImageToDescription = false
+                  if key == "Contacto" {
+                    ContactCompanyComponentView(modelCompany: contactCompanyViewModel).onAppear {
+                      bindImageToDescription = false
+                    }
                   }
-                }
-                if key == "Reviews" {
-                  ContactCompanyRatingView(dispScrollView: $dispScrollView).onAppear {
-                    bindImageToDescription = false
-                  }
+                  if key == "Reviews" {
+                    ContactCompanyRatingView(dispScrollView: $dispScrollView).onAppear {
+                      bindImageToDescription = false
+                    }
                 }
               }
             }
-            Spacer()
           }.onAppear {
             Task {
               let specificUUIDString = "c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e"
@@ -260,7 +257,7 @@ struct ContactCompanyView: View {
               }
             }
           }
-          .offset(y: -geometry.safeAreaInsets.top) // Push content upwards
+          .offset(y: -geometry.safeAreaInsets.top)
           .navigationTitle(contactCompanyViewModel.contentCompany.name)
           .navigationBarTitleDisplayMode(.inline)
           .toolbar {
@@ -273,7 +270,7 @@ struct ContactCompanyView: View {
         ScrollViewRating(dispScrollView: $dispScrollView, isPressed: $isPressed)
           .onAppear {
             isPressed = ["Producto": false, "Contacto": false, "Reviews": true]
-        }
+          }
       }
     }
   }
