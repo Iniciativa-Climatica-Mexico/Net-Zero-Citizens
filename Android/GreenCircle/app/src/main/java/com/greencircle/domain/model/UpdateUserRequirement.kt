@@ -21,7 +21,8 @@ class UpdateUserRequirement {
      */
     suspend operator fun invoke(
         userId: String,
-        userInfo: UserAPIService.UpdateUserRequest
+        userInfo: UserAPIService.UpdateUserRequest,
+        authToken: String
     ): UserAPIService.UpdateUserResponse? =
-        repository.updateUser(userId, userInfo)
+        repository.updateUser(userId, userInfo, authToken)
 }

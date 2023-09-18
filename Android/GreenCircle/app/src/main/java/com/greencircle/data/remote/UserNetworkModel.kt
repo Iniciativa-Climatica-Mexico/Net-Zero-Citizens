@@ -1,5 +1,6 @@
 package com.greencircle.data.remote
 
+import AuthInterceptor
 import com.greencircle.utils.Constants
 import okhttp3.OkHttpClient
 import retrofit2.converter.gson.GsonConverterFactory
@@ -17,11 +18,11 @@ object UserNetworkModel {
      *
      * @return Una instancia de [UserAPIService] lista para realizar llamadas a la API.
      */
-    operator fun invoke(): UserAPIService {
-        // Configura un cliente OkHttpClient.
-        val okHttpClient = OkHttpClient.Builder().build()
+    operator fun invoke(authToken: String): UserAPIService {
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(AuthInterceptor(authToken))
+            .build()
 
-        // Crea y configura una instancia de Retrofit para la comunicación con la API.
         return retrofit2.Retrofit.Builder()
             .baseUrl(Constants.SERVER_BASE_URL)
             .client(okHttpClient)

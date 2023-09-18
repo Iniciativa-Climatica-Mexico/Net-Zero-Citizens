@@ -23,6 +23,8 @@ import com.greencircle.framework.views.MainActivity
 class CreateUserFragment : Fragment() {
     private lateinit var viewModel: CreateUserViewModel
     private var arguments = Bundle()
+    private lateinit var authToken: String
+    private lateinit var uuid: String
 
     /**
      * Inicializa el "CreateUserFragment"
@@ -73,7 +75,8 @@ class CreateUserFragment : Fragment() {
         viewModel.googleLoginResult.observe(viewLifecycleOwner) { result ->
             // Handle the result here
             if (result != null) {
-                Log.d("CreateUserFragment", result.toString())
+                authToken = result.tokens.authToken
+                uuid = result.user.uuid
             } else {
                 Log.d("CreateUserFragment", "Google login failed")
             }
@@ -115,7 +118,8 @@ class CreateUserFragment : Fragment() {
             gender
         )
 
-        viewModel.updateUser("abcd-1234-efgh-1902", userInfo)
+
+        viewModel.updateUser(uuid, userInfo, authToken)
         navigateToHome()
     }
 
