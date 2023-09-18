@@ -1,5 +1,6 @@
 package com.greencircle.framework.views.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,7 +12,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputLayout
 import com.greencircle.R
+import com.greencircle.data.remote.UserAPIService
 import com.greencircle.framework.viewmodel.CreateUserViewModel
+import com.greencircle.framework.views.MainActivity
 
 /**Constructor de "CreateUserFragment"
  *
@@ -105,11 +108,15 @@ class CreateUserFragment : Fragment() {
         val state = stateInputLayout.editText?.text.toString()
         val gender = genderInputLayout.editText?.text.toString()
 
-        Log.d("CreateUserFragment", "Send data to backend")
-        Log.d("CreateUserFragment", "Phone: $phone")
-        Log.d("CreateUserFragment", "Age: $age")
-        Log.d("CreateUserFragment", "State: $state")
-        Log.d("CreateUserFragment", "Gender: $gender")
+        val userInfo: UserAPIService.UpdateUserRequest = UserAPIService.UpdateUserRequest (
+            phone,
+            age,
+            state,
+            gender
+        )
+
+        viewModel.updateUser("abcd-1234-efgh-1902",userInfo)
+        navigateToHome()
     }
 
     /**
@@ -127,5 +134,10 @@ class CreateUserFragment : Fragment() {
 
         userName.text = arguments.getString("displayName")
         userEmail.text = arguments.getString("email")
+    }
+
+    private fun navigateToHome() {
+        var intent: Intent = Intent(requireContext(), MainActivity::class.java)
+        startActivity(intent)
     }
 }
