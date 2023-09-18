@@ -17,7 +17,8 @@ class UpdateUserRequirement {
      *
      * @param userId El ID del usuario que se va a actualizar.
      * @param userInfo La información actualizada del usuario.
-     * @return Un objeto [UserAPIService.UpdateUserResponse] que contiene información sobre la actualización realizada.
+     * @return Un objeto [UserAPIService.UpdateUserResponse] que puede contener el id del
+     * nuevo usuario y un mensaje.
      */
     suspend operator fun invoke(
         userId: String,

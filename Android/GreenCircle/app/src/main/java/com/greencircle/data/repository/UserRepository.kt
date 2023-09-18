@@ -18,6 +18,7 @@ class UserRepository {
      *
      * @param userId El ID del usuario que se va a actualizar.
      * @param userInfo La información actualizada del usuario.
+     * @param authToken El token del usuario.
      * @return Un objeto [UserAPIService.UpdateUserResponse] que contiene información sobre la actualización realizada.
      */
     suspend fun updateUser(
