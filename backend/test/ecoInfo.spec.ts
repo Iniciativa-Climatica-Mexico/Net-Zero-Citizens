@@ -1,11 +1,10 @@
 import chai from 'chai'
 import chaiExclude from 'chai-exclude'
-import { db, initDB } from '../src/configs/database.config'
-import { getAllEcoinfo } from '../src/services/ecoinfo.service'
+import sinon from 'sinon'
 import { unwrap } from './utils'
+import { db, initDB } from '../src/configs/database.config'
 
 chai.use(chaiExclude)
-
 const { expect } = chai
 
 const testData = [
@@ -47,16 +46,25 @@ const testData = [
   },
 ]
 
-before(async () => {
-  await db.drop()
-  await initDB()
-})
+const exclude = ['createdAt', 'updatedAt']
 
-describe('Ecoinfo', () => {
-  it('should return all ecoinfos', async () => {
-    const ecoinfos = await getAllEcoinfo()
-    expect(unwrap(ecoinfos))
-      .excludingEvery(['createdAt', 'updatedAt'])
-      .to.deep.equal(testData)
+describe('EcoInfo Service', () => {
+  let getAllEcoinfo: sinon.SinonStub
+
+  beforeEach(() => {
+    db.drop()
+    initDB()
+
+    getAllEcoinfo = sinon.stub(getAllEcoinfo).returns(Promise.resolve(testData))
+  })
+
+  afterEach(() => {
+    sinon.restore()
+  })
+
+  it('should return all ecoinfo', async () => {
+    const ecoinfo = await getAllEcoinfo()
+
+    expect(unwrap(ecoinfo)).excludingEvery(exclude).to.deep.equal(testData)
   })
 })
