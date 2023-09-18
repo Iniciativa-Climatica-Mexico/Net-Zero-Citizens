@@ -18,7 +18,7 @@ class LoginViewModel(private val context: Context) : ViewModel() {
     private val googleAuthRequirement = GoogleAuthRequirement()
     private val saveTokensRequirement = SaveTokensRequirement(context)
     private val recoverTokensRequirement = RecoverTokensRequirement(context)
-    private val _googleLoginResult = MutableLiveData<AuthResponse?>() //variable de datos dinamicos
+    private val _googleLoginResult = MutableLiveData<AuthResponse?>() // variable de datos dinamicos
     val googleLoginResult: LiveData<AuthResponse?> = _googleLoginResult
     fun googleLogin(token: String) {
         viewModelScope.launch(Dispatchers.IO) {
