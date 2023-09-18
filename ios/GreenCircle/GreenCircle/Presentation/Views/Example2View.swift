@@ -16,9 +16,7 @@ struct Example2View: View {
                          leftDestination: { ExampleView() },
                          rightDestination: { })
                 .navigationBarBackButtonHidden(true)
-                .offset(y: -60)
-            
-            
+                .offset(y: -60)   
             ScrollView {
                 VStack {
                     Text("hola")

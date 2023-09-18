@@ -12,12 +12,11 @@ class UserViewModel: ObservableObject {
     /// Caso de uso para hacer fetch de los datos de compañía
     private let fetchUserInfoUseCase: FetchUserInfoUseCase
     private let updateUserDataUseCase: UpdateUserDataUseCaseProtocol
-    
     /// La compañía puede cambiar en la vista (se construye .onAppear())
     @Published var contentUser: User = User(
-        userId:"",
+        userId: "",
         roleId: "",
-        companyId:"",
+        companyId: "",
         googleId: "",
         facebookId: "",
         appleId: "",
@@ -38,7 +37,6 @@ class UserViewModel: ObservableObject {
     init(
         fetchUserInfoUseCase: FetchUserInfoUseCase = FetchUserInfoUseCaseImpl.shared,
         updateUserDataUseCase: UpdateUserDataUseCaseProtocol = UpdateUserDataUseCase()
-        
     ) {
         self.fetchUserInfoUseCase = fetchUserInfoUseCase
         self.updateUserDataUseCase = updateUserDataUseCase
@@ -47,7 +45,6 @@ class UserViewModel: ObservableObject {
     @MainActor
     /// Obtener información de la compañía mediante el caso de uso
     /// Actualización de la compañía si existe el UUID en base de datos
-    
     func fetchUserById(idUser: String) async {
         let resultUser = await fetchUserInfoUseCase.fetchUserById(id: idUser)
         if let resultUser = resultUser {
@@ -57,7 +54,6 @@ class UserViewModel: ObservableObject {
             print("No se pudo obtener el usuario")
         }
     }
-    
     func updateUserData(updatedUserData: User, userId: String) async {
             let resultUser = await updateUserDataUseCase.execute(updatedUserData: updatedUserData, userId: userId)
             if let resultUser = resultUser {
@@ -67,9 +63,10 @@ class UserViewModel: ObservableObject {
                 print("No se pudo actualizar el usuario")
             }
         }
-    
+
     func updateUserCredentials(userId: String, newUserCredentials: Credentials) async {
-           let resultUser = await updateUserDataUseCase.updateCredentials(userId: userId, newUserCredentials: newUserCredentials)
+           let resultUser = await updateUserDataUseCase.updateCredentials(
+            userId: userId, newUserCredentials: newUserCredentials)
            if let resultUser = resultUser {
                print("Credenciales del usuario actualizadas: \(resultUser)")
                contentUser = resultUser

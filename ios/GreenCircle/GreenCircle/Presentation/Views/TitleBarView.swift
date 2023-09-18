@@ -14,14 +14,12 @@ struct TitleBarColor {
 
 // Vista genérica para la Title Bar
 struct TitleBarView<LeftDestination: View, RightDestination: View>: View {
-    
     // Propiedades
     let title: String
     let leftIcon: String?
     let rightIcon: String?
     let leftDestination: LeftDestination
     let rightDestination: RightDestination
-    
     // Inicializador con parámetros opcionales para los iconos y destinos
     init(
         title: String,
@@ -36,7 +34,6 @@ struct TitleBarView<LeftDestination: View, RightDestination: View>: View {
         self.leftDestination = leftDestination()
         self.rightDestination = rightDestination()
     }
-    
     // Cuerpo de la vista
     var body: some View {
         GeometryReader { geometry in
@@ -53,7 +50,6 @@ struct TitleBarView<LeftDestination: View, RightDestination: View>: View {
                     .font(.system(size: 17))
                     .bold()
                     .padding(.top, 50)
-                
                 // Contenido de la Title Bar
                 HStack {
                     // Icono izquierdo y navegación
@@ -63,9 +59,7 @@ struct TitleBarView<LeftDestination: View, RightDestination: View>: View {
                                 .foregroundColor(Color.white)
                         }
                     }
-                    
                     Spacer()
-                    
                     // Icono derecho y navegación
                     if let rightIcon = rightIcon {
                         NavigationLink(destination: rightDestination) {
@@ -80,9 +74,6 @@ struct TitleBarView<LeftDestination: View, RightDestination: View>: View {
             .frame(width: geometry.size.width, height: 100 + geometry.safeAreaInsets.top)
         }
     }
-
-
-
 }
 
 // Vista previa para Title Bar

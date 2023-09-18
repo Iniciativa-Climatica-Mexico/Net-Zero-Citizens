@@ -8,12 +8,10 @@
 import SwiftUI
 
 struct EditProfileView: View {
-    
     @ObservedObject var modelUser: UserViewModel
-    
     var body: some View {
         ZStack {
-            //Title Bar
+            // Title Bar
             VStack {
                 TitleBarView(
                     title: "Editar Datos",
@@ -25,11 +23,9 @@ struct EditProfileView: View {
                 .frame(height: 10)
                 .navigationBarBackButtonHidden(true)
                 .offset(y: -60)
-                
                 Spacer() // Esto empuja el TitleBarView hacia arriba
             }
-            
-            //Content
+            // Content
             VStack {
                 VStack {
                     
@@ -44,7 +40,6 @@ struct EditProfileView: View {
                             .fontWeight(.semibold)
                             .padding(.top, 12)
                             .padding(.bottom, 2)
-                        
                         Text(modelUser.contentUser.lastName)
                             .foregroundColor(Color.black)
                             .font(.system(size: 16))
@@ -59,62 +54,46 @@ struct EditProfileView: View {
                         .font(.system(size: 13))
                         .fontWeight(.bold)
                         .padding(.top, 8) // Añade padding para separar el botón del texto
-                    
                 }
-                .padding(.top, 70)
-                
-
+                .padding(.top, 150)
                 ScrollView {
                     VStack(alignment: .leading) {
                         Group {
                             Text("Nombre")
-                                 .padding(.top, 16)
-                                 .foregroundColor(Color("GreenColor"))
-                                 .font(.system(size: 13))
-                                 .fontWeight(.semibold)
-                                
-                            
+                                .padding(.top, 16)
+                                .foregroundColor(Color("GreenColor"))
+                                .font(.system(size: 13))
+                                .fontWeight(.semibold)
                             TextField("Nombre", text: $modelUser.contentUser.firstName)
                                 .padding(.top, 3)
                                 .font(.system(size: 13))
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
-
-                            
                         }
-                        
                         Group {
                             Text("Primer Apellido")
                                 .padding(.top, 16)
                                 .foregroundColor(Color("GreenColor"))
                                 .font(.system(size: 13))
                                 .fontWeight(.semibold)
-                            
                             TextField("Primer Apellido", text: $modelUser.contentUser.lastName)
                                 .padding(.top, 3)
                                 .font(.system(size: 13))
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                                
-                            
                         }
-                        
                         Group {
                             Text("Segundo Apellido")
                                 .padding(.top, 16)
                                 .foregroundColor(Color("GreenColor"))
                                 .font(.system(size: 13))
                                 .fontWeight(.semibold)
-                            
                             TextField("Segundo Apellido", text: Binding(get: {
                             modelUser.contentUser.secondLastName ?? "Segundo Apellido"
                             }, set: { newValue in
                                 modelUser.contentUser.secondLastName = newValue
                             }))
-        
                             .padding(.top, 3)
                             .font(.system(size: 13))
                             .textFieldStyle(RoundedBorderTextFieldStyle())
-                            
-                            
                         }
                         
                         HStack {
@@ -144,19 +123,16 @@ struct EditProfileView: View {
                                 }
                             }
                             .padding(.trailing, 16) // Añade un padding para separar los dos VStack
-                            
                             VStack(alignment: .leading) {
                                 Text("Sexo")
                                     .padding(.top, 16)
                                     .foregroundColor(Color("GreenColor"))
                                     .font(.system(size: 13))
                                     .fontWeight(.semibold)
-                                
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 5)
                                         .stroke(Color.gray, lineWidth: 0.1)
                                         .frame(height: 30)
-                                    
                                     Picker("Sexo", selection: $modelUser.contentUser.sex) {
                                         Text("Femenino").tag("Femenino")
                                         Text("Masculino").tag("Masculino")
@@ -170,38 +146,29 @@ struct EditProfileView: View {
                                 }
                             }
                         }
-
-
                         Group {
                             Text("Correo Electrónico")
                                 .padding(.top, 16)
                                 .foregroundColor(Color("GreenColor"))
                                 .font(.system(size: 13))
                                 .fontWeight(.semibold)
-                            
                             TextField("Correo Electrónico", text: $modelUser.contentUser.email)
                                 .padding(.top, 3)
                                 .font(.system(size: 13))
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                                
                         }
-                        
-                        
                         Group {
                             Text("Celular")
                                 .padding(.top, 16)
                                 .foregroundColor(Color("GreenColor"))
                                 .font(.system(size: 13))
                                 .fontWeight(.semibold)
-                            
                             TextField("Celular", text: $modelUser.contentUser.phoneNumber)
                                 .keyboardType(.phonePad)
                                 .padding(.top, 3)
                                 .font(.system(size: 13))
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                                
                         }
-                        
                         Group {
                             VStack(alignment: .leading) {
                                 Text("Estado")
@@ -262,15 +229,12 @@ struct EditProfileView: View {
                                 }
                             }
                         }
-
-                        
                     }
                     .padding()
-                    
                     HStack {
                         Button(action: {
                             // Acción del primer botón
-                        }) {
+                        }){
                             Text("Cancelar")
                                 .foregroundColor(TitleBarColor.TitleBarColor)
                                 .padding(.vertical, 16)

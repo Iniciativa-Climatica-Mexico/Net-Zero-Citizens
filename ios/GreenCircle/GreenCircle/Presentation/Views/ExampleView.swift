@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ExampleView: View {
     var body: some View {
-        
         VStack {
             // TitleBarView (No forma parte del ScrollView)
             TitleBarView(
@@ -22,7 +21,6 @@ struct ExampleView: View {
             .frame(height: 80)  // Espacio entre el titel bar y el contenido
             .navigationBarBackButtonHidden(true)  // Ocultar botón "back" predeterminado
             .offset(y: -60)  // Ajustar TitleBar a la altura correcta
-            
             // ScrollView (Esta parte sí se desplaza)
             ScrollView {
                 VStack {
@@ -41,4 +39,3 @@ struct ExampleView_Previews: PreviewProvider {
         ExampleView()
     }
 }
-

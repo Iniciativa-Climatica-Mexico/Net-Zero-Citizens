@@ -8,14 +8,10 @@
 import SwiftUI
 
 struct ProfileView: View {
-    
     @ObservedObject var modelUser: UserViewModel
-    
-    
     var body: some View {
         ZStack {
-            
-            //Title Bar
+            // Title Bar
             VStack {
                 
                 
@@ -28,27 +24,24 @@ struct ProfileView: View {
                 )
                 .frame(height: 10)
                 .offset(y: -60)
-                
                 Spacer() // Esto empuja el TitleBarView hacia arriba
             }
-
-            
             VStack {
-                
-                Image("Sun")
-                .resizable() // Hacer que la imagen sea redimensionable
-                .frame(width: 100, height: 100)
-            
-                
+                AsyncImage(url: URL(string: "https://example.com/icon.png")) { image in
+                    image.resizable()
+                } placeholder: {
+                    ProgressView()
+                }
+                .frame(width: 50, height: 50)
+                .padding(.top, 12)
+                .padding(.bottom, 2)
                 HStack {
-                    
                     Text(modelUser.contentUser.firstName)
                         .foregroundColor(Color.black)
                         .font(.system(size: 16))
                         .fontWeight(.semibold)
                         .padding(.top, 10)
                         .padding(.bottom, 2)
-                    
                     Text(modelUser.contentUser.lastName)
                         .foregroundColor(Color.black)
                         .font(.system(size: 16))
@@ -78,7 +71,6 @@ struct ProfileView: View {
                             .cornerRadius(8)
                     }
                     .padding(.trailing, 4)
-                    
                     Button(action: {
                         // Acción del segundo botón
                     }) {
@@ -94,7 +86,6 @@ struct ProfileView: View {
                            }
                     }
                     .padding(.leading, 4) // Añade padding para crear espacio entre los botones
-                    
                 }
                 .padding(.horizontal, 40) // Añade padding horizontal para que los botones no lleguen hasta el borde de la vista
                 .padding(.top, 24) // Reduciendo el padding top para acercar los botones
