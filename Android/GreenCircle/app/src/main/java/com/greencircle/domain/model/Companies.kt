@@ -58,4 +58,7 @@ data class Companies(
     @SerializedName("status") val status: Status,
     @SerializedName("createdAt") val createdAt: Timestamp,
     @SerializedName("updatedAt") val updatedAt: Timestamp,
+    @SerializedName("products") val products: List<Product> = listOf(),
+    @SerializedName("images") val companyImages: List<CompanyImages>? = listOf(),
+    @SerializedName("rating") val rating: Float? = null,
 )

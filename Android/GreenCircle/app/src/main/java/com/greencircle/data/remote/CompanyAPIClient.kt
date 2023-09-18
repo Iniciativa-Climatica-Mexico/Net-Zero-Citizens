@@ -11,7 +11,7 @@ class CompanyAPIClient {
         return try {
             api.getCompany(companyID)
         } catch (e: java.lang.Exception) {
-            Log.d("customErr", e.toString())
+            Log.d("customErrCompany", e.toString())
             e.printStackTrace()
             null
         }

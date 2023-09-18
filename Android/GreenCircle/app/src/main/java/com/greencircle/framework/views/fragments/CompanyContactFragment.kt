@@ -22,7 +22,7 @@ class CompanyContactFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(CompanyContactViewModel::class.java)
+        viewModel = ViewModelProvider(this)[CompanyContactViewModel::class.java]
     }
 
     override fun onCreateView(

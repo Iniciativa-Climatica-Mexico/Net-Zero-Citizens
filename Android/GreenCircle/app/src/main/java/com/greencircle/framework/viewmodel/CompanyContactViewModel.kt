@@ -1,6 +1,11 @@
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.greencircle.data.remote.CompanyAPIClient
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 
 class CompanyContactViewModel : ViewModel() {
@@ -10,6 +15,8 @@ class CompanyContactViewModel : ViewModel() {
 
     private val _selectedButtonId = MutableLiveData<Int>()
     val selectedButtonId: LiveData<Int> = _selectedButtonId
+
+    val companyAPIClient = CompanyAPIClient()
 
     /*
     * Pasa el id del botón seleccionado al LiveData
@@ -23,25 +30,15 @@ class CompanyContactViewModel : ViewModel() {
      */
     init {
 
-        val items = mutableListOf<CarouselItem>()
-        items.add(
-            CarouselItem(
-                "https://www.labodegasolar.com/cdn/shop/articles/placas-solares-tejado-" +
-                    "thinkstock-getty-1662535982.jpg?v=1667323017"
-            )
-        )
-        items.add(
-            CarouselItem(
-                "https://www.viviendasaludable.es/wp-content/uploads/2021/09/Paneles-" +
-                    "Solares-en-casa.jpg"
-            )
-        )
-        items.add(
-            CarouselItem(
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSid3sii1nL-4PaHZE_" +
-                    "Ksa9HRslIsrgXPlizHbu7AKNM0KAee8FOw38iFNgec_mk_buf_M&usqp=CAU"
-            )
-        )
-        _carouselItems.value = items
+        CoroutineScope(Dispatchers.IO).launch {
+            val companyData =
+                companyAPIClient.getCompanyById("c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e")
+            Log.d("CompanyData", companyData.toString())
+            val carouselItems = mutableListOf<CarouselItem>()
+            companyData?.companyImages?.forEach {
+                carouselItems.add(CarouselItem(imageUrl = it.imageUrl))
+            }
+            _carouselItems.postValue(carouselItems)
+        }
     }
 }
