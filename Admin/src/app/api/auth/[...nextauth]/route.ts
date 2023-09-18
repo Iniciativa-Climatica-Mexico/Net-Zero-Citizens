@@ -1,39 +1,25 @@
-import { apiV1Url } from "@/utils/constants";
-import nextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google"
+import { googleLogin } from '@/utils/authUtils'
+import { SERVER_BASE_URL } from '@/utils/constants'
+import nextAuth from 'next-auth'
+import GoogleProvider from 'next-auth/providers/google'
 
 const handler = nextAuth({
-    providers: [
-        GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID??"",
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET??"",
-        })
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID??'',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET??'',
+    })
 
-    ],
+  ],
 
-    callbacks: {
-        async jwt({ token, account, session }) {
-          if(!token || !account) return token
-          
-          fetch(apiV1Url+'/auth/login/google', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              googleToken: account.id_token
-            })
-          })
-            .then(res => res.json())
-            .then(data => {
-              console.log(data)
-            })
-            
-          //TODO Save tokens in cookies
-    
-          return token
-        },
-    }
+  callbacks: {
+    async jwt({ token, account }) {
+      if(!token || !account) return token
+      console.log(account)
+      googleLogin(`${SERVER_BASE_URL}/auth/login/google`, account.id_token as string)
+      return token
+    },
+  }
 })
 
-export {handler as GET, handler as POST};
+export {handler as GET, handler as POST}
