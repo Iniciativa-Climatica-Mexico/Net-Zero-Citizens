@@ -8,6 +8,9 @@ import com.greencircle.domain.model.EcoInfo
 
 /**
  * ViewModel para EcoInfo
+ * @constructor Crea una instancia de EcoInfoViewModel
+ * @property repository Repositorio de EcoInfo
+ * @since 1.0.0
  */
 class EcoInfoViewModel(private val repository: EcoInfoRepository) : ViewModel() {
     private val _ecoInfos = MutableLiveData<List<EcoInfo>>()
