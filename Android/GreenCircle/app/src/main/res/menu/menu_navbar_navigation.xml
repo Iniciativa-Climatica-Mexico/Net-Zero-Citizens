@@ -3,21 +3,21 @@
 
     <item
         android:id="@+id/ecoInfo"
-        android:icon="@drawable/leaf_icon"
+        android:icon="@drawable/icon_leaf"
         android:title="@string/eco_info" />
     <item
         android:id="@+id/proveedores"
-        android:icon="@drawable/proveedores_icon"
+        android:icon="@drawable/icon_proveedores"
         android:title="@string/proveedores" />
 
     <item
         android:id="@+id/mapa"
-        android:icon="@drawable/mapa_icon"
+        android:icon="@drawable/icon_map"
         android:title="@string/mapa" />
 
     <item
         android:id="@+id/perfil"
-        android:icon="@drawable/perfil_icon"
+        android:icon="@drawable/icon_profile"
         android:title="@string/perfil" />
 
 </menu>

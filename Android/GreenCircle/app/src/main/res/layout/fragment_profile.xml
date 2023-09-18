@@ -111,9 +111,7 @@
                     android:textSize="15sp"
                     android:layout_marginLeft="20dp"
                     android:textAllCaps="false"/>
-
             </LinearLayout>
-
 
             <TextView
                 android:id="@+id/resenasTextView"
@@ -126,12 +124,7 @@
                 android:textStyle="bold"
                 android:layout_marginTop="30dp"
                 android:layout_marginLeft="30dp"
-
                 />
-
-
-
-
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
