@@ -1,4 +1,5 @@
 import CompanyProducts from '../models/companyProducts.model'
+import CompanyImages from '../models/companyImages.model'
 import Product from '../models/products.model'
 import Review from '../models/review.model'
 import Company from '../models/company.model'
@@ -29,12 +30,36 @@ export const getAllCompanies = async <T>(
  * @returns Promise<Company | Null> Proveedor con el id especificado
  */
 export const getCompanyById = async (id: string): Promise<Company | null> => {
+  const company = await Company.findByPk(id)
   const companyScore = await getCompanyScore(id)
   const companyProducts = await getCompanyProducts(id)
-  console.log(companyScore?.[0].getDataValue('rating'))
-  console.log(companyProducts)
+  const companyImages = await getCompanyImages(id)
+  let rating = Math.round(companyScore?.[0].getDataValue('rating')*10)/10
+  let products: Product[] = []
+  let images: CompanyImages[] = []
+  companyProducts?.forEach(function (product){
+    products.push(product.getDataValue('product').dataValues)
+  })
+  companyImages?.forEach(function (image){
+    images.push(image.dataValues)
+  })
+  company?.setDataValue('products', products)
+  company?.setDataValue('rating', rating)
+  company?.setDataValue('images', images)
+  return company
+}
 
-  return await Company.findByPk(id)
+const getCompanyImages = async (
+  id: string
+): Promise<CompanyImages[] | null> => {
+  return await CompanyImages.findAll({
+    where: {
+      companyId: id,
+    },
+    attributes:{
+      exclude:['createdAt', 'updatedAt']
+    }
+  })
 }
 
 const getCompanyProducts = async (
