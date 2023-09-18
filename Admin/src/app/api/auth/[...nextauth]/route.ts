@@ -20,6 +20,7 @@ const handler = nextAuth({
         console.log(res.tokens)
         token.authToken = res.tokens?.authToken
         token.refreshToken = res.tokens?.refreshToken
+        token.user = res.user
       }
       // console.log(token)
       return token
@@ -29,6 +30,7 @@ const handler = nextAuth({
       
       if(token.authToken) session.authToken = token.authToken
       if(token.refreshToken) session.refreshToken = token.refreshToken
+      if(token.user) session.user = token.user
 
       return session
     }
