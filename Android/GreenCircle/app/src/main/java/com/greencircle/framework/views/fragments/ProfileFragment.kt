@@ -39,7 +39,7 @@ class ProfileFragment : Fragment() {
         if (user != null) {
             val name = user.firstName + " " + user.lastName
             binding.username.text = name
-            //binding.profileImage.setImageResource(user.profilePicture)
+            // binding.profileImage.setImageResource(user.profilePicture)
         }
     }
     override fun onDestroyView() {
