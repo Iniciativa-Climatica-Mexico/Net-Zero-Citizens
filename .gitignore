@@ -11,6 +11,9 @@
 .idea/dictionaries
 .idea/libraries
 
+# XCode
+**/*.plist
+
 ### Node JS ###
 # dependencies
 /node_modules
