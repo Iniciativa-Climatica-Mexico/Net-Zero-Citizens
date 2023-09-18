@@ -11,8 +11,8 @@ export default class UserBootstrap extends Bootstrapper {
         email: 'john.doe@example.com',
         phoneNumber: '1234567890',
         age: 30,
-        state: 'NY',
-        sex: 'masculine',
+        state: 'Aguascalientes',
+        sex: 'Femenino',
         roleId: 'ADMIN_ROLE_ID',
       },
       {
@@ -22,8 +22,8 @@ export default class UserBootstrap extends Bootstrapper {
         email: 'jane.doe@example.com',
         phoneNumber: '0987654321',
         age: 25,
-        state: 'CA',
-        sex: 'femenine',
+        state: 'Baja California',
+        sex: 'Masculino',
         roleId: 'CUSTOMER_ROLE_ID',
       },
     ])

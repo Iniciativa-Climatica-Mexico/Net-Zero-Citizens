@@ -47,6 +47,7 @@ export const updateUserInfo: RequestHandler<
   const userInfo = await UserService.getUserInfo(userId)
 
   if (userInfo) {
+    console.log(userId)
     await UserService.updateUserInfo(userId, req.body)
     res.status(201).json({ message: 'User updated' })
   } else {

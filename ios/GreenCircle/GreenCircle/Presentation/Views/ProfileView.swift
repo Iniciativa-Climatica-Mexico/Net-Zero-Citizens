@@ -24,17 +24,14 @@ struct ProfileView: View {
                 )
                 .frame(height: 10)
                 .offset(y: -60)
+                .navigationBarBackButtonHidden(true)
                 Spacer() // Esto empuja el TitleBarView hacia arriba
             }
             VStack {
-                AsyncImage(url: URL(string: "https://example.com/icon.png")) { image in
-                    image.resizable()
-                } placeholder: {
-                    ProgressView()
-                }
-                .frame(width: 50, height: 50)
-                .padding(.top, 12)
-                .padding(.bottom, 2)
+                Image("Sun")
+                .resizable() // Hacer que la imagen sea redimensionable
+                .frame(width: 100, height: 100)
+                
                 HStack {
                     Text(modelUser.contentUser.firstName)
                         .foregroundColor(Color.black)
@@ -99,6 +96,15 @@ struct ProfileView: View {
                 }
             }
     }
+        .onAppear {
+            Task {
+                // Realizar una nueva solicitud para obtener los datos actualizados del usuario
+                do {
+                    await modelUser.fetchUserById(idUser: "abcd-1234-efgh-5679")
+                }
+            }
+        }
+        
 }
 
 struct ProfileView_Previews: PreviewProvider {

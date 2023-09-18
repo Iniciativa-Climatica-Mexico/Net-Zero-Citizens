@@ -5,14 +5,16 @@ struct ProfileInformationView: View {
     @ObservedObject var modelUser: UserViewModel
     
     var body: some View {
+
+        
         ZStack {
             //Title Bar
             VStack {
                 TitleBarView(
                     title: "Mis Datos",
-                    leftIcon: nil,
+                    leftIcon: "chevron.left",
                     rightIcon: "pencil",
-                    leftDestination: {  },
+                    leftDestination: { ProfileView(modelUser: UserViewModel()) },
                     rightDestination: { EditProfileView(modelUser: UserViewModel()) }
                 )
                 .frame(height: 10)
@@ -232,7 +234,17 @@ struct ProfileInformationView: View {
                 }
             }
         }
+        .onAppear {
+            Task {
+                // Realizar una nueva solicitud para obtener los datos actualizados del usuario
+                do {
+                    await modelUser.fetchUserById(idUser: "abcd-1234-efgh-5679")
+                }
+            }
+        }
     }
+    
+    
 }
 
 struct ProfileInformationView_Previews: PreviewProvider {

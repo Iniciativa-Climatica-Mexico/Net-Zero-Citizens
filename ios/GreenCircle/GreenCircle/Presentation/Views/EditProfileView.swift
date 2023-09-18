@@ -9,6 +9,8 @@ import SwiftUI
 
 struct EditProfileView: View {
     @ObservedObject var modelUser: UserViewModel
+    @State private var isShowingProfileView = false
+
     var body: some View {
         ZStack {
             // Title Bar
@@ -17,7 +19,8 @@ struct EditProfileView: View {
                     title: "Editar Datos",
                     leftIcon: "chevron.left",
                     rightIcon: nil,
-                    leftDestination: { ProfileInformationView(modelUser: UserViewModel())},
+                    leftDestination: { ProfileView(modelUser: UserViewModel())
+                    },
                     rightDestination: { }
                 )
                 .frame(height: 10)
@@ -55,7 +58,7 @@ struct EditProfileView: View {
                         .fontWeight(.bold)
                         .padding(.top, 8) // Añade padding para separar el botón del texto
                 }
-                .padding(.top, 150)
+                .padding(.top, 70)
                 ScrollView {
                     VStack(alignment: .leading) {
                         Group {
@@ -271,9 +274,11 @@ struct EditProfileView: View {
                                     createdAt: modelUser.contentUser.createdAt,
                                     updatedAt: Date()
                                     
-                                    
+                            
                                 )
                                 await modelUser.updateUserData(updatedUserData: updatedUser, userId: "abcd-1234-efgh-5679")
+                            
+                                
                             }
                         }) {
                             Text("Guardar")
@@ -295,8 +300,6 @@ struct EditProfileView: View {
                 .padding(.top, 10)  // Ajusta este valor para cambiar el espacio entre "Cerrar sesión" y tu formulario
 
                 Spacer()
-                
-                
                 
                 
             }

@@ -52,6 +52,7 @@ export const updateUserInfo = async (
 ): Promise<User | null> => {
   const userInfo = await User.findByPk(userId)
   if (userInfo) {
+    console.log(newUserInfo)
     return userInfo.update(newUserInfo)
   } else {
     return null
