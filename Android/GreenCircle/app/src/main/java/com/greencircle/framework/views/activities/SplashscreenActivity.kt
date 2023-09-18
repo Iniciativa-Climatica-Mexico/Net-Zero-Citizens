@@ -52,7 +52,7 @@ class SplashscreenActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-     /**
+    /**
      * Redirige al usuario a la pantalla de inicio de sesión (LoginActivity).
      */
     private fun passViewGoToMain() {
