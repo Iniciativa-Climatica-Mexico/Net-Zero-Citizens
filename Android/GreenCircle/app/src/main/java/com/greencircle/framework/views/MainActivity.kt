@@ -7,7 +7,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.greencircle.R
 import com.greencircle.databinding.ActivityMainBinding
 import com.greencircle.framework.views.fragments.CompanyReviewFragment
-import com.greencircle.framework.views.fragments.ProveedoresFragment
+import com.greencircle.framework.views.fragments.UserReviewFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.proveedores -> {
-                    replaceFragment(ProveedoresFragment())
+                    replaceFragment(UserReviewFragment())
                     true
                 }
 
