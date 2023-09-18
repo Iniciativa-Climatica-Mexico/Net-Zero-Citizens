@@ -1,4 +1,7 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
 
-module.exports = nextConfig
+module.exports = {
+  images: {
+    domains: ['encrypted-tbn3.gstatic.com'], // Add the hostname here
+  },
+}

@@ -298,7 +298,7 @@ describe('Company Service', () => {
       .to.deep.equal(testData)
   })
 
-  it('should update company information', async () => {
+  it('should update company information (status=approved)', async () => {
     // Define the updated information
     const updatedInfo: UpdateCompanyInfoBody = {
       name: 'Updated Company Name',
