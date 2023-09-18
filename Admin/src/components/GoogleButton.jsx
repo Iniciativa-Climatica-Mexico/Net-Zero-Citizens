@@ -1,9 +1,20 @@
-import { signIn } from 'next-auth/react'
+'use client'
+import {signIn, signOut, useSession} from 'next-auth/react'
 
 const GoogleButton = () => {
+  const {data: session} = useSession()
+
+  if(session && session.user){
+    return(
+      <button  onClick = {() => signOut()} className='text-red-600'>
+        Salir
+      </button> 
+    )
+  }
+
   return (
     <button
-      className='flex w-full justify-center gap-5 rounded bg-white py-4 px-4 text-sm font-bold drop-shadow-md hover:bg-gray-50'
+      className='flex w-full justify-center gap-5 rounded bg-white px-4 text-sm font-bold drop-shadow-md hover:bg-gray-50 h-12 items-center rounded-4xl'
       onClick={() => signIn('google')}
     >
       <GoogleLogo />

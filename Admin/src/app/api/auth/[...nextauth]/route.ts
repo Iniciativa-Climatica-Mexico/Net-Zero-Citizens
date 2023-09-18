@@ -1,4 +1,4 @@
-import { googleLogin } from '@/utils/authUtils'
+import { googleLogin, AuthResponse } from '@/utils/authUtils'
 import { SERVER_BASE_URL } from '@/utils/constants'
 import nextAuth from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
@@ -15,8 +15,8 @@ const handler = nextAuth({
   callbacks: {
     async jwt({ token, account }) {
       if(!token || !account) return token
-      console.log(account)
-      googleLogin(`${SERVER_BASE_URL}/auth/login/google`, account.id_token as string)
+      const res: AuthResponse | null = await googleLogin(`${SERVER_BASE_URL}/auth/login/google`, account.id_token as string)
+      console.log(res)
       return token
     },
   }

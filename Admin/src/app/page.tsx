@@ -1,7 +1,7 @@
 
 'use client'
 import { useSession } from 'next-auth/react'
-import SignInButton from '@/components/SignInButton'
+import GoogleButton from '@/components/GoogleButton'
 import 'bootstrap/dist/css/bootstrap.min.css' 
 
 export default function Home() {
@@ -17,7 +17,7 @@ export default function Home() {
           <p className='text-sm font-normal'>Nos da gusto verte de regreso</p>  
         </header>
         <div className='mt-5'>
-          <SignInButton/>
+          <GoogleButton />
         </div>
       </figure>
       <a href="#" className='text-gray-500'>Aviso de Privacidad</a>
