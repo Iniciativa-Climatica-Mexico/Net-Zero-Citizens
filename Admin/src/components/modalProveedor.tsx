@@ -1,14 +1,24 @@
+/**
+ * Represents a modal component that includes company info and allows admin to accpet or reject a comapny
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <ModalProveedor selectedCompany={selectedCompany} setIsModalOpen={setIsModalOpen}fetchPending={fetchPending} />
+ * ```
+ */
+
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 import Image from 'next/image'
 
 import { updateCompany, UpdateCompanyInfoBody } from '@/api/v1/company'
 
-import CloseIcon from './../../node_modules/@mui/icons-material/Close'
-import PhoneIcon from './../../node_modules/@mui/icons-material/Phone'
-import BusinessIcon from './../../node_modules/@mui/icons-material/Business'
-import LanguageIcon from './../../node_modules/@mui/icons-material/Language'
-import PlaceIcon from './../../node_modules/@mui/icons-material/Place'
+import CloseIcon from '@mui/icons-material/Close'
+import PhoneIcon from '@mui/icons-material/Phone'
+import BusinessIcon from '@mui/icons-material/Business'
+import LanguageIcon from '@mui/icons-material/Language'
+import PlaceIcon from '@mui/icons-material/Place'
 import FileOpenIcon from '@mui/icons-material/FileOpen'
 
 import { Separator } from './ui/separator'

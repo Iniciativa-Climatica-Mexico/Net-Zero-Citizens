@@ -21,8 +21,8 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-import { CellAction } from '@/components/cellAction'
-import ModalProveedor from '@/components/modalProveedor'
+import { CellAction } from '@/components/CellAction'
+import ModalProveedor from '@/components/ModalProveedor'
 
 interface Company {
   companyId: string

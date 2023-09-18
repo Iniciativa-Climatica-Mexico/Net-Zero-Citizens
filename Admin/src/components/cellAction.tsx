@@ -1,3 +1,13 @@
+/**
+ * Represents a component that allows admin to make quick actions from the table
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <CellAction companyId={company.companyId} fetchPending={fetchPending} company={company} />
+ * ```
+ */
+
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
