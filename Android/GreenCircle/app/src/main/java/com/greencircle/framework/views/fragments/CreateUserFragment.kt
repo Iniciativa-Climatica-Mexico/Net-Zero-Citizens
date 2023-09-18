@@ -136,6 +136,12 @@ class CreateUserFragment : Fragment() {
         userEmail.text = arguments.getString("email")
     }
 
+    /**
+     * Navega a la pantalla de inicio de la aplicación.
+     *
+     * Esta función se encarga de crear un intent para abrir la actividad principal de la aplicación
+     * (`MainActivity`) y luego inicia la actividad para mostrar la pantalla de inicio.
+     */
     private fun navigateToHome() {
         var intent: Intent = Intent(requireContext(), MainActivity::class.java)
         startActivity(intent)
