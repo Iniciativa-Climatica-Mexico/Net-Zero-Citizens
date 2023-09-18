@@ -13,6 +13,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { updateCompany, UpdateCompanyInfoBody } from '@/api/v1/company'
+import { useToast } from './ui/use-toast'
+import { Toaster } from './ui/toaster'
 
 interface Company {
   companyId: string
@@ -52,6 +54,8 @@ interface cellActionProps {
 
 export const CellAction = ({setIsModalOpen, companyId, fetchPending, company}:cellActionProps) => {
 
+  const { toast } = useToast()
+
   /**
      * @brief Function that allows admin to accept a specific company
      * @param company
@@ -74,6 +78,9 @@ export const CellAction = ({setIsModalOpen, companyId, fetchPending, company}:ce
     } catch (error) {
       console.error('Error accepting company:', error)
     } finally {
+      toast({
+        description: 'Proveedor aprobado exitosamente.',
+      })
       fetchPending()
     }
   }
@@ -100,11 +107,13 @@ export const CellAction = ({setIsModalOpen, companyId, fetchPending, company}:ce
     } catch (error) {
       console.error('Error rejecting company:', error)
     } finally {
+      toast({
+        description: 'Proveedor rechazado exitosamente.',
+      })
       setIsModalOpen(false)
       fetchPending()
     }
   }
-
   return (
     <ThemeProvider theme={theme}>
       <DropdownMenu>
@@ -127,6 +136,7 @@ export const CellAction = ({setIsModalOpen, companyId, fetchPending, company}:ce
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+      <Toaster />
     </ThemeProvider>
   )
 }

@@ -13,6 +13,8 @@ import FileOpenIcon from '@mui/icons-material/FileOpen'
 
 import { Separator } from './ui/separator'
 import { Button } from './ui/button'
+import { useToast } from './ui/use-toast'
+import { Toaster } from './ui/toaster'
 
 interface Company {
     companyId: string
@@ -59,6 +61,8 @@ interface ModalProveedorProps {
 
 export default function ModalProveedor({ setIsModalOpen, selectedCompany, fetchPending }: ModalProveedorProps) {
 
+  const { toast } = useToast()
+
   /**
      * @brief Function that allows admin to accept a specific company
      * @param company
@@ -81,6 +85,9 @@ export default function ModalProveedor({ setIsModalOpen, selectedCompany, fetchP
     } catch (error) {
       console.error('Error accepting company:', error)
     } finally {
+      toast({
+        description: 'Proveedor aprobado exitosamente.',
+      })
       setIsModalOpen(false)
       fetchPending()
     }
@@ -107,6 +114,9 @@ export default function ModalProveedor({ setIsModalOpen, selectedCompany, fetchP
     } catch (error) {
       console.error('Error rejecting company:', error)
     } finally {
+      toast({
+        description: 'Proveedor rechazado exitosamente.',
+      })
       setIsModalOpen(false)
       fetchPending()
     }

@@ -79,6 +79,7 @@ export default function Home() {
   const [pendingCompanies, setPendingCompanies] = useState<Company []>([])
   const [searchTerm, setSearchTerm] = useState('')
 
+
   /**
    * @brief Function that opens the modal and passes the attributes of the selected company to a component
    * @param company
