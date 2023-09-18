@@ -17,10 +17,11 @@ class UserAPIClient {
      */
     suspend fun updateUser(
         userId: String,
-        userInfo: UserAPIService.UpdateUserRequest
+        userInfo: UserAPIService.UpdateUserRequest,
+        authToken: String
     ): UserAPIService.UpdateUserResponse? {
         // Inicializa el cliente de la API de usuario.
-        api = UserNetworkModel()
+        api = UserNetworkModel(authToken)
         return try {
             // Realiza la actualización del usuario llamando al método en la API.
             val response = api.updateUser(userId, userInfo)

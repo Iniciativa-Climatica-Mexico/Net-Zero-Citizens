@@ -22,7 +22,8 @@ class UserRepository {
      */
     suspend fun updateUser(
         userId: String,
-        userInfo: UserAPIService.UpdateUserRequest
+        userInfo: UserAPIService.UpdateUserRequest,
+        authToken: String
     ): UserAPIService.UpdateUserResponse? =
-        apiUser.updateUser(userId, userInfo)
+        apiUser.updateUser(userId, userInfo, authToken)
 }
