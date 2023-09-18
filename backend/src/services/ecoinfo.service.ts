@@ -23,7 +23,7 @@ const fetchEcoInfo = async () => {
   const pageId: string = process.env.ECO_INFO_PAGE_ID || ''
   const pageAccessToken: string = process.env.ECO_INFO_TOKEN || ''
 
-  const apiUrl = `https://graph.facebook.com/${pageId}/posts?fields=attachments{media,description,url}&access_token=${pageAccessToken}`
+  const apiUrl = `https://graph.facebook.com/${pageId}/posts?limit=10&fields=attachments{media,description,url}&access_token=${pageAccessToken}`
 
   if (pageId === '' || pageAccessToken === '') {
     throw new Error('No se ha configurado el id de la página o el access token')
@@ -35,7 +35,8 @@ const fetchEcoInfo = async () => {
     if (response.statusText == 'OK') {
       const dataJson = await response.json()
       const data = EcoInfoApiSchema.parse(dataJson)
-      updateEcoInfo(data)
+
+      await updateEcoInfo(data)
     } else {
       throw new Error('Error al obtener la información de la página')
     }
