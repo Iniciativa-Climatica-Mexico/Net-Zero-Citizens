@@ -5,6 +5,8 @@ const router = express.Router()
 
 router.get('/', controller.getAllSurveys)
 router.get('/:surveyId', controller.getSurveyById)
+router.get('/pending/:userId', controller.getSurveyPending)
+router.post('/:surveyId/answer/:userId', controller.answerSurvey)
 
 //router.post('/', controller.createSurvey);
 

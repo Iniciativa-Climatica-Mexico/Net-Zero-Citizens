@@ -1,10 +1,7 @@
+import Answer from '../models/answer.model'
 import Survey from '../models/survey.model'
 import * as SurveyService from '../services/survey.service'
-import {
-  NoRecord,
-  Paginator,
-  PaginationParams,
-} from '../utils/RequestResponse'
+import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
 
 /**
@@ -43,8 +40,7 @@ export const getAllSurveys: RequestHandler<
  * Función del controlador que devuelve una encuesta por su id
  * de la base de datos
  * @param req La request HTTP al servidor
- * @param res Un objeto paginador con las encuestas y la
- *          información de paginación
+ * @param res Un objeto de la encuesta
  *
  */
 export const getSurveyById: RequestHandler<
@@ -55,19 +51,37 @@ export const getSurveyById: RequestHandler<
 > = async (req, res) => {
   const surveyId = req.params.surveyId
   const survey = await SurveyService.getSurveyById(surveyId)
+  console.log(survey)
   res.json(survey || undefined)
 }
 
-
+/**
+ * @brief
+ * Función del controlador que devuelve la ultima encuesta no cerrada
+ * si el usuario aun no la ha contestado
+ * @param req La request HTTP al servidor
+ * @param res Un objeto de la encuesta
+ */
+export const getSurveyPending: RequestHandler<
+  { userId: string },
+  Survey | null | { message: string },
+  NoRecord,
+  NoRecord
+> = async (req, res) => {
+  try {
+    const userId = req.params.userId
+    const survey = await SurveyService.getSurveyPending(userId)
+    res.json(survey || null)
+  } catch (err) {
+    res.status(500).json({ message: 'Error getting pending surveys' })
+  }
+}
 
 /**
  * @brief
  * Función del controlador que crea una encuesta en la base de datos
  * @param req La request HTTP al servidor
- * @param res Un objeto paginador con las encuestas y la
- *         información de paginación
- *
- * TODO: Verificar caul de las dos funciones es la correcta del servicio.
+ * @param res El objeto de la encuesta creada
  */
 export const createSurvey: RequestHandler<
   NoRecord,
@@ -89,8 +103,7 @@ export const createSurvey: RequestHandler<
  * @brief
  * Función del controlador que cierra la encuesta y la actualiza en la base de datos
  * @param req La request HTTP al servidor
- * @param res Un objeto paginador con las encuestas y la
- *        información de paginación
+ * @param res Estatus 200 si la encuesta se cierra correctamente, 404 si no se encuentra
  */
 export const closeSurvey: RequestHandler<
   { surveyId: string },
@@ -105,5 +118,33 @@ export const closeSurvey: RequestHandler<
     res.status(404).json({ message: 'Survey not found' })
   } else {
     res.status(200)
+  }
+}
+
+/**
+ * @brief
+ * Función del controlador que crea respuestas a una encuesta 
+ * de parte de un usuario en la base de datos
+ * @param req La request HTTP al servidor
+ * @param res Un arreglo de las respuestas creadas
+ */
+export const answerSurvey: RequestHandler<
+  { userId: string; surveyId: string },
+  Answer[] | { message: string },
+  undefined,
+  NoRecord
+> = async (req, res) => {
+  try {
+    const answerData = SurveyService.answerSurveyBodyScheme.parse(req.body)
+    const userId = req.params.userId
+    const surveyId = req.params.surveyId
+    const answers = await SurveyService.answerSurvey({
+      ...answerData,
+      userId,
+      surveyId,
+    })
+    res.json(answers)
+  } catch (err) {
+    res.status(500).json({ message: 'Error creating answer' })
   }
 }

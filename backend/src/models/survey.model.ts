@@ -1,4 +1,4 @@
-import { Table, Column, Model, HasMany, DataType } from 'sequelize-typescript'
+import { Table, Column, Model, HasMany, DataType, BeforeCreate } from 'sequelize-typescript'
 import Question from './question.model'
 
 @Table({ tableName: 'SURVEYS' })
@@ -43,4 +43,15 @@ export default class Survey extends Model {
 
   @HasMany(() => Question)
   questions!: Question[]
+
+  @BeforeCreate static closeOtherSurvays(instance: Survey) {
+    return Survey.update(
+      { endDate: new Date() },
+      {
+        where: {
+          endDate: null,
+        },
+      }
+    )
+  }
 }

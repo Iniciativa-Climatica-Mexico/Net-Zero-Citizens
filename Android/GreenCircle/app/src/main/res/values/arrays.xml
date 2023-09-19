@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="my_string_array">
+        <item>String 1</item>
+        <item>String 2</item>
+        <item>String 3</item>
+        <!-- Add more items as needed -->
+    </string-array>
+</resources>

@@ -37,3 +37,10 @@ export function scaleGenerator(
   }
   return colors
 }
+
+export type Paginator<T> = {
+  rows: T[]
+  start: number
+  pageSize: number
+  total: number
+}

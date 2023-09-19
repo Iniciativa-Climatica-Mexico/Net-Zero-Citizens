@@ -3,6 +3,10 @@ import Question from '../models/question.model'
 import QuestionOption from '../models/questionOption.model'
 import Survey from '../models/survey.model'
 
+/**
+ * @brief
+ * Tipo de dato que representa un reporte de una encuesta
+ */
 export type SurveyReport = {
   surveyId: string
   title: string
@@ -12,14 +16,19 @@ export type SurveyReport = {
   questions: QuestionReport[]
 }
 
-export type QuestionReport = {
+type QuestionReport = {
   questionText: string
   questionType: string
   answers: tabulatedAns[]
 }
 
-export type tabulatedAns = { label: string; count: number }
+type tabulatedAns = { label: string; count: number }
 
+/**
+ * Función del servicio que devuelve el reporte de una encuesta
+ * @param surveyId El id de la encuesta
+ * @returns El reporte de la encuesta o null si no existe
+ */
 export const getSurveyReport = async (
   surveyId: string
 ): Promise<SurveyReport | null> => {
