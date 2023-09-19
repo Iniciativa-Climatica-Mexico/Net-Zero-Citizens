@@ -26,6 +26,7 @@ import com.greencircle.utils.AuthUtils
 class RegisterCompanyFragment : Fragment() {
     private var _binding: FragmentRegisterCompanyBinding? = null
     private lateinit var viewModel: CreateCompanyViewModel
+    private lateinit var _arguments: Bundle
     private val authUtils = AuthUtils()
     private val binding get() = _binding!!
 
@@ -45,11 +46,10 @@ class RegisterCompanyFragment : Fragment() {
                     val task = GoogleSignIn.getSignedInAccountFromIntent(data)
                     try {
                         val account = task.getResult(ApiException::class.java)
-                        val arguments = authUtils.getDataFromGoogleAccount(account)
+                        _arguments = authUtils.getDataFromGoogleAccount(account)
                         // Google Login
-                        val token: String = arguments.getString("idToken").toString()
+                        val token: String = _arguments.getString("idToken").toString()
                         viewModel.googleLogin(token)
-                        // navigateToForm(arguments)
                     } catch (e: ApiException) {
                         Toast.makeText(
                             requireContext(), "Something went wrong", Toast.LENGTH_SHORT
@@ -108,9 +108,7 @@ class RegisterCompanyFragment : Fragment() {
                 if (result.user.roles != "new_user") {
                     navigateToHome()
                 } else {
-                    Toast.makeText(requireContext(), "Por favor, regístrate", Toast.LENGTH_SHORT)
-                        .show()
-                    navigateToForm()
+                    navigateToForm(_arguments)
                 }
             } else {
                 Log.d("CreateCompanyFragment", "Google login failed")

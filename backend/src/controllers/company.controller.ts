@@ -53,6 +53,7 @@ export const createCompany: RequestHandler<
       const company = req.body.company
     
       const newCompany = await CompanyService.createCompany(company)    
+      console.log(newCompany)
 
       if(!newCompany) return res.status(400).json({ companyId: '', error: 'Error creating company'})
 
