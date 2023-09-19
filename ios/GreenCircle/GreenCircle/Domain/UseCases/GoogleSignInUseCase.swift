@@ -20,6 +20,8 @@ class GoogleSignInUseCase {
     do {
       let res = try await GIDSignIn.sharedInstance.signIn(withPresenting: presentingViewController)
       
+      print(res.user.idToken!.tokenString)
+      
       return await repository
         .postGoogleLogin(googleToken: res.user.idToken!.tokenString)
     } catch {

@@ -7,8 +7,9 @@ import ProducRouter from './product.routes'
 import { validateToken, validateRole } from '../middlewares/auth.middleware'
 import { Express } from 'express'
 
-export const initRouter = (app: Express) => {
-  app.use('/auth', AuthRouter)
+export const initRouterV1 = (app: Express) => {
+  // Public Routes
+  app.use('/api/v1/auth', AuthRouter)
 
   // Middleware
   app.use(validateToken)
