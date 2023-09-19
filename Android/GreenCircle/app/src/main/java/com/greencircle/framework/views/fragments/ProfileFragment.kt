@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.greencircle.R
 import com.greencircle.databinding.FragmentProfileBinding
@@ -23,6 +25,13 @@ class ProfileFragment : Fragment() {
     ): View {
         viewModel = ViewModelProvider(this)[UserViewModel::class.java]
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
+
+        val userReviewFragment = UserReviewFragment()
+        val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+        val transaction: FragmentTransaction = fragmentManager.beginTransaction()
+        transaction.add(R.id.userReviewFragment, userReviewFragment, "child_fragment_tag")
+        transaction.commit()
+
         var root: View = binding.root
         viewModel.setUserId("abcd-1234-efgh-5678")
         viewModel.getUser()
@@ -30,6 +39,7 @@ class ProfileFragment : Fragment() {
         InitializeEditarPerfilButton()
         return root
     }
+
     private fun InitializeObservers() {
         viewModel.userLiveData.observe(viewLifecycleOwner, {
             user = it
@@ -53,6 +63,7 @@ class ProfileFragment : Fragment() {
             // binding.profileImage.setImageResource(user.profilePicture)
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

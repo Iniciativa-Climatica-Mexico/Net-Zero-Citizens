@@ -9,7 +9,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,96 +21,97 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:background="@drawable/top_background"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/arrow_back_icon"
-                    android:background="@null"
-                    android:layout_marginLeft="20dp"
                     android:layout_gravity="center_vertical"
-                    android:onClick="goBack"/>
+                    android:layout_marginLeft="20dp"
+                    android:background="@null"
+                    android:onClick="goBack"
+                    android:src="@drawable/arrow_back_icon" />
 
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/perfil_icon_toolbar"
-                    android:background="@null"
                     android:layout_gravity="center_vertical|right"
                     android:layout_marginRight="20dp"
-                    android:onClick="goToProfile"/>
+                    android:background="@null"
+                    android:onClick="goToProfile"
+                    android:src="@drawable/perfil_icon_toolbar" />
 
 
                 <TextView
                     android:id="@+id/headerText"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Mi Perfil" />
+                    android:text="Mi Perfil"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
             </androidx.appcompat.widget.Toolbar>
 
             <ImageView
                 android:id="@+id/profileImage"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginTop="20dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/pp_icon"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/circle_background"
                 android:scaleType="centerCrop"
-                android:background="@drawable/circle_background" />
+                android:src="@drawable/pp_icon" />
 
             <TextView
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:textSize="20sp"
-                android:textStyle="bold"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/gray_800"
-                android:layout_marginTop="10dp"/>
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:textColor="@color/blue"
+                android:layout_marginTop="5dp"
                 android:text="@string/Cerrar_sesion"
+                android:textColor="@color/blue"
                 android:textSize="15sp"
-                android:textStyle="bold"
-                android:layout_marginTop="5dp"/>
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:orientation="horizontal"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_corner"
                     android:text="Mis favoritos "
+                    android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textAllCaps="false"/>
+                    android:textSize="15sp" />
+
                 <Button
                     android:id="@+id/editarPerfilButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
                     android:background="@drawable/rounded_corner"
                     android:text="Editar Perfil"
+                    android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:layout_marginLeft="20dp"
-                    android:textAllCaps="false"/>
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <TextView
@@ -118,13 +119,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:text="Resenas Escritas(n)"
-                android:textSize="23dp"
-                android:textColor="@color/gray_800"
-                android:textStyle="bold"
-                android:layout_marginTop="30dp"
                 android:layout_marginLeft="30dp"
-                />
+                android:layout_marginTop="30dp"
+                android:text="Resenas Escritas(n)"
+                android:textColor="@color/gray_800"
+                android:textSize="23dp"
+                android:textStyle="bold" />
+
+            <FrameLayout
+                android:id="@+id/userReviewFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="30dp" />
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
