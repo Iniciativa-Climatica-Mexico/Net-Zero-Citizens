@@ -40,7 +40,7 @@ class NetworkAPIService {
   func getPendingSurvey(url: URL) async -> SurveyModel? {
     let requestTask = AF.request(url, method: .get).validate()
     let response = await requestTask.serializingData().response
-
+    
     switch response.result {
     case .success(let data):
       do {
@@ -55,6 +55,19 @@ class NetworkAPIService {
     case let .failure(error):
       debugPrint(error)
       return nil
+    }
+  }
+
+  func submitAnswers(url: URL, answers: [Answer]) async -> Bool {
+    let requestTask = AF.request(url, method: .post, parameters: answers, encoder: JSONParameterEncoder.default).validate()
+    let response = await requestTask.serializingData().response
+
+    switch response.result {
+    case .success:
+      return true
+    case let .failure(error):
+      debugPrint(error)
+      return false
     }
   }
 }

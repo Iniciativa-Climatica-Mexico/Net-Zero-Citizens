@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ScaleQuestion: View {
-  var question: SurveyQuestion
+  @Binding var question: SurveyQuestion
   @State private var isSelected: Int = -1
   
   var body: some View {
@@ -16,6 +16,7 @@ struct ScaleQuestion: View {
       Text(question.questionText)
         .font(.headline)
       HStack {
+        Spacer()
         ForEach(1..<6, id: \.self) { rating in
           Button(action: {
             self.isSelected = rating
@@ -33,20 +34,8 @@ struct ScaleQuestion: View {
           )
           .padding(.bottom, 4)
         }
+        Spacer()
       }
     }
   }
 }
-
-struct ScaleQuestion_Previews: PreviewProvider {
-  static var previews: some View {
-    ScaleQuestion(question: SurveyQuestion (
-      questionId: "qst-002",
-      questionOptions: [],
-      questionText: "Rate our website usability from 1 to 5 (1 being the worst, 5 being the best).",
-      questionType: .scale,
-      isRequired: true
-    ))
-  }
-}
-

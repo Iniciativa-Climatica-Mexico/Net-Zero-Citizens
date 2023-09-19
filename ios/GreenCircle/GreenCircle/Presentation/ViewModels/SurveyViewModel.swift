@@ -8,17 +8,30 @@
 import Foundation
 
 class SurveyViewModel: ObservableObject {
-  private let getPendingSurveyUseCase: GetPendingSurveyUseCase
+  private let surveyUseCase: SurveyUseCase
   
   @Published var survey: SurveyModel = SurveyModel(surveyId: "", title: "", description: "", questions: [])
+  //@Published var answers: Answer = Answer(scaleValue: 0, answerText: nil, questionId: nil)
   
-  init(getPendingSurveyUseCase: GetPendingSurveyUseCaseProtocol = GetPendingSurveyUseCase.shared) {
+  init(getPendingSurveyUseCase: SurveyUseCaseProtocol = SurveyUseCase.shared) {
+    self.surveyUseCase = getPendingSurveyUseCase as! SurveyUseCase
+  }
+  
+  /*
+  init(submitSurveyUseCase: SubmitSurveyUseCaseProtocol = SubmitSurveyUseCase.shared) {
     self.getPendingSurveyUseCase = getPendingSurveyUseCase as! GetPendingSurveyUseCase
   }
+   */
   
   @MainActor
   func getPendingSurvey() async {
-    self.survey = await getPendingSurveyUseCase.getPendingSurvey()!
+    self.survey = await surveyUseCase.getPendingSurvey()!
   }
+
+  @MainActor
+  func submitAnswers(answers:  [Answer]) async -> Bool {
+    return await surveyUseCase.submitAnswers(surveyId: self.survey.surveyId, answers: answers)
+  }
+  
   
 }

@@ -7,14 +7,16 @@
 
 import Foundation
 
-protocol GetPendingSurveyUseCaseProtocol {
+protocol SurveyUseCaseProtocol {
   func getPendingSurvey() async -> SurveyModel?
+  
+  func submitAnswers(surveyId: String, answers: [Answer]) async -> Bool
 }
 
-class GetPendingSurveyUseCase: GetPendingSurveyUseCaseProtocol {
+class SurveyUseCase: SurveyUseCaseProtocol {
   let surveyRepository: SurveyRepository
   
-  static let shared = GetPendingSurveyUseCase()
+  static let shared = SurveyUseCase()
   init(surveyRepository: SurveyRepository = SurveyRepository.shared) {
     self.surveyRepository = surveyRepository
   }
@@ -23,4 +25,8 @@ class GetPendingSurveyUseCase: GetPendingSurveyUseCaseProtocol {
     return await surveyRepository.getPendingSurvey()
   }
   
+  func submitAnswers(surveyId: String, answers: [Answer]) async -> Bool {
+    return await surveyRepository.submitAnswers(surveyId: surveyId, answers:answers)
+  }
+    
 }

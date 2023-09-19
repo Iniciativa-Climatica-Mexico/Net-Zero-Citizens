@@ -8,30 +8,24 @@
 import SwiftUI
 
 struct OpenQuestion: View {
-  var question: SurveyQuestion
-  @State var text = ""
+  @Binding var question: SurveyQuestion
+  let characterLimit = 20
+  
+  init(question: Binding<SurveyQuestion>) {
+    self._question = question
+  }
   
   var body: some View {
     VStack(alignment: .leading) {
       Text(question.questionText)
         .font(.headline)
-      TextField("Respuesta", text: $text, axis: .vertical)
-        .lineLimit(5, reservesSpace: true)
-        .multilineTextAlignment(.leading)
-        .textFieldStyle(.roundedBorder)
+      TextField("Respuesta", text: Binding(
+        get: { self.question.answer?.answerText ?? "" },
+        set: { self.question.answer?.answerText = String($0.prefix(self.characterLimit))}
+      ))
+      .lineLimit(5, reservesSpace: true)
+      .multilineTextAlignment(.leading)
+      .textFieldStyle(.roundedBorder)
     }
   }
 }
-
-struct OpenQuestion_Previews: PreviewProvider {
-  static var previews: some View {
-    OpenQuestion(question: SurveyQuestion (
-      questionId: "qst-002",
-      questionOptions: [],
-      questionText: "What did you like about our service?",
-      questionType: .open,
-      isRequired: true
-    ))
-  }
-}
-

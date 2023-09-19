@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MultipleChoice: View {
-  var question: SurveyQuestion
+  @Binding var question: SurveyQuestion
   @State private var isSelected: Int = -1
   
   var body: some View {
@@ -36,21 +36,3 @@ struct MultipleChoice: View {
     }
   }
 }
-
-
-struct MultipleChoice_Previews: PreviewProvider {
-  static var previews: some View {
-    MultipleChoice(question: SurveyQuestion (
-      questionId: "qst-003",
-      questionOptions: [
-        QuestionOption(questionOptionId: "opt-001", textOption: "Fast Delivery"),
-        QuestionOption(questionOptionId: "opt-002", textOption: "Easy Returns"),
-        QuestionOption(questionOptionId: "opt-003", textOption: "Wide Product Range"),
-      ],
-      questionText: "Which of the following features do you find most useful?",
-      questionType: .multiple_choice,
-      isRequired: false
-    ))
-  }
-}
-

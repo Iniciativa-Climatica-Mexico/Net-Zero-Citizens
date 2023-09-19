@@ -28,9 +28,17 @@ class SurveyRepository: SurveyApiProtocol {
   }
   
   func getPendingSurvey() async -> SurveyModel? {
-    let userId = "A01708302"
+    let userId = "abcd-1234-efgh-5678"
     let surveyRoute = SurveyApi.Routes.survey.replacingOccurrences(of: ":userId", with: userId)
     return await service.getPendingSurvey(url: URL(string: "\(SurveyApi.base)\(surveyRoute)")!)
+  }
+  
+  func submitAnswers(surveyId: String, answers : [Answer]) async -> Bool {
+    let userId = "abcd-1234-efgh-5678"
+    let surveyRoute = SurveyApi.Routes.survey.replacingOccurrences(of: ":userId", with: userId)
+      .replacingOccurrences(of: ":surveyId", with: surveyId)
+    
+    return await service.submitAnswers(url: URL(string: "\(SurveyApi.base)\(surveyRoute)")!, answers: answers)
   }
   
 }

@@ -19,12 +19,12 @@ struct SurveyModel: Decodable, Identifiable {
 }
 
 struct SurveyQuestion: Decodable, Identifiable, Hashable {
-  let questionId: String
+  var questionId: String
   let questionOptions: [QuestionOption]
   let questionText: String
   let questionType: QuestionType
   let isRequired: Bool
-  //var answer: Answer? = nil
+  var answer: Answer?
   
   var id: String {
     return questionId
@@ -46,8 +46,12 @@ struct QuestionOption: Decodable, Identifiable, Hashable {
   }
 }
 
-struct Answer: Decodable, Hashable {
-  let scaleValue: Int?
-  let answerText: String?
-  let questionId: String
+struct Answer: Decodable, Hashable, Encodable {
+  var scaleValue: Int?
+  var answerText: String?
+  var questionId: String?
+}
+
+struct SurveyAnswerRequest: Encodable {
+  let answers: [Answer]
 }
