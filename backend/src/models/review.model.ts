@@ -23,6 +23,7 @@ export default class Review extends Model {
   @ForeignKey(() => User)
   @Column({
     type: DataType.UUID,
+    defaultValue: DataType.UUIDV4,
     allowNull: false,
     field: 'USER_ID',
   })
@@ -41,6 +42,12 @@ export default class Review extends Model {
 
   @BelongsTo(() => Company)
   company: Company
+
+  @Column({
+    type: DataType.STRING(100),
+    field: 'REVIEW_TITLE',
+  })
+  reviewTitle: string
 
   @Column({
     type: DataType.INTEGER,
