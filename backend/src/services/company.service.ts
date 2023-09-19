@@ -34,20 +34,24 @@ export const getCompanyById = async (id: string): Promise<Company | null> => {
   const companyScore = await getCompanyScore(id)
   const companyProducts = await getCompanyProducts(id)
   const companyImages = await getCompanyImages(id)
-  let rating = Math.round(companyScore?.[0].getDataValue('rating') * 10) / 10
-  let comment = companyScore?.[0].getDataValue('comment')
-  let products: Product[] = []
-  let images: CompanyImages[] = []
+  const rating = Math.round(companyScore?.[0].getDataValue('rating') * 10) / 10
+  const comment = companyScore?.[0].getDataValue('comment')
+  const products: Product[] = []
+  const images: CompanyImages[] = []
+
   companyProducts?.forEach(function (product) {
     products.push(product.getDataValue('product').dataValues)
   })
+
   companyImages?.forEach(function (image) {
     images.push(image.dataValues)
   })
+
   company?.setDataValue('products', products)
   company?.setDataValue('rating', rating)
   company?.setDataValue('oneComment', comment)
   company?.setDataValue('images', images)
+  
   return company
 }
 

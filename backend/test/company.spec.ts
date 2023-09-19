@@ -5,16 +5,18 @@ import {
   getAllCompanies,
   getCompanyById,
 } from '../src/services/company.service'
+import { unwrap } from './utils'
 
 chai.use(chaiExclude)
 
 const { expect } = chai
 
-const testData = [
+const testData = [  
   {
     companyId: 'c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
     userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
     name: 'Company 1',
+    oneComment: 'This is a comment',
     description: 'Company 1 description',
     email: 'company@outlook.com',
     phone: '1234567890',
@@ -32,13 +34,15 @@ const testData = [
     pdfPeeFideUrl: 'https://www.company1.com/pdfPeeFide.pdf',
     pdfGuaranteeSecurityUrl:
       'https://www.company1.com/pdfGuaranteeSecurity.pdf',
-    pdfActaConstitutivaUrl: 'https://www.company1.com/pdfActaConstitutiva.pdf',
+    pdfActaConstitutivaUrl:
+      'https://www.company1.com/pdfActaConstitutiva.pdf',
     pdfIneUrl: 'https://www.company1.com/pdfIne.pdf',
     status: 'approved',
     products: [{
       productId: 'd1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
       name: 'Product 1',
-      description: 'Product 1 description',
+      description:
+          'Los paneles solares están compuestos por células solares, generalmente hechas de silicio, que tienen la capacidad de generar electricidad cuando son expuestas a la luz',
       imageUrl: 'https://www.product1.com/image.png',
       imageAltText: 'Product 1 Image',
     },],
@@ -92,14 +96,14 @@ const testData = [
         productId: 'd2b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
         name: 'Product 2',
         description: 'Product 2 description',
-        imageUrl: 'https://www.product2.com/image.png',
+        imageUrl: 'https://images.adsttc.com/media/images/5ed5/4a01/b357/6538/ab00/048b/newsletter/aec-daily-solar-lighting_(2).jpg?1591036359',
         imageAltText: 'Product 2 Image',
       },
       {
         productId: 'd3b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
         name: 'Product 3',
         description: 'Product 3 description',
-        imageUrl: 'https://www.product3.com/image.png',
+        imageUrl: 'https://www.iberdrola.com/documents/20125/40918/Renovables_746x419.jpeg/171c88c6-834d-5309-0e0e-f758530dc3a9?t=1627967517593',
         imageAltText: 'Product 3 Image',
       },
     ],
@@ -108,7 +112,7 @@ const testData = [
   },
   {
     companyId: 'a2c0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
-    userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
+    userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
     name: 'Company 3',
     description: 'Company 3 description',
     email: 'company3@outlook.com',
@@ -157,7 +161,7 @@ describe('Company Service', () => {
   it('should return all companies', async () => {
     const response = await getAllCompanies({ start: 0, pageSize: 10 })
 
-    expect(response.rows.map((company) => company.get()))
+    expect(unwrap(response))
       .excludingEvery(attributesToExclude)
       .excludingEvery(extraAttributes)
       .to.deep.equal(testData)
@@ -166,10 +170,10 @@ describe('Company Service', () => {
   it('should return all companies with pagination', async () => {
     const response = await getAllCompanies({ start: 0, pageSize: 1 })
 
-    expect(response.rows.map((company) => company.get()))
+    expect(unwrap(response))
       .excludingEvery(attributesToExclude)
       .excludingEvery(extraAttributes)
-      .to.deep.equal([testData[0]])
+      .to.deep.equal([testData[0]]) 
   })
 
   it('should get company by id', async () => {
