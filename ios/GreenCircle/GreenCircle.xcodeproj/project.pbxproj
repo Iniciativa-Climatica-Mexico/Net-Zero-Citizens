@@ -31,6 +31,7 @@
 		C4B5C9302AB95F8E00C8432A /* CompanyImagesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5C92A2AB95F8E00C8432A /* CompanyImagesModel.swift */; };
 		C4B5C9342AB9608000C8432A /* DummyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5C9332AB9608000C8432A /* DummyModel.swift */; };
 		C4B5C9382AB9678300C8432A /* CompanyRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5C9372AB9678300C8432A /* CompanyRepository.swift */; };
+		C4BBD6C52AB9732400E6C0F5 /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BBD6C42AB9732400E6C0F5 /* ProductModel.swift */; };
 		C4E5D1362AA93BAA001BE235 /* CompanyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E5D1352AA93BAA001BE235 /* CompanyViewModel.swift */; };
 		C4F664622AB1924F00C443AE /* RatingCompanyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F664612AB1924F00C443AE /* RatingCompanyView.swift */; };
 /* End PBXBuildFile section */
@@ -79,6 +80,7 @@
 		C4B5C92A2AB95F8E00C8432A /* CompanyImagesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompanyImagesModel.swift; sourceTree = "<group>"; };
 		C4B5C9332AB9608000C8432A /* DummyModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DummyModel.swift; path = GreenCircle/Data/Models/DummyModel.swift; sourceTree = SOURCE_ROOT; };
 		C4B5C9372AB9678300C8432A /* CompanyRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompanyRepository.swift; sourceTree = "<group>"; };
+		C4BBD6C42AB9732400E6C0F5 /* ProductModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductModel.swift; path = ../../../../../../../../../../../../../../.Trash/Models/ProductModel.swift; sourceTree = "<group>"; };
 		C4E5D1352AA93BAA001BE235 /* CompanyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyViewModel.swift; sourceTree = "<group>"; };
 		C4F664612AB1924F00C443AE /* RatingCompanyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingCompanyView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -262,6 +264,7 @@
 		C4B5C9262AB95F8E00C8432A /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				C4BBD6C42AB9732400E6C0F5 /* ProductModel.swift */,
 				C4B5C9332AB9608000C8432A /* DummyModel.swift */,
 				C4B5C9272AB95F8E00C8432A /* ReviewsModel.swift */,
 				C4B5C9282AB95F8E00C8432A /* CompanyModel.swift */,
@@ -448,6 +451,7 @@
 				6C4452B82AA6EF8500BE5930 /* GreenCircleApp.swift in Sources */,
 				C45AC64C2AAD3A82005F2F6C /* FetchCompanyDataUseCase.swift in Sources */,
 				C40CEC252AAABC92004F8521 /* NavBarTheme.swift in Sources */,
+				C4BBD6C52AB9732400E6C0F5 /* ProductModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
