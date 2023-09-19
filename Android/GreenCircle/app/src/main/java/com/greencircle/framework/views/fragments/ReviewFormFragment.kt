@@ -3,6 +3,7 @@ package com.greencircle.framework.views.fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +25,7 @@ class ReviewFormFragment : Fragment() {
     private var rating: Float = 0.0f
     private var reviewTitle: String = ""
     private var review: String = ""
+    private var companyId: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,6 +36,8 @@ class ReviewFormFragment : Fragment() {
 
         _binding = FragmentReviewFormBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        companyId = arguments?.getString("CompanyId")
 
         initializeRatingBar()
         initializeRatingBarListener()
@@ -128,11 +132,11 @@ class ReviewFormFragment : Fragment() {
     }
 
     private fun postReview(rating: Int) {
-        val UUID = "abcd-1234-efgh-5678"
-        val companyId = "comp-1234-efgh-0000"
+//        TODO: Cambiar UUID por el del usuario logueado
+        val UUID = "8de45630-2e76-4d97-98c2-9ec0d1f3a5b8"
         val reviewBase = ReviewBase(reviewTitle, review, rating)
 
-        viewModel.addReview(UUID, companyId, reviewBase)
+        viewModel.addReview(UUID, companyId.toString(), reviewBase)
 
         Toast.makeText(
             requireContext(),

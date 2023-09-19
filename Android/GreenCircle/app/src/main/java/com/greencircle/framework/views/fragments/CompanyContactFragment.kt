@@ -40,6 +40,10 @@ class CompanyContactFragment : Fragment() {
 
             // bundle para pasar los datos de contacto a CompanyContactInfoFragment
             val bundle = Bundle()
+            bundle.putString("CompanyId", companyData?.companyId.toString())
+
+            companyReviewsFragment.arguments = bundle
+
             bundle.putString("WebPage", companyData?.webPage)
             bundle.putString("Email", companyData?.email)
             bundle.putString("Phone", companyData?.phone)

@@ -27,6 +27,7 @@ class CompanyReviewFragment : Fragment() {
     private lateinit var reviewButton: Button
     private lateinit var ratingBar: RatingBar
     private var rating: Float = 0.0f
+    private var companyId: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +39,9 @@ class CompanyReviewFragment : Fragment() {
         val root: View = binding.root
         data = ArrayList()
 
-        viewModel.setCompanyId("comp-1234-efgh-0000")
+        companyId = arguments?.getString("CompanyId")
+
+        viewModel.setCompanyId(companyId.toString())
         viewModel.getReviewsList()
 
         initializeComponents(root)
@@ -59,26 +62,9 @@ class CompanyReviewFragment : Fragment() {
         _binding = null
     }
 
-    private fun initializeReviewFormButton() {
-        reviewButton = binding.reviewButton
-
-        reviewButton.setOnClickListener {
-            navigateToReviewFormFragment()
-        }
-    }
-
-    private fun setRating() {
-        ratingBar = binding.ratingBar
-
-        ratingBar.setOnRatingBarChangeListener { _, rating, _ ->
-            this.rating = rating
-            if (rating > 0.0f)
-                navigateToReviewFormFragment()
-        }
-    }
-
     private fun navigateToReviewFormFragment() {
         val bundle = Bundle()
+        bundle.putString("CompanyId", companyId)
         bundle.putFloat("rating", rating)
         val reviewFormFragment = ReviewFormFragment()
         reviewFormFragment.arguments = bundle
@@ -97,6 +83,24 @@ class CompanyReviewFragment : Fragment() {
         fragmentTransaction.commit()
     }
 
+    private fun initializeReviewFormButton() {
+        reviewButton = binding.reviewButton
+
+        reviewButton.setOnClickListener {
+            navigateToReviewFormFragment()
+        }
+    }
+
+    private fun setRating() {
+        ratingBar = binding.ratingBar
+
+        ratingBar.setOnRatingBarChangeListener { _, rating, _ ->
+            this.rating = rating
+            if (rating > 0.0f)
+                navigateToReviewFormFragment()
+        }
+    }
+
     private fun initializeComponents(root: View) {
         recyclerView = root.findViewById(R.id.RV_Company_Review)
     }
@@ -107,21 +111,29 @@ class CompanyReviewFragment : Fragment() {
         }
     }
 
+    private fun showReviews() {
+        binding.RVCompanyReview.visibility = View.VISIBLE
+        binding.emptyView.visibility = View.GONE
+        binding.reviewInfoWrapper.visibility = View.VISIBLE
+    }
+
+    private fun showEmptyView() {
+        binding.RVCompanyReview.visibility = View.GONE
+        binding.reviewInfoWrapper.visibility = View.GONE
+        binding.emptyView.visibility = View.VISIBLE
+    }
+
     private fun setUpRecyclerView(dataForList: ArrayList<CompanyReview>) {
         recyclerView.setHasFixedSize(true)
         val gridLayoutManager =
             GridLayoutManager(requireContext(), 1, GridLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = gridLayoutManager
         if (dataForList.size > 0) {
-            binding.RVCompanyReview.visibility = View.VISIBLE
-            binding.emptyView.visibility = View.GONE
-            binding.reviewInfoWrapper.visibility = View.VISIBLE
+            showReviews()
             adapter.CompanyReviewAdapter(dataForList, requireContext())
             recyclerView.adapter = adapter
         } else {
-            binding.RVCompanyReview.visibility = View.GONE
-            binding.reviewInfoWrapper.visibility = View.GONE
-            binding.emptyView.visibility = View.VISIBLE
+            showEmptyView()
         }
     }
 }
