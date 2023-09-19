@@ -229,7 +229,7 @@ export default class SurveysBootstrapper extends Bootstrapper {
               },
             ],
           },
-        ],
+        ], 
       },
     ]
     for (const survey of surveys) {

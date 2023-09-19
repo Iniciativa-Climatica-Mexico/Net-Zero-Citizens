@@ -11,6 +11,7 @@ import com.greencircle.databinding.ActivitySurveyBinding
 import com.greencircle.domain.model.survey.Question
 import com.greencircle.framework.viewmodel.SurveyViewModel
 import com.greencircle.framework.views.fragments.survey.QuestionFragment
+import java.util.UUID
 
 class SurveyActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySurveyBinding
@@ -53,7 +54,8 @@ class SurveyActivity : AppCompatActivity() {
                 SurveyViewModel.SubmitStatus.error -> {
                     MaterialAlertDialogBuilder(this).setTitle("Error")
                         .setMessage("No se pudieron enviar tus respuestas. Inténtalo más tarde.")
-                        .setCancelable(false).setPositiveButton("Aceptar") { _, _ -> goToMain() }
+                        .setCancelable(false)
+                        .setPositiveButton("Aceptar") { _, _ -> goToMain() }
                         .show()
                 }
             }
@@ -88,7 +90,7 @@ class SurveyActivity : AppCompatActivity() {
         fragmentTransaction.commit()
     }
 
-    fun onQuestionAnswered(questionId: String, answer: String) {
+    fun onQuestionAnswered(questionId: UUID, answer: String) {
         viewModel.onQuestionAnswered(questionId, answer)
     }
 

@@ -8,6 +8,7 @@ import com.greencircle.domain.model.survey.Answer
 import com.greencircle.domain.model.survey.QuestionType
 import com.greencircle.domain.model.survey.Survey
 import com.greencircle.domain.usecase.SurveyRequirement
+import java.util.UUID
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -61,7 +62,7 @@ class SurveyViewModel : ViewModel() {
         }
     }
 
-    fun onQuestionAnswered(questionId: String, answer: String) {
+    fun onQuestionAnswered(questionId: UUID, answer: String) {
         val question = surveyLiveData.value?.questions?.find { it.questionId == questionId }
         if (question == null) {
             Log.i("Salida", "Question not found")
