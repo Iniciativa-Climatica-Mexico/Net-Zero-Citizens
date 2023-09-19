@@ -21,6 +21,7 @@ class UpdateReviewFragment : Fragment() {
 
     private lateinit var viewModel: UpdateReviewViewModel
 
+    private lateinit var reviewId: String
     private var rating: Float = 0.0f
     private var reviewTitle: String = ""
     private var review: String = ""
@@ -42,12 +43,18 @@ class UpdateReviewFragment : Fragment() {
         return root
     }
 
+    override fun onStart() {
+        super.onStart()
+        initializeComponents()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
     private fun initializeComponents() {
+        reviewId = arguments?.getString("reviewId") ?: ""
         rating = arguments?.getFloat("score") ?: 0.0f
         reviewTitle = arguments?.getString("title") ?: ""
         review = arguments?.getString("review") ?: ""
@@ -132,7 +139,6 @@ class UpdateReviewFragment : Fragment() {
     }
 
     private fun postUpdatedReview(rating: Int) {
-        val reviewId = "revw-1234-efgh-0000"
         val reviewBase = ReviewBase(reviewTitle, review, rating)
 
         viewModel.updateReview(reviewId, reviewBase)

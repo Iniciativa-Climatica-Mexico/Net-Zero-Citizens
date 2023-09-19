@@ -10,7 +10,7 @@
     android:layout_marginBottom="10dp"
     android:orientation="vertical"
     card_view:cardCornerRadius="10dp"
-    card_view:cardElevation="50dp">
+    card_view:cardElevation="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

@@ -71,6 +71,7 @@ class UserReviewViewHolder(
         bundle.putString("title", title)
         bundle.putString("review", review)
         bundle.putFloat("score", score)
+        bundle.putString("reviewId", reviewId)
 
         val updateReviewFragment = UpdateReviewFragment()
         updateReviewFragment.arguments = bundle

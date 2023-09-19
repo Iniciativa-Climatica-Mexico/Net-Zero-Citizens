@@ -26,6 +26,8 @@ class CompanyReviewFragment : Fragment() {
     private lateinit var data: ArrayList<CompanyReview>
     private lateinit var reviewButton: Button
     private lateinit var ratingBar: RatingBar
+
+    private var companyId: String = arguments?.getString("companyId") ?: "comp-1234-efgh-0000"
     private var rating: Float = 0.0f
 
     override fun onCreateView(
@@ -38,7 +40,7 @@ class CompanyReviewFragment : Fragment() {
         val root: View = binding.root
         data = ArrayList()
 
-        viewModel.setCompanyId("comp-1234-efgh-0000")
+        viewModel.setCompanyId(companyId)
         viewModel.getReviewsList()
 
         initializeComponents(root)
