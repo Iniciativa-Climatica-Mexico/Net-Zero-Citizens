@@ -52,10 +52,13 @@ class UserReviewViewHolder(
     }
 
     fun bind(item: UserReview, context: Context) {
+        val score = item.score.toString() + " de 5"
+
         reviewId = item.reviewId
         binding.reviewCardTitle.text = item.reviewTitle
         binding.reviewCardContent.text = item.review
         binding.reviewCardDate.text = formatDateWithSlashes(item.updatedAt)
+        binding.reviewCardRating.text = score
         binding.reviewCardRatingBar.rating = item.score.toFloat()
     }
 
