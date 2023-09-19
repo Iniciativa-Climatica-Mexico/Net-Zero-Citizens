@@ -13,14 +13,13 @@ class CompanyReviewViewHolder(private var binding: ItemCompanyReviewBinding) :
 
     fun bind(item: CompanyReview, context: Context) {
         val name = item.user.firstName + " " + item.user.lastName
-        val rating = item.rating.toString() + " de 5"
-        val date = item.updatedAt.slice(0..9)
+        val score = item.score.toString() + " de 5"
         binding.reviewCardName.text = name
         binding.reviewCardTitle.text = item.reviewTitle
         binding.reviewCardContent.text = item.review
-        binding.reviewCardRating.text = rating
+        binding.reviewCardRating.text = score
         binding.reviewCardDate.text = formatDateWithSlashes(item.updatedAt)
-        binding.reviewCardRatingBar.rating = item.rating.toFloat()
+        binding.reviewCardRatingBar.rating = item.score.toFloat()
     }
     private fun formatDateWithSlashes(dateString: String): String {
         try {
