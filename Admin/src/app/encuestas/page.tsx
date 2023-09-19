@@ -11,11 +11,11 @@ export default async function ListSurveys() {
           <h1 className="self-start font-extrabold my-8 mx-8 text-4xl text-txt">
             Encuestas
           </h1>
-          <Link href="/reportes/">
+          {/* <Link href="/reportes/">
             <button className=" bg-primary hover:bg-primary-900 text-white font-bold py-2 px-4 mx-8 my-8 rounded self-end">
               Crear Encuesta
             </button>
-          </Link>
+          </Link> */}
         </div>
         <div className="flex flex-col items-center w-full justify-center">
           <table className="table-fixed border-collapse w-4/5">
@@ -68,6 +68,7 @@ export default async function ListSurveys() {
 }
 
 function SurveyComponent(props: Survey) {
+  console.log(props)
   return (
     <tr className="border-b border-gray-300">
       <td className='truncate cursor-pointer  text-txt hover:text-primary hover:font-semibold'>
