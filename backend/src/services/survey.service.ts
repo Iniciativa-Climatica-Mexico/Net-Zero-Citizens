@@ -98,7 +98,7 @@ export const getSurveyPending = async (
   )
   const alreadyAnswered = pool.some((length) => length > 0)
   if (alreadyAnswered) return null
-  return survey
+  return unwrap(survey)
 }
 
 export const createSurveyBodyScheme = z.object({
@@ -202,7 +202,23 @@ export const answerSurvey = async (answers: FullAnswers): Promise<Answer[]> => {
       },
     ],
   })
+
   if (!survey) throw new Error('Survey not found')
+  if (survey.endDate != null) throw new Error('Survey is closed')
+
+  const pool = await Promise.all(
+    survey.questions.map(async (question) => {
+      const answersDb = await Answer.findAll({
+        where: {
+          questionId: question.questionId,
+          userId: answers.userId,
+        },
+      })
+      return answersDb.length
+    })
+  )
+  const alreadyAnswered = pool.some((length) => length > 0)
+  if (alreadyAnswered) throw new Error('User has already answered the survey')
 
   const answersToInsert: typeof processedAnswers = []
   const questions = survey.questions
