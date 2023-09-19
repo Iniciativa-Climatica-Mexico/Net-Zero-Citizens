@@ -9,7 +9,7 @@ chai.use(chaiSubset)
 
 const { expect } = chai
 const testData = {
-  surveyId: 'surv-1234-efgh-0000',
+  surveyId: 'beaa7b8d-0531-4f24-9a0a-d08900f1f7db',
   title: 'Encuesta de satisfacción',
   description: 'Encuesta para medir la satisfacción de los clientes',
   questions: [
@@ -77,7 +77,7 @@ beforeEach(async () => {
 
 describe('Report Service', () => {
   it('should return a report of a survey with its questions, options and answers', async () => {
-    const survey = await getSurveyReport('surv-1234-efgh-0000')
+    const survey = await getSurveyReport('beaa7b8d-0531-4f24-9a0a-d08900f1f7db')
     expect(survey).excludingEvery(attributesToExclude).to.deep.equal(testData)
   })
 

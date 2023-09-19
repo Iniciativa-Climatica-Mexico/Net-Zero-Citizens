@@ -26,61 +26,61 @@ export default class SurveysBootstrapper extends Bootstrapper {
     }
     const surveys = [
       {
-        surveyId: 'surv-1234-efgh-0000',
+        surveyId: 'beaa7b8d-0531-4f24-9a0a-d08900f1f7db',
         title: 'Encuesta de satisfacción',
         description: 'Encuesta para medir la satisfacción de los clientes',
         questions: [
           {
-            questionId: 'ques-1234-efgh-0000',
+            questionId: '4f6ba762-60a3-4b64-a5ed-5a54fe534969',
             questionText: '¿Qué tan satisfecho está con el servicio?',
             questionType: 'scale',
             answers: [
               {
-                answerId: 'answ-1234-efgh-0000',
+                answerId: '32836306-79d9-46db-966d-65d556329ccd',
                 userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
                 scaleValue: 5,
               },
               {
-                answerId: 'answ-1234-efgh-0001',
+                answerId: 'e5990693-8804-4676-905f-5d633aa81ae3',
                 userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
                 scaleValue: 4,
               },
             ],
           },
           {
-            questionId: 'ques-1234-efgh-0001',
+            questionId: 'd5034404-24eb-4eb6-92a0-f39a5a4fe592',
             questionText: '¿Cómo describiría nuestro servicio?',
             questionType: 'multiple_choice',
             questionOptions: [
               {
-                questionOptionId: 'optn-1234-efgh-0000',
+                questionOptionId: 'e42b3e35-9a57-471a-9868-da23adb93f3d',
                 textOption: 'Excelente',
               },
               {
-                questionOptionId: 'optn-1234-efgh-0001',
+                questionOptionId: '89d38b7a-f75e-481e-b522-f642d38bc87c',
                 textOption: 'Bueno',
               },
               {
-                questionOptionId: 'optn-1234-efgh-0002',
+                questionOptionId: '1fb3772a-6ac7-4609-ab7b-c2777ecad62b',
                 textOption: 'Regular',
               },
               {
-                questionOptionId: 'optn-1234-efgh-0003',
+                questionOptionId: '8e5d10c3-ab64-4ef9-9433-33870e1bbd49',
                 textOption: 'Malo',
               },
               {
-                questionOptionId: 'optn-1234-efgh-0004',
+                questionOptionId: '581ec9c2-5b40-44f5-a9e9-9e1166042506',
                 textOption: 'Pésimo',
               },
             ],
             answers: [
               {
-                answerId: 'answ-1234-efgh-0002',
+                answerId: '5e7ec927-e777-4915-8fa0-69d9ca192fb5',
                 userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
                 answerText: 'Excelente',
               },
               {
-                answerId: 'answ-1234-efgh-0003',
+                answerId: '46eb7810-bf30-41dc-8eca-f9e3d0be6935',
                 userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
                 answerText: 'Bueno',
               },
@@ -89,29 +89,29 @@ export default class SurveysBootstrapper extends Bootstrapper {
         ],
       },
       {
-        surveyId: 'surv-5678-abcd-1111',
+        surveyId: '2d233918-2b99-4a3d-ba43-e69aee89497a',
         title: 'Product Feedback Survey',
         description: 'Survey to gather feedback on our latest product',
         questions: [
           {
-            questionId: 'ques-5678-abcd-1111',
+            questionId: 'e71bb662-b5cd-46d0-8e81-0c493e9fcbab',
             questionText: 'What features would you like to see in our product?',
             questionType: 'open',
             isRequired: false,
           },
           {
-            questionId: 'ques-5678-abcd-1112',
+            questionId: '894a255f-d68d-4e64-8053-84327aa5c22c',
             questionText:
               'On a scale of 1 to 10, how likely are you to recommend our product?',
             questionType: 'scale',
             answers: [
               {
-                answerId: 'answ-5678-abcd-1111',
+                answerId: '24e1ed06-bec3-458c-a0f7-a57bfdb6f426',
                 userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
                 scaleValue: 3,
               },
               {
-                answerId: 'answ-5678-abcd-1112',
+                answerId: '97703d0c-9abe-4d36-a942-b1ea36ec4c7e',
                 userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
                 scaleValue: 5,
               },
@@ -121,27 +121,27 @@ export default class SurveysBootstrapper extends Bootstrapper {
       },
 
       {
-        surveyId: 'surv-9876-dcba-2222',
+        surveyId: 'd65281ba-53ff-42ce-b434-8a5915ca5e35',
         title: 'Employee Engagement Survey',
         description: 'Survey to measure employee engagement in the company',
         questions: [
           {
-            questionId: 'ques-9876-dcba-2222',
+            questionId: '8e9a45a4-e5c8-4673-8285-728981dcd480',
             questionText: 'Do you feel valued in your role?',
             questionType: 'multiple_choice',
             questionOptions: [
               {
-                questionOptionId: 'optn-9876-dcba-2220',
+                questionOptionId: 'dc168c50-d9f3-4acd-a962-93febe3e822a',
                 textOption: 'Yes',
               },
               {
-                questionOptionId: 'optn-9876-dcba-2221',
+                questionOptionId: '30e82a3a-570b-4d3e-acfc-87eafd188cf6',
                 textOption: 'No',
               },
             ],
             answers: [
               {
-                answerId: 'answ-9876-dcba-2222',
+                answerId: 'd3fa51ba-39ff-4c4d-96f5-67d6c6f1eb8a',
                 userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
                 answerText: 'No',
               },
@@ -150,80 +150,80 @@ export default class SurveysBootstrapper extends Bootstrapper {
         ],
       },
       {
-        surveyId: 'surv-5555-efgh-3333',
+        surveyId: '48aca777-4baa-4365-8ca8-ed7ba4d33681',
         title: 'Website Usability Survey',
         description: 'Survey to assess the usability of our website',
         questions: [
           {
-            questionId: 'ques-5555-efgh-3330',
+            questionId: 'c96f70e0-c966-4f87-bdd5-184ec7cf0ffa',
             questionText: 'Did you find the website easy to navigate?',
             questionType: 'multiple_choice',
             questionOptions: [
               {
-                questionOptionId: 'optn-5555-efgh-3330',
+                questionOptionId: '12234887-aac5-437b-b700-40e99161dccd',
                 textOption: 'Yes',
               },
               {
-                questionOptionId: 'optn-5555-efgh-3331',
+                questionOptionId: '54863a53-56e3-479e-8ffd-7943de650a23',
                 textOption: 'No',
               },
             ],
             answers: [
               {
-                answerId: 'answ-5555-efgh-3330',
                 userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
+                answerId: 'd9634fec-d669-4619-bcb2-e137b4ea508f',
                 answerText: 'No',
               },
             ],
           },          
           {
-            questionId: 'ques-5678-abcd-3331',
+            questionId: 'b84348e0-c7bf-4c09-82ce-5366c81d764e',
             questionText: 'What features would you like to see in our product?',
             questionType: 'open',
             isRequired: false,
           },
           {
-            questionId: 'ques-5678-abcd-3332',
+            questionId: '3c9dccbb-1b19-49c0-b8e0-170e047a336a',
             questionText:
               'On a scale of 1 to 10, how likely are you to recommend our product?',
             questionType: 'scale',
             answers: [
               {
-                answerId: 'answ-5678-abcd-3331',
+                answerId: '73910c50-0827-43dc-ace7-f03ed8c44a3f',
                 userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
                 scaleValue: 5,
               },
             ],
           },
           {
-            questionId: 'ques-1234-efgh-3333',
+            questionId: 'ea067a23-3a46-41a6-b6e4-152aa199535a',
             questionText: '¿Cómo describiría nuestro servicio?',
             questionType: 'multiple_choice',
             questionOptions: [
               {
-                questionOptionId: 'optn-1234-efgh-3332',
+                questionOptionId: '86d7613d-7633-4156-b596-65f218415c40',
                 textOption: 'Excelente',
               },
               {
-                questionOptionId: 'optn-1234-efgh-3333',
+                questionOptionId: '0c11fa72-2e8c-4310-acdb-fc5e2856793c',
                 textOption: 'Bueno',
               },
               {
-                questionOptionId: 'optn-1234-efgh-3334',
+                questionOptionId: 'd467a0a1-14da-4c5e-a7d8-45b13de95715',
                 textOption: 'Regular',
               },
               {
-                questionOptionId: 'optn-1234-efgh-3335',
+                questionOptionId: 'effa5c3d-2e54-434e-b0f7-300429c07c31',
                 textOption: 'Malo',
               },
               {
-                questionOptionId: 'optn-1234-efgh-3336',
+                questionOptionId: '06329a73-b188-4b77-8ab9-5f783a510807',
                 textOption: 'Pésimo',
               },
             ],
             answers: [
               {
-                answerId: 'answ-1234-efgh-3338',
+                answerId: 'ad767557-62d9-4c31-9277-c7a2aa25bed6',
                 userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
                 answerText: 'Bueno',
               },
