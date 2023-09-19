@@ -47,7 +47,7 @@ export default class Company extends Model {
   name: string
 
   @Column({
-    type: DataType.STRING(500),
+    type: DataType.STRING(100),
     allowNull: false,
     field: 'DESCRIPTION',
   })

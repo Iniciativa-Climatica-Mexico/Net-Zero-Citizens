@@ -27,4 +27,7 @@
     <string name="no_title_form_review_error">Ingresa un título para la opinión</string>
     <string name="review_initial_rating">0.0</string>
     <string name="review_initial_opinions_number">0 opiniones</string>
+    <string name="servicios">Servicios</string>
+    <string name="contacto">Contacto</string>
+    <string name="rese_as">Reseñas</string>
 </resources>

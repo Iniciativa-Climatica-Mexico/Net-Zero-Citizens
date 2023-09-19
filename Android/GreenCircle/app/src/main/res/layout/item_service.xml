@@ -35,8 +35,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 app:cardCornerRadius="20dp"
-                app:cardElevation="8dp"
-                app:cardUseCompatPadding="true" >
+                app:cardElevation="0dp"
+                app:cardUseCompatPadding="true"
+                android:layout_margin="10dp"
+                >
 
                 <ImageView
                     android:id="@+id/IVSImage"

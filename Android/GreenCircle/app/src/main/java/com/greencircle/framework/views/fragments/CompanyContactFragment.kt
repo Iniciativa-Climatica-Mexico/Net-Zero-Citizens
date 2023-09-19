@@ -37,14 +37,36 @@ class CompanyContactFragment : Fragment() {
         viewModel.companyData.observe(viewLifecycleOwner) { companyData ->
             initCarousel(companyData?.companyImages)
             binding.TVCompanyName.text = companyData?.name
+
+            // bundle para pasar los datos de contacto a CompanyContactInfoFragment
+            val bundle = Bundle()
+            bundle.putString("WebPage", companyData?.webPage)
+            bundle.putString("Email", companyData?.email)
+            bundle.putString("Phone", companyData?.phone)
+
+            val direction: String =
+                (
+                    companyData?.street + " " + companyData?.streetNumber + ", " +
+                        companyData?.zipCode + ", " + companyData?.state + ", " +
+                        companyData?.city
+                    ).toString()
+
+            bundle.putString("Direction", direction)
+            contactInfoFragment.arguments = bundle
+
+            // bundle para pasar los servicios a CompanyServicesFragment
+            val bundleServices = Bundle()
+            bundleServices.putSerializable("Services", companyData?.products)
+            servicesFragment.arguments = bundleServices
+
+            childFragmentManager.beginTransaction().add(R.id.fragmentContainer, servicesFragment)
+                .add(R.id.fragmentContainer, contactInfoFragment)
+                .add(R.id.fragmentContainer, companyReviewsFragment).hide(contactInfoFragment)
+                .hide(companyReviewsFragment).commit()
         }
 
+        // Obtiene los datos de la empresa
         viewModel.getCompanyData()
-
-        childFragmentManager.beginTransaction().add(R.id.fragmentContainer, servicesFragment)
-            .add(R.id.fragmentContainer, contactInfoFragment)
-            .add(R.id.fragmentContainer, companyReviewsFragment).hide(contactInfoFragment)
-            .hide(companyReviewsFragment).commit()
 
         /*
         *Boton que cambia entre los fragmentos de servicios, informacion de contacto y reviews

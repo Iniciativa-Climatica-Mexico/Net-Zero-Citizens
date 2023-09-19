@@ -1,6 +1,7 @@
 package com.greencircle.domain.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 import java.sql.Timestamp
 import java.util.UUID
 
@@ -39,7 +40,7 @@ data class Companies(
     @SerializedName("name") val name: String,
     @SerializedName("description") val description: String,
     @SerializedName("email") val email: String,
-    @SerializedName("phoneNumber") val phoneNumber: String,
+    @SerializedName("phone") val phone: String,
     @SerializedName("webPage") val webPage: String? = null,
     @SerializedName("street") val street: String,
     @SerializedName("streetNumber") val streetNumber: Int,
@@ -58,7 +59,7 @@ data class Companies(
     @SerializedName("status") val status: Status,
     @SerializedName("createdAt") val createdAt: Timestamp,
     @SerializedName("updatedAt") val updatedAt: Timestamp,
-    @SerializedName("products") val products: List<Product> = listOf(),
+    @SerializedName("products") val products: ArrayList<Product> = arrayListOf(),
     @SerializedName("images") val companyImages: List<CompanyImages>? = listOf(),
     @SerializedName("rating") val rating: Float? = null,
-)
+) : Serializable
