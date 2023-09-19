@@ -37,26 +37,24 @@ class SurveyActivity : AppCompatActivity() {
             when (status) {
                 SurveyViewModel.SubmitStatus.success -> {
                     MaterialAlertDialogBuilder(this).setTitle("¡Gracias por responder!")
-                        .setMessage("Tus respuestas han sido enviadas.")
-                        .setCancelable(false)
+                        .setMessage("Tus respuestas han sido enviadas.").setCancelable(false)
                         .setPositiveButton("Aceptar") { _, _ -> goToMain() }.show()
                 }
 
                 SurveyViewModel.SubmitStatus.validationError -> {
-                    MaterialAlertDialogBuilder(this).setTitle("Faltan preguntas")
+                    MaterialAlertDialogBuilder(this)
+                        .setTitle("Faltan preguntas")
                         .setMessage(
-                            "No puedes enviar sin antes haber termiando " +
-                                    "de llenar todas las preguntas obligatorias.",
-                        )
-                        .setCancelable(false)
-                        .setPositiveButton("Seguir") { _, _ -> }.show()
+                            "No puedes enviar sin antes haber " +
+                                "termiandode llenar todas las preguntas obligatorias.",
+                        ).setCancelable(false).setPositiveButton("Seguir") { _, _ -> }.show()
                 }
 
                 SurveyViewModel.SubmitStatus.error -> {
                     MaterialAlertDialogBuilder(this).setTitle("Error")
                         .setMessage("No se pudieron enviar tus respuestas. Inténtalo más tarde.")
-                        .setCancelable(false)
-                        .setPositiveButton("Aceptar") { _, _ -> goToMain() }.show()
+                        .setCancelable(false).setPositiveButton("Aceptar") { _, _ -> goToMain() }
+                        .show()
                 }
             }
         }
@@ -70,8 +68,7 @@ class SurveyActivity : AppCompatActivity() {
         }
         binding.topAppBar.setOnClickListener {
             MaterialAlertDialogBuilder(this).setTitle("¿Quieres dejar de responder?")
-                .setMessage("Los cambios realizados no se guardarán.")
-                .setCancelable(false)
+                .setMessage("Los cambios realizados no se guardarán.").setCancelable(false)
                 .setPositiveButton("Salir") { _, _ ->
                     goToMain()
                 }.setNegativeButton("Sigue editando") { _, _ -> }.show()

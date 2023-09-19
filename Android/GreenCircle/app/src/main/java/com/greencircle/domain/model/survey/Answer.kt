@@ -2,7 +2,6 @@ package com.greencircle.domain.model.survey
 
 import java.io.Serializable
 
-
 /**
  * Modela la respuesta de una pregunta de encuesta
  */
