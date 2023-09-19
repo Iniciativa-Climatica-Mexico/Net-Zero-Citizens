@@ -7,6 +7,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.greencircle.R
 import com.greencircle.databinding.ActivityMainBinding
 import com.greencircle.framework.views.fragments.ProfileFragment
+import com.greencircle.framework.views.fragments.CompanyReviewFragment
+import com.greencircle.framework.views.fragments.UserReviewFragment
+
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomNavigationView: BottomNavigationView
@@ -21,6 +24,16 @@ class MainActivity : AppCompatActivity() {
 
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
+                R.id.ecoInfo -> {
+                    replaceFragment(CompanyReviewFragment())
+                    true
+                }
+
+                R.id.proveedores -> {
+                    replaceFragment(UserReviewFragment())
+                    true
+                }
+
                 R.id.perfil -> {
                     replaceFragment(ProfileFragment())
                     true

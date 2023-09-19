@@ -4,23 +4,22 @@
     android:id="@+id/reviewCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="10dp"
     android:layout_marginTop="10dp"
     android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/gray_400" />
+        android:background="@color/gray_400"
+        />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp">
+        android:paddingVertical="20dp">
 
         <LinearLayout
-
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -90,10 +89,10 @@
                     android:id="@+id/reviewCardRating"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:text="4/5"
+                    android:gravity="end"
+                    android:text="4 de 5"
                     android:textColor="@color/green"
-                    android:textSize="8sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -118,7 +117,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:gravity="left"
+            android:gravity="start"
             android:text="¡Me encantaron sus productos! Estos paneles solares fueron entregados en mi puerta justo a tiempo :)
 El servicio de atención al cliente es satisfactorio, pero tuve pequeñas complicaciones en la comunicacion"
             android:textColor="@color/gray_700"

@@ -5,4 +5,27 @@
     <string name="mapa">Mapa</string>
     <string name="perfil">Perfil</string>
     <string name="Cerrar_sesion">Cerrar sesion</string>
+    <string name="review_nested_scroll_desc">Scrollable content</string>
+    <string name="review_form_title">Comparte tu opinión</string>
+    <string name="review_rating_bar_label">¿Cómo calificarías la atención y servicio del proveedor?</string>
+    <string name="review_bad_rating_title">Malo</string>
+    <string name="review_excellent_rating_title">Excelente</string>
+    <string name="review_title_label">Escribe un título para tu opinión</string>
+    <string name="review_opinion_label">Escribe tu opinión</string>
+    <string name="review_publish_botton_label">Publicar</string>
+    <string name="review_rate_action_title">Califica al proveedor</string>
+    <string name="review_rate_description">Comparte tu opinión sobre este proveedor</string>
+    <string name="review_rate_button">Escribe una opinión</string>
+    <string name="review_opinions_title">Opiniones del proveedor</string>
+    <string name="review_error_rating_message">Selecciona una clasificación antes de publicar tu reseña</string>
+    <string name="review_comment_section_title">Escribe una opinión</string>
+    <string name="review_comment_section_optional">(Opcional)</string>
+    <string name="review_comment_section_desc">Tus comentarios ayudan a otros usuarios a conocer mejor a un proveedor</string>
+    <string name="review_submit_toast">Tu reseña se ha registrado exitosamente</string>
+    <string name="update_review_submit_toast">Tu reseña se ha actualizado exitosamente</string>
+    <string name="no_reviews_to_display">No hay reseñas para este proveedor ¡Sé el primero en escribir una!</string>
+    <string name="no_review_form_review_error">Ingresa una opinión</string>
+    <string name="no_title_form_review_error">Ingresa un título para la opinión</string>
+    <string name="review_initial_rating">0.0</string>
+    <string name="review_initial_opinions_number">0 opiniones</string>
 </resources>

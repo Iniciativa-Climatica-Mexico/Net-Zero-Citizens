@@ -8,7 +8,7 @@ data class CompanyReview(
     @SerializedName("companyId") val companyId: String,
     @SerializedName("reviewTitle") val reviewTitle: String,
     @SerializedName("review") val review: String,
-    @SerializedName("score") val rating: Int,
+    @SerializedName("score") val score: Int,
     @SerializedName("cratedAt") val createdAt: String,
     @SerializedName("updatedAt") val updatedAt: String,
     @SerializedName("user") val user: UserBase,
