@@ -84,7 +84,6 @@ class CompanyServicesFragment : Fragment() {
      */
     private fun setUpRecyclerView(dataForList: ArrayList<ServiceItem>) {
         Log.d("CompanyServicesFragment", "Setting up RecyclerView with data: $dataForList")
-        recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         adapter = ServiceAdapter() // Initialize the adapter
         adapter.initServiceAdapter(dataForList, requireContext())
