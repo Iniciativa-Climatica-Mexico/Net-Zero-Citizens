@@ -15,6 +15,8 @@ import com.greencircle.domain.model.UserReview
 import com.greencircle.framework.viewmodel.DeleteUserReviewViewModel
 import com.greencircle.framework.views.fragments.UpdateReviewFragment
 import com.greencircle.framework.views.fragments.UserReviewFragment
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class UserReviewViewHolder(
     private var binding: ItemUserReviewBinding,
@@ -53,8 +55,7 @@ class UserReviewViewHolder(
         reviewId = item.reviewId
         binding.reviewCardTitle.text = item.reviewTitle
         binding.reviewCardContent.text = item.review
-        binding.reviewCardRating.text = item.score.toString() + " de 5"
-        binding.reviewCardDate.text = item.updatedAt.slice(0..9)
+        binding.reviewCardDate.text = formatDateWithSlashes(item.updatedAt)
         binding.reviewCardRatingBar.rating = item.score.toFloat()
     }
 
@@ -116,6 +117,20 @@ class UserReviewViewHolder(
             fragmentTransaction?.commit()
         } catch (e: Exception) {
             Log.d("myError", "Error: ${e.message}")
+        }
+    }
+    private fun formatDateWithSlashes(dateString: String): String {
+        try {
+            // Formato de entrada: "2023-09-19T05:05:02.293Z"
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+            val date = inputFormat.parse(dateString)
+
+            // Formato de salida: "19/09/2023"
+            val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            return outputFormat.format(date)
+        } catch (e: Exception) {
+            Log.e("DateError", "Error formatting date: ${e.message}")
+            return dateString // Devuelve la fecha original si no se puede formatear
         }
     }
 }

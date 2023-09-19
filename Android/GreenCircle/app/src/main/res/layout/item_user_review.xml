@@ -4,8 +4,10 @@
     android:id="@+id/reviewCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="10dp"
     android:layout_marginTop="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginBottom="10dp"
     android:orientation="vertical"
     card_view:cardCornerRadius="10dp"
     card_view:cardElevation="50dp">
@@ -25,8 +27,9 @@
 
             <TextView
                 android:id="@+id/reviewCardTitle"
-                android:layout_width="100dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.135"
                 android:text="El producto tiene una calidad increíble y la atención fue muy buena."
                 android:textColor="@color/black"
                 android:textSize="15sp"
@@ -41,14 +44,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="end"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_weight="0.5">
 
                 <TextView
                     android:id="@+id/reviewCardDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="end"
-                    android:text="2023-08-31"
+                    android:text="31/08/2023"
                     android:textSize="11sp" />
 
                 <ImageButton
@@ -89,7 +93,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
                 android:gravity="center_vertical|end"
-                android:text="4 / 5"
+                android:text="4 de 5"
                 android:textColor="@color/green"
                 android:textSize="13sp" />
 
@@ -100,9 +104,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:gravity="left"
+            android:justificationMode="inter_word"
             android:text="¡Me encantaron sus productos! Estos paneles solares fueron entregados en mi puerta justo a tiempo :)
-El servicio de atención al cliente es satisfactorio, pero tuve pequeñas complicaciones en la comunicacion"
+            El servicio de atención al cliente es satisfactorio, pero tuve pequeñas complicaciones en la comunicacion"
             android:textColor="@color/gray_700"
             android:textSize="13sp"
             card_view:flow_verticalBias="0.0"
