@@ -70,11 +70,11 @@ class SurveyRepository {
         )
 //        return mockData
         // get id
-        return apiSurvey.getSurveyPending("abcd-1234-efgh-5678")
+        return apiSurvey.getSurveyPending("8de45630-2e76-4d97-98c2-9ec0d1f3a5b8")
     }
 
     suspend fun submitAnswers(surveyId: String, answers: List<Answer>) {
         // send answers to server
-        apiSurvey.submitAnswers("abcd-1234-efgh-5678", surveyId, answers)
+        apiSurvey.submitAnswers("8de45630-2e76-4d97-98c2-9ec0d1f3a5b8", surveyId, answers)
     }
 }
