@@ -73,7 +73,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Username"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="@color/gray_800"
@@ -222,10 +221,13 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:orientation="horizontal"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="70dp"
+                    >
 
                     <Button
                         android:layout_width="wrap_content"
+                        android:id="@+id/cancelarCambiosButton"
                         android:layout_height="wrap_content"
                         android:background="@drawable/rounded_corner"
                         android:text="Cancelar "
@@ -233,7 +235,7 @@
                         android:textSize="15sp"
                         android:textAllCaps="false"/>
                     <Button
-                        android:id="@+id/editarPerfilButton"
+                        android:id="@+id/aceptarCambiosButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/rounded_corner"
