@@ -42,7 +42,7 @@ struct Company: Codable {
   var createdAt: String
   var updatedAt: String
   var products: [Product]?
-  var rating: Double
+  var score: Double
   var oneComment: String
   var images: [CompanyImages]?
 }
