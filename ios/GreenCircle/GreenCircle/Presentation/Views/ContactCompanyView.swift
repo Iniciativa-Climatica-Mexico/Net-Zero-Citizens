@@ -94,11 +94,11 @@ struct ContactCompanyRatingView: View {
           .padding(.bottom, 3).bold()
         HStack {
           ForEach(0..<5) { index in
-            if index < Int($modelCompanyRating.contentCompany.rating.wrappedValue) {
+            if index < Int($modelCompanyRating.contentCompany.score.wrappedValue) {
               Image(systemName: "star.fill")
                 .resizable()
                 .frame(width: 11, height: 11)
-            } else if index == Int(modelCompanyRating.contentCompany.rating) {
+            } else if index == Int(modelCompanyRating.contentCompany.score) {
               Image(systemName: "star.leadinghalf.fill")
                 .resizable()
                 .frame(width: 11, height: 11)
@@ -108,7 +108,7 @@ struct ContactCompanyRatingView: View {
                 .frame(width: 11, height: 11)
             }
           }
-          Text(String(modelCompanyRating.contentCompany.rating))
+          Text(String(modelCompanyRating.contentCompany.score))
         }
           .padding(.bottom, 5)
           .foregroundColor(Color("GreenCustom"))
