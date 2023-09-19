@@ -17,8 +17,21 @@ struct OpenQuestion: View {
   
   var body: some View {
     VStack(alignment: .leading) {
-      Text(question.questionText)
-        .font(.headline)
+      VStack(alignment: .leading) {
+        if question.isRequired == false {
+          Text(question.questionText)
+            .font(.headline)
+        } else {
+          Text(question.questionText)
+            .font(.headline)
+            .padding(.bottom, 1)
+          Text("* Required")
+            .font(.system(size: 15))
+            .font(.title)
+            .foregroundColor(Color(red: 0.33, green: 0.49, blue: 0.55))
+            .padding(.bottom, 10)
+        }
+      }
       TextField("Respuesta", text: Binding(
         get: { self.question.answer?.answerText ?? "" },
         set: { self.question.answer?.answerText = String($0.prefix(self.characterLimit))}

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SurveyView: View {
   @StateObject var vm = SurveyViewModel()
+  @State private var showSuccessAlert = false
+  @State private var showErrorAlert = false
   
   init() {
     for var question in vm.survey.questions {
@@ -44,8 +46,14 @@ struct SurveyView: View {
             let answers = vm.survey.questions.map({ question in
               return question.answer ?? Answer()
             })
-            let res = await vm.submitAnswers(answers: answers)
+            let submissionResult = await vm.submitAnswers(answers: answers)
             
+            if(submissionResult) {
+              showSuccessAlert = true
+            }
+            else {
+              showErrorAlert = true
+            }
           }
           print(vm.survey.questions.map({ (question) -> String? in
             if(question.answer?.answerText != nil){
@@ -69,11 +77,11 @@ struct SurveyView: View {
         await vm.getPendingSurvey()
       }
     }
-  }
-}
-
-struct Previews_SurveyView_Previews: PreviewProvider {
-  static var previews: some View {
-    SurveyView()
+    .alert(isPresented: $showSuccessAlert) {
+      Alert(title: Text("Success"), message: Text("Survey submitted successfully"), dismissButton: .default(Text("OK")))
+    }
+    .alert(isPresented: $showErrorAlert) {
+      Alert(title: Text("Error"), message: Text("Error submitting survey"), dismissButton: .default(Text("OK")))
+    }
   }
 }
