@@ -28,7 +28,7 @@ export const getAllCompanies = async <T>(
  * y los productos que vende
  * @param id Id del proveedor a buscar
  * @returns Promise<Company | Null> Proveedor con el id especificado
- */
+*/
 export const getCompanyById = async (id: string): Promise<Company | null> => {
   const company = await Company.findByPk(id)
   const companyScore = await getCompanyScore(id)
@@ -51,6 +51,8 @@ export const getCompanyById = async (id: string): Promise<Company | null> => {
   company?.setDataValue('rating', rating)
   company?.setDataValue('oneComment', comment)
   company?.setDataValue('images', images)
+
+  console.log(company)
   
   return company
 }
@@ -95,7 +97,7 @@ const getCompanyScore = async (id: string): Promise<Review[] | null> => {
       companyId: id,
     },
     attributes: {
-      include: [[fn('AVG', col('rating')), 'rating'], 'comment'],
+      include: [[fn('AVG', col('score')), 'score'], 'review'],
       exclude: ['reviewId', 'userId', 'createdAt', 'updatedAt'],
     },
   })
