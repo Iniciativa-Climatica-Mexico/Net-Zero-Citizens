@@ -40,6 +40,7 @@ class CompanyViewModel: ObservableObject {
     updatedAt: "",
     products: [],
     rating: 0.0,
+    oneComment: "",
     images: []
     )
   /// Para implementar el caso de uso en la vista que llame al ViewModel Compañía

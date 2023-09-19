@@ -7,7 +7,8 @@ export default class ProductBootstrap extends Bootstrapper {
       {
         productId: 'd1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
         name: 'Product 1',
-        description: 'Product 1 description',
+        description:
+          'Los paneles solares están compuestos por células solares, generalmente hechas de silicio, que tienen la capacidad de generar electricidad cuando son expuestas a la luz',
         imageUrl: 'https://www.product1.com/image.png',
         imageAltText: 'Product 1 Image',
       },

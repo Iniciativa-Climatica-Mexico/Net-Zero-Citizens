@@ -24,7 +24,7 @@ struct TabViewImagesProducts: View {
               .onAppear {
                 descriptionBind[index] = product.description
                 nameBind[index] = product.name
-              }.frame(maxWidth: 100, maxHeight: 100)
+              }.frame(maxWidth: 170, maxHeight: 150)
           }
       }
       .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
@@ -53,12 +53,15 @@ struct ContactCompanyProductView: View {
     VStack(alignment: .leading) {
       Text(productName)
         .foregroundColor(Color("BlackCustom"))
-        .font(.system(size: 16)).bold()
+        .contrast(12.6)
+        .font(.system(size: 18)).bold()
       VStack {
         Text(productDescription)
           .foregroundColor(Color("BlackCustom"))
-          .font(.system(size: 12))
+          .contrast(12.6)
+          .font(.system(size: 13))
           .padding(EdgeInsets(top: 5, leading: 0, bottom: 6, trailing: 0))
+          .lineSpacing(8)
       }
       Spacer()
     }.padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
@@ -66,36 +69,53 @@ struct ContactCompanyProductView: View {
 }
 
 struct ContactCompanyRatingView: View {
+  @ObservedObject var modelCompanyRating: CompanyViewModel
   @Binding var dispScrollView: Bool
   var body: some View {
     if !dispScrollView {
       VStack(alignment: .leading) {
         Text("Rating")
-          .font(.system(size: 15))
+          .font(.system(size: 18))
           .padding(.bottom, 3).bold()
         HStack {
-          Image(systemName: "star.fill").resizable().frame(width: 11, height: 11)
-          Image(systemName: "star.fill").resizable().frame(width: 11, height: 11)
-          Image(systemName: "star.fill").resizable().frame(width: 11, height: 11)
-          Image(systemName: "star.fill").resizable().frame(width: 11, height: 11)
-          Image(systemName: "star.fill").resizable().frame(width: 11, height: 11)
+          ForEach(0..<5) { index in
+            if index < Int(modelCompanyRating.contentCompany.rating) {
+              Image(systemName: "star.fill")
+                .resizable()
+                .frame(width: 11, height: 11)
+            } else if index == Int(modelCompanyRating.contentCompany.rating) {
+              Image(systemName: "star.leadinghalf.fill")
+                .resizable()
+                .frame(width: 11, height: 11)
+            } else {
+              Image(systemName: "star")
+                .resizable()
+                .frame(width: 11, height: 11)
+            }
+          }
+          Text(String(modelCompanyRating.contentCompany.rating))
         }
           .padding(.bottom, 5)
           .foregroundColor(Color("GreenCustom"))
         
         Divider()
         Text("Reviews")
-          .font(.system(size: 15))
+          .font(.system(size: 16))
+          .foregroundColor(Color("BlackCustom")).contrast(12.6)
           .padding(.bottom, 3).bold()
-        VStack {
-          Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incididunt ut labore et dolore magna aliqua.")
+        VStack(spacing: 6) {
+          Text(modelCompanyRating.contentCompany.oneComment)
             .font(.system(size: 13))
             .foregroundColor(Color("BlackCustom")).contrast(12.6)
+        }
+        HStack {
+          Spacer()
           Text("Ver mas...").onTapGesture {
             dispScrollView = true
           }
           .font(.system(size: 13))
           .foregroundColor(Color("BlueCustom"))
+          Spacer()
         }
         Spacer()
       }
@@ -108,11 +128,12 @@ struct ContactCompanyRatingView: View {
 struct ContactCompanyComponentView: View {
   @ObservedObject var modelCompany: CompanyViewModel
   var body: some View {
-    VStack(alignment: .leading) {
+    VStack(alignment: .leading, spacing: 6) {
       Text("Conecta")
-        .font(.system(size: 15))
-        .padding(.bottom, 3).bold()
-      VStack(alignment: .leading, spacing: 5) {
+        .font(.system(size: 18))
+        .foregroundColor(Color("BlackCustom")).contrast(12.6).bold()
+        .padding(.bottom, 5)
+      VStack(alignment: .leading, spacing: 7) {
         Text("Página web").font(.system(size: 13))
           .foregroundColor(Color("BlackCustom")).contrast(12.6)
         Text(modelCompany.contentCompany.webPage ?? "No hay página web disponible")
@@ -122,7 +143,7 @@ struct ContactCompanyComponentView: View {
 
       Divider()
 
-      VStack(alignment: .leading, spacing: 5) {
+      VStack(alignment: .leading, spacing: 7) {
         Text("Correo electrónico").font(.system(size: 13))
           .foregroundColor(Color("BlackCustom")).contrast(12.6)
         Text(modelCompany.contentCompany.email).font(.system(size: 10))
@@ -131,7 +152,7 @@ struct ContactCompanyComponentView: View {
 
       Divider()
 
-      VStack(alignment: .leading, spacing: 5) {
+      VStack(alignment: .leading, spacing: 7) {
         Text("Dirección")
           .font(.system(size: 13))
           .foregroundColor(Color("BlackCustom"))
@@ -221,7 +242,7 @@ struct ContactCompanyView: View {
                 }
               }
             }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-              .padding(.bottom, 8)
+              .padding(.bottom, 15)
             HStack {
               CustomButtonOption(isPressed: $isPressed, content: "Producto")
               CustomButtonOption(isPressed: $isPressed, content: "Contacto")
@@ -241,7 +262,7 @@ struct ContactCompanyView: View {
                     }
                   }
                   if key == "Reviews" {
-                    ContactCompanyRatingView(dispScrollView: $dispScrollView).onAppear {
+                    ContactCompanyRatingView(modelCompanyRating: contactCompanyViewModel, dispScrollView: $dispScrollView).onAppear {
                       bindImageToDescription = false
                     }
                 }
