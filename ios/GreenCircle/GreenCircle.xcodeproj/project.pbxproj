@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		654B58C12AB7ACD600057880 /* UpdateUserDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654B58C02AB7ACD600057880 /* UpdateUserDataUseCase.swift */; };
+		654B58D22AB8E7E300057880 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654B58D12AB8E7E300057880 /* AppDelegate.swift */; };
 		657A83462AB652F90022F62C /* CustomDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657A83452AB652F90022F62C /* CustomDateFormatter.swift */; };
 		657A83492AB670E30022F62C /* LocalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657A83482AB670E30022F62C /* LocalService.swift */; };
 		6C4452B82AA6EF8500BE5930 /* GreenCircleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4452B72AA6EF8500BE5930 /* GreenCircleApp.swift */; };
@@ -51,6 +52,8 @@
 
 /* Begin PBXFileReference section */
 		654B58C02AB7ACD600057880 /* UpdateUserDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserDataUseCase.swift; sourceTree = "<group>"; };
+		654B58D12AB8E7E300057880 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		654B58D32AB8E81F00057880 /* GreenCircle.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GreenCircle.entitlements; sourceTree = "<group>"; };
 		657A83452AB652F90022F62C /* CustomDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDateFormatter.swift; sourceTree = "<group>"; };
 		657A83482AB670E30022F62C /* LocalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalService.swift; sourceTree = "<group>"; };
 		6C4452B42AA6EF8500BE5930 /* GreenCircle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GreenCircle.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -143,6 +146,7 @@
 		6C4452B62AA6EF8500BE5930 /* GreenCircle */ = {
 			isa = PBXGroup;
 			children = (
+				654B58D32AB8E81F00057880 /* GreenCircle.entitlements */,
 				6C4452E42AA6F06D00BE5930 /* Utils */,
 				6C4452E32AA6F06700BE5930 /* Data */,
 				6C4452E22AA6F05F00BE5930 /* Domain */,
@@ -151,6 +155,7 @@
 				6C4452B92AA6EF8500BE5930 /* ContentView.swift */,
 				6C4452BB2AA6EF8600BE5930 /* Assets.xcassets */,
 				6C4452BD2AA6EF8600BE5930 /* Preview Content */,
+				654B58D12AB8E7E300057880 /* AppDelegate.swift */,
 			);
 			path = GreenCircle;
 			sourceTree = "<group>";
@@ -418,6 +423,7 @@
 				6C4452B82AA6EF8500BE5930 /* GreenCircleApp.swift in Sources */,
 				657A83492AB670E30022F62C /* LocalService.swift in Sources */,
 				B3827EFB2AACF45400AC7213 /* User.swift in Sources */,
+				654B58D22AB8E7E300057880 /* AppDelegate.swift in Sources */,
 				B35DBF382AB3490A006C4BB2 /* NetworkAPIService.swift in Sources */,
 				B3827EFD2AACF8C000AC7213 /* UserService.swift in Sources */,
 				B329A1622AAA2F7E00C7921B /* UserViewModel.swift in Sources */,
@@ -578,6 +584,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GreenCircle/GreenCircle.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"GreenCircle/Preview Content\"";
@@ -607,6 +614,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GreenCircle/GreenCircle.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"GreenCircle/Preview Content\"";
