@@ -33,6 +33,9 @@ class CompanyContactInfoFragment : Fragment() {
         _binding = null
     }
 
+    /*
+    * Se encarga de bindear los datos de contacto de la empresa
+     */
     fun bindCompanyContactInfo() {
         binding.TVWPValue.text = arguments?.getString("WebPage")
         binding.TVEmailValue.text = arguments?.getString("Email")

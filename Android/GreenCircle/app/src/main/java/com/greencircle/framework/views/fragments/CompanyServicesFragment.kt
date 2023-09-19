@@ -89,6 +89,9 @@ class CompanyServicesFragment : Fragment() {
         recyclerView.adapter = adapter
     }
 
+    /*
+    * Adapta los datos de la lista de productos a la lista de servicios
+     */
     private fun adapToServiceCard(dataToAdapt: ArrayList<Product>): ArrayList<ServiceItem> {
         val adaptedData = ArrayList<ServiceItem>()
         for (item in dataToAdapt) {
