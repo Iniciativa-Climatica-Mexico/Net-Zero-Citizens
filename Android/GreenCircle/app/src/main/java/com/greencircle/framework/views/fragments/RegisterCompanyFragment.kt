@@ -84,12 +84,11 @@ class RegisterCompanyFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Inflar el diseño de este fragmento
         _binding = FragmentRegisterCompanyBinding.inflate(inflater, container, false)
-
         // Google Login
         authUtils.googleLoginListener(binding, requireActivity(), googleSignInActivityResult)
 
-        // Inflate the layout for this fragment
         return binding.root
     }
 
