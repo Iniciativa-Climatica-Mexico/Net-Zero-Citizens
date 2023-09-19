@@ -78,11 +78,7 @@ class CreateCompanyFragment : Fragment() {
         viewModel.googleLoginResult.observe(viewLifecycleOwner) { result ->
             // Handle the result here
             if (result != null) {
-                if (result.user.roles != "new_user") {
-                    navigateToHome()
-                } else {
-                    authToken = result.tokens.authToken
-                }
+                authToken = result.tokens.authToken
             } else {
                 Log.d("CreateCompanyFragment", "Google login failed")
             }
@@ -178,6 +174,7 @@ class CreateCompanyFragment : Fragment() {
 
     private fun navigateToHome() {
         var intent: Intent = Intent(requireContext(), MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
 }

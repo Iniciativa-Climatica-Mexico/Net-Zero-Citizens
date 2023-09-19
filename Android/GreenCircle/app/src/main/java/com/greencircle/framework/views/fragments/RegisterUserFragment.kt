@@ -3,15 +3,19 @@ package com.greencircle.framework.views.fragments
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.greencircle.databinding.FragmentRegisterUserBinding
+import com.greencircle.framework.viewmodel.CreateUserViewModel
+import com.greencircle.framework.views.MainActivity
 import com.greencircle.framework.views.activities.RegisterUserActivity
 import com.greencircle.utils.AuthUtils
 
@@ -21,6 +25,8 @@ import com.greencircle.utils.AuthUtils
  */
 class RegisterUserFragment : Fragment() {
     private var _binding: FragmentRegisterUserBinding? = null
+    private lateinit var viewModel: CreateUserViewModel
+    private lateinit var _arguments: Bundle
     private val binding get() = _binding!!
     private val authUtils = AuthUtils()
 
@@ -40,8 +46,10 @@ class RegisterUserFragment : Fragment() {
                     val task = GoogleSignIn.getSignedInAccountFromIntent(data)
                     try {
                         val account = task.getResult(ApiException::class.java)
-                        val arguments = authUtils.getDataFromGoogleAccount(account)
-                        navigateToForm(arguments)
+                        _arguments = authUtils.getDataFromGoogleAccount(account)
+                        // Google Login
+                        val token: String = _arguments.getString("idToken").toString()
+                        viewModel.googleLogin(token)
                     } catch (e: ApiException) {
                         Toast.makeText(
                             requireContext(), "Something went wrong", Toast.LENGTH_SHORT
@@ -52,6 +60,16 @@ class RegisterUserFragment : Fragment() {
                 // Handle the case where the user canceled the operation
             }
         }
+
+    /**
+     * Inicializa el "CreateCompanyFragment"
+     *
+     * @param savedInstanceState La instancia de Bundle que contiene datos previamente guardados del fragmento.
+     */
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this)[CreateUserViewModel::class.java]
+    }
 
     /**
      * Método que se llama cuando se crea la vista del fragmento de registro de usuario.
@@ -66,11 +84,35 @@ class RegisterUserFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Inflar el diseño de este fragmento
         _binding = FragmentRegisterUserBinding.inflate(inflater, container, false)
-
+        // Google Login
         authUtils.googleLoginListener(binding, requireActivity(), googleSignInActivityResult)
 
         return binding.root
+    }
+
+    /**
+     * Método llamado cuando la vista del fragmento ha sido creada después de onCreateView.
+     * Observa y maneja el Live Data proveniente del inicio de sesión de Google.
+     *
+     * @param view La vista raíz del fragmento "CreateCompanyFragment".
+     * @param savedInstanceState La instancia de Bundle que contiene datos previamente guardados del fragmento.
+     */
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.googleLoginResult.observe(viewLifecycleOwner) { result ->
+            // Handle the result here
+            if (result != null) {
+                if (result.user.roles != "new_user") {
+                    navigateToHome()
+                } else {
+                    navigateToForm(_arguments)
+                }
+            } else {
+                Log.d("CreateCompanyFragment", "Google login failed")
+            }
+        }
     }
 
     /**
@@ -86,5 +128,11 @@ class RegisterUserFragment : Fragment() {
         val createUserFragment = CreateUserFragment()
         val activity = requireActivity() as RegisterUserActivity
         activity.replaceFragment(createUserFragment, arguments)
+    }
+
+    private fun navigateToHome() {
+        var intent: Intent = Intent(requireContext(), MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 }

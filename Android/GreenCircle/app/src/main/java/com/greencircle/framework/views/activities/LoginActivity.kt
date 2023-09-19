@@ -57,7 +57,6 @@ class LoginActivity : AppCompatActivity() {
                         val account = task.getResult(ApiException::class.java)
                         Log.d("Test", "${account.idToken}")
                         viewModel.googleLogin(account.idToken!!)
-                        navigateToHome()
                     } catch (e: ApiException) {
                         Toast.makeText(
                             applicationContext, "Something went wrong", Toast.LENGTH_SHORT
@@ -85,6 +84,22 @@ class LoginActivity : AppCompatActivity() {
 
         // Google Login
         authUtils.googleLoginListener(binding, this, googleSignInActivityResult)
+
+        // Observador para el estado de autenticación
+        viewModel.googleLoginResult.observe(this) { authResponse ->
+            if (authResponse != null) {
+                if (authResponse.user.roles != "new_user") {
+                    navigateToHome()
+                } else {
+                    Toast.makeText(applicationContext, "Por favor, regístrate", Toast.LENGTH_SHORT)
+                        .show()
+                    navigateToRegisterUser()
+                }
+            } else {
+                // Handle the case where the Google login failed
+                Toast.makeText(applicationContext, "Google login failed", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     // Métodos para los listeners de los botones de registro
@@ -106,6 +121,7 @@ class LoginActivity : AppCompatActivity() {
     private fun navigateToHome() {
         var intent: Intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     private fun navigateToRegisterCompany() {

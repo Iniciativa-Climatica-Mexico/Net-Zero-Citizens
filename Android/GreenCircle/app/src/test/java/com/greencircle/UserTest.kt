@@ -21,12 +21,14 @@ class UserTest {
         val age = "21"
         val state = "Querétaro"
         val gender = "Femenino"
+        val roleId = "CUSTOMER_ROLE_ID"
 
         val userInfo = UserAPIService.UpdateUserRequest(
             phoneNumber = phoneNumber,
             age = age,
             state = state,
-            gender = gender
+            gender = gender,
+            roleId = roleId
         )
 
         // Checar la integridad de los datos
@@ -34,6 +36,7 @@ class UserTest {
         assertEquals(age, userInfo.age)
         assertEquals(state, userInfo.state)
         assertEquals(gender, userInfo.gender)
+        assertEquals(roleId, userInfo.roleId)
     }
 
     /**
@@ -45,19 +48,22 @@ class UserTest {
         val age = "21"
         val state = "Querétaro"
         val gender = "Femenino"
+        val roleId = "CUSTOMER_ROLE_ID"
 
         val userInfo = UserAPIService.UpdateUserRequest(
             phoneNumber = phoneNumber,
             age = age,
             state = state,
-            gender = gender
+            gender = gender,
+            roleId = roleId
         )
 
         val userInfo2 = UserAPIService.UpdateUserRequest(
             phoneNumber = phoneNumber,
             age = age,
             state = state,
-            gender = gender
+            gender = gender,
+            roleId = roleId
         )
 
         assertEquals(userInfo, userInfo2)

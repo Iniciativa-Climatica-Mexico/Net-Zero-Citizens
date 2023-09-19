@@ -116,6 +116,7 @@ export const createCompany: RequestHandler<
     const company = req.body.company
 
     const newCompany = await CompanyService.createCompany(company)
+    console.log(newCompany)
 
     if (!newCompany)
       return res
@@ -146,22 +147,18 @@ export const addProduct: RequestHandler<
 > = async (req, res) => {
   try {
     if (!req.body.companyProduct)
-      res
-        .status(400)
-        .json({
-          companyProductId: '',
-          error: 'Missing company or product data',
-        })
+      res.status(400).json({
+        companyProductId: '',
+        error: 'Missing company or product data',
+      })
     const company = req.body.companyProduct
     const newCompanyProduct = await CompanyService.addProduct(company)
 
     if (!newCompanyProduct)
-      res
-        .status(400)
-        .json({
-          companyProductId: '',
-          error: 'Error adding product to company',
-        })
+      res.status(400).json({
+        companyProductId: '',
+        error: 'Error adding product to company',
+      })
 
     res.json({
       companyProductId: newCompanyProduct?.dataValues.companyId,
