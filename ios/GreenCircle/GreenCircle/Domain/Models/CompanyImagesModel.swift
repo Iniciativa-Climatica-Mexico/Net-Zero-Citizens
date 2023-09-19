@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct CompanyImages: Codable {
-    var companyImageId: UUID
-    var companyId: String?
-    var imageUrl: String?
-    var altText: String?
+struct CompanyImages: Codable, Hashable {
+  var companyImageId: UUID
+  var companyId: String?
+  var imageUrl: String?
+  var altText: String?
 }

@@ -8,11 +8,11 @@
 import Foundation
 
 struct Reviews: Codable {
-    var idReview: Int
-    var UUID: String
-    var idCompany: Int
-    var review: String
-    var score: Int
-    var createdAt = Date() // Check
-    var updatedAt = Date() // Check
+  var idReview: Int
+  var UUID: String
+  var idCompany: Int
+  var review: String
+  var score: Int
+  var createdAt: String
+  var updatedAt: String
 }
