@@ -5,14 +5,14 @@ export default class ReviewBootstrap extends Bootstrapper {
     Review.bulkCreate([
       {
         reviewId: 'revw-1234-efgh-0000',
-        userId: 'abcd-1234-efgh-5678',
+        userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
         companyId: 'comp-1234-efgh-0000',
         rating: 5,
         comment: 'This is a comment',
       },
       {
         reviewId: 'revw-1234-efgh-0001',
-        userId: 'abcd-1234-efgh-5679',
+        userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
         companyId: 'comp-1234-efgh-0000',
         rating: 5,
         comment: 'This is a comment',

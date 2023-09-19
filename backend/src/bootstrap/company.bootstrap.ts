@@ -6,7 +6,7 @@ export default class CompanyBootstrap extends Bootstrapper {
     Company.bulkCreate([
       {
         companyId: 'comp-1234-efgh-0000',
-        userId: 'abcd-1234-efgh-5678',
+        userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
         name: 'Company 1',
         description: 'Company 1 description',
         email: 'example1@mail.com',
@@ -16,7 +16,7 @@ export default class CompanyBootstrap extends Bootstrapper {
       },
       {
         companyId: 'comp-1234-efgh-0001',
-        userId: 'abcd-1234-efgh-5678',
+        userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
         name: 'Company 2',
         description: 'Company 2 description',
         email: 'example2@mail.com',

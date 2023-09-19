@@ -9,7 +9,7 @@ chai.use(chaiExclude)
 const { expect } = chai
 const testData = [
   {
-    userId: 'abcd-1234-efgh-5678',
+    userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
     name: 'Company 1',
     description: 'Company 1 description',
     email: 'example1@mail.com',
@@ -18,7 +18,7 @@ const testData = [
     phoneNumber: '123456789',
   },
   {
-    userId: 'abcd-1234-efgh-5678',
+    userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
     name: 'Company 2',
     description: 'Company 2 description',
     email: 'example2@mail.com',

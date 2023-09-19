@@ -198,7 +198,7 @@ const testCreateSurvey: CreateSurveyReqBody = {
 
 const testAnswer: FullAnswers = {
   surveyId: 'surv-5555-efgh-3333',
-  userId: 'abcd-1234-efgh-5678',
+  userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
   answers: [
     {
       questionId: 'ques-5555-efgh-3330',
@@ -247,7 +247,7 @@ describe('Survey Service', () => {
   })
 
   it('should return a pending survey', async () => {
-    const response = await getSurveyPending('abcd-1234-efgh-5678')
+    const response = await getSurveyPending('8de45630-2e76-4d97-98c2-9ec0d1f3a5b8')
     expect(response)
       .excludingEvery(attributesToExclude)
       .to.deep.equal(testSurveyPending)

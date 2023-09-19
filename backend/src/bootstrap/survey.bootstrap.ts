@@ -37,12 +37,12 @@ export default class SurveysBootstrapper extends Bootstrapper {
             answers: [
               {
                 answerId: 'answ-1234-efgh-0000',
-                userId: 'abcd-1234-efgh-5678',
+                userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
                 scaleValue: 5,
               },
               {
                 answerId: 'answ-1234-efgh-0001',
-                userId: 'abcd-1234-efgh-5679',
+                userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
                 scaleValue: 4,
               },
             ],
@@ -76,12 +76,12 @@ export default class SurveysBootstrapper extends Bootstrapper {
             answers: [
               {
                 answerId: 'answ-1234-efgh-0002',
-                userId: 'abcd-1234-efgh-5678',
+                userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
                 answerText: 'Excelente',
               },
               {
                 answerId: 'answ-1234-efgh-0003',
-                userId: 'abcd-1234-efgh-5679',
+                userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
                 answerText: 'Bueno',
               },
             ],
@@ -107,12 +107,12 @@ export default class SurveysBootstrapper extends Bootstrapper {
             answers: [
               {
                 answerId: 'answ-5678-abcd-1111',
-                userId: 'abcd-1234-efgh-5678',
+                userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
                 scaleValue: 3,
               },
               {
                 answerId: 'answ-5678-abcd-1112',
-                userId: 'abcd-1234-efgh-5679',
+                userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
                 scaleValue: 5,
               },
             ],
@@ -142,7 +142,7 @@ export default class SurveysBootstrapper extends Bootstrapper {
             answers: [
               {
                 answerId: 'answ-9876-dcba-2222',
-                userId: 'abcd-1234-efgh-5679',
+                userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
                 answerText: 'No',
               },
             ],
@@ -171,7 +171,7 @@ export default class SurveysBootstrapper extends Bootstrapper {
             answers: [
               {
                 answerId: 'answ-5555-efgh-3330',
-                userId: 'abcd-1234-efgh-5679',
+                userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
                 answerText: 'No',
               },
             ],
@@ -190,7 +190,7 @@ export default class SurveysBootstrapper extends Bootstrapper {
             answers: [
               {
                 answerId: 'answ-5678-abcd-3331',
-                userId: 'abcd-1234-efgh-5679',
+                userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
                 scaleValue: 5,
               },
             ],
@@ -224,7 +224,7 @@ export default class SurveysBootstrapper extends Bootstrapper {
             answers: [
               {
                 answerId: 'answ-1234-efgh-3338',
-                userId: 'abcd-1234-efgh-5679',
+                userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
                 answerText: 'Bueno',
               },
             ],
