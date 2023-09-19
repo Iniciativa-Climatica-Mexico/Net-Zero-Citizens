@@ -121,16 +121,14 @@ class UserReviewViewHolder(
     }
     private fun formatDateWithSlashes(dateString: String): String {
         try {
-            // Formato de entrada: "2023-09-19T05:05:02.293Z"
             val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
             val date = inputFormat.parse(dateString)
 
-            // Formato de salida: "19/09/2023"
             val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
             return outputFormat.format(date)
         } catch (e: Exception) {
             Log.e("DateError", "Error formatting date: ${e.message}")
-            return dateString // Devuelve la fecha original si no se puede formatear
+            return dateString
         }
     }
 }
