@@ -178,6 +178,7 @@
 		6C4452E22AA6F05F00BE5930 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				6C4452E82AA6F09D00BE5930 /* Models */,
 				6C4452E72AA6F09500BE5930 /* UseCases */,
 			);
 			path = Domain;
@@ -186,7 +187,6 @@
 		6C4452E32AA6F06700BE5930 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				6C4452E82AA6F09D00BE5930 /* Models */,
 				6C4452EA2AA6F0AE00BE5930 /* Remote */,
 				6C4452E92AA6F0A800BE5930 /* Repository */,
 			);
