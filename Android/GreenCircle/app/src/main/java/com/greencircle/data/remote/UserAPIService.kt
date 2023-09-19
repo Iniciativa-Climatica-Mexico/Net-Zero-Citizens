@@ -34,6 +34,7 @@ interface UserAPIService {
         val age: String,
         val state: String,
         val gender: String,
+        val roleId: String?
 
     )
 

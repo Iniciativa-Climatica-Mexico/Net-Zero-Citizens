@@ -110,12 +110,14 @@ class CreateUserFragment : Fragment() {
         val age = ageInputLayout.editText?.text.toString()
         val state = stateInputLayout.editText?.text.toString()
         val gender = genderInputLayout.editText?.text.toString()
+        val roleId = "CUSTOMER_ROLE_ID"
 
         val userInfo: UserAPIService.UpdateUserRequest = UserAPIService.UpdateUserRequest(
             phone,
             age,
             state,
-            gender
+            gender,
+            roleId,
         )
 
         viewModel.updateUser(uuid, userInfo, authToken)
