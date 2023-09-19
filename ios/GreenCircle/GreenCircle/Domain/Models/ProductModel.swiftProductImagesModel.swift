@@ -7,13 +7,10 @@
 
 import Foundation
 
-struct Product: Codable {
-    var productId: UUID
-    var name: String
-    var description: String?
-    var imageUrl: String
-    var imageAltText: String
-    var createdAt: String
-    var updatedAt: String
-    var companies: [Company]
+struct Product: Codable, Hashable {
+  var productId: UUID
+  var name: String
+  var description: String?
+  var imageUrl: String
+  var imageAltText: String
 }
