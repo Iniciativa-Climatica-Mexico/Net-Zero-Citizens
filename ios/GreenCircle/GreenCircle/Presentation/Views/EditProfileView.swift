@@ -9,6 +9,7 @@ import SwiftUI
 
 struct EditProfileView: View {
     @ObservedObject var modelUser: UserViewModel
+    @State private var showAlert = false
 
     var body: some View {
         ZStack {
@@ -235,8 +236,8 @@ struct EditProfileView: View {
                     .padding()
                     HStack {
                         Button(action: {
-                            // Acción del primer botón
-                        }){
+                            showAlert = true
+                        }) {
                             Text("Cancelar")
                                 .foregroundColor(TitleBarColor.TitleBarColor)
                                 .padding(.vertical, 16)
@@ -250,6 +251,17 @@ struct EditProfileView: View {
                                 )
                         }
                         .padding(.trailing, 4)
+                        .alert(isPresented: $showAlert) {
+                            Alert(
+                                title: Text("Salir sin guardar"),
+                                message: Text("Si sales, los datos actualizados no se guardarán. ¿Estás seguro de que quieres salir?"),
+                                primaryButton: .default(Text("Cancelar")),
+                                secondaryButton: .destructive(Text("Salir"), action: {
+                                    //Falta implementar
+                                })
+                            )
+                        }
+                        
                         
                         Button(action: {
                             Task {

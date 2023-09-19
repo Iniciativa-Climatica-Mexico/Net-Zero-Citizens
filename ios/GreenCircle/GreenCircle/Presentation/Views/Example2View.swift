@@ -19,7 +19,7 @@ struct Example2View: View {
                 .offset(y: -60)   
             ScrollView {
                 VStack {
-                    Text("hola")
+                    Text("Provisional de cerrar sesión")
                 }
             }
         }
