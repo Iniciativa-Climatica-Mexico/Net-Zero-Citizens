@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp">
+        android:paddingVertical="20dp">
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -25,7 +25,7 @@
 
             <TextView
                 android:id="@+id/reviewCardTitle"
-                android:layout_width="253dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="El producto tiene una calidad increíble y la atención fue muy buena."
                 android:textColor="@color/black"
@@ -54,13 +54,13 @@
                 <ImageButton
                     android:minWidth="48dp"
                     android:minHeight="48dp"
-                    android:contentDescription="Delete Button"
-                    android:id="@+id/reviewCardDeleteButton"
+                    android:contentDescription="Options Button"
+                    android:id="@+id/reviewCardOptionsButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
                     android:background="@color/white"
-                    android:src="@drawable/icon_delete" />
+                    android:src="@drawable/icon_more_horizontal" />
 
             </LinearLayout>
 

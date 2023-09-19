@@ -31,4 +31,21 @@ class ReviewRepository {
         Log.d("POST", response.toString())
         return response
     }
+
+    suspend fun updateReview(
+        reviewId: String,
+        review: ReviewBase
+    ): Response<ResponseBody>? {
+        val response = api.updateReview(reviewId, review)
+        Log.d("PUT", response.toString())
+        return response
+    }
+
+    suspend fun deleteReview(
+        reviewId: String
+    ): Response<ResponseBody>? {
+        val response = api.deleteReview(reviewId)
+        Log.d("DELETE", response.toString())
+        return response
+    }
 }

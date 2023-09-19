@@ -63,7 +63,8 @@
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:text="@string/no_reviews_to_display"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:visibility="visible" />
     </LinearLayout>
 
     <!-- OPINIONES DEL PROVEEDOR -->
@@ -73,7 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:orientation="vertical"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ratingWrapper">

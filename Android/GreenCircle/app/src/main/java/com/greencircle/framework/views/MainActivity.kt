@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
                     replaceFragment(CompanyContactFragment())
                     true
                 }
-
                 else -> false
             }
         }

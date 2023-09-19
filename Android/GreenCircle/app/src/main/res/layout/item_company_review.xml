@@ -10,7 +10,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/gray_400" />
+        android:background="@color/gray_400"
+        />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -89,9 +90,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="end"
-                    android:text="4/5"
+                    android:text="4 de 5"
                     android:textColor="@color/green"
-                    android:textSize="8sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
 
