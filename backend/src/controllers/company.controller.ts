@@ -1,10 +1,10 @@
 import Company from '../models/company.model'
+import CompanyProduct from '../models/companyProducts.model'
 import * as CompanyService from '../services/company.service'
 import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
 
-
-export const getCompanyInfo : RequestHandler<{ companyId: string }> =async (
+export const getCompanyInfo: RequestHandler<{ companyId: string }> = async (
   req,
   res
 ) => {
@@ -12,11 +12,10 @@ export const getCompanyInfo : RequestHandler<{ companyId: string }> =async (
 
   const companyInfo = await CompanyService.getCompanyInfo(compId)
 
-  if (companyInfo){
+  if (companyInfo) {
     res.json(companyInfo)
-  }
-  else {
-    res.status(404).json({error: 'Company not found'})
+  } else {
+    res.status(404).json({ error: 'Company not found' })
   }
 }
 
@@ -61,11 +60,11 @@ export const getPendingCompanies: RequestHandler<
   NoRecord,
   Paginator<Company>,
   NoRecord,
-  PaginationParams<{ status: string}>
+  PaginationParams<{ status: string }>
 > = async (req, res) => {
   const params = {
     start: req.query.start || 0,
-    pageSize: req.query.pageSize || 10
+    pageSize: req.query.pageSize || 10,
   }
   const companies = await CompanyService.getPendingCompanies(params)
   res.json({
@@ -79,12 +78,12 @@ export const getPendingCompanies: RequestHandler<
 /**
  * @brief
  * Función del controlador que actualiza a un proveedor de la base de datos
- * @param req 
- * @param res 
+ * @param req
+ * @param res
  */
 export const updateCompanyInfo: RequestHandler<
   { companyId: string },
-  { message: string }, 
+  { message: string },
   CompanyService.UpdateCompanyInfoBody
 > = async (req, res) => {
   const compId = req.params.companyId
@@ -92,8 +91,85 @@ export const updateCompanyInfo: RequestHandler<
   if (companyInfo) {
     await CompanyService.updateCompanyInfo(compId, req.body)
     res.status(201).json({ message: 'Company updated' })
-  }
-  else {
+  } else {
     res.status(404).json({ message: 'Company not found' })
+  }
+}
+/**
+ * @brief
+ * Función del controlador para registrar un nuevo proveedor
+ * @param req La request HTTP al servidor
+ * @param res Un objeto paginador con los proveedores y la
+ *            información de paginación
+ */
+export const createCompany: RequestHandler<
+  NoRecord,
+  { companyId: string; message?: string; error?: string },
+  { company: Company },
+  NoRecord
+> = async (req, res) => {
+  try {
+    if (!req.body.company)
+      return res
+        .status(400)
+        .json({ companyId: '', error: 'Missing company data' })
+    const company = req.body.company
+
+    const newCompany = await CompanyService.createCompany(company)
+
+    if (!newCompany)
+      return res
+        .status(400)
+        .json({ companyId: '', error: 'Error creating company' })
+
+    return res.json({
+      companyId: newCompany?.dataValues.companyId,
+      message: 'Company created',
+    })
+  } catch (error) {
+    res.status(400).json({ companyId: '', error: 'Error creating company' })
+  }
+}
+
+/**
+ * @brief
+ * Función del controlador para añadir un producto a un proveedor
+ * @param req La request HTTP al servidor
+ * @param res Un objeto paginador con los proveedores y la
+ *            información de paginación
+ */
+export const addProduct: RequestHandler<
+  NoRecord,
+  { companyProductId: string; message?: string; error?: string },
+  { companyProduct: CompanyProduct },
+  NoRecord
+> = async (req, res) => {
+  try {
+    if (!req.body.companyProduct)
+      res
+        .status(400)
+        .json({
+          companyProductId: '',
+          error: 'Missing company or product data',
+        })
+    const company = req.body.companyProduct
+    const newCompanyProduct = await CompanyService.addProduct(company)
+
+    if (!newCompanyProduct)
+      res
+        .status(400)
+        .json({
+          companyProductId: '',
+          error: 'Error adding product to company',
+        })
+
+    res.json({
+      companyProductId: newCompanyProduct?.dataValues.companyId,
+      message: 'Product added to company',
+    })
+  } catch (error) {
+    res
+      .status(400)
+      .json({ companyProductId: '', error: 'Error adding product to company' })
   }
 }
