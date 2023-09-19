@@ -123,7 +123,6 @@
 		6C3208092AB791AE005D23A5 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				6CB498442AB29A9900B6560C /* MainMenuView.swift */,
 				6CB4982B2AB102CD00B6560C /* CoordinatorView.swift */,
 				6CB4983D2AB1367700B6560C /* UserRegisterView.swift */,
 				6CB4982D2AB102D300B6560C /* LoginView.swift */,
@@ -232,6 +231,7 @@
 		6C4452E52AA6F08700BE5930 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6CB498442AB29A9900B6560C /* MainMenuView.swift */,
 				6C3208092AB791AE005D23A5 /* Login */,
 			);
 			path = Views;
@@ -240,9 +240,7 @@
 		6C4452E62AA6F08F00BE5930 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				6CD917CB2AB7927400C65C87 /* LoginViewModel.swift */,
-				6CD917CF2AB793FB00C65C87 /* UserRegisterViewModel.swift */,
-				6CD917D12AB7945A00C65C87 /* UserRegisterFormViewModel.swift */,
+				6CE09BF62ABA2ED80011C94B /* Login */,
 				6CE4843C2AB889810015CAC2 /* UserData.swift */,
 			);
 			path = ViewModels;
@@ -299,6 +297,16 @@
 				6CBF705B2AB6E7F200C1F5C1 /* MainButton.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		6CE09BF62ABA2ED80011C94B /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				6CD917CB2AB7927400C65C87 /* LoginViewModel.swift */,
+				6CD917CF2AB793FB00C65C87 /* UserRegisterViewModel.swift */,
+				6CD917D12AB7945A00C65C87 /* UserRegisterFormViewModel.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
