@@ -34,8 +34,8 @@ export const getCompanyById = async (id: string): Promise<Company | null> => {
   const companyScore = await getCompanyScore(id)
   const companyProducts = await getCompanyProducts(id)
   const companyImages = await getCompanyImages(id)
-  const rating = Math.round(companyScore?.[0].getDataValue('rating') * 10) / 10
-  const comment = companyScore?.[0].getDataValue('comment')
+  const rating = Math.round(companyScore?.[0].getDataValue('score') * 10) / 10
+  const comment = companyScore?.[0].getDataValue('review')
   const products: Product[] = []
   const images: CompanyImages[] = []
 
@@ -48,10 +48,10 @@ export const getCompanyById = async (id: string): Promise<Company | null> => {
   })
 
   company?.setDataValue('products', products)
-  company?.setDataValue('rating', rating)
+  company?.setDataValue('score', rating)
   company?.setDataValue('oneComment', comment)
   company?.setDataValue('images', images)
-  
+
   return company
 }
 
@@ -95,7 +95,7 @@ const getCompanyScore = async (id: string): Promise<Review[] | null> => {
       companyId: id,
     },
     attributes: {
-      include: [[fn('AVG', col('rating')), 'rating'], 'comment'],
+      include: [[fn('AVG', col('score')), 'score'], 'review'],
       exclude: ['reviewId', 'userId', 'createdAt', 'updatedAt'],
     },
   })

@@ -41,7 +41,7 @@ const testDataId = [
         imageAltText: 'Product 1 Image',
       },
     ],
-    rating: 4.3,
+    score: 4.3,
     oneComment: 'This is a comment',
     images: [
       {
@@ -91,7 +91,7 @@ const testDataId = [
     pdfActaConstitutivaUrl: 'https://www.company2.com/pdfActaConstitutiva.pdf',
     pdfIneUrl: 'https://www.company2.com/pdfIne.pdf',
     status: 'rejected',
-    rating: 2.5,
+    score: 2.5,
     products: [
       {
         productId: 'd2b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
@@ -136,7 +136,7 @@ const testDataId = [
     pdfActaConstitutivaUrl: 'https://www.company3.com/pdfActaConstitutiva.pdf',
     pdfIneUrl: 'https://www.company3.com/pdfIne.pdf',
     status: 'pending_approval',
-    rating: null,
+    score: null,
     products: [],
     images: [],
   },
