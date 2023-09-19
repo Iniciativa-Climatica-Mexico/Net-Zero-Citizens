@@ -153,8 +153,8 @@ export const updateReview = async (
   })
   if (res) {
     res.reviewTitle = reviewTitle
-    res.comment = review
-    res.rating = score
+    res.review = review
+    res.score = score
     await res.save()
     return res
   } else {

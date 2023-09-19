@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class CompanyReviewViewModel : ViewModel() {
-    val reviewObjectLiveData = MutableLiveData<CompanyReviewObject>()
+    val reviewObjectLiveData = MutableLiveData<CompanyReviewObject?>()
     private val companyReviewListRequirement = CompanyReviewListRequirement()
 
     private lateinit var companyId: String
@@ -27,7 +27,7 @@ class CompanyReviewViewModel : ViewModel() {
                 Log.d("Salida", "result is null")
             } else {
                 CoroutineScope(Dispatchers.Main).launch {
-                    reviewObjectLiveData.postValue(result!!)
+                    reviewObjectLiveData.postValue(result)
                 }
             }
         }

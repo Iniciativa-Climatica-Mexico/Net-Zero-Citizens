@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         topBarBinding = TopBarBinding.bind(binding.root)
-        bottomNavigationView = binding.bottomNaSvigation
+        bottomNavigationView = binding.bottomNavigation
 
         topBarBinding.title.text = "Inicio"
 

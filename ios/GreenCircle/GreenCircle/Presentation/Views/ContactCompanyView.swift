@@ -17,21 +17,36 @@ struct TabViewImagesProducts: View {
   var body: some View {
       VStack {
         TabView(selection: $index) {
-          ForEach(productImages.contentCompany.products!, id: \.self) { product in
-            AsyncImage(url: URL(string: product.imageUrl))
-              .scaledToFit()
-              .cornerRadius(10)
+          ForEach(productImages.contentCompany.products?.indices ?? 0..<1, id: \.self) { productIndex in
+            if let product = productImages.contentCompany.products?[productIndex] {
+              AsyncImage(url: URL(string: product.imageUrl)) { phase in
+                switch phase {
+                case .empty:
+                  ProgressView()
+                case .success(let imageProduct):
+                  imageProduct
+                    .resizable()
+                    .scaledToFit()
+                    .cornerRadius(10)
+                    .frame(maxWidth: 230, maxHeight: 200)
+                case .failure(_):
+                    Text("Error cargando imagen")
+                @unknown default:
+                  EmptyView()
+                }
+              }
               .onAppear {
-                descriptionBind[index] = product.description
-                nameBind[index] = product.name
-              }.frame(maxWidth: 170, maxHeight: 150)
+                descriptionBind[productIndex] = product.description
+                nameBind[productIndex] = product.name
+              }
+            }
           }
       }
       .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
       HStack(spacing: 7) {
-         ForEach(productImages.contentCompany.products!, id: \.self) { _ in
+        ForEach(productImages.contentCompany.products?.indices ?? 0..<1, id: \.self) { productIndex in
            Circle()
-           .fill(index == self.index ? Color("BlackCustom") : Color("BlackCustom").opacity(0.5))
+           .fill(productIndex == self.index ? Color("BlackCustom") : Color("BlackCustom").opacity(0.5))
            .frame(width: 7, height: 7)
            
          }
@@ -79,11 +94,11 @@ struct ContactCompanyRatingView: View {
           .padding(.bottom, 3).bold()
         HStack {
           ForEach(0..<5) { index in
-            if index < Int(modelCompanyRating.contentCompany.rating) {
+            if index < Int($modelCompanyRating.contentCompany.score.wrappedValue) {
               Image(systemName: "star.fill")
                 .resizable()
                 .frame(width: 11, height: 11)
-            } else if index == Int(modelCompanyRating.contentCompany.rating) {
+            } else if index == Int(modelCompanyRating.contentCompany.score) {
               Image(systemName: "star.leadinghalf.fill")
                 .resizable()
                 .frame(width: 11, height: 11)
@@ -93,7 +108,7 @@ struct ContactCompanyRatingView: View {
                 .frame(width: 11, height: 11)
             }
           }
-          Text(String(modelCompanyRating.contentCompany.rating))
+          Text(String(modelCompanyRating.contentCompany.score))
         }
           .padding(.bottom, 5)
           .foregroundColor(Color("GreenCustom"))
@@ -136,7 +151,7 @@ struct ContactCompanyComponentView: View {
       VStack(alignment: .leading, spacing: 7) {
         Text("Página web").font(.system(size: 13))
           .foregroundColor(Color("BlackCustom")).contrast(12.6)
-        Text(modelCompany.contentCompany.webPage ?? "No hay página web disponible")
+        Text(modelCompany.contentCompany.webPage ?? "")
           .font(.system(size: 10))
           .foregroundColor(Color("GreenCustom"))
       }
@@ -223,21 +238,23 @@ struct ContactCompanyView: View {
         NavigationStack {
           VStack(alignment: .leading) {
             TabView {
-              ForEach(contactCompanyViewModel.contentCompany.images!, id: \.self) { image in
-                AsyncImage(url: URL(string: image.imageUrl ?? "")) { phase in
-                  switch phase {
-                  case .empty:
-                    ProgressView()
-                  case .success(let image):
-                    image
-                      .resizable()
-                      .scaledToFill()
-                      .frame(maxWidth: .infinity, maxHeight: bindImageToDescription ? 165 : 165)
-                      .roundedCorner(10, corners: [.bottomLeft, .bottomRight])
-                  case .failure:
-                    Text("Failed to load Image!!")
-                  @unknown default:
-                    fatalError()
+              ForEach(contactCompanyViewModel.contentCompany.images ?? [], id: \.self) { image in
+                if let imageUrl = image.imageUrl {
+                  AsyncImage(url: URL(string: imageUrl)) { phase in
+                    switch phase {
+                    case .empty:
+                      ProgressView()
+                    case .success(let image):
+                      image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(maxWidth: .infinity, maxHeight: bindImageToDescription ? 165 : 165)
+                        .roundedCorner(10, corners: [.bottomLeft, .bottomRight])
+                    case .failure:
+                      Text("Failed to load Image!!")
+                    @unknown default:
+                      fatalError()
+                    }
                   }
                 }
               }
@@ -279,7 +296,7 @@ struct ContactCompanyView: View {
             }
           }
           .offset(y: -geometry.safeAreaInsets.top)
-          .navigationTitle(contactCompanyViewModel.contentCompany.name)
+          .navigationTitle($contactCompanyViewModel.contentCompany.name)
           .navigationBarTitleDisplayMode(.inline)
           .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {

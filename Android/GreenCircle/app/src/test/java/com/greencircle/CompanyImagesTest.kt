@@ -22,7 +22,7 @@ class CompanyImagesTest {
             name = "Test Company",
             description = "Test Description",
             email = "company@test.com",
-            phoneNumber = "+52 442 123 4567",
+            phone = "+52 442 123 4567",
             webPage = null,
             street = "Test Street",
             streetNumber = 123,
@@ -48,14 +48,12 @@ class CompanyImagesTest {
             companyId = UUID(0, 1),
             imageUrl = "test.jpg",
             altText = "Test Image Alt Text",
-            company = company
         )
 
         assertEquals(companyImage.companyImageId, UUID(0, 2))
         assertEquals(companyImage.companyId, UUID(0, 1))
         assertEquals(companyImage.imageUrl, "test.jpg")
         assertEquals(companyImage.altText, "Test Image Alt Text")
-        assertEquals(companyImage.company, company)
     }
 
     @Test
@@ -66,7 +64,7 @@ class CompanyImagesTest {
             name = "Test Company",
             description = "Test Description",
             email = "company@test.com",
-            phoneNumber = "+52 442 123 4567",
+            phone = "+52 442 123 4567",
             webPage = null,
             street = "Test Street",
             streetNumber = 123,
@@ -92,7 +90,6 @@ class CompanyImagesTest {
             companyId = UUID(0, 1),
             imageUrl = "test.jpg",
             altText = "Test Image Alt Text",
-            company = company
         )
 
         val companyImage2 = CompanyImages(
@@ -100,7 +97,6 @@ class CompanyImagesTest {
             companyId = UUID(0, 1),
             imageUrl = "test.jpg",
             altText = "Test Image Alt Text",
-            company = company
         )
 
         assertEquals(companyImage1, companyImage2)
@@ -114,7 +110,7 @@ class CompanyImagesTest {
             name = "Test Company",
             description = "Test Description",
             email = "company@test.com",
-            phoneNumber = "+52 442 123 4567",
+            phone = "+52 442 123 4567",
             webPage = null,
             street = "Test Street",
             streetNumber = 123,
@@ -140,7 +136,6 @@ class CompanyImagesTest {
             companyId = UUID(0, 1),
             imageUrl = "test.jpg",
             altText = "Test Image Alt Text",
-            company = company
         )
 
         val companyImage2 = CompanyImages(
@@ -148,7 +143,6 @@ class CompanyImagesTest {
             companyId = UUID(0, 1),
             imageUrl = "another.jpg",
             altText = "Another Image Alt Text",
-            company = company
         )
 
         assertNotEquals(companyImage1, companyImage2)
@@ -162,7 +156,7 @@ class CompanyImagesTest {
             name = "Test Company",
             description = "Test Description",
             email = "company@test.com",
-            phoneNumber = "+52 442 123 4567",
+            phone = "+52 442 123 4567",
             webPage = null,
             street = "Test Street",
             streetNumber = 123,
@@ -188,7 +182,6 @@ class CompanyImagesTest {
             companyId = UUID(0, 1),
             imageUrl = "test.jpg",
             altText = "Test Image Alt Text",
-            company = company
         )
 
         val companyImage2 = CompanyImages(
@@ -196,7 +189,6 @@ class CompanyImagesTest {
             companyId = UUID(0, 1),
             imageUrl = "test.jpg",
             altText = "Test Image Alt Text",
-            company = company
         )
 
         assertEquals(companyImage1.hashCode(), companyImage2.hashCode())
