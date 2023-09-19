@@ -30,11 +30,11 @@ class UserReviewFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProvider(this)[UserReviewViewModel::class.java]
         _binding = FragmentUserReviewBinding.inflate(inflater, container, false)
         val root: View = binding.root
         data = ArrayList()
 
+        viewModel = ViewModelProvider(this)[UserReviewViewModel::class.java]
         viewModel.setUUID(userId)
         viewModel.getUserReviewsList()
 

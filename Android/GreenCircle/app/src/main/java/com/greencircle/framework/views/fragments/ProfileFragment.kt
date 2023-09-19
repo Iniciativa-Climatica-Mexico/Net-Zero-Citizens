@@ -25,6 +25,11 @@ class ProfileFragment : Fragment() {
     ): View {
         viewModel = ViewModelProvider(this)[UserViewModel::class.java]
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        var root: View = binding.root
+        viewModel.setUserId("abcd-1234-efgh-5678")
+        viewModel.getUser()
+        InitializeObservers()
+        InitializeEditarPerfilButton()
 
         val userReviewFragment = UserReviewFragment()
         val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
@@ -32,11 +37,6 @@ class ProfileFragment : Fragment() {
         transaction.add(R.id.userReviewFragment, userReviewFragment, "child_fragment_tag")
         transaction.commit()
 
-        var root: View = binding.root
-        viewModel.setUserId("abcd-1234-efgh-5678")
-        viewModel.getUser()
-        InitializeObservers()
-        InitializeEditarPerfilButton()
         return root
     }
 
