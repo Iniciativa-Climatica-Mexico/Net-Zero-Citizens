@@ -1,13 +1,17 @@
 package com.greencircle.framework.views.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.greencircle.databinding.FragmentCompanyContactInfoBinding
 
+/**
+ * Fragmento que se encarga de mostrar la información de contacto de la empresa
+ * @constructor Crea un fragmento de company contact info
+ * @since 1.0.0
+ */
 class CompanyContactInfoFragment : Fragment() {
 
     private var _binding: FragmentCompanyContactInfoBinding? = null
