@@ -103,7 +103,9 @@ class CompanyReviewFragment : Fragment() {
 
     private fun initializeObservers() {
         viewModel.reviewObjectLiveData.observe(viewLifecycleOwner) { companyReviewObject ->
-            setUpRecyclerView(companyReviewObject.rows)
+            if (companyReviewObject != null) {
+                setUpRecyclerView(companyReviewObject.rows)
+            }
         }
     }
 

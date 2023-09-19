@@ -1,10 +1,12 @@
 package com.greencircle.framework.views.fragments
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,6 +30,7 @@ class CompanyServicesFragment : Fragment() {
     private lateinit var adapter: ServiceAdapter
     private lateinit var recyclerView: RecyclerView
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,7 +43,6 @@ class CompanyServicesFragment : Fragment() {
         initializeComponents(root)
 
         val data = arguments?.getSerializable("Services") as ArrayList<Product>
-
         val dataAdapted = adapToServiceCard(data)
 
         initializeObservers()
