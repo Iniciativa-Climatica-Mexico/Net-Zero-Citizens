@@ -78,12 +78,12 @@ function QuestionComponent(props: QuestionDetail) {
       </td>
       <td className="text-center truncate py-8 px-8 text-txt ">
         {props.isRequired ? (
-          <button className="text-primary py-2 px-4 w-[8rem] rounded cursor-default border-primary border-2">
-            Opcional
+          <button className="bg-primary text-white py-2 px-4 w-[8rem] rounded cursor-default">
+            Obligatorio
           </button>
         ) : (
-          <button className="bg-primary text-white py-2 px-4 w-[8rem] rounded cursor-default">
-            Obligatorio{' '}
+          <button className="text-primary py-2 px-4 w-[8rem] rounded cursor-default border-primary border-2">
+            Opcional
           </button>
         )}
       </td>

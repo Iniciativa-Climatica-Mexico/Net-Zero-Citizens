@@ -1,10 +1,13 @@
 import { Survey, fetchAllSurveys } from '@/api/survey'
 import Link from 'next/link'
+import moment from 'moment'
 
 export default async function ListSurveys() {
   try {
     const response = await fetchAllSurveys()
-    const surveysList = response.rows
+    const surveysList = response.rows.sort((a, b) => {
+      return moment(b.startDate).diff(moment(a.startDate))
+    })
     return (
       <div>
         <div className="flex-row flex items-center justify-between my-8 mx-8">
@@ -68,6 +71,7 @@ export default async function ListSurveys() {
 }
 
 function SurveyComponent(props: Survey) {
+  console.log(props)
   return (
     <tr className="border-b border-gray-300">
       <td className='truncate cursor-pointer  text-txt hover:text-primary hover:font-semibold'>
@@ -77,10 +81,10 @@ function SurveyComponent(props: Survey) {
         {props.description}
       </td>
       <td className="text-center truncate py-8 px-8 border-gray-300 text-txt ">
-        {props.startDate.toString()}
+        {moment(props.startDate).format('MMM Do YYYY')}
       </td>
       <td className="text-center truncate py-8 px-8 border-gray-300 text-txt ">
-        {props.endDate ? props.endDate.toString() : '---------'}
+        {props.endDate ? moment(props.endDate).format('MMM Do YYYY') : '---------'}
       </td>
     </tr>
   )
