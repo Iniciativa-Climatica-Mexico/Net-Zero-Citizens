@@ -3,11 +3,11 @@ package com.greencircle
 import com.greencircle.domain.model.Companies
 import com.greencircle.domain.model.Product
 import com.greencircle.domain.model.Status
-import java.sql.Timestamp
-import java.util.UUID
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
+import java.sql.Timestamp
+import java.util.UUID
 
 /**
  * Pruebas unitarias para la clase Product
@@ -22,7 +22,7 @@ class ProductTest {
             name = "Test Company",
             description = "Test Description",
             email = "company@test.com",
-            phoneNumber = "+52 442 123 4567",
+            phone = "+52 442 123 4567",
             webPage = null,
             street = "Test Street",
             streetNumber = 123,
@@ -69,7 +69,7 @@ class ProductTest {
             name = "Test Company",
             description = "Test Description",
             email = "company@test.com",
-            phoneNumber = "+52 442 123 4567",
+            phone = "+52 442 123 4567",
             webPage = null,
             street = "Test Street",
             streetNumber = 123,
@@ -119,7 +119,7 @@ class ProductTest {
             name = "Test Company",
             description = "Test Description",
             email = "company@test.com",
-            phoneNumber = "+52 442 123 4567",
+            phone = "+52 442 123 4567",
             webPage = null,
             street = "Test Street",
             streetNumber = 123,
@@ -169,7 +169,7 @@ class ProductTest {
             name = "Test Company",
             description = "Test Description",
             email = "company@test.com",
-            phoneNumber = "+52 442 123 4567",
+            phone = "+52 442 123 4567",
             webPage = null,
             street = "Test Street",
             streetNumber = 123,

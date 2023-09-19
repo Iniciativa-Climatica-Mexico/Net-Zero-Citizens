@@ -30,7 +30,7 @@ class CompaniesTest {
             name = "Test Company",
             description = "Test Description",
             email = "company@test.com",
-            phoneNumber = "+52 442 123 4567",
+            phone = "+52 442 123 4567",
             webPage = null,
             street = "Test Street",
             streetNumber = 123,
@@ -56,7 +56,7 @@ class CompaniesTest {
         assertEquals("Test Company", company.name)
         assertEquals("Test Description", company.description)
         assertEquals("company@test.com", company.email)
-        assertEquals("+52 442 123 4567", company.phoneNumber)
+        assertEquals("+52 442 123 4567", company.phone)
         assertNull(company.webPage)
         assertEquals("Test Street", company.street)
         assertEquals(123, company.streetNumber)
@@ -91,7 +91,7 @@ class CompaniesTest {
             name = "Test Company",
             description = "Test Description",
             email = "company@test.com",
-            phoneNumber = "+52 442 123 4567",
+            phone = "+52 442 123 4567",
             webPage = null,
             street = "Test Street",
             streetNumber = 123,
@@ -118,7 +118,7 @@ class CompaniesTest {
             name = "Test Company",
             description = "Test Description",
             email = "company@test.com",
-            phoneNumber = "+52 442 123 4567",
+            phone = "+52 442 123 4567",
             webPage = null,
             street = "Test Street",
             streetNumber = 123,
@@ -156,7 +156,7 @@ class CompaniesTest {
             name = "Test Company",
             description = "Test Description",
             email = "company@test.com",
-            phoneNumber = "+52 442 123 4567",
+            phone = "+52 442 123 4567",
             webPage = null,
             street = "Test Street",
             streetNumber = 123,
@@ -183,7 +183,7 @@ class CompaniesTest {
             name = "Test Company",
             description = "Test Description",
             email = "company@test.com",
-            phoneNumber = "+52 442 123 4567",
+            phone = "+52 442 123 4567",
             webPage = null,
             street = "Test Street",
             streetNumber = 123,
@@ -221,7 +221,7 @@ class CompaniesTest {
             name = "Test Company",
             description = "Test Description",
             email = "company@test.com",
-            phoneNumber = "+52 442 123 4567",
+            phone = "+52 442 123 4567",
             webPage = null,
             street = "Test Street",
             streetNumber = 123,
@@ -248,7 +248,7 @@ class CompaniesTest {
             name = "Test Company",
             description = "Test Description",
             email = "company@test.com",
-            phoneNumber = "+52 442 123 4567",
+            phone = "+52 442 123 4567",
             webPage = null,
             street = "Test Street",
             streetNumber = 123,
