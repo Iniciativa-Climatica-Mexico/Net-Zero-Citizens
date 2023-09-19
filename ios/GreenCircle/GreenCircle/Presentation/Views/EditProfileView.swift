@@ -9,12 +9,15 @@ import SwiftUI
 
 struct EditProfileView: View {
     @ObservedObject var modelUser: UserViewModel
+    @Environment(\.presentationMode) var presentationMode
     @State private var showAlert = false
 
     var body: some View {
+        
         ZStack {
             // Title Bar
             VStack {
+                
                 TitleBarView(
                     title: "Editar Datos",
                     leftIcon: "chevron.left",
@@ -27,6 +30,7 @@ struct EditProfileView: View {
                 .navigationBarBackButtonHidden(true)
                 .offset(y: -60)
                 Spacer() // Esto empuja el TitleBarView hacia arriba
+                
             }
             // Content
             VStack {
@@ -257,7 +261,7 @@ struct EditProfileView: View {
                                 message: Text("Si sales, los datos actualizados no se guardarán. ¿Estás seguro de que quieres salir?"),
                                 primaryButton: .default(Text("Cancelar")),
                                 secondaryButton: .destructive(Text("Salir"), action: {
-                                    //Falta implementar
+                                    presentationMode.wrappedValue.dismiss()
                                 })
                             )
                         }
@@ -320,12 +324,15 @@ struct EditProfileView: View {
                 }
             }
         }
-
+        
+        
     }
 }
 
 struct EditProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView(modelUser: UserViewModel())
+        EditProfileView(modelUser: UserViewModel())
+        
     }
 }
+

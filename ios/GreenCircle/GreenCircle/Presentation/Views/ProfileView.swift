@@ -7,11 +7,20 @@
 
 import SwiftUI
 
+
+
+
 struct ProfileView: View {
     @ObservedObject var modelUser: UserViewModel
 
+
+    
     
     var body: some View {
+        
+        
+        
+        
         ZStack {
             // Title Bar
             VStack {
@@ -28,7 +37,11 @@ struct ProfileView: View {
                 .offset(y: -60)
                 .navigationBarBackButtonHidden(true)
                 Spacer() // Esto empuja el TitleBarView hacia arriba
+               
             }
+            
+            
+            
             VStack {
                 Image("Sun")
                 .resizable() // Hacer que la imagen sea redimensionable
@@ -111,6 +124,7 @@ struct ProfileView: View {
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
         ProfileView(modelUser: UserViewModel())
+        
     }
 }
 

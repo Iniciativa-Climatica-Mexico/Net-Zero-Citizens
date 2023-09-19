@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		050AC1902ABA0DC6003A0EDF /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050AC18F2ABA0DC6003A0EDF /* TabBarView.swift */; };
+		050AC1922ABA5A87003A0EDF /* NavBarTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050AC1912ABA5A87003A0EDF /* NavBarTheme.swift */; };
 		654B58C12AB7ACD600057880 /* UpdateUserDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654B58C02AB7ACD600057880 /* UpdateUserDataUseCase.swift */; };
 		654B58D22AB8E7E300057880 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654B58D12AB8E7E300057880 /* AppDelegate.swift */; };
 		657A83462AB652F90022F62C /* CustomDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657A83452AB652F90022F62C /* CustomDateFormatter.swift */; };
@@ -51,6 +53,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		050AC18F2ABA0DC6003A0EDF /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
+		050AC1912ABA5A87003A0EDF /* NavBarTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarTheme.swift; sourceTree = "<group>"; };
 		654B58C02AB7ACD600057880 /* UpdateUserDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserDataUseCase.swift; sourceTree = "<group>"; };
 		654B58D12AB8E7E300057880 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		654B58D32AB8E81F00057880 /* GreenCircle.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GreenCircle.entitlements; sourceTree = "<group>"; };
@@ -224,11 +228,13 @@
 			isa = PBXGroup;
 			children = (
 				B3E8EDD92AA91E170050B051 /* TitleBarView.swift */,
+				050AC1912ABA5A87003A0EDF /* NavBarTheme.swift */,
 				B3FC227F2AA92B7E00582DAD /* ExampleView.swift */,
 				B34AC9A72AA93C7500CE97AF /* Example2View.swift */,
 				B329A15F2AAA21D800C7921B /* ProfileView.swift */,
 				B35DBF332AB27A93006C4BB2 /* ProfileInformationView.swift */,
 				B33D1A822AB3D68B0015720B /* EditProfileView.swift */,
+				050AC18F2ABA0DC6003A0EDF /* TabBarView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -412,11 +418,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				B33D1A832AB3D68C0015720B /* EditProfileView.swift in Sources */,
+				050AC1922ABA5A87003A0EDF /* NavBarTheme.swift in Sources */,
 				B3827EFF2AACF92700AC7213 /* UserRepository.swift in Sources */,
 				6C4452BA2AA6EF8500BE5930 /* ContentView.swift in Sources */,
 				B34AC9A82AA93C7500CE97AF /* Example2View.swift in Sources */,
 				B35DBF342AB27A93006C4BB2 /* ProfileInformationView.swift in Sources */,
 				654B58C12AB7ACD600057880 /* UpdateUserDataUseCase.swift in Sources */,
+				050AC1902ABA0DC6003A0EDF /* TabBarView.swift in Sources */,
 				657A83462AB652F90022F62C /* CustomDateFormatter.swift in Sources */,
 				B3E8EDDA2AA91E170050B051 /* TitleBarView.swift in Sources */,
 				B3827F012AACF9A800AC7213 /* FetchUserDataUseCase.swift in Sources */,
