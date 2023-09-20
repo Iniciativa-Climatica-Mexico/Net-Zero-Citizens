@@ -50,11 +50,12 @@ export default function CloseButtonComponent(props: { surveyId: string }) {
             transform: 'translate(-50%, -50%)',
             minWidth: 'fit-content',
             minHeight: 'fit-content',
+            maxWidth: '40rem'
           },
         }}
       >
         <div className="flex flex-col items-center justify-center">
-          <h1 className="font-extrabold text-4xl text-txt text-center">
+          <h1 className="font-extrabold text-2xl text-txt text-center">
             ¿Está seguro que desea cerrar la encuesta?
           </h1>
           <div className="flex flex-col items-center justify-center w-full gap-4 py-4 sm:flex-row">

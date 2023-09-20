@@ -58,7 +58,7 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
         </div>
         {(() => {
           return (
-            <div className="flex">
+            <div className="flex min-h-[25rem]">
               {/* Lado izquierdo de la ventana */}
               <div className="pl-20 w-2/5 flex flex-col justify-between">
                 <QuestionComponent {...question} />
@@ -76,8 +76,8 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
                         <div className="bg-zinc-900 text-white rounded-full text-xl font-semibold p-2 px-4 inline-block">
                           {question.answers.length > 0
                             ? question.answers
-                                .map((ans) => ans.count)
-                                .reduce((prev, curr) => prev + curr)
+                              .map((ans) => ans.count)
+                              .reduce((prev, curr) => prev + curr)
                             : 0}
                         </div>
                       </td>
@@ -205,19 +205,6 @@ function QuestionComponent(props: QuestionReport) {
       <div className="bg-emerald-600 text-white font-semibold rounded-lg text-sm px-6 py-2 inline-block">
         {questionTypeMap[props.questionType]}
       </div>
-      {props.questionType == 'open' &&
-        props.answers?.map((answer, index) => {
-          return <AnswerComponent key={index} {...answer} />
-        })}
-    </div>
-  )
-}
-
-function AnswerComponent(props: tabulatedAns) {
-  return (
-    <div className="flex flex-col justify-between">
-      <h3>{props.label}</h3>
-      <p>{props.count}</p>
     </div>
   )
 }
