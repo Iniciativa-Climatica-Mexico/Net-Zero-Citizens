@@ -1,19 +1,18 @@
-
-import { signIn } from "next-auth/react";
+import { signIn } from 'next-auth/react'
 
 const GoogleButton = () => {
   return (
     <button
       className="flex w-full justify-center gap-5 rounded bg-white py-4 px-4 text-sm font-bold drop-shadow-md hover:bg-gray-50"
-      onClick={() => signIn("google")}
+      onClick={() => signIn('google')}
     >
       <GoogleLogo />
       <div>Sign in with Google</div>
     </button>
-  );
-};
+  )
+}
 
-export default GoogleButton;
+export default GoogleButton
 
 const GoogleLogo = (props) => (
   <svg
@@ -41,4 +40,4 @@ const GoogleLogo = (props) => (
       fill="#EB4335"
     />
   </svg>
-);
+)

@@ -1,14 +1,14 @@
-import Link from "next/link";
-import { useSession, signOut } from "next-auth/react";
+import Link from 'next/link'
+import { useSession, signOut } from 'next-auth/react'
 
 const LoginButton = ({ size, signInOnly }) => {
   // Get the user session so you can see if they are authenticated
   // or not.
-  const { status } = useSession();
+  const { status } = useSession()
 
-  const padding = size === "large" ? "py-2 px-4" : "py-1 px-2";
+  const padding = size === 'large' ? 'py-2 px-4' : 'py-1 px-2'
 
-  if (status === "authenticated") {
+  if (status === 'authenticated') {
     return !signInOnly ? (
       <button
         className={`${padding} rounded bg-red-600 text-sm font-bold text-white`}
@@ -16,7 +16,7 @@ const LoginButton = ({ size, signInOnly }) => {
       >
         Sign Out
       </button>
-    ) : null;
+    ) : null
   }
 
   return (
@@ -26,7 +26,7 @@ const LoginButton = ({ size, signInOnly }) => {
     >
       Sign In
     </Link>
-  );
-};
+  )
+}
 
-export default LoginButton;
+export default LoginButton

@@ -1,16 +1,9 @@
 import React from 'react'
 
-
 const Card = () => {
-  return (
-    <div className= "card">
-      
-    </div>
-  )
+  return <div className="card"></div>
 }
 
-Card.propTypes = {
-
-}
+Card.propTypes = {}
 
 export default Card

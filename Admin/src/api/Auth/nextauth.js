@@ -1,6 +1,5 @@
-import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-const { GOOGLE_ID, GOOGLE_SECRET } = require('../utils/constants');
+import NextAuth from 'next-auth'
+import GoogleProvider from 'next-auth/providers/google'
 
 export const authOptions = {
   providers: [
@@ -9,6 +8,6 @@ export const authOptions = {
       clientSecret: process.env.GOOGLE_SECRET,
     }),
   ],
-};
+}
 
-export default NextAuth(authOptions);
+export default NextAuth(authOptions)

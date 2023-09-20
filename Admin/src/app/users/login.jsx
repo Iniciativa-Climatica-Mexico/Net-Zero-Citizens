@@ -1,20 +1,20 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
 
-import GoogleButton from "../components/GoogleButton";
+import GoogleButton from '../components/GoogleButton'
 //import BrandLogo from "../components/Logo";
 
 const Login = () => {
   // Retrieve the session and router so that we can navigate
   // the user back home if they are already authenticated
-  const { status } = useSession();
-  const router = useRouter();
+  const { status } = useSession()
+  const router = useRouter()
 
   // If the user is authenticated, redirect them to the home
   // page
-  if (status === "authenticated") {
-    router.replace("/");
+  if (status === 'authenticated') {
+    router.replace('/')
   }
 
   return (
@@ -23,8 +23,9 @@ const Login = () => {
         className="col-span-5 overflow-hidden"
         style={{
           backgroundImage:
+            // eslint-disable-next-line quotes
             "url('https://placeimg.com/1000/1000/nature/grayscale')",
-          backgroundSize: "cover",
+          backgroundSize: 'cover',
         }}
       ></div>
 
@@ -46,7 +47,7 @@ const Login = () => {
         </Link>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login
