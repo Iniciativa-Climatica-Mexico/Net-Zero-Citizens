@@ -24,16 +24,6 @@
 		6C5F19D02AB7BEC5007D3D44 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5F19CF2AB7BEC5007D3D44 /* UserModel.swift */; };
 		6C9761832AB2B45D0046DB50 /* DummyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9761822AB2B45D0046DB50 /* DummyModel.swift */; };
 		6C9761872AB2B65C0046DB50 /* DummyRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9761862AB2B65C0046DB50 /* DummyRepository.swift */; };
-		C417D9AC2AB538AB00B80B85 /* EcoInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C417D9AB2AB538AB00B80B85 /* EcoInfoViewModel.swift */; };
-		C4345C692AB61F3A00FE61E6 /* CustomCornerImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4345C682AB61F3A00FE61E6 /* CustomCornerImage.swift */; };
-		C4345C6B2AB62F3900FE61E6 /* EcoInfoViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4345C6A2AB62F3900FE61E6 /* EcoInfoViewModelTest.swift */; };
-		C45720F42AB674FB00F6EABB /* NavBarTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45720F32AB674FB00F6EABB /* NavBarTheme.swift */; };
-		C483FD832AB39F7100A9E85A /* EcoInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483FD822AB39F7100A9E85A /* EcoInfoModel.swift */; };
-		C483FD852AB3A12500A9E85A /* BibliographiesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483FD842AB3A12500A9E85A /* BibliographiesModel.swift */; };
-		C483FD872AB3A34500A9E85A /* EcoInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483FD862AB3A34500A9E85A /* EcoInfoRepository.swift */; };
-		C483FD892AB3A58E00A9E85A /* fetchAllEcoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483FD882AB3A58E00A9E85A /* fetchAllEcoInfo.swift */; };
-		C483FD8B2AB3AC6500A9E85A /* EcoInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483FD8A2AB3AC6500A9E85A /* EcoInfoView.swift */; };
-		C48480C92AB8934E0004FD41 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48480C82AB8934E0004FD41 /* TabBarView.swift */; };
 		6CB4982C2AB102CD00B6560C /* CoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB4982B2AB102CD00B6560C /* CoordinatorView.swift */; };
 		6CB4982E2AB102D300B6560C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB4982D2AB102D300B6560C /* LoginView.swift */; };
 		6CB498312AB1031A00B6560C /* FlowStacks in Frameworks */ = {isa = PBXBuildFile; productRef = 6CB498302AB1031A00B6560C /* FlowStacks */; };
@@ -62,6 +52,15 @@
 		6CE09C0D2ABAA72B0011C94B /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE09C0C2ABAA72B0011C94B /* Error.swift */; };
 		6CE4843D2AB889810015CAC2 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE4843C2AB889810015CAC2 /* UserData.swift */; };
 		6CE4843F2AB8AD020015CAC2 /* UserRegisterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE4843E2AB8AD020015CAC2 /* UserRegisterUseCase.swift */; };
+		C417D9AC2AB538AB00B80B85 /* EcoInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C417D9AB2AB538AB00B80B85 /* EcoInfoViewModel.swift */; };
+		C4345C6B2AB62F3900FE61E6 /* EcoInfoViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4345C6A2AB62F3900FE61E6 /* EcoInfoViewModelTest.swift */; };
+		C45720F42AB674FB00F6EABB /* NavBarTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45720F32AB674FB00F6EABB /* NavBarTheme.swift */; };
+		C483FD832AB39F7100A9E85A /* EcoInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483FD822AB39F7100A9E85A /* EcoInfoModel.swift */; };
+		C483FD852AB3A12500A9E85A /* BibliographiesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483FD842AB3A12500A9E85A /* BibliographiesModel.swift */; };
+		C483FD872AB3A34500A9E85A /* EcoInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483FD862AB3A34500A9E85A /* EcoInfoRepository.swift */; };
+		C483FD892AB3A58E00A9E85A /* fetchAllEcoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483FD882AB3A58E00A9E85A /* fetchAllEcoInfo.swift */; };
+		C483FD8B2AB3AC6500A9E85A /* EcoInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483FD8A2AB3AC6500A9E85A /* EcoInfoView.swift */; };
+		C48480C92AB8934E0004FD41 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48480C82AB8934E0004FD41 /* TabBarView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,16 +100,6 @@
 		6C5F19CF2AB7BEC5007D3D44 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		6C9761822AB2B45D0046DB50 /* DummyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyModel.swift; sourceTree = "<group>"; };
 		6C9761862AB2B65C0046DB50 /* DummyRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyRepository.swift; sourceTree = "<group>"; };
-		C417D9AB2AB538AB00B80B85 /* EcoInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoInfoViewModel.swift; sourceTree = "<group>"; };
-		C4345C682AB61F3A00FE61E6 /* CustomCornerImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCornerImage.swift; sourceTree = "<group>"; };
-		C4345C6A2AB62F3900FE61E6 /* EcoInfoViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoInfoViewModelTest.swift; sourceTree = "<group>"; };
-		C45720F32AB674FB00F6EABB /* NavBarTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarTheme.swift; sourceTree = "<group>"; };
-		C483FD822AB39F7100A9E85A /* EcoInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoInfoModel.swift; sourceTree = "<group>"; };
-		C483FD842AB3A12500A9E85A /* BibliographiesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibliographiesModel.swift; sourceTree = "<group>"; };
-		C483FD862AB3A34500A9E85A /* EcoInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoInfoRepository.swift; sourceTree = "<group>"; };
-		C483FD882AB3A58E00A9E85A /* fetchAllEcoInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fetchAllEcoInfo.swift; sourceTree = "<group>"; };
-		C483FD8A2AB3AC6500A9E85A /* EcoInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoInfoView.swift; sourceTree = "<group>"; };
-		C48480C82AB8934E0004FD41 /* TabBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		6CB4982B2AB102CD00B6560C /* CoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorView.swift; sourceTree = "<group>"; };
 		6CB4982D2AB102D300B6560C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		6CB498372AB10B0800B6560C /* CornerRadiusExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRadiusExtension.swift; sourceTree = "<group>"; };
@@ -137,6 +126,15 @@
 		6CE09C0C2ABAA72B0011C94B /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		6CE4843C2AB889810015CAC2 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		6CE4843E2AB8AD020015CAC2 /* UserRegisterUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegisterUseCase.swift; sourceTree = "<group>"; };
+		C417D9AB2AB538AB00B80B85 /* EcoInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoInfoViewModel.swift; sourceTree = "<group>"; };
+		C4345C6A2AB62F3900FE61E6 /* EcoInfoViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoInfoViewModelTest.swift; sourceTree = "<group>"; };
+		C45720F32AB674FB00F6EABB /* NavBarTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarTheme.swift; sourceTree = "<group>"; };
+		C483FD822AB39F7100A9E85A /* EcoInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoInfoModel.swift; sourceTree = "<group>"; };
+		C483FD842AB3A12500A9E85A /* BibliographiesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibliographiesModel.swift; sourceTree = "<group>"; };
+		C483FD862AB3A34500A9E85A /* EcoInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoInfoRepository.swift; sourceTree = "<group>"; };
+		C483FD882AB3A58E00A9E85A /* fetchAllEcoInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fetchAllEcoInfo.swift; sourceTree = "<group>"; };
+		C483FD8A2AB3AC6500A9E85A /* EcoInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoInfoView.swift; sourceTree = "<group>"; };
+		C48480C82AB8934E0004FD41 /* TabBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -276,7 +274,6 @@
 		6C4452E42AA6F06D00BE5930 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				C4345C682AB61F3A00FE61E6 /* CustomCornerImage.swift */,
 				C45720F32AB674FB00F6EABB /* NavBarTheme.swift */,
 				6CB498372AB10B0800B6560C /* CornerRadiusExtension.swift */,
 				6CE09C012ABA7A7D0011C94B /* Constants.swift */,
@@ -584,7 +581,6 @@
 				6C4452B82AA6EF8500BE5930 /* GreenCircleApp.swift in Sources */,
 				C417D9AC2AB538AB00B80B85 /* EcoInfoViewModel.swift in Sources */,
 				C483FD892AB3A58E00A9E85A /* fetchAllEcoInfo.swift in Sources */,
-				C4345C692AB61F3A00FE61E6 /* CustomCornerImage.swift in Sources */,
 				6CE09BF82ABA37A20011C94B /* CompanyRegisterView.swift in Sources */,
 				6CE09BFE2ABA76CD0011C94B /* CompanyRegisterFormViewModel.swift in Sources */,
 				6CE09C072ABA8F520011C94B /* CompanyRepository.swift in Sources */,

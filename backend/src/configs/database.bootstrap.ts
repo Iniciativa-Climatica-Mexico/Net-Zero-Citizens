@@ -13,7 +13,6 @@ export const bootstrapDB = async () => {
       CompanyBootstrap,
       UserBootstrap,
       ReviewBootstrap,
-      SurveysBootstrapper,
       ProductBootstrap,
       ProductImageBootstrap,
       DummyBootstrap,

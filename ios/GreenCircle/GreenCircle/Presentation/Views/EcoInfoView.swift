@@ -49,7 +49,7 @@ struct EcoInfoCard: View {
             .resizable()
             .scaledToFill()
             .frame(maxWidth: .infinity, maxHeight: 250)
-            .roundedCorner(10, corners: [.topLeft, .topRight])
+            .cornerRadius(10, corners: [.topLeft, .topRight])
         } placeholder: {
           ProgressView().frame(width: 150, height: 250)
         }

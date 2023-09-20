@@ -13,13 +13,13 @@ struct LoginView: View {
   var goForm: () -> Void
   var goMainMenu: () -> Void
   var goCompanyRegister: () -> Void
-  
+
   @StateObject var viewModel = LoginViewModel()
   @EnvironmentObject var user: UserData
-  
+
   var body: some View {
-    ZStack{
-      
+    ZStack {
+
       BackgroundView()
       
       VStack(spacing: 40) {
@@ -32,9 +32,9 @@ struct LoginView: View {
         VStack {
           GoogleSignInButton(style: .wide){
             Task {
-              let new_user = await viewModel
+              let newUser = await viewModel
                 .handleGoogleSignIn(userData: user)
-              if new_user {
+              if newUser {
                 goForm()
               } else {
                 goMainMenu()

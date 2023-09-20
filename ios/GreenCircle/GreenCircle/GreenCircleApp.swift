@@ -10,9 +10,9 @@ import GoogleSignIn
 
 @main
 struct GreenCircleApp: App {
+  @State var isActive = false
   
   var body: some Scene {
-  @State var isActive = false
     WindowGroup {
       ZStack {
         if isActive {
