@@ -1,4 +1,4 @@
-package com.greencircle.framework.ui.adapters.viewholders
+package com.greencircle.framework.ui.adapters.ViewHolder
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide

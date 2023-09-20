@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.greencircle.databinding.CatalogueCardLayoutBinding
 import com.greencircle.domain.model.CompanySummary
-import com.greencircle.framework.ui.adapters.viewholders.CatalogueViewHolder
+import com.greencircle.framework.ui.adapters.ViewHolder.CatalogueViewHolder
 
 /**
  * Esta clase se utiliza para almacenar los datos de

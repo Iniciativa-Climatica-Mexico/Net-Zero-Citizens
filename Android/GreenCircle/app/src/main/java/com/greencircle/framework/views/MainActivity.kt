@@ -13,7 +13,8 @@ import com.greencircle.framework.views.fragments.HomeFragment
 /**
  * Actividad principal que muestra la interfaz de usuario principal de la aplicación.
  *
- * Esta actividad contiene un [BottomNavigationView] que permite al usuario navegar entre dos fragmentos: [HomeFragment] y [ProfileFragment].
+ * Esta actividad contiene un [BottomNavigationView] que permite al usuario navegar
+ * entre dos fragmentos: [HomeFragment] y [ProfileFragment].
  * Esta clase se utiliza para crear la actividad principal de la aplicación
  */
 class MainActivity : AppCompatActivity() {
@@ -50,6 +51,7 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.proveedores -> {
                     replaceFragment(CatalogueFragment())
+                    topBarBinding.title.text = "Catálogo de Proveedores"
                     true
                 }
 
@@ -63,10 +65,6 @@ class MainActivity : AppCompatActivity() {
      *
      * @param fragment El fragmento que se va a mostrar.
      */
-     * Esta función se utiliza para reemplazar el fragmento actual con el fragmento dado como parámetro
-     * @param fragment: Objeto Fragment
-     */
-
     private fun replaceFragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
