@@ -17,10 +17,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GreenCircle"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
         <activity
-            android:name=".framework.views.MainActivity"
+            android:name=".framework.views.activities.SplashscreenActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.GreenCircle.NoActionBar">
@@ -30,12 +31,34 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".framework.views.MainActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.GreenCircle.NoActionBar" />
+
+        <activity
+            android:name=".framework.views.activities.RegisterCompanyActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.GreenCircle.NoActionBar" />
+
+        <activity
+            android:name=".framework.views.activities.LoginActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.GreenCircle.NoActionBar" />
+
+        <activity
+            android:name=".framework.views.activities.RegisterUserActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.GreenCircle.NoActionBar" />
+
+
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${GOOGLE_MAPS_API_KEY}"/>
     </application>
-
-
-
-
 </manifest>

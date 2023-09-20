@@ -1,5 +1,5 @@
 import {
-  BelongsTo,
+  BelongsToMany,
   Column,
   DataType,
   ForeignKey,
@@ -7,8 +7,11 @@ import {
   Model,
   Table,
 } from 'sequelize-typescript'
-import User from './users.model'
 import Review from './review.model'
+import CompanyImages from './companyImages.model'
+import CompanyProducts from './companyProducts.model'
+import Product from './products.model'
+import User from './users.model'
 
 type StatusEnum = 'approved' | 'pending_approval' | 'rejected'
 
@@ -21,159 +24,175 @@ export default class Company extends Model {
   @Column({
     type: DataType.UUID,
     primaryKey: true,
-    defaultValue: DataType.UUIDV4,
     allowNull: false,
+    defaultValue: DataType.UUIDV4,
     field: 'COMPANY_ID',
+    unique: true,
   })
   companyId: string
 
   @ForeignKey(() => User)
   @Column({
-    field: 'USER_ID',
     type: DataType.UUID,
-    allowNull: true,
+    allowNull: false,
+    field: 'USER_ID',
   })
-  userId: string | null
-
-  @BelongsTo(() => User)
-  user: User
+  userId: string
 
   @Column({
-    field: 'NAME',
-    type: DataType.STRING(255),
+    type: DataType.STRING(100),
     allowNull: false,
+    field: 'NAME',
   })
   name: string
 
   @Column({
-    field: 'DESCRIPTION',
     type: DataType.STRING(500),
     allowNull: false,
+    field: 'DESCRIPTION',
   })
   description: string
 
   @Column({
-    field: 'EMAIL',
     type: DataType.STRING(255),
     allowNull: false,
-    unique: 'EMAIL',
+    field: 'EMAIL',
+    unique: true,
   })
   email: string
 
   @Column({
-    field: 'PHONE_NUMBER',
     type: DataType.STRING(10),
     allowNull: false,
-    unique: 'PHONE_NUMBER',
+    field: 'PHONE_NUMBER',
   })
-  phoneNumber: string
+  phone: string
 
   @Column({
-    field: 'WEB_PAGE',
     type: DataType.STRING(255),
     allowNull: true,
-    unique: 'WEB_PAGE',
+    field: 'WEB_PAGE',
   })
-  webPage: string
+  webPage: string | null
 
   @Column({
-    field: 'STREET',
     type: DataType.STRING(255),
     allowNull: false,
+    field: 'STREET',
   })
   street: string
 
   @Column({
-    field: 'STREET_NUMBER',
     type: DataType.INTEGER,
     allowNull: false,
+    field: 'STREET_NUMBER',
   })
-  streetNumber: number
+  streetNumber: string
 
   @Column({
-    field: 'CITY',
     type: DataType.STRING(50),
     allowNull: false,
+    field: 'CITY',
   })
   city: string
 
   @Column({
-    field: 'STATE',
     type: DataType.STRING(50),
     allowNull: false,
+    field: 'STATE',
   })
   state: string
 
   @Column({
-    field: 'ZIP_CODE',
     type: DataType.INTEGER,
     allowNull: false,
+    field: 'ZIP_CODE',
   })
   zipCode: number
 
   @Column({
+    type: DataType.DOUBLE,
+    allowNull: true,
+    field: 'LATITUDE',
+  })
+  latitude: number | null
+
+  @Column({
+    type: DataType.DOUBLE,
+    allowNull: true,
+    field: 'LONGITUDE',
+  })
+  longitude: number | null
+
+  @Column({
+    type: DataType.STRING(255),
+    allowNull: true,
     field: 'PROFILE_PICTURE',
-    type: DataType.STRING(500),
-    allowNull: true,
   })
-  profilePicture: string
+  profilePicture: string | null
 
   @Column({
+    type: DataType.STRING(500),
+    allowNull: false,
     field: 'PDF_CURRICULUM_URL',
-    type: DataType.STRING(500),
-    allowNull: false,
-    unique: 'PDF_CURRICULUM_URL',
+    unique: true,
   })
-  pdfCurriculumURL: string
+  pdfCurriculumUrl: string
 
   @Column({
+    type: DataType.STRING(500),
+    allowNull: true,
     field: 'PDF_DIC_CDMX_URL',
-    type: DataType.STRING(500),
-    allowNull: true,
-    unique: 'PDF_DIC_CDMX_URL',
+    unique: true,
   })
-  pdfDicCdmxURL: string
+  pdfDicCdmxUrl: string | null
 
   @Column({
+    type: DataType.STRING(500),
+    allowNull: true,
     field: 'PDF_PEE_FIDE_URL',
-    type: DataType.STRING(500),
-    allowNull: true,
-    unique: 'PDF_PEE_FIDE_URL',
+    unique: true,
   })
-  pdfPeeFideURL: string
+  pdfPeeFideUrl: string | null
 
   @Column({
+    type: DataType.STRING(500),
+    allowNull: false,
     field: 'PDF_GUARANTEE_SECURITY_URL',
-    type: DataType.STRING(500),
-    allowNull: false,
-    unique: 'PDF_GUARANTEE_SECURITY_URL',
+    unique: true,
   })
-  pdfGuaranteeSecurityURL: string
+  pdfGuaranteeSecurityUrl: string
 
   @Column({
+    type: DataType.STRING(500),
+    allowNull: false,
     field: 'PDF_ACTA_CONSTITUTIVA_URL',
-    type: DataType.STRING(500),
-    allowNull: false,
-    unique: 'PDF_ACTA_CONSTITUTIVA_URL',
+    unique: true,
   })
-  pdfActaConstitutivaURL: string
+  pdfActaConstitutivaUrl: string
 
   @Column({
-    field: 'PDF_INE_URL',
     type: DataType.STRING(500),
     allowNull: false,
-    unique: 'PDF_INE_URL',
+    field: 'PDF_INE_URL ',
+    unique: true,
   })
-  pdfINEURL: string
+  pdfIneUrl: string
 
   @Column({
-    field: 'STATUS',
     type: DataType.ENUM('approved', 'pending_approval', 'rejected'),
     allowNull: false,
+    field: 'STATUS',
     defaultValue: 'pending_approval',
   })
   status: StatusEnum
 
   @HasMany(() => Review)
-  reviews: Review[]
+  reviews!: Review[]
+
+  @BelongsToMany(() => Product, { through: () => CompanyProducts })
+  products!: Product[]
+
+  @HasMany(() => CompanyImages)
+  images!: CompanyImages[]
 }

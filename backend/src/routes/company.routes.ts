@@ -1,16 +1,22 @@
 import express from 'express'
-import * as controller from '../controllers/company.controller'
+import * as CompanyController from '../controllers/company.controller'
+import * as CompanyImageController from '../controllers/companyImage.controller'
+
 
 const router = express.Router()
 
-router.get('/', controller.getAllCompanies)
+router.get('/', CompanyController.getAllCompanies)
+router.post('/create', CompanyController.createCompany)
 
-router.get('/pending', controller.getPendingCompanies)
+router.post('/add/product', CompanyController.addProduct)
+router.post('/upload/image', CompanyImageController.uploadCompanyImage)
 
-router.get('/geocoding', controller.getCoordinates)
+router.get('/pending', CompanyController.getPendingCompanies)
 
-router.post('/pending/:companyId',controller.updateCompanyInfo)
+router.get('/geocoding', CompanyController.getCoordinates)
 
-router.get('/:companyId', controller.getCompanyInfo)
+router.post('/pending/:companyId',CompanyController.updateCompanyInfo)
+
+router.get('/:companyId', CompanyController.getCompanyInfo)
 
 export default router
