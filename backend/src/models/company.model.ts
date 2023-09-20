@@ -47,7 +47,7 @@ export default class Company extends Model {
   name: string
 
   @Column({
-    type: DataType.STRING(100),
+    type: DataType.STRING(500),
     allowNull: false,
     field: 'DESCRIPTION',
   })
@@ -112,17 +112,17 @@ export default class Company extends Model {
 
   @Column({
     type: DataType.DOUBLE,
-    allowNull: false,
+    allowNull: true,
     field: 'LATITUDE',
   })
-  latitude: number
+  latitude: number | null
 
   @Column({
     type: DataType.DOUBLE,
-    allowNull: false,
+    allowNull: true,
     field: 'LONGITUDE',
   })
-  longitude: number
+  longitude: number | null
 
   @Column({
     type: DataType.STRING(255),
@@ -137,7 +137,7 @@ export default class Company extends Model {
     field: 'PDF_CURRICULUM_URL',
     unique: true,
   })
-  pdfCurriculumUrl: string | null
+  pdfCurriculumUrl: string
 
   @Column({
     type: DataType.STRING(500),
@@ -145,7 +145,7 @@ export default class Company extends Model {
     field: 'PDF_DIC_CDMX_URL',
     unique: true,
   })
-  pdfDicCdmxUrl: string
+  pdfDicCdmxUrl: string | null
 
   @Column({
     type: DataType.STRING(500),
@@ -153,7 +153,7 @@ export default class Company extends Model {
     field: 'PDF_PEE_FIDE_URL',
     unique: true,
   })
-  pdfPeeFideUrl: string
+  pdfPeeFideUrl: string | null
 
   @Column({
     type: DataType.STRING(500),
@@ -183,6 +183,7 @@ export default class Company extends Model {
     type: DataType.ENUM('approved', 'pending_approval', 'rejected'),
     allowNull: false,
     field: 'STATUS',
+    defaultValue: 'pending_approval',
   })
   status: StatusEnum
 

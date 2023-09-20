@@ -8,6 +8,7 @@
 import Alamofire
 import Foundation
 
+/// Struct que representa una respuesta paginada
 struct PaginatedQuery<T: Codable>: Codable {
   var rows: [T]
   var start: Int

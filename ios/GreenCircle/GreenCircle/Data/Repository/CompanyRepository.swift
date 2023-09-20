@@ -2,32 +2,29 @@
 //  CompanyRepository.swift
 //  GreenCircle
 //
-//  Created by Dani Gutiérrez on 06/09/23.
+//  Created by Ricardo Adolfo Fernández Alvarado on 19/09/23.
+//  Created by Daniel Gutierresz on 19/09/23.
 //
 
 import Foundation
-import Alamofire
 
-/// Estructura con rutas para modelo de compañía
-struct ApiCompany {
-  static let baseCompany = "http://localhost:3000/api/v1/company"
+/// Clase representando la estructura de la API para las compañías
+class CompanyAPI {
+  static let base = "http://localhost:3000/api/v1/company"
   struct Routes {
+    static let create = "/create"
     static let company = "/company/"
   }
 }
 
-/// Protocolo que para cualquier clase que la use debe ser implementada
-protocol CompanyAPIProtocol {
-  // GET all companies
-  
-  /// Obtener compañía por UUID recibido desde el view listCompanies
-  ///  - Parameters: UUID
-  ///  - Returns: Modelo de Compañía
+/// Protocolo con las funciones del repositorio de Compañías
+protocol CompanyRepositoryProtocol {
+  func postCompany(authToken: String, company: PostCompanyData) async
   func fetchCompanyById(companyId: UUID) async -> Company?
 }
 
-/// Implementación de repoitorio de Compañía con singleton
-class CompanyRepository: CompanyAPIProtocol {
+/// Clase con las funciones del repositorio de las compañías
+class CompanyRepository: CompanyRepositoryProtocol {
   /// Inicialización de servicio backEnd
   let service: NetworkAPIService
   /// Inicialización de singleton de repositorio de compañía
@@ -36,10 +33,24 @@ class CompanyRepository: CompanyAPIProtocol {
   init(service: NetworkAPIService = NetworkAPIService.shared) {
     self.service = service
   }
+
   /// Obtener compañía por UUID llamando al método del servicio del backend
   ///   - Parameters: UUID de la compañía
   ///   - Returns: Modelo de compañía
   func fetchCompanyById(companyId: UUID) async -> Company? {
-    return await service.fetchCompanyById(url: URL(string: "\(ApiCompany.baseCompany)/\(companyId.uuidString.lowercased())")!)
+    return await service
+      .fetchCompanyById(url: URL(string: "\(ApiCompany.baseCompany)/\(companyId.uuidString.lowercased())")!)
+  }
+
+  /// Función que llama al servicio de conexión con la API para postear una  nueva compañía
+  /// - Parameters:
+  ///   - authToken: token de autenticación
+  ///   - company: el objeto con la información de la compañía
+  func postCompany(authToken: String, company: PostCompanyData) async {
+    await service
+      .postCompany(url:
+                    URL(
+                      string: "\(CompanyAPI.base)\(CompanyAPI.Routes.create)")!,
+                   authToken: authToken, company: company)
   }
 }
