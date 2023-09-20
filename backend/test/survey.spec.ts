@@ -303,7 +303,6 @@ describe('Answer Service', () => {
         userId: testAnswer.userId,
       },
     })
-    console.log(unwrap(answerDb))
     expect(unwrap(answerDb))
       .excludingEvery(attributesToExclude)
       .containSubset(testAnswer.answers)
