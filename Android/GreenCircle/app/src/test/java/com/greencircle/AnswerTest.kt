@@ -3,6 +3,7 @@ package com.greencircle
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.greencircle.domain.model.survey.Answer
+import java.util.UUID
 import org.junit.Assert.assertThrows
 import org.junit.Test
 
@@ -15,11 +16,12 @@ class AnswerTest {
      */
     @Test
     fun validAnswer() {
+        val questionID = UUID.randomUUID()
         val json = """
             {
                 "scaleValue": null,
                 "answerText": null,
-                "questionId": "testId"
+                "questionId": $questionID
             }
         """.trimIndent()
 
@@ -27,7 +29,7 @@ class AnswerTest {
 
         assert(answer.scaleValue == null)
         assert(answer.answerText == null)
-        assert(answer.questionId == "testId")
+        assert(answer.questionId == questionID)
     }
 
     /**
@@ -35,11 +37,12 @@ class AnswerTest {
      */
     @Test
     fun invalidAnswerData() {
+        val questionID = UUID.randomUUID()
         val json = """
             {
                 "scaleValue": "Not an int",
                 "answerText": null,
-                "questionId": 123
+                "questionId": $questionID
             }
         """.trimIndent()
         assertThrows(JsonSyntaxException::class.java) {
@@ -52,11 +55,12 @@ class AnswerTest {
      */
     @Test
     fun invalidAnswerJson() {
+        val questionID = UUID.randomUUID()
         val json = """
          
                 "scaleValue": null,
                 "answerText": null,
-                "questionId": "t
+                "questionId": $questionID
         """.trimIndent()
 
         assertThrows(JsonSyntaxException::class.java) {

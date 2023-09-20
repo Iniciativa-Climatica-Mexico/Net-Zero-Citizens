@@ -5,6 +5,7 @@ import com.google.gson.JsonSyntaxException
 import com.greencircle.domain.model.survey.Question
 import com.greencircle.domain.model.survey.QuestionOption
 import com.greencircle.domain.model.survey.QuestionType
+import java.util.UUID
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertThrows
 import org.junit.Test
@@ -18,18 +19,21 @@ class QuestionTest {
      */
     @Test
     fun validQuestion() {
+        val questionID = UUID.randomUUID()
+        val testOption1ID = UUID.randomUUID()
+        val testOption2ID = UUID.randomUUID()
         val json = """
             {
-                "questionId": "testId",
+                "questionId": $questionID,
                 "questionText": "testText",
                 "questionType": "multiple_choice",
                 "questionOptions": [
                     {
-                        "questionOptionId": "testOption1",
+                        "questionOptionId": $testOption1ID,
                         "textOption": "testOption1"
                     },
                     {
-                        "questionOptionId": "testOption2",
+                        "questionOptionId": $testOption2ID,
                         "textOption": "testOption2"
                     }
                 ]
@@ -38,13 +42,13 @@ class QuestionTest {
 
         val question = Gson().fromJson(json, Question::class.java)
 
-        assert(question.questionId == "testId")
+        assert(question.questionId == questionID)
         assert(question.questionText == "testText")
         assert(question.questionType == QuestionType.multiple_choice)
         assert(
             question.questionOptions == listOf(
-                QuestionOption("testOption1", "testOption1"),
-                QuestionOption("testOption2", "testOption2"),
+                QuestionOption(testOption1ID, "testOption1"),
+                QuestionOption(testOption2ID, "testOption2"),
             ),
         )
     }
@@ -54,18 +58,21 @@ class QuestionTest {
      */
     @Test
     fun invalidQuestionData() {
+        val questionID = UUID.randomUUID()
+        val testOption1ID = UUID.randomUUID()
+        val testOption2ID = UUID.randomUUID()
         val json = """
             {
-                "questionId": "testId",
+                "questionId": $questionID,
                 "questionText": "testText",
                 "questionType": "No es un tipo",
                 "questionOptions": [
                     {
-                        "questionOptionId": "testOption1",
+                        "questionOptionId": $testOption1ID,
                         "textOption": "testOption1"
                     },
                     {
-                        "questionOptionId": "testOption2",
+                        "questionOptionId": $testOption2ID,
                         "textOption": "testOption2"
                     }
                 ]
@@ -81,17 +88,20 @@ class QuestionTest {
      */
     @Test
     fun invalidQuestionJson() {
+        val questionID = UUID.randomUUID()
+        val testOption1ID = UUID.randomUUID()
+        val testOption2ID = UUID.randomUUID()
         val json = """
-                "questionId": "testId",
+                "questionId": $questionID,
                 "questionText": "testText",
                 "questionType": "No es un tipo",
                 "questionOptions": [
                     {
-                        "questionOptionId": "testOption1",
+                        "questionOptionId": $testOption1ID,
                         "textOption": "testOption1"
                     },
                     {
-                        "questionOptionId": "testOption2",
+                        "questionOptionId": $testOption2ID,
                         "textOption": "testOption2"
                     }
                 ]
