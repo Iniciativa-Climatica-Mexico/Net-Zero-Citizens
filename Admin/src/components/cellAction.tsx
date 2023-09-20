@@ -27,22 +27,27 @@ import {
 import { updateCompany, UpdateCompanyInfoBody } from '@/api/v1/company'
 import { useToast } from './ui/use-toast'
 import { Toaster } from './ui/toaster'
+import { recoverTokens } from '@/utils/authUtils'
 
 interface cellActionProps {
-  setIsModalOpen: (value: boolean) => void;
+  setIsModalOpen: (value: boolean) => void
   companyId: string
   fetchPending: () => void
   company: Company
 }
 
-export const CellAction = ({setIsModalOpen, companyId, fetchPending, company}:cellActionProps) => {
-
+export const CellAction = ({
+  setIsModalOpen,
+  companyId,
+  fetchPending,
+  company,
+}: cellActionProps) => {
   const { toast } = useToast()
-
+  const tokens = recoverTokens()
   /**
-     * @brief Function that allows admin to accept a specific company
-     * @param company
-     * @param companyId
+   * @brief Function that allows admin to accept a specific company
+   * @param company
+   * @param companyId
    */
   const handleAccept = async (company: Company, companyId: string) => {
     try {
@@ -50,14 +55,18 @@ export const CellAction = ({setIsModalOpen, companyId, fetchPending, company}:ce
       const updatedCompanyInfo: UpdateCompanyInfoBody = {
         name: company.name,
         description: company.description,
+        street: company.street,
+        streetNumber: company.streetNumber,
+        city: company.city,
+        state: company.state,
+        zipCode: company.zipCode,
         profilePicture: company.profilePicture,
         status: 'approved',
-        phoneNumber: company.phoneNumber,
+        phone: company.phone,
         webPage: company.webPage,
       }
 
-      await updateCompany(companyId, updatedCompanyInfo)
-
+      await updateCompany(companyId, updatedCompanyInfo, tokens.authToken)
     } catch (error) {
       console.error('Error accepting company:', error)
     } finally {
@@ -69,9 +78,9 @@ export const CellAction = ({setIsModalOpen, companyId, fetchPending, company}:ce
   }
 
   /**
-     * @brief Function that allows admin to reject a specific company
-     * @param company
-     * @param companyId
+   * @brief Function that allows admin to reject a specific company
+   * @param company
+   * @param companyId
    */
   const handleReject = async (company: Company, companyId: string) => {
     try {
@@ -79,14 +88,19 @@ export const CellAction = ({setIsModalOpen, companyId, fetchPending, company}:ce
       const updatedCompanyInfo: UpdateCompanyInfoBody = {
         name: company.name,
         description: company.description,
+        street: company.street,
+        streetNumber: company.streetNumber,
+        city: company.city,
+        state: company.state,
+        zipCode: company.zipCode,
         profilePicture: company.profilePicture,
-        status: 'rejected',
-        phoneNumber: company.phoneNumber,
+        status: 'approved',
+        phone: company.phone,
         webPage: company.webPage,
       }
 
       // Call the updateCompany function with the updated information
-      await updateCompany(companyId, updatedCompanyInfo)
+      await updateCompany(companyId, updatedCompanyInfo, tokens.authToken)
     } catch (error) {
       console.error('Error rejecting company:', error)
     } finally {
@@ -101,20 +115,16 @@ export const CellAction = ({setIsModalOpen, companyId, fetchPending, company}:ce
     <ThemeProvider theme={Theme}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <MoreHorizIcon
-            onClick={() => {
-            }}
-            className='cursor-pointer'
-          />
+          <MoreHorizIcon onClick={() => {}} className="cursor-pointer" />
         </DropdownMenuTrigger>
-        <DropdownMenuContent align='end'>
+        <DropdownMenuContent align="end" style={{ background: 'white' }}>
           <DropdownMenuLabel>Acciones rápidas</DropdownMenuLabel>
           <DropdownMenuItem onClick={() => handleAccept(company, companyId)}>
-            <CheckCircleOutlineIcon className='mr-1.5' />
+            <CheckCircleOutlineIcon className="mr-1.5" />
             Aceptar
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => handleReject(company, companyId)}>
-            <CancelIcon className='mr-1.5' />
+            <CancelIcon className="mr-1.5" />
             Rechazar
           </DropdownMenuItem>
         </DropdownMenuContent>
