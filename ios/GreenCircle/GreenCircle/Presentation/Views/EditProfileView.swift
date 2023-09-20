@@ -299,7 +299,7 @@ struct EditProfileView: View {
                         }) {
                             Text("Cancelar")
                                 .foregroundColor(TitleBarColor.TitleBarColor)
-                                .padding(.vertical, 16)
+                                .padding(.vertical, 12)
                                 .padding(.horizontal)
                                 .frame(maxWidth: .infinity)
                                 .background(Color.white)
@@ -309,12 +309,16 @@ struct EditProfileView: View {
                                         .stroke(TitleBarColor.TitleBarColor, lineWidth: 1)
                                 )
                         }
-                        .padding(.trailing, 4)
+                        .frame(maxWidth: 100) // Hace que el botón Cancelar ocupe todo el ancho disponible
+                        .padding(.trailing, 10) // Añade un espacio después del botón Cancelar
+
                         .alert(isPresented: $showAlert) {
                             Alert(
                                 title: Text("Salir sin guardar"),
                                 message: Text("Si sales, los datos actualizados no se guardarán. ¿Estás seguro de que quieres salir?"),
-                                primaryButton: .default(Text("Cancelar")),
+                                primaryButton: .default(Text("Seguir editando"), action: {
+                                    //Pendiente porque de igual manera se sale
+                                }),
                                 secondaryButton: .destructive(Text("Salir"), action: {
                                     presentationMode.wrappedValue.dismiss()
                                 })
@@ -363,21 +367,22 @@ struct EditProfileView: View {
                         }) {
                             Text("Guardar")
                                 .foregroundColor(.white)
-                                .padding(.vertical, 16)
+                                .padding(.vertical, 12)
                                 .padding(.horizontal)
                                 .frame(maxWidth: .infinity)
                                 .background(TitleBarColor.TitleBarColor)
                                 .cornerRadius(8)
                         }
-                        .padding(.leading, 4) // Añade padding para crear espacio entre los botones
+                      
+                        .padding(.leading, 8) // padding para crear espacio entre los botones
                     }
-                    .padding(.horizontal, 20) // Añade padding horizontal para que los botones no lleguen hasta el borde de la vista
-                    .padding(.top, 24) // Reduce el padding top para acercar los botones
+                    .padding(.horizontal, 20) // padding horizontal para que los botones no lleguen hasta el borde de la vista
+                    .padding(.top, 10)
 
                     Spacer()
 
                 }
-                .padding(.top, 10)  // Ajusta este valor para cambiar el espacio entre "Cerrar sesión" y tu formulario
+                .padding(.top, 10)  //cambiar el espacio entre "Cerrar sesión" y tu formulario
 
                 Spacer()
                 
