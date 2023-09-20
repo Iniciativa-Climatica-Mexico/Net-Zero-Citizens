@@ -11,7 +11,7 @@ export type SurveyReport = {
 
 export type QuestionReport = {
   questionText: string
-  questionType: string
+  questionType: 'open' | 'scale' | 'multiple_choice'
   answers: tabulatedAns[]
 }
 
