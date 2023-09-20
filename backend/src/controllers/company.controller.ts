@@ -3,14 +3,9 @@ import CompanyProduct from '../models/companyProducts.model'
 import * as CompanyService from '../services/company.service'
 import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
-const NodeGeocoder = require('node-geocoder');
+import NodeGeocoder from 'node-geocoder'
 
-const geocoder = NodeGeocoder({
-  provider: 'google',
-  apiKey: process.env.GOOGLE_MAPS_API,
-});
-
-export const getCompanyInfo : RequestHandler<{ companyId: string }> =async (
+export const getCompanyInfo: RequestHandler<{ companyId: string }> = async (
   req,
   res
 ) => {
@@ -18,11 +13,11 @@ export const getCompanyInfo : RequestHandler<{ companyId: string }> =async (
 
   const companyInfo = await CompanyService.getCompanyInfo(compId)
 
-  if (companyInfo){
+  if (companyInfo) {
     res.json(companyInfo)
   }
   else {
-    res.status(404).json({error: 'Company not found'})
+    res.status(404).json({ error: 'Company not found' })
   }
 }
 
@@ -147,7 +142,7 @@ export const getPendingCompanies: RequestHandler<
   NoRecord,
   Paginator<Company>,
   NoRecord,
-  PaginationParams<{ status: string}>
+  PaginationParams<{ status: string }>
 > = async (req, res) => {
   const params = {
     start: req.query.start || 0,
@@ -170,7 +165,7 @@ export const getPendingCompanies: RequestHandler<
  */
 export const updateCompanyInfo: RequestHandler<
   { companyId: string },
-  { message: string }, 
+  { message: string },
   CompanyService.UpdateCompanyInfoBody
 > = async (req, res) => {
   const compId = req.params.companyId
@@ -193,11 +188,11 @@ export const updateCompanyInfo: RequestHandler<
  */
 
 interface FilteredCompany {
-  companyId: string;
-  name: string;
-  latitude: number;
-  longitude: number;
-  profilePicture: string;
+  companyId: string
+  name: string
+  latitude: number
+  longitude: number
+  profilePicture: string
 }
 
 export const getCoordinates: RequestHandler<
@@ -209,63 +204,61 @@ export const getCoordinates: RequestHandler<
   const params = {
     start: req.query.start || 0,
     pageSize: req.query.pageSize || 10,
-  };
-
-  // Define un tipo para la respuesta de geocodificación
-  interface GeocodeResult {
-    latitude: number;
-    longitude: number;
   }
 
-  const companies = await CompanyService.getApprovedCompanies(params);
+  const companies = await CompanyService.getApprovedCompanies(params)
 
   // Configura el geocoder con tu clave de API
   const geocoder = NodeGeocoder({
     provider: 'google',
     apiKey: process.env.GOOGLE_MAPS_API,
-  });
+  })
 
   const companiesWithCoordinates = await Promise.all(
     companies.rows.map(async (company) => {
-      const { street, streetNumber, city, state, zipCode } = company.dataValues;
+      const { street, streetNumber, city, state, zipCode } = company.dataValues
 
       // Crea la dirección a partir de los campos de la empresa
-      const address = `${street} ${streetNumber}, ${city}, ${state}, ${zipCode}`;
+      const address = `${street} ${streetNumber}, ${city}, ${state}, ${zipCode}`
 
       try {
         // Realiza la geocodificación
-        const geocodeResult = await geocoder.geocode(address);
+        const geocodeResult = await geocoder.geocode(address)
         if (geocodeResult.length > 0) {
-          const { latitude, longitude } = geocodeResult[0];
+          const { latitude, longitude } = geocodeResult[0]
           return {
             companyId: company.dataValues.companyId,
             name: company.dataValues.name,
             latitude,
             longitude,
             profilePicture: company.dataValues.profilePicture,
-          };
+          }
         }
-      } catch (error: any) {
-        console.error(`Error al geocodificar la empresa ${company.dataValues.companyId}: ${error.message}`);
+      } catch (error: unknown) {
+        if (typeof error === 'string') {
+          console.error(`Error al geocodificar la empresa ${company.dataValues.companyId}: ${error}`)
+        } else {
+          console.error(`Error al geocodificar la empresa ${company.dataValues.companyId}`)
+        }
       }
 
       // Si la geocodificación falla o no se encuentra, regresa null
-      return null;
+      return null
     })
-  );
+  )
 
   // Filtra las empresas que no pudieron geocodificarse
-  const filteredCompanies = companiesWithCoordinates.filter((company) => company !== null);
+  const filteredCompanies = companiesWithCoordinates.filter((company) => company !== null)
 
   const filteredCompaniesTyped: FilteredCompany[] = filteredCompanies.filter(
     (company): company is FilteredCompany => company !== null
-  );
+  )
 
   const paginator: Paginator<FilteredCompany> = {
     rows: filteredCompaniesTyped,
     start: 0,
     pageSize: filteredCompanies.length,
     total: filteredCompanies.length,
-  };
-  res.json(paginator);
-};
+  }
+  res.json(paginator)
+}
