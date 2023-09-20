@@ -1,3 +1,13 @@
+/**
+ * Represents provisional navbar used in layout
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <Navbar />
+ * ```
+ */
+
 'use client'
 
 import Image from 'next/image'

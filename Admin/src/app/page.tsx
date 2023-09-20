@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { getPendingCompanies } from '@/api/v1/company'
+import { Company, getPendingCompanies } from '@/api/v1/company'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -15,38 +15,13 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-import { CellAction } from '@/components/cellAction'
-import ModalProveedor from '@/components/modalProveedor'
-
-interface Company {
-  companyId: string
-  name: string
-  location: string
-  profilePicture: string
-  state: string
-  city: string
-  street: string
-  zipCode: string
-  status: 'approved' | 'pending_approval' | 'rejected'
-  email: string
-  phoneNumber: string
-  webPage: string
-  description: string
-  createdAt: string
-  streetNumber: number
-  pdfCurriculumURL: string
-  pdfDicCdmxURL: string
-  pdfPeeFideURL: string
-  pdfGuaranteeSecurityURL: string
-  pdfActaConstitutivaURL: string
-  pdfINEURL: string
-}
+import { CellAction } from '@/components/CellAction'
+import ModalProveedor from '@/components/ModalProveedor'
 
 export default function Home() {
   const [selectedCompany, setSelectedCompany] = useState<Company>({
     companyId: '',
     name: '',
-    location: '',
     profilePicture: '',
     state: '',
     city: '',
