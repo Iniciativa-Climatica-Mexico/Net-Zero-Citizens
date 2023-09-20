@@ -62,7 +62,6 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
               {/* Lado izquierdo de la ventana */}
               <div className="pl-20 w-2/5 flex flex-col justify-between">
                 <QuestionComponent {...question} />
-
                 <table className="table-fixed border-collapse rounded-lg border border-slate-400 w-3/5">
                   <thead>
                     <tr>
@@ -75,9 +74,11 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
                     <tr>
                       <td className="text-center p-4 border border-slate-400">
                         <div className="bg-zinc-900 text-white rounded-full text-xl font-semibold p-2 px-4 inline-block">
-                          {question.answers
-                            .map((ans) => ans.count)
-                            .reduce((prev, curr) => (prev += curr))}
+                          {question.answers.length > 0
+                            ? question.answers
+                                .map((ans) => ans.count)
+                                .reduce((prev, curr) => prev + curr)
+                            : 0}
                         </div>
                       </td>
                     </tr>
@@ -90,48 +91,89 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
                 <h2 className="text-black font-extrabold text-4xl">
                   Desglose de respuestas
                 </h2>
-                <div className="flex">
-                  {/* Tabla de labels */}
-                  <div className="pt-10 w-1/2">
-                    <table className="table-fixed border-collapse rounded-lg border border-slate-400">
-                      <thead>
-                        <tr>
-                          <th className="px-10 py-4 border border-slate-400">
-                            Opción
-                          </th>
-                          <th className="px-10 py-4 border border-slate-400">
-                            Total de respuestas
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {question.answers.map((ans) => (
-                          <tr>
-                            <td className="text-center p-4 border border-slate-400">
-                              {ans.label}
-                            </td>
-                            <td className="text-center p-4 border border-slate-400">
-                              {ans.count}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-
-                  {/* Gráfica */}
-                  <div className="pl-4 w-1/2">
+                {question.answers.length > 0 ? (
+                  <>
+                    {/* Preguntas cerradas */}
                     {question.questionType != 'open' && (
-                      <ScaleChart
-                        {...{
-                          title: question.questionText,
-                          labels,
-                          data,
-                        }}
-                      />
+                      <div className="flex">
+                        {/* Tabla de labels */}
+                        <div className="pt-10 w-1/2">
+                          <table className="table-fixed border-collapse rounded-lg border border-slate-400">
+                            <thead>
+                              <tr>
+                                <th className="px-10 py-4 border border-slate-400">
+                                  Opción
+                                </th>
+                                <th className="px-10 py-4 border border-slate-400">
+                                  Total de respuestas
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {question.answers.map((ans) => (
+                                <tr>
+                                  <td className="text-center p-4 border border-slate-400">
+                                    {ans.label}
+                                  </td>
+                                  <td className="text-center p-4 border border-slate-400">
+                                    {ans.count}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+
+                        {/* Gráfica */}
+                        <div className="pl-4 w-1/2">
+                          <ScaleChart
+                            {...{
+                              title: question.questionText,
+                              labels,
+                              data,
+                            }}
+                          />
+                        </div>
+                      </div>
                     )}
-                  </div>
-                </div>
+
+                    {/* Preguntas abiertas */}
+                    {question.questionType == 'open' && (
+                      <div className="flex">
+                        <div className="pt-10">
+                          <table className="table-fixed border-collapse rounded-lg border border-slate-400">
+                            <thead>
+                              <tr>
+                                <th className="px-10 py-4 border border-slate-400">
+                                  Respuesta
+                                </th>
+                                <th className="px-10 py-4 border border-slate-400">
+                                  Total de respuestas
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {question.answers.map((ans) => (
+                                <tr>
+                                  <td className="text-center p-4 border border-slate-400">
+                                    {ans.label}
+                                  </td>
+                                  <td className="text-center p-4 border border-slate-400">
+                                    {ans.count}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <h3 className="text-black font-extrabold text-5xl pt-40 pb-3">
+                    No hay respuestas disponibles
+                  </h3>
+                )}
               </div>
             </div>
           )
@@ -173,7 +215,7 @@ function QuestionComponent(props: QuestionReport) {
 
 function AnswerComponent(props: tabulatedAns) {
   return (
-    <div>
+    <div className="flex flex-col justify-between">
       <h3>{props.label}</h3>
       <p>{props.count}</p>
     </div>
