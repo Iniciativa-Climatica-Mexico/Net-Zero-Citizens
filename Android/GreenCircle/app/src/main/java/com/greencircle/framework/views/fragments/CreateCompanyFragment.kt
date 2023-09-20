@@ -15,7 +15,8 @@ import com.greencircle.R
 import com.greencircle.data.remote.CompanyAPIService
 import com.greencircle.data.remote.models.Company
 import com.greencircle.framework.viewmodel.CreateCompanyViewModel
-import com.greencircle.framework.views.MainActivity
+import com.greencircle.framework.views.activities.RegisterCompanyActivity
+import java.util.UUID
 
 /**Constructor de "CreateCompanyFragment"
  *
@@ -25,6 +26,7 @@ class CreateCompanyFragment : Fragment() {
     private lateinit var viewModel: CreateCompanyViewModel
     private var arguments = Bundle()
     private lateinit var authToken: String
+    private lateinit var uuid: UUID
 
     /**
      * Inicializa el "CreateCompanyFragment"
@@ -79,6 +81,7 @@ class CreateCompanyFragment : Fragment() {
             // Handle the result here
             if (result != null) {
                 authToken = result.tokens.authToken
+                uuid = result.user.uuid
             } else {
                 Log.d("CreateCompanyFragment", "Google login failed")
             }
@@ -131,7 +134,7 @@ class CreateCompanyFragment : Fragment() {
 
         // Send the data to the backend
         val companyData: Company = Company(
-            "abcd-1234-efgh-1902",
+            uuid,
             name,
             description,
             email,
@@ -151,7 +154,7 @@ class CreateCompanyFragment : Fragment() {
         val createCompanyRequest = CompanyAPIService.CreateCompanyRequest(companyData)
 
         viewModel.createCompany(createCompanyRequest, authToken)
-        navigateToHome()
+        navigateToUnverifiedFragment()
     }
 
     /**
@@ -172,9 +175,22 @@ class CreateCompanyFragment : Fragment() {
         userEmail.text = arguments.getString("email")
     }
 
-    private fun navigateToHome() {
-        var intent: Intent = Intent(requireContext(), MainActivity::class.java)
+    /**
+     * Navega hacia el fragmento "UnverifiedCompanyFragment" dentro de la "RegisterCompanyActivity".
+     *
+     * Esta función se encarga de hacer la transición al fragmento "UnverifiedCompanyFragment" desde el fragmento
+     * actual dentro de la "RegisterCompanyActivity". Opcionalmente, puede recibir un Bundle de argumentos
+     * que se pueden pasar al fragmento de destino.
+     *
+     * @param arguments Un Bundle opcional de argumentos que contiene la información de la cuenta de Google.
+     */
+    private fun navigateToUnverifiedFragment(arguments: Bundle? = null) {
+        val unverifiedCompanyFragment = UnverifiedCompanyFragment()
+        val activity = requireActivity() as RegisterCompanyActivity
+
+        val intent = Intent(activity, RegisterCompanyActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
+
+        activity.replaceFragment(unverifiedCompanyFragment, arguments, false)
     }
 }

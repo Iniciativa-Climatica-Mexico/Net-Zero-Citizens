@@ -8,6 +8,7 @@ import com.greencircle.data.remote.UserAPIService
 import com.greencircle.data.remote.models.AuthResponse
 import com.greencircle.domain.model.UpdateUserRequirement
 import com.greencircle.domain.usecase.GoogleAuthRequirement
+import java.util.UUID
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -42,7 +43,7 @@ class CreateUserViewModel : ViewModel() {
      * @param userId El ID del usuario que se va a actualizar.
      * @param userInfo La información actualizada del usuario.
      */
-    fun updateUser(userId: String, userInfo: UserAPIService.UpdateUserRequest, authToken: String) {
+    fun updateUser(userId: UUID, userInfo: UserAPIService.UpdateUserRequest, authToken: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val result: UserAPIService.UpdateUserResponse? =
                 updateUserRequirement(userId, userInfo, authToken)

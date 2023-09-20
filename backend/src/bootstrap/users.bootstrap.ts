@@ -5,7 +5,7 @@ export default class UserBootstrap extends Bootstrapper {
   async run() {
     await User.bulkCreate([
       {
-        userId: 'abcd-1234-efgh-5678',
+        userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
         roleId: 'ADMIN_ROLE_ID',
         companyId: null,
         firstName: 'John',
@@ -17,7 +17,7 @@ export default class UserBootstrap extends Bootstrapper {
         gender: 'masculine',
       },
       {
-        userId: 'abcd-1234-efgh-5679',
+        userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
         roleId: 'CUSTOMER_ROLE_ID',
         companyId: null,
         firstName: 'Jane',
@@ -29,7 +29,7 @@ export default class UserBootstrap extends Bootstrapper {
         gender: 'femenine',
       },
       {
-        userId: 'abcd-1234-efgh-1902',
+        userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b7',
         roleId: 'ADMIN_ROLE_ID',
         companyId: null,
         firstName: 'Sergio',

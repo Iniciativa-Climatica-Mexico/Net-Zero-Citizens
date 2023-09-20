@@ -19,6 +19,9 @@ export type CompanyType = {
   city: string
   state: string
   zipCode: number
+  userId: string
+  latitude?: number | null
+  longitude?: number | null
   profilePicture?: string | null
   pdfCurriculumUrl: string
   pdfDicCdmxUrl?: string | null

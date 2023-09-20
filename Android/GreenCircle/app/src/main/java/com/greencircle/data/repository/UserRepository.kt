@@ -2,6 +2,7 @@ package com.greencircle.data.repository
 
 import com.greencircle.data.remote.UserAPIClient
 import com.greencircle.data.remote.UserAPIService
+import java.util.UUID
 
 /**
  * Repositorio para gestionar operaciones relacionadas con usuarios.
@@ -22,7 +23,7 @@ class UserRepository {
      * @return Un objeto [UserAPIService.UpdateUserResponse] que contiene información sobre la actualización realizada.
      */
     suspend fun updateUser(
-        userId: String,
+        userId: UUID,
         userInfo: UserAPIService.UpdateUserRequest,
         authToken: String
     ): UserAPIService.UpdateUserResponse? =

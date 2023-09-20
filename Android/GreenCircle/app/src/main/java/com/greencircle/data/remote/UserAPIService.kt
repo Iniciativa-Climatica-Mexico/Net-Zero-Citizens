@@ -1,5 +1,6 @@
 package com.greencircle.data.remote
 
+import java.util.UUID
 import retrofit2.http.Body
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -47,7 +48,7 @@ interface UserAPIService {
      */
     @PUT("users/{userId}")
     suspend fun updateUser(
-        @Path("userId") userId: String,
+        @Path("userId") userId: UUID,
         @Body request: UpdateUserRequest
     ): UpdateUserResponse
 }

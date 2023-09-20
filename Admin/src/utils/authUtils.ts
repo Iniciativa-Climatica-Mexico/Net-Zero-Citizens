@@ -63,6 +63,7 @@ const saveTokensFromSession = (session: Session) => {
   saveTokens({
     authToken: session.authToken,
     refreshToken: session.refreshToken,
+    refreshToken: session.refreshToken,
   })
 }
 
@@ -75,6 +76,7 @@ const recoverTokens = () => {
   const authToken = localStorage.getItem(AUTH_TOKEN_KEY)
   const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY)
 
+  return { authToken, refreshToken }
   return { authToken, refreshToken }
 }
 

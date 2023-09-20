@@ -13,8 +13,8 @@ const { expect } = chai
 
 const testData = [
   {
-    companyId: 'comp-1234-efgh-0000',
-    userId: 'abcd-1234-efgh-5679',
+    companyId: 'c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
+    userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
     name: 'Company 1',
     description: 'Company 1 description',
     email: 'example1@mail.com',
@@ -38,8 +38,8 @@ const testData = [
     status: 'pending_approval',
   },
   {
-    companyId: 'comp-1234-efgh-0001',
-    userId: 'abcd-1234-efgh-5680',
+    companyId: 'a2b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
+    userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
     name: 'Company 2',
     description: 'Company 2 description',
     email: 'example2@mail.com',
@@ -63,8 +63,8 @@ const testData = [
     status: 'pending_approval',
   },
   {
-    companyId: 'comp-1234-efgh-0002',
-    userId: 'abcd-1234-efgh-5681',
+    companyId: 'a2c0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
+    userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b7',
     name: 'Company 3',
     description: 'Company 3 description',
     email: 'example3@mail.com',
