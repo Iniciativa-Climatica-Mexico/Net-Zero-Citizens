@@ -27,7 +27,7 @@ const testData = [
     streetNumber: '456',
     city: 'Cityville',
     state: 'Stateville',
-    zipCode: 12345,
+    zipCode: '12345',
     profilePicture:
       'https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcR6XZP6rdW3VhHwZSxu3u4RCWyQFHTwl_4QSRK5t0km1FCytdaWwJEoNmW8c2ju5DRR4DbxppAQvVH441I',
     pdfCurriculumUrl: 'https://example.com/company1-cv.pdf',
@@ -52,7 +52,7 @@ const testData = [
     streetNumber: '456',
     city: 'Cityville',
     state: 'Stateville',
-    zipCode: 12345,
+    zipCode: '12345',
     profilePicture:
       'https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcR6XZP6rdW3VhHwZSxu3u4RCWyQFHTwl_4QSRK5t0km1FCytdaWwJEoNmW8c2ju5DRR4DbxppAQvVH441I',
     pdfCurriculumUrl: 'https://example.com/company2-cv.pdf',
@@ -77,7 +77,7 @@ const testData = [
     streetNumber: '456',
     city: 'Cityville',
     state: 'Stateville',
-    zipCode: 12345,
+    zipCode: '12345',
     profilePicture:
       'https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcR6XZP6rdW3VhHwZSxu3u4RCWyQFHTwl_4QSRK5t0km1FCytdaWwJEoNmW8c2ju5DRR4DbxppAQvVH441I',
     pdfCurriculumUrl: 'https://example.com/company3-cv.pdf',
@@ -92,7 +92,7 @@ const testData = [
   },
   {
     companyId: 'comp-1234-efgh-0003',
-    userId: 'abcd-1234-efgh-5682',
+    userId: '5ae3f37e-5313-49f0-b1ec-0050f010067f',
     name: 'Company 4',
     description: 'Company 4 description',
     email: 'example4@mail.com',
@@ -102,7 +102,7 @@ const testData = [
     streetNumber: '456',
     city: 'Cityville',
     state: 'Stateville',
-    zipCode: 12345,
+    zipCode: '12345',
     profilePicture:
       'https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcR6XZP6rdW3VhHwZSxu3u4RCWyQFHTwl_4QSRK5t0km1FCytdaWwJEoNmW8c2ju5DRR4DbxppAQvVH441I',
     pdfCurriculumUrl: 'https://example.com/company4-cv.pdf',
@@ -117,7 +117,7 @@ const testData = [
   },
   {
     companyId: 'comp-1234-efgh-0004',
-    userId: 'abcd-1234-efgh-5683',
+    userId: '6381d9cf-6693-49a2-be80-82c82b63d6ca',
     name: 'Company 5',
     description: 'Company 5 description',
     email: 'example5@mail.com',
@@ -127,7 +127,7 @@ const testData = [
     streetNumber: '456',
     city: 'Cityville',
     state: 'Stateville',
-    zipCode: 12345,
+    zipCode: '12345',
     profilePicture:
       'https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcR6XZP6rdW3VhHwZSxu3u4RCWyQFHTwl_4QSRK5t0km1FCytdaWwJEoNmW8c2ju5DRR4DbxppAQvVH441I',
     pdfCurriculumUrl: 'https://example.com/company5-cv.pdf',
@@ -142,7 +142,7 @@ const testData = [
   },
   {
     companyId: 'comp-1234-efgh-0005',
-    userId: 'abcd-1234-efgh-5684',
+    userId: '19241612-b373-4238-aa42-d9467a457234',
     name: 'Company 6',
     description: 'Company 6 description',
     email: 'example6@mail.com',
@@ -152,7 +152,7 @@ const testData = [
     streetNumber: '456',
     city: 'Cityville',
     state: 'Stateville',
-    zipCode: 12345,
+    zipCode: '12345',
     profilePicture:
       'https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcR6XZP6rdW3VhHwZSxu3u4RCWyQFHTwl_4QSRK5t0km1FCytdaWwJEoNmW8c2ju5DRR4DbxppAQvVH441I',
     pdfCurriculumUrl: 'https://example.com/company6-cv.pdf',
@@ -167,7 +167,7 @@ const testData = [
   },
   {
     companyId: 'comp-1234-efgh-0006',
-    userId: 'abcd-1234-efgh-5685',
+    userId: 'b90edc2f-ec86-4b55-80a8-55dc7873b991',
     name: 'Company 7',
     description: 'Company 7 description',
     email: 'example7@mail.com',
@@ -177,7 +177,7 @@ const testData = [
     streetNumber: '456',
     city: 'Cityville',
     state: 'Stateville',
-    zipCode: 12345,
+    zipCode: '12345',
     profilePicture:
       'https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcR6XZP6rdW3VhHwZSxu3u4RCWyQFHTwl_4QSRK5t0km1FCytdaWwJEoNmW8c2ju5DRR4DbxppAQvVH441I',
     pdfCurriculumUrl: 'https://example.com/company7-cv.pdf',
@@ -192,7 +192,7 @@ const testData = [
   },
   {
     companyId: 'comp-1234-efgh-0007',
-    userId: 'abcd-1234-efgh-5686',
+    userId: '05276d35-f433-469e-b3fb-6a310296ea84',
     name: 'Company 8',
     description: 'Company 8 description',
     email: 'example8@mail.com',
@@ -202,7 +202,7 @@ const testData = [
     streetNumber: '456',
     city: 'Cityville',
     state: 'Stateville',
-    zipCode: 12345,
+    zipCode: '12345',
     profilePicture:
       'https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcR6XZP6rdW3VhHwZSxu3u4RCWyQFHTwl_4QSRK5t0km1FCytdaWwJEoNmW8c2ju5DRR4DbxppAQvVH441I',
     pdfCurriculumUrl: 'https://example.com/company8-cv.pdf',
@@ -217,7 +217,7 @@ const testData = [
   },
   {
     companyId: 'comp-1234-efgh-0008',
-    userId: 'abcd-1234-efgh-5687',
+    userId: '8dcc93aa-8c69-4519-ae0e-08814226bca7',
     name: 'Company 9',
     description: 'Company 9 description',
     email: 'example9@mail.com',
@@ -227,7 +227,7 @@ const testData = [
     streetNumber: '456',
     city: 'Cityville',
     state: 'Stateville',
-    zipCode: 12345,
+    zipCode: '12345',
     profilePicture:
       'https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcR6XZP6rdW3VhHwZSxu3u4RCWyQFHTwl_4QSRK5t0km1FCytdaWwJEoNmW8c2ju5DRR4DbxppAQvVH441I',
     pdfCurriculumUrl: 'https://example.com/company9-cv.pdf',
@@ -242,7 +242,7 @@ const testData = [
   },
   {
     companyId: 'comp-1234-efgh-0009',
-    userId: 'abcd-1234-efgh-5688',
+    userId: '7fa2ee93-21a7-4d2c-9fa2-ae2c312080cf',
     name: 'Company 10',
     description: 'Company 10 description',
     email: 'example10@mail.com',
@@ -252,7 +252,7 @@ const testData = [
     streetNumber: '456',
     city: 'Cityville',
     state: 'Stateville',
-    zipCode: 12345,
+    zipCode: '12345',
     profilePicture:
       'https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcR6XZP6rdW3VhHwZSxu3u4RCWyQFHTwl_4QSRK5t0km1FCytdaWwJEoNmW8c2ju5DRR4DbxppAQvVH441I',
     pdfCurriculumUrl: 'https://example.com/company10-cv.pdf',

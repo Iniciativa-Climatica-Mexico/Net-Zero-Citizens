@@ -83,7 +83,7 @@ export default class Company extends Model {
   street: string
 
   @Column({
-    type: DataType.INTEGER,
+    type: DataType.STRING,
     allowNull: false,
     field: 'STREET_NUMBER',
   })
@@ -104,11 +104,11 @@ export default class Company extends Model {
   state: string
 
   @Column({
-    type: DataType.INTEGER,
+    type: DataType.STRING,
     allowNull: false,
     field: 'ZIP_CODE',
   })
-  zipCode: number
+  zipCode: string
 
   @Column({
     type: DataType.STRING(255),
