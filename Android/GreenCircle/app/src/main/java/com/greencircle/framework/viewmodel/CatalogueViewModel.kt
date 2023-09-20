@@ -5,8 +5,17 @@ import androidx.lifecycle.ViewModel
 import com.greencircle.domain.model.CompanySummary
 import java.util.UUID
 
+/**
+ * This class is used to manage the company summary data
+*/
+
 class CatalogueViewModel : ViewModel() {
     val catalogueLiveData = MutableLiveData<ArrayList<CompanySummary>>()
+
+    /**
+     * This function is used to get the company summary list
+     */
+
     fun getCompanySummaryList() {
         catalogueLiveData.postValue(
             arrayListOf(

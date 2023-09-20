@@ -9,11 +9,18 @@ import com.greencircle.databinding.ActivityMainBinding
 import com.greencircle.framework.views.fragments.CatalogueFragment
 import com.greencircle.framework.views.fragments.HomeFragment
 
+/**
+ * This class is used to manage the main activity
+ */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomNavigationView: BottomNavigationView
 
+    /**
+     * This function is used to create the activity and replace the
+     * fragment when the item is selected from the bottom navigation view
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -40,6 +47,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    /**
+     * This function is used to replace the fragment when the item is
+     * selected from the bottom navigation view
+     * @param fragment: Fragment object
+     */
 
     private fun replaceFragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
