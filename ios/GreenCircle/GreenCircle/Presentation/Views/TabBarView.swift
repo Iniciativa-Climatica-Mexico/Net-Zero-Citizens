@@ -8,33 +8,32 @@
 import SwiftUI
 
 struct TabBarView: View {
-  var body: some View {
-    TabView {
-      EmptyView()
-      .tabItem {
-        Image(systemName: "leaf.fill")
-        Text("Eco-Info")
-      }
+    var body: some View {
+        TabView {
+            EcoInfoView()
+                .tabItem {
+                    Image(systemName: "leaf.fill")
+                    Text("Eco-Info")
+                }
 
-    ContactCompanyView()
-        .applyNavBarTheme()
-      .tabItem {
-        Image(systemName: "book.fill")
-        Text("Catálogo")
-      }
+            CatalogView()
+                .tabItem {
+                    Image(systemName: "book.fill")
+                    Text("Catálogo")
+                }
 
-    EmptyView()
-      .tabItem {
-        Image(systemName: "map.fill")
-        Text("Mapa")
-      }
+            MapView()
+                .tabItem {
+                    Image(systemName: "map.fill")
+                    Text("Mapa")
+                }
 
-      EmptyView()
-      .tabItem {
-        Image(systemName: "person.fill")
-        Text("Perfil")
-      }
+            ProfileView()
+                .tabItem {
+                    Image(systemName: "person.fill")
+                    Text("Perfil")
+                }
+        }
     }
-    .accentColor(Color("GreenCustom"))
-  }
 }
+
