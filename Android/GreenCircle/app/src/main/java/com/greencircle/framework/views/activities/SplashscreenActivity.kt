@@ -57,7 +57,7 @@ class SplashscreenActivity : AppCompatActivity() {
      * Redirige al usuario a la pantalla de inicio de sesión (LoginActivity).
      */
     private fun passViewGoToMain() {
-        val intent: Intent = Intent(this, MainActivity::class.java)
+        var intent: Intent = Intent(this, SurveyActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         startActivity(intent)
         finish()
