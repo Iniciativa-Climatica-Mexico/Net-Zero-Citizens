@@ -59,7 +59,7 @@ export const sendNotification = async (
   message: string,
   arn: string,
   companyId?: string,
-  userId?: string,
+  userId?: string
 ) => {
   try {
     let deviceToken
@@ -75,7 +75,7 @@ export const sendNotification = async (
         PlatformApplicationArn: arn,
         Token: deviceToken,
       }
-      console.log("Endpoint params: ", endpointParams)
+      console.log('Endpoint params: ', endpointParams)
       const endpointResponse = await sns
         .createPlatformEndpoint(endpointParams)
         .promise()
@@ -97,12 +97,7 @@ export const sendNotification = async (
         TargetArn: endpointResponse.EndpointArn,
       }
       const publishResponse = await sns.publish(publishParams).promise()
-      console.log("-------------------------------------------")
-      console.log(endpointResponse)
-      console.log(publishParams)
       console.log(publishResponse)
-      console.log("-------------------------------------------")
-      console.log(`Mensaje enviado con éxito: ${message}`)
     }
   } catch (error) {
     console.log(error)

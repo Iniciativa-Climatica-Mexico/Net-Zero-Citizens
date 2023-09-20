@@ -1,10 +1,10 @@
 import DummyRouter from './dummy.routes'
 import UserRouter from './user.routes'
 import CompanyRouter from './company.routes'
-import AuthRouter from './auth.routes'
+// import AuthRouter from './auth.routes'
 import ReviewRouter from './review.routes'
 import ProducRouter from './product.routes'
-import { validateToken, validateRole } from '../middlewares/auth.middleware'
+// import { validateToken, validateRole } from '../middlewares/auth.middleware'
 import { Express } from 'express'
 // import { validateToken, validateRole } from '../middlewares/auth.middleware'
 

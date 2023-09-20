@@ -1,16 +1,12 @@
 import { sendNotification } from '../src/services/notification.service'
 import { expect } from 'chai'
 import { db, initDB } from '../src/configs/database.config'
-import * as UserService from '../src/services/users.service'
-import * as CompanyService from '../src/services/company.service'
 
 beforeEach(async () => {
+  await db.drop()
   await initDB()
 })
 
-afterEach(async () => {
-  await db.drop()
-})
 
 /**
  * @brief Prueba unitaria para el servicio de notificaciones
@@ -23,7 +19,7 @@ describe('Notification Service', () => {
   it('should send a notification successfully', async () => {
     // Aquí pondrías un ARN de prueba que has creado en la consola de AWS
     const testARN = process.env.AWS_ARN
-    const userId = 'abcd-1234-efgh-5678'
+    const userId = '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8'
 
     try {
       await sendNotification('Prueba','Mensaje de prueba', userId,testARN)
