@@ -15,12 +15,15 @@ import com.greencircle.domain.model.UserReview
 import com.greencircle.framework.viewmodel.DeleteUserReviewViewModel
 import com.greencircle.framework.views.fragments.UpdateReviewFragment
 import com.greencircle.framework.views.fragments.UserReviewFragment
+import java.text.SimpleDateFormat
+import java.util.Locale
+import java.util.UUID
 
 class UserReviewViewHolder(
     private var binding: ItemUserReviewBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private lateinit var reviewId: String
+    private lateinit var reviewId: UUID
     private val viewModel: DeleteUserReviewViewModel = DeleteUserReviewViewModel()
     private val menuButton: ImageButton = binding.reviewCardOptionsButton
 
@@ -50,11 +53,13 @@ class UserReviewViewHolder(
     }
 
     fun bind(item: UserReview, context: Context) {
+        val score = item.score.toString() + " de 5"
+
         reviewId = item.reviewId
         binding.reviewCardTitle.text = item.reviewTitle
         binding.reviewCardContent.text = item.review
-        binding.reviewCardRating.text = item.score.toString() + " de 5"
-        binding.reviewCardDate.text = item.updatedAt.slice(0..9)
+        binding.reviewCardDate.text = formatDateWithSlashes(item.updatedAt.toString())
+        binding.reviewCardRating.text = score
         binding.reviewCardRatingBar.rating = item.score.toFloat()
     }
 
@@ -67,7 +72,7 @@ class UserReviewViewHolder(
         bundle.putString("title", title)
         bundle.putString("review", review)
         bundle.putFloat("score", score)
-        bundle.putString("reviewId", reviewId)
+        bundle.putString("reviewId", reviewId.toString())
 
         val updateReviewFragment = UpdateReviewFragment()
         updateReviewFragment.arguments = bundle
@@ -94,7 +99,7 @@ class UserReviewViewHolder(
 
         alertDialogBuilder.setPositiveButton("yes") { dialog, which ->
             deleteReview(reviewId)
-            Toast.makeText(itemView.context, reviewId, Toast.LENGTH_SHORT).show()
+            Toast.makeText(itemView.context, reviewId.toString(), Toast.LENGTH_SHORT).show()
         }
 
         alertDialogBuilder.setNegativeButton("no", null)
@@ -105,7 +110,7 @@ class UserReviewViewHolder(
         alertDialog.show()
     }
 
-    private fun deleteReview(reviewId: String) {
+    private fun deleteReview(reviewId: UUID) {
         try {
             viewModel.deleteReview(reviewId)
             val userReviewFragment = UserReviewFragment()
@@ -117,6 +122,18 @@ class UserReviewViewHolder(
             fragmentTransaction?.commit()
         } catch (e: Exception) {
             Log.d("myError", "Error: ${e.message}")
+        }
+    }
+    private fun formatDateWithSlashes(dateString: String): String {
+        try {
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+            val date = inputFormat.parse(dateString)
+
+            val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            return outputFormat.format(date)
+        } catch (e: Exception) {
+            Log.e("DateError", "Error formatting date: ${e.message}")
+            return dateString
         }
     }
 }

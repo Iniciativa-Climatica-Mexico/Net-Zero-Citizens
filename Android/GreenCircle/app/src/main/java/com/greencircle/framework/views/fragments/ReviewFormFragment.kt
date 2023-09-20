@@ -18,7 +18,8 @@ import com.greencircle.framework.viewmodel.ReviewFormViewModel
 
 class ReviewFormFragment : Fragment() {
     private var _binding: FragmentReviewFormBinding? = null
-    private val binding get() = _binding!!
+    private val binding
+        get() = _binding!!
 
     private lateinit var viewModel: ReviewFormViewModel
 
@@ -28,16 +29,17 @@ class ReviewFormFragment : Fragment() {
     private var companyId: String = ""
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         viewModel = ViewModelProvider(this)[ReviewFormViewModel::class.java]
 
         _binding = FragmentReviewFormBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        companyId = arguments?.getString("CompanyId") ?: "0"
+        companyId: UUID =
+        UUID.fromString(arguments?.getString("CompanyId")) ?: UUID.fromString("abcd-1234-efgh-5678")
 
         initializeRatingBar()
         initializeRatingBarListener()
@@ -79,14 +81,14 @@ class ReviewFormFragment : Fragment() {
 
         if (reviewTitle.isEmpty() && review.isNotEmpty()) {
             setTextInputError(
-                binding.titleTextField,
-                getString(R.string.no_title_form_review_error)
+                    binding.titleTextField,
+                    getString(R.string.no_title_form_review_error)
             )
             return false
         } else if (reviewTitle.isNotEmpty() && review.isEmpty()) {
             setTextInputError(
-                binding.reviewTextField,
-                getString(R.string.no_review_form_review_error)
+                    binding.reviewTextField,
+                    getString(R.string.no_review_form_review_error)
             )
             return false
         }
@@ -96,23 +98,47 @@ class ReviewFormFragment : Fragment() {
     }
 
     private fun initializeTextWatchers() {
-        binding.titleInput.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(titleInputEditable: Editable) {
-                isReviewComplete()
-            }
+        binding.titleInput.addTextChangedListener(
+                object : TextWatcher {
+                    override fun afterTextChanged(titleInputEditable: Editable) {
+                        isReviewComplete()
+                    }
 
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-        })
+                    override fun beforeTextChanged(
+                            s: CharSequence,
+                            start: Int,
+                            count: Int,
+                            after: Int
+                    ) {}
+                    override fun onTextChanged(
+                            s: CharSequence,
+                            start: Int,
+                            before: Int,
+                            count: Int
+                    ) {}
+                }
+        )
 
-        binding.reviewInput.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(reviewInputEditable: Editable) {
-                isReviewComplete()
-            }
+        binding.reviewInput.addTextChangedListener(
+                object : TextWatcher {
+                    override fun afterTextChanged(reviewInputEditable: Editable) {
+                        isReviewComplete()
+                    }
 
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-        })
+                    override fun beforeTextChanged(
+                            s: CharSequence,
+                            start: Int,
+                            count: Int,
+                            after: Int
+                    ) {}
+                    override fun onTextChanged(
+                            s: CharSequence,
+                            start: Int,
+                            before: Int,
+                            count: Int
+                    ) {}
+                }
+        )
     }
 
     private fun navigateToCompanyReviewFragment() {
@@ -121,10 +147,10 @@ class ReviewFormFragment : Fragment() {
         val fragmentTransaction = fragmentManager.beginTransaction()
 
         fragmentTransaction.setCustomAnimations(
-            R.anim.slide_in_right,
-            R.anim.slide_out_left,
-            R.anim.slide_in_left,
-            R.anim.slide_out_right
+                R.anim.slide_in_right,
+                R.anim.slide_out_left,
+                R.anim.slide_in_left,
+                R.anim.slide_out_right
         )
 
         fragmentTransaction.replace(R.id.frame_layout, companyContactFragment)
@@ -132,39 +158,43 @@ class ReviewFormFragment : Fragment() {
     }
 
     private fun postReview(rating: Int) {
-//        TODO: Cambiar userId por el del usuario logeado
+        //        TODO: Cambiar userId por el del usuario logeado
 
         if (companyId == "0") {
             Toast.makeText(
-                requireContext(),
-                getString(R.string.review_submit_error),
-                Toast.LENGTH_SHORT
-            ).show()
+                            requireContext(),
+                            getString(R.string.review_submit_error),
+                            Toast.LENGTH_SHORT
+                    )
+                    .show()
             return
         }
 
-        val userId = "8de45630-2e76-4d97-98c2-9ec0d1f3a5b8"
+        val uuid: UUID =
+        UUID.fromString(arguments?.getString("UUID")) ?: UUID.fromString("8de45630-2e76-4d97-98c2-9ec0d1f3a5b8"
+)
+
         val reviewBase = ReviewBase(reviewTitle, review, rating)
 
-        val res = runCatching {
-            viewModel.addReview(userId, companyId, reviewBase)
-        }
+        val res = runCatching { viewModel.addReview(userId, companyId, reviewBase) }
 
         if (res.isFailure) {
             Log.e("ReviewFormFragment", res.exceptionOrNull()?.message.toString())
             Toast.makeText(
-                requireContext(),
-                getString(R.string.review_submit_error),
-                Toast.LENGTH_SHORT
-            ).show()
+                            requireContext(),
+                            getString(R.string.review_submit_error),
+                            Toast.LENGTH_SHORT
+                    )
+                    .show()
             return
         }
 
         Toast.makeText(
-            requireContext(),
-            getString(R.string.review_submit_toast),
-            Toast.LENGTH_SHORT
-        ).show()
+                        requireContext(),
+                        getString(R.string.review_submit_toast),
+                        Toast.LENGTH_SHORT
+                )
+                .show()
 
         navigateToCompanyReviewFragment()
     }

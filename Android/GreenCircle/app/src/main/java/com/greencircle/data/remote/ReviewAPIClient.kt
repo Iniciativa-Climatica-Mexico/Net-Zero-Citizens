@@ -4,52 +4,47 @@ import android.util.Log
 import com.greencircle.domain.model.CompanyReviewObject
 import com.greencircle.domain.model.ReviewBase
 import com.greencircle.domain.model.UserReviewObject
+import java.util.UUID
 import okhttp3.ResponseBody
 import retrofit2.Response
 
 class ReviewAPIClient {
     private lateinit var api: ReviewAPIService
-    suspend fun getCompanyReviews(companyId: String): CompanyReviewObject? {
+    suspend fun getCompanyReviews(companyId: UUID): CompanyReviewObject? {
         api = ReviewNetworkModuleDI()
         return try {
             api.getCompanyReviews(companyId)
         } catch (e: java.lang.Exception) {
-            Log.d("customErr", e.toString())
             e.printStackTrace()
             null
         }
     }
 
-    suspend fun getUserReviews(userId: String): UserReviewObject? {
+    suspend fun getUserReviews(UUID: UUID): UserReviewObject? {
         api = ReviewNetworkModuleDI()
         return try {
             api.getUserReviews(userId)
         } catch (e: java.lang.Exception) {
-            Log.d("customErr", e.toString())
             e.printStackTrace()
             null
         }
     }
 
     suspend fun addReview(
-        userId: String,
-        companyId: String,
-        review: ReviewBase
+            UUID: UUID,
+            companyId: UUID,
+            review: ReviewBase
     ): Response<ResponseBody>? {
         api = ReviewNetworkModuleDI()
         return try {
             api.addReview(userId, companyId, review)
         } catch (e: java.lang.Exception) {
-            Log.d("customErr", e.toString())
             e.printStackTrace()
             null
         }
     }
 
-    suspend fun updateReview(
-        reviewId: String,
-        review: ReviewBase
-    ): Response<ResponseBody>? {
+    suspend fun updateReview(reviewId: UUID, review: ReviewBase): Response<ResponseBody>? {
         api = ReviewNetworkModuleDI()
         return try {
             api.updateReview(reviewId, review)
@@ -60,9 +55,7 @@ class ReviewAPIClient {
         }
     }
 
-    suspend fun deleteReview(
-        reviewId: String
-    ): Response<ResponseBody>? {
+    suspend fun deleteReview(reviewId: UUID): Response<ResponseBody>? {
         api = ReviewNetworkModuleDI()
         return try {
             api.deleteReview(reviewId)

@@ -15,11 +15,13 @@ import com.greencircle.databinding.FragmentCompanyReviewBinding
 import com.greencircle.domain.model.CompanyReview
 import com.greencircle.framework.ui.adapters.CompanyReviewAdapter
 import com.greencircle.framework.viewmodel.CompanyReviewViewModel
+import java.util.UUID
 
 class CompanyReviewFragment : Fragment() {
     private var _binding: FragmentCompanyReviewBinding? = null
 
-    private val binding get() = _binding!!
+    private val binding
+        get() = _binding!!
     private lateinit var viewModel: CompanyReviewViewModel
     private lateinit var recyclerView: RecyclerView
     private val adapter: CompanyReviewAdapter = CompanyReviewAdapter()
@@ -29,19 +31,21 @@ class CompanyReviewFragment : Fragment() {
 
     private var rating: Float = 0.0f
     private var reviewsCount: Int = 0
-    private var companyId: String = ""
+    private var companyId: UUID = UUID.fromString("comp-1234-efgh-0000")
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         viewModel = ViewModelProvider(this)[CompanyReviewViewModel::class.java]
         _binding = FragmentCompanyReviewBinding.inflate(inflater, container, false)
         val root: View = binding.root
         data = ArrayList()
 
-        companyId = arguments?.getString("CompanyId") ?: "0"
+        companyId =
+                UUID.fromString(arguments?.getString("CompanyId"))
+                        ?: UUID.fromString("comp-1234-efgh-0000")
         viewModel.setCompanyId(companyId)
         viewModel.getReviewsList()
 
@@ -80,10 +84,10 @@ class CompanyReviewFragment : Fragment() {
         val fragmentTransaction = fragmentManager.beginTransaction()
 
         fragmentTransaction.setCustomAnimations(
-            R.anim.slide_in_right,
-            R.anim.slide_out_left,
-            R.anim.slide_in_left,
-            R.anim.slide_out_right
+                R.anim.slide_in_right,
+                R.anim.slide_out_left,
+                R.anim.slide_in_left,
+                R.anim.slide_out_right
         )
 
         fragmentTransaction.replace(R.id.frame_layout, reviewFormFragment)
@@ -94,9 +98,7 @@ class CompanyReviewFragment : Fragment() {
     private fun initializeReviewFormButton() {
         reviewButton = binding.reviewButton
 
-        reviewButton.setOnClickListener {
-            navigateToReviewFormFragment()
-        }
+        reviewButton.setOnClickListener { navigateToReviewFormFragment() }
     }
 
     private fun setRating() {
@@ -104,8 +106,7 @@ class CompanyReviewFragment : Fragment() {
 
         ratingBar.setOnRatingBarChangeListener { _, rating, _ ->
             this.rating = rating
-            if (rating > 0.0f)
-                navigateToReviewFormFragment()
+            if (rating > 0.0f) navigateToReviewFormFragment()
         }
     }
 
@@ -150,7 +151,7 @@ class CompanyReviewFragment : Fragment() {
     private fun setUpRecyclerView(dataForList: ArrayList<CompanyReview>) {
         recyclerView.setHasFixedSize(true)
         val gridLayoutManager =
-            GridLayoutManager(requireContext(), 1, GridLayoutManager.VERTICAL, false)
+                GridLayoutManager(requireContext(), 1, GridLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = gridLayoutManager
         if (reviewsCount > 0) {
             showReviews()

@@ -7,7 +7,7 @@ import com.greencircle.databinding.ItemCompanyReviewBinding
 import com.greencircle.domain.model.CompanyReview
 
 class CompanyReviewViewHolder(private var binding: ItemCompanyReviewBinding) :
-    RecyclerView.ViewHolder(binding.root) {
+        RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: CompanyReview, context: Context) {
         val reviewTitle = item.reviewTitle

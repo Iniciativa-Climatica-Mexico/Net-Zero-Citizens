@@ -13,6 +13,7 @@ import com.greencircle.databinding.FragmentUserReviewBinding
 import com.greencircle.domain.model.UserReview
 import com.greencircle.framework.adapters.UserReviewAdapter
 import com.greencircle.framework.viewmodel.UserReviewViewModel
+import java.util.UUID
 
 class UserReviewFragment : Fragment() {
 
@@ -23,18 +24,18 @@ class UserReviewFragment : Fragment() {
     private val adapter: UserReviewAdapter = UserReviewAdapter()
 
     private lateinit var data: ArrayList<UserReview>
-    private var userId: String = arguments?.getString("userId") ?: "abcd-1234-efgh-5678"
+    private var userId: UUID = UUID.fromString(arguments?.getString("userId")) ?: UUID.fromString("abcd-1234-efgh-5678")
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProvider(this)[UserReviewViewModel::class.java]
         _binding = FragmentUserReviewBinding.inflate(inflater, container, false)
         val root: View = binding.root
         data = ArrayList()
 
+        viewModel = ViewModelProvider(this)[UserReviewViewModel::class.java]
         viewModel.setUUID(userId)
         viewModel.getUserReviewsList()
 
