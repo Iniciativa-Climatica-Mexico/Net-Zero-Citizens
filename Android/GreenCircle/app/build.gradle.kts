@@ -7,7 +7,7 @@ plugins {
     id("kotlin-android")
 
     // Klint
-    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    id("org.jlleitschuh.gradle.ktlint") version "11.6.0"
 
     // App Sweep
     id("com.guardsquare.appsweep") version "latest.release"
