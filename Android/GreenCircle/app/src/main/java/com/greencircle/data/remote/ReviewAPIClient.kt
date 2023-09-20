@@ -11,7 +11,6 @@ class ReviewAPIClient {
     private lateinit var api: ReviewAPIService
     suspend fun getCompanyReviews(companyId: String): CompanyReviewObject? {
         api = ReviewNetworkModuleDI()
-        Log.d("companyId", companyId)
         return try {
             api.getCompanyReviews(companyId)
         } catch (e: java.lang.Exception) {
@@ -21,11 +20,10 @@ class ReviewAPIClient {
         }
     }
 
-    suspend fun getUserReviews(UUID: String): UserReviewObject? {
+    suspend fun getUserReviews(userId: String): UserReviewObject? {
         api = ReviewNetworkModuleDI()
-        Log.d("UUID", UUID)
         return try {
-            api.getUserReviews(UUID)
+            api.getUserReviews(userId)
         } catch (e: java.lang.Exception) {
             Log.d("customErr", e.toString())
             e.printStackTrace()
@@ -34,13 +32,13 @@ class ReviewAPIClient {
     }
 
     suspend fun addReview(
-        UUID: String,
+        userId: String,
         companyId: String,
         review: ReviewBase
     ): Response<ResponseBody>? {
         api = ReviewNetworkModuleDI()
         return try {
-            api.addReview(UUID, companyId, review)
+            api.addReview(userId, companyId, review)
         } catch (e: java.lang.Exception) {
             Log.d("customErr", e.toString())
             e.printStackTrace()

@@ -5,6 +5,7 @@
     <string name="mapa">Mapa</string>
     <string name="perfil">Perfil</string>
     <string name="review_nested_scroll_desc">Scrollable content</string>
+    <string name="review_opinions_count">%d opiniones</string>
     <string name="review_form_title">Comparte tu opinión</string>
     <string name="review_rating_bar_label">¿Cómo calificarías la atención y servicio del proveedor?</string>
     <string name="review_bad_rating_title">Malo</string>
@@ -30,4 +31,9 @@
     <string name="servicios">Servicios</string>
     <string name="contacto">Contacto</string>
     <string name="rese_as">Reseñas</string>
+    <string name="review_submit_error">Hubo un error al publicar la review. Por favor intenta de nuevo más tarde</string>
+    <string name="review_placeholder_user">User</string>
+    <string name="review_placeholder_date">Date</string>
+    <string name="review_placeholder_title">Title</string>
+    <string name="review_placeholder_review">Review</string>
 </resources>

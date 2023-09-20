@@ -28,6 +28,7 @@ class CompanyReviewFragment : Fragment() {
     private lateinit var ratingBar: RatingBar
 
     private var rating: Float = 0.0f
+    private var reviewsCount: Int = 0
     private var companyId: String = ""
 
     override fun onCreateView(
@@ -40,15 +41,16 @@ class CompanyReviewFragment : Fragment() {
         val root: View = binding.root
         data = ArrayList()
 
-        companyId = arguments?.getString("companyId") ?: "comp-1234-efgh-0000"
-
+        companyId = arguments?.getString("CompanyId") ?: "0"
         viewModel.setCompanyId(companyId)
         viewModel.getReviewsList()
 
         initializeComponents(root)
         initializeObservers()
         initializeReviewFormButton()
+
         setRating()
+        setCompanyReviewsData()
 
         return root
     }
@@ -56,6 +58,11 @@ class CompanyReviewFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         ratingBar.rating = 0.0f
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getReviewsList()
     }
 
     override fun onDestroyView() {
@@ -66,7 +73,7 @@ class CompanyReviewFragment : Fragment() {
     private fun navigateToReviewFormFragment() {
         val bundle = Bundle()
         bundle.putString("CompanyId", companyId)
-        bundle.putFloat("rating", rating)
+        bundle.putFloat("RatingStars", rating)
         val reviewFormFragment = ReviewFormFragment()
         reviewFormFragment.arguments = bundle
         val fragmentManager = requireActivity().supportFragmentManager
@@ -106,9 +113,23 @@ class CompanyReviewFragment : Fragment() {
         recyclerView = root.findViewById(R.id.RV_Company_Review)
     }
 
+    private fun setCompanyReviewsData() {
+        val averageRating = arguments?.getFloat("AverageRating") ?: 0.0f
+        val averageRatingString = averageRating.toString()
+
+        binding.averageRating.text = averageRatingString
+        binding.averageRatingStars.rating = averageRating
+    }
+
+    private fun setReviewsCount() {
+        binding.countOpinions.text = getString(R.string.review_opinions_count, reviewsCount)
+    }
+
     private fun initializeObservers() {
         viewModel.reviewObjectLiveData.observe(viewLifecycleOwner) { companyReviewObject ->
             if (companyReviewObject != null) {
+                reviewsCount = companyReviewObject.rows.size
+                setReviewsCount()
                 setUpRecyclerView(companyReviewObject.rows)
             }
         }
@@ -131,7 +152,7 @@ class CompanyReviewFragment : Fragment() {
         val gridLayoutManager =
             GridLayoutManager(requireContext(), 1, GridLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = gridLayoutManager
-        if (dataForList.size > 0) {
+        if (reviewsCount > 0) {
             showReviews()
             adapter.CompanyReviewAdapter(dataForList, requireContext())
             recyclerView.adapter = adapter

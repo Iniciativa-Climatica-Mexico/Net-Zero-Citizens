@@ -12,8 +12,8 @@ object ReviewNetworkModuleDI {
     operator fun invoke(): ReviewAPIService {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
-            .addConverterFactory(gsonFactory)
             .client(okHttpClient)
+            .addConverterFactory(gsonFactory)
             .build()
             .create(ReviewAPIService::class.java)
     }

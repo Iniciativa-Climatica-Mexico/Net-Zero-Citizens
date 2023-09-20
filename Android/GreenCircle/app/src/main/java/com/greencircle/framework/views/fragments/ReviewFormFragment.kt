@@ -3,6 +3,7 @@ package com.greencircle.framework.views.fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,7 +37,7 @@ class ReviewFormFragment : Fragment() {
         _binding = FragmentReviewFormBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        companyId = arguments?.getString("companyId") ?: "comp-1234-efgh-0000"
+        companyId = arguments?.getString("CompanyId") ?: "0"
 
         initializeRatingBar()
         initializeRatingBarListener()
@@ -51,7 +52,7 @@ class ReviewFormFragment : Fragment() {
     }
 
     private fun initializeRatingBar() {
-        rating = arguments?.getFloat("rating") ?: 0.0f
+        rating = arguments?.getFloat("RatingStars") ?: 0.0f
         binding.ratingBar.rating = rating
     }
 
@@ -131,11 +132,33 @@ class ReviewFormFragment : Fragment() {
     }
 
     private fun postReview(rating: Int) {
-//        TODO: Cambiar UUID por el del usuario logueado
-        val UUID = "8de45630-2e76-4d97-98c2-9ec0d1f3a5b8"
+//        TODO: Cambiar userId por el del usuario logeado
+
+        if (companyId == "0") {
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.review_submit_error),
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+
+        val userId = "8de45630-2e76-4d97-98c2-9ec0d1f3a5b8"
         val reviewBase = ReviewBase(reviewTitle, review, rating)
 
-        viewModel.addReview(UUID, companyId, reviewBase)
+        val res = runCatching {
+            viewModel.addReview(userId, companyId, reviewBase)
+        }
+
+        if (res.isFailure) {
+            Log.e("ReviewFormFragment", res.exceptionOrNull()?.message.toString())
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.review_submit_error),
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
 
         Toast.makeText(
             requireContext(),

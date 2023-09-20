@@ -23,12 +23,16 @@ class ReviewRepository {
     }
 
     suspend fun addReview(
-        UUID: String,
+        userId: String,
         companyId: String,
         review: ReviewBase
     ): Response<ResponseBody>? {
-        val response = api.addReview(UUID, companyId, review)
-        Log.d("POST", response.toString())
+        val response = api.addReview(userId, companyId, review)
+        if (response != null && response.isSuccessful) {
+            Log.d("POST", response.toString())
+        } else {
+            Log.e("POST", "Error en la solicitud: $response")
+        }
         return response
     }
 

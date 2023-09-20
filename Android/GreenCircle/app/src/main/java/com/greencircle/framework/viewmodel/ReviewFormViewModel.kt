@@ -10,9 +10,9 @@ import kotlinx.coroutines.launch
 class ReviewFormViewModel : ViewModel() {
     private val addReviewRequirement = AddReviewRequirement()
 
-    fun addReview(UUID: String, companyId: String, review: ReviewBase) {
+    fun addReview(userId: String, companyId: String, review: ReviewBase) {
         viewModelScope.launch(Dispatchers.IO) {
-            addReviewRequirement(UUID, companyId, review)
+            addReviewRequirement(userId, companyId, review)
         }
     }
 }

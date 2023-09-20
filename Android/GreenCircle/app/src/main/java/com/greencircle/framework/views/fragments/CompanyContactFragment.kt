@@ -41,6 +41,7 @@ class CompanyContactFragment : Fragment() {
             // bundle para pasar los datos de contacto a CompanyContactInfoFragment
             val bundle = Bundle()
             bundle.putString("CompanyId", companyData?.companyId.toString())
+            bundle.putFloat("AverageRating", companyData?.score ?: 0.0f)
 
             companyReviewsFragment.arguments = bundle
 

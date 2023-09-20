@@ -139,21 +139,22 @@ export const getReviewByUser: RequestHandler<
  * @param req La request HTTP al servidor
  * @param res Un objeto con la review creada
  * @returns
- * - 400 si no se envía el UUID o el companyId
+ * - 400 si no se envía el userId o el companyId
  * - 200 si se crea la review
  * - 500 si ocurre un error en el servidor
  */
 
 export const addReview: RequestHandler<
-  { UUID: string; companyId: string },
+  { userId: string; companyId: string },
   string,
   { reviewTitle: string; review: string; score: number },
   NoRecord
 > = async (req, res) => {
-  const { UUID, companyId } = req.params
+  const { userId, companyId } = req.params
   const { reviewTitle, review, score } = req.body
-  if (!UUID || !companyId) {
-    res.status(400).json('Missing UUID or companyId')
+
+  if (!userId || !companyId) {
+    res.status(400).json('Missing userId or companyId')
     return
   }
   if (!review || !reviewTitle) {
@@ -164,7 +165,7 @@ export const addReview: RequestHandler<
     return
   }
   try {
-    await ReviewService.addReview(UUID, companyId, reviewTitle, review, score)
+    await ReviewService.addReview(userId, companyId, reviewTitle, review, score)
     res.status(200).send('Added review')
   } catch (error) {
     console.log(error)

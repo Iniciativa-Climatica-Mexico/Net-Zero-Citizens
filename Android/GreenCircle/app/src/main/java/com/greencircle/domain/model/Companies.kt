@@ -33,6 +33,7 @@ import java.util.UUID
  * @property status Estatus de la empresa
  * @property createdAt Fecha de creación de la empresa
  * @property updatedAt Fecha de actualización de la empresa
+ * @property score Calificación de la empresa
  */
 data class Companies(
     @SerializedName("companyId") val companyId: UUID,
@@ -61,5 +62,5 @@ data class Companies(
     @SerializedName("updatedAt") val updatedAt: Timestamp,
     @SerializedName("products") val products: ArrayList<Product> = arrayListOf(),
     @SerializedName("images") val companyImages: List<CompanyImages>? = listOf(),
-    @SerializedName("rating") val rating: Float? = null,
+    @SerializedName("score") val score: Float? = null,
 ) : Serializable
