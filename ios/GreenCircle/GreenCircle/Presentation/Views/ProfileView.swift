@@ -74,32 +74,46 @@ struct ProfileView: View {
                     }) {
                         Text("Mis Favoritos")
                             .foregroundColor(.white)
-                            .padding(.vertical, 16)
+                            .padding(.vertical, 12)
                             .padding(.horizontal)
                             .frame(maxWidth: .infinity)
                             .background(TitleBarColor.TitleBarColor)
                             .cornerRadius(8)
                     }
-                    .padding(.trailing, 4)
+                    .padding(.trailing, 10)
                     Button(action: {
                     }) {
 
                         NavigationLink(destination:  EditProfileView(modelUser: UserViewModel())) {
                                Text("Editar perfil")
                                 .foregroundColor(.white)
-                                .padding(.vertical, 16)
+                                .padding(.vertical, 12)
                                 .padding(.horizontal)
                                 .frame(maxWidth: .infinity)
                                 .background(TitleBarColor.TitleBarColor)
                                 .cornerRadius(8)
                            }
                     }
-                    .padding(.leading, 4) // Añade padding para crear espacio entre los botones
+                    .padding(.leading,10) // Añade padding para crear espacio entre los botones
+                    
+                    
                 }
                 .padding(.horizontal, 40) // Añade padding horizontal para que los botones no lleguen hasta el borde de la vista
                 .padding(.top, 24) // Reduciendo el padding top para acercar los botones
 
                 Spacer()
+                
+//--------------------Seccón de Reseñas-----------------------------------------
+                Text("Reseñas Escritas (0)")
+                    .font(.system(size: 20))
+                    .fontWeight(.bold)
+                    .padding(.top, 32)
+                    .padding(.leading)
+                    .foregroundColor(.black)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                ScrollView{
+                    //Aquí irán las tarjetas de reseñas
+                }
             }
             .padding(.top, 70)
             .onAppear {
@@ -107,7 +121,13 @@ struct ProfileView: View {
                     await modelUser.fetchUserById(idUser: "abcd-1234-efgh-5679")
                 }
             }
+            
+            
     }
+        
+        
+      
+
         .onAppear {
             Task {
                 // Nueva solicitud para obtener los datos actualizados del usuario
@@ -116,6 +136,9 @@ struct ProfileView: View {
                 }
             }
         }
+       
+        
+        
         
 }
 
