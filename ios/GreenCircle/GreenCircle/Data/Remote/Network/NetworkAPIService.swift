@@ -51,6 +51,6 @@ class NetworkAPIService {
     let requestTask = AF.request(url, method: .put,
                                  parameters: params,
                                  headers: headers).validate()
-    let response = await requestTask.serializingData().response
+    let _ = await requestTask.serializingData().response
   }
 }

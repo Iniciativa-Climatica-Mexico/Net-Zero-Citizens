@@ -14,6 +14,8 @@ struct CoordinatorView: View {
     case login
     case userRegister
     case userRegisterForm
+    case companyRegister
+    case companyRegisterForm
     case mainMenuView
     // case companyRegister
   }
@@ -24,21 +26,55 @@ struct CoordinatorView: View {
     Router($routes) { screen, _ in
       switch screen {
       case .login:
-        LoginView(goUserRegister: {routes.presentCover(.userRegister)},
-                  goForm: {routes.presentCover(.userRegisterForm)},
-                  goMainMenu: {routes.presentCover(.mainMenuView)})
+        LoginView(goUserRegister: goUserRegister,
+                  goForm: goCompanyRegister,
+                  goMainMenu: goUserForm,
+                  goCompanyRegister: goMainMenu)
         
       case .userRegister:
-        UserRegisterView(goLogin: {routes.goBackToRoot()},
-                         goForm: {routes.presentCover(.userRegisterForm)},
-                         goMainMenu: {routes.presentCover(.mainMenuView)})
+        UserRegisterView(goLogin: goLogin,
+                         goForm: goUserForm,
+                         goMainMenu: goMainMenu)
         
       case .userRegisterForm:
-        UserRegisterFormView(goMainMenu: {routes.presentCover(.mainMenuView)})
+        UserRegisterFormView(goMainMenu: goMainMenu)
+        
+      case .companyRegister:
+        CompanyRegisterView(goLogin: goLogin,
+                            goForm: goCompanyForm,
+                            goMainMenu: goMainMenu)
+        
+      case .companyRegisterForm:
+        MainMenuView()
+        
         
       case .mainMenuView:
         MainMenuView()
       }
     }
+  }
+  
+  private func goLogin() {
+    routes.goBackToRoot()
+  }
+  
+  private func goUserRegister() {
+    routes.presentCover(.userRegister)
+  }
+  
+  private func goUserForm() {
+    routes.presentCover(.userRegisterForm)
+  }
+  
+  private func goCompanyRegister() {
+    routes.presentCover(.companyRegister)
+  }
+  
+  private func goCompanyForm() {
+    routes.presentCover(.companyRegisterForm)
+  }
+  
+  private func goMainMenu() {
+    routes.presentCover(.mainMenuView)
   }
 }

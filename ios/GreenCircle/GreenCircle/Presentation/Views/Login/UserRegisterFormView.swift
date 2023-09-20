@@ -15,8 +15,8 @@ struct UserRegisterFormView: View {
   var goMainMenu: () -> Void
   
   var body: some View {
-    VStack {
-      UserRegisterHeaderView(
+    VStack(spacing: 10) {
+      RegisterHeaderView(
         mail: userData.user!.email,
         name: "\(userData.user!.first_name) \(userData.user!.last_name)")
       Spacer()
@@ -45,6 +45,7 @@ struct UserRegisterFormView: View {
           
           Toggle("", isOn: $viewModel.privacy)
         }
+        Spacer()
       }.padding(.horizontal)
       Spacer()
       MainButton("Continuar", action: {
@@ -81,7 +82,7 @@ struct UserRegisterFormView_Previews: PreviewProvider {
   }
 }
 
-struct UserRegisterHeaderView: View {
+struct RegisterHeaderView: View {
   var mail: String
   var name: String
   

@@ -12,6 +12,7 @@ struct LoginView: View {
   var goUserRegister: () -> Void
   var goForm: () -> Void
   var goMainMenu: () -> Void
+  var goCompanyRegister: () -> Void
   
   @StateObject var viewModel = LoginViewModel()
   @EnvironmentObject var user: UserData
@@ -67,7 +68,8 @@ struct LoginView_Previews: PreviewProvider {
   static var previews: some View {
     LoginView(goUserRegister: {},
               goForm: {},
-              goMainMenu: {})
+              goMainMenu: {},
+              goCompanyRegister: {})
   }
 }
 
@@ -81,10 +83,10 @@ struct HeaderView: View {
         .font(.largeTitle)
         .foregroundColor(.green)
       Text(title)
-        .font(.system(size: 45, weight: .bold))
+        .font(.system(size: 40, weight: .bold))
         .padding(.vertical)
       Text(subTitle)
-        .font(.system(size: 24))
+        .font(.system(size: 20))
       Spacer()
     }
     .padding(.horizontal)

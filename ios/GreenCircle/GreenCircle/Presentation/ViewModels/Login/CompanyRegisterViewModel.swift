@@ -1,13 +1,13 @@
 //
-//  UserRegisterViewModel.swift
+//  CompanyRegisterViewModel.swift
 //  GreenCircle
 //
-//  Created by Ricardo Adolfo Fernández Alvarado on 17/09/23.
+//  Created by Ricardo Adolfo Fernández Alvarado on 19/09/23.
 //
 
 import Foundation
 
-class UserRegisterViewModel: ObservableObject {
+class CompanyRegisterViewModel: ObservableObject {
   var useCase = GoogleSignInUseCase.shared
   
   @MainActor
