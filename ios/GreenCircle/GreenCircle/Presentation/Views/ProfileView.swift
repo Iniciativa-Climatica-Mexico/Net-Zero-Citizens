@@ -20,12 +20,9 @@ struct ProfileView: View {
         
         
         
-        
         ZStack {
             // Title Bar
             VStack {
-                
-                
                 TitleBarView(
                     title: "Mi Perfil",
                     leftIcon: nil,
@@ -37,23 +34,24 @@ struct ProfileView: View {
                 .offset(y: -60)
                 .navigationBarBackButtonHidden(true)
                 Spacer() // Esto empuja el TitleBarView hacia arriba
-               
             }
-            
-            
-            
+  //----------------------Perfil-------------------------------
             VStack {
+                
+                //Imagen provicional
                 Image("Sun")
                 .resizable() // Hacer que la imagen sea redimensionable
                 .frame(width: 100, height: 100)
                 
                 HStack {
+                    //Nombre del usuario
                     Text(modelUser.contentUser.firstName)
                         .foregroundColor(Color.black)
                         .font(.system(size: 16))
                         .fontWeight(.semibold)
                         .padding(.top, 10)
                         .padding(.bottom, 2)
+                    //Apellido del Usuario
                     Text(modelUser.contentUser.lastName)
                         .foregroundColor(Color.black)
                         .font(.system(size: 16))
@@ -62,17 +60,17 @@ struct ProfileView: View {
                         .padding(.bottom, 2)
                 }
                 
-
+                //Bot{on cerrar sesión con navegaci{on provicional
                 NavigationLink("Cerrar Sesión", destination: Example2View())
                     .foregroundColor(TitleBarColor.TitleBarColor)
                     .font(.system(size: 13))
                     .fontWeight(.bold)
                     .padding(.top, 4)
 
-                // Aquí están los dos nuevos botones
+//----------------------Botones------------------------------
                 HStack {
                     Button(action: {
-                        // Acción del primer botón
+                        // Implementación futura
                     }) {
                         Text("Mis Favoritos")
                             .foregroundColor(.white)
@@ -112,7 +110,7 @@ struct ProfileView: View {
     }
         .onAppear {
             Task {
-                // Realizar una nueva solicitud para obtener los datos actualizados del usuario
+                // Nueva solicitud para obtener los datos actualizados del usuario
                 do {
                     await modelUser.fetchUserById(idUser: "abcd-1234-efgh-5679")
                 }

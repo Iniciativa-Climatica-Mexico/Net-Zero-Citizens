@@ -8,21 +8,58 @@
 import SwiftUI
 
 struct EditProfileView: View {
-    @ObservedObject var modelUser: UserViewModel
+    
     @Environment(\.presentationMode) var presentationMode
+    @ObservedObject var modelUser: UserViewModel
     @State private var showAlert = false
-
+    @State private var newPassword: String = ""
+    @State private var confirmPassword: String = ""
+    @State private var passwordErrorMessage: String? = nil
+    @State private var estados = [
+        "Aguascalientes",
+        "Baja California",
+        "Baja California Sur",
+        "Campeche",
+        "Chiapas",
+        "Chihuahua",
+        "Ciudad de México",
+        "Coahuila",
+        "Colima",
+        "Durango",
+        "Estado de México",
+        "Guanajuato",
+        "Guerrero",
+        "Hidalgo",
+        "Jalisco",
+        "Michoacán",
+        "Morelos",
+        "Nayarit",
+        "Nuevo León",
+        "Oaxaca",
+        "Puebla",
+        "Querétaro",
+        "Quintana Roo",
+        "San Luis Potosí",
+        "Sinaloa",
+        "Sonora",
+        "Tabasco",
+        "Tamaulipas",
+        "Tlaxcala",
+        "Veracruz",
+        "Yucatán",
+        "Zacatecas"
+    ]
+    
     var body: some View {
         
         ZStack {
             // Title Bar
             VStack {
-                
                 TitleBarView(
                     title: "Editar Datos",
-                    leftIcon: "chevron.left",
+                    leftIcon: nil,//"chevron.left",
                     rightIcon: nil,
-                    leftDestination: { ProfileView(modelUser: UserViewModel())
+                    leftDestination: { //ProfileView(modelUser: UserViewModel())
                     },
                     rightDestination: { }
                 )
@@ -55,7 +92,7 @@ struct EditProfileView: View {
                             .padding(.bottom, 2)
                     }
                   
-
+                    //Botón cerrar sesión
                     NavigationLink("Cerrar Sesión", destination: Example2View()) //Esto va a ser con flowstacks
                         .foregroundColor(TitleBarColor.TitleBarColor)
                         .font(.system(size: 13))
@@ -63,8 +100,11 @@ struct EditProfileView: View {
                         .padding(.top, 8) // Añade padding para separar el botón del texto
                 }
                 .padding(.top, 70)
+                
                 ScrollView {
                     VStack(alignment: .leading) {
+                        
+                        //------------------------Field Nombre----------------------------------------------------------
                         Group {
                             Text("Nombre")
                                 .padding(.top, 16)
@@ -72,10 +112,12 @@ struct EditProfileView: View {
                                 .font(.system(size: 13))
                                 .fontWeight(.semibold)
                             TextField("Nombre", text: $modelUser.contentUser.firstName)
+                                .disableAutocorrection(true)
                                 .padding(.top, 3)
                                 .font(.system(size: 13))
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                         }
+                        //------------------------Field Primer Apellido----------------------------------------------------------
                         Group {
                             Text("Primer Apellido")
                                 .padding(.top, 16)
@@ -83,10 +125,12 @@ struct EditProfileView: View {
                                 .font(.system(size: 13))
                                 .fontWeight(.semibold)
                             TextField("Primer Apellido", text: $modelUser.contentUser.lastName)
+                                .disableAutocorrection(true)
                                 .padding(.top, 3)
                                 .font(.system(size: 13))
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                         }
+                        //------------------------Field Segundo Apellido----------------------------------------------------------
                         Group {
                             Text("Segundo Apellido")
                                 .padding(.top, 16)
@@ -94,16 +138,18 @@ struct EditProfileView: View {
                                 .font(.system(size: 13))
                                 .fontWeight(.semibold)
                             TextField("Segundo Apellido", text: Binding(get: {
-                            modelUser.contentUser.secondLastName ?? "Segundo Apellido"
+                                modelUser.contentUser.secondLastName ?? "" //Opcional
                             }, set: { newValue in
                                 modelUser.contentUser.secondLastName = newValue
                             }))
+                            .disableAutocorrection(true)
                             .padding(.top, 3)
                             .font(.system(size: 13))
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                         }
                         
                         HStack {
+                            //------------------------Picker Edad----------------------------------------------------------
                             VStack(alignment: .leading) {
                                 Text("Edad")
                                     .padding(.top, 16)
@@ -117,7 +163,7 @@ struct EditProfileView: View {
                                         .frame(height: 30)
                                     
                                     Picker("Edad", selection: $modelUser.contentUser.age) {
-                                        ForEach(0..<100) { i in
+                                        ForEach(1..<100) { i in
                                             Text("\(i)").tag(i)
                                         }
                                     }
@@ -130,6 +176,8 @@ struct EditProfileView: View {
                                 }
                             }
                             .padding(.trailing, 16) // Añade un padding para separar los dos VStack
+                            
+                            //------------------------Picker Sexo----------------------------------------------------------
                             VStack(alignment: .leading) {
                                 Text("Sexo")
                                     .padding(.top, 16)
@@ -141,8 +189,10 @@ struct EditProfileView: View {
                                         .stroke(Color.gray, lineWidth: 0.1)
                                         .frame(height: 30)
                                     Picker("Sexo", selection: $modelUser.contentUser.sex) {
-                                        Text("Femenino").tag("Femenino")
-                                        Text("Masculino").tag("Masculino")
+                                        Text("Femenino").tag("femenine")
+                                        Text("Masculino").tag("masculine")
+                                        Text("Otro").tag("other")
+                                        Text("---").tag("no_answer")
                                     }
                                     .pickerStyle(MenuPickerStyle())
                                     .padding(.top, 3)
@@ -150,9 +200,9 @@ struct EditProfileView: View {
                                     .font(.system(size: 11))
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .padding(.horizontal, 10)
-                                }
-                            }
+                                }                            }
                         }
+                        //------------------------Field Correo----------------------------------------------------------
                         Group {
                             Text("Correo Electrónico")
                                 .padding(.top, 16)
@@ -160,10 +210,45 @@ struct EditProfileView: View {
                                 .font(.system(size: 13))
                                 .fontWeight(.semibold)
                             TextField("Correo Electrónico", text: $modelUser.contentUser.email)
+                                .disableAutocorrection(true)
+                                .autocapitalization(.none)
                                 .padding(.top, 3)
                                 .font(.system(size: 13))
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                         }
+                        //------------------------Field Nueva contraseña----------------------------------------------------------
+                        Group {
+                            Text("Contraseña")
+                                .padding(.top, 16)
+                                .foregroundColor(Color("GreenColor"))
+                                .font(.system(size: 13))
+                                .fontWeight(.semibold)
+                            SecureField("Escribe una nueva contraseña", text: $newPassword)
+                                .disableAutocorrection(true)
+                                .padding(.top, 3)
+                                .font(.system(size: 13))
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                        }
+                        //------------------------Field Confirmar contraseña----------------------------------------------------------
+                        Group {
+                            Text("Confirmar Contraseña")
+                                .padding(.top, 16)
+                                .foregroundColor(Color("GreenColor"))
+                                .font(.system(size: 13))
+                                .fontWeight(.semibold)
+                            SecureField("Confirmar Contraseña", text: $confirmPassword)
+                                .disableAutocorrection(true)
+                                .padding(.top, 3)
+                                .font(.system(size: 13))
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                        }
+                        
+                        if let errorMessage = passwordErrorMessage { //Mensaje de error si no coinciden
+                            Text(errorMessage)
+                                .foregroundColor(.red)
+                                .font(.system(size: 12))
+                        }
+                        //------------------------Field Celular----------------------------------------------------------
                         Group {
                             Text("Celular")
                                 .padding(.top, 16)
@@ -176,6 +261,7 @@ struct EditProfileView: View {
                                 .font(.system(size: 13))
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                         }
+                        //------------------------Field Estado----------------------------------------------------------
                         Group {
                             VStack(alignment: .leading) {
                                 Text("Estado")
@@ -187,43 +273,10 @@ struct EditProfileView: View {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 5)
                                         .stroke(Color.gray, lineWidth: 0.1)
-                                        
+                                    
                                     
                                     Picker("Estado", selection: $modelUser.contentUser.state) {
-                                        ForEach([
-                                            "Aguascalientes",
-                                            "Baja California",
-//                                            "Baja California Sur",
-//                                            "Campeche",
-//                                            "Chiapas",
-//                                            "Chihuahua",
-//                                            "Ciudad de México",
-//                                            "Coahuila",
-//                                            "Colima",
-//                                            "Durango",
-//                                            "Estado de México",
-//                                            "Guanajuato",
-//                                            "Guerrero",
-//                                            "Hidalgo",
-//                                            "Jalisco",
-//                                            "Michoacán",
-//                                            "Morelos",
-//                                            "Nayarit",
-//                                            "Nuevo León",
-//                                            "Oaxaca",
-//                                            "Puebla",
-//                                            "Querétaro",
-//                                            "Quintana Roo",
-//                                            "San Luis Potosí",
-//                                            "Sinaloa",
-//                                            "Sonora",
-//                                            "Tabasco",
-//                                            "Tamaulipas",
-//                                            "Tlaxcala",
-//                                            "Veracruz",
-//                                            "Yucatán",
-//                                            "Zacatecas"
-                                        ], id: \.self) { estado in
+                                        ForEach(estados, id: \.self) { estado in
                                             Text(estado).tag(estado)
                                         }
                                     }
@@ -238,7 +291,9 @@ struct EditProfileView: View {
                         }
                     }
                     .padding()
+//------------------------Sección de botones----------------------------------------------------------
                     HStack {
+                        //Botón cancelar
                         Button(action: {
                             showAlert = true
                         }) {
@@ -266,8 +321,17 @@ struct EditProfileView: View {
                             )
                         }
                         
-                        
+                        //Botón guardar
                         Button(action: {
+                            
+                            //Verificar si passwords coinciden para ver si se puede guardar o manda error
+                            if newPassword == confirmPassword {
+                                    modelUser.contentUser.password = newPassword
+                                    passwordErrorMessage = nil
+                                } else {
+                                    passwordErrorMessage = "Las contraseñas no coinciden"
+                                }
+                            //Al guardar actualiza los datos
                             Task {
                                 let updatedUser = User(
                                     userId: modelUser.contentUser.userId,
@@ -291,9 +355,10 @@ struct EditProfileView: View {
                                     
                                 
                                 )
+                                //Updatear Usuarios
                                 await modelUser.updateUserData(updatedUserData: updatedUser, userId: "abcd-1234-efgh-5679")
-                            
-                                
+                                //Regresar a vista anterior
+                                self.presentationMode.wrappedValue.dismiss()
                             }
                         }) {
                             Text("Guardar")
@@ -307,7 +372,7 @@ struct EditProfileView: View {
                         .padding(.leading, 4) // Añade padding para crear espacio entre los botones
                     }
                     .padding(.horizontal, 20) // Añade padding horizontal para que los botones no lleguen hasta el borde de la vista
-                    .padding(.top, 24) // Reduciendo el padding top para acercar los botones
+                    .padding(.top, 24) // Reduce el padding top para acercar los botones
 
                     Spacer()
 

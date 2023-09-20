@@ -53,6 +53,8 @@ class UserViewModel: ObservableObject {
         } else {
             print("No se pudo obtener el usuario")
         }
+        
+        
     }
     func updateUserData(updatedUserData: User, userId: String) async {
             let resultUser = await updateUserDataUseCase.execute(updatedUserData: updatedUserData, userId: userId)

@@ -13,8 +13,9 @@ struct Example2View: View {
             TitleBarView(title: "Example 2",
                          leftIcon: "chevron.left",
                          rightIcon: nil,
-                         leftDestination: { ExampleView() },
+                         leftDestination: { Example2View() },
                          rightDestination: { })
+                .navigationBarBackButtonHidden(true)
                 .navigationBarBackButtonHidden(true)
                 .offset(y: -60)   
             ScrollView {

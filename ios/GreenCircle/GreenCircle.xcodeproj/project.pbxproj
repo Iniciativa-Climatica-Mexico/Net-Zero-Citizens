@@ -32,7 +32,6 @@
 		B3827F012AACF9A800AC7213 /* FetchUserDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3827F002AACF9A800AC7213 /* FetchUserDataUseCase.swift */; };
 		B3827F042AAD8FF300AC7213 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = B3827F032AAD8FF300AC7213 /* Alamofire */; };
 		B3E8EDDA2AA91E170050B051 /* TitleBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E8EDD92AA91E170050B051 /* TitleBarView.swift */; };
-		B3FC22802AA92B7E00582DAD /* ExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FC227F2AA92B7E00582DAD /* ExampleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,7 +80,6 @@
 		B3827EFE2AACF92700AC7213 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		B3827F002AACF9A800AC7213 /* FetchUserDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUserDataUseCase.swift; sourceTree = "<group>"; };
 		B3E8EDD92AA91E170050B051 /* TitleBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleBarView.swift; sourceTree = "<group>"; };
-		B3FC227F2AA92B7E00582DAD /* ExampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,7 +227,6 @@
 			children = (
 				B3E8EDD92AA91E170050B051 /* TitleBarView.swift */,
 				050AC1912ABA5A87003A0EDF /* NavBarTheme.swift */,
-				B3FC227F2AA92B7E00582DAD /* ExampleView.swift */,
 				B34AC9A72AA93C7500CE97AF /* Example2View.swift */,
 				B329A15F2AAA21D800C7921B /* ProfileView.swift */,
 				B35DBF332AB27A93006C4BB2 /* ProfileInformationView.swift */,
@@ -436,7 +433,6 @@
 				B3827EFD2AACF8C000AC7213 /* UserService.swift in Sources */,
 				B329A1622AAA2F7E00C7921B /* UserViewModel.swift in Sources */,
 				B329A1602AAA21D800C7921B /* ProfileView.swift in Sources */,
-				B3FC22802AA92B7E00582DAD /* ExampleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
