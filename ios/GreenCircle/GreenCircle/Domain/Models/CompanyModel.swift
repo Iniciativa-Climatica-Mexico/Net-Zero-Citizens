@@ -7,12 +7,14 @@
 
 import Foundation
 
+/// Enum representando el status de una compañía
 enum StatusEnum: String, Codable, Equatable {
   case approved = "approved"
   case pendingApproval = "pending_approval"
   case rejected = "rejected"
 }
 
+/// Struct representando la información presente en una compañía
 struct Company: Codable {
   var companyId: UUID
   var userId: String

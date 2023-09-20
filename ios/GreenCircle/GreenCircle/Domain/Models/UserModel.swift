@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Struct representando el usuario
 struct User: Codable, Identifiable {
   var id: String {uuid}
   

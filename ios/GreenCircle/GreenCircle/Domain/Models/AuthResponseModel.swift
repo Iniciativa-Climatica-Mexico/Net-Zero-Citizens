@@ -7,11 +7,13 @@
 
 import Foundation
 
+/// Struct representando los tokens
 struct Tokens: Codable {
   var authToken: String
   var refreshToken: String
 }
 
+/// Struct representando la respuesta del servidor en autenticación
 struct AuthResponse: Codable {
   var tokens: Tokens
   var user: User
