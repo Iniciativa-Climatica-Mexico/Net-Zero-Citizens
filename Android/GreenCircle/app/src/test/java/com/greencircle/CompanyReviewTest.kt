@@ -1,13 +1,14 @@
 package com.greencircle
 
 import com.greencircle.domain.model.Companies
+import com.greencircle.domain.model.CompanyReview
 import com.greencircle.domain.model.Status
-import java.sql.Timestamp
-import java.util.UUID
+import com.greencircle.domain.model.UserBase
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
-import org.junit.Assert.assertNull
 import org.junit.Test
+import java.sql.Timestamp
+import java.util.UUID
 
 /**
  * Pruebas unitarias para la clase CompanyReview
@@ -23,58 +24,28 @@ class CompanyReviewTest {
     @Test
     fun testCompanyReviewConstructor() {
         val timestamp = Timestamp(System.currentTimeMillis())
-        val status = Status.APPROVED
-        val company = Companies(
-            companyId = UUID(0, 1),
+        val companyReview = CompanyReview(
             userId = UUID(0, 1),
-            name = "Test Company",
-            description = "Test Description",
-            email = "company@test.com",
-            phone = "+52 442 123 4567",
-            webPage = null,
-            street = "Test Street",
-            streetNumber = 123,
-            city = "Test City",
-            state = "Test State",
-            zipCode = 12345,
-            latitude = 19.4326,
-            longitude = -99.1332,
-            profilePicture = "test.jpg",
-            pdfCurriculumUrl = "test.pdf",
-            pdfDicCdmxUrl = null,
-            pdfPeeFideUrl = null,
-            pdfGuaranteeSecurityUrl = "test.pdf",
-            pdfActaConstituyentesUrl = "test.pdf",
-            pdfIneUrl = "test.pdf",
-            status = status,
+            reviewId = UUID(0, 1),
+            companyId = UUID(0, 1),
+            reviewTitle = "Review title",
+            review = "Review comment",
+            rating = 5,
             createdAt = timestamp,
-            updatedAt = timestamp
+            updatedAt = timestamp,
+            user = UserBase("Jhon", "Doe")
         )
 
-        assertEquals(UUID(0, 1), company.companyId)
-        assertEquals(UUID(0, 1), company.userId)
-        assertEquals("Test Company", company.name)
-        assertEquals("Test Description", company.description)
-        assertEquals("company@test.com", company.email)
-        assertEquals("+52 442 123 4567", company.phone)
-        assertNull(company.webPage)
-        assertEquals("Test Street", company.street)
-        assertEquals(123, company.streetNumber)
-        assertEquals("Test City", company.city)
-        assertEquals("Test State", company.state)
-        assertEquals(12345, company.zipCode)
-        assertEquals(19.4326, company.latitude, 0.0)
-        assertEquals(-99.1332, company.longitude, 0.0)
-        assertEquals("test.jpg", company.profilePicture)
-        assertEquals("test.pdf", company.pdfCurriculumUrl)
-        assertNull(company.pdfDicCdmxUrl)
-        assertNull(company.pdfPeeFideUrl)
-        assertEquals("test.pdf", company.pdfGuaranteeSecurityUrl)
-        assertEquals("test.pdf", company.pdfActaConstituyentesUrl)
-        assertEquals("test.pdf", company.pdfIneUrl)
-        assertEquals(status, company.status)
-        assertEquals(timestamp, company.createdAt)
-        assertEquals(timestamp, company.updatedAt)
+        assertEquals(UUID(0, 1), companyReview.userId)
+        assertEquals(UUID(0, 1), companyReview.reviewId)
+        assertEquals(UUID(0, 1), companyReview.companyId)
+        assertEquals("Review title", companyReview.reviewTitle)
+        assertEquals("Review comment", companyReview.review)
+        assertEquals(5, companyReview.rating)
+        assertEquals(timestamp, companyReview.createdAt)
+        assertEquals(timestamp, companyReview.updatedAt)
+        assertEquals("Jhon", companyReview.user.firstName)
+        assertEquals("Doe", companyReview.user.lastName)
     }
 
     /**
@@ -82,64 +53,33 @@ class CompanyReviewTest {
      * Test de equals de la clase CompanyReview
      */
     @Test
-    fun testCompaniesEquals() {
+    fun testCompanyReviewEquals() {
         val timestamp = Timestamp(System.currentTimeMillis())
-        val status = Status.APPROVED
-        val company = Companies(
-            companyId = UUID(0, 1),
+        val companyReview1 = CompanyReview(
             userId = UUID(0, 1),
-            name = "Test Company",
-            description = "Test Description",
-            email = "company@test.com",
-            phone = "+52 442 123 4567",
-            webPage = null,
-            street = "Test Street",
-            streetNumber = 123,
-            city = "Test City",
-            state = "Test State",
-            zipCode = 12345,
-            latitude = 19.4326,
-            longitude = -99.1332,
-            profilePicture = "test.jpg",
-            pdfCurriculumUrl = "test.pdf",
-            pdfDicCdmxUrl = null,
-            pdfPeeFideUrl = null,
-            pdfGuaranteeSecurityUrl = "test.pdf",
-            pdfActaConstituyentesUrl = "test.pdf",
-            pdfIneUrl = "test.pdf",
-            status = status,
+            reviewId = UUID(0, 1),
+            companyId = UUID(0, 1),
+            reviewTitle = "Review title",
+            review = "Review comment",
+            rating = 5,
             createdAt = timestamp,
-            updatedAt = timestamp
+            updatedAt = timestamp,
+            user = UserBase("Jhon", "Doe")
         )
 
-        val company2 = Companies(
-            companyId = UUID(0, 1),
+        val companyReview2 = CompanyReview(
             userId = UUID(0, 1),
-            name = "Test Company",
-            description = "Test Description",
-            email = "company@test.com",
-            phone = "+52 442 123 4567",
-            webPage = null,
-            street = "Test Street",
-            streetNumber = 123,
-            city = "Test City",
-            state = "Test State",
-            zipCode = 12345,
-            latitude = 19.4326,
-            longitude = -99.1332,
-            profilePicture = "test.jpg",
-            pdfCurriculumUrl = "test.pdf",
-            pdfDicCdmxUrl = null,
-            pdfPeeFideUrl = null,
-            pdfGuaranteeSecurityUrl = "test.pdf",
-            pdfActaConstituyentesUrl = "test.pdf",
-            pdfIneUrl = "test.pdf",
-            status = status,
+            reviewId = UUID(0, 1),
+            companyId = UUID(0, 1),
+            reviewTitle = "Review title",
+            review = "Review comment",
+            rating = 5,
             createdAt = timestamp,
-            updatedAt = timestamp
+            updatedAt = timestamp,
+            user = UserBase("Jhon", "Doe")
         )
 
-        assertEquals(company, company2)
+        assertEquals(companyReview1, companyReview2)
     }
 
     /**
@@ -147,64 +87,33 @@ class CompanyReviewTest {
      * Test de not equals de la clase CompanyReview
      */
     @Test
-    fun testCompaniesNotEquals() {
+    fun testCompanyReviewsNotEquals() {
         val timestamp = Timestamp(System.currentTimeMillis())
-        val status = Status.APPROVED
-        val company = Companies(
-            companyId = UUID(0, 1),
+        val companyReview1 = CompanyReview(
             userId = UUID(0, 1),
-            name = "Test Company",
-            description = "Test Description",
-            email = "company@test.com",
-            phone = "+52 442 123 4567",
-            webPage = null,
-            street = "Test Street",
-            streetNumber = 123,
-            city = "Test City",
-            state = "Test State",
-            zipCode = 12345,
-            latitude = 19.4326,
-            longitude = -99.1332,
-            profilePicture = "test.jpg",
-            pdfCurriculumUrl = "test.pdf",
-            pdfDicCdmxUrl = null,
-            pdfPeeFideUrl = null,
-            pdfGuaranteeSecurityUrl = "test.pdf",
-            pdfActaConstituyentesUrl = "test.pdf",
-            pdfIneUrl = "test.pdf",
-            status = status,
+            reviewId = UUID(0, 1),
+            companyId = UUID(0, 1),
+            reviewTitle = "Review title",
+            review = "Review comment",
+            rating = 5,
             createdAt = timestamp,
-            updatedAt = timestamp
+            updatedAt = timestamp,
+            user = UserBase("Jhon", "Doe")
         )
 
-        val company2 = Companies(
-            companyId = UUID(0, 3),
-            userId = UUID(0, 2),
-            name = "Test Company",
-            description = "Test Description",
-            email = "company@test.com",
-            phone = "+52 442 123 4567",
-            webPage = null,
-            street = "Test Street",
-            streetNumber = 123,
-            city = "Test City",
-            state = "Test State",
-            zipCode = 12345,
-            latitude = 19.4326,
-            longitude = -99.1332,
-            profilePicture = "test.jpg",
-            pdfCurriculumUrl = "test.pdf",
-            pdfDicCdmxUrl = null,
-            pdfPeeFideUrl = null,
-            pdfGuaranteeSecurityUrl = "test.pdf",
-            pdfActaConstituyentesUrl = "test.pdf",
-            pdfIneUrl = "test.pdf",
-            status = status,
+        val companyReview2 = CompanyReview(
+            userId = UUID(0, 3),
+            reviewId = UUID(0, 2),
+            companyId = UUID(0, 1),
+            reviewTitle = "Review title",
+            review = "Review comment",
+            rating = 5,
             createdAt = timestamp,
-            updatedAt = timestamp
+            updatedAt = timestamp,
+            user = UserBase("Jhon", "Doe")
         )
 
-        assertNotEquals(company, company2)
+        assertNotEquals(companyReview1, companyReview2)
     }
 
     /**
@@ -214,61 +123,30 @@ class CompanyReviewTest {
     @Test
     fun testCompaniesHashCode() {
         val timestamp = Timestamp(System.currentTimeMillis())
-        val status = Status.APPROVED
-        val company = Companies(
-            companyId = UUID(0, 1),
+        val companyReview1 = CompanyReview(
             userId = UUID(0, 1),
-            name = "Test Company",
-            description = "Test Description",
-            email = "company@test.com",
-            phone = "+52 442 123 4567",
-            webPage = null,
-            street = "Test Street",
-            streetNumber = 123,
-            city = "Test City",
-            state = "Test State",
-            zipCode = 12345,
-            latitude = 19.4326,
-            longitude = -99.1332,
-            profilePicture = "test.jpg",
-            pdfCurriculumUrl = "test.pdf",
-            pdfDicCdmxUrl = null,
-            pdfPeeFideUrl = null,
-            pdfGuaranteeSecurityUrl = "test.pdf",
-            pdfActaConstituyentesUrl = "test.pdf",
-            pdfIneUrl = "test.pdf",
-            status = status,
+            reviewId = UUID(0, 1),
+            companyId = UUID(0, 1),
+            reviewTitle = "Review title",
+            review = "Review comment",
+            rating = 5,
             createdAt = timestamp,
-            updatedAt = timestamp
+            updatedAt = timestamp,
+            user = UserBase("Jhon", "Doe")
         )
 
-        val company2 = Companies(
-            companyId = UUID(0, 1),
+        val companyReview2 = CompanyReview(
             userId = UUID(0, 1),
-            name = "Test Company",
-            description = "Test Description",
-            email = "company@test.com",
-            phone = "+52 442 123 4567",
-            webPage = null,
-            street = "Test Street",
-            streetNumber = 123,
-            city = "Test City",
-            state = "Test State",
-            zipCode = 12345,
-            latitude = 19.4326,
-            longitude = -99.1332,
-            profilePicture = "test.jpg",
-            pdfCurriculumUrl = "test.pdf",
-            pdfDicCdmxUrl = null,
-            pdfPeeFideUrl = null,
-            pdfGuaranteeSecurityUrl = "test.pdf",
-            pdfActaConstituyentesUrl = "test.pdf",
-            pdfIneUrl = "test.pdf",
-            status = status,
+            reviewId = UUID(0, 1),
+            companyId = UUID(0, 1),
+            reviewTitle = "Review title",
+            review = "Review comment",
+            rating = 5,
             createdAt = timestamp,
-            updatedAt = timestamp
+            updatedAt = timestamp,
+            user = UserBase("Jhon", "Doe")
         )
 
-        assertEquals(company.hashCode(), company2.hashCode())
+        assertEquals(companyReview1.hashCode(), companyReview2.hashCode())
     }
 }
