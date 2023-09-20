@@ -48,6 +48,11 @@ const testData = [
 
 const exclude = ['createdAt', 'updatedAt']
 
+beforeEach(() => {
+  db.drop()
+  initDB()
+})
+
 describe('EcoInfo Service', () => {
   let getAllEcoinfo: sinon.SinonStub
 
