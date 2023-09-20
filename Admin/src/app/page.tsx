@@ -1,15 +1,11 @@
 'use client'
 
-import {
-  useState,
-  useEffect
-} from 'react'
+import { recoverTokens } from '@/utils/authUtils'
+import { useSession } from 'next-auth/react'
+import { useState, useEffect } from 'react'
 import { getPendingCompanies } from '@/api/v1/company'
 
-import {
-  Avatar,
-  AvatarImage
-} from '@/components/ui/avatar'
+import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -27,66 +23,73 @@ interface Company {
   name: string
   location: string
   profilePicture: string
-  state: string,
-  city: string,
-  street: string,
-  zipCode: string,
+  state: string
+  city: string
+  street: string
+  zipCode: string
   status: 'approved' | 'pending_approval' | 'rejected'
   email: string
 }
 
 export default function Home() {
+  const { data: session } = useSession()
+  const tokens = recoverTokens()
+
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 8
   const startIndex = (currentPage - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
-  const [pendingCompanies, setPendingCompanies] = useState<Company []>([])
+  const [pendingCompanies, setPendingCompanies] = useState<Company[]>([])
   const [searchTerm, setSearchTerm] = useState('')
 
   const fetchPending = async function fetchingPendingCompanies() {
     try {
-      const companies = await getPendingCompanies()
-      setPendingCompanies(companies)
-    } catch(error){
+      if (tokens.authToken !== null) {
+        const companies = await getPendingCompanies(tokens.authToken)
+        setPendingCompanies(companies)
+      }
+    } catch (error) {
       console.log('Fetch of companies was not succesful', error)
     }
   }
 
-  const filteredCompanies = pendingCompanies.filter((company) => company.name.toLowerCase().includes(searchTerm.toLowerCase()))
+  const filteredCompanies = pendingCompanies?.filter((company) =>
+    company.name.toLowerCase().includes(searchTerm.toLowerCase())
+  )
 
-  const handlePageChange = (newPage:number) => setCurrentPage(newPage)
+  const handlePageChange = (newPage: number) => setCurrentPage(newPage)
 
   useEffect(() => {
     fetchPending()
-  },[])
+  }, [])
 
   return (
     <>
-      <main className='border border-[#C1C9D2] m-[30px] mt-[15px] p-[20px] pb-5 rounded-lg'>
-        <h1 className='text-[20px] font-bold'>Descubre Proveedores</h1>
-        <div className='flex items-center py-4 gap-x-2'>
+      <main className="border border-[#C1C9D2] m-[30px] mt-[15px] p-[20px] pb-5 rounded-lg">
+        <h1 className="text-[20px] font-bold">Descubre Proveedores</h1>
+        <div className="flex items-center py-4 gap-x-2">
           <Input
-            placeholder='Busca un proveedor'
-            className='max-w-sm'
+            placeholder="Busca un proveedor"
+            className="max-w-sm"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <Table className='border border-[#C1C9D2] rounded'>
+        <Table className="border border-[#C1C9D2] rounded">
           <TableCaption></TableCaption>
 
           <TableHeader>
             <TableRow>
-              <TableHead className='w-[100px]'>Imagen</TableHead>
+              <TableHead className="w-[100px]">Imagen</TableHead>
               <TableHead>Nombre</TableHead>
               <TableHead>Correo</TableHead>
               <TableHead>Ubicacion</TableHead>
               <TableHead>Estado</TableHead>
-              <TableHead className='text-right'></TableHead>
+              <TableHead className="text-right"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredCompanies.slice(startIndex, endIndex).map((company) => (
+            {filteredCompanies?.slice(startIndex, endIndex).map((company) => (
               <TableRow key={company.companyId}>
                 <TableCell>
                   <Avatar>
@@ -112,10 +115,10 @@ export default function Home() {
             ))}
           </TableBody>
         </Table>
-        <div className='flex justify-end items-center pt-2 gap-x-2'>
+        <div className="flex justify-end items-center pt-2 gap-x-2">
           <Button
-            variant='outline'
-            className='px-4'
+            variant="outline"
+            className="px-4"
             onClick={() => {
               handlePageChange(currentPage - 1)
             }}
@@ -124,11 +127,11 @@ export default function Home() {
             Anterior
           </Button>
           <Button
-            variant='outline'
+            variant="outline"
             onClick={() => {
               handlePageChange(currentPage + 1)
             }}
-            disabled={endIndex >= filteredCompanies.length}
+            disabled={endIndex >= filteredCompanies?.length}
           >
             Siguiente
           </Button>
@@ -137,7 +140,3 @@ export default function Home() {
     </>
   )
 }
-
-
-
-
