@@ -1,6 +1,8 @@
 package com.greencircle.framework.views
-
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -12,6 +14,10 @@ import com.greencircle.framework.views.fragments.ProfileFragment
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var sharedPreferences: SharedPreferences
+
+    private val PREFS_NAME = "MyPrefsFile"
+    private val NOTIFICATIONS_ASKED_KEY = "notifications_asked"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +42,11 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+        sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val notificationsAsked = sharedPreferences.getBoolean(NOTIFICATIONS_ASKED_KEY, false)
+        if (!notificationsAsked) {
+            showNotificationConfirmationDialog()
+        }
     }
 
     private fun replaceFragment(fragment: Fragment) {
@@ -43,5 +54,29 @@ class MainActivity : AppCompatActivity() {
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frame_layout, fragment)
         fragmentTransaction.commit()
+    }
+    private fun showNotificationConfirmationDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Activar Notificaciones")
+        builder.setMessage("¿Desea activar las notificaciones?")
+        builder.setPositiveButton("Sí") { _, _ ->
+            enableNotifications()
+        }
+        builder.setNegativeButton("No") { dialog, _ ->
+            dialog.dismiss()
+            markNotificationsAsAsked()
+        }
+        builder.show()
+    }
+
+    private fun enableNotifications() {
+        // Aquí va tu código para habilitar las notificaciones
+        markNotificationsAsAsked()
+    }
+
+    private fun markNotificationsAsAsked() {
+        val editor = sharedPreferences.edit()
+        editor.putBoolean(NOTIFICATIONS_ASKED_KEY, true)
+        editor.apply()
     }
 }

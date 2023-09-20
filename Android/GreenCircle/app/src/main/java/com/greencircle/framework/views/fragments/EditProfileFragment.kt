@@ -54,6 +54,9 @@ class EditProfileFragment : Fragment() {
             binding.inputSegundoApellido.setText(user.secondLastName)
             binding.inputEdad.setText(user.age.toString())
             binding.inputSexo.setText(user.sex)
+            binding.inputCorreoElectronico.setText(user.email)
+            binding.inputContrasena.setText(user.password)
+            binding.inputConfirmarContrasena.setText(user.password)
             binding.inputTelefono.setText(user.phoneNumber)
             binding.inputEstado.setText(user.state)
             // binding.profileImage.setImageResource(user.profilePicture)
@@ -85,14 +88,23 @@ class EditProfileFragment : Fragment() {
     }
     private fun InitializeAceptarCambiosButton() {
         binding.aceptarCambiosButton.setOnClickListener {
-            updateUser()
-            Toast.makeText(
-                requireContext(), "Los cambios fueron realizados con éxito", Toast.LENGTH_SHORT
-            ).show()
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.frame_layout, ProfileFragment())
-            transaction.addToBackStack("profileFragment")
-            transaction.commit()
+            if
+            (binding.inputContrasena.text.toString()
+                == binding.inputConfirmarContrasena.text.toString()
+            ) {
+                updateUser()
+                Toast.makeText(
+                    requireContext(), "Los cambios fueron realizados con éxito", Toast.LENGTH_SHORT
+                ).show()
+                val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.frame_layout, ProfileFragment())
+                transaction.addToBackStack("profileFragment")
+                transaction.commit()
+            } else {
+                Toast.makeText(
+                    requireContext(), "Las contraseñas no coinciden", Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
     // function to go back to fragment profile if user cancels changes
