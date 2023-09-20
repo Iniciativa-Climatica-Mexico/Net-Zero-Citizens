@@ -2,14 +2,14 @@ package com.greencircle.domain.model
 import java.util.UUID
 
 /**
- * This class is used to store the company summary data
- * @property companyId: UUID of the company
- * @property name: Name of the company
- * @property city: City of the company
- * @property state: State of the company
- * @property rating: Rating of the company
- * @property profilePicture: Profile picture of the company (optional)
-*/
+ * Esta clase se utiliza para almacenar los datos de resumen de la empresa
+ * @property companyId: UUID de la empresa
+ * @property name: Nombre de la empresa
+ * @property city: Ciudad de la empresa
+ * @property state: Estado donde se encuentra la empresa
+ * @property rating: Calificación de la empresa
+ * @property profilePicture: Imagen de perfil de la empresa
+ */
 data class CompanySummary(
     val companyId: UUID,
     val name: String,

@@ -7,8 +7,10 @@ import com.greencircle.databinding.CatalogueCardLayoutBinding
 import com.greencircle.domain.model.CompanySummary
 
 /**
- * This class is used to store the company summary data
- * @property binding: Binding object for the catalogue card layout
+ * Esta clase se utiliza para almacenar los datos de resumen
+ * de la empresa y crear la vista de la tarjeta del
+ * catálogo de la empresa
+ * @property binding: Objeto CatalogueCardLayoutBinding
  * @constructor CatalogueViewHolder
  */
 
@@ -16,9 +18,10 @@ class CatalogueViewHolder(private val binding: CatalogueCardLayoutBinding) : Rec
 .ViewHolder(binding.root) {
 
 /**
-     * This function is used to bind the company summary data to the view
-     * @param companySummary: CompanySummary object to store the company summary data
-*/
+     * Esta función se utiliza para vincular los datos de resumen de la empresa
+     * con la vista de la tarjeta del catálogo de la empresa
+     * @param companySummary: Objeto CompanySummary
+     */
 
     fun bind(companySummary: CompanySummary) {
         binding.companyName.text = companySummary.name

@@ -10,7 +10,7 @@ import com.greencircle.framework.views.fragments.CatalogueFragment
 import com.greencircle.framework.views.fragments.HomeFragment
 
 /**
- * This class is used to manage the main activity
+ * Esta clase se utiliza para crear la actividad principal de la aplicación
  */
 class MainActivity : AppCompatActivity() {
 
@@ -18,8 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bottomNavigationView: BottomNavigationView
 
     /**
-     * This function is used to create the activity and replace the
-     * fragment when the item is selected from the bottom navigation view
+     * Esta función se utiliza para crear la actividad principal de la aplicación
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,9 +48,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * This function is used to replace the fragment when the item is
-     * selected from the bottom navigation view
-     * @param fragment: Fragment object
+     * Esta función se utiliza para reemplazar el fragmento actual con el fragmento dado como parámetro
+     * @param fragment: Objeto Fragment
      */
 
     private fun replaceFragment(fragment: Fragment) {

@@ -6,14 +6,15 @@ import com.greencircle.domain.model.CompanySummary
 import java.util.UUID
 
 /**
- * This class is used to manage the company summary data
-*/
+ * Esta clase se utiliza para almacenar los datos de resumen de
+ * la empresa y crear la vista de la tarjeta del catálogo de la empresa
+ */
 
 class CatalogueViewModel : ViewModel() {
     val catalogueLiveData = MutableLiveData<ArrayList<CompanySummary>>()
 
     /**
-     * This function is used to get the company summary list
+     * Esta función se utiliza para obtener la lista de resumen de la empresa
      */
 
     fun getCompanySummaryList() {

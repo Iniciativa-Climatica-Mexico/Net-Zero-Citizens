@@ -9,7 +9,9 @@ import com.greencircle.domain.model.CompanySummary
 import com.greencircle.framework.ui.adapters.viewholders.CatalogueViewHolder
 
 /**
- * This class is used to manage the company summary data
+ * Esta clase se utiliza para almacenar los datos de
+ * resumen de la empresa y crear la vista de la
+ * tarjeta del catálogo de la empresa
  */
 
 class CatalogueAdapter : RecyclerView.Adapter<CatalogueViewHolder>() {
@@ -17,9 +19,9 @@ class CatalogueAdapter : RecyclerView.Adapter<CatalogueViewHolder>() {
     lateinit var context: Context
 
     /**
-     * This function is used to initialize the custom adapter
-     * @param data: ArrayList of CompanySummary objects
-     * @param context: Context of the application
+     * Esta función se utiliza para inicializar el adaptador personalizado
+     * @param data: Lista de objetos CompanySummary
+     * @param context: Contexto de la aplicación
      * */
     fun initCustomAdapter(data: ArrayList<CompanySummary>, context: Context) {
         this.data = data
@@ -27,9 +29,11 @@ class CatalogueAdapter : RecyclerView.Adapter<CatalogueViewHolder>() {
     }
 
     /**
-     * This function is used to create the view holder
-     * @param viewGroup: ViewGroup object
-     * @param i: Integer value
+     * Esta función se utiliza para crear la
+     * vista de la tarjeta del catálogo de la empresa
+     * @param viewGroup: Objeto ViewGroup
+     * @param i: Valor entero
+     * @return Objeto CatalogueViewHolder
      */
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CatalogueViewHolder {
@@ -42,9 +46,9 @@ class CatalogueAdapter : RecyclerView.Adapter<CatalogueViewHolder>() {
     }
 
     /**
-     * This function is used to bind the view holder
-     * @param viewHolder: ViewHolder for the catalogue card layout
-     * @param position: Integer value
+     * Esta función se utiliza para vincular los datos de resumen de la empresa
+     * @param viewHolder: ViewHolder de la tarjeta del catálogo de la empresa
+     * @param position: Posición de la tarjeta del catálogo de la empresa en la lista
      */
     override fun onBindViewHolder(viewHolder: CatalogueViewHolder, position: Int) {
         val item = data[position]
@@ -52,8 +56,8 @@ class CatalogueAdapter : RecyclerView.Adapter<CatalogueViewHolder>() {
     }
 
     /**
-     * This function is used to get the item count
-     * @return Integer value
+     * Esta función se utiliza para obtener el número de elementos de la lista
+     * @return Valor entero
      */
     override fun getItemCount(): Int {
         return data.size
