@@ -5,7 +5,7 @@ export default class CompanyBootstrap extends Bootstrapper {
   async run() {
     Company.bulkCreate([
       {
-        companyId: 'comp-1234-efgh-0000',
+        companyId: 'f47ac10b-58cc-4372-a567-0e02b2c3d479',
         userId: 'abcd-1234-efgh-5679',
         name: 'Company 1',
         description: 'Company 1 description',
@@ -30,7 +30,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         status: 'pending_approval',
       },
       {
-        companyId: 'comp-1234-efgh-0001',
+        companyId: '3d6f0f67-40e5-4d58-8cb9-02b8d7a9d140',
         userId: 'abcd-1234-efgh-5680',
         name: 'Company 2',
         description: 'Company 2 description',
@@ -55,7 +55,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         status: 'pending_approval',
       },
       {
-        companyId: 'comp-1234-efgh-0002',
+        companyId: '5a8f29b5-98f0-41c4-a98f-0fb8ec22d7e7',
         userId: 'abcd-1234-efgh-5681',
         name: 'Company 3',
         description: 'Company 3 description',
@@ -80,7 +80,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         status: 'pending_approval',
       },
       {
-        companyId: 'comp-1234-efgh-0003',
+        companyId: '7e20e812-632e-4c25-8124-326f236db9bf',
         userId: 'abcd-1234-efgh-5682',
         name: 'Company 4',
         description: 'Company 4 description',
@@ -105,7 +105,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         status: 'pending_approval',
       },
       {
-        companyId: 'comp-1234-efgh-0004',
+        companyId: '2b5de26a-041d-4ea6-a144-3e36c0e28961',
         userId: 'abcd-1234-efgh-5683',
         name: 'Company 5',
         description: 'Company 5 description',
@@ -130,7 +130,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         status: 'pending_approval',
       },
       {
-        companyId: 'comp-1234-efgh-0005',
+        companyId: '6d5e7b2d-9c1e-4d4e-baa7-07b0b874401c',
         userId: 'abcd-1234-efgh-5684',
         name: 'Company 6',
         description: 'Company 6 description',
@@ -155,7 +155,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         status: 'pending_approval',
       },
       {
-        companyId: 'comp-1234-efgh-0006',
+        companyId: '8a604e88-74f3-4f4e-8b64-836bfa86b5d2',
         userId: 'abcd-1234-efgh-5685',
         name: 'Company 7',
         description: 'Company 7 description',
@@ -180,7 +180,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         status: 'pending_approval',
       },
       {
-        companyId: 'comp-1234-efgh-0007',
+        companyId: 'bc0f09b1-22b0-4a54-a9f0-5935c9590aeb',
         userId: 'abcd-1234-efgh-5686',
         name: 'Company 8',
         description: 'Company 8 description',
@@ -205,7 +205,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         status: 'pending_approval',
       },
       {
-        companyId: 'comp-1234-efgh-0008',
+        companyId: 'e6ad188a-5baf-4b95-8c16-5a11d10a7ebc',
         userId: 'abcd-1234-efgh-5687',
         name: 'Company 9',
         description: 'Company 9 description',
@@ -230,7 +230,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         status: 'approved',
       },
       {
-        companyId: 'comp-1234-efgh-0009',
+        companyId: 'f17ff7a5-d808-43f9-af1a-127f6f0c1b4e',
         userId: 'abcd-1234-efgh-5688',
         name: 'Company 10',
         description: 'Company 10 description',
