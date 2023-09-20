@@ -20,7 +20,7 @@ import com.greencircle.databinding.ItemOpenAnswerFieldBinding
 import com.greencircle.databinding.ItemScaleAnswerFieldBinding
 import com.greencircle.domain.model.survey.Question
 import com.greencircle.domain.model.survey.QuestionType
-import com.greencircle.framework.views.SurveyActivity
+import com.greencircle.framework.views.activities.SurveyActivity
 
 class QuestionFragment : Fragment() {
     lateinit var question: Question
