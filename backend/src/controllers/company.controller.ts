@@ -44,23 +44,33 @@ export const getAllCompanies: RequestHandler<
  */
 export const createCompany: RequestHandler<
   NoRecord,
-  {companyId: string, message?: string, error?: string},
-  {company: Company},
+  { companyId: string; message?: string; error?: string },
+  { company: Company },
   NoRecord
-  > = async (req, res) => {
-    try {
-      if(!req.body.company) return res.status(400).json({ companyId: '', error: 'Missing company data'})
-      const company = req.body.company
-    
-      const newCompany = await CompanyService.createCompany(company)    
+> = async (req, res) => {
+  try {
+    if (!req.body.company)
+      return res
+        .status(400)
+        .json({ companyId: '', error: 'Missing company data' })
+    const company = req.body.company
 
-      if(!newCompany) return res.status(400).json({ companyId: '', error: 'Error creating company'})
+    const newCompany = await CompanyService.createCompany(company)
+    console.log(newCompany)
 
-      return res.json({ companyId: newCompany?.dataValues.companyId, message: 'Company created'})
-    } catch (error) {
-      res.status(400).json({ companyId: '', error: 'Error creating company'})
-    }
+    if (!newCompany)
+      return res
+        .status(400)
+        .json({ companyId: '', error: 'Error creating company' })
+
+    return res.json({
+      companyId: newCompany?.dataValues.companyId,
+      message: 'Company created',
+    })
+  } catch (error) {
+    res.status(400).json({ companyId: '', error: 'Error creating company' })
   }
+}
 
 /**
  * @brief
@@ -71,19 +81,36 @@ export const createCompany: RequestHandler<
  */
 export const addProduct: RequestHandler<
   NoRecord,
-  {companyProductId: string, message?: string, error?: string},
-  {companyProduct: CompanyProduct},
+  { companyProductId: string; message?: string; error?: string },
+  { companyProduct: CompanyProduct },
   NoRecord
-  > = async (req, res) => {
-    try {
-      if(!req.body.companyProduct) res.status(400).json({ companyProductId: '', error: 'Missing company or product data'})
-      const company = req.body.companyProduct
-      const newCompanyProduct = await CompanyService.addProduct(company)    
+> = async (req, res) => {
+  try {
+    if (!req.body.companyProduct)
+      res
+        .status(400)
+        .json({
+          companyProductId: '',
+          error: 'Missing company or product data',
+        })
+    const company = req.body.companyProduct
+    const newCompanyProduct = await CompanyService.addProduct(company)
 
-      if(!newCompanyProduct) res.status(400).json({ companyProductId: '', error: 'Error adding product to company'})
-      
-      res.json({ companyProductId: newCompanyProduct?.dataValues.companyId, message: 'Product added to company'})
-    } catch (error) {
-      res.status(400).json({ companyProductId: '', error: 'Error adding product to company'})
-    }
+    if (!newCompanyProduct)
+      res
+        .status(400)
+        .json({
+          companyProductId: '',
+          error: 'Error adding product to company',
+        })
+
+    res.json({
+      companyProductId: newCompanyProduct?.dataValues.companyId,
+      message: 'Product added to company',
+    })
+  } catch (error) {
+    res
+      .status(400)
+      .json({ companyProductId: '', error: 'Error adding product to company' })
   }
+}

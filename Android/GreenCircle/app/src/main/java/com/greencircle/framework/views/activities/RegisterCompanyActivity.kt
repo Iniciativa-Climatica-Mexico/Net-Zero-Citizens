@@ -38,12 +38,15 @@ class RegisterCompanyActivity : AppCompatActivity() {
      * @param fragment El fragmento que se va a mostrar.
      * @param data Un Bundle opcional de argumentos que contiene la información de la cuenta de Google.
      */
-    fun replaceFragment(fragment: Fragment, data: Bundle? = null) {
+    fun replaceFragment(fragment: Fragment, data: Bundle? = null, addToBackStack: Boolean = true) {
         fragment.arguments = data
         val fragmentManager = supportFragmentManager
         var fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.register_company_fragment, fragment)
-        fragmentTransaction.addToBackStack(null)
+
+        if (addToBackStack) {
+            fragmentTransaction.addToBackStack(null)
+        }
         fragmentTransaction.commit()
     }
 

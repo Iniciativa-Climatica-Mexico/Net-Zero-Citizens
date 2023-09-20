@@ -49,6 +49,8 @@
 		6CE09C0D2ABAA72B0011C94B /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE09C0C2ABAA72B0011C94B /* Error.swift */; };
 		6CE4843D2AB889810015CAC2 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE4843C2AB889810015CAC2 /* UserData.swift */; };
 		6CE4843F2AB8AD020015CAC2 /* UserRegisterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE4843E2AB8AD020015CAC2 /* UserRegisterUseCase.swift */; };
+		6C9761832AB2B45D0046DB50 /* DummyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9761822AB2B45D0046DB50 /* DummyModel.swift */; };
+		6C9761872AB2B65C0046DB50 /* DummyRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9761862AB2B65C0046DB50 /* DummyRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +113,8 @@
 		6CE09C0C2ABAA72B0011C94B /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		6CE4843C2AB889810015CAC2 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		6CE4843E2AB8AD020015CAC2 /* UserRegisterUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegisterUseCase.swift; sourceTree = "<group>"; };
+		6C9761822AB2B45D0046DB50 /* DummyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyModel.swift; sourceTree = "<group>"; };
+		6C9761862AB2B65C0046DB50 /* DummyRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,7 +235,6 @@
 		6C4452E22AA6F05F00BE5930 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				6C4452E82AA6F09D00BE5930 /* Models */,
 				6C4452E72AA6F09500BE5930 /* UseCases */,
 			);
 			path = Domain;
@@ -240,6 +243,7 @@
 		6C4452E32AA6F06700BE5930 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				6C4452E82AA6F09D00BE5930 /* Models */,
 				6C4452EA2AA6F0AE00BE5930 /* Remote */,
 				6C4452E92AA6F0A800BE5930 /* Repository */,
 			);
@@ -290,6 +294,7 @@
 				6C5F19CF2AB7BEC5007D3D44 /* UserModel.swift */,
 				6C00A8672AB7C06600E34A8A /* AuthResponseModel.swift */,
 				6CE09BFF2ABA778A0011C94B /* CompanyModel.swift */,
+				6C9761822AB2B45D0046DB50 /* DummyModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -299,6 +304,7 @@
 			children = (
 				6C5F19CD2AB7BCAA007D3D44 /* UserRepository.swift */,
 				6CE09C062ABA8F520011C94B /* CompanyRepository.swift */,
+				6C9761862AB2B65C0046DB50 /* DummyRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -512,6 +518,8 @@
 				6CB4983C2AB12C5800B6560C /* LinkButton.swift in Sources */,
 				6CB498382AB10B0800B6560C /* CornerRadiusExtension.swift in Sources */,
 				6CE09C002ABA778A0011C94B /* CompanyModel.swift in Sources */,
+				6C9761832AB2B45D0046DB50 /* DummyModel.swift in Sources */,
+				6C9761872AB2B65C0046DB50 /* DummyRepository.swift in Sources */,
 				6C4452B82AA6EF8500BE5930 /* GreenCircleApp.swift in Sources */,
 				6CE09BF82ABA37A20011C94B /* CompanyRegisterView.swift in Sources */,
 				6CE09BFE2ABA76CD0011C94B /* CompanyRegisterFormViewModel.swift in Sources */,

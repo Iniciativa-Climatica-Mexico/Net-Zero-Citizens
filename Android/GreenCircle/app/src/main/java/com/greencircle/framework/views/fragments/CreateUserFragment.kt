@@ -75,12 +75,8 @@ class CreateUserFragment : Fragment() {
         viewModel.googleLoginResult.observe(viewLifecycleOwner) { result ->
             // Handle the result here
             if (result != null) {
-                if (result.user.roles != "new_user") {
-                    navigateToHome()
-                } else {
-                    authToken = result.tokens.authToken
-                    uuid = result.user.uuid
-                }
+                authToken = result.tokens.authToken
+                uuid = result.user.uuid
             } else {
                 Log.d("CreateUserFragment", "Google login failed")
             }
@@ -114,12 +110,14 @@ class CreateUserFragment : Fragment() {
         val age = ageInputLayout.editText?.text.toString()
         val state = stateInputLayout.editText?.text.toString()
         val gender = genderInputLayout.editText?.text.toString()
+        val roleId = "CUSTOMER_ROLE_ID"
 
         val userInfo: UserAPIService.UpdateUserRequest = UserAPIService.UpdateUserRequest(
             phone,
             age,
             state,
-            gender
+            gender,
+            roleId,
         )
 
         viewModel.updateUser(uuid, userInfo, authToken)
@@ -151,6 +149,7 @@ class CreateUserFragment : Fragment() {
      */
     private fun navigateToHome() {
         var intent: Intent = Intent(requireContext(), MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
 }
