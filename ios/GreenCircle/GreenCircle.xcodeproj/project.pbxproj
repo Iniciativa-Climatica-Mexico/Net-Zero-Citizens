@@ -23,6 +23,8 @@
 		C40F9DF52AAA26E600F00028 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C40F9DF42AAA26E600F00028 /* .swiftlint.yml */; };
 		C40F9DF72AAA2D3A00F00028 /* ContactCompanyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40F9DF62AAA2D3900F00028 /* ContactCompanyView.swift */; };
 		C417D9AA2AB51A7500B80B85 /* CompanyViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C417D9A92AB51A7500B80B85 /* CompanyViewModelTest.swift */; };
+		C42F22BD2ABA78B8009AB61C /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42F22BC2ABA78B7009AB61C /* TabBarView.swift */; };
+		C42F22C02ABAACDE009AB61C /* TabBarTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42F22BF2ABAACDE009AB61C /* TabBarTheme.swift */; };
 		C45AC64C2AAD3A82005F2F6C /* FetchCompanyDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45AC64B2AAD3A82005F2F6C /* FetchCompanyDataUseCase.swift */; };
 		C46859442AB385F20035326F /* CustomCornerImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46859432AB385F20035326F /* CustomCornerImage.swift */; };
 		C4B5C92D2AB95F8E00C8432A /* ReviewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5C9272AB95F8E00C8432A /* ReviewsModel.swift */; };
@@ -72,6 +74,9 @@
 		C40F9DF42AAA26E600F00028 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		C40F9DF62AAA2D3900F00028 /* ContactCompanyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCompanyView.swift; sourceTree = "<group>"; };
 		C417D9A92AB51A7500B80B85 /* CompanyViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyViewModelTest.swift; sourceTree = "<group>"; };
+		C42F22BC2ABA78B7009AB61C /* TabBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
+		C42F22BE2ABAAB36009AB61C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		C42F22BF2ABAACDE009AB61C /* TabBarTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarTheme.swift; sourceTree = "<group>"; };
 		C45AC64B2AAD3A82005F2F6C /* FetchCompanyDataUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchCompanyDataUseCase.swift; sourceTree = "<group>"; };
 		C46859432AB385F20035326F /* CustomCornerImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCornerImage.swift; sourceTree = "<group>"; };
 		C4B5C9272AB95F8E00C8432A /* ReviewsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewsModel.swift; sourceTree = "<group>"; };
@@ -135,6 +140,7 @@
 		6C4452B62AA6EF8500BE5930 /* GreenCircle */ = {
 			isa = PBXGroup;
 			children = (
+				C42F22BE2ABAAB36009AB61C /* Info.plist */,
 				6C4452E42AA6F06D00BE5930 /* Utils */,
 				6C4452E32AA6F06700BE5930 /* Data */,
 				6C4452E22AA6F05F00BE5930 /* Domain */,
@@ -205,6 +211,7 @@
 			children = (
 				C40CEC242AAABC92004F8521 /* NavBarTheme.swift */,
 				C46859432AB385F20035326F /* CustomCornerImage.swift */,
+				C42F22BF2ABAACDE009AB61C /* TabBarTheme.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -214,6 +221,7 @@
 			children = (
 				C40F9DF62AAA2D3900F00028 /* ContactCompanyView.swift */,
 				C4F664612AB1924F00C443AE /* RatingCompanyView.swift */,
+				C42F22BC2ABA78B7009AB61C /* TabBarView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -445,9 +453,11 @@
 				C4B5C92D2AB95F8E00C8432A /* ReviewsModel.swift in Sources */,
 				C4B5C92F2AB95F8E00C8432A /* CompanyProductsModel.swift in Sources */,
 				C4B5C9342AB9608000C8432A /* DummyModel.swift in Sources */,
+				C42F22C02ABAACDE009AB61C /* TabBarTheme.swift in Sources */,
 				6CB4982A2AB0FAA400B6560C /* CustomDateFormatter.swift in Sources */,
 				6C4452BA2AA6EF8500BE5930 /* ContentView.swift in Sources */,
 				6C9761872AB2B65C0046DB50 /* DummyRepository.swift in Sources */,
+				C42F22BD2ABA78B8009AB61C /* TabBarView.swift in Sources */,
 				6C4452B82AA6EF8500BE5930 /* GreenCircleApp.swift in Sources */,
 				C45AC64C2AAD3A82005F2F6C /* FetchCompanyDataUseCase.swift in Sources */,
 				C40CEC252AAABC92004F8521 /* NavBarTheme.swift in Sources */,
@@ -614,9 +624,11 @@
 				DEVELOPMENT_TEAM = 3YA9576WH5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GreenCircle/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -643,9 +655,11 @@
 				DEVELOPMENT_TEAM = 3YA9576WH5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GreenCircle/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
