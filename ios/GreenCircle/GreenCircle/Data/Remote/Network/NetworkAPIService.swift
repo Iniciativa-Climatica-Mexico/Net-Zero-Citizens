@@ -53,4 +53,36 @@ class NetworkAPIService {
                                  headers: headers).validate()
     let _ = await requestTask.serializingData().response
   }
+  
+  func postCompany(url: URL, authToken: String, company: PostCompanyData) async {
+    print(company)
+    let params: Parameters = [
+      "company": [
+        "name": company.name,
+        "description": company.description,
+        "email": company.email,
+        "phone": company.phone,
+        "webPage": company.webPage,
+        "street": company.street,
+        "streetNumber": company.streetNumber!,
+        "city": company.city,
+        "state": company.state,
+        "zipCode": company.zipCode!,
+        "userId": company.userId!,
+        "pdfCurriculumUrl": company.pdfCurriculumUrl,
+        "pdfGuaranteeSecurityUrl": company.pdfGuaranteeSecurityUrl,
+        "pdfActaConstitutivaUrl": company.pdfActaConstitutivaUrl,
+        "pdfIneUrl": company.pdfIneUrl
+      ] as [String : Any]
+    ]
+    print(authToken)
+    
+    let headers: HTTPHeaders = [.authorization(bearerToken: authToken)]
+    let requestTask = AF.request(url, method: .post,
+                                 parameters: params,
+                                 headers: headers).validate()
+    
+    let res = await requestTask.serializingData().response
+    print(res.result)
+  }
 }

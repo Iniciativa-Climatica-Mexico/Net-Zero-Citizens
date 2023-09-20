@@ -23,6 +23,7 @@ class UserAPI {
 
 protocol UserRepositoryProtocol {
   func postGoogleLogin(googleToken: String) async -> AuthResponse?
+  func putUser(authToken: String, user: User) async
 }
 
 class UserRepository: UserRepositoryProtocol {

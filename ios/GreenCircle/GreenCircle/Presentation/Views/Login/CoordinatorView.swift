@@ -17,6 +17,7 @@ struct CoordinatorView: View {
     case companyRegister
     case companyRegisterForm
     case mainMenuView
+    case pendingCompany
     // case companyRegister
   }
   
@@ -27,9 +28,9 @@ struct CoordinatorView: View {
       switch screen {
       case .login:
         LoginView(goUserRegister: goUserRegister,
-                  goForm: goCompanyRegister,
-                  goMainMenu: goUserForm,
-                  goCompanyRegister: goMainMenu)
+                  goForm: goUserForm,
+                  goMainMenu: goMainMenu,
+                  goCompanyRegister: goCompanyRegister)
         
       case .userRegister:
         UserRegisterView(goLogin: goLogin,
@@ -45,11 +46,13 @@ struct CoordinatorView: View {
                             goMainMenu: goMainMenu)
         
       case .companyRegisterForm:
-        MainMenuView()
-        
+        CompanyRegisterFormView(goPending: goPending)
         
       case .mainMenuView:
         MainMenuView()
+        
+      case .pendingCompany:
+        PendingCompanyView()
       }
     }
   }
@@ -76,5 +79,9 @@ struct CoordinatorView: View {
   
   private func goMainMenu() {
     routes.presentCover(.mainMenuView)
+  }
+  
+  private func goPending() {
+    routes.presentCover(.pendingCompany)
   }
 }

@@ -56,7 +56,7 @@ struct LoginView: View {
           }
         }.padding(.horizontal)
         
-        LinkButton("Soy Proveedor", buttonColor: .blue, action: {})
+        LinkButton("Soy Proveedor", buttonColor: .blue, action: goCompanyRegister)
           .padding(.bottom)
       }.foregroundColor(Color("MainText"))
     }
@@ -70,39 +70,5 @@ struct LoginView_Previews: PreviewProvider {
               goForm: {},
               goMainMenu: {},
               goCompanyRegister: {})
-  }
-}
-
-struct HeaderView: View {
-  var title: String
-  var subTitle: String = ""
-  
-  var body: some View {
-    VStack(alignment: .leading) {
-      Image(systemName: "leaf")
-        .font(.largeTitle)
-        .foregroundColor(.green)
-      Text(title)
-        .font(.system(size: 40, weight: .bold))
-        .padding(.vertical)
-      Text(subTitle)
-        .font(.system(size: 20))
-      Spacer()
-    }
-    .padding(.horizontal)
-    .frame(maxWidth: .infinity,
-           maxHeight: 250,
-           alignment: .leading)
-  }
-}
-
-struct BackgroundView: View {
-  var body: some View {
-    Rectangle()
-      .fill(.gray)
-      .opacity(0.1)
-      .cornerRadius(40, corners: [.topLeft, .topRight])
-      .edgesIgnoringSafeArea(.bottom)
-      .padding(.top, 300)
   }
 }

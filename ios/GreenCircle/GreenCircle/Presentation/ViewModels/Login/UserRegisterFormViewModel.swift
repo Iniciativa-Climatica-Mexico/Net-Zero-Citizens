@@ -11,40 +11,6 @@ class UserRegisterFormViewModel: ObservableObject {
   var useCase = UserRegisterUseCase.shared
   
   let genders = ["Masculino", "Femenino", "Otro", "Prefiero no decirlo"]
-  let states = [
-    "Aguascalientes",
-    "Baja California",
-    "Baja California Sur",
-    "Campeche",
-    "Chiapas",
-    "Chihuahua",
-    "Coahuila",
-    "Colima",
-    "Durango",
-    "Guanajuato",
-    "Guerrero",
-    "Hidalgo",
-    "Jalisco",
-    "Ciudad de México (CDMX)",
-    "Estado de México",
-    "Michoacán",
-    "Morelos",
-    "Nayarit",
-    "Nuevo León",
-    "Oaxaca",
-    "Puebla",
-    "Querétaro",
-    "Quintana Roo",
-    "San Luis Potosí",
-    "Sinaloa",
-    "Sonora",
-    "Tabasco",
-    "Tamaulipas",
-    "Tlaxcala",
-    "Veracruz",
-    "Yucatán",
-    "Zacatecas"
-  ]
   
   @Published var phone = ""
   @Published var age = ""
@@ -74,8 +40,6 @@ class UserRegisterFormViewModel: ObservableObject {
   }
   
   private func validateInformation() throws {
-    print(phone.rangeOfCharacter(from: NSCharacterSet.letters) != nil)
-    
     if phone.isEmpty
         || phone.count != 10
         || phone.rangeOfCharacter(from: NSCharacterSet.letters) != nil

@@ -33,7 +33,7 @@ struct UserRegisterFormView: View {
         .keyboardType(.numberPad)
         PickerFormView(selectedOption: $viewModel.state,
                        label: "Estado",
-                       options: viewModel.states)
+                       options: Constants.states)
         PickerFormView(selectedOption: $viewModel.gender,
                        label: "Género",
                        options: viewModel.genders)
@@ -79,87 +79,5 @@ struct UserRegisterFormView_Previews: PreviewProvider {
              login_type: "google",
              picture: "picture",
              roles: "new_user")))
-  }
-}
-
-struct RegisterHeaderView: View {
-  var mail: String
-  var name: String
-  
-  var body: some View {
-    VStack(alignment: .leading, spacing: 10) {
-      Image(systemName: "leaf")
-        .font(.largeTitle)
-        .foregroundColor(.green)
-      Text("Bienvenido, \(name)")
-        .font(.system(size: 40, weight: .bold))
-      VStack(alignment: .leading) {
-        Text("Te registraste con el correo")
-        Text(mail).bold()
-      }
-      .foregroundColor(Color("SecondaryText"))
-      .font(.system(size: 20))
-    }
-    .padding(.horizontal)
-    .frame(maxWidth: .infinity,
-           alignment: .leading)
-  }
-}
-
-struct InputFormView: View {
-  var bindingValue: Binding<String>
-  var label: String
-  var prompt: String
-  
-  var body: some View {
-    VStack(alignment: .leading) {
-      Text(label)
-        .foregroundColor(Color("SecondaryText"))
-      TextField(prompt, text: bindingValue)
-        .padding(10)
-        .overlay {
-          RoundedRectangle(cornerRadius: 10)
-            .stroke(.gray, lineWidth: 1)
-        }
-      
-    }.font(.system(size: 20, weight: .medium))
-  }
-  
-}
-
-struct PickerFormView: View {
-  @Binding var selectedOption: String
-  var label: String
-  var options: [String]
-  
-  var body: some View {
-    VStack(alignment: .leading) {
-      Text(label)
-        .foregroundColor(Color("SecondaryText"))
-      HStack {
-        Menu {
-          Picker(selection: $selectedOption) {
-            ForEach(options, id: \.self) { option in
-              Text(option).tag(option)
-            }
-          } label: {}
-        } label: {
-          if selectedOption.isEmpty {
-            Text("Selecciona una opción...")
-              .opacity(0.3)
-          } else {
-            Text(selectedOption)
-          }
-          Spacer()
-          Image(systemName: "chevron.down")
-        }
-        .padding(10)
-        Spacer()
-      }.overlay {
-        RoundedRectangle(cornerRadius: 10)
-          .stroke(.gray, lineWidth: 1)
-      }
-    }
-    .font(.system(size: 20, weight: .medium))
   }
 }
