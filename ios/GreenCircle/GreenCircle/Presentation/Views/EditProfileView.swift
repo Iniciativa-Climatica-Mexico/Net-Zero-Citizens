@@ -177,9 +177,9 @@ struct EditProfileView: View {
                             }
                             .padding(.trailing, 16) // Añade un padding para separar los dos VStack
                             
-                            //------------------------Picker Sexo----------------------------------------------------------
+                            //------------------------Picker Género----------------------------------------------------------
                             VStack(alignment: .leading) {
-                                Text("Sexo")
+                                Text("Género")
                                     .padding(.top, 16)
                                     .foregroundColor(Color("GreenColor"))
                                     .font(.system(size: 13))
@@ -188,7 +188,7 @@ struct EditProfileView: View {
                                     RoundedRectangle(cornerRadius: 5)
                                         .stroke(Color.gray, lineWidth: 0.1)
                                         .frame(height: 30)
-                                    Picker("Sexo", selection: $modelUser.contentUser.gender) {
+                                    Picker("Género", selection: $modelUser.contentUser.gender) {
                                         Text("Femenino").tag("femenine")
                                         Text("Masculino").tag("masculine")
                                         Text("Otro").tag("other")

@@ -153,13 +153,13 @@
 //                            .padding(.trailing, 16) // Añade un padding para separar los dos VStack
 //                            
 //                            VStack(alignment: .leading) {
-//                                Text("Sexo")
+//                                Text("Género")
 //                                    .padding(.top, 16)
 //                                    .foregroundColor(Color("GreenColor"))
 //                                    .font(.system(size: 13))
 //                                    .fontWeight(.semibold)
 //                                
-//                                TextField("Sexo", text: $modelUser.contentUser.sex)
+//                                TextField("Género", text: $modelUser.contentUser.sex)
 //                                    .keyboardType(.phonePad)
 //                                    .disabled(true)
 //                                    .padding(.top, 3)
