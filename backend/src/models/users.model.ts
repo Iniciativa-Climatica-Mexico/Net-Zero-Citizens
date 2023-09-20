@@ -2,10 +2,13 @@ import {
   Table,
   Column,
   Model,
+  ForeignKey,
   DataType,
   HasOne,
   HasMany,
+  BelongsTo,
 } from 'sequelize-typescript'
+import Role from './role.model'
 import Company from './company.model'
 import Review from './review.model'
 
@@ -47,16 +50,29 @@ export default class User extends Model {
   })
   userId: string
 
-  // @ForeignKey(() => Role)
+  @ForeignKey(() => Role)
   @Column({
-    type: DataType.INTEGER,
+    type: DataType.UUID,
     allowNull: false,
     field: 'ROLE_ID',
+    defaultValue: DataType.UUIDV4,
   })
-  roleId: number
+  roleId: string
 
-  @HasOne(() => Company)
-  company: Company | null
+  @BelongsTo(() => Role)
+  role: Role
+
+  @ForeignKey(() => Company)
+  @Column({
+    type: DataType.UUID,
+    allowNull: true,
+    field: 'COMPANY_ID',
+    defaultValue: DataType.UUIDV4,
+  })
+  companyId: string | null
+
+  @BelongsTo(() => Company)
+  company: Company
 
   @Column({
     type: DataType.STRING,
@@ -117,11 +133,11 @@ export default class User extends Model {
 
   @Column({
     type: DataType.STRING,
-    allowNull: false,
+    allowNull: true,
     unique: true,
     field: 'PHONE_NUMBER',
   })
-  phoneNumber: string
+  phoneNumber: string | null
 
   @Column({
     type: DataType.INTEGER,
@@ -140,9 +156,9 @@ export default class User extends Model {
   @Column({
     type: DataType.ENUM('masculine', 'femenine', 'other', 'no_answer'),
     allowNull: false,
-    field: 'SEX',
+    field: 'GENDER',
   })
-  sex: 'masculine' | 'femenine' | 'other' | 'no_answer'
+  gender: 'masculine' | 'femenine' | 'other' | 'no_answer'
 
   @Column({
     type: DataType.STRING,

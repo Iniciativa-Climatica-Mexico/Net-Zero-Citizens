@@ -22,6 +22,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Company, updateCompany, UpdateCompanyInfoBody } from '@/api/v1/company'
+import { recoverTokens } from '@/utils/authUtils'
 
 interface cellActionProps {
   companyId: string
@@ -34,6 +35,8 @@ export const CellAction = ({
   fetchPending,
   company,
 }: cellActionProps) => {
+  const tokens = recoverTokens()
+
   /**
    * @brief Function that allows admin to accept a specific company
    * @param company
@@ -44,13 +47,18 @@ export const CellAction = ({
       const updatedCompanyInfo: UpdateCompanyInfoBody = {
         name: company.name,
         description: company.description,
+        street: company.street,
+        streetNumber: company.streetNumber,
+        city: company.city,
+        state: company.state,
+        zipCode: company.zipCode,
         profilePicture: company.profilePicture,
         status: 'approved',
-        phoneNumber: company.phoneNumber,
+        phone: company.phone,
         webPage: company.webPage,
       }
-
-      await updateCompany(companyId, updatedCompanyInfo)
+      console.log(tokens.authToken)
+      await updateCompany(companyId, updatedCompanyInfo, tokens.authToken)
     } catch (error) {
       console.error('Error accepting company:', error)
     } finally {
@@ -64,7 +72,7 @@ export const CellAction = ({
         <DropdownMenuTrigger asChild>
           <MoreHorizIcon onClick={() => {}} className="cursor-pointer" />
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
+        <DropdownMenuContent align="end" style={{ background: 'white' }}>
           <DropdownMenuLabel>Acciones rápidas</DropdownMenuLabel>
           <DropdownMenuItem onClick={() => handleAccept(company, companyId)}>
             <CheckCircleOutlineIcon className="mr-1.5" />

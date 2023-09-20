@@ -1,22 +1,21 @@
+import { SERVER_BASE_URL } from '@/utils/constants'
 import axios from 'axios'
-
-const backendBaseUrl = 'http://localhost:3000'
 
 export interface Company {
   companyId: string
   name: string
   profilePicture: string
-  state: string,
-  city: string,
-  street: string,
-  zipCode: string,
+  state: string
+  city: string
+  street: string
+  zipCode: string
   status: 'approved' | 'pending_approval' | 'rejected'
-  email: string,
-  phoneNumber: string
+  email: string
+  phone: string
   webPage: string
   description: string
   createdAt: string
-  streetNumber: number
+  streetNumber: string
   pdfCurriculumURL: string
   pdfDicCdmxURL: string
   pdfPeeFideURL: string
@@ -28,11 +27,20 @@ export interface Company {
 /**
  * @brief
  * Funcion que regresa los proveedores pendientes por aprobar
+ * @param authToken - The authentication token to be passed in the request headers.
  * @returns Una respuesta conteniendo todos los proveedores pendientes
  */
-export const getPendingCompanies = async () => {
+export const getPendingCompanies = async (authToken: string | null) => {
   try {
-    const response = await axios.get(`${backendBaseUrl}/api/v1/company/pending`)
+    if (!authToken) {
+      throw new Error('No authToken provided')
+    }
+
+    const response = await axios.get(`${SERVER_BASE_URL}/company/pending`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    })
     return response.data.rows
   } catch (error) {
     console.error('Error fetching pending companies:', error)
@@ -43,20 +51,31 @@ export const getPendingCompanies = async () => {
 export type UpdateCompanyInfoBody = {
   name: string
   description: string
+  street: string
+  streetNumber: string
+  city: string
+  state: string
+  zipCode: string
   profilePicture: string
   status: 'approved' | 'pending_approval' | 'rejected'
-  phoneNumber: string
+  phone: string
   webPage: string
 }
 
 export const updateCompany = async (
   companyId: string,
-  updateInfo: UpdateCompanyInfoBody
+  updateInfo: UpdateCompanyInfoBody,
+  authToken: string | null
 ) => {
   try {
     const response = await axios.post(
-      `${backendBaseUrl}/api/v1/company/pending/${companyId}`,
-      updateInfo
+      `${SERVER_BASE_URL}/company/pending/${companyId}`,
+      updateInfo,
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
     )
     return response.data
   } catch (error) {
@@ -64,6 +83,3 @@ export const updateCompany = async (
     throw error
   }
 }
-
-
-

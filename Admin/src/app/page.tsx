@@ -1,7 +1,9 @@
 'use client'
 
+import { recoverTokens } from '@/utils/authUtils'
 import { useState, useEffect } from 'react'
 import { Company, getPendingCompanies } from '@/api/v1/company'
+
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -19,6 +21,8 @@ import { CellAction } from '@/components/cellAction'
 import ModalProveedor from '@/components/modalProveedor'
 
 export default function Home() {
+  const tokens = recoverTokens()
+
   const [selectedCompany, setSelectedCompany] = useState<Company>({
     companyId: '',
     name: '',
@@ -29,7 +33,7 @@ export default function Home() {
     zipCode: '',
     status: 'pending_approval',
     email: '',
-    phoneNumber: '',
+    phone: '',
     webPage: '',
     description: '',
     createdAt: '',
@@ -63,14 +67,16 @@ export default function Home() {
    */
   const fetchPending = async function fetchingPendingCompanies() {
     try {
-      const companies = await getPendingCompanies()
-      setPendingCompanies(companies)
+      if (tokens.authToken !== null) {
+        const companies = await getPendingCompanies(tokens.authToken)
+        setPendingCompanies(companies)
+      }
     } catch (error) {
       console.log('Fetch of companies was not succesful', error)
     }
   }
 
-  const filteredCompanies = pendingCompanies.filter((company) =>
+  const filteredCompanies = pendingCompanies?.filter((company) =>
     company.name.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
@@ -125,7 +131,7 @@ export default function Home() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredCompanies.slice(startIndex, endIndex).map((company) => (
+            {filteredCompanies?.slice(startIndex, endIndex).map((company) => (
               <TableRow key={company.companyId}>
                 <TableCell
                   className="cursor-pointer"
@@ -203,7 +209,7 @@ export default function Home() {
             onClick={() => {
               handlePageChange(currentPage + 1)
             }}
-            disabled={endIndex >= filteredCompanies.length}
+            disabled={endIndex >= filteredCompanies?.length}
           >
             Siguiente
           </Button>

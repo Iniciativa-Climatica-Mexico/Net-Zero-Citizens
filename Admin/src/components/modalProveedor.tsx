@@ -27,6 +27,7 @@ import FileOpenIcon from '@mui/icons-material/FileOpen'
 import { Separator } from './ui/separator'
 import { Button } from './ui/button'
 import { Checkbox } from './ui/checkbox'
+import { recoverTokens } from '@/utils/authUtils'
 
 interface ModalProveedorProps {
   setIsModalOpen: (value: boolean) => void
@@ -41,6 +42,7 @@ export default function ModalProveedor({
 }: ModalProveedorProps) {
   const [checkboxChecked, setCheckboxChecked] = useState(false)
 
+  const tokens = recoverTokens()
   /**
    * @brief Function that allows admin to accept a specific company
    * @param company
@@ -51,13 +53,18 @@ export default function ModalProveedor({
       const updatedCompanyInfo: UpdateCompanyInfoBody = {
         name: company.name,
         description: company.description,
+        street: company.street,
+        streetNumber: company.streetNumber,
+        city: company.city,
+        state: company.state,
+        zipCode: company.zipCode,
         profilePicture: company.profilePicture,
         status: 'approved',
-        phoneNumber: company.phoneNumber,
+        phone: company.phone,
         webPage: company.webPage,
       }
 
-      await updateCompany(companyId, updatedCompanyInfo)
+      await updateCompany(companyId, updatedCompanyInfo, tokens.authToken)
     } catch (error) {
       console.error('Error accepting company:', error)
     } finally {
@@ -117,7 +124,7 @@ export default function ModalProveedor({
               <Separator />
               <section className="flex items-center text-[#589A74] py-[10px] gap-x-2">
                 <PhoneIcon color="secondary" />
-                {selectedCompany.phoneNumber}
+                {selectedCompany.phone}
               </section>
               <Separator />
               <section className="flex items-center text-[#589A74] py-[10px] gap-x-2">
@@ -196,14 +203,17 @@ export default function ModalProveedor({
               </p>
             </aside>
           </article>
-          <section className='text-[13px] px-[35px] pt-[25px] w-full'>
-            <h3 className='font-bold'>Descripción</h3>
-            <p className='text-sm py-[15px]'>
-              {selectedCompany.description}
-            </p>
+          <section className="text-[13px] px-[35px] pt-[25px] w-full">
+            <h3 className="font-bold">Descripción</h3>
+            <p className="text-sm py-[15px]">{selectedCompany.description}</p>
             <Separator />
             <div className="flex items-center space-x-2 py-[25px]">
-              <Checkbox onClick={()=> {setCheckboxChecked(!checkboxChecked)}} id="terms" />
+              <Checkbox
+                onClick={() => {
+                  setCheckboxChecked(!checkboxChecked)
+                }}
+                id="terms"
+              />
               <label
                 htmlFor="terms"
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -211,9 +221,17 @@ export default function ModalProveedor({
                 He leído los documentos que ha entregado el proveedor
               </label>
             </div>
-            <footer className='flex gap-x-3'>
-              <Button disabled={!checkboxChecked} onClick={() => handleAccept(selectedCompany, selectedCompany.companyId)} variant='default'>Aprobar</Button>
-              <Button variant='outline'>Rechazar</Button>
+            <footer className="flex gap-x-3 text-slate-100">
+              <Button
+                disabled={!checkboxChecked}
+                onClick={() =>
+                  handleAccept(selectedCompany, selectedCompany.companyId)
+                }
+                variant="default"
+              >
+                Aprobar
+              </Button>
+              <Button variant="outline">Rechazar</Button>
             </footer>
           </section>
         </article>
