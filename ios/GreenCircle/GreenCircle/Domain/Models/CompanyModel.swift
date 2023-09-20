@@ -2,17 +2,20 @@
 //  CompanyModel.swift
 //  GreenCircle
 //
-//  Created by Dani Gutiérrez on 06/09/23.
+//  Created by Ricardo Adolfo Fernández 19/09/23.
+// Created by Daniel Gutiérrez on 19/09/23.
 //
 
 import Foundation
 
+/// Enum representando el status de una compañía
 enum StatusEnum: String, Codable, Equatable {
   case approved = "approved"
   case pendingApproval = "pending_approval"
   case rejected = "rejected"
 }
 
+/// Struct representando la información presente en una compañía
 struct Company: Codable {
   var companyId: UUID
   var userId: String
@@ -20,9 +23,9 @@ struct Company: Codable {
   var description: String
   var email: String
   var phone: String
-  var webPage: String?
+  var webPage: String
   var street: String
-  var streetNumber: Int
+  var streetNumber: Int?
   var city: String
   var state: String
   var zipCode: Int
@@ -41,8 +44,8 @@ struct Company: Codable {
   // var images: [Product]
   var createdAt: String
   var updatedAt: String
-  var products: [Product]?
+//  var products: [Product]?
   var score: Double
   var oneComment: String
-  var images: [CompanyImages]?
+//  var images: [CompanyImages]?
 }

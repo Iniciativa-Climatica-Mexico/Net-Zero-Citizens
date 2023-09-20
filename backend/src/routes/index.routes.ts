@@ -6,6 +6,7 @@ import SurveyRouter from './survey.routes'
 import ReportRouter from './report.routes'
 import ReviewRouter from './review.routes'
 import ProducRouter from './product.routes'
+import EcofinfoRouter from './ecoinfo.routes'
 import { validateToken, validateRole } from '../middlewares/auth.middleware'
 import { Express } from 'express'
 
@@ -24,5 +25,6 @@ export const initRouterV1 = (app: Express) => {
   app.use('/api/v1/survey', SurveyRouter)
   app.use('/api/v1/review', ReviewRouter)
   app.use('/api/v1/product', ProducRouter)
+  app.use('/api/v1/ecoinfo', EcofinfoRouter)
   app.use('/api/v1/report', ReportRouter)
 }

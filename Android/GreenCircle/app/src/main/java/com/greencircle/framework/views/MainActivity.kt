@@ -8,6 +8,8 @@ import com.greencircle.R
 import com.greencircle.databinding.ActivityMainBinding
 import com.greencircle.databinding.TopBarBinding
 import com.greencircle.framework.views.fragments.CompanyContactFragment
+import com.greencircle.framework.views.fragments.HomeFragment
+import com.greencircle.framework.views.fragments.ProfileFragment
 
 /**
  * Actividad principal que muestra la interfaz de usuario principal de la aplicación.
@@ -31,14 +33,24 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         topBarBinding = TopBarBinding.bind(binding.root)
-        bottomNavigationView = binding.bottomNavigation
+        replaceFragment(HomeFragment())
 
-        topBarBinding.title.text = "Inicio"
+        topBarBinding.title.text = "EcoInfo"
+        bottomNavigationView = binding.bottomNaSvigation
+
 
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.proveedores -> {
                     replaceFragment(CompanyContactFragment())
+                R.id.ecoInfo -> {
+                    replaceFragment(HomeFragment())
+                    topBarBinding.title.text = "EcoInfo"
+                    true
+                }
+
+                R.id.proveedores -> {
+                    replaceFragment(ProfileFragment())
                     topBarBinding.title.text = "Proveedores"
                     true
                 }
