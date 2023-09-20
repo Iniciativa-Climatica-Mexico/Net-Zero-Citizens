@@ -1,4 +1,7 @@
 'use client'
+import { signOut, useSession } from 'next-auth/react'
+import { deleteTokens } from '@/utils/authUtils'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
@@ -6,6 +9,7 @@ import Logo from '../../public/LogoBloque.png'
 import { usePathname } from 'next/navigation'
 
 export default function Navbar() {
+  const { data: session } = useSession()
   const pathname = usePathname()
 
   const [condition, setCondition] = useState(false)
@@ -21,7 +25,7 @@ export default function Navbar() {
     <>
       {condition && (
         <nav className="bg-white border-b border-[#C1C9D2] dark:bg-gray-900 w-full h-17">
-          <div className="flex flex-wrap justify-between items-center mx-auto p-4 font-bold">
+          <div className="flex flex-wrap justify-between items-center mx-auto px-4 py-1 mt-2 font-bold">
             <div className="flex items-center space-x-4">
               <Image
                 src={Logo}
@@ -38,7 +42,7 @@ export default function Navbar() {
               className="hidden w-full md:block md:w-auto"
               id="navbar-default"
             >
-              <ul className="font-medium flex items-center flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+              <ul className="font-medium flex items-center flex-col px-4 py-1 md:p-0 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900">
                 <li>
                   <a
                     href="#"
@@ -73,6 +77,21 @@ export default function Navbar() {
                       height={40}
                       className="mr-2 rounded-full"
                     />
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    {session && session.user && (
+                      <button
+                        onClick={() => {
+                          signOut()
+                          deleteTokens()
+                        }}
+                        className="text-red-600"
+                      >
+                        Salir
+                      </button>
+                    )}
                   </div>
                 </li>
               </ul>

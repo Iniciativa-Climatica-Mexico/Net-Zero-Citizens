@@ -1,5 +1,7 @@
 'use client'
 
+import { recoverTokens } from '@/utils/authUtils'
+import { useSession } from 'next-auth/react'
 import { useState, useEffect } from 'react'
 import { getPendingCompanies } from '@/api/v1/company'
 
@@ -30,6 +32,9 @@ interface Company {
 }
 
 export default function Home() {
+  const { data: session } = useSession()
+  const tokens = recoverTokens()
+
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 8
   const startIndex = (currentPage - 1) * itemsPerPage
@@ -39,14 +44,16 @@ export default function Home() {
 
   const fetchPending = async function fetchingPendingCompanies() {
     try {
-      const companies = await getPendingCompanies()
-      setPendingCompanies(companies)
+      if (tokens.authToken !== null) {
+        const companies = await getPendingCompanies(tokens.authToken)
+        setPendingCompanies(companies)
+      }
     } catch (error) {
       console.log('Fetch of companies was not succesful', error)
     }
   }
 
-  const filteredCompanies = pendingCompanies.filter((company) =>
+  const filteredCompanies = pendingCompanies?.filter((company) =>
     company.name.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
@@ -82,7 +89,7 @@ export default function Home() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredCompanies.slice(startIndex, endIndex).map((company) => (
+            {filteredCompanies?.slice(startIndex, endIndex).map((company) => (
               <TableRow key={company.companyId}>
                 <TableCell>
                   <Avatar>
@@ -124,7 +131,7 @@ export default function Home() {
             onClick={() => {
               handlePageChange(currentPage + 1)
             }}
-            disabled={endIndex >= filteredCompanies.length}
+            disabled={endIndex >= filteredCompanies?.length}
           >
             Siguiente
           </Button>
