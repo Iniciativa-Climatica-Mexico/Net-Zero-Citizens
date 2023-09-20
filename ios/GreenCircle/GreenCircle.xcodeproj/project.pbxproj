@@ -16,6 +16,7 @@
 		6C9761812AB2B2920046DB50 /* NetworkAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9761802AB2B2920046DB50 /* NetworkAPIService.swift */; };
 		6C9761832AB2B45D0046DB50 /* DummyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9761822AB2B45D0046DB50 /* DummyModel.swift */; };
 		6C9761872AB2B65C0046DB50 /* DummyRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9761862AB2B65C0046DB50 /* DummyRepository.swift */; };
+		6CA4A94C2ABAF06A0017468A /* CompanyRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA4A94B2ABAF06A0017468A /* CompanyRepository.swift */; };
 		6CB498242AB0DECC00B6560C /* PaginatedQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB498232AB0DECC00B6560C /* PaginatedQuery.swift */; };
 		6CB498272AB0E07600B6560C /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 6CB498262AB0E07600B6560C /* Alamofire */; };
 		6CB4982A2AB0FAA400B6560C /* CustomDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB498292AB0FAA400B6560C /* CustomDateFormatter.swift */; };
@@ -56,13 +57,14 @@
 		6C9761802AB2B2920046DB50 /* NetworkAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAPIService.swift; sourceTree = "<group>"; };
 		6C9761822AB2B45D0046DB50 /* DummyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyModel.swift; sourceTree = "<group>"; };
 		6C9761862AB2B65C0046DB50 /* DummyRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyRepository.swift; sourceTree = "<group>"; };
+		6CA4A94B2ABAF06A0017468A /* CompanyRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyRepository.swift; sourceTree = "<group>"; };
 		6CB498232AB0DECC00B6560C /* PaginatedQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginatedQuery.swift; sourceTree = "<group>"; };
 		6CB498292AB0FAA400B6560C /* CustomDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDateFormatter.swift; sourceTree = "<group>"; };
-		E2D7ED732ABAACC0009E4129 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContentView.swift; path = ../../../../../../INTEGRACION_SEGURIDAD/SWIFT/catalogo/catalogo/Views/ContentView.swift; sourceTree = "<group>"; };
-		E2D7ED742ABAACC0009E4129 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardView.swift; path = ../../../../../../INTEGRACION_SEGURIDAD/SWIFT/catalogo/catalogo/Views/CardView.swift; sourceTree = "<group>"; };
-		E2D7ED772ABAACDB009E4129 /* ContentViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContentViewModel.swift; path = ../../../../../../INTEGRACION_SEGURIDAD/SWIFT/catalogo/catalogo/ViewModels/ContentViewModel.swift; sourceTree = "<group>"; };
-		E2D7ED792ABAACEF009E4129 /* CardCatalogo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardCatalogo.swift; path = ../../../../../../INTEGRACION_SEGURIDAD/SWIFT/catalogo/catalogo/Models/CardCatalogo.swift; sourceTree = "<group>"; };
-		E2D7ED7B2ABAAD4C009E4129 /* NavBarTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavBarTheme.swift; path = ../../../../../INTEGRACION_SEGURIDAD/SWIFT/catalogo/catalogo/Utils/NavBarTheme.swift; sourceTree = "<group>"; };
+		E2D7ED732ABAACC0009E4129 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E2D7ED742ABAACC0009E4129 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		E2D7ED772ABAACDB009E4129 /* ContentViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
+		E2D7ED792ABAACEF009E4129 /* CardCatalogo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCatalogo.swift; sourceTree = "<group>"; };
+		E2D7ED7B2ABAAD4C009E4129 /* NavBarTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavBarTheme.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,6 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				6C9761862AB2B65C0046DB50 /* DummyRepository.swift */,
+				6CA4A94B2ABAF06A0017468A /* CompanyRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -385,6 +388,7 @@
 				E2D7ED762ABAACC0009E4129 /* CardView.swift in Sources */,
 				6CB498242AB0DECC00B6560C /* PaginatedQuery.swift in Sources */,
 				E2D7ED752ABAACC0009E4129 /* ContentView.swift in Sources */,
+				6CA4A94C2ABAF06A0017468A /* CompanyRepository.swift in Sources */,
 				E2D7ED782ABAACDB009E4129 /* ContentViewModel.swift in Sources */,
 				6C9761812AB2B2920046DB50 /* NetworkAPIService.swift in Sources */,
 				6CB4982A2AB0FAA400B6560C /* CustomDateFormatter.swift in Sources */,

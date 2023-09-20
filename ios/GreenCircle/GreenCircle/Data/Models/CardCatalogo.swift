@@ -1,27 +1,30 @@
 //
-//  CardCatalogo.swift
-//  catalogo
+//  CompanyModel.swift
+//  GreenCircle
 //
-//  Created by Diego Iturbe on 18/09/23.
+//  Created by Ricardo Adolfo Fernández Alvarado on 19/09/23.
 //
-
 import Foundation
 
-
-struct Catalogo: Codable{
-    var count: Int
-    var results: [Proveedor]
+/// Enum representando el status de una compañía
+enum StatusEnum: String, Codable, Equatable {
+  case approved = "approved"
+  case pendingApproval = "pending_approval"
+  case rejected = "rejected"
 }
 
-struct Proveedor: Codable {
-    let nombre: String
-    let ubicacion: String
-    let calificacion: Double
-    let image: String
-    
-}
-
-struct ProveedorBase: Identifiable{
-    var id : Int
-    var proveedor : Proveedor
+/// Struct representando la información presente en una compañía
+struct Company: Codable, Identifiable {
+  var id: String { companyId }
+  var companyId: String
+  var userId: String?
+  var name: String
+  var description: String
+  var email: String
+  var phoneNumber: String
+  var webPage: String?
+  var location: String
+  var profilePicture: String?
+  var createdAt: String
+  var updatedAt: String
 }
