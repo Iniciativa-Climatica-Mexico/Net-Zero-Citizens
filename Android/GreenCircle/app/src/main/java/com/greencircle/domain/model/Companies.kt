@@ -59,7 +59,8 @@ data class Companies(
     @SerializedName("status") val status: Status,
     @SerializedName("createdAt") val createdAt: Timestamp,
     @SerializedName("updatedAt") val updatedAt: Timestamp,
-    @SerializedName("products") val products: ArrayList<Product> = arrayListOf(),
+    @SerializedName("products") val products: ArrayList<Product>? = arrayListOf(),
     @SerializedName("images") val companyImages: List<CompanyImages>? = listOf(),
     @SerializedName("score") val rating: Float? = null,
+    @SerializedName("oneComment") val oneComment: String? = null,
 ) : Serializable

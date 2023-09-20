@@ -21,5 +21,4 @@ data class Product(
     @SerializedName("description") val description: String? = null,
     @SerializedName("imageUrl") val imageUrl: String,
     @SerializedName("imageAltText") val imageAltText: String,
-    @SerializedName("companies") val companies: List<Companies>,
 ) : Serializable

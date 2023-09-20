@@ -1,3 +1,4 @@
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,6 +19,7 @@ class CompanyContactViewModel : ViewModel() {
     fun getCompanyData() {
         viewModelScope.launch(Dispatchers.IO) {
             val response = repository.getCompanyData()
+            Log.d("CompanyContactViewModel", "Response: $response")
             _companyData.postValue(response)
         }
     }

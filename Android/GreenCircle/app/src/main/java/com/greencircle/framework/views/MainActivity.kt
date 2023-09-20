@@ -22,6 +22,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var topBarBinding: TopBarBinding
 
     /**
+     * Reemplaza el fragmento actual en el contenedor (FrameLayout) con el fragmento proporcionado.
+     *
+     * @param fragment El fragmento que se va a mostrar.
+     */
+    fun replaceFragment(fragment: Fragment) {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.frame_layout, fragment)
+        fragmentTransaction.commit()
+    }
+
+    /**
      * Método llamado cuando se crea la actividad.
      *
      * @param savedInstanceState El estado guardado de la actividad.
@@ -38,11 +50,13 @@ class MainActivity : AppCompatActivity() {
         topBarBinding.title.text = "EcoInfo"
         bottomNavigationView = binding.bottomNaSvigation
 
-
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.proveedores -> {
                     replaceFragment(CompanyContactFragment())
+                    true
+                }
+
                 R.id.ecoInfo -> {
                     replaceFragment(HomeFragment())
                     topBarBinding.title.text = "EcoInfo"
@@ -58,17 +72,5 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
-    }
-
-    /**
-     * Reemplaza el fragmento actual en el contenedor (FrameLayout) con el fragmento proporcionado.
-     *
-     * @param fragment El fragmento que se va a mostrar.
-     */
-    private fun replaceFragment(fragment: Fragment) {
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.frame_layout, fragment)
-        fragmentTransaction.commit()
     }
 }
