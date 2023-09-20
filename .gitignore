@@ -189,3 +189,6 @@ temp/
 *.crt
 *.pem
 *.p12
+
+
+./Android/GreenCircle/app/google-services.json
