@@ -29,18 +29,11 @@ const testData = [
   },
 ]
 
-const attributesToExclude = [
-  'productId',
-  'createdAt',
-  'updatedAt',
-]
+const attributesToExclude = ['productId', 'createdAt', 'updatedAt']
 
 beforeEach(async () => {
-  await initDB()
-})
-
-afterEach(async () => {
   await db.drop()
+  await initDB()
 })
 
 describe('Product Service', () => {
