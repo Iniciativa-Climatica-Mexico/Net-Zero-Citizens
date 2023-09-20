@@ -17,24 +17,27 @@ export default async function DetailedSurvey(props: DetailedSurveyProps) {
 
     return (
       <div>
-        <div className="flex-row flex items-center justify-between my-8 mx-8">
+        <div className="flex flex-row items-center  my-8 mx-8">
           <h1 className="self-start font-extrabold mt-8 mx-8 text-4xl text-txt">
             {surveyDetail.title}
           </h1>
-          <div>
-            <CloseButtonComponent surveyId={surveyId} />
+          
+        </div>
+        <div className="flex mx-8 justify-between">
+          <p className="self-start mb-8 mx-8 text-secondary">
+            {surveyDetail.description}
+          </p>
+          <div className='flex gap-4'>
+            {surveyDetail.endDate == null && (
+              <CloseButtonComponent surveyId={surveyId} />
+            )}
 
             <Link href={'/reportes/encuesta/' + surveyId}>
-              <button className=" bg-primary hover:bg-primary-900 text-white font-bold py-2 px-4 mx-8 mt-8 rounded self-end">
+              <button className=" bg-primary hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end">
                 Generar Reporte
               </button>
             </Link>
           </div>
-        </div>
-        <div className="flex mx-8">
-          <p className="self-start mb-8 mx-8 text-secondary">
-            {surveyDetail.description}
-          </p>
         </div>
         <div className="flex flex-col items-center w-full justify-center">
           <table className="table-fixed border-collapse w-4/5">
@@ -94,4 +97,3 @@ function QuestionComponent(props: QuestionDetail) {
     </tr>
   )
 }
-

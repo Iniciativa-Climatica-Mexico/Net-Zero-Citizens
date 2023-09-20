@@ -116,7 +116,7 @@ export const closeSurvey: RequestHandler<
   if (!survey) {
     res.status(404).json({ message: 'Survey not found' })
   } else {
-    res.status(200)
+    res.status(200).send()
   }
 }
 
