@@ -144,6 +144,13 @@ export default class User extends Model {
   })
   profilePicture: string | null
 
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+    field: 'DEVICE_TOKEN',
+  })
+  deviceToken: string | null
+
   @HasMany(() => Review)
   reviews: Review[]
 }

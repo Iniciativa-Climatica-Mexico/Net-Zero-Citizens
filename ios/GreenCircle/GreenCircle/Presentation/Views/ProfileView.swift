@@ -23,6 +23,8 @@ struct ProfileView: View {
         ZStack {
             // Title Bar
             VStack {
+                
+                
                 TitleBarView(
                     title: "Mi Perfil",
                     leftIcon: nil,

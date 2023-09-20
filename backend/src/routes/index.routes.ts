@@ -6,16 +6,17 @@ import ReviewRouter from './review.routes'
 import ProducRouter from './product.routes'
 import { validateToken, validateRole } from '../middlewares/auth.middleware'
 import { Express } from 'express'
+// import { validateToken, validateRole } from '../middlewares/auth.middleware'
 
 export const initRouterV1 = (app: Express) => {
   // Public Routes
-  app.use('/api/v1/auth', AuthRouter)
+  // app.use('/api/v1/auth', AuthRouter)
 
   // Middleware
   // app.use(validateToken)
   
   // Dummy routes
-  app.use('/api/v1/admin/dummy', validateRole(['admin']), DummyRouter)
+  // app.use('/api/v1/admin/dummy', validateRole(['admin']), DummyRouter)
 
   // Private Routes
   app.use('/api/v1/dummy', DummyRouter)

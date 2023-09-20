@@ -175,6 +175,13 @@ export default class Company extends Model {
   })
   status: StatusEnum
 
+  @Column({
+    field: 'DEVICE_TOKEN',
+    type: DataType.STRING(500),
+    allowNull: true,
+  })
+  deviceToken: string
+
   @HasMany(() => Review)
   reviews: Review[]
 

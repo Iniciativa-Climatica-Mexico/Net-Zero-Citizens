@@ -16,6 +16,8 @@
     "@types/react": "^18.2.21",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.15",
+    "axios": "^1.5.0",
+    "mysql2": "^3.6.0",
     "next": "^13.4.19",
     "postcss": "8.4.29",
     "react": "^18.2.0",
@@ -39,6 +41,8 @@
     "eslint": "^8.48.0",
     "eslint-config-next": "13.4.19",
     "mocha": "^10.2.0",
+    "prettier": "^3.0.3",
+    "sequelize-cli": "^6.6.1",
     "ts-mocha": "^10.0.0",
     "ts-node": "^10.9.1"
   }
