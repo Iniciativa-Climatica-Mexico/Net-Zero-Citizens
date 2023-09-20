@@ -17,14 +17,14 @@ class CompanyReviewViewHolder(private var binding: ItemCompanyReviewBinding) :
         }
         val name = item.user.firstName + " " + item.user.lastName
         val rating = "${item.rating} de 5"
-        val date = item.updatedAt.slice(0..9)
+        val date = item.updatedAt
         val review = item.review
         val ratingFloat = item.rating.toFloat()
         binding.reviewCardName.text = name
         binding.reviewCardTitle.text = reviewTitle
         binding.reviewCardContent.text = review
         binding.reviewCardRating.text = rating
-        binding.reviewCardDate.text = date
+        binding.reviewCardDate.text = date.toString().slice(0..9)
         binding.reviewCardRatingBar.rating = ratingFloat
     }
 }

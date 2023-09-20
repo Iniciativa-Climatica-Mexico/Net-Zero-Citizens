@@ -15,12 +15,13 @@ import com.greencircle.domain.model.UserReview
 import com.greencircle.framework.viewmodel.DeleteUserReviewViewModel
 import com.greencircle.framework.views.fragments.UpdateReviewFragment
 import com.greencircle.framework.views.fragments.UserReviewFragment
+import java.util.UUID
 
 class UserReviewViewHolder(
     private var binding: ItemUserReviewBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private lateinit var reviewId: String
+    private lateinit var reviewId: UUID
     private val viewModel: DeleteUserReviewViewModel = DeleteUserReviewViewModel()
     private val menuButton: ImageButton = binding.reviewCardOptionsButton
 
@@ -67,7 +68,7 @@ class UserReviewViewHolder(
         bundle.putString("title", title)
         bundle.putString("review", review)
         bundle.putFloat("score", score)
-        bundle.putString("reviewId", reviewId)
+        bundle.putString("reviewId", reviewId.toString())
 
         val updateReviewFragment = UpdateReviewFragment()
         updateReviewFragment.arguments = bundle
@@ -94,7 +95,7 @@ class UserReviewViewHolder(
 
         alertDialogBuilder.setPositiveButton("yes") { dialog, which ->
             deleteReview(reviewId)
-            Toast.makeText(itemView.context, reviewId, Toast.LENGTH_SHORT).show()
+            Toast.makeText(itemView.context, reviewId.toString(), Toast.LENGTH_SHORT).show()
         }
 
         alertDialogBuilder.setNegativeButton("no", null)
@@ -105,7 +106,7 @@ class UserReviewViewHolder(
         alertDialog.show()
     }
 
-    private fun deleteReview(reviewId: String) {
+    private fun deleteReview(reviewId: UUID) {
         try {
             viewModel.deleteReview(reviewId)
             val userReviewFragment = UserReviewFragment()

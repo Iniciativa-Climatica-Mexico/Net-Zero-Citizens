@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.greencircle.domain.model.UserReviewObject
 import com.greencircle.domain.usecase.UserReviewListRequirement
+import java.util.UUID
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,9 +15,9 @@ class UserReviewViewModel : ViewModel() {
     val userReviewObjectLiveData = MutableLiveData<UserReviewObject>()
     private val userReviewListRequirement = UserReviewListRequirement()
 
-    private lateinit var UUID: String
+    private lateinit var UUID: UUID
 
-    fun setUUID(UUID: String) {
+    fun setUUID(UUID: UUID) {
         this.UUID = UUID
     }
 

@@ -15,6 +15,7 @@ import com.greencircle.databinding.FragmentCompanyReviewBinding
 import com.greencircle.domain.model.CompanyReview
 import com.greencircle.framework.ui.adapters.CompanyReviewAdapter
 import com.greencircle.framework.viewmodel.CompanyReviewViewModel
+import java.util.UUID
 
 class CompanyReviewFragment : Fragment() {
     private var _binding: FragmentCompanyReviewBinding? = null
@@ -29,7 +30,7 @@ class CompanyReviewFragment : Fragment() {
 
     private var rating: Float = 0.0f
     private var reviewsCount: Int = 0
-    private var companyId: String = ""
+    private var companyId: UUID = UUID.randomUUID()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,7 +42,8 @@ class CompanyReviewFragment : Fragment() {
         val root: View = binding.root
         data = ArrayList()
 
-        companyId = arguments?.getString("CompanyId") ?: "0"
+        companyId = UUID.fromString(arguments?.getString("CompanyId"))
+            ?: UUID.fromString("c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e")
         viewModel.setCompanyId(companyId)
         viewModel.getReviewsList()
 
@@ -72,7 +74,7 @@ class CompanyReviewFragment : Fragment() {
 
     private fun navigateToReviewFormFragment() {
         val bundle = Bundle()
-        bundle.putString("CompanyId", companyId)
+        bundle.putString("CompanyId", companyId.toString())
         bundle.putFloat("RatingStars", rating)
         val reviewFormFragment = ReviewFormFragment()
         reviewFormFragment.arguments = bundle
@@ -144,7 +146,6 @@ class CompanyReviewFragment : Fragment() {
     private fun showEmptyView() {
         binding.RVCompanyReview.visibility = View.GONE
         binding.reviewInfoWrapper.visibility = View.GONE
-        binding.emptyView.visibility = View.VISIBLE
     }
 
     private fun setUpRecyclerView(dataForList: ArrayList<CompanyReview>) {

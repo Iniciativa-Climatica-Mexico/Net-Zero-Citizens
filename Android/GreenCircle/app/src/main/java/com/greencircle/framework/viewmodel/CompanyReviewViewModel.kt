@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.greencircle.domain.model.CompanyReviewObject
 import com.greencircle.domain.usecase.CompanyReviewListRequirement
+import java.util.UUID
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,9 +15,9 @@ class CompanyReviewViewModel : ViewModel() {
     val reviewObjectLiveData = MutableLiveData<CompanyReviewObject?>()
     private val companyReviewListRequirement = CompanyReviewListRequirement()
 
-    private lateinit var companyId: String
+    private lateinit var companyId: UUID
 
-    fun setCompanyId(companyId: String) {
+    fun setCompanyId(companyId: UUID) {
         this.companyId = companyId
     }
 

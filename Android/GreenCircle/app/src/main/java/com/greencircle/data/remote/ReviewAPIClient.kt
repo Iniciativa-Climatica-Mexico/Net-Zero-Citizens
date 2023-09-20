@@ -4,23 +4,26 @@ import android.util.Log
 import com.greencircle.domain.model.CompanyReviewObject
 import com.greencircle.domain.model.ReviewBase
 import com.greencircle.domain.model.UserReviewObject
+import java.util.UUID
 import okhttp3.ResponseBody
 import retrofit2.Response
 
 class ReviewAPIClient {
     private lateinit var api: ReviewAPIService
-    suspend fun getCompanyReviews(companyId: String): CompanyReviewObject? {
+    suspend fun getCompanyReviews(companyId: UUID): CompanyReviewObject? {
         api = ReviewNetworkModuleDI()
         return try {
-            api.getCompanyReviews(companyId)
+            val response = api.getCompanyReviews(companyId)
+            Log.d("response", response.toString())
+            return response
         } catch (e: java.lang.Exception) {
-            Log.d("customErr", e.toString())
+            Log.d("customErr2", e.toString())
             e.printStackTrace()
             null
         }
     }
 
-    suspend fun getUserReviews(userId: String): UserReviewObject? {
+    suspend fun getUserReviews(userId: UUID): UserReviewObject? {
         api = ReviewNetworkModuleDI()
         return try {
             api.getUserReviews(userId)
@@ -32,22 +35,22 @@ class ReviewAPIClient {
     }
 
     suspend fun addReview(
-        userId: String,
-        companyId: String,
+        userId: UUID,
+        companyId: UUID,
         review: ReviewBase
     ): Response<ResponseBody>? {
         api = ReviewNetworkModuleDI()
         return try {
             api.addReview(userId, companyId, review)
         } catch (e: java.lang.Exception) {
-            Log.d("customErr", e.toString())
+            Log.d("customErrAdd", e.toString())
             e.printStackTrace()
             null
         }
     }
 
     suspend fun updateReview(
-        reviewId: String,
+        reviewId: UUID,
         review: ReviewBase
     ): Response<ResponseBody>? {
         api = ReviewNetworkModuleDI()
@@ -61,7 +64,7 @@ class ReviewAPIClient {
     }
 
     suspend fun deleteReview(
-        reviewId: String
+        reviewId: UUID
     ): Response<ResponseBody>? {
         api = ReviewNetworkModuleDI()
         return try {

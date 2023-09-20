@@ -15,6 +15,7 @@ import com.greencircle.R
 import com.greencircle.databinding.FragmentReviewFormBinding
 import com.greencircle.domain.model.ReviewBase
 import com.greencircle.framework.viewmodel.ReviewFormViewModel
+import java.util.UUID
 
 class ReviewFormFragment : Fragment() {
     private var _binding: FragmentReviewFormBinding? = null
@@ -25,7 +26,7 @@ class ReviewFormFragment : Fragment() {
     private var rating: Float = 0.0f
     private var reviewTitle: String = ""
     private var review: String = ""
-    private var companyId: String = ""
+    private var companyId: UUID = UUID.randomUUID()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,7 +38,7 @@ class ReviewFormFragment : Fragment() {
         _binding = FragmentReviewFormBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        companyId = arguments?.getString("CompanyId") ?: "0"
+        companyId = UUID.fromString(arguments?.getString("CompanyId")) ?: UUID.fromString("c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e")
 
         initializeRatingBar()
         initializeRatingBarListener()
@@ -134,7 +135,7 @@ class ReviewFormFragment : Fragment() {
     private fun postReview(rating: Int) {
 //        TODO: Cambiar userId por el del usuario logeado
 
-        if (companyId == "0") {
+        if (companyId.toString() == "0") {
             Toast.makeText(
                 requireContext(),
                 getString(R.string.review_submit_error),
@@ -143,11 +144,12 @@ class ReviewFormFragment : Fragment() {
             return
         }
 
-        val userId = "8de45630-2e76-4d97-98c2-9ec0d1f3a5b8"
+        val userId = UUID.fromString(arguments?.getString("userId"))
+            ?: UUID.fromString("8de45630-2e76-4d97-98c2-9ec0d1f3a5b8")
         val reviewBase = ReviewBase(reviewTitle, review, rating)
 
         val res = runCatching {
-            viewModel.addReview(userId, companyId, reviewBase)
+                viewModel.addReview(userId, companyId, reviewBase)
         }
 
         if (res.isFailure) {

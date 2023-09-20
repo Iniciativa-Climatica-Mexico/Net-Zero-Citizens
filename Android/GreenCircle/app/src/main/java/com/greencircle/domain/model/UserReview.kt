@@ -1,11 +1,12 @@
 package com.greencircle.domain.model
 
 import com.google.gson.annotations.SerializedName
+import java.util.UUID
 
 data class UserReview(
-    @SerializedName("reviewId") val reviewId: String,
-    @SerializedName("userId") val userId: String,
-    @SerializedName("companyId") val companyId: String,
+    @SerializedName("reviewId") val reviewId: UUID,
+    @SerializedName("userId") val userId: UUID,
+    @SerializedName("companyId") val companyId: UUID,
     @SerializedName("reviewTitle") val reviewTitle: String,
     @SerializedName("review") val review: String,
     @SerializedName("score") val score: Int,

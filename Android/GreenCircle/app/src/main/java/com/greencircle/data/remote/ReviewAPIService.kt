@@ -3,6 +3,7 @@ package com.greencircle.data.remote
 import com.greencircle.domain.model.CompanyReviewObject
 import com.greencircle.domain.model.ReviewBase
 import com.greencircle.domain.model.UserReviewObject
+import java.util.UUID
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
@@ -16,29 +17,29 @@ interface ReviewAPIService {
     // http:localhost:3000/api/v1/review/company/{companyId}
     @GET("review/company/{companyId}")
     suspend fun getCompanyReviews(
-        @Path("companyId") companyId: String
+        @Path("companyId") companyId: UUID
     ): CompanyReviewObject
 
     @GET("review/user/{userId}")
     suspend fun getUserReviews(
-        @Path("userId") userId: String
+        @Path("userId") userId: UUID
     ): UserReviewObject
 
     @POST("review/{userId}/{companyId}")
     suspend fun addReview(
-        @Path("userId") userId: String,
-        @Path("companyId") companyId: String,
+        @Path("userId") userId: UUID,
+        @Path("companyId") companyId: UUID,
         @Body review: ReviewBase
     ): Response<ResponseBody>
 
     @PUT("review/{reviewId}")
     suspend fun updateReview(
-        @Path("reviewId") reviewId: String,
+        @Path("reviewId") reviewId: UUID,
         @Body review: ReviewBase
     ): Response<ResponseBody>
 
     @DELETE("review/{reviewId}")
     suspend fun deleteReview(
-        @Path("reviewId") reviewId: String
+        @Path("reviewId") reviewId: UUID
     ): Response<ResponseBody>
 }
