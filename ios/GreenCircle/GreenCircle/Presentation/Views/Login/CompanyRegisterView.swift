@@ -12,28 +12,28 @@ struct CompanyRegisterView: View {
   var goLogin: () -> Void
   var goForm: () -> Void
   var goMainMenu: () -> Void
-  
+
   @StateObject var viewModel = LoginViewModel()
   @EnvironmentObject var user: UserData
-  
+
   var body: some View {
-    ZStack{
-      
+    ZStack {
+
       BackgroundView()
-      
+
       VStack(spacing: 40) {
         HeaderView(
           title: "Crear cuenta de empresa",
           subTitle: "Registrate con tu cuenta preferida")
-        
+
         Spacer()
-        
+
         VStack {
-          GoogleSignInButton(style: .wide){
+          GoogleSignInButton(style: .wide) {
             Task {
-              let new_user = await viewModel
+              let newUser = await viewModel
                 .handleGoogleSignIn(userData: user)
-              if new_user {
+              if newUser {
                 goForm()
               } else {
                 goMainMenu()
@@ -42,20 +42,20 @@ struct CompanyRegisterView: View {
           }
         }
         .padding(.horizontal)
-        
+
         Spacer()
-        
+
         Divider().padding(.horizontal)
-        
+
         HStack {
           Text("¿No eres un proveedor?")
           Spacer()
           LinkButton("Inicia Sesión",
-                     buttonColor: .blue){
+                     buttonColor: .blue) {
             goLogin()
           }
         }.padding(.horizontal)
-        
+
         LinkButton("Aviso de privacidad",
                    buttonColor: .blue, action: {})
           .padding(.bottom)

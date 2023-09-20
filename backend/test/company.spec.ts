@@ -295,3 +295,4 @@ describe('Company Service', () => {
       .to.deep.equal(testData)
   })
 })
+

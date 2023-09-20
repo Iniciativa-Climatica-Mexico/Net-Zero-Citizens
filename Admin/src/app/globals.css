@@ -4,6 +4,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+
 @layer base {
   :root {
     --background: 0 0% 100%;

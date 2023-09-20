@@ -30,9 +30,9 @@ struct UserRegisterView: View {
         VStack {
           GoogleSignInButton(style: .wide){
             Task {
-              let new_user = await viewModel
+              let newUser = await viewModel
                 .handleGoogleSignIn(userData: userData)
-              if new_user {
+              if newUser {
                 goForm()
               } else {
                 goMainMenu()

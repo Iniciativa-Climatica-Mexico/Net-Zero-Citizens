@@ -35,6 +35,14 @@ export default class Question extends Model {
   })
   questionType: string
 
+  @Column({
+    type: DataType.BOOLEAN,
+    allowNull: false,
+    field: 'IS_REQUIRED',
+    defaultValue: true,
+  })
+  isRequired: boolean
+
   @ForeignKey(() => Survey)
   @Column({
     type: DataType.UUID,
