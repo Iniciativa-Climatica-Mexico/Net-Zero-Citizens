@@ -7,6 +7,7 @@
 import Alamofire
 import Foundation
 
+/// Clase con el serivicio de la API
 class NetworkAPIService {
   static let shared = NetworkAPIService()
   static let decoder = JSONDecoder()
@@ -15,6 +16,11 @@ class NetworkAPIService {
     NetworkAPIService.decoder.dateDecodingStrategy = .iso8601WithFractionalSeconds
   }
   
+  /// Función encargada de postear al backend la información de un nuevo usuario registrado con Google
+  /// - Parameters:
+  ///   - url: url para hacer el POST
+  ///   - googleToken: token de identidad de Google
+  /// - Returns: respuesta de autenticación con tokens e información del usuario
   func postGoogleSignIn(url: URL, googleToken: String) async -> AuthResponse? {
     let params: Parameters = ["googleToken": googleToken]
     
@@ -39,6 +45,11 @@ class NetworkAPIService {
     
   }
   
+  /// Actualiza un usuario con la información proporcionada
+  /// - Parameters:
+  ///   - url: el url para realizar el PUT
+  ///   - authToken: token de autenticación
+  ///   - user: la información del usuario a actualizar
   func putUser(url: URL, authToken: String, user: User) async {
     let params: Parameters = [
       "phoneNumber": user.phone!,
@@ -54,6 +65,11 @@ class NetworkAPIService {
     let _ = await requestTask.serializingData().response
   }
   
+  /// Crea una compañía nueva
+  /// - Parameters:
+  ///   - url: url para hacer el post
+  ///   - authToken: token de autenticación
+  ///   - company: datos de la compañía a postear
   func postCompany(url: URL, authToken: String, company: PostCompanyData) async {
     print(company)
     let params: Parameters = [
