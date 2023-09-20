@@ -15,4 +15,4 @@ struct GreenCircleApp: App {
             ContentView()
         }
     }
-}
+  }

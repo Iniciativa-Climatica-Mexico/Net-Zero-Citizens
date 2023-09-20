@@ -16,7 +16,7 @@ class NetworkAPIService {
     NetworkAPIService.decoder.dateDecodingStrategy = .iso8601WithFractionalSeconds
   }
 
-//  func fetchUserById(url: URL) async -> User? {
+//  func getAllDummies(url: URL) async -> PaginatedQuery<Dummy>? {
 //    let requestTask = AF.request(url, method: .get).validate()
 //    let response = await requestTask.serializingData().response
 //
@@ -26,7 +26,7 @@ class NetworkAPIService {
 //        return
 //          try NetworkAPIService
 //          .decoder
-//          .decode(User.self, from: data)
+//          .decode(PaginatedQuery<Dummy>.self, from: data)
 //      } catch {
 //        debugPrint(error)
 //        return nil

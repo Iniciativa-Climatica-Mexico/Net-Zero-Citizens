@@ -278,6 +278,16 @@
 			path = Remote;
 			sourceTree = "<group>";
 		};
+		6CB498282AB0FA9B00B6560C /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				6CB498232AB0DECC00B6560C /* PaginatedQuery.swift */,
+				6CB498292AB0FAA400B6560C /* CustomDateFormatter.swift */,
+				6C9761802AB2B2920046DB50 /* NetworkAPIService.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */

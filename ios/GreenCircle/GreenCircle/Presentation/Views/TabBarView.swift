@@ -3,6 +3,7 @@
 //  GreenCircle
 //
 //  Created by Frida Bailleres González on 19/09/23.
+//  Created by Diego Vega Camacho on 13/09/23.
 //
 
 import SwiftUI

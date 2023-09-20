@@ -12,11 +12,8 @@ struct ContentView: View {
         VStack {
             NavigationView {
                 ProfileView(modelUser: UserViewModel())
-                
             }
-            
         }
-    
     }
 }
 
