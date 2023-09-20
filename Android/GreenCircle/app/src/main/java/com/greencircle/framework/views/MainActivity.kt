@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.greencircle.R
 import com.greencircle.databinding.ActivityMainBinding
+import com.greencircle.databinding.TopBarBinding
 import com.greencircle.framework.views.fragments.HomeFragment
 import com.greencircle.framework.views.fragments.ProfileFragment
 
@@ -18,6 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var topBarBinding: TopBarBinding
 
     /**
      * Método llamado cuando se crea la actividad.
@@ -30,19 +32,23 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        topBarBinding = TopBarBinding.bind(binding.root)
         replaceFragment(HomeFragment())
 
-        bottomNavigationView = binding.bottomNavigation
+        topBarBinding.title.text = "EcoInfo"
+        bottomNavigationView = binding.bottomNaSvigation
 
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.ecoInfo -> {
                     replaceFragment(HomeFragment())
+                    topBarBinding.title.text = "EcoInfo"
                     true
                 }
 
                 R.id.proveedores -> {
                     replaceFragment(ProfileFragment())
+                    topBarBinding.title.text = "Proveedores"
                     true
                 }
 
