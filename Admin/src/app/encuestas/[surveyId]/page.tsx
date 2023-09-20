@@ -1,5 +1,6 @@
 import { fetchSurveyById, QuestionDetail } from '@/api/survey'
 import Link from 'next/link'
+import CloseButtonComponent from './components/CloseButtonComponent'
 
 type DetailedSurveyProps = {
   params: {
@@ -13,7 +14,6 @@ export default async function DetailedSurvey(props: DetailedSurveyProps) {
   try {
     const surveyId = props.params.surveyId
     const surveyDetail = await fetchSurveyById(surveyId)
-    console.log(surveyDetail)
 
     return (
       <div>
@@ -21,11 +21,15 @@ export default async function DetailedSurvey(props: DetailedSurveyProps) {
           <h1 className="self-start font-extrabold mt-8 mx-8 text-4xl text-txt">
             {surveyDetail.title}
           </h1>
-          <Link href={'/reportes/encuesta/' + surveyId}>
-            <button className=" bg-primary hover:bg-primary-900 text-white font-bold py-2 px-4 mx-8 mt-8 rounded self-end">
-              Generar Reporte
-            </button>
-          </Link>
+          <div>
+            <CloseButtonComponent surveyId={surveyId} />
+
+            <Link href={'/reportes/encuesta/' + surveyId}>
+              <button className=" bg-primary hover:bg-primary-900 text-white font-bold py-2 px-4 mx-8 mt-8 rounded self-end">
+                Generar Reporte
+              </button>
+            </Link>
+          </div>
         </div>
         <div className="flex mx-8">
           <p className="self-start mb-8 mx-8 text-secondary">
@@ -90,3 +94,4 @@ function QuestionComponent(props: QuestionDetail) {
     </tr>
   )
 }
+

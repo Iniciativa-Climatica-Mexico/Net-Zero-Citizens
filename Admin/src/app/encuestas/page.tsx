@@ -71,7 +71,6 @@ export default async function ListSurveys() {
 }
 
 function SurveyComponent(props: Survey) {
-  console.log(props)
   return (
     <tr className="border-b border-gray-300">
       <td className='truncate cursor-pointer  text-txt hover:text-primary hover:font-semibold'>
