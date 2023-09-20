@@ -14,7 +14,7 @@ class UserViewModel: ObservableObject {
     private let updateUserDataUseCase: UpdateUserDataUseCaseProtocol
     /// La compañía puede cambiar en la vista (se construye .onAppear())
     @Published var contentUser: User = User(
-        userId: "",
+        userId: UUID(),
         roleId: "",
         companyId: "",
         googleId: "",

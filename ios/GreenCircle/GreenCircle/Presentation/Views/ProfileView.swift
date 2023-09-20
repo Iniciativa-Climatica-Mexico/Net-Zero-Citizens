@@ -118,7 +118,7 @@ struct ProfileView: View {
             .padding(.top, 70)
             .onAppear {
                 Task {
-                    await modelUser.fetchUserById(idUser: "abcd-1234-efgh-5679")
+                    await modelUser.fetchUserById(idUser: "0cca9c89-c38e-4350-ae31-9215741c8f11")
                 }
             }
             
@@ -132,7 +132,7 @@ struct ProfileView: View {
             Task {
                 // Nueva solicitud para obtener los datos actualizados del usuario
                 do {
-                    await modelUser.fetchUserById(idUser: "abcd-1234-efgh-5679")
+                    await modelUser.fetchUserById(idUser: "0cca9c89-c38e-4350-ae31-9215741c8f11")
                 }
             }
         }

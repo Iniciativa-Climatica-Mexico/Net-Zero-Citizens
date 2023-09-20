@@ -360,7 +360,7 @@ struct EditProfileView: View {
                                 
                                 )
                                 //Updatear Usuarios
-                                await modelUser.updateUserData(updatedUserData: updatedUser, userId: "abcd-1234-efgh-5679")
+                                await modelUser.updateUserData(updatedUserData: updatedUser, userId: "0cca9c89-c38e-4350-ae31-9215741c8f11")
                                 //Regresar a vista anterior
                                 self.presentationMode.wrappedValue.dismiss()
                             }
@@ -390,7 +390,7 @@ struct EditProfileView: View {
             }
             .onAppear {
                 Task {
-                    await modelUser.fetchUserById(idUser: "abcd-1234-efgh-5679")
+                    await modelUser.fetchUserById(idUser: "0cca9c89-c38e-4350-ae31-9215741c8f11")
                 }
             }
         }
