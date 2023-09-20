@@ -97,8 +97,8 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/company_name"
             android:layout_marginLeft="19dp"
-            android:layout_marginTop="-17dp"
-            android:layout_marginRight="-349dp"
+            android:layout_marginTop="-13dp"
+            android:layout_marginRight="-333dp"
             android:layout_toLeftOf="@id/company_name"
             android:button="@drawable/sl_favourite_24dp"
             android:buttonTint="#589A74" />
