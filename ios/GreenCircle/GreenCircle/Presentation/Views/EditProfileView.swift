@@ -188,7 +188,7 @@ struct EditProfileView: View {
                                     RoundedRectangle(cornerRadius: 5)
                                         .stroke(Color.gray, lineWidth: 0.1)
                                         .frame(height: 30)
-                                    Picker("Sexo", selection: $modelUser.contentUser.sex) {
+                                    Picker("Sexo", selection: $modelUser.contentUser.gender) {
                                         Text("Femenino").tag("femenine")
                                         Text("Masculino").tag("masculine")
                                         Text("Otro").tag("other")
@@ -352,7 +352,7 @@ struct EditProfileView: View {
                                     phoneNumber: modelUser.contentUser.phoneNumber,
                                     age: modelUser.contentUser.age,
                                     state: modelUser.contentUser.state,
-                                    sex: modelUser.contentUser.sex,
+                                    gender: modelUser.contentUser.gender,
                                     profilePicture: modelUser.contentUser.profilePicture,
                                     createdAt: modelUser.contentUser.createdAt,
                                     updatedAt: Date()

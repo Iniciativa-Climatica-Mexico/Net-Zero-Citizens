@@ -28,7 +28,7 @@ class UserViewModel: ObservableObject {
         phoneNumber: "",
         age: 0,
         state: "",
-        sex: "",
+        gender: "",
         profilePicture: "",
         createdAt: Date(),
         updatedAt: Date()
