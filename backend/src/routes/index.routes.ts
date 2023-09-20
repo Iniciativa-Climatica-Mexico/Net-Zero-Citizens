@@ -12,7 +12,7 @@ export const initRouterV1 = (app: Express) => {
   app.use('/api/v1/auth', AuthRouter)
 
   // Middleware
-  app.use(validateToken)
+  // app.use(validateToken)
   
   // Dummy routes
   app.use('/api/v1/admin/dummy', validateRole(['admin']), DummyRouter)

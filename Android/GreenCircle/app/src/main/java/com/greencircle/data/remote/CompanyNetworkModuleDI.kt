@@ -9,7 +9,7 @@ object CompanyNetworkModuleDI {
 
     operator fun invoke(): CompanyAPIService {
         return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(Constants.SERVER_BASE_URL)
             .addConverterFactory(gsonFactory)
             .build()
             .create(CompanyAPIService::class.java)
