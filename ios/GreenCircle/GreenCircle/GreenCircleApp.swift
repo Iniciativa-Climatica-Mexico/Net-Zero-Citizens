@@ -13,6 +13,7 @@ struct GreenCircleApp: App {
     WindowGroup {
       ContentView()
             .applyNavBarTheme()
+        
     }
   }
 }
