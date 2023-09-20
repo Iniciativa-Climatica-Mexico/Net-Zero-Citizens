@@ -2,6 +2,7 @@ import chai from 'chai'
 import chaiExclude from 'chai-exclude'
 import { db, initDB } from '../src/configs/database.config'
 import { getCompanyById } from '../src/services/company.service'
+import { getAllCompanies } from '../src/services/company.service'
 
 chai.use(chaiExclude)
 

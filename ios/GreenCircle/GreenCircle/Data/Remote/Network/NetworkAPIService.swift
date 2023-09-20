@@ -111,27 +111,46 @@ class NetworkAPIService {
       debugPrint(error)
     }
   }
-    /// Obtener compañía por id
-    ///  - Parameters:
-    ///     - url: Backend url para obtener datos
-    ///  - Returns: Modelo de compañía o error en cualquier otro caso no válido
-  func fetchCompanyById(url: URL) async -> Company? {
-    let taskRequest = AF.request(url, method: .get).validate()
-    let response = await taskRequest.serializingData().response
+  
+  /// - Description: Obtener encuesta pendiente
+  /// - Parameter url: URL
+  /// - Returns: Modelo de encuesta o nil (SurveyModel?)
+  func getPendingSurvey(url: URL) async -> SurveyModel? {
+    let requestTask = AF.request(url, method: .get).validate()
+    let response = await requestTask.serializingData().response
+    
     switch response.result {
     case .success(let data):
       do {
         return
           try NetworkAPIService
           .decoder
-          .decode(Company.self, from: data)
+          .decode(SurveyModel.self, from: data)
       } catch {
         debugPrint(error)
-          return nil
+        return nil
       }
     case let .failure(error):
-      debugPrint(error.localizedDescription)
+      debugPrint(error)
       return nil
+    }
+  }
+  
+  /// - Description: Enviar respuestas de la encuesta
+  /// - Parameters:
+  ///   - url: URL
+  ///   - answers: Las respuestas de la encuesta
+  /// - Returns: Bool
+  func submitAnswers(url: URL, answers: [Answer]) async -> Bool {
+    let requestTask = AF.request(url, method: .post, parameters: answers, encoder: JSONParameterEncoder.default).validate()
+    let response = await requestTask.serializingData().response
+
+    switch response.result {
+    case .success:
+      return true
+    case let .failure(error):
+      debugPrint(error)
+      return false
     }
   }
 }

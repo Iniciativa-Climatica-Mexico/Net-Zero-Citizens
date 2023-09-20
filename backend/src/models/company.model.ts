@@ -27,7 +27,6 @@ export default class Company extends Model {
     allowNull: false,
     defaultValue: DataType.UUIDV4,
     field: 'COMPANY_ID',
-    unique: true,
   })
   companyId: string
 
@@ -57,7 +56,7 @@ export default class Company extends Model {
     type: DataType.STRING(255),
     allowNull: false,
     field: 'EMAIL',
-    unique: true,
+    // unique: true,
   })
   email: string
 
@@ -135,7 +134,7 @@ export default class Company extends Model {
     type: DataType.STRING(500),
     allowNull: false,
     field: 'PDF_CURRICULUM_URL',
-    unique: true,
+    // unique: true,
   })
   pdfCurriculumUrl: string
 
@@ -143,7 +142,7 @@ export default class Company extends Model {
     type: DataType.STRING(500),
     allowNull: true,
     field: 'PDF_DIC_CDMX_URL',
-    unique: true,
+    // unique: true,
   })
   pdfDicCdmxUrl: string | null
 
@@ -151,7 +150,7 @@ export default class Company extends Model {
     type: DataType.STRING(500),
     allowNull: true,
     field: 'PDF_PEE_FIDE_URL',
-    unique: true,
+    // unique: true,
   })
   pdfPeeFideUrl: string | null
 
@@ -159,7 +158,7 @@ export default class Company extends Model {
     type: DataType.STRING(500),
     allowNull: false,
     field: 'PDF_GUARANTEE_SECURITY_URL',
-    unique: true,
+    // unique: true,
   })
   pdfGuaranteeSecurityUrl: string
 
@@ -167,15 +166,15 @@ export default class Company extends Model {
     type: DataType.STRING(500),
     allowNull: false,
     field: 'PDF_ACTA_CONSTITUTIVA_URL',
-    unique: true,
+    // unique: true,
   })
   pdfActaConstitutivaUrl: string
 
   @Column({
     type: DataType.STRING(500),
     allowNull: false,
-    field: 'PDF_INE_URL ',
-    unique: true,
+    field: 'PDF_INE_URL',
+    // unique: true,
   })
   pdfIneUrl: string
 
