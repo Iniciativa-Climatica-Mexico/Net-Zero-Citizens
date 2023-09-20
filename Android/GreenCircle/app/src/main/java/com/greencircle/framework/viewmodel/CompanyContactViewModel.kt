@@ -1,4 +1,3 @@
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,10 +15,9 @@ class CompanyContactViewModel : ViewModel() {
     /*
     * Inicializa el LiveData con los items de prueba para el carrusel
      */
-    fun getCompanyData() {
+    fun getCompanyData(companyId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val response = repository.getCompanyData()
-            Log.d("CompanyContactViewModel", "Response: $response")
+            val response = repository.getCompanyData(companyId)
             _companyData.postValue(response)
         }
     }
