@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Clase con constantes usadas a lo largo de la aplicación
 class Constants {
   static let states = [
     "Aguascalientes",

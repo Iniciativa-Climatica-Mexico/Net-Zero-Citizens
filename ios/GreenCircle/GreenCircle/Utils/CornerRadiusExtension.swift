@@ -13,6 +13,7 @@ extension View {
   }
 }
 
+/// Util para redondear ciertas esquinas de una figura
 struct RoundedCorner: Shape {
 
   var radius: CGFloat = .infinity
