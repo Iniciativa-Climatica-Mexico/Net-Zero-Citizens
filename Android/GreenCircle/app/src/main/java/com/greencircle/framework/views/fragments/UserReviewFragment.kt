@@ -24,8 +24,7 @@ class UserReviewFragment : Fragment() {
     private val adapter: UserReviewAdapter = UserReviewAdapter()
 
     private lateinit var data: ArrayList<UserReview>
-    private var userId: UUID =
-        UUID.fromString(arguments?.getString("userId")) ?: UUID.fromString("abcd-1234-efgh-5678")
+    private lateinit var userId: UUID
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +35,12 @@ class UserReviewFragment : Fragment() {
         _binding = FragmentUserReviewBinding.inflate(inflater, container, false)
         val root: View = binding.root
         data = ArrayList()
+
+        if (arguments?.getString("userId") != null) {
+            userId = UUID.fromString("8de45630-2e76-4d97-98c2-9ec0d1f3a5b8")
+        } else {
+            userId = UUID.fromString(arguments?.getString("userId"))
+        }
 
         viewModel.setUUID(userId)
         viewModel.getUserReviewsList()

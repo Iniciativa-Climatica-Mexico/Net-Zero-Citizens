@@ -42,8 +42,11 @@ class CompanyReviewFragment : Fragment() {
         val root: View = binding.root
         data = ArrayList()
 
-        companyId = UUID.fromString(arguments?.getString("CompanyId"))
-            ?: UUID.fromString("c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e")
+        if (arguments?.getString("CompanyId") != null) {
+            companyId = UUID.fromString("c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e")
+        } else {
+            companyId = UUID.fromString(arguments?.getString("CompanyId"))
+        }
         viewModel.setCompanyId(companyId)
         viewModel.getReviewsList()
 
