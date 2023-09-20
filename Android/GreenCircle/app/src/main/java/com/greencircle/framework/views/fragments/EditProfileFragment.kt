@@ -75,7 +75,7 @@ class EditProfileFragment : Fragment() {
             binding.inputPrimerApellido.text.toString(),
             binding.inputSegundoApellido.text.toString(),
             user.email,
-            user.password ?: "EstoNoDeberiaEstarAqui",
+            binding.inputContrasena.text.toString(),
             binding.inputTelefono.text.toString(),
             binding.inputEdad.text.toString().toInt(),
             binding.inputSexo.text.toString(),

@@ -8,12 +8,14 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.greencircle.R
 import com.greencircle.databinding.ActivityMainBinding
+import com.greencircle.databinding.TopBarBinding
 import com.greencircle.framework.views.fragments.CompanyReviewFragment
 import com.greencircle.framework.views.fragments.ProfileFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var topBarBinding: TopBarBinding
     private lateinit var sharedPreferences: SharedPreferences
 
     private val PREFS_NAME = "MyPrefsFile"
@@ -24,6 +26,11 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        topBarBinding = TopBarBinding.bind(binding.root)
+        bottomNavigationView = binding.bottomNavigation
+
+        topBarBinding.title.text = "Inicio"
 
         bottomNavigationView = binding.bottomNavigation
 
@@ -36,6 +43,7 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.perfil -> {
                     replaceFragment(ProfileFragment())
+                    topBarBinding.title.text = "Perfil"
                     true
                 }
 
