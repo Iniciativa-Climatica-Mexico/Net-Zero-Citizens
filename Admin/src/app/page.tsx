@@ -15,8 +15,8 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-import { CellAction } from '@/components/CellAction'
-import ModalProveedor from '@/components/ModalProveedor'
+import { CellAction } from '@/components/cellAction'
+import ModalProveedor from '@/components/modalProveedor'
 
 export default function Home() {
   const [selectedCompany, setSelectedCompany] = useState<Company>({

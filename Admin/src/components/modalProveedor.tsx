@@ -1,3 +1,5 @@
+'use client'
+
 /**
  * Represents a modal component that includes company info and allows admin to accpet or reject a comapny
  *
@@ -23,6 +25,7 @@ import FileOpenIcon from '@mui/icons-material/FileOpen'
 
 import { Separator } from './ui/separator'
 import { Button } from './ui/button'
+import { useState } from 'react'
 
 interface ModalProveedorProps {
   setIsModalOpen: (value: boolean) => void
