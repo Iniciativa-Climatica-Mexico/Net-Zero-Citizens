@@ -5,11 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.greencircle.domain.model.ReviewBase
 import com.greencircle.domain.usecase.UpdateReviewRequirement
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 class UpdateReviewViewModel : ViewModel() {
     private val updateReviewRequirement = UpdateReviewRequirement()
 
-    fun updateReview(reviewId: String, review: ReviewBase) {
+    fun updateReview(reviewId: UUID, review: ReviewBase) {
         viewModelScope.launch {
             val response = updateReviewRequirement(reviewId, review)
         }

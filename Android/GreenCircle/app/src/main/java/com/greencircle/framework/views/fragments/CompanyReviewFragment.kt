@@ -15,6 +15,7 @@ import com.greencircle.databinding.FragmentCompanyReviewBinding
 import com.greencircle.domain.model.CompanyReview
 import com.greencircle.framework.adapters.CompanyReviewAdapter
 import com.greencircle.framework.viewmodel.CompanyReviewViewModel
+import java.util.UUID
 
 class CompanyReviewFragment : Fragment() {
     private var _binding: FragmentCompanyReviewBinding? = null
@@ -27,7 +28,7 @@ class CompanyReviewFragment : Fragment() {
     private lateinit var reviewButton: Button
     private lateinit var ratingBar: RatingBar
 
-    private var companyId: String = arguments?.getString("companyId") ?: "comp-1234-efgh-0000"
+    private var companyId: UUID = UUID.fromString(arguments?.getString("companyId")) ?: UUID.fromString("comp-1234-efgh-0000")
     private var rating: Float = 0.0f
 
     override fun onCreateView(

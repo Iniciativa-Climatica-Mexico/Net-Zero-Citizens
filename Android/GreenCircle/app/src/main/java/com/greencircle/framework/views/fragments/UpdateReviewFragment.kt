@@ -14,6 +14,7 @@ import com.greencircle.R
 import com.greencircle.databinding.FragmentEditUserReviewBinding
 import com.greencircle.domain.model.ReviewBase
 import com.greencircle.framework.viewmodel.UpdateReviewViewModel
+import java.util.UUID
 
 class UpdateReviewFragment : Fragment() {
     private var _binding: FragmentEditUserReviewBinding? = null
@@ -21,7 +22,7 @@ class UpdateReviewFragment : Fragment() {
 
     private lateinit var viewModel: UpdateReviewViewModel
 
-    private lateinit var reviewId: String
+    private lateinit var reviewId: UUID
     private var rating: Float = 0.0f
     private var reviewTitle: String = ""
     private var review: String = ""
@@ -54,7 +55,7 @@ class UpdateReviewFragment : Fragment() {
     }
 
     private fun initializeComponents() {
-        reviewId = arguments?.getString("reviewId") ?: ""
+        reviewId = UUID.fromString(arguments?.getString("reviewId")) ?: UUID.fromString("revw-1234-efgh-0000")
         rating = arguments?.getFloat("score") ?: 0.0f
         reviewTitle = arguments?.getString("title") ?: ""
         review = arguments?.getString("review") ?: ""

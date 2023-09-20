@@ -18,7 +18,7 @@ class CompanyReviewViewHolder(private var binding: ItemCompanyReviewBinding) :
         binding.reviewCardTitle.text = item.reviewTitle
         binding.reviewCardContent.text = item.review
         binding.reviewCardRating.text = score
-        binding.reviewCardDate.text = formatDateWithSlashes(item.updatedAt)
+        binding.reviewCardDate.text = formatDateWithSlashes(item.updatedAt.toString())
         binding.reviewCardRatingBar.rating = item.score.toFloat()
     }
     private fun formatDateWithSlashes(dateString: String): String {

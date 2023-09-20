@@ -7,33 +7,28 @@ import com.greencircle.domain.model.ReviewBase
 import com.greencircle.domain.model.UserReviewObject
 import okhttp3.ResponseBody
 import retrofit2.Response
+import java.util.UUID
 
 class ReviewRepository {
     private val api = ReviewAPIClient()
-    suspend fun getCompanyReviews(companyId: String): CompanyReviewObject? {
-        val response = api.getCompanyReviews(companyId)
-        Log.d("prueba", response.toString())
-        return response
+    suspend fun getCompanyReviews(companyId: UUID): CompanyReviewObject? {
+        return api.getCompanyReviews(companyId)
     }
 
-    suspend fun getUserReviews(UUID: String): UserReviewObject? {
-        val response = api.getUserReviews(UUID)
-        Log.d("prueba", response.toString())
-        return response
+    suspend fun getUserReviews(UUID: UUID): UserReviewObject? {
+        return api.getUserReviews(UUID)
     }
 
     suspend fun addReview(
-        UUID: String,
-        companyId: String,
+        UUID: UUID,
+        companyId: UUID,
         review: ReviewBase
     ): Response<ResponseBody>? {
-        val response = api.addReview(UUID, companyId, review)
-        Log.d("POST", response.toString())
-        return response
+        return api.addReview(UUID, companyId, review)
     }
 
     suspend fun updateReview(
-        reviewId: String,
+        reviewId: UUID,
         review: ReviewBase
     ): Response<ResponseBody>? {
         val response = api.updateReview(reviewId, review)
@@ -42,7 +37,7 @@ class ReviewRepository {
     }
 
     suspend fun deleteReview(
-        reviewId: String
+        reviewId: UUID
     ): Response<ResponseBody>? {
         val response = api.deleteReview(reviewId)
         Log.d("DELETE", response.toString())

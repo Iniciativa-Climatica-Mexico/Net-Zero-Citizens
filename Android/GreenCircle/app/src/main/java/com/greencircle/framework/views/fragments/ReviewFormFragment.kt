@@ -14,6 +14,7 @@ import com.greencircle.R
 import com.greencircle.databinding.FragmentReviewFormBinding
 import com.greencircle.domain.model.ReviewBase
 import com.greencircle.framework.viewmodel.ReviewFormViewModel
+import java.util.UUID
 
 class ReviewFormFragment : Fragment() {
     private var _binding: FragmentReviewFormBinding? = null
@@ -128,11 +129,11 @@ class ReviewFormFragment : Fragment() {
     }
 
     private fun postReview(rating: Int) {
-        val UUID = "abcd-1234-efgh-5678"
-        val companyId = "comp-1234-efgh-0000"
+        val uuid : UUID = UUID.fromString(arguments?.getString("UUID")) ?: UUID.fromString("abcd-1234-efgh-5678")
+        val companyId: UUID = UUID.fromString(arguments?.getString("companyId")) ?: UUID.fromString("abcd-1234-efgh-5678")
         val reviewBase = ReviewBase(reviewTitle, review, rating)
 
-        viewModel.addReview(UUID, companyId, reviewBase)
+        viewModel.addReview(uuid, companyId, reviewBase)
 
         Toast.makeText(
             requireContext(),

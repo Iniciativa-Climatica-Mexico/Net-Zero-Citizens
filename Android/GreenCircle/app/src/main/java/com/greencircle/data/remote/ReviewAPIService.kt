@@ -11,34 +11,35 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
+import java.util.UUID
 
 interface ReviewAPIService {
     // http:localhost:3000/api/v1/review/company/{companyId}
     @GET("review/company/{companyId}")
     suspend fun getCompanyReviews(
-        @Path("companyId") companyId: String
+        @Path("companyId") companyId: UUID
     ): CompanyReviewObject
 
     @GET("review/user/{UUID}")
     suspend fun getUserReviews(
-        @Path("UUID") UUID: String
+        @Path("UUID") UUID: UUID
     ): UserReviewObject
 
     @POST("review/{UUID}/{companyId}")
     suspend fun addReview(
-        @Path("UUID") UUID: String,
-        @Path("companyId") companyId: String,
+        @Path("UUID") UUID: UUID,
+        @Path("companyId") companyId: UUID,
         @Body review: ReviewBase
     ): Response<ResponseBody>
 
     @PUT("review/{reviewId}")
     suspend fun updateReview(
-        @Path("reviewId") reviewId: String,
+        @Path("reviewId") reviewId: UUID,
         @Body review: ReviewBase
     ): Response<ResponseBody>
 
     @DELETE("review/{reviewId}")
     suspend fun deleteReview(
-        @Path("reviewId") reviewId: String
+        @Path("reviewId") reviewId: UUID
     ): Response<ResponseBody>
 }

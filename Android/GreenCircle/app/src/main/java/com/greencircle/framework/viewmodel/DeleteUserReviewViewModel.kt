@@ -4,10 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.greencircle.domain.usecase.DeleteReviewRequirement
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 class DeleteUserReviewViewModel : ViewModel() {
     private val deleteReviewRequirement = DeleteReviewRequirement()
-    fun deleteReview(reviewId: String) {
+    fun deleteReview(reviewId: UUID) {
         viewModelScope.launch {
             val response = deleteReviewRequirement(reviewId)
         }

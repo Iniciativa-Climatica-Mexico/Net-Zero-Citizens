@@ -6,50 +6,46 @@ import com.greencircle.domain.model.ReviewBase
 import com.greencircle.domain.model.UserReviewObject
 import okhttp3.ResponseBody
 import retrofit2.Response
+import java.util.UUID
 
 class ReviewAPIClient {
     private lateinit var api: ReviewAPIService
-    suspend fun getCompanyReviews(companyId: String): CompanyReviewObject? {
+    suspend fun getCompanyReviews(companyId: UUID): CompanyReviewObject? {
         api = ReviewNetworkModuleDI()
-        Log.d("companyId", companyId)
         return try {
             api.getCompanyReviews(companyId)
         } catch (e: java.lang.Exception) {
-            Log.d("customErr", e.toString())
             e.printStackTrace()
             null
         }
     }
 
-    suspend fun getUserReviews(UUID: String): UserReviewObject? {
+    suspend fun getUserReviews(UUID: UUID): UserReviewObject? {
         api = ReviewNetworkModuleDI()
-        Log.d("UUID", UUID)
         return try {
             api.getUserReviews(UUID)
         } catch (e: java.lang.Exception) {
-            Log.d("customErr", e.toString())
             e.printStackTrace()
             null
         }
     }
 
     suspend fun addReview(
-        UUID: String,
-        companyId: String,
+        UUID: UUID,
+        companyId: UUID,
         review: ReviewBase
     ): Response<ResponseBody>? {
         api = ReviewNetworkModuleDI()
         return try {
             api.addReview(UUID, companyId, review)
         } catch (e: java.lang.Exception) {
-            Log.d("customErr", e.toString())
             e.printStackTrace()
             null
         }
     }
 
     suspend fun updateReview(
-        reviewId: String,
+        reviewId: UUID,
         review: ReviewBase
     ): Response<ResponseBody>? {
         api = ReviewNetworkModuleDI()
@@ -63,7 +59,7 @@ class ReviewAPIClient {
     }
 
     suspend fun deleteReview(
-        reviewId: String
+        reviewId: UUID
     ): Response<ResponseBody>? {
         api = ReviewNetworkModuleDI()
         return try {
