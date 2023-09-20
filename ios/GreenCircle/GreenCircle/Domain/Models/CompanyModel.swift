@@ -2,7 +2,8 @@
 //  CompanyModel.swift
 //  GreenCircle
 //
-//  Created by Ricardo Adolfo Fernández Alvarado on 19/09/23.
+//  Created by Ricardo Adolfo Fernández 19/09/23.
+// Created by Daniel Gutiérrez on 19/09/23.
 //
 
 import Foundation
