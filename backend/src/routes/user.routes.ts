@@ -7,4 +7,7 @@ usersRouter.get('/:userId', controller.getUserInfo)
 usersRouter.put('/:userId', controller.updateUserInfo)
 usersRouter.put('/credentials/:userId', controller.updateUserCredentials)
 
+usersRouter.get('/', controller.getAllUsers)
+usersRouter.post('/create', controller.createUser)
+
 export default usersRouter

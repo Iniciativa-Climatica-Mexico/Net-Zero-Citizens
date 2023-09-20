@@ -16,17 +16,11 @@ class Api {
 }
 
 protocol DummyApiProtocol {
-  func getDummies() async -> PaginatedQuery<Dummy>?
+  
 }
 
 class DummyRepository: DummyApiProtocol {
   let service = NetworkAPIService.shared
   static let shared = DummyRepository()
-
-  func getDummies() async -> PaginatedQuery<Dummy>? {
-    return
-      await service
-      .getAllDummies(url: URL(string: "\(Api.base)\(Api.Routes.dummy)")!)
-  }
 
 }
