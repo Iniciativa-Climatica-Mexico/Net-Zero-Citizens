@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //
 //  CustomCornerImage.swift
 //  GreenCircle
@@ -25,3 +26,6 @@ extension View {
     clipShape(RoundedCorner(radius: radius, corners: corners) )
   }
 }
+=======
+
+>>>>>>> a4abd9313522219223a693d043bfb7277282e554

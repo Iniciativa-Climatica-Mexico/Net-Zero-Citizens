@@ -104,6 +104,12 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
 
+      - name: Decrypt google-service.json
+        run: |
+          echo "${{ secrets.FIREBASE_ACCOUNT }}" | gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.GPG_PASSPHRASE }}" --output google-services.json google-services.json.gpg
+
+        working-directory: Android/GreenCircle/app
+
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
@@ -174,6 +180,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Decrypt google-service.json
+        run: |
+          echo "${{ secrets.FIREBASE_ACCOUNT }}" | gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.GPG_PASSPHRASE }}" --output google-services.json google-services.json.gpg
+
+        working-directory: Android/GreenCircle/app
+
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
@@ -187,6 +199,8 @@ jobs:
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
         working-directory: Android/GreenCircle
+        env:
+          GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
 
       - name: Restore cache
         uses: actions/cache@v2
@@ -330,6 +344,8 @@ jobs:
           JWT_AUTH: ${{ secrets.JWT_AUTH }}
           JWT_REFRESH: ${{ secrets.JWT_REFRESH }}
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          ECO_INFO_PAGE_ID: ${{ secrets.ECO_INFO_PAGE_ID }}
+          ECO_INFO_TOKEN: ${{ secrets.ECO_INFO_TOKEN }}
 
       - name: Upload Mocha & Chai Test Report
         if: always()
