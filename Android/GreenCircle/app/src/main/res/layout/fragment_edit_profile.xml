@@ -27,25 +27,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/arrow_back_icon"
-                    android:background="@null"
-                    android:layout_marginLeft="20dp"
-                    android:layout_gravity="center_vertical"
-                    android:onClick="goBack"/>
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/edit_icon"
-                    android:background="@null"
-                    android:layout_gravity="center_vertical|right"
-                    android:layout_marginRight="20dp"
-                    android:onClick="goToEditProfile"
-                    />
-
 
                 <TextView
                     android:id="@+id/headerText"
