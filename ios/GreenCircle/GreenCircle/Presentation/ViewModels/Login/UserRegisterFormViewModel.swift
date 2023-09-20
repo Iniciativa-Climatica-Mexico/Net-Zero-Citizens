@@ -20,10 +20,10 @@ class UserRegisterFormViewModel: ObservableObject {
   @Published var privacy = false
   @Published var showAlert = false
   
-  @MainActor
   /// Función encargada de enviar el post al backend y actualizar el objeto de entorno
   /// - Parameter userData: objeto con la información del usuario
   /// - Returns: un booleano representando si ocurrió un error al validar el formulario
+  @MainActor
   func handleSubmit(userData: UserData) async -> Bool {
     do {
       try validateInformation()

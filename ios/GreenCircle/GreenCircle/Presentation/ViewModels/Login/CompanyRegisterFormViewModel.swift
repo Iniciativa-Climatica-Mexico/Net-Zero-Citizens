@@ -31,9 +31,9 @@ class CompanyRegisterFormViewModel: ObservableObject {
   @Published var formState = PostCompanyData()
   var useCase = RegisterCompanyUseCase.shared
   
-  @MainActor
   /// Función para manejar el submit de la información de la compañía
   /// - Parameter userData: objeto en el entorno con la información del usuario
+  @MainActor
   func handleSubmit(userData: UserData) async {
     formState.userId = userData.user!.id
     await useCase.registerCompany(authToken: userData.tokens!.authToken,

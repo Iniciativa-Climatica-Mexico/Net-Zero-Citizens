@@ -10,10 +10,10 @@ import Foundation
 class LoginViewModel: ObservableObject {
   var useCase = GoogleSignInUseCase.shared
   
-  @MainActor
   /// Función encargada de realizar el SignIn con Google y actualizar la información de entorno
   /// - Parameter userData: objeto de entorno
   /// - Returns: un booleano indicando el éxito de la operación
+  @MainActor
   func handleGoogleSignIn(userData: UserData) async -> Bool {
     let res = await useCase.handleSignInButton()!
 
