@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.greencircle.R
 
@@ -11,6 +12,7 @@ class UnverifiedCompanyFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        onBackPress()
     }
 
     /**
@@ -30,6 +32,21 @@ class UnverifiedCompanyFragment : Fragment() {
             R.layout.fragment_unverified_company,
             container,
             false
+        )
+    }
+
+    /**
+     * Método que controla el "back button" para evitar regresar al fragment anterior.
+     */
+    fun onBackPress() {
+        // Override the back button behavior
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Do nothing to prevent going back
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this, onBackPressedCallback
         )
     }
 }
