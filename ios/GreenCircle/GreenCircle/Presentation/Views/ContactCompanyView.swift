@@ -28,7 +28,7 @@ struct TabViewImagesProducts: View {
                     .resizable()
                     .scaledToFit()
                     .cornerRadius(10)
-                    .frame(maxWidth: 230, maxHeight: 200)
+                    .frame(maxWidth: 230, maxHeight: 180)
                 case .failure(_):
                     Text("Error cargando imagen")
                 @unknown default:
@@ -48,15 +48,12 @@ struct TabViewImagesProducts: View {
            Circle()
            .fill(productIndex == self.index ? Color("BlackCustom") : Color("BlackCustom").opacity(0.5))
            .frame(width: 7, height: 7)
-           
          }
         }
-      }.frame(maxHeight: bindImageToDescription ? 190 : 190)
-      .padding(.top, 10)
+      }
     if bindImageToDescription {
-      ZStack {
         ContactCompanyProductView(productDescription: descriptionBind[index] ?? "", productName: nameBind[index] ?? "")
-        }
+        .frame(height: 180)
       }
     }
 }
@@ -65,7 +62,7 @@ struct ContactCompanyProductView: View {
   var productDescription: String
   var productName: String
   var body: some View {
-    VStack(alignment: .leading) {
+    VStack(alignment: .leading, spacing: 5) {
       Text(productName)
         .foregroundColor(Color("BlackCustom"))
         .contrast(12.6)
@@ -88,10 +85,10 @@ struct ContactCompanyRatingView: View {
   @Binding var dispScrollView: Bool
   var body: some View {
     if !dispScrollView {
-      VStack(alignment: .leading) {
+      VStack(alignment: .leading, spacing: 5) {
         Text("Rating")
           .font(.system(size: 18))
-          .padding(.bottom, 3).bold()
+          .padding(.bottom, 5).bold()
         HStack {
           ForEach(0..<5) { index in
             if index < Int($modelCompanyRating.contentCompany.score.wrappedValue) {
@@ -122,7 +119,7 @@ struct ContactCompanyRatingView: View {
           Text(modelCompanyRating.contentCompany.oneComment)
             .font(.system(size: 13))
             .foregroundColor(Color("BlackCustom")).contrast(12.6)
-        }
+        }.padding(.bottom, 10)
         HStack {
           Spacer()
           Text("Ver mas...").onTapGesture {
@@ -143,12 +140,12 @@ struct ContactCompanyRatingView: View {
 struct ContactCompanyComponentView: View {
   @ObservedObject var modelCompany: CompanyViewModel
   var body: some View {
-    VStack(alignment: .leading, spacing: 6) {
+    VStack(alignment: .leading, spacing: 5) {
       Text("Conecta")
         .font(.system(size: 18))
         .foregroundColor(Color("BlackCustom")).contrast(12.6).bold()
         .padding(.bottom, 5)
-      VStack(alignment: .leading, spacing: 7) {
+      VStack(alignment: .leading, spacing: 6) {
         Text("Página web").font(.system(size: 13))
           .foregroundColor(Color("BlackCustom")).contrast(12.6)
         Text(modelCompany.contentCompany.webPage ?? "")
@@ -158,7 +155,7 @@ struct ContactCompanyComponentView: View {
 
       Divider()
 
-      VStack(alignment: .leading, spacing: 7) {
+      VStack(alignment: .leading, spacing: 6) {
         Text("Correo electrónico").font(.system(size: 13))
           .foregroundColor(Color("BlackCustom")).contrast(12.6)
         Text(modelCompany.contentCompany.email).font(.system(size: 10))
@@ -167,7 +164,7 @@ struct ContactCompanyComponentView: View {
 
       Divider()
 
-      VStack(alignment: .leading, spacing: 7) {
+      VStack(alignment: .leading, spacing: 6) {
         Text("Dirección")
           .font(.system(size: 13))
           .foregroundColor(Color("BlackCustom"))
@@ -188,7 +185,7 @@ struct ContactCompanyComponentView: View {
       }
       Divider()
 
-      VStack(alignment: .leading, spacing: 5) {
+      VStack(alignment: .leading, spacing: 6) {
         Text("Número telefónico").font(.system(size: 13))
           .foregroundColor(Color("BlackCustom")).contrast(12.6)
         Text(modelCompany.contentCompany.phone)
@@ -233,7 +230,6 @@ struct ContactCompanyView: View {
   @State var bindImageToDescription: Bool = false
   @State var stringDescription: String = ""
   var body: some View {
-    GeometryReader { geometry in
       if !dispScrollView {
         NavigationStack {
           VStack(alignment: .leading) {
@@ -248,7 +244,7 @@ struct ContactCompanyView: View {
                       image
                         .resizable()
                         .scaledToFill()
-                        .frame(maxWidth: .infinity, maxHeight: bindImageToDescription ? 165 : 165)
+                        .frame(maxWidth: .infinity, maxHeight: 155)
                         .roundedCorner(10, corners: [.bottomLeft, .bottomRight])
                     case .failure:
                       Text("Failed to load Image!!")
@@ -259,12 +255,14 @@ struct ContactCompanyView: View {
                 }
               }
             }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+              .frame(height: 155)
               .padding(.bottom, 15)
             HStack {
               CustomButtonOption(isPressed: $isPressed, content: "Producto")
               CustomButtonOption(isPressed: $isPressed, content: "Contacto")
               CustomButtonOption(isPressed: $isPressed, content: "Reviews")
             }
+            Spacer()
             TabViewImagesProducts(productImages: contactCompanyViewModel, bindImageToDescription: $bindImageToDescription)
             ForEach(Array(isPressed.keys), id: \.self) { key in
               if let value: Bool = isPressed[key], value == true {
@@ -284,7 +282,8 @@ struct ContactCompanyView: View {
                     }
                 }
               }
-            }
+            }.frame(height: bindImageToDescription ? 33 : 220)
+            Spacer()
           }.onAppear {
             Task {
               let specificUUIDString = "c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e"
@@ -295,14 +294,14 @@ struct ContactCompanyView: View {
               }
             }
           }
-          .offset(y: -geometry.safeAreaInsets.top)
-          .navigationTitle($contactCompanyViewModel.contentCompany.name)
+          .navigationTitle(contactCompanyViewModel.contentCompany.name)
           .navigationBarTitleDisplayMode(.inline)
           .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
               Image(systemName: "chevron.left").foregroundColor(.white)
             }
           }
+          Spacer()
         }
       } else {
         ScrollViewRating(dispScrollView: $dispScrollView, isPressed: $isPressed)
@@ -311,5 +310,4 @@ struct ContactCompanyView: View {
           }
       }
     }
-  }
 }
