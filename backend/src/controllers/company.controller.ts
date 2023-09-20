@@ -267,9 +267,5 @@ export const getCoordinates: RequestHandler<
     pageSize: filteredCompanies.length,
     total: filteredCompanies.length,
   };
-
-  console.log("-----------------------------------------------------")
-  console.log(filteredCompanies)
-
   res.json(paginator);
 };
