@@ -3,10 +3,10 @@ package com.greencircle.framework.ui.adapters.viewholders
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.greencircle.R
-import com.greencircle.databinding.CardLayoutBinding
+import com.greencircle.databinding.CatalogueCardLayoutBinding
 import com.greencircle.domain.model.CompanySummary
 
-class CatalogueViewHolder(private val binding: CardLayoutBinding) : RecyclerView
+class CatalogueViewHolder(private val binding: CatalogueCardLayoutBinding) : RecyclerView
 .ViewHolder(binding.root) {
     fun bind(companySummary: CompanySummary) {
         binding.companyName.text = companySummary.name

@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.greencircle.databinding.CardLayoutBinding
+import com.greencircle.databinding.CatalogueCardLayoutBinding
 import com.greencircle.domain.model.CompanySummary
 import com.greencircle.framework.ui.adapters.viewholders.CatalogueViewHolder
 
@@ -18,7 +18,7 @@ class CatalogueAdapter : RecyclerView.Adapter<CatalogueViewHolder>() {
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CatalogueViewHolder {
-        val v = CardLayoutBinding.inflate(
+        val v = CatalogueCardLayoutBinding.inflate(
             LayoutInflater.from(viewGroup.context),
             viewGroup,
             false

@@ -6,7 +6,7 @@ import com.greencircle.domain.model.CompanySummary
 import java.util.UUID
 
 class CatalogueViewModel : ViewModel() {
-    val catalogueLiveData = MutableLiveData<ArrayList<CompanySummary>>
+    val catalogueLiveData = MutableLiveData<ArrayList<CompanySummary>>()
     fun getCompanySummaryList() {
         catalogueLiveData.postValue(
             arrayListOf(
