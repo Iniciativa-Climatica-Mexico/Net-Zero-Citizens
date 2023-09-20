@@ -46,6 +46,7 @@ class CompanyReviewTest {
             pdfGuaranteeSecurityUrl = "test.pdf",
             pdfActaConstituyentesUrl = "test.pdf",
             pdfIneUrl = "test.pdf",
+            status = status,
             createdAt = timestamp,
             updatedAt = timestamp
         )
