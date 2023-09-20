@@ -1,5 +1,4 @@
 import User from '../models/users.model'
-import { PaginatedQuery, PaginationParams } from '../utils/RequestResponse'
 import Role from '../models/role.model'
 
 /**

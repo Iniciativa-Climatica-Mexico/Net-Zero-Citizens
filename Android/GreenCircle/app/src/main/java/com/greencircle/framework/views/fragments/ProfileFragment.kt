@@ -5,29 +5,67 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModelProvider
 import com.greencircle.R
-
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import com.greencircle.databinding.FragmentProfileBinding
+import com.greencircle.domain.model.User
+import com.greencircle.framework.viewmodel.UserViewModel
 
 class ProfileFragment : Fragment() {
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+    private var _binding: FragmentProfileBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var viewModel: UserViewModel
+    private lateinit var user: User
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+    ): View {
+        viewModel = ViewModelProvider(this)[UserViewModel::class.java]
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        var root: View = binding.root
+        viewModel.setUserId("abcd-1234-efgh-5678")
+        viewModel.getUser()
+        InitializeObservers()
+        InitializeEditarPerfilButton()
+
+        val userReviewFragment = UserReviewFragment()
+        val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+        val transaction: FragmentTransaction = fragmentManager.beginTransaction()
+        transaction.add(R.id.userReviewFragment, userReviewFragment, "child_fragment_tag")
+        transaction.commit()
+
+        return root
+    }
+
+    private fun InitializeObservers() {
+        viewModel.userLiveData.observe(viewLifecycleOwner, {
+            user = it
+            setUserData()
+        })
+    }
+
+    private fun InitializeEditarPerfilButton() {
+        binding.editarPerfilButton.setOnClickListener {
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.frame_layout, EditProfileFragment())
+            transaction.addToBackStack("editProfileFragment")
+            transaction.commit()
+        }
+    }
+
+    private fun setUserData() {
+        if (user != null) {
+            val name = user.firstName + " " + user.lastName
+            binding.username.text = name
+            // binding.profileImage.setImageResource(user.profilePicture)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
