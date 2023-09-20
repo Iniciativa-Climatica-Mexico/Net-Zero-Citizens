@@ -8,8 +8,6 @@ import android.util.Log
 class CompanyAPIClient {
     private lateinit var api: CompanyAPIService
 
-    class CompanyAPIClient()
-
     /**
      * Crea una nueva empresa en la API.
      *

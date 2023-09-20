@@ -10,7 +10,7 @@ const { expect } = chai
 
 const testData = [
   {
-    userId: 'abcd-1234-efgh-5678',
+    userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
     roleId: 'ADMIN_ROLE_ID',
     firstName: 'John',
     lastName: 'Doe',
@@ -28,7 +28,7 @@ const testData = [
     profilePicture: null,
   },
   {
-    userId: 'abcd-1234-efgh-5679',
+    userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
     roleId: 'CUSTOMER_ROLE_ID',
     firstName: 'Jane',
     lastName: 'Doe',
@@ -46,7 +46,7 @@ const testData = [
     profilePicture: null,
   },
   {
-    userId: 'abcd-1234-efgh-1902',
+    userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b7',
     roleId: 'ADMIN_ROLE_ID',
     firstName: 'Sergio',
     lastName: 'Garnica González',
@@ -66,7 +66,7 @@ const testData = [
 
 ]
 const newUser = {
-  userId: 'abcd-1234-efgh-5680',
+  userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b6',
   roleId: 'CUSTOMER_ROLE_ID',
   companyId: null,
   googleId: null,
@@ -116,7 +116,7 @@ describe('UserService', () => {
   }) 
   it('should get a user by email with role', async () => {
     const res = await UserService.getUserByEmailWithRole('john.doe@example.com')
-    expect(res?.userId).to.equal('abcd-1234-efgh-5678')
+    expect(res?.userId).to.equal('8de45630-2e76-4d97-98c2-9ec0d1f3a5b8')
     expect(res?.roleId).to.equal('ADMIN_ROLE_ID')
     expect(res?.role.dataValues.ROLE_ID).to.equal('ADMIN_ROLE_ID')
     expect(res?.role.dataValues.NAME).to.equal('admin')

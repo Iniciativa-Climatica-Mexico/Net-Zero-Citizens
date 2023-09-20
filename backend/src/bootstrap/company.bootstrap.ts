@@ -6,7 +6,7 @@ export default class CompanyBootstrap extends Bootstrapper {
     await Company.bulkCreate([
       {
         companyId: 'c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
-        userId: 'abcd-1234-efgh-5678',
+        userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
         name: 'Company 1',
         description: 'Company 1 description',
         email: 'company@outlook.com',
@@ -32,7 +32,7 @@ export default class CompanyBootstrap extends Bootstrapper {
       },
       {
         companyId: 'a2b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
-        userId: 'abcd-1234-efgh-5679',
+        userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
         name: 'Company 2',
         description: 'Company 2 description',
         email: 'company2@outlook.com',
@@ -58,7 +58,7 @@ export default class CompanyBootstrap extends Bootstrapper {
       },
       {
         companyId: 'a2c0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
-        userId: 'abcd-1234-efgh-5679',
+        userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b7',
         name: 'Company 3',
         description: 'Company 3 description',
         email: 'company3@outlook.com',

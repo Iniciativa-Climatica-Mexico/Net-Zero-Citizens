@@ -1,6 +1,7 @@
 package com.greencircle.data.remote
 
 import android.util.Log
+import java.util.UUID
 
 /**
  * Cliente para realizar operaciones relacionadas con usuarios a través de la API.
@@ -16,7 +17,7 @@ class UserAPIClient {
      * @return Un objeto [UserAPIService.UpdateUserResponse] que contiene información sobre la actualización realizada.
      */
     suspend fun updateUser(
-        userId: String,
+        userId: UUID,
         userInfo: UserAPIService.UpdateUserRequest,
         authToken: String
     ): UserAPIService.UpdateUserResponse? {

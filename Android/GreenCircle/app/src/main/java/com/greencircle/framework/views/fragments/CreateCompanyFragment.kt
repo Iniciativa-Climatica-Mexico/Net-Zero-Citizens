@@ -16,6 +16,7 @@ import com.greencircle.data.remote.CompanyAPIService
 import com.greencircle.data.remote.models.Company
 import com.greencircle.framework.viewmodel.CreateCompanyViewModel
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
+import java.util.UUID
 
 /**Constructor de "CreateCompanyFragment"
  *
@@ -25,6 +26,7 @@ class CreateCompanyFragment : Fragment() {
     private lateinit var viewModel: CreateCompanyViewModel
     private var arguments = Bundle()
     private lateinit var authToken: String
+    private lateinit var uuid: UUID
 
     /**
      * Inicializa el "CreateCompanyFragment"
@@ -79,6 +81,7 @@ class CreateCompanyFragment : Fragment() {
             // Handle the result here
             if (result != null) {
                 authToken = result.tokens.authToken
+                uuid = result.user.uuid
             } else {
                 Log.d("CreateCompanyFragment", "Google login failed")
             }
@@ -131,7 +134,7 @@ class CreateCompanyFragment : Fragment() {
 
         // Send the data to the backend
         val companyData: Company = Company(
-            "abcd-1234-efgh-1902",
+            uuid,
             name,
             description,
             email,

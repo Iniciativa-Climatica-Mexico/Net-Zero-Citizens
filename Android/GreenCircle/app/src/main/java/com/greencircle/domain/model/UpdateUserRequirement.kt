@@ -2,6 +2,7 @@ package com.greencircle.domain.model
 
 import com.greencircle.data.remote.UserAPIService
 import com.greencircle.data.repository.UserRepository
+import java.util.UUID
 
 /**
  * Modelo para actualizar la información de un usuario.
@@ -21,7 +22,7 @@ class UpdateUserRequirement {
      * nuevo usuario y un mensaje.
      */
     suspend operator fun invoke(
-        userId: String,
+        userId: UUID,
         userInfo: UserAPIService.UpdateUserRequest,
         authToken: String
     ): UserAPIService.UpdateUserResponse? =

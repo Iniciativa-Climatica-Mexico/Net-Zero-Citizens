@@ -1,6 +1,7 @@
 package com.greencircle.data.remote.models
 
 import com.google.gson.annotations.SerializedName
+import java.util.UUID
 
 data class AuthResponse(
     val tokens: Tokens,
@@ -16,7 +17,7 @@ data class Tokens(
 data class User(
     @SerializedName("first_name") val firstName: String,
     @SerializedName("last_name") val lastName: String,
-    @SerializedName("uuid") val uuid: String,
+    @SerializedName("uuid") val uuid: UUID,
     @SerializedName("email") val email: String,
     @SerializedName("picture") val picture: String,
     @SerializedName("roles") val roles: String,

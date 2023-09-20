@@ -1,7 +1,9 @@
 package com.greencircle.data.remote.models
 
+import java.util.UUID
+
 data class Company(
-    val userId: String,
+    val userId: UUID,
     val name: String,
     val description: String,
     val email: String,

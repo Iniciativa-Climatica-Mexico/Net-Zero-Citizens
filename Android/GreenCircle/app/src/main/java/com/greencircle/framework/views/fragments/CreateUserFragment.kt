@@ -15,6 +15,7 @@ import com.greencircle.R
 import com.greencircle.data.remote.UserAPIService
 import com.greencircle.framework.viewmodel.CreateUserViewModel
 import com.greencircle.framework.views.MainActivity
+import java.util.UUID
 
 /**Constructor de "CreateUserFragment"
  *
@@ -24,7 +25,7 @@ class CreateUserFragment : Fragment() {
     private lateinit var viewModel: CreateUserViewModel
     private var arguments = Bundle()
     private lateinit var authToken: String
-    private lateinit var uuid: String
+    private lateinit var uuid: UUID
 
     /**
      * Inicializa el "CreateUserFragment"
