@@ -10,9 +10,6 @@ plugins {
 
     // App Sweep
     id("com.guardsquare.appsweep") version "latest.release"
-
-    // Google Services
-    id("com.google.gms.google-services")
 }
 
 android {
