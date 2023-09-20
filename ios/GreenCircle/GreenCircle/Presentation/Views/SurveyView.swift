@@ -78,10 +78,10 @@ struct SurveyView: View {
       }
     }
     .alert(isPresented: $showSuccessAlert) {
-      Alert(title: Text("Success"), message: Text("Survey submitted successfully"), dismissButton: .default(Text("OK")))
+      Alert(title: Text("Éxito"), message: Text("Tu encuesta fue enviada con éxito"), dismissButton: .default(Text("OK")))
     }
     .alert(isPresented: $showErrorAlert) {
-      Alert(title: Text("Error"), message: Text("Error submitting survey"), dismissButton: .default(Text("OK")))
+      Alert(title: Text("Error"), message: Text("Error enviando tu encuesta, intenta de nuevo más tarde"), dismissButton: .default(Text("OK")))
     }
   }
 }

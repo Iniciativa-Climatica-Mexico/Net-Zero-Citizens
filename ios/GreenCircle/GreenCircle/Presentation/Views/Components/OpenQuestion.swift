@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct OpenQuestion: View {
-  var question: SurveyQuestion
+  @Binding var question: SurveyQuestion
   let characterLimit = 20
   
-  var answer: Binding<Answer>
+  init(question: Binding<SurveyQuestion>) {
+    self._question = question
+  }
   
   var body: some View {
     VStack(alignment: .leading) {
@@ -30,7 +32,10 @@ struct OpenQuestion: View {
             .padding(.bottom, 10)
         }
       }
-      TextField("Respuesta", text: self.answer!.answerText)
+      TextField("Respuesta", text: Binding(
+        get: { self.question.answer?.answerText ?? "" },
+        set: { self.question.answer?.answerText = String($0.prefix(self.characterLimit))}
+      ), axis: .vertical)
       .lineLimit(5, reservesSpace: true)
       .multilineTextAlignment(.leading)
       .textFieldStyle(.roundedBorder)

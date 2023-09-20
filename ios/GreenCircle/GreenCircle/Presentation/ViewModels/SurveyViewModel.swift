@@ -24,14 +24,17 @@ class SurveyViewModel: ObservableObject {
    */
   
   @MainActor
+  /// - Description: Obtener encuesta pendiente
   func getPendingSurvey() async {
     self.survey = await surveyUseCase.getPendingSurvey()!
   }
 
   @MainActor
+  /// - Description: Enviar respuestas de la encuesta
+  /// - Parameter answers: Respuestas de la encuesta
+  /// - Returns: Bool
   func submitAnswers(answers:  [Answer]) async -> Bool {
     return await surveyUseCase.submitAnswers(surveyId: self.survey.surveyId, answers: answers)
   }
-  
   
 }
