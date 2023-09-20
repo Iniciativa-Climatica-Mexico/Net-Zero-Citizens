@@ -61,5 +61,5 @@ data class Companies(
     @SerializedName("updatedAt") val updatedAt: Timestamp,
     @SerializedName("products") val products: ArrayList<Product> = arrayListOf(),
     @SerializedName("images") val companyImages: List<CompanyImages>? = listOf(),
-    @SerializedName("rating") val rating: Float? = null,
+    @SerializedName("score") val rating: Float? = null,
 ) : Serializable
