@@ -5,7 +5,6 @@ import com.greencircle.domain.model.ReviewBase
 import java.util.UUID
 import okhttp3.ResponseBody
 import retrofit2.Response
-import java.util.UUID
 
 class AddReviewRequirement {
     private val repository = ReviewRepository()

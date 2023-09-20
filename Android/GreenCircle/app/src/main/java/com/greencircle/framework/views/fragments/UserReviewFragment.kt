@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.greencircle.R
@@ -13,7 +12,6 @@ import com.greencircle.databinding.FragmentUserReviewBinding
 import com.greencircle.domain.model.UserReview
 import com.greencircle.framework.adapters.UserReviewAdapter
 import com.greencircle.framework.viewmodel.UserReviewViewModel
-import java.util.UUID
 import java.util.UUID
 
 class UserReviewFragment : Fragment() {

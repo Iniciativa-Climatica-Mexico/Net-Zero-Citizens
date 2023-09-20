@@ -12,7 +12,6 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
-import java.util.UUID
 
 interface ReviewAPIService {
     // http:localhost:3000/api/v1/review/company/{companyId}

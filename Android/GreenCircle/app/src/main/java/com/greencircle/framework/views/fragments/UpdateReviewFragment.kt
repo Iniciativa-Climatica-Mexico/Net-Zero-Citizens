@@ -15,7 +15,6 @@ import com.greencircle.databinding.FragmentEditUserReviewBinding
 import com.greencircle.domain.model.ReviewBase
 import com.greencircle.framework.viewmodel.UpdateReviewViewModel
 import java.util.UUID
-import java.util.UUID
 
 class UpdateReviewFragment : Fragment() {
     private var _binding: FragmentEditUserReviewBinding? = null
