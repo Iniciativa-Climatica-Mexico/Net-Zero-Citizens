@@ -41,7 +41,6 @@ export const getSurveyReport = async (
         include: [
           {
             model: QuestionOption,
-            attributes: ['textOption'],
           },
           {
             model: Answer,
@@ -49,6 +48,14 @@ export const getSurveyReport = async (
           },
         ],
       },
+    ],
+    order: [
+      [
+        { model: Question, as: 'questions' },
+        { model: QuestionOption, as: 'questionOptions' },
+        'order',
+        'ASC',
+      ],
     ],
   })
 

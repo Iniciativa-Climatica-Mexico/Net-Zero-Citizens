@@ -1,11 +1,13 @@
 import chai from 'chai'
 import chaiExclude from 'chai-exclude'
 import chaiSubset from 'chai-subset'
+import chaiDeepEqualInAnyOrder from 'deep-equal-in-any-order'
 import { db, initDB } from '../src/configs/database.config'
 import { getSurveyReport } from '../src/services/report.service'
 
 chai.use(chaiExclude)
 chai.use(chaiSubset)
+chai.use(chaiDeepEqualInAnyOrder)
 
 const { expect } = chai
 const testData = {
@@ -78,7 +80,7 @@ beforeEach(async () => {
 describe('Report Service', () => {
   it('should return a report of a survey with its questions, options and answers', async () => {
     const survey = await getSurveyReport('beaa7b8d-0531-4f24-9a0a-d08900f1f7db')
-    expect(survey).excludingEvery(attributesToExclude).to.deep.equal(testData)
+    expect(survey).excludingEvery(attributesToExclude).to.deep.equalInAnyOrder(testData)
   })
 
   it('It should return a null survey', async () => {

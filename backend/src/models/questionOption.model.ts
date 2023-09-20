@@ -32,4 +32,11 @@ export default class QuestionOption extends Model {
     field: 'QUESTION_ID',
   })
   questionId: string
+
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+    field: 'ORDER',
+  })
+  order: number
 }

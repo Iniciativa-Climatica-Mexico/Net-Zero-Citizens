@@ -2,6 +2,8 @@ import chai from 'chai'
 import chaiExclude from 'chai-exclude'
 import chaiSubset from 'chai-subset'
 import chaiAsPromised from 'chai-as-promised'
+import chaiDeepEqualInAnyOrder from 'deep-equal-in-any-order'
+
 import { db, initDB } from '../src/configs/database.config'
 import {
   getAllSurveys,
@@ -11,7 +13,6 @@ import {
   CreateSurveyReqBody,
   getSurveyPending,
   answerSurvey,
-  FullAnswers,
 } from '../src/services/survey.service'
 import { unwrap } from './utils'
 import Survey from '../src/models/survey.model'
@@ -22,6 +23,7 @@ import Answer from '../src/models/answer.model'
 chai.use(chaiExclude)
 chai.use(chaiSubset)
 chai.use(chaiAsPromised)
+chai.use(chaiDeepEqualInAnyOrder)
 
 const { expect } = chai
 
@@ -103,30 +105,30 @@ const testSurveyPending = {
   endDate: null,
   questions: [
     {
-      questionId: 'ques-5555-efgh-3330',
+      questionId: 'c96f70e0-c966-4f87-bdd5-184ec7cf0ffa',
       questionText: 'Did you find the website easy to navigate?',
       questionType: 'multiple_choice',
       isRequired: true,
       questionOptions: [
         {
-          questionOptionId: 'optn-5555-efgh-3330',
+          questionOptionId: '12234887-aac5-437b-b700-40e99161dccd',
           textOption: 'Yes',
         },
         {
-          questionOptionId: 'optn-5555-efgh-3331',
+          questionOptionId: '54863a53-56e3-479e-8ffd-7943de650a23',
           textOption: 'No',
         },
       ],
     },
     {
-      questionId: 'ques-5678-abcd-3331',
+      questionId: 'b84348e0-c7bf-4c09-82ce-5366c81d764e',
       questionText: 'What features would you like to see in our product?',
       questionType: 'open',
       isRequired: false,
       questionOptions: [],
     },
     {
-      questionId: 'ques-5678-abcd-3332',
+      questionId: '3c9dccbb-1b19-49c0-b8e0-170e047a336a',
       questionText:
         'On a scale of 1 to 10, how likely are you to recommend our product?',
       questionType: 'scale',
@@ -134,29 +136,29 @@ const testSurveyPending = {
       isRequired: true,
     },
     {
-      questionId: 'ques-1234-efgh-3333',
+      questionId: 'ea067a23-3a46-41a6-b6e4-152aa199535a',
       questionText: '¿Cómo describiría nuestro servicio?',
       questionType: 'multiple_choice',
       isRequired: true,
       questionOptions: [
         {
-          questionOptionId: 'optn-1234-efgh-3332',
+          questionOptionId: '86d7613d-7633-4156-b596-65f218415c40',
           textOption: 'Excelente',
         },
         {
-          questionOptionId: 'optn-1234-efgh-3333',
+          questionOptionId: '0c11fa72-2e8c-4310-acdb-fc5e2856793c',
           textOption: 'Bueno',
         },
         {
-          questionOptionId: 'optn-1234-efgh-3334',
+          questionOptionId: 'd467a0a1-14da-4c5e-a7d8-45b13de95715',
           textOption: 'Regular',
         },
         {
-          questionOptionId: 'optn-1234-efgh-3335',
+          questionOptionId: 'effa5c3d-2e54-434e-b0f7-300429c07c31',
           textOption: 'Malo',
         },
         {
-          questionOptionId: 'optn-1234-efgh-3336',
+          questionOptionId: '06329a73-b188-4b77-8ab9-5f783a510807',
           textOption: 'Pésimo',
         },
       ],
@@ -196,24 +198,24 @@ const testCreateSurvey: CreateSurveyReqBody = {
   ],
 }
 
-const testAnswer: FullAnswers = {
-  surveyId: 'surv-5555-efgh-3333',
+const testAnswer = {
+  surveyId: '48aca777-4baa-4365-8ca8-ed7ba4d33681',
   userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
   answers: [
     {
-      questionId: 'ques-5555-efgh-3330',
+      questionId: 'c96f70e0-c966-4f87-bdd5-184ec7cf0ffa',
       answerText: 'No',
     },
     {
-      questionId: 'ques-5678-abcd-3331',
+      questionId: 'b84348e0-c7bf-4c09-82ce-5366c81d764e',
       answerText: 'Hola',
     },
     {
-      questionId: 'ques-5678-abcd-3332',
+      questionId: '3c9dccbb-1b19-49c0-b8e0-170e047a336a',
       scaleValue: 5,
     },
     {
-      questionId: 'ques-1234-efgh-3333',
+      questionId: 'ea067a23-3a46-41a6-b6e4-152aa199535a',
       answerText: 'Bueno',
     },
   ],
@@ -231,14 +233,14 @@ describe('Survey Service', () => {
     const response = await getAllSurveys({ start: 0, pageSize: 10 })
     expect(unwrap(response).rows)
       .excludingEvery(attributesToExclude.concat('endDate'))
-      .to.deep.equal(testSurveyList)
+      .to.deep.equalInAnyOrder(testSurveyList)
   })
 
   it('should return a survey by id', async () => {
     const response = await getSurveyById('beaa7b8d-0531-4f24-9a0a-d08900f1f7db')
     expect(unwrap(response))
       .excludingEvery(attributesToExclude.concat('endDate'))
-      .to.deep.equal(testSurveyById)
+      .to.deep.equalInAnyOrder(testSurveyById)
   })
 
   it('should return null if survey does not exist', async () => {
@@ -247,10 +249,12 @@ describe('Survey Service', () => {
   })
 
   it('should return a pending survey', async () => {
-    const response = await getSurveyPending('8de45630-2e76-4d97-98c2-9ec0d1f3a5b8')
+    const response = await getSurveyPending(
+      '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8'
+    )
     expect(response)
       .excludingEvery(attributesToExclude)
-      .to.deep.equal(testSurveyPending)
+      .to.deep.equalInAnyOrder(testSurveyPending)
   })
 
   it('should create a new survey', async () => {

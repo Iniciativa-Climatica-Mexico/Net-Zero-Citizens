@@ -55,22 +55,27 @@ export default class SurveysBootstrapper extends Bootstrapper {
               {
                 questionOptionId: 'e42b3e35-9a57-471a-9868-da23adb93f3d',
                 textOption: 'Excelente',
+                order: 1,
               },
               {
                 questionOptionId: '89d38b7a-f75e-481e-b522-f642d38bc87c',
                 textOption: 'Bueno',
+                order: 2,
               },
               {
                 questionOptionId: '1fb3772a-6ac7-4609-ab7b-c2777ecad62b',
                 textOption: 'Regular',
+                order: 3,
               },
               {
                 questionOptionId: '8e5d10c3-ab64-4ef9-9433-33870e1bbd49',
                 textOption: 'Malo',
+                order: 4,
               },
               {
                 questionOptionId: '581ec9c2-5b40-44f5-a9e9-9e1166042506',
                 textOption: 'Pésimo',
+                order: 5,
               },
             ],
             answers: [
@@ -133,10 +138,12 @@ export default class SurveysBootstrapper extends Bootstrapper {
               {
                 questionOptionId: 'dc168c50-d9f3-4acd-a962-93febe3e822a',
                 textOption: 'Yes',
+                order: 1,
               },
               {
                 questionOptionId: '30e82a3a-570b-4d3e-acfc-87eafd188cf6',
                 textOption: 'No',
+                order: 2,
               },
             ],
             answers: [
@@ -162,10 +169,12 @@ export default class SurveysBootstrapper extends Bootstrapper {
               {
                 questionOptionId: '12234887-aac5-437b-b700-40e99161dccd',
                 textOption: 'Yes',
+                order: 1,
               },
               {
                 questionOptionId: '54863a53-56e3-479e-8ffd-7943de650a23',
                 textOption: 'No',
+                order: 2,
               },
             ],
             answers: [
@@ -203,22 +212,27 @@ export default class SurveysBootstrapper extends Bootstrapper {
               {
                 questionOptionId: '86d7613d-7633-4156-b596-65f218415c40',
                 textOption: 'Excelente',
+                order: 1,
               },
               {
                 questionOptionId: '0c11fa72-2e8c-4310-acdb-fc5e2856793c',
                 textOption: 'Bueno',
+                order: 2,
               },
               {
                 questionOptionId: 'd467a0a1-14da-4c5e-a7d8-45b13de95715',
                 textOption: 'Regular',
+                order: 3,
               },
               {
                 questionOptionId: 'effa5c3d-2e54-434e-b0f7-300429c07c31',
                 textOption: 'Malo',
+                order: 4,
               },
               {
                 questionOptionId: '06329a73-b188-4b77-8ab9-5f783a510807',
                 textOption: 'Pésimo',
+                order: 5,
               },
             ],
             answers: [

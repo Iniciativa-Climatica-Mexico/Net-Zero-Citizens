@@ -47,10 +47,18 @@ export const getSurveyById = async (
           {
             model: QuestionOption,
             association: 'questionOptions',
-            attributes: { exclude: ['questionId'] },
+            attributes: { exclude: ['questionId', 'order'] },
           },
         ],
       },
+    ],
+    order: [
+      [
+        { model: Question, as: 'questions' },
+        { model: QuestionOption, as: 'questionOptions' },
+        'order',
+        'ASC',
+      ],
     ],
   })
   return s ? unwrap(s) : null
@@ -60,7 +68,6 @@ export const getSurveyPending = async (
   userId: string
 ): Promise<Survey | null> => {
   const survey = await Survey.findOne({
-    order: [['createdAt', 'DESC']],
     where: {
       endDate: null,
     },
@@ -78,10 +85,19 @@ export const getSurveyPending = async (
           {
             model: QuestionOption,
             association: 'questionOptions',
-            attributes: { exclude: ['questionId'] },
+            attributes: { exclude: ['questionId', 'order'] },
           },
         ],
       },
+    ],
+    order: [
+      [
+        { model: Question, as: 'questions' },
+        { model: QuestionOption, as: 'questionOptions' },
+        'order',
+        'ASC',
+      ],
+      ['createdAt', 'DESC'],
     ],
   })
   if (!survey) return null
@@ -108,7 +124,11 @@ export const createSurveyBodyScheme = z.object({
     z.object({
       questionText: z.string(),
       questionType: z.enum(['open', 'scale', 'multiple_choice']),
-      questionOptions: z.array(z.object({ textOption: z.string() })).optional(),
+      questionOptions: z
+        .array(
+          z.object({ textOption: z.string(), order: z.number().optional() })
+        )
+        .optional(),
     })
   ),
 })
@@ -125,6 +145,13 @@ export type CreateSurveyReqBody = z.infer<typeof createSurveyBodyScheme>
 export const createSurvey = async (
   survey: CreateSurveyReqBody
 ): Promise<Survey> => {
+  survey.questions.forEach((q) => {
+    if (q.questionType === 'multiple_choice') {
+      q.questionOptions?.forEach((o, i) => {
+        o.order = i + 1
+      })
+    }
+  })
   const s = await Survey.create(survey, {
     include: [
       {
@@ -137,6 +164,14 @@ export const createSurvey = async (
           },
         ],
       },
+    ],
+    order: [
+      [
+        { model: Question, as: 'questions' },
+        { model: QuestionOption, as: 'questionOptions' },
+        'order',
+        'ASC',
+      ],
     ],
   })
   return unwrap(s)
@@ -176,7 +211,7 @@ type AnswerSurveyReqBody = z.infer<typeof answerSurveyBodyScheme>
 type FullAnswers = AnswerSurveyReqBody & { userId: string; surveyId: string }
 
 /**
- * Función del servicio que crea respuestas a una encuesta 
+ * Función del servicio que crea respuestas a una encuesta
  * @param answers Lista de respuestas y el id de la encuesta y el usuario
  * @returns Un arreglo de las respuestas creadas
  */
@@ -197,6 +232,7 @@ export const answerSurvey = async (answers: FullAnswers): Promise<Answer[]> => {
           {
             model: QuestionOption,
             association: 'questionOptions',
+            order: [['order', 'ASC']],
           },
         ],
       },
