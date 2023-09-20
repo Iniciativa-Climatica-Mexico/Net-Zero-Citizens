@@ -1,116 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/reviewCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="10dp"
-    android:layout_marginTop="10dp"
-    android:orientation="vertical"
+    card_view:cardBackgroundColor="@color/gray_100"
     card_view:cardCornerRadius="10dp"
-    card_view:cardElevation="50dp">
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginTop="10dp"
+    card_view:contentPadding="1dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/reviewCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="20dp">
+        android:orientation="vertical"
+        card_view:cardCornerRadius="10dp"
+        card_view:cardElevation="0dp">
 
-        <LinearLayout
-            android:id="@+id/linearLayout2"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent">
+            android:layout_height="wrap_content"
+            android:padding="20dp">
 
-            <TextView
-                android:id="@+id/reviewCardTitle"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="El producto tiene una calidad increíble y la atención fue muy buena."
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                card_view:layout_constraintBottom_toBottomOf="parent"
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintVertical_bias="0.0" />
+                card_view:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/reviewCardTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.135"
+                    android:text="El producto tiene una calidad increíble y la atención fue muy buena."
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    card_view:layout_constraintBottom_toBottomOf="parent"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintTop_toTopOf="parent"
+                    card_view:layout_constraintVertical_bias="0.0" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:gravity="end"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/reviewCardDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="31/08/2023"
+                        android:textSize="11sp" />
+
+                    <ImageButton
+                        android:id="@+id/reviewCardOptionsButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:contentDescription="Options Button"
+                        android:minWidth="48dp"
+
+                        android:minHeight="48dp"
+                        android:src="@drawable/icon_more_horizontal" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="end"
-                android:orientation="vertical">
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                card_view:layout_constraintBottom_toTopOf="@+id/reviewCardContent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@id/linearLayout2">
+
+                <RatingBar
+                    android:id="@+id/reviewCardRatingBar"
+                    style="@android:style/Widget.Material.RatingBar.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
                 <TextView
-                    android:id="@+id/reviewCardDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="end"
-                    android:text="2023-08-31"
-                    android:textSize="11sp" />
-
-                <ImageButton
-                    android:minWidth="48dp"
-                    android:minHeight="48dp"
-                    android:contentDescription="Options Button"
-                    android:id="@+id/reviewCardOptionsButton"
+                    android:id="@+id/reviewCardRating"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:background="@color/white"
-                    android:src="@drawable/icon_more_horizontal" />
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:gravity="center_vertical|end"
+                    android:text="4 de 5"
+                    android:textColor="@color/green"
+                    android:textSize="13sp" />
 
             </LinearLayout>
 
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            card_view:layout_constraintBottom_toTopOf="@+id/reviewCardContent"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@id/linearLayout2">
-
-            <RatingBar
-                android:id="@+id/reviewCardRatingBar"
-                style="@android:style/Widget.Material.RatingBar.Small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
             <TextView
-                android:id="@+id/reviewCardRating"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:gravity="center_vertical|end"
-                android:text="4 / 5"
-                android:textColor="@color/green"
-                android:textSize="13sp" />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/reviewCardContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="left"
-            android:text="¡Me encantaron sus productos! Estos paneles solares fueron entregados en mi puerta justo a tiempo :)
-El servicio de atención al cliente es satisfactorio, pero tuve pequeñas complicaciones en la comunicacion"
-            android:textColor="@color/gray_700"
-            android:textSize="13sp"
-            card_view:flow_verticalBias="0.0"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+                android:id="@+id/reviewCardContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:justificationMode="inter_word"
+                android:text="¡Me encantaron sus productos! Estos paneles solares fueron entregados en mi puerta justo a tiempo :)
+            El servicio de atención al cliente es satisfactorio, pero tuve pequeñas complicaciones en la comunicacion"
+                android:textColor="@color/gray_700"
+                android:textSize="13sp"
+                card_view:flow_verticalBias="0.0"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 </androidx.cardview.widget.CardView>

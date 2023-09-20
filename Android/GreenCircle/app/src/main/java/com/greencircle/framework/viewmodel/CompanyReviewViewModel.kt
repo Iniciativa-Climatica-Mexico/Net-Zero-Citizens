@@ -10,6 +10,7 @@ import java.util.UUID
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 class CompanyReviewViewModel : ViewModel() {
     val reviewObjectLiveData = MutableLiveData<CompanyReviewObject?>()

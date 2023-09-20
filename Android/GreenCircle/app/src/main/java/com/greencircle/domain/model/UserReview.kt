@@ -1,6 +1,7 @@
 package com.greencircle.domain.model
 
 import com.google.gson.annotations.SerializedName
+import java.sql.Timestamp
 import java.util.UUID
 
 data class UserReview(
@@ -10,6 +11,6 @@ data class UserReview(
     @SerializedName("reviewTitle") val reviewTitle: String,
     @SerializedName("review") val review: String,
     @SerializedName("score") val score: Int,
-    @SerializedName("cratedAt") val createdAt: String,
-    @SerializedName("updatedAt") val updatedAt: String,
+    @SerializedName("cratedAt") val createdAt: Timestamp,
+    @SerializedName("updatedAt") val updatedAt: Timestamp,
 )

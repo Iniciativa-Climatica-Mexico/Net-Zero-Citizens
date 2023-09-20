@@ -16,6 +16,7 @@ import com.greencircle.domain.model.CompanyReview
 import com.greencircle.framework.ui.adapters.CompanyReviewAdapter
 import com.greencircle.framework.viewmodel.CompanyReviewViewModel
 import java.util.UUID
+import java.util.UUID
 
 class CompanyReviewFragment : Fragment() {
     private var _binding: FragmentCompanyReviewBinding? = null

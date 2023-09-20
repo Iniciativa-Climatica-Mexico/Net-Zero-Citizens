@@ -27,9 +27,22 @@ class MainActivity : AppCompatActivity() {
 
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
+                R.id.ecoInfo -> {
+                    replaceFragment(CompanyReviewFragment())
+                    true
+                }
+
+                R.id.perfil -> {
+                    replaceFragment(ProfileFragment())
+                    true
+                }
                 R.id.proveedores -> {
                     replaceFragment(CompanyContactFragment())
                     topBarBinding.title.text = "Proveedores"
+                    true
+                }
+                R.id.perfil -> {
+                    replaceFragment(ProfileFragment())
                     true
                 }
                 else -> false

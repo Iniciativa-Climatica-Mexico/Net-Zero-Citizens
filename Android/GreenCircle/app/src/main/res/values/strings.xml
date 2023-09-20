@@ -4,6 +4,7 @@
     <string name="proveedores">Proveedores</string>
     <string name="mapa">Mapa</string>
     <string name="perfil">Perfil</string>
+    <string name="Cerrar_sesion">Cerrar sesion</string>
     <string name="review_nested_scroll_desc">Scrollable content</string>
     <string name="review_opinions_count">%d opiniones</string>
     <string name="review_form_title">Comparte tu opinión</string>
