@@ -20,6 +20,7 @@ import { Separator } from './ui/separator'
 import { Button } from './ui/button'
 import { useToast } from './ui/use-toast'
 import { Checkbox } from './ui/checkbox'
+import { AlertDialog, AlertDialogTrigger, AlertDialogDescription, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from './ui/alert-dialog'
 
 interface ModalProveedorProps {
     setIsModalOpen: (value: boolean) => void;
@@ -214,7 +215,25 @@ export default function ModalProveedor({ setIsModalOpen, selectedCompany, fetchP
             </div>
             <footer className='flex gap-x-3'>
               <Button disabled={!checkboxChecked} onClick={() => handleAccept(selectedCompany, selectedCompany.companyId)} variant='default'>Aprobar</Button>
-              <Button onClick={() => handleReject(selectedCompany, selectedCompany.companyId)} variant='outline'>Rechazar</Button>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant='outline'>Rechazar</Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Seguro que deseas realizar esta acción?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Confirmar el rechazo de un proveedor.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                    <AlertDialogAction onClick={() => handleReject(selectedCompany, selectedCompany.companyId)} className='bg-[#3E5D8C] font-medium text-primary-foreground hover:bg-[#173871] hover:text-white'>
+                      Continuar
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </footer>
           </section>
         </article>
