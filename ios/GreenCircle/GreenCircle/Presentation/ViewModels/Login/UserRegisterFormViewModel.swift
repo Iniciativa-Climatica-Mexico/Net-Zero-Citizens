@@ -32,7 +32,6 @@ class UserRegisterFormViewModel: ObservableObject {
       userData.user!.age = Int(age)!
       userData.user!.state = state
       userData.user!.gender = gender
-      print(userData.tokens!.authToken)
       
       await useCase.postNewUser(authToken: userData.tokens!.authToken,
                                 user: userData.user!)

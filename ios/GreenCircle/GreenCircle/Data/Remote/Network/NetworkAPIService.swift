@@ -31,7 +31,7 @@ class NetworkAPIService {
     let response = await requestTask.serializingData().response
     
     switch response.result {
-    case .success(let data):
+    case let .success(data):
       do {
         return try NetworkAPIService.decoder
           .decode(AuthResponse.self, from: data)
@@ -62,7 +62,14 @@ class NetworkAPIService {
     let requestTask = AF.request(url, method: .put,
                                  parameters: params,
                                  headers: headers).validate()
-    let _ = await requestTask.serializingData().response
+    let response = await requestTask.serializingData().response
+    
+    switch response.result {
+    case .success(_):
+      return
+    case let .failure(error):
+      debugPrint(error)
+    }
   }
   
   /// Crea una compañía nueva
@@ -71,7 +78,6 @@ class NetworkAPIService {
   ///   - authToken: token de autenticación
   ///   - company: datos de la compañía a postear
   func postCompany(url: URL, authToken: String, company: PostCompanyData) async {
-    print(company)
     let params: Parameters = [
       "company": [
         "name": company.name,
@@ -91,14 +97,18 @@ class NetworkAPIService {
         "pdfIneUrl": company.pdfIneUrl
       ] as [String : Any]
     ]
-    print(authToken)
     
     let headers: HTTPHeaders = [.authorization(bearerToken: authToken)]
     let requestTask = AF.request(url, method: .post,
                                  parameters: params,
                                  headers: headers).validate()
     
-    let res = await requestTask.serializingData().response
-    print(res.result)
+    let response = await requestTask.serializingData().response
+    switch response.result {
+    case .success(_):
+      return
+    case let .failure(error):
+      debugPrint(error)
+    }
   }
 }
