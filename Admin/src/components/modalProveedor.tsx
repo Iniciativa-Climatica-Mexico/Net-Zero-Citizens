@@ -1,67 +1,25 @@
-/**
- * Represents a modal component that includes company info and allows admin to accpet or reject a comapny
- *
- * @component
- * @example
- * ```tsx
- * <ModalProveedor selectedCompany={selectedCompany} setIsModalOpen={setIsModalOpen}fetchPending={fetchPending} />
- * ```
- */
+'use client'
 
-import { createTheme, ThemeProvider } from '@mui/material/styles'
-
+import { useState } from 'react'
 import Image from 'next/image'
 
-import { updateCompany, UpdateCompanyInfoBody } from '@/api/v1/company'
+import { ThemeProvider } from '@mui/material/styles'
+import { Theme } from '@/@types/icons/material'
 
-import CloseIcon from '@mui/icons-material/Close'
-import PhoneIcon from '@mui/icons-material/Phone'
-import BusinessIcon from '@mui/icons-material/Business'
-import LanguageIcon from '@mui/icons-material/Language'
-import PlaceIcon from '@mui/icons-material/Place'
+import { updateCompany, UpdateCompanyInfoBody } from '@/api/v1/company'
+import { Company } from '@/@types/company/company'
+
+import CloseIcon from './../../node_modules/@mui/icons-material/Close'
+import PhoneIcon from './../../node_modules/@mui/icons-material/Phone'
+import BusinessIcon from './../../node_modules/@mui/icons-material/Business'
+import LanguageIcon from './../../node_modules/@mui/icons-material/Language'
+import PlaceIcon from './../../node_modules/@mui/icons-material/Place'
 import FileOpenIcon from '@mui/icons-material/FileOpen'
 
 import { Separator } from './ui/separator'
 import { Button } from './ui/button'
 import { useToast } from './ui/use-toast'
-import { Toaster } from './ui/toaster'
-
-interface Company {
-    companyId: string
-    name: string
-    profilePicture: string
-    state: string,
-    city: string,
-    street: string,
-    zipCode: string,
-    status: 'approved' | 'pending_approval' | 'rejected'
-    email: string,
-    phoneNumber: string
-    webPage: string
-    description: string
-    createdAt: string
-    streetNumber: number
-    pdfCurriculumURL: string
-    pdfDicCdmxURL: string
-    pdfPeeFideURL: string
-    pdfGuaranteeSecurityURL: string
-    pdfActaConstitutivaURL: string
-    pdfINEURL: string
-  }
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#333333',
-    },
-    secondary: {
-      main: '#589A74',
-    },
-    info: {
-      main: '#FFFFFF',
-    },
-  },
-})
+import { Checkbox } from './ui/checkbox'
 
 interface ModalProveedorProps {
     setIsModalOpen: (value: boolean) => void;
@@ -70,6 +28,7 @@ interface ModalProveedorProps {
 }
 
 export default function ModalProveedor({ setIsModalOpen, selectedCompany, fetchPending }: ModalProveedorProps) {
+  const [checkboxChecked, setCheckboxChecked] = useState(false)
 
   const { toast } = useToast()
 
@@ -80,7 +39,6 @@ export default function ModalProveedor({ setIsModalOpen, selectedCompany, fetchP
    */
   const handleAccept = async (company: Company, companyId: string) => {
     try {
-      // Create an object with the updated status
       const updatedCompanyInfo: UpdateCompanyInfoBody = {
         name: company.name,
         description: company.description,
@@ -153,7 +111,7 @@ export default function ModalProveedor({ setIsModalOpen, selectedCompany, fetchP
 
   return (
     <div className='bg h-screen flex flex-col items-end'>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={Theme}>
         <CloseIcon
           color='info'
           className='cursor-pointer mb-2'
@@ -244,8 +202,18 @@ export default function ModalProveedor({ setIsModalOpen, selectedCompany, fetchP
             <p className='text-sm py-[15px]'>
               {selectedCompany.description}
             </p>
+            <Separator />
+            <div className="flex items-center space-x-2 py-[25px]">
+              <Checkbox onClick={()=> {setCheckboxChecked(!checkboxChecked)}} id="terms" />
+              <label
+                htmlFor="terms"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                He leído los documentos que ha entregado el proveedor
+              </label>
+            </div>
             <footer className='flex gap-x-3'>
-              <Button onClick={() => handleAccept(selectedCompany, selectedCompany.companyId)} variant='default'>Aprobar</Button>
+              <Button disabled={!checkboxChecked} onClick={() => handleAccept(selectedCompany, selectedCompany.companyId)} variant='default'>Aprobar</Button>
               <Button onClick={() => handleReject(selectedCompany, selectedCompany.companyId)} variant='outline'>Rechazar</Button>
             </footer>
           </section>

@@ -5,6 +5,7 @@ import {
   useEffect
 } from 'react'
 import { getPendingCompanies } from '@/api/v1/company'
+import { Company } from '@/@types/company/company'
 import {
   Avatar,
   AvatarImage
@@ -23,30 +24,6 @@ import {
 
 import { CellAction } from '@/components/CellAction'
 import ModalProveedor from '@/components/ModalProveedor'
-
-interface Company {
-  companyId: string
-  name: string
-  location: string
-  profilePicture: string
-  state: string,
-  city: string,
-  street: string,
-  zipCode: string,
-  status: 'approved' | 'pending_approval' | 'rejected'
-  email: string,
-  phoneNumber: string
-  webPage: string
-  description: string
-  createdAt: string
-  streetNumber: number
-  pdfCurriculumURL: string
-  pdfDicCdmxURL: string
-  pdfPeeFideURL: string
-  pdfGuaranteeSecurityURL: string
-  pdfActaConstitutivaURL: string
-  pdfINEURL: string
-}
 
 export default function Home() {
   const [selectedCompany, setSelectedCompany] = useState<Company>({companyId: '',

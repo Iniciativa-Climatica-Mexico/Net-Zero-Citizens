@@ -8,7 +8,9 @@
  * ```
  */
 
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { ThemeProvider } from '@mui/material/styles'
+import { Company } from '@/@types/company/company'
+import { Theme } from '@/@types/icons/material'
 
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import CancelIcon from '@mui/icons-material/Cancel'
@@ -25,35 +27,6 @@ import {
 import { updateCompany, UpdateCompanyInfoBody } from '@/api/v1/company'
 import { useToast } from './ui/use-toast'
 import { Toaster } from './ui/toaster'
-
-interface Company {
-  companyId: string
-  name: string
-  profilePicture: string
-  state: string,
-  city: string,
-  street: string,
-  zipCode: string,
-  status: 'approved' | 'pending_approval' | 'rejected'
-  email: string,
-  phoneNumber: string
-  webPage: string
-  description: string
-}
-
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#589A74',
-    },
-    secondary: {
-      main: '#589A74',
-      light: '#F5EBFF',
-      contrastText: '#47008F',
-    },
-  },
-})
 
 interface cellActionProps {
   setIsModalOpen: (value: boolean) => void;
@@ -125,7 +98,7 @@ export const CellAction = ({setIsModalOpen, companyId, fetchPending, company}:ce
     }
   }
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={Theme}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <MoreHorizIcon
