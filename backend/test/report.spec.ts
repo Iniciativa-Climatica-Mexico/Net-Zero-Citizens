@@ -80,7 +80,9 @@ beforeEach(async () => {
 describe('Report Service', () => {
   it('should return a report of a survey with its questions, options and answers', async () => {
     const survey = await getSurveyReport('beaa7b8d-0531-4f24-9a0a-d08900f1f7db')
-    expect(survey).excludingEvery(attributesToExclude).to.deep.equalInAnyOrder(testData)
+    expect(survey)
+      .excludingEvery(attributesToExclude)
+      .to.deep.equalInAnyOrder(testData)
   })
 
   it('It should return a null survey', async () => {

@@ -1,5 +1,4 @@
 import { RequestHandler } from 'express'
-import Survey from '../models/survey.model'
 import { NoRecord } from '../utils/RequestResponse'
 import * as ReportService from '../services/report.service'
 

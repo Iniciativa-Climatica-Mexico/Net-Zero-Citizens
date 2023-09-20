@@ -6,14 +6,36 @@
 //
 
 import SwiftUI
+import GoogleSignIn
 
 @main
 struct GreenCircleApp: App {
-  //@UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+  @State var isActive = false
   
   var body: some Scene {
     WindowGroup {
-      SurveyView()
+      ZStack {
+        if isActive {
+          CoordinatorView()
+            .environmentObject(UserData())
+            .onOpenURL { url in
+              GIDSignIn.sharedInstance.handle(url)
+            }
+            .onAppear {
+              GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
+                // Check if `user` exists; otherwise, do something with `error`
+              }
+            }
+        } else {
+          SplashScreenView()
+        }
+      }.onAppear {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+          withAnimation {
+            self.isActive = true
+          }
+        }
+      }
     }
   }
 }

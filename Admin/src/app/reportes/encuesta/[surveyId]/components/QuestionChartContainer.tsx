@@ -1,6 +1,6 @@
 'use client'
 
-import { QuestionReport, SurveyReport, tabulatedAns } from '@/api/report'
+import { QuestionReport, SurveyReport } from '@/api/report'
 
 import ScaleChart from './ScaleChart'
 import { useState } from 'react'
@@ -198,7 +198,6 @@ const questionTypeMap = {
 function QuestionComponent(props: QuestionReport) {
   return (
     <div className="text-txt bg-background">
-      {/* <h3 className="text-txt font-medium text-xl">{props.questionText}</h3> */}
       <h3 className="text-black font-extrabold text-3xl pt-10 pb-3">
         Tipo de pregunta
       </h3>

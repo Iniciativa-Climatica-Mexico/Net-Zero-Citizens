@@ -1,3 +1,4 @@
+import { unwrap } from '../../test/utils'
 import Answer from '../models/answer.model'
 import Survey from '../models/survey.model'
 import * as SurveyService from '../services/survey.service'
@@ -25,7 +26,6 @@ export const getAllSurveys: RequestHandler<
       title: req.query.name || '',
     },
   }
-
   const surveys = await SurveyService.getAllSurveys(params)
   res.json({
     rows: surveys.rows,
@@ -122,7 +122,7 @@ export const closeSurvey: RequestHandler<
 
 /**
  * @brief
- * Función del controlador que crea respuestas a una encuesta 
+ * Función del controlador que crea respuestas a una encuesta
  * de parte de un usuario en la base de datos
  * @param req La request HTTP al servidor
  * @param res Un arreglo de las respuestas creadas

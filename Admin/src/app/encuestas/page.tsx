@@ -1,10 +1,10 @@
 import { Survey, fetchAllSurveys } from '@/api/survey'
-import Link from 'next/link'
 import moment from 'moment'
 
 export default async function ListSurveys() {
   try {
     const response = await fetchAllSurveys()
+    console.log(response)
     const surveysList = response.rows.sort((a, b) => {
       return moment(b.startDate).diff(moment(a.startDate))
     })
@@ -14,11 +14,6 @@ export default async function ListSurveys() {
           <h1 className="self-start font-extrabold my-8 mx-8 text-4xl text-txt">
             Encuestas
           </h1>
-          {/* <Link href="/reportes/">
-            <button className=" bg-primary hover:bg-primary-900 text-white font-bold py-2 px-4 mx-8 my-8 rounded self-end">
-              Crear Encuesta
-            </button>
-          </Link> */}
         </div>
         <div className="flex flex-col items-center w-full justify-center">
           <table className="table-fixed border-collapse w-4/5">
@@ -73,8 +68,13 @@ export default async function ListSurveys() {
 function SurveyComponent(props: Survey) {
   return (
     <tr className="border-b border-gray-300">
-      <td className='truncate cursor-pointer  text-txt hover:text-primary hover:font-semibold'>
-        <a href={'/encuestas/' + props.surveyId} className="text-center py-8 px-8 ">{props.title}</a>
+      <td className="truncate cursor-pointer  text-txt hover:text-primary hover:font-semibold">
+        <a
+          href={'/encuestas/' + props.surveyId}
+          className="text-center py-8 px-8 "
+        >
+          {props.title}
+        </a>
       </td>
       <td className="truncate py-8 px-8 border-gray-300 text-txt ">
         {props.description}
@@ -83,7 +83,9 @@ function SurveyComponent(props: Survey) {
         {moment(props.startDate).format('MMM Do YYYY')}
       </td>
       <td className="text-center truncate py-8 px-8 border-gray-300 text-txt ">
-        {props.endDate ? moment(props.endDate).format('MMM Do YYYY') : '---------'}
+        {props.endDate
+          ? moment(props.endDate).format('MMM Do YYYY')
+          : '---------'}
       </td>
     </tr>
   )

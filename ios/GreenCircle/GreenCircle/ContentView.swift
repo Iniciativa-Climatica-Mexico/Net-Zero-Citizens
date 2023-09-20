@@ -9,19 +9,13 @@ import SwiftUI
 
 struct ContentView: View {
   var body: some View {
-    SurveyView()
-    /*
-     VStack {
-     Image(systemName: "globe")
-     .imageScale(.large)
-     .foregroundColor(.accentColor)
-     Text("Hello, world!")
-     }
-     .padding()
-     .onAppear {
-     Task {
-     print(await DummyRepository.shared.getDummies()!)
-     */
+    VStack {
+      Image(systemName: "globe")
+        .imageScale(.large)
+        .foregroundColor(.accentColor)
+      Text("Hello, world!")
+    }
+    .padding()
   }
 }
 
