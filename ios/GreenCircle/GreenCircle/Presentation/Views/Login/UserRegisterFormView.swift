@@ -51,7 +51,7 @@ struct UserRegisterFormView: View {
       MainButton("Continuar", action: {
         Task {
           let success = await viewModel
-            .putUserInformation(userData: userData)
+            .handleSubmit(userData: userData)
           if(success) {
             goMainMenu()
           }

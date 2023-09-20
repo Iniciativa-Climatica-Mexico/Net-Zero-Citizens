@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// ViewModel de la vista de formulario de Registro de Usuario
 class UserRegisterFormViewModel: ObservableObject {
   var useCase = UserRegisterUseCase.shared
   
@@ -20,7 +21,10 @@ class UserRegisterFormViewModel: ObservableObject {
   @Published var showAlert = false
   
   @MainActor
-  func putUserInformation(userData: UserData) async -> Bool {
+  /// Función encargada de enviar el post al backend y actualizar el objeto de entorno
+  /// - Parameter userData: objeto con la información del usuario
+  /// - Returns: un booleano representando si ocurrió un error al validar el formulario
+  func handleSubmit(userData: UserData) async -> Bool {
     do {
       try validateInformation()
       
@@ -39,6 +43,7 @@ class UserRegisterFormViewModel: ObservableObject {
     }
   }
   
+  /// Valida los datos del formulario
   private func validateInformation() throws {
     if phone.isEmpty
         || phone.count != 10
@@ -51,8 +56,4 @@ class UserRegisterFormViewModel: ObservableObject {
       throw CustomError.mainError
     }
   }
-}
-
-enum CustomError: Error {
-  case mainError
 }

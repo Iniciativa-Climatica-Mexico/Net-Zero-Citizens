@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Struct representando la información necesaria para crear una compañía en el backend
 struct PostCompanyData {
   var name: String = ""
   var description: String = ""
@@ -25,17 +26,21 @@ struct PostCompanyData {
   let pdfIneUrl = "a"
 }
 
+/// ViewModel de la vista del formulario para registrar compañía
 class CompanyRegisterFormViewModel: ObservableObject {
   @Published var formState = PostCompanyData()
   var useCase = RegisterCompanyUseCase.shared
   
   @MainActor
+  /// Función para manejar el submit de la información de la compañía
+  /// - Parameter userData: objeto en el entorno con la información del usuario
   func handleSubmit(userData: UserData) async {
     formState.userId = userData.user!.id
     await useCase.registerCompany(authToken: userData.tokens!.authToken,
                                   company: formState)
   }
   
+  /// Función para validar los datos del formulario
   private func validate() throws {
     if formState.name.isEmpty
         || formState.description.isEmpty
