@@ -6,10 +6,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object EcoInfoRetrofit {
     private val retrofit by lazy {
-        Retrofit.Builder()
-            .baseUrl(Constants.ECO_INFO_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        Retrofit.Builder().baseUrl(Constants.SERVER_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create()).build()
     }
 
     val api: EcoInfoAPI by lazy {

@@ -4,6 +4,7 @@ import CompanyRouter from './company.routes'
 import AuthRouter from './auth.routes'
 import ReviewRouter from './review.routes'
 import ProducRouter from './product.routes'
+import EcofinfoRouter from './ecoinfo.routes'
 import { validateToken, validateRole } from '../middlewares/auth.middleware'
 import { Express } from 'express'
 
@@ -12,7 +13,7 @@ export const initRouterV1 = (app: Express) => {
   app.use('/api/v1/auth', AuthRouter)
 
   // Middleware
-  app.use(validateToken)
+  // app.use(validateToken)
 
   // Dummy routes
   app.use('/api/v1/admin/dummy', validateRole(['admin']), DummyRouter)
@@ -23,4 +24,5 @@ export const initRouterV1 = (app: Express) => {
   app.use('/api/v1/company', CompanyRouter)
   app.use('/api/v1/review', ReviewRouter)
   app.use('/api/v1/product', ProducRouter)
+  app.use('/api/v1/ecoinfo', EcofinfoRouter)
 }

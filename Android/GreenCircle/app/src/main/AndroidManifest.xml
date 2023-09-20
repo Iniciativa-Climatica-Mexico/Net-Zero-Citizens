@@ -15,8 +15,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GreenCircle"
-        tools:targetApi="31"
-        android:usesCleartextTraffic="true">
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
@@ -51,6 +49,12 @@
 
         <activity
             android:name=".framework.views.activities.RegisterUserActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.GreenCircle.NoActionBar" />
+
+        <activity
+            android:name=".framework.views.fragments.HomeFragment"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.GreenCircle.NoActionBar" />
