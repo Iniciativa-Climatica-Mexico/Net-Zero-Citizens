@@ -2,6 +2,8 @@
 # Visual Studio Code
 .vscode/*
 
+# Xcode
+
 # Android Studio
 *.iml
 .idea/workspace.xml

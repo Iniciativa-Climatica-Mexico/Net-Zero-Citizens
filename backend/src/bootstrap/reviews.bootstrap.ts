@@ -5,7 +5,7 @@ export default class ReviewBootstrap extends Bootstrapper {
     Review.bulkCreate([
       {
         reviewId: 'revw-1234-efgh-0000',
-        userId: '0cca9c89-c38e-4350-ae31-9215741c8f11',
+        userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
         companyId: 'comp-1234-efgh-0000',
         score: 5,
         reviewTitle: 'This is a title',
@@ -13,7 +13,7 @@ export default class ReviewBootstrap extends Bootstrapper {
       },
       {
         reviewId: 'revw-1234-efgh-0001',
-        userId: '0cca9c89-c38e-4350-ae31-9215741c8f11',
+        userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
         companyId: 'comp-1234-efgh-0000',
         score: 5,
         reviewTitle: 'This is a title',
