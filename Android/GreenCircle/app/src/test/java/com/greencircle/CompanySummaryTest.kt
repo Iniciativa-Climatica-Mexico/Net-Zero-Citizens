@@ -13,7 +13,7 @@ class CompanySummaryTest {
                 "name": "Company 1",
                 "city": "City 1",
                 "state": "State 1",
-                "rating": 4.5,
+                "score": 4.5,
                 "profilePicture": "https://picsum.photos/200/300"
             }
         """.trimIndent()
