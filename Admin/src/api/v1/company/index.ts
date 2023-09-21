@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { SERVER_BASE_URL } from '@/utils/constants'
+import { apiV1Url } from '@/utils/constants'
 
 /**
  * @brief
@@ -12,8 +12,7 @@ export const getPendingCompanies = async (authToken: string | null) => {
     if (!authToken) {
       throw new Error('No authToken provided')
     }
-
-    const response = await axios.get(`${SERVER_BASE_URL}/company/pending`, {
+    const response = await axios.get(`${apiV1Url}/company/pending`, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
