@@ -44,8 +44,8 @@ struct Company: Codable {
   // var images: [Product]
   var createdAt: String
   var updatedAt: String
-//  var products: [Product]?
+  var products: [Product]?
   var score: Double
   var oneComment: String
-//  var images: [CompanyImages]?
+  var images: [CompanyImages]?
 }
