@@ -16,12 +16,12 @@ export interface Company {
   description: string
   createdAt: string
   streetNumber: string
-  pdfCurriculumURL: string
-  pdfDicCdmxURL: string
-  pdfPeeFideURL: string
-  pdfGuaranteeSecurityURL: string
-  pdfActaConstitutivaURL: string
-  pdfINEURL: string
+  pdfCurriculumUrl: string
+  pdfDicCdmxUrl: string
+  pdfPeeFideUrl: string
+  pdfGuaranteeSecurityUrl: string
+  pdfActaConstitutivaUrl: string
+  pdfIneUrl: string
 }
 
 /**
@@ -30,17 +30,9 @@ export interface Company {
  * @param authToken - The authentication token to be passed in the request headers.
  * @returns Una respuesta conteniendo todos los proveedores pendientes
  */
-export const getPendingCompanies = async (authToken: string | null) => {
+export const getPendingCompanies = async () => {
   try {
-    if (!authToken) {
-      throw new Error('No authToken provided')
-    }
-
-    const response = await axios.get(`${SERVER_BASE_URL}/company/pending`, {
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-    })
+    const response = await axios.get(`${SERVER_BASE_URL}/company/pending`)
     return response.data.rows
   } catch (error) {
     console.error('Error fetching pending companies:', error)
@@ -64,18 +56,12 @@ export type UpdateCompanyInfoBody = {
 
 export const updateCompany = async (
   companyId: string,
-  updateInfo: UpdateCompanyInfoBody,
-  authToken: string | null
+  updateInfo: UpdateCompanyInfoBody
 ) => {
   try {
     const response = await axios.post(
       `${SERVER_BASE_URL}/company/pending/${companyId}`,
-      updateInfo,
-      {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      }
+      updateInfo
     )
     return response.data
   } catch (error) {

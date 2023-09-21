@@ -14,7 +14,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.greencircle.R
 import com.greencircle.data.remote.UserAPIService
 import com.greencircle.framework.viewmodel.CreateUserViewModel
-import com.greencircle.framework.views.MainActivity
+import com.greencircle.framework.views.activities.SurveyActivity
 import java.util.UUID
 
 /**Constructor de "CreateUserFragment"
@@ -149,7 +149,7 @@ class CreateUserFragment : Fragment() {
      * (`MainActivity`) y luego inicia la actividad para mostrar la pantalla de inicio.
      */
     private fun navigateToHome() {
-        var intent: Intent = Intent(requireContext(), MainActivity::class.java)
+        var intent: Intent = Intent(requireContext(), SurveyActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }

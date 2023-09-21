@@ -15,7 +15,6 @@ import com.google.android.gms.common.api.ApiException
 import com.greencircle.R
 import com.greencircle.databinding.ActivityLoginBinding
 import com.greencircle.framework.viewmodel.LoginViewModel
-import com.greencircle.framework.views.MainActivity
 import com.greencircle.utils.AuthUtils
 
 /**
@@ -52,6 +51,7 @@ class LoginActivity : AppCompatActivity() {
             if (result.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = result.data
                 Log.d("GoogleSignIn", "data: $data")
+                Log.d("GoogleSignIn", "result: $result")
                 if (data != null && result.resultCode == Activity.RESULT_OK) {
                     val task = GoogleSignIn.getSignedInAccountFromIntent(data)
                     try {
@@ -68,6 +68,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             } else if (result.resultCode == Activity.RESULT_CANCELED) {
                 // Handle the case where the user canceled the operation
+                Log.d("GoogleSignIn", "result: $result")
             }
         }
 
@@ -92,7 +93,7 @@ class LoginActivity : AppCompatActivity() {
         viewModel.googleLoginResult.observe(this) { authResponse ->
             if (authResponse != null) {
                 if (authResponse.user.roles != "new_user") {
-                    navigateToHome()
+                    navigateToSurvey()
                 } else {
                     Toast.makeText(applicationContext, "Por favor, regístrate", Toast.LENGTH_SHORT)
                         .show()
@@ -121,8 +122,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     // Métodos de navegación
-    private fun navigateToHome() {
-        var intent: Intent = Intent(this, MainActivity::class.java)
+    private fun navigateToSurvey() {
+        var intent: Intent = Intent(this, SurveyActivity::class.java)
         startActivity(intent)
         finish()
     }

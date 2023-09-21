@@ -22,7 +22,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Company, updateCompany, UpdateCompanyInfoBody } from '@/api/v1/company'
-import { recoverTokens } from '@/utils/authUtils'
 
 interface cellActionProps {
   companyId: string
@@ -35,8 +34,6 @@ export const CellAction = ({
   fetchPending,
   company,
 }: cellActionProps) => {
-  const tokens = recoverTokens()
-
   /**
    * @brief Function that allows admin to accept a specific company
    * @param company
@@ -57,8 +54,7 @@ export const CellAction = ({
         phone: company.phone,
         webPage: company.webPage,
       }
-      console.log(tokens.authToken)
-      await updateCompany(companyId, updatedCompanyInfo, tokens.authToken)
+      await updateCompany(companyId, updatedCompanyInfo)
     } catch (error) {
       console.error('Error accepting company:', error)
     } finally {

@@ -1,13 +1,21 @@
 package com.greencircle.data.remote
 
 import com.greencircle.data.remote.models.Company
+import com.greencircle.domain.model.Companies
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 /**
  * Interfaz que define los métodos para realizar operaciones relacionadas con empresas a través de una API.
  */
 interface CompanyAPIService {
+
+    @GET("company/{id}")
+    suspend fun getCompany(
+        @Path("id") id: String
+    ): Companies
 
     /**
      * Clase que representa la respuesta de la creación de una empresa.

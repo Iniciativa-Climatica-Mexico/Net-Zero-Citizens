@@ -1,12 +1,24 @@
 package com.greencircle.data.remote
 
 import android.util.Log
+import com.greencircle.domain.model.Companies
 
 /**
  * Cliente para realizar operaciones relacionadas con empresas a través de la API.
  */
 class CompanyAPIClient {
     private lateinit var api: CompanyAPIService
+
+    suspend fun getCompanyById(companyID: String): Companies? {
+        api = CompanyNetworkModuleDI()
+        return try {
+            api.getCompany(companyID)
+        } catch (e: java.lang.Exception) {
+            Log.d("customErrCompany", e.toString())
+            e.printStackTrace()
+            null
+        }
+    }
 
     /**
      * Crea una nueva empresa en la API.

@@ -10,7 +10,6 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
 
 import { ThemeProvider } from '@mui/material/styles'
 import { Theme } from '@/api/v1/material'
@@ -27,7 +26,6 @@ import FileOpenIcon from '@mui/icons-material/FileOpen'
 import { Separator } from './ui/separator'
 import { Button } from './ui/button'
 import { Checkbox } from './ui/checkbox'
-import { recoverTokens } from '@/utils/authUtils'
 
 interface ModalProveedorProps {
   setIsModalOpen: (value: boolean) => void
@@ -42,7 +40,6 @@ export default function ModalProveedor({
 }: ModalProveedorProps) {
   const [checkboxChecked, setCheckboxChecked] = useState(false)
 
-  const tokens = recoverTokens()
   /**
    * @brief Function that allows admin to accept a specific company
    * @param company
@@ -64,7 +61,7 @@ export default function ModalProveedor({
         webPage: company.webPage,
       }
 
-      await updateCompany(companyId, updatedCompanyInfo, tokens.authToken)
+      await updateCompany(companyId, updatedCompanyInfo)
     } catch (error) {
       console.error('Error accepting company:', error)
     } finally {
@@ -103,7 +100,7 @@ export default function ModalProveedor({
         />
         <article className="flex flex-col border border-[#C1C9D2] justify-center items-center rounded-lg w-[823px] py-[25px] bg-white z-10">
           <article className="flex border border-[#C1C9D2] rounded-xl w-[763px]">
-            <Image
+            <img
               src={selectedCompany.profilePicture}
               alt="Green Circle"
               width={350}
@@ -136,7 +133,7 @@ export default function ModalProveedor({
               </h2>
               <section className="flex justify-between items-end mb-3">
                 <a
-                  href={selectedCompany.pdfCurriculumURL}
+                  href={selectedCompany.pdfCurriculumUrl}
                   className="min-w-[31%]"
                   target="_blank"
                 >
@@ -146,7 +143,7 @@ export default function ModalProveedor({
                   </div>
                 </a>
                 <a
-                  href={selectedCompany.pdfDicCdmxURL}
+                  href={selectedCompany.pdfDicCdmxUrl}
                   className="min-w-[31%]"
                   target="_blank"
                 >
@@ -156,7 +153,7 @@ export default function ModalProveedor({
                   </div>
                 </a>
                 <a
-                  href={selectedCompany.pdfPeeFideURL}
+                  href={selectedCompany.pdfPeeFideUrl}
                   className="min-w-[31%]"
                   target="_blank"
                 >
@@ -168,7 +165,7 @@ export default function ModalProveedor({
               </section>
               <section className="flex justify-between items-end mb-3">
                 <a
-                  href={selectedCompany.pdfGuaranteeSecurityURL}
+                  href={selectedCompany.pdfGuaranteeSecurityUrl}
                   className="min-w-[31%]"
                   target="_blank"
                 >
@@ -178,7 +175,7 @@ export default function ModalProveedor({
                   </div>
                 </a>
                 <a
-                  href={selectedCompany.pdfActaConstitutivaURL}
+                  href={selectedCompany.pdfActaConstitutivaUrl}
                   className="min-w-[31%]"
                   target="_blank"
                 >
@@ -188,7 +185,7 @@ export default function ModalProveedor({
                   </div>
                 </a>
                 <a
-                  href={selectedCompany.pdfINEURL}
+                  href={selectedCompany.pdfIneUrl}
                   className="min-w-[31%]"
                   target="_blank"
                 >

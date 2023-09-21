@@ -56,7 +56,6 @@ export default class Company extends Model {
     type: DataType.STRING(255),
     allowNull: false,
     field: 'EMAIL',
-    // unique: true,
   })
   email: string
 
@@ -120,7 +119,6 @@ export default class Company extends Model {
     type: DataType.STRING(500),
     allowNull: false,
     field: 'PDF_CURRICULUM_URL',
-    // unique: true,
   })
   pdfCurriculumUrl: string
 
@@ -128,7 +126,6 @@ export default class Company extends Model {
     type: DataType.STRING(500),
     allowNull: true,
     field: 'PDF_DIC_CDMX_URL',
-    // unique: true,
   })
   pdfDicCdmxUrl: string | null
 
@@ -136,7 +133,6 @@ export default class Company extends Model {
     type: DataType.STRING(500),
     allowNull: true,
     field: 'PDF_PEE_FIDE_URL',
-    // unique: true,
   })
   pdfPeeFideUrl: string | null
 
@@ -144,7 +140,6 @@ export default class Company extends Model {
     type: DataType.STRING(500),
     allowNull: false,
     field: 'PDF_GUARANTEE_SECURITY_URL',
-    // unique: true,
   })
   pdfGuaranteeSecurityUrl: string
 
@@ -152,7 +147,6 @@ export default class Company extends Model {
     type: DataType.STRING(500),
     allowNull: false,
     field: 'PDF_ACTA_CONSTITUTIVA_URL',
-    // unique: true,
   })
   pdfActaConstitutivaUrl: string
 
@@ -160,7 +154,6 @@ export default class Company extends Model {
     type: DataType.STRING(500),
     allowNull: false,
     field: 'PDF_INE_URL',
-    // unique: true,
   })
   pdfIneUrl: string
 
