@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.greencircle.databinding.ItemCompanyReviewBinding
-import com.greencircle.domain.model.CompanyReview
+import com.greencircle.domain.model.reviews.CompanyReview
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -18,7 +18,7 @@ class CompanyReviewViewHolder(private var binding: ItemCompanyReviewBinding) :
         binding.reviewCardTitle.text = item.reviewTitle
         binding.reviewCardContent.text = item.review
         binding.reviewCardRating.text = score
-        binding.reviewCardDate.text = formatDateWithSlashes(item.updatedAt)
+        binding.reviewCardDate.text = formatDateWithSlashes(item.updatedAt.toString())
         binding.reviewCardRatingBar.rating = item.score.toFloat()
     }
     private fun formatDateWithSlashes(dateString: String): String {

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    tools:context=".framework.views.fragments.ProfileFragment">
+    tools:context=".framework.views.fragments.profile.ProfileFragment">
 
 
     <LinearLayout
@@ -12,6 +12,44 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/my_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/top_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:background="@null"
+                android:onClick="goBack"
+                android:src="@drawable/arrow_back_icon" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|right"
+                android:layout_marginRight="20dp"
+                android:background="@null"
+                android:onClick="goToProfile"
+                android:src="@drawable/perfil_icon_toolbar" />
+
+
+            <TextView
+                android:id="@+id/headerText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Mi Perfil"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
 
         <ImageView
             android:id="@+id/profileImage"
@@ -72,17 +110,43 @@
                 android:textSize="15sp" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/resenasTextView"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_marginLeft="30dp"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="30dp"
-            android:text="Resenas Escritas(n)"
-            android:textColor="@color/gray_800"
-            android:textSize="23dp"
-            android:textStyle="bold" />
+            >
+
+            <TextView
+                android:id="@+id/resenasTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Resenas Escritas ("
+                android:textColor="@color/gray_800"
+                android:textSize="23dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/resenasCountTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/green"
+                android:textSize="23dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/resenasTextView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=")"
+                android:textColor="@color/gray_800"
+                android:textSize="23dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/userReviewFragment"

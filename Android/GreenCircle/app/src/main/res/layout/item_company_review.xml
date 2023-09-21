@@ -55,7 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
-                    android:text="Hernan"
+                    android:text="@string/review_placeholder_user"
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -64,7 +64,7 @@
                     android:id="@+id/reviewCardDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="31/08/2023"
+                    android:text="@string/review_placeholder_date"
                     android:textColor="@color/gray_700"
                     android:textSize="11sp" />
             </LinearLayout>
@@ -90,7 +90,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="end"
-                    android:text="4 de 5"
+                    android:text="@string/review_initial_rating"
                     android:textColor="@color/green"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -102,7 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:paddingEnd="30sp"
-            android:text="El producto tiene una calidad increíble y la atención fue muy buena."
+            android:text="@string/review_placeholder_title"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold"
@@ -118,8 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="start"
-            android:text="¡Me encantaron sus productos! Estos paneles solares fueron entregados en mi puerta justo a tiempo :)
-El servicio de atención al cliente es satisfactorio, pero tuve pequeñas complicaciones en la comunicacion"
+            android:text="@string/review_placeholder_review"
             android:textColor="@color/gray_700"
             android:textSize="13sp"
             card_view:layout_constraintBottom_toBottomOf="parent"

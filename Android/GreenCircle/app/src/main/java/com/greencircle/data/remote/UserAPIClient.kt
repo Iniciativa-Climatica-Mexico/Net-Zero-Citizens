@@ -1,28 +1,37 @@
 package com.greencircle.data.remote
 
 import android.util.Log
-import com.greencircle.domain.model.User
+import java.util.UUID
 
+/**
+ * Cliente para realizar operaciones relacionadas con usuarios a través de la API.
+ */
 class UserAPIClient {
     private lateinit var api: UserAPIService
-    suspend fun getUser(userId: String): User? {
-        api = UserNetworkModuleDI()
-        return try {
-            Log.d("api", api.toString())
-            api.getUser(userId)
-        } catch (e: java.lang.Exception) {
-            Log.d("error123", e.toString())
-            e.printStackTrace()
-            null
-        }
-    }
 
-    suspend fun updateUser(userId: String, user: User): User? {
-        api = UserNetworkModuleDI()
+    /**
+     * Actualiza la información de un usuario en la API.
+     *
+     * @param userId El ID del usuario que se va a actualizar.
+     * @param userInfo La información actualizada del usuario.
+     * @return Un objeto [UserAPIService.UpdateUserResponse] que contiene información sobre la actualización realizada.
+     */
+    suspend fun updateUser(
+        userId: UUID,
+        userInfo: UserAPIService.UpdateUserRequest,
+        authToken: String
+    ): UserAPIService.UpdateUserResponse? {
+        // Inicializa el cliente de la API de usuario.
+        api = UserNetworkModel(authToken)
         return try {
-            api.updateUser(userId, user)
-        } catch (e: java.lang.Exception) {
+            // Realiza la actualización del usuario llamando al método en la API.
+            val response = api.updateUser(userId, userInfo)
+            Log.d("UserAPIClient", "Response: $response")
+            response
+        } catch (e: Exception) {
+            // Maneja cualquier excepción que pueda ocurrir durante la actualización.
             e.printStackTrace()
+            Log.e("UpdateUser", "Error: $e")
             null
         }
     }
