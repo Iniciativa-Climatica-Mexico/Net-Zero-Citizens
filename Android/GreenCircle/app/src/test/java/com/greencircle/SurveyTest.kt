@@ -5,8 +5,8 @@ import com.greencircle.domain.model.survey.Question
 import com.greencircle.domain.model.survey.QuestionOption
 import com.greencircle.domain.model.survey.QuestionType
 import com.greencircle.domain.model.survey.Survey
-import org.junit.Test
 import java.util.UUID
+import org.junit.Test
 
 /**
  * Pruebas unitarias para la clase Survey
@@ -54,10 +54,14 @@ class SurveyTest {
         assert(
             survey.questions == listOf(
                 Question(
-                    questionID, listOf(
+                    questionID,
+                    listOf(
                         QuestionOption(testOption1ID, "testOption1"),
                         QuestionOption(testOption2ID, "testOption2")
-                    ), "testQuestionText", QuestionType.multiple_choice, false
+                    ),
+                    "testQuestionText",
+                    QuestionType.multiple_choice,
+                    false
                 )
             )
         )
