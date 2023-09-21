@@ -40,12 +40,10 @@ struct Company: Codable {
   var pdfIneUrl: String
   var status: StatusEnum
   // var reviews: [Review]
-  // var images: [CompanyImages]
-  // var images: [Product]
   var createdAt: String
   var updatedAt: String
-//  var products: [Product]?
+  var products: [Product]?
   var score: Double
   var oneComment: String
-//  var images: [CompanyImages]?
+  var images: [CompanyImages]?
 }

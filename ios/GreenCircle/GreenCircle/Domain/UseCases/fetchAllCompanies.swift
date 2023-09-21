@@ -7,14 +7,25 @@
 
 import SwiftUI
 
-struct fetchAllCompanies: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+/*
+protocol FetchAllCompaniesUseCaseProtocol {
+  func fetchAllCompanies() -> async [Company]?
 }
 
-struct fetchAllCompanies_Previews: PreviewProvider {
-    static var previews: some View {
-        fetchAllCompanies()
+class FetchAllCompaniesUseCase: FetchAllCompaniesUseCaseProtocol {
+  let fetchCompaniesRepository: CompanyRepository
+  
+  static let shared = FetchAllCompaniesUseCase()
+  
+  init(fetchCompaniesRepository: CompanyRepository = CompanyRepository.shared) {
+    self.fetchCompaniesRepository = fetchCompaniesRepository
+  }
+  
+  func fetchAllCompanies() async -> [Company]? {
+    if let resultCompanies = await fetchCompaniesRepository.fetchAllCompanies() {
+      return resultCompanies
     }
+    return nil
+  }
 }
+*/

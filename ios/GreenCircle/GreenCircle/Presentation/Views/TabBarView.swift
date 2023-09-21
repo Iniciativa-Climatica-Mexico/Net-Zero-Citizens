@@ -18,7 +18,7 @@ struct TabBarView: View {
           Text("Eco-Info")
         }
       
-      //SurveyView()
+      ContactCompanyView()
         .tabItem {
           Image(systemName: "book.fill")
           Text("Catálogo")

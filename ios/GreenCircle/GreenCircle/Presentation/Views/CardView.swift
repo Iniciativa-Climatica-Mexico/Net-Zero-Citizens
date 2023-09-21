@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/*
 struct CardView: View {
   @StateObject var contentViewModel = ContentViewModel()
   var body: some View {
@@ -82,6 +83,7 @@ struct CardView: View {
       
     }
     .onAppear {
+      
       Task {
         await contentViewModel.getCompanies()
       }
@@ -89,12 +91,5 @@ struct CardView: View {
   }
 }
 
+*/
 
-
-
-
-struct CardView_Previews: PreviewProvider {
-  static var previews: some View {
-    CardView()
-  }
-}

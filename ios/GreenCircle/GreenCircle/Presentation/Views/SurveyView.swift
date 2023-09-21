@@ -14,6 +14,7 @@ struct SurveyView: View {
   
   var body: some View {
   NavigationView {
+    NavigationLink("LocalizedStringKey", destination: TabBarView())
     ScrollView {
       VStack(alignment: .leading) {
         Text(vm.survey.title)

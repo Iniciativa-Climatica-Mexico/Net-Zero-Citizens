@@ -7,16 +7,16 @@
 
 import Foundation
 
+/*
 class ContentViewModel: ObservableObject {
-  @Published var companies = [Company]()
+  private let fetchAllCompanies
+  @Published var companies = [Company] = []
   var repository = CompanyRepository.shared
   
   @MainActor
-  func getCompanies() async {
-    guard let companies =
-            await repository.getCompanies(authToken: "") else { return }
+  func fetchAllCompanies() async {
     
-    self.companies = companies.rows
   }
 }
+*/
 

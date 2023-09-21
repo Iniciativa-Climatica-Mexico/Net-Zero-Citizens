@@ -178,7 +178,7 @@ struct ContactCompanyComponentView: View {
             .font(.system(size: 10))
             .foregroundColor(Color("GreenCustom"))
           
-          Text(String(modelCompany.contentCompany.streetNumber))
+          Text(String(modelCompany.contentCompany.streetNumber!))
             .font(.system(size: 10))
             .foregroundColor(Color("GreenCustom"))
         }
@@ -245,7 +245,7 @@ struct ContactCompanyView: View {
                         .resizable()
                         .scaledToFill()
                         .frame(maxWidth: .infinity, maxHeight: 155)
-                        .roundedCorner(10, corners: [.bottomLeft, .bottomRight])
+                        .cornerRadius(10, corners: [.bottomLeft, .bottomRight])
                     case .failure:
                       Text("Failed to load Image!!")
                     @unknown default:

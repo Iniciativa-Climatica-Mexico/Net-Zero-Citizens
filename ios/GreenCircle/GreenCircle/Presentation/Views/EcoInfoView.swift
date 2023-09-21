@@ -23,9 +23,9 @@ struct EcoInfoView: View {
             Spacer()
           }.padding(EdgeInsets(top: 17, leading: 15, bottom: 7, trailing: 0))
         }
-        LazyVStack {
+        VStack {
           ForEach(ecoInfoViewModel.ecoInfoArray, id: \.ecoinfoId) { ecoInfo in
-            EcoInfoCard(isPressedSeeMore: $isPressedSeeMore, ecoInfo: ecoInfo)
+            EcoInfoCard(ecoInfo: ecoInfo)
           }
         }.padding(.top, 8)
       }.navigationTitle("Eco Info")
@@ -39,7 +39,6 @@ struct EcoInfoView: View {
 }
 
 struct EcoInfoCard: View {
-  @Binding var isPressedSeeMore: [Int: Bool]
   let ecoInfo: EcoInfo
   var body: some View {
     ZStack {
@@ -61,13 +60,14 @@ struct EcoInfoCard: View {
                 .font(.system(size: 12)).foregroundColor(Color("BlackCustom"))
                 .multilineTextAlignment(.leading)
               Text("Ver más...")
-                .font(.system(size: 12))
-                .foregroundColor(Color("BlueCustom"))
-                .onTapGesture {
+              .font(.system(size: 12))
+              .foregroundColor(Color("BlueCustom"))
+              .padding(.top)
+              .onTapGesture {
                 if let url = URL(string: ecoInfo.postLink) {
                   UIApplication.shared.open(url)
                 }
-              }.frame(maxWidth: .infinity, alignment: .trailing)
+            }.frame(maxWidth: .infinity, alignment: .trailing)
           }.padding()
         }
       }
