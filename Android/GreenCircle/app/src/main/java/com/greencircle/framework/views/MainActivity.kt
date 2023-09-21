@@ -18,10 +18,21 @@ import com.greencircle.framework.views.fragments.HomeFragment
  * Esta clase se utiliza para crear la actividad principal de la aplicación
  */
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var topBarBinding: TopBarBinding
+
+    /**
+     * Reemplaza el fragmento actual en el contenedor (FrameLayout) con el fragmento proporcionado.
+     *
+     * @param fragment El fragmento que se va a mostrar.
+     */
+    fun replaceFragment(fragment: Fragment) {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.frame_layout, fragment)
+        fragmentTransaction.commit()
+    }
 
     /**
      * Método llamado cuando se crea la actividad.
@@ -58,17 +69,5 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
-    }
-
-    /**
-     * Reemplaza el fragmento actual en el contenedor (FrameLayout) con el fragmento proporcionado.
-     *
-     * @param fragment El fragmento que se va a mostrar.
-     */
-    private fun replaceFragment(fragment: Fragment) {
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.frame_layout, fragment)
-        fragmentTransaction.commit()
     }
 }

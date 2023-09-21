@@ -1,8 +1,11 @@
+import CompanyProducts from '../models/companyProducts.model'
+import CompanyImages from '../models/companyImages.model'
+import Product from '../models/products.model'
+import Review from '../models/review.model'
 import { col, fn } from 'sequelize'
 import Company from '../models/company.model'
 import CompanyProduct from '../models/companyProducts.model'
 import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
-import Review from '../models/review.model'
 
 // TYPES
 /**
@@ -59,7 +62,7 @@ export type StatusEnum = 'approved' | 'pending_approval' | 'rejected'
 export const getAllCompanies = async <T>(
   params: PaginationParams<T>
 ): Promise<PaginatedQuery<Company>> => {
-  return await Company.findAndCountAll({
+  return Company.findAndCountAll({
     limit: params.pageSize,
     offset: params.start,
   })
@@ -87,4 +90,84 @@ export const addProduct = async (
   companyProduct: CompanyProductType
 ): Promise<CompanyProduct | null> => {
   return await CompanyProduct.create(companyProduct)
+}
+
+/**
+ * @brief
+ * Obtiene un proveedor por su id y lo devuelve en la respuesta. Si no
+ * existe el proveedor, devuelve null. Añade la puntuación media del proveedor
+ * y los productos que vende
+ * @param id Id del proveedor a buscar
+ * @returns Promise<Company | Null> Proveedor con el id especificado
+ */
+export const getCompanyById = async (id: string): Promise<Company | null> => {
+  const company = await Company.findByPk(id)
+  const companyScore = await getCompanyScore(id)
+  const companyProducts = await getCompanyProducts(id)
+  const companyImages = await getCompanyImages(id)
+  const rating = Math.round(companyScore?.[0].getDataValue('score') * 10) / 10
+  const comment = companyScore?.[0].getDataValue('review')
+  const products: Product[] = []
+  const images: CompanyImages[] = []
+
+  companyProducts?.forEach(function (product) {
+    products.push(product.getDataValue('product').dataValues)
+  })
+
+  companyImages?.forEach(function (image) {
+    images.push(image.dataValues)
+  })
+
+  company?.setDataValue('products', products)
+  company?.setDataValue('score', rating)
+  company?.setDataValue('oneComment', comment)
+  company?.setDataValue('images', images)
+
+  return company
+}
+
+const getCompanyImages = async (
+  id: string
+): Promise<CompanyImages[] | null> => {
+  return await CompanyImages.findAll({
+    where: {
+      companyId: id,
+    },
+    attributes: {
+      exclude: ['createdAt', 'updatedAt'],
+    },
+  })
+}
+
+const getCompanyProducts = async (
+  id: string
+): Promise<CompanyProducts[] | null> => {
+  return await CompanyProducts.findAll({
+    where: {
+      companyId: id,
+    },
+    include: [
+      {
+        model: Product,
+        attributes: {
+          exclude: ['createdAt', 'updatedAt'],
+        },
+      },
+    ],
+    attributes: {
+      exclude: ['createdAt', 'updatedAt'],
+    },
+  })
+}
+
+const getCompanyScore = async (id: string): Promise<Review[] | null> => {
+  return await Review.findAll({
+    where: {
+      companyId: id,
+    },
+    attributes: {
+      include: [[fn('AVG', col('score')), 'score'], 'review'],
+      exclude: ['reviewId', 'userId', 'createdAt', 'updatedAt'],
+    },
+  })
 }

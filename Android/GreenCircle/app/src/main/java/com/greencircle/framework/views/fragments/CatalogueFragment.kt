@@ -37,7 +37,9 @@ class CatalogueFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(binding.root.context)
 
         viewModel.catalogueLiveData.observe(viewLifecycleOwner) { list ->
-            adapter.initCustomAdapter(list, binding.root.context)
+            if (list != null) {
+                adapter.initCustomAdapter(list, binding.root.context)
+            }
             recyclerView.adapter = adapter
         }
 

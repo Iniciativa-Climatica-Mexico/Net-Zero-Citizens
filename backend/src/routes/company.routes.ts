@@ -5,6 +5,7 @@ import * as CompanyImageController from '../controllers/companyImage.controller'
 const router = express.Router()
 
 router.get('/', CompanyController.getAllCompanies)
+router.get('/:id', CompanyController.getCompanyById)
 router.post('/create', CompanyController.createCompany)
 
 router.post('/add/product', CompanyController.addProduct)
