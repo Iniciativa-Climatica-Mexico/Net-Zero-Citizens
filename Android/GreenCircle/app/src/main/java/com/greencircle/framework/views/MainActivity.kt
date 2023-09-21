@@ -47,9 +47,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         topBarBinding = TopBarBinding.bind(binding.root)
-        replaceFragment(CatalogueFragment())
+        replaceFragment(HomeFragment())
 
-        topBarBinding.title.text = "Catálogo de Proveedores"
+        topBarBinding.title.text = "EcoInfo"
         bottomNavigationView = binding.bottomNaSvigation
 
         bottomNavigationView.setOnItemSelectedListener { menuItem ->

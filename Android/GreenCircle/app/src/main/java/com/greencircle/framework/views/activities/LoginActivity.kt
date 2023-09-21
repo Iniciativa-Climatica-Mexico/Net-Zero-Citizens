@@ -93,7 +93,7 @@ class LoginActivity : AppCompatActivity() {
         viewModel.googleLoginResult.observe(this) { authResponse ->
             if (authResponse != null) {
                 if (authResponse.user.roles != "new_user") {
-                    navigateToHome()
+                    navigateToSurvey()
                 } else {
                     Toast.makeText(applicationContext, "Por favor, regístrate", Toast.LENGTH_SHORT)
                         .show()
@@ -122,7 +122,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     // Métodos de navegación
-    private fun navigateToHome() {
+    private fun navigateToSurvey() {
         var intent: Intent = Intent(this, SurveyActivity::class.java)
         startActivity(intent)
         finish()

@@ -1,6 +1,5 @@
 package com.greencircle.framework.views.fragments
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.greencircle.R
 import com.greencircle.databinding.FragmentCompanyCatalogueBinding
 import com.greencircle.framework.ui.adapters.CatalogueAdapter
 import com.greencircle.framework.viewmodel.CatalogueViewModel
@@ -62,5 +60,4 @@ class CatalogueFragment : Fragment() {
     private fun setUpViewModel() {
         viewModel = ViewModelProvider(this)[CatalogueViewModel::class.java]
     }
-
 }

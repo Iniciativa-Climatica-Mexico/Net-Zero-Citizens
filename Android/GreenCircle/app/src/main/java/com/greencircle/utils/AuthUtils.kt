@@ -12,7 +12,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.greencircle.R
-import com.greencircle.framework.views.MainActivity
+import com.greencircle.framework.views.activities.SurveyActivity
 
 class AuthUtils {
     private fun googleLogin(
@@ -71,7 +71,7 @@ class AuthUtils {
     }
 
     fun navigateToMainActivity(activity: Activity, arguments: Bundle) {
-        val intent = Intent(activity, MainActivity::class.java)
+        val intent = Intent(activity, SurveyActivity::class.java)
         intent.putExtras(arguments)
         activity.startActivity(intent)
         activity.finish()
