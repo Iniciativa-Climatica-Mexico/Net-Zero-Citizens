@@ -6,7 +6,6 @@ import { col, fn } from 'sequelize'
 import Company from '../models/company.model'
 import CompanyProduct from '../models/companyProducts.model'
 import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
-import Review from '../models/review.model'
 
 // TYPES
 /**

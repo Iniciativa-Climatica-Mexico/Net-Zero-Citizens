@@ -7,7 +7,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.greencircle.R
 import com.greencircle.databinding.ActivityMainBinding
 import com.greencircle.databinding.TopBarBinding
-import com.greencircle.framework.views.fragments.CompanyContactFragment
 import com.greencircle.framework.views.fragments.CatalogueFragment
 import com.greencircle.framework.views.fragments.HomeFragment
 
@@ -55,11 +54,6 @@ class MainActivity : AppCompatActivity() {
 
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.proveedores -> {
-                    replaceFragment(CompanyContactFragment())
-                    true
-                }
-
                 R.id.ecoInfo -> {
                     replaceFragment(HomeFragment())
                     topBarBinding.title.text = "EcoInfo"
