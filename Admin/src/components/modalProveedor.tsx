@@ -29,7 +29,7 @@ import FileOpenIcon from '@mui/icons-material/FileOpen'
 import { Separator } from './ui/separator'
 import { Button } from './ui/button'
 import { Checkbox } from './ui/checkbox'
-import { recoverTokens } from '@/utils/authUtils'
+//import { recoverTokens } from '@/utils/authUtils'
 import { AlertDialogFooter, AlertDialogHeader } from './ui/alert-dialog'
 import {
   AlertDialog,
@@ -54,7 +54,7 @@ export default function ModalProveedor({
 }: ModalProveedorProps) {
   const [checkboxChecked, setCheckboxChecked] = useState(false)
 
-  const tokens = recoverTokens()
+  //const tokens = recoverTokens()
   /**
    * @brief Function that allows admin to accept a specific company
    * @param company
@@ -76,7 +76,7 @@ export default function ModalProveedor({
         webPage: company.webPage,
       }
 
-      await updateCompany(companyId, updatedCompanyInfo, tokens.authToken)
+      await updateCompany(companyId, updatedCompanyInfo)
     } catch (error) {
       console.error('Error rejecting company:', error)
     } finally {
@@ -108,7 +108,7 @@ export default function ModalProveedor({
       }
 
       // Call the updateCompany function with the updated information
-      await updateCompany(companyId, updatedCompanyInfo, tokens.authToken)
+      await updateCompany(companyId, updatedCompanyInfo)
     } catch (error) {
       console.error('Error rejecting company:', error)
     } finally {
@@ -270,6 +270,7 @@ export default function ModalProveedor({
             </div>
             <footer className="flex gap-x-3">
               <Button
+                className="text-slate-200"
                 disabled={!checkboxChecked}
                 onClick={() =>
                   handleAccept(selectedCompany, selectedCompany.companyId)
@@ -278,32 +279,14 @@ export default function ModalProveedor({
               >
                 Aprobar
               </Button>
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button variant="outline">Rechazar</Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>
-                      Seguro que deseas realizar esta acción?
-                    </AlertDialogTitle>
-                    <AlertDialogDescription>
-                      Confirmar el rechazo de un proveedor.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                    <AlertDialogAction
-                      onClick={() =>
-                        handleReject(selectedCompany, selectedCompany.companyId)
-                      }
-                      className="bg-[#3E5D8C] font-medium text-primary-foreground hover:bg-[#173871] hover:text-white"
-                    >
-                      Continuar
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
+              <Button
+                onClick={() =>
+                  handleReject(selectedCompany, selectedCompany.companyId)
+                }
+                variant="outline"
+              >
+                Rechazar
+              </Button>
             </footer>
           </section>
         </article>

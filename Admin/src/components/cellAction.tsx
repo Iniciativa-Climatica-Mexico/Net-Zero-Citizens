@@ -27,7 +27,7 @@ import {
 import { updateCompany, UpdateCompanyInfoBody } from '@/api/v1/company'
 import { useToast } from './ui/use-toast'
 import { Toaster } from './ui/toaster'
-import { recoverTokens } from '@/utils/authUtils'
+//import { recoverTokens } from '@/utils/authUtils'
 
 interface cellActionProps {
   setIsModalOpen: (value: boolean) => void
@@ -43,7 +43,7 @@ export const CellAction = ({
   company,
 }: cellActionProps) => {
   const { toast } = useToast()
-  const tokens = recoverTokens()
+  //const tokens = recoverTokens()
   /**
    * @brief Function that allows admin to accept a specific company
    * @param company
@@ -66,7 +66,7 @@ export const CellAction = ({
         webPage: company.webPage,
       }
 
-      await updateCompany(companyId, updatedCompanyInfo, tokens.authToken)
+      await updateCompany(companyId, updatedCompanyInfo)
     } catch (error) {
       console.error('Error accepting company:', error)
     } finally {
@@ -100,7 +100,7 @@ export const CellAction = ({
       }
 
       // Call the updateCompany function with the updated information
-      await updateCompany(companyId, updatedCompanyInfo, tokens.authToken)
+      await updateCompany(companyId, updatedCompanyInfo)
     } catch (error) {
       console.error('Error rejecting company:', error)
     } finally {
