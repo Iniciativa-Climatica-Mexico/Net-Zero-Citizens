@@ -11,7 +11,7 @@ import SwiftUI
 struct LoginView: View {
   var goUserRegister: () -> Void
   var goForm: () -> Void
-  var goMainMenu: () -> Void
+  var goSurvey: () -> Void
   var goCompanyRegister: () -> Void
 
   @StateObject var viewModel = LoginViewModel()
@@ -37,7 +37,7 @@ struct LoginView: View {
               if newUser {
                 goForm()
               } else {
-                goMainMenu()
+                goSurvey()
               }
             }
           }
@@ -68,7 +68,7 @@ struct LoginView_Previews: PreviewProvider {
   static var previews: some View {
     LoginView(goUserRegister: {},
               goForm: {},
-              goMainMenu: {},
+              goSurvey: {},
               goCompanyRegister: {})
   }
 }

@@ -198,8 +198,8 @@
 		447DE0133975400299321CC3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				EC7A69D5FD2F9F9D7E2ACBF4 /* CoordinatorView.swift */,
 				18EEAAEE773A27449B95A26E /* .placeholder */,
+				EC7A69D5FD2F9F9D7E2ACBF4 /* CoordinatorView.swift */,
 				DDDF09FCA4D57ACDEC28BE07 /* EcoInfoView.swift */,
 				F34017F1DFA61C1E9747B4CC /* MainMenuView.swift */,
 				ED88CC126A98875FF4EF8EBF /* SplashScreenView.swift */,

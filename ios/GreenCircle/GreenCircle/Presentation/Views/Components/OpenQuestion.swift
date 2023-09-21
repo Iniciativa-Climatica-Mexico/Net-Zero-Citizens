@@ -30,7 +30,7 @@ struct OpenQuestion: View {
             .padding(.bottom, 10)
         } ///answer.answerText   Binding(get: {text.name ?? ""}, set: {text.name = $0})
       }
-      TextField("Respuesta", value: answer.answerText, format: String() , axis: .vertical)
+      TextField("Respuesta", text: Binding(get: {answer.answerText ?? ""}, set: {answer.answerText = $0}), axis: .vertical)
       .lineLimit(5, reservesSpace: true)
       .multilineTextAlignment(.leading)
       .textFieldStyle(.roundedBorder)

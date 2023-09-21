@@ -142,7 +142,8 @@ class NetworkAPIService {
   ///   - answers: Las respuestas de la encuesta
   /// - Returns: Bool
   func submitAnswers(url: URL, answers: [Answer]) async -> Bool {
-    let requestTask = AF.request(url, method: .post, parameters: answers, encoder: JSONParameterEncoder.default).validate()
+    let body: Parameters = ["answers": answers]
+    let requestTask = AF.request(url, method: .post, parameters: body).validate()
     let response = await requestTask.serializingData().response
 
     switch response.result {

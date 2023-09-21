@@ -45,9 +45,8 @@ struct QuestionOption: Decodable, Identifiable, Hashable {
   }
 }
 
-struct Answer: Decodable, Hashable, Encodable {
+struct Answer: Codable, Hashable {
   var scaleValue: Int?
   var answerText: String?
   var questionId: String
-}
-
+} 

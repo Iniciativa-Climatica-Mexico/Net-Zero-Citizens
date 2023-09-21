@@ -11,7 +11,7 @@ class SurveyViewModel: ObservableObject {
   private let surveyUseCase: SurveyUseCase
   
   @Published var survey: SurveyModel = SurveyModel(surveyId: "", title: "", description: "", questions: [])
-  @Published var answers = [Answer]()
+  @Published var answers: [Answer] = []
   
   init(getPendingSurveyUseCase: SurveyUseCaseProtocol = SurveyUseCase.shared) {
     self.surveyUseCase = getPendingSurveyUseCase as! SurveyUseCase

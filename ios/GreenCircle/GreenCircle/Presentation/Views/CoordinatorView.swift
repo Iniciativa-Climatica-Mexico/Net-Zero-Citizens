@@ -18,6 +18,7 @@ struct CoordinatorView: View {
     case companyRegisterForm
     case mainMenuView
     case pendingCompany
+    case survey
     // case companyRegister
   }
   
@@ -29,21 +30,21 @@ struct CoordinatorView: View {
       case .login:
         LoginView(goUserRegister: goUserRegister,
                   goForm: goUserForm,
-                  goMainMenu: goMainMenu,
+                  goSurvey: goSurvey,
                   goCompanyRegister: goCompanyRegister)
         
       case .userRegister:
         UserRegisterView(goLogin: goLogin,
                          goForm: goUserForm,
-                         goMainMenu: goMainMenu)
+                         goSurvey: goSurvey)
         
       case .userRegisterForm:
-        UserRegisterFormView(goMainMenu: goMainMenu)
+        UserRegisterFormView(goSurvey: goSurvey)
         
       case .companyRegister:
         CompanyRegisterView(goLogin: goLogin,
                             goForm: goCompanyForm,
-                            goMainMenu: goMainMenu)
+                            goSurvey: goSurvey)
         
       case .companyRegisterForm:
         CompanyRegisterFormView(goPending: goPending)
@@ -53,6 +54,10 @@ struct CoordinatorView: View {
         
       case .pendingCompany:
         PendingCompanyView()
+        
+      case .survey:
+        SurveyView()
+          .applyNavBarTheme()
       }
     }
   }
@@ -79,6 +84,10 @@ struct CoordinatorView: View {
   
   private func goMainMenu() {
     routes.presentCover(.mainMenuView)
+  }
+  
+  private func goSurvey() {
+    routes.presentCover(.survey)
   }
   
   private func goPending() {
