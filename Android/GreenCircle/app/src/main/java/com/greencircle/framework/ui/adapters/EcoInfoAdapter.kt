@@ -35,7 +35,9 @@ class EcoInfoAdapter(private val ecoInfoList: List<EcoInfo>) :
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EcoInfoViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
-            R.layout.card_layout_ecoinfo, parent, false
+            R.layout.card_layout_ecoinfo,
+            parent,
+            false
         )
 
         return EcoInfoViewHolder(itemView)

@@ -560,7 +560,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:latest":
+"@typescript-eslint/eslint-plugin@latest":
   version: 6.7.2
   resolution: "@typescript-eslint/eslint-plugin@npm:6.7.2"
   dependencies:
@@ -585,7 +585,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^6.4.0, @typescript-eslint/parser@npm:latest":
+"@typescript-eslint/parser@latest, @typescript-eslint/parser@npm:^6.4.0":
   version: 6.7.2
   resolution: "@typescript-eslint/parser@npm:6.7.2"
   dependencies:
@@ -1020,7 +1020,7 @@ __metadata:
     ts-mocha: ^10.0.0
     ts-node: ^10.9.1
     ts-node-dev: ^2.0.0
-    typescript: "*"
+    typescript: ^5.2.2
     zod: ^3.22.2
   languageName: unknown
   linkType: soft
@@ -1831,7 +1831,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-standard-with-typescript@npm:latest":
+eslint-config-standard-with-typescript@latest:
   version: 39.0.0
   resolution: "eslint-config-standard-with-typescript@npm:39.0.0"
   dependencies:
@@ -2550,8 +2550,8 @@ __metadata:
   linkType: hard
 
 "glob@npm:^10.2.2":
-  version: 10.3.4
-  resolution: "glob@npm:10.3.4"
+  version: 10.3.5
+  resolution: "glob@npm:10.3.5"
   dependencies:
     foreground-child: ^3.1.0
     jackspeak: ^2.0.3
@@ -2560,7 +2560,7 @@ __metadata:
     path-scurry: ^1.10.1
   bin:
     glob: dist/cjs/src/bin.js
-  checksum: 176b97c124414401cb51329a93d2ba112cef8814adbed10348481916b9521b677773eee2691cb6b24d66632d8c8bb8913533f5ac4bfb2d0ef5454a1856082361
+  checksum: 564f4799cae48c0bcc841c88a20b539b5701c27ed5596f8623f588b3c523262d3fc20eb1ea89cab9c75b0912faf40ca5501fc835f982225d0d0599282b09e97a
   languageName: node
   linkType: hard
 
@@ -5502,7 +5502,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:*":
+"typescript@npm:^5.2.2":
   version: 5.2.2
   resolution: "typescript@npm:5.2.2"
   bin:
@@ -5512,7 +5512,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@*#~builtin<compat/typescript>":
+"typescript@patch:typescript@^5.2.2#~builtin<compat/typescript>":
   version: 5.2.2
   resolution: "typescript@patch:typescript@npm%3A5.2.2#~builtin<compat/typescript>::version=5.2.2&hash=f3b441"
   bin:

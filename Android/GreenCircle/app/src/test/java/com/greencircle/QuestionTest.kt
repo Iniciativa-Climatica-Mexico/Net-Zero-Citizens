@@ -48,8 +48,8 @@ class QuestionTest {
         assert(
             question.questionOptions == listOf(
                 QuestionOption(testOption1ID, "testOption1"),
-                QuestionOption(testOption2ID, "testOption2"),
-            ),
+                QuestionOption(testOption2ID, "testOption2")
+            )
         )
     }
 

@@ -17,5 +17,5 @@ data class Company(
     val pdfCurriculumUrl: String,
     val pdfGuaranteeSecurityUrl: String,
     val pdfActaConstitutivaUrl: String,
-    val pdfIneUrl: String,
+    val pdfIneUrl: String
 )
