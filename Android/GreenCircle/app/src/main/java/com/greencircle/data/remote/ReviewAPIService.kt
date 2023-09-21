@@ -19,11 +19,11 @@ interface ReviewAPIService {
     suspend fun getCompanyReviews(@Path("companyId") companyId: UUID): CompanyReviewObject
 
     @GET("review/user/{userId}")
-    suspend fun getUserReviews(@Path("UUID") UUID: UUID): UserReviewObject
+    suspend fun getUserReviews(@Path("userId") userId: UUID): UserReviewObject
 
     @POST("review/{userId}/{companyId}")
     suspend fun addReview(
-            @Path("UUID") UUID: UUID,
+            @Path("userId") userId: UUID,
             @Path("companyId") companyId: UUID,
             @Body review: ReviewBase
     ): Response<ResponseBody>

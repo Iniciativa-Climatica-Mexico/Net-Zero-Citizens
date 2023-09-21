@@ -11,6 +11,7 @@
         android:paddingHorizontal="30dp">
 
         <!--  CALIFICA AL PROVEEDOR  -->
+        <!--  CALIFICA AL PROVEEDOR  -->
 
         <LinearLayout
             android:id="@+id/ratingWrapper"
@@ -37,7 +38,22 @@
                 android:layout_height="wrap_content"
                 android:text="@string/review_rate_description"
                 android:textSize="14sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/review_rate_description"
+                android:textSize="14sp" />
 
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="@android:style/Widget.Material.RatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginVertical="15dp"
+                android:numStars="5"
+                android:progressTint="@color/blue"
+                android:stepSize="1" />
             <RatingBar
                 android:id="@+id/ratingBar"
                 style="@android:style/Widget.Material.RatingBar"
@@ -90,7 +106,18 @@
                 android:text="@string/review_opinions_title"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/review_opinions_title"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -106,6 +133,11 @@
                     android:textColor="@color/green"
                     android:textSize="51sp" />
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -129,6 +161,7 @@
                         android:text="@string/review_initial_opinions_number"
                         android:textSize="12sp" />
 
+                </LinearLayout>
                 </LinearLayout>
 
             </LinearLayout>

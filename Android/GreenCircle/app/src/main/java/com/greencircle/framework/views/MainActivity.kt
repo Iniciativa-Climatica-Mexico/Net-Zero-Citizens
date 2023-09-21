@@ -8,6 +8,7 @@ import com.greencircle.R
 import com.greencircle.databinding.ActivityMainBinding
 import com.greencircle.databinding.TopBarBinding
 import com.greencircle.framework.views.fragments.CompanyContactFragment
+import com.greencircle.framework.views.fragments.ProfileFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -30,6 +31,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.proveedores -> {
                     replaceFragment(CompanyContactFragment())
                     topBarBinding.title.text = "Proveedores"
+                    true
+                }
+                R.id.perfil -> {
+                    replaceFragment(ProfileFragment())
                     true
                 }
                 else -> false

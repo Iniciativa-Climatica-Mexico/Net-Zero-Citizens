@@ -7,11 +7,11 @@ import okhttp3.ResponseBody
 import retrofit2.Response
 
 class AddReviewRequirement {
-        private val repository = ReviewRepository()
+    private val repository = ReviewRepository()
 
-        suspend operator fun invoke(
-                        UUID: UUID,
-                        companyId: UUID,
-                        review: ReviewBase
-        ): Response<ResponseBody>? = repository.addReview(UUID, companyId, review)
+    suspend operator fun invoke(
+            userId: UUID,
+            companyId: UUID,
+            review: ReviewBase
+    ): Response<ResponseBody>? = repository.addReview(userId, companyId, review)
 }

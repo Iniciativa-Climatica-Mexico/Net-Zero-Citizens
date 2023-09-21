@@ -13,14 +13,17 @@ class ReviewAPIClient {
     suspend fun getCompanyReviews(companyId: UUID): CompanyReviewObject? {
         api = ReviewNetworkModuleDI()
         return try {
-            api.getCompanyReviews(companyId)
+            val response = api.getCompanyReviews(companyId)
+            Log.d("response", response.toString())
+            return response
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
             null
         }
     }
 
-    suspend fun getUserReviews(UUID: UUID): UserReviewObject? {
+    suspend fun getUserReviews(userId: UUID): UserReviewObject? {
+>>>>>>>>> Temporary merge branch 2
         api = ReviewNetworkModuleDI()
         return try {
             api.getUserReviews(userId)
@@ -31,9 +34,9 @@ class ReviewAPIClient {
     }
 
     suspend fun addReview(
-            UUID: UUID,
-            companyId: UUID,
-            review: ReviewBase
+        userId: UUID,
+        companyId: UUID,
+        review: ReviewBase
     ): Response<ResponseBody>? {
         api = ReviewNetworkModuleDI()
         return try {

@@ -26,7 +26,8 @@ class ReviewFormFragment : Fragment() {
     private var rating: Float = 0.0f
     private var reviewTitle: String = ""
     private var review: String = ""
-    private var companyId: String = ""
+    private lateinit var companyId: UUID
+    private lateinit var userId: UUID
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -38,8 +39,17 @@ class ReviewFormFragment : Fragment() {
         _binding = FragmentReviewFormBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        companyId: UUID =
-        UUID.fromString(arguments?.getString("CompanyId")) ?: UUID.fromString("abcd-1234-efgh-5678")
+        if (arguments?.getString("companyId") == null) {
+            companyId = UUID.fromString("c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e")
+        } else {
+            companyId = UUID.fromString(arguments?.getString("companyId"))
+        }
+
+        if (arguments?.getString("userId") == null) {
+            userId = UUID.fromString("8de45630-2e76-4d97-98c2-9ec0d1f3a5b8")
+        } else {
+            userId = UUID.fromString(arguments?.getString("userId"))
+        }
 
         initializeRatingBar()
         initializeRatingBarListener()
@@ -158,24 +168,7 @@ class ReviewFormFragment : Fragment() {
     }
 
     private fun postReview(rating: Int) {
-        //        TODO: Cambiar userId por el del usuario logeado
-
-        if (companyId == "0") {
-            Toast.makeText(
-                            requireContext(),
-                            getString(R.string.review_submit_error),
-                            Toast.LENGTH_SHORT
-                    )
-                    .show()
-            return
-        }
-
-        val uuid: UUID =
-        UUID.fromString(arguments?.getString("UUID")) ?: UUID.fromString("8de45630-2e76-4d97-98c2-9ec0d1f3a5b8"
-)
-
         val reviewBase = ReviewBase(reviewTitle, review, rating)
-
         val res = runCatching { viewModel.addReview(userId, companyId, reviewBase) }
 
         if (res.isFailure) {

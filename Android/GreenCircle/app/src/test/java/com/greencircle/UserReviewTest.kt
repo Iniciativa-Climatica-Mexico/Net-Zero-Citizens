@@ -1,11 +1,11 @@
 package com.greencircle
 
 import com.greencircle.domain.model.UserReview
+import java.sql.Timestamp
+import java.util.UUID
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
-import java.sql.Timestamp
-import java.util.UUID
 
 /**
  * Pruebas unitarias para la la clase UserReview
@@ -24,7 +24,7 @@ class UserReviewTest {
         val timestamp = Timestamp(System.currentTimeMillis())
         val userReview = UserReview(
             reviewId = UUID(0, 1),
-            UUID = UUID(0, 1),
+            userId = UUID(0, 1),
             companyId = UUID(0, 1),
             review = "review",
             reviewTitle = "reviewTitle",
@@ -34,7 +34,7 @@ class UserReviewTest {
         )
 
         assertEquals(UUID(0, 1), userReview.reviewId)
-        assertEquals(UUID(0, 1), userReview.UUID)
+        assertEquals(UUID(0, 1), userReview.userId)
         assertEquals(UUID(0, 1), userReview.companyId)
         assertEquals("review", userReview.review)
         assertEquals("reviewTitle", userReview.reviewTitle)
@@ -52,7 +52,7 @@ class UserReviewTest {
         val timestamp = Timestamp(System.currentTimeMillis())
         val userReview1 = UserReview(
             reviewId = UUID(0, 1),
-            UUID = UUID(0, 1),
+            userId = UUID(0, 1),
             companyId = UUID(0, 1),
             review = "review",
             reviewTitle = "reviewTitle",
@@ -62,7 +62,7 @@ class UserReviewTest {
         )
         val userReview2 = UserReview(
             reviewId = UUID(0, 1),
-            UUID = UUID(0, 1),
+            userId = UUID(0, 1),
             companyId = UUID(0, 1),
             review = "review",
             reviewTitle = "reviewTitle",
@@ -78,11 +78,11 @@ class UserReviewTest {
      * Test de not equals de la clase CompanyReview
      */
     @Test
-    fun testUserReviewNotEquals(){
+    fun testUserReviewNotEquals() {
         val timestamp = Timestamp(System.currentTimeMillis())
         val userReview1 = UserReview(
             reviewId = UUID(0, 1),
-            UUID = UUID(0, 1),
+            userId = UUID(0, 1),
             companyId = UUID(0, 1),
             review = "review",
             reviewTitle = "reviewTitle",
@@ -92,7 +92,7 @@ class UserReviewTest {
         )
         val userReview2 = UserReview(
             reviewId = UUID(0, 2),
-            UUID = UUID(0, 2),
+            userId = UUID(0, 2),
             companyId = UUID(0, 2),
             review = "review2",
             reviewTitle = "reviewTitle2",
@@ -112,7 +112,7 @@ class UserReviewTest {
         val timestamp = Timestamp(System.currentTimeMillis())
         val userReview1 = UserReview(
             reviewId = UUID(0, 1),
-            UUID = UUID(0, 1),
+            userId = UUID(0, 1),
             companyId = UUID(0, 1),
             review = "review",
             reviewTitle = "reviewTitle",
@@ -122,7 +122,7 @@ class UserReviewTest {
         )
         val userReview2 = UserReview(
             reviewId = UUID(0, 1),
-            UUID = UUID(0, 1),
+            userId = UUID(0, 1),
             companyId = UUID(0, 1),
             review = "review",
             reviewTitle = "reviewTitle",

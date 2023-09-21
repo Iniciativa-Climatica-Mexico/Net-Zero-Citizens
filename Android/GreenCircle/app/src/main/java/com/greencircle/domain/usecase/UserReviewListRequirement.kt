@@ -6,6 +6,6 @@ import java.util.UUID
 
 class UserReviewListRequirement {
     private val repository = ReviewRepository()
-    suspend operator fun invoke(UUID: UUID): UserReviewObject? =
-        repository.getUserReviews(UUID)
+    suspend operator fun invoke(userId: UUID): UserReviewObject? =
+        repository.getUserReviews(userId)
 }

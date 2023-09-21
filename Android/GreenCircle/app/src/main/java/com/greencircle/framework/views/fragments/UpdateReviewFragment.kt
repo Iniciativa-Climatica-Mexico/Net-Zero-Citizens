@@ -55,7 +55,7 @@ class UpdateReviewFragment : Fragment() {
     }
 
     private fun initializeComponents() {
-        reviewId = UUID.fromString(arguments?.getString("reviewId")) ?: UUID.fromString("revw-1234-efgh-0000")
+        reviewId = UUID.fromString(arguments?.getString("reviewId")) ?: UUID.fromString("")
         rating = arguments?.getFloat("score") ?: 0.0f
         reviewTitle = arguments?.getString("title") ?: ""
         review = arguments?.getString("review") ?: ""

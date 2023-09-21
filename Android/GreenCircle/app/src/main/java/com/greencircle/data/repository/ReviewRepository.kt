@@ -15,12 +15,12 @@ class ReviewRepository {
         return api.getCompanyReviews(companyId)
     }
 
-    suspend fun getUserReviews(UUID: UUID): UserReviewObject? {
-        return api.getUserReviews(UUID)
+    suspend fun getUserReviews(userId: UUID): UserReviewObject? {
+        return api.getUserReviews(userId)
     }
 
     suspend fun addReview(
-            UUID: UUID,
+            userId: UUID,
             companyId: UUID,
             review: ReviewBase
     ): Response<ResponseBody>? {
@@ -34,14 +34,10 @@ class ReviewRepository {
     }
 
     suspend fun updateReview(reviewId: UUID, review: ReviewBase): Response<ResponseBody>? {
-        val response = api.updateReview(reviewId, review)
-        Log.d("PUT", response.toString())
-        return response
+        return api.updateReview(reviewId, review)
     }
 
     suspend fun deleteReview(reviewId: UUID): Response<ResponseBody>? {
-        val response = api.deleteReview(reviewId)
-        Log.d("DELETE", response.toString())
-        return response
+        return api.deleteReview(reviewId)
     }
 }

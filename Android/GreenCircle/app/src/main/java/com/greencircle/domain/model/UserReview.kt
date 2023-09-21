@@ -6,7 +6,7 @@ import java.util.UUID
 
 data class UserReview(
         @SerializedName("reviewId") val reviewId: UUID,
-        @SerializedName("UUID") val UUID: UUID,
+        @SerializedName("userId") val userId: UUID,
         @SerializedName("companyId") val companyId: UUID,
         @SerializedName("reviewTitle") val reviewTitle: String,
         @SerializedName("review") val review: String,
