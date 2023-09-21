@@ -160,6 +160,8 @@ export const getCompanyById = async (id: string): Promise<Company | null> => {
   const products: Product[] = []
   const images: CompanyImages[] = []
 
+  console.log(company)
+
   companyProducts?.forEach(function (product) {
     products.push(product.getDataValue('product').dataValues)
   })

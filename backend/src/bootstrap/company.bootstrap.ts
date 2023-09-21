@@ -25,7 +25,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         pdfDicCdmxUrl: 'https://www.company1.com/pdfDicCdmx.pdf',
         pdfPeeFideUrl: 'https://www.company1.com/pdfPeeFide.pdf',
         pdfGuaranteeSecurityUrl:
-          'https://example.com/company1-guarantee-security.pdf',
+          'https://www.company1.com/pdfGuaranteeSecurity.pdf',
         pdfActaConstitutivaUrl:
           'https://example.com/company1-acta-constitutiva.pdf',
         pdfIneUrl: 'https://example.com/company1-ine.pdf',
@@ -50,7 +50,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         pdfDicCdmxUrl: 'https://www.company2.com/pdfDicCdmx.pdf',
         pdfPeeFideUrl: 'https://www.company2.com/pdfPeeFide.pdf',
         pdfGuaranteeSecurityUrl:
-          'https://example.com/company2-guarantee-security.pdf',
+          'https://www.company2.com/pdfGuaranteeSecurity.pdf',
         pdfActaConstitutivaUrl:
           'https://example.com/company2-acta-constitutiva.pdf',
         pdfIneUrl: 'https://example.com/company2-ine.pdf',

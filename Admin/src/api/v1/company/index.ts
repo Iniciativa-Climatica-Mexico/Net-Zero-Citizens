@@ -1,4 +1,4 @@
-import { SERVER_BASE_URL } from '@/utils/constants'
+import { apiV1Url } from '@/utils/constants'
 import axios from 'axios'
 
 export interface Company {
@@ -32,7 +32,7 @@ export interface Company {
  */
 export const getPendingCompanies = async () => {
   try {
-    const response = await axios.get(`${SERVER_BASE_URL}/company/pending`)
+    const response = await axios.get(`${apiV1Url}/company/pending`)
     return response.data.rows
   } catch (error) {
     console.error('Error fetching pending companies:', error)
@@ -60,7 +60,7 @@ export const updateCompany = async (
 ) => {
   try {
     const response = await axios.post(
-      `${SERVER_BASE_URL}/company/pending/${companyId}`,
+      `${apiV1Url}/company/pending/${companyId}`,
       updateInfo
     )
     return response.data
