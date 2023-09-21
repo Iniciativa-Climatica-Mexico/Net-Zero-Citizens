@@ -5,8 +5,8 @@ import com.greencircle.domain.model.survey.Question
 import com.greencircle.domain.model.survey.QuestionOption
 import com.greencircle.domain.model.survey.QuestionType
 import com.greencircle.domain.model.survey.Survey
-import java.util.UUID
 import org.junit.Test
+import java.util.UUID
 
 /**
  * Pruebas unitarias para la clase Survey

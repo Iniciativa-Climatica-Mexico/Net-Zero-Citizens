@@ -3,9 +3,9 @@ package com.greencircle
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.greencircle.domain.model.survey.Answer
-import java.util.UUID
 import org.junit.Assert.assertThrows
 import org.junit.Test
+import java.util.UUID
 
 /**
  * Pruebas unitarias para la clase Answer

@@ -1,9 +1,9 @@
 package com.greencircle
 
 import com.greencircle.data.remote.models.Company
-import java.util.UUID
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import java.util.UUID
 
 /**
  * Clase de prueba para la funcionalidad relacionada con la clase [Company].
