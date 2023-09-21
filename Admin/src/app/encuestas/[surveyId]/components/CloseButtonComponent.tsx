@@ -28,7 +28,7 @@ export default function CloseButtonComponent(props: { surveyId: string }) {
     <div>
       <button
         onClick={() => setIsOpen(true)}
-        className=" bg-primary hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end"
+        className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end"
       >
         Cerrar Encuesta
       </button>
@@ -61,13 +61,13 @@ export default function CloseButtonComponent(props: { surveyId: string }) {
           <div className="flex flex-col items-center justify-center w-full gap-4 py-4 sm:flex-row">
             <button
               onClick={() => closeSurvey(props.surveyId)}
-              className=" bg-primary hover:bg-primary-900 text-white font-bold py-2 px-4 rounded"
+              className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded"
             >
               Cerrar Encuesta
             </button>
             <button
               onClick={() => setIsOpen(false)}
-              className=" bg-primary hover:bg-primary-900 text-white font-bold py-2 px-4 rounded"
+              className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded"
             >
               Cancelar
             </button>
