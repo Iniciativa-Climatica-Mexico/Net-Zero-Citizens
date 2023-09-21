@@ -8,7 +8,6 @@ chai.use(chaiExclude)
 const { expect } = chai
 const testDataId = [
   {
-  {
     companyId: 'c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
     userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
     name: 'SUNPOWER',
@@ -25,17 +24,15 @@ const testDataId = [
     score: 4.3,
     profilePicture:
       'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Sunpower_logo.svg/2560px-Sunpower_logo.svg.png',
-    profilePicture:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Sunpower_logo.svg/2560px-Sunpower_logo.svg.png',
     pdfCurriculumUrl: 'https://www.company1.com/pdfCurriculum.pdf',
     pdfDicCdmxUrl: 'https://www.company1.com/pdfDicCdmx.pdf',
     pdfPeeFideUrl: 'https://www.company1.com/pdfPeeFide.pdf',
     pdfGuaranteeSecurityUrl:
-      'https://example.com/company1-guarantee-security.pdf',
+      'https://www.company1.com/pdfGuaranteeSecurity.pdf',
     pdfActaConstitutivaUrl:
       'https://example.com/company1-acta-constitutiva.pdf',
     pdfIneUrl: 'https://example.com/company1-ine.pdf',
-    status: 'pending_approval',
+    status: 'approved',
   },
   {
     companyId: 'a2b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
@@ -56,11 +53,11 @@ const testDataId = [
     pdfDicCdmxUrl: 'https://www.company2.com/pdfDicCdmx.pdf',
     pdfPeeFideUrl: 'https://www.company2.com/pdfPeeFide.pdf',
     pdfGuaranteeSecurityUrl:
-      'https://example.com/company2-guarantee-security.pdf',
+      'https://www.company2.com/pdfGuaranteeSecurity.pdf',
     pdfActaConstitutivaUrl:
       'https://example.com/company2-acta-constitutiva.pdf',
     pdfIneUrl: 'https://example.com/company2-ine.pdf',
-    status: 'pending_approval',
+    status: 'rejected',
   },
   {
     companyId: 'a2c0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
@@ -112,7 +109,6 @@ describe('Company Service', () => {
       .excludingEvery(attributesToExclude)
       .to.deep.equal(testDataId[0])
   })
-
 
   it('should return null if company does not exist', async () => {
     const response = await getCompanyById(
