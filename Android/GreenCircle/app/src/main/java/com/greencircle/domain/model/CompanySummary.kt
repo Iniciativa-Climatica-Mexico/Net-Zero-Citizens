@@ -1,4 +1,6 @@
 package com.greencircle.domain.model
+
+import com.google.gson.annotations.SerializedName
 import java.util.UUID
 
 /**
@@ -15,6 +17,6 @@ data class CompanySummary(
     val name: String,
     val city: String,
     val state: String,
-    val rating: Float,
+    @SerializedName("score") val rating: Float,
     val profilePicture: String? = null
 )
