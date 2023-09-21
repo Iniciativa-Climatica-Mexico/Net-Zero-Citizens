@@ -7,13 +7,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.greencircle.R
 import com.greencircle.databinding.ActivityMainBinding
 import com.greencircle.databinding.TopBarBinding
+import com.greencircle.framework.views.fragments.CatalogueFragment
 import com.greencircle.framework.views.fragments.HomeFragment
-import com.greencircle.framework.views.fragments.ProfileFragment
 
 /**
  * Actividad principal que muestra la interfaz de usuario principal de la aplicación.
  *
- * Esta actividad contiene un [BottomNavigationView] que permite al usuario navegar entre dos fragmentos: [HomeFragment] y [ProfileFragment].
+ * Esta actividad contiene un [BottomNavigationView] que permite al usuario navegar
+ * entre dos fragmentos: [HomeFragment] y [ProfileFragment].
+ * Esta clase se utiliza para crear la actividad principal de la aplicación
  */
 class MainActivity : AppCompatActivity() {
 
@@ -25,6 +27,7 @@ class MainActivity : AppCompatActivity() {
      * Método llamado cuando se crea la actividad.
      *
      * @param savedInstanceState El estado guardado de la actividad.
+     * Esta función se utiliza para crear la actividad principal de la aplicación
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,8 +50,8 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.proveedores -> {
-                    replaceFragment(ProfileFragment())
-                    topBarBinding.title.text = "Proveedores"
+                    replaceFragment(CatalogueFragment())
+                    topBarBinding.title.text = "Catálogo de Proveedores"
                     true
                 }
 

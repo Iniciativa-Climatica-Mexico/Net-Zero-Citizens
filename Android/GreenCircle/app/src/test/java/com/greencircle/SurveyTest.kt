@@ -57,13 +57,13 @@ class SurveyTest {
                     questionID,
                     listOf(
                         QuestionOption(testOption1ID, "testOption1"),
-                        QuestionOption(testOption2ID, "testOption2"),
+                        QuestionOption(testOption2ID, "testOption2")
                     ),
                     "testQuestionText",
                     QuestionType.multiple_choice,
-                    false,
-                ),
-            ),
+                    false
+                )
+            )
         )
     }
 }
