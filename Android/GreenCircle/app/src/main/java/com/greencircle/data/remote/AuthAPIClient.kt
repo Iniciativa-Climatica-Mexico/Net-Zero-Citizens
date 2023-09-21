@@ -14,6 +14,8 @@ class AuthAPIClient {
     suspend fun googleLogin(token: String): AuthResponse? {
         api = AuthNetworkModel()
         return try {
+            Log.d("AuthAPIClient", "ENTRAAAAAAA")
+            Log.d("AuthAPIClient", "Token: $token")
             val body = AuthAPIService.GoogleLoginRequest(token)
             val response = api.googleLogin(body)
             Log.d("AuthAPIClient", "Response: $response")

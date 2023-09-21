@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
  */
 
 class CatalogueViewModel() : ViewModel() {
-    val catalogueLiveData = MutableLiveData<ArrayList<CompanySummary>>()
+    val catalogueLiveData = MutableLiveData<ArrayList<CompanySummary>?>()
     private val catalogueRequirement = CatalogueRequirement()
 
     /**

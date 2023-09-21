@@ -1,5 +1,10 @@
 import { Table, Column, Model, DataType } from 'sequelize-typescript'
 
+/**
+ * @brief
+ * Interface con los atributos de la tabla de ecoinfo
+ */
+
 @Table({ tableName: 'ECOINFO' })
 export default class Ecoinfo extends Model {
   @Column({

@@ -12,6 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <!-- Customize your theme here. -->
+        <item name="android:textColorLink">@color/primary_900</item>
     </style>
 
     <style name="Theme.GreenCircle.NoActionBar">

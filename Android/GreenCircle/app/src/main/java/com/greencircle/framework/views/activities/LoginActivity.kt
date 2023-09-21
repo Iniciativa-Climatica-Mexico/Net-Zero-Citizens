@@ -51,6 +51,7 @@ class LoginActivity : AppCompatActivity() {
             if (result.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = result.data
                 Log.d("GoogleSignIn", "data: $data")
+                Log.d("GoogleSignIn", "result: $result")
                 if (data != null && result.resultCode == Activity.RESULT_OK) {
                     val task = GoogleSignIn.getSignedInAccountFromIntent(data)
                     try {
@@ -67,6 +68,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             } else if (result.resultCode == Activity.RESULT_CANCELED) {
                 // Handle the case where the user canceled the operation
+                Log.d("GoogleSignIn", "result: $result")
             }
         }
 
