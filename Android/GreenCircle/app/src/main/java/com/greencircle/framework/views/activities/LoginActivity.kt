@@ -15,7 +15,6 @@ import com.google.android.gms.common.api.ApiException
 import com.greencircle.R
 import com.greencircle.databinding.ActivityLoginBinding
 import com.greencircle.framework.viewmodel.LoginViewModel
-import com.greencircle.framework.views.MainActivity
 import com.greencircle.utils.AuthUtils
 
 /**
@@ -122,7 +121,7 @@ class LoginActivity : AppCompatActivity() {
 
     // Métodos de navegación
     private fun navigateToHome() {
-        var intent: Intent = Intent(this, MainActivity::class.java)
+        var intent: Intent = Intent(this, SurveyActivity::class.java)
         startActivity(intent)
         finish()
     }

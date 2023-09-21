@@ -2,13 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/ecoInfo"
-        android:icon="@drawable/leaf_icon"
-        android:title="@string/eco_info" />
-    <item
         android:id="@+id/proveedores"
         android:icon="@drawable/proveedores_icon"
         android:title="@string/proveedores" />
+
+    <item
+        android:id="@+id/ecoInfo"
+        android:icon="@drawable/leaf_icon"
+        android:title="@string/eco_info" />
 
     <item
         android:id="@+id/mapa"

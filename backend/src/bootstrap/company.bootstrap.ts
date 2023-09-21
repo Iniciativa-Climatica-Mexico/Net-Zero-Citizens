@@ -7,7 +7,7 @@ export default class CompanyBootstrap extends Bootstrapper {
       {
         companyId: 'c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
         userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
-        name: 'Company 1',
+        name: 'Mundo Renovable',
         description: 'Company 1 description',
         email: 'company@outlook.com',
         phone: '1234567890',
@@ -33,7 +33,7 @@ export default class CompanyBootstrap extends Bootstrapper {
       {
         companyId: 'a2b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
         userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
-        name: 'Company 2',
+        name: 'Exel Solar',
         description: 'Company 2 description',
         email: 'company2@outlook.com',
         phone: '0123456789',
@@ -45,7 +45,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         zipCode: 76152,
         latitude: 20.041296,
         longitude: -120.206199,
-        profilePicture: 'https://www.company2.com/profilePicture.png',
+        profilePicture: 'https://images.unsplash.com/photo-1613665813446-82a78c468a1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1758&q=80',
         pdfCurriculumUrl: 'https://www.company2.com/pdfCurriculum.pdf',
         pdfDicCdmxUrl: 'https://www.company2.com/pdfDicCdmx.pdf',
         pdfPeeFideUrl: 'https://www.company2.com/pdfPeeFide.pdf',
@@ -59,7 +59,7 @@ export default class CompanyBootstrap extends Bootstrapper {
       {
         companyId: 'a2c0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
         userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b7',
-        name: 'Company 3',
+        name: 'Enium Solar',
         description: 'Company 3 description',
         email: 'company3@outlook.com',
         phone: '0123456789',

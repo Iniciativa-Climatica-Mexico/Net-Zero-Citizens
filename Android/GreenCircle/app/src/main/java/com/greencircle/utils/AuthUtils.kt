@@ -12,6 +12,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.greencircle.R
+import com.greencircle.framework.views.MainActivity
 
 class AuthUtils {
     private fun googleLogin(
@@ -44,8 +45,7 @@ class AuthUtils {
         val acct: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(activity)
         Log.d("GoogleSignIn", "acct: $acct")
         if (acct != null) {
-            // TODO Cambiar por navigateToForm()
-            googleSignOut(mGoogleSignInClient)
+            navigateToMainActivity(activity, getDataFromGoogleAccount(acct))
         }
 
         googleButton.setOnClickListener {
@@ -68,5 +68,12 @@ class AuthUtils {
         arguments.putString("idToken", account?.idToken)
 
         return arguments
+    }
+
+    fun navigateToMainActivity(activity: Activity, arguments: Bundle) {
+        val intent = Intent(activity, MainActivity::class.java)
+        intent.putExtras(arguments)
+        activity.startActivity(intent)
+        activity.finish()
     }
 }
