@@ -25,8 +25,6 @@ export type CompanyType = {
   state: string
   zipCode: number
   userId: string
-  latitude?: number | null
-  longitude?: number | null
   profilePicture?: string | null
   pdfCurriculumUrl: string
   pdfDicCdmxUrl?: string | null
@@ -70,6 +68,58 @@ export const getAllCompanies = async <T>(
 
 /**
  * @brief
+ * Función del servicio que devuelve todos los proveedores pendientes por aprobar
+ * @params Los parametros de paginación
+ * @returns Una promesa con los proveedores y la información de paginación
+ */
+
+export const getPendingCompanies = async <T>(
+  params: PaginationParams<T>
+): Promise<PaginatedQuery<Company>> => {
+  return await Company.findAndCountAll({
+    limit: params.pageSize,
+    offset: params.start,
+    where: {
+      status: 'pending_approval',
+    },
+  })
+}
+
+export type UpdateCompanyInfoBody = {
+  name: string
+  description: string
+  street: string
+  streetNumber: string
+  city: string
+  state: string
+  zipCode: number
+  profilePicture: string
+  status: 'approved' | 'pending_approval' | 'rejected'
+  phone: string
+  webPage: string
+}
+
+/**
+ * @brief
+ * Actualiza en la base de datos el proveedor con los datos pasados en los parametros
+ * @param companyId
+ * @param newCompanyInfo
+ * @returns Una promesa de la actualización del proveedor en la base de datos.
+ */
+export const updateCompanyInfo = async (
+  companyId: string,
+  newCompanyInfo: UpdateCompanyInfoBody
+): Promise<Company | null> => {
+  const companyInfo = await Company.findByPk(companyId)
+  if (companyInfo) {
+    return companyInfo.update(newCompanyInfo)
+  } else {
+    return null
+  }
+}
+
+/**
+ * @brief
  * Función del servicio para crear una nueva compañia
  * @param company La compañia a crear
  * @returns Una promesa con los proveedores y la información de paginación
@@ -109,6 +159,8 @@ export const getCompanyById = async (id: string): Promise<Company | null> => {
   const comment = companyScore?.[0].getDataValue('review')
   const products: Product[] = []
   const images: CompanyImages[] = []
+
+  console.log(company)
 
   companyProducts?.forEach(function (product) {
     products.push(product.getDataValue('product').dataValues)

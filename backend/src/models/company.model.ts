@@ -109,20 +109,6 @@ export default class Company extends Model {
   zipCode: number
 
   @Column({
-    type: DataType.DOUBLE,
-    allowNull: true,
-    field: 'LATITUDE',
-  })
-  latitude: number | null
-
-  @Column({
-    type: DataType.DOUBLE,
-    allowNull: true,
-    field: 'LONGITUDE',
-  })
-  longitude: number | null
-
-  @Column({
     type: DataType.STRING(255),
     allowNull: true,
     field: 'PROFILE_PICTURE',
