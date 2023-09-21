@@ -5,10 +5,10 @@ import com.google.gson.JsonSyntaxException
 import com.greencircle.domain.model.survey.Question
 import com.greencircle.domain.model.survey.QuestionOption
 import com.greencircle.domain.model.survey.QuestionType
+import java.util.UUID
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertThrows
 import org.junit.Test
-import java.util.UUID
 
 /**
  * Pruebas unitarias para la clase Question

@@ -4,10 +4,10 @@ import com.greencircle.domain.model.Companies
 import com.greencircle.domain.model.CompanyProducts
 import com.greencircle.domain.model.Product
 import com.greencircle.domain.model.Status
-import org.junit.Assert.assertEquals
-import org.junit.Test
 import java.sql.Timestamp
 import java.util.UUID
+import org.junit.Assert.assertEquals
+import org.junit.Test
 
 /**
  * Pruebas unitarias para la clase CompanyProducts

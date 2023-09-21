@@ -3,13 +3,13 @@ package com.greencircle
 import com.greencircle.data.remote.EcoInfoAPI
 import com.greencircle.data.repository.EcoInfoRepository
 import com.greencircle.domain.model.EcoInfo
+import java.sql.Time
+import java.util.UUID
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
-import java.sql.Time
-import java.util.UUID
 
 class EcoInfoTest {
     @Test
