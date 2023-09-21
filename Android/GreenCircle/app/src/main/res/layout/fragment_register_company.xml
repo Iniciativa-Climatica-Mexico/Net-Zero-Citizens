@@ -20,7 +20,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginBottom="20dp"
-            android:src="@drawable/leaf_icon" />
+            android:src="@drawable/icon_leaf" />
 
         <TextView
             android:layout_width="wrap_content"

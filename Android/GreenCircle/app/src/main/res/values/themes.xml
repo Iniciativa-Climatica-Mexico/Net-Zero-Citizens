@@ -12,11 +12,19 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <!-- Customize your theme here. -->
+        <item name="android:textColorLink">@color/primary_900</item>
     </style>
 
     <style name="Theme.GreenCircle.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.GreenCircle.CustomRadioButtonStyle">
+        <item name="android:background">@drawable/custom_radio_selector</item>
+        <item name="android:textColor">@drawable/custom_radio_text_selector</item>
+        <item name="android:button">@android:color/transparent</item>
+        <item name="android:textAlignment">center</item>
     </style>
 
 </resources>
