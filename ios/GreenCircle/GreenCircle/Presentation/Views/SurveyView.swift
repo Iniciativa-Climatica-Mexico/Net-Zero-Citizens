@@ -12,12 +12,6 @@ struct SurveyView: View {
   @State private var showSuccessAlert = false
   @State private var showErrorAlert = false
   
-  init() {
-    for var question in vm.survey.questions {
-      question.answer = Answer(scaleValue: nil, answerText: nil, questionId: question.questionId)
-    }
-  }
-  
   var body: some View {
     NavigationView {
       ScrollView {
@@ -26,27 +20,14 @@ struct SurveyView: View {
             .font(.subheadline)
             .padding(.bottom)
           
-          ForEach($vm.survey.questions, id: \.self) { $question in
-            switch question.questionType {
-            case .open:
-              OpenQuestion(question: $question)
-                .padding(.bottom, 15)
-            case .scale:
-              ScaleQuestion(question: $question)
-                .padding(.bottom, 15)
-            case .multiple_choice:
-              MultipleChoice(question: $question)
-                .padding(.bottom, 15)
-            }
+          ForEach(Array(vm.survey.questions.enumerated()), id: \.offset) { index, question in
+            QuestionView(question: question, answer: $vm.answers[index])
           }
         }
         .padding([.leading, .trailing], 22)
         Button("Enviar", action: {
           Task {
-            let answers = vm.survey.questions.map({ question in
-              return question.answer ?? Answer()
-            })
-            let submissionResult = await vm.submitAnswers(answers: answers)
+            let submissionResult = await vm.submitAnswers()
             
             if(submissionResult) {
               showSuccessAlert = true
@@ -54,15 +35,14 @@ struct SurveyView: View {
             else {
               showErrorAlert = true
             }
+             vm.answers.forEach { answer in
+              if answer.scaleValue != nil {
+                print(answer.scaleValue)
+              } else {
+                print(answer.answerText)
+              }
+            }
           }
-          print(vm.survey.questions.map({ (question) -> String? in
-            if(question.answer?.answerText != nil){
-              return question.answer?.answerText
-            }
-            else {
-              return question.answer?.scaleValue?.description
-            }
-          }))
         })
         .foregroundColor(.white)
         .frame(width: 178, height: 40)
@@ -82,6 +62,25 @@ struct SurveyView: View {
     }
     .alert(isPresented: $showErrorAlert) {
       Alert(title: Text("Error"), message: Text("Error enviando tu encuesta, intenta de nuevo más tarde"), dismissButton: .default(Text("OK")))
+    }
+  }
+}
+
+struct QuestionView: View {
+  var question: SurveyQuestion
+  @Binding var answer: Answer
+  
+  var body: some View {
+    switch question.questionType {
+    case .open:
+      OpenQuestion(question: question, answer: $answer)
+        .padding(.bottom, 15)
+    case .scale:
+      ScaleQuestion(question: question, answer: $answer)
+        .padding(.bottom, 15)
+    case .multiple_choice:
+      MultipleChoice(question: question, answer: $answer)
+        .padding(.bottom, 15)
     }
   }
 }

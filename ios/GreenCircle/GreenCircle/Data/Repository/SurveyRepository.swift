@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 class SurveyApi {
-  static let base = "http://localhost:5050/api/v1"
+  static let base = "http://localhost:4000/api/v1"
   struct Routes {
     static let survey = "/survey/pending/:userId"
     static let submitSurvey = "/survey/:surveyId/answer/:userId"

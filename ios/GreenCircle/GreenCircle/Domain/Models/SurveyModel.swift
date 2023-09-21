@@ -24,7 +24,6 @@ struct SurveyQuestion: Decodable, Identifiable, Hashable {
   let questionText: String
   let questionType: QuestionType
   let isRequired: Bool
-  var answer: Answer?
   
   var id: String {
     return questionId
@@ -49,9 +48,6 @@ struct QuestionOption: Decodable, Identifiable, Hashable {
 struct Answer: Decodable, Hashable, Encodable {
   var scaleValue: Int?
   var answerText: String?
-  var questionId: String?
+  var questionId: String
 }
 
-struct SurveyAnswerRequest: Encodable {
-  let answers: [Answer]
-}

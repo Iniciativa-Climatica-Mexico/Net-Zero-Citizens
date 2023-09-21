@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct MultipleChoice: View {
-  @Binding var question: SurveyQuestion
+  var question: SurveyQuestion
+  @Binding var answer: Answer 
   @State private var isSelected: Int = -1
   
   var body: some View {
@@ -32,6 +33,7 @@ struct MultipleChoice: View {
       ForEach(0..<question.questionOptions.count, id: \.self) { answer in
         Button(action: {
           self.isSelected = answer
+          self.answer.answerText = question.questionOptions[answer].textOption
         }) {
           Text(question.questionOptions[answer].textOption)
             .frame(maxWidth: .infinity)

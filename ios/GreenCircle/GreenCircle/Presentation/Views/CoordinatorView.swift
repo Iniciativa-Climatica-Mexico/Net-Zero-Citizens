@@ -49,7 +49,7 @@ struct CoordinatorView: View {
         CompanyRegisterFormView(goPending: goPending)
         
       case .mainMenuView:
-        MainMenuView()
+        TabBarView()
         
       case .pendingCompany:
         PendingCompanyView()
