@@ -122,8 +122,7 @@ class NetworkAPIService {
     switch response.result {
     case .success(let data):
       do {
-        return
-          try NetworkAPIService
+        return try NetworkAPIService
           .decoder
           .decode(SurveyModel.self, from: data)
       } catch {

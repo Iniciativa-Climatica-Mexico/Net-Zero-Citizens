@@ -21,7 +21,8 @@ import com.greencircle.utils.AuthUtils
 /**
  * Actividad principal para la autenticación y registro de usuarios.
  *
- * Esta actividad permite a los usuarios autenticarse con Google, registrarse como empresas o usuarios individuales, y navegar a la pantalla principal de la aplicación.
+ * Esta actividad permite a los usuarios autenticarse con Google, registrarse como
+ * empresas o usuarios individuales, y navegar a la pantalla principal de la aplicación.
  */
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -60,7 +61,9 @@ class LoginActivity : AppCompatActivity() {
                         viewModel.googleLogin(account.idToken!!)
                     } catch (e: ApiException) {
                         Toast.makeText(
-                            applicationContext, "Something went wrong", Toast.LENGTH_SHORT
+                            applicationContext,
+                            "Something went wrong",
+                            Toast.LENGTH_SHORT
                         ).show()
                     }
                 }
