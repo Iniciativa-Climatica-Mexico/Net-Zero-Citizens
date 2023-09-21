@@ -344,6 +344,8 @@ jobs:
           JWT_AUTH: ${{ secrets.JWT_AUTH }}
           JWT_REFRESH: ${{ secrets.JWT_REFRESH }}
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          ECO_INFO_PAGE_ID: ${{ secrets.ECO_INFO_PAGE_ID }}
+          ECO_INFO_TOKEN: ${{ secrets.ECO_INFO_TOKEN }}
 
       - name: Upload Mocha & Chai Test Report
         if: always()

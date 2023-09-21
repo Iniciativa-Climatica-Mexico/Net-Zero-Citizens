@@ -23,6 +23,7 @@ if (env === 'production') {
 } else {
   console.log('Using development database (In memory)')
   db = new Sequelize('sqlite::memory:', {
+    logging: process.env.DB_LOGGING === 'true' ? console.log : false,
     define: {
       freezeTableName: true,
     },
