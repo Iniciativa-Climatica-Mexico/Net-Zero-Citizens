@@ -13,6 +13,8 @@
 
 # XCode
 /**/*.plist
+/**/project.pbxproj
+/**/Package.resolved
 
 ### Node JS ###
 # dependencies
@@ -189,3 +191,4 @@ temp/
 *.crt
 *.pem
 *.p12
+ios/GreenCircle/GreenCircle/Info.plist
