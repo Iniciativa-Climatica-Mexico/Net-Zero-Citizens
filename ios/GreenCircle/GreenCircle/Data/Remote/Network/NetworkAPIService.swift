@@ -141,8 +141,21 @@ class NetworkAPIService {
   ///   - answers: Las respuestas de la encuesta
   /// - Returns: Bool
   func submitAnswers(url: URL, answers: [Answer]) async -> Bool {
-    let body: Parameters = ["answers": answers]
-    let requestTask = AF.request(url, method: .post, parameters: body).validate()
+    
+    var processAns = [[String: Any]]()
+    
+    answers.forEach{
+      answer in
+      if let answerText = answer.answerText {
+        processAns.append(["questionId": answer.questionId, "answerText": answerText])
+      }
+      if let scaleValue = answer.scaleValue {
+        processAns.append(["questionId": answer.questionId, "scaleValue": scaleValue])
+      }
+    }
+    
+    let body: Parameters = ["answers":  processAns]
+    let requestTask = AF.request(url, method: .post, parameters: body, encoding: JSONEncoding()).validate()
     let response = await requestTask.serializingData().response
     
     switch response.result {
