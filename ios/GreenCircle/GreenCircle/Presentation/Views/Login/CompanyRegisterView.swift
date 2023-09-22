@@ -11,7 +11,7 @@ import GoogleSignInSwift
 struct CompanyRegisterView: View {
   var goLogin: () -> Void
   var goForm: () -> Void
-  var goSurvey: () -> Void
+  var goMainMenu: () -> Void
 
   @StateObject var viewModel = LoginViewModel()
   @EnvironmentObject var user: UserData
@@ -36,7 +36,7 @@ struct CompanyRegisterView: View {
               if newUser {
                 goForm()
               } else {
-                goSurvey()
+                goMainMenu()
               }
             }
           }
@@ -66,6 +66,6 @@ struct CompanyRegisterView: View {
 
 struct CompanyRegisterView_Previews: PreviewProvider {
     static var previews: some View {
-      CompanyRegisterView(goLogin: {}, goForm: {}, goSurvey: {})
+      CompanyRegisterView(goLogin: {}, goForm: {}, goMainMenu: {})
     }
 }

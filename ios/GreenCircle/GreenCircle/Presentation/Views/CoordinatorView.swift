@@ -19,7 +19,6 @@ struct CoordinatorView: View {
     case mainMenuView
     case pendingCompany
     case survey
-    // case companyRegister
   }
   
   @State var routes: Routes<Screens> = [.root(.login)]
@@ -30,21 +29,21 @@ struct CoordinatorView: View {
       case .login:
         LoginView(goUserRegister: goUserRegister,
                   goForm: goUserForm,
-                  goSurvey: goSurvey,
+                  goMainMenu: goMainMenu,
                   goCompanyRegister: goCompanyRegister)
         
       case .userRegister:
         UserRegisterView(goLogin: goLogin,
                          goForm: goUserForm,
-                         goSurvey: goSurvey)
+                         goMainMenu: goMainMenu)
         
       case .userRegisterForm:
-        UserRegisterFormView(goSurvey: goSurvey)
+        UserRegisterFormView(goMainMenu: goMainMenu)
         
       case .companyRegister:
         CompanyRegisterView(goLogin: goLogin,
                             goForm: goCompanyForm,
-                            goSurvey: goSurvey)
+                            goMainMenu: goMainMenu)
         
       case .companyRegisterForm:
         CompanyRegisterFormView(goPending: goPending)

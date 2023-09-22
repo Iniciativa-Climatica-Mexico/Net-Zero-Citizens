@@ -17,7 +17,6 @@ struct GreenCircleApp: App {
       ZStack {
         if isActive {
           CoordinatorView()
-          SurveyView()
             .environmentObject(UserData())
             .onOpenURL { url in
               GIDSignIn.sharedInstance.handle(url)

@@ -148,7 +148,7 @@ struct ContactCompanyComponentView: View {
       VStack(alignment: .leading, spacing: 6) {
         Text("Página web").font(.system(size: 13))
           .foregroundColor(Color("BlackCustom")).contrast(12.6)
-        Text(modelCompany.contentCompany.webPage ?? "")
+        Text(modelCompany.contentCompany.webPage)
           .font(.system(size: 10))
           .foregroundColor(Color("GreenCustom"))
       }

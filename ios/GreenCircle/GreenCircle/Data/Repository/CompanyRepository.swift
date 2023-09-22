@@ -55,18 +55,9 @@ class CompanyRepository: CompanyRepositoryProtocol {
                    authToken: authToken, company: company)
   }
   
-  /*
-  /// Función que llama al servicio de conexión con la API para regresar  todos las
-  /// compañías
-  /// - Parameters:
-  ///   - authToken: token de autenticación
-  ///   - company: el objeto con la información de la compañía
-  func fetchAllCompanies() async {
-    await service
-      .fetchAllCompanies(url:
-                          URL(
-                            string: "\(CompanyAPI.base)")!)
+  func fetchAllCompanies(companyId: UUID) async -> Company? {
+    return await service
+      .fetchCompanyById(url: URL(string: "\(CompanyAPI.base)\(CompanyAPI.Routes.company)")!)
   }
-  */
   
 }

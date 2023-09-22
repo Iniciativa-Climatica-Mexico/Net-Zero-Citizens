@@ -12,15 +12,12 @@ protocol FetchCompanyInfoUseCase {
   func fetchCompanyById(id: UUID) async -> Company?
 }
 
-/// Inicialización de clase de requerimientos de modelo de compañía
-/// No como se hará fetch de los datos, pero si definir los casos de uso
-/// para hacerlo
 class FetchCompanyInfoUseCaseImpl: FetchCompanyInfoUseCase {
-  /// Inicialización de repositorio para poder hacer el fetch de datos de compañía
+
   let companyDataRepository: CompanyRepository
-  /// Creación de Singleton
+
   static let shared = FetchCompanyInfoUseCaseImpl()
-  /// Constructor con recibimiento o por default
+
   init(companyDataRepository: CompanyRepository = CompanyRepository.shared) {
     self.companyDataRepository = companyDataRepository
   }
@@ -29,7 +26,7 @@ class FetchCompanyInfoUseCaseImpl: FetchCompanyInfoUseCase {
   ///   - Returns: Modelo de compañía
   func fetchCompanyById(id: UUID) async -> Company? {
     if var company = await companyDataRepository.fetchCompanyById(companyId: id) {
-      if company.webPage != nil {
+      if !company.webPage.isEmpty {
         company.webPage = "No contamos con Página Web"
       }
       if let profilePicture = company.profilePicture, profilePicture.isEmpty {

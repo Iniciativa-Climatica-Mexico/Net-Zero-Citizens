@@ -11,7 +11,7 @@ import SwiftUI
 struct EcoInfoView: View {
   @State var isPressedSeeMore: [Int: Bool] = [:]
   @StateObject var ecoInfoViewModel = EcoInfoViewModel()
-
+  
   var body: some View {
     NavigationStack {
       ScrollView {
@@ -24,7 +24,7 @@ struct EcoInfoView: View {
           }.padding(EdgeInsets(top: 17, leading: 15, bottom: 7, trailing: 0))
         }
         VStack {
-          ForEach(ecoInfoViewModel.ecoInfoArray, id: \.ecoinfoId) { ecoInfo in
+          ForEach(ecoInfoViewModel.ecoInfoArray, id: \.self) { ecoInfo in
             EcoInfoCard(ecoInfo: ecoInfo)
           }
         }.padding(.top, 8)
@@ -41,7 +41,7 @@ struct EcoInfoView: View {
 struct EcoInfoCard: View {
   let ecoInfo: EcoInfo
   var body: some View {
-    ZStack {
+    VStack {
       VStack {
         AsyncImage(url: URL(string: ecoInfo.coverImage ?? "")) { image in
           image
@@ -56,18 +56,22 @@ struct EcoInfoCard: View {
           VStack(alignment: .leading) {
             let ecoInfoText = String(ecoInfo.description ?? "")
               .replacingOccurrences(of: "\n", with: " ")
-              Text("\(ecoInfoText) ")
-                .font(.system(size: 12)).foregroundColor(Color("BlackCustom"))
-                .multilineTextAlignment(.leading)
+            Text("\(ecoInfoText) ")
+              .font(.system(size: 12)).foregroundColor(Color("BlackCustom"))
+              .multilineTextAlignment(.leading)
+            
+            Button(action: {
+              if let url = URL(string: ecoInfo.postLink) {
+                UIApplication.shared.open(url)
+              }
+            }) {
               Text("Ver más...")
-              .font(.system(size: 12))
-              .foregroundColor(Color("BlueCustom"))
-              .padding(.top)
-              .onTapGesture {
-                if let url = URL(string: ecoInfo.postLink) {
-                  UIApplication.shared.open(url)
-                }
+                .font(.system(size: 12))
+                .foregroundColor(Color("BlueCustom"))
+                .padding(8)
             }.frame(maxWidth: .infinity, alignment: .trailing)
+              
+            
           }.padding()
         }
       }

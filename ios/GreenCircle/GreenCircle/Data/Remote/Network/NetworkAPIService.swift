@@ -214,12 +214,7 @@ class NetworkAPIService {
     }
   }
   
-  /*
-  /// Obtener compañías
-  ///  - Parameters:
-  ///     - url: Backend url para obtener datos
-  ///  - Returns: Modelo de compañía
-  func fetchAllCompanies(url: URL) async -> PaginatedQuery<Company>? {
+  func fetchAllCompanies(url: URL) async -> Company? {
     let taskRequest = AF.request(url, method: .get).validate()
     let response = await taskRequest.serializingData().response
     switch response.result {
@@ -238,6 +233,5 @@ class NetworkAPIService {
       return nil
     }
   }
-   */
   
 }

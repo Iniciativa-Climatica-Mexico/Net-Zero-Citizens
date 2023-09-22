@@ -9,12 +9,12 @@ import SwiftUI
 
 struct SurveyView: View {
   @StateObject var vm = SurveyViewModel()
-  @State private var showSuccessAlert = false
-  @State private var showErrorAlert = false
+  @State private var showAlert = false
+  @State private var submissionResult: Bool = false
+  @State private var requiredQuestion: Bool = false
   
   var body: some View {
     NavigationView {
-      //NavigationLink("LocalizedStringKey", destination: TabBarView())
       ScrollView {
         VStack(alignment: .leading) {
           Text(vm.survey.title)
@@ -28,17 +28,10 @@ struct SurveyView: View {
         .padding([.leading, .trailing], 22)
         Button("Enviar", action: {
           Task {
-            let submissionResult = await vm.submitAnswers()
-            print("submissionResult: ", submissionResult)
+            print(vm.answerRequired())
+            submissionResult = await vm.submitAnswers()
+            showAlert = true
             
-            if submissionResult == true {
-              showSuccessAlert = true
-              print("La alerta de éxito se está mostrando")
-            }
-            else {
-              showErrorAlert = true
-              print("La alerta de error se está mostrando")
-            }
           }
         })
         .foregroundColor(.white)
@@ -55,11 +48,12 @@ struct SurveyView: View {
         await vm.getPendingSurvey()
       }
     }
-    .alert(isPresented: $showSuccessAlert) {
-      Alert(title: Text("Éxito"), message: Text("Tu encuesta fue enviada con éxito"), dismissButton: .default(Text("OK")))
-    }
-    .alert(isPresented: $showErrorAlert) {
-      Alert(title: Text("Error"), message: Text("Error enviando tu encuesta, intenta de nuevo más tarde"), dismissButton: .default(Text("OK")))
+    .alert(isPresented: $showAlert) {
+      if (submissionResult == true) {
+        return Alert(title: Text("Éxito"), message: Text("Tu encuesta fue enviada con éxito"), dismissButton: .default(Text("OK")))
+      } else {
+        return Alert(title: Text("Error"), message: Text("Error enviando tu encuesta, intenta de nuevo más tarde"), dismissButton: .default(Text("OK")))
+      }
     }
   }
 }
@@ -82,3 +76,5 @@ struct QuestionView: View {
     }
   }
 }
+
+

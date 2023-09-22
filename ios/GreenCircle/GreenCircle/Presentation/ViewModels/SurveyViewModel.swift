@@ -34,5 +34,15 @@ class SurveyViewModel: ObservableObject {
   func submitAnswers() async -> Bool {
     return await surveyUseCase.submitAnswers(surveyId: self.survey.surveyId, answers: self.answers)
   }
+
+  @MainActor
+  func answerRequired() -> Bool {
+    for (question, answer) in zip(survey.questions, answers) {
+      
+    }
+    return self.answers.contains(where: { answer in
+      answer.scaleValue == nil && answer.answerText == nil
+    })
+  }
   
 }
