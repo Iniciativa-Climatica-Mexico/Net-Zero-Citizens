@@ -25,9 +25,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { updateCompany, UpdateCompanyInfoBody } from '@/api/v1/company'
-import { useToast } from './ui/use-toast'
+import { toast } from './ui/use-toast'
 import { Toaster } from './ui/toaster'
-//import { recoverTokens } from '@/utils/authUtils'
 
 interface cellActionProps {
   setIsModalOpen: (value: boolean) => void
@@ -42,8 +41,6 @@ export const CellAction = ({
   fetchPending,
   company,
 }: cellActionProps) => {
-  const { toast } = useToast()
-  //const tokens = recoverTokens()
   /**
    * @brief Function that allows admin to accept a specific company
    * @param company
@@ -66,13 +63,15 @@ export const CellAction = ({
         webPage: company.webPage,
       }
 
+      // Call the updateCompany function with the updated information
       await updateCompany(companyId, updatedCompanyInfo)
     } catch (error) {
-      console.error('Error accepting company:', error)
+      console.error('Error approving company:', error)
     } finally {
       toast({
         description: 'Proveedor aprobado exitosamente.',
       })
+      setIsModalOpen(false)
       fetchPending()
     }
   }
@@ -94,7 +93,7 @@ export const CellAction = ({
         state: company.state,
         zipCode: company.zipCode,
         profilePicture: company.profilePicture,
-        status: 'approved',
+        status: 'rejected',
         phone: company.phone,
         webPage: company.webPage,
       }
@@ -111,6 +110,7 @@ export const CellAction = ({
       fetchPending()
     }
   }
+
   return (
     <ThemeProvider theme={Theme}>
       <DropdownMenu>

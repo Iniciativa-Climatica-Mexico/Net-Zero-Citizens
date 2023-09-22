@@ -1,10 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-  <include android:id="@+id/topbar" layout="@layout/top_bar" />
-  <FrameLayout android:id="@+id/frame_layout" android:layout_width="match_parent" android:layout_height="match_parent" />
+    <!--    Import topbar.xml-->
+    <include
+        android:id="@+id/topbar"
+        layout="@layout/top_bar"
+        />
 
+    <FrameLayout
+        android:id="@+id/frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-  <com.google.android.material.bottomnavigation.BottomNavigationView android:id="@+id/bottom_naSvigation" android:layout_width="match_parent" android:layout_height="60dp" android:layout_alignParentBottom="true" app:itemIconTint="@drawable/navbar_selector" app:itemTextColor="@drawable/navbar_selector" app:labelVisibilityMode="labeled" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:menu="@menu/menu_navbar_navigation" />
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_naSvigation"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        app:itemIconTint="@drawable/navbar_selector"
+        app:itemTextColor="@drawable/navbar_selector"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/menu_navbar_navigation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

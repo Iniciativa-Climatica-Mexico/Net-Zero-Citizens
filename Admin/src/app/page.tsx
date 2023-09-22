@@ -1,6 +1,5 @@
 'use client'
 
-//import { recoverTokens } from '@/utils/authUtils'
 import { useState, useEffect } from 'react'
 import { Company, getPendingCompanies } from '@/api/v1/company'
 
@@ -21,8 +20,6 @@ import { CellAction } from '@/components/cellAction'
 import ModalProveedor from '@/components/modalProveedor'
 
 export default function Home() {
-  //const tokens = recoverTokens()
-
   const [selectedCompany, setSelectedCompany] = useState<Company>({
     companyId: '',
     name: '',
@@ -38,12 +35,12 @@ export default function Home() {
     description: '',
     createdAt: '',
     streetNumber: '',
-    pdfCurriculumURL: '',
-    pdfDicCdmxURL: '',
-    pdfPeeFideURL: '',
-    pdfGuaranteeSecurityURL: '',
-    pdfActaConstitutivaURL: '',
-    pdfINEURL: '',
+    pdfCurriculumUrl: '',
+    pdfDicCdmxUrl: '',
+    pdfPeeFideUrl: '',
+    pdfGuaranteeSecurityUrl: '',
+    pdfActaConstitutivaUrl: '',
+    pdfIneUrl: '',
   })
   const [modalOpen, setIsModalOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
@@ -67,10 +64,8 @@ export default function Home() {
    */
   const fetchPending = async function fetchingPendingCompanies() {
     try {
-      //if (tokens.authToken !== null) {
       const companies = await getPendingCompanies()
       setPendingCompanies(companies)
-      //}
     } catch (error) {
       console.log('Fetch of companies was not succesful', error)
     }

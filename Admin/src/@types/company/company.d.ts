@@ -13,10 +13,10 @@ export interface Company {
   description: string
   createdAt: string
   streetNumber: string
-  pdfCurriculumURL: string
-  pdfDicCdmxURL: string
-  pdfPeeFideURL: string
-  pdfGuaranteeSecurityURL: string
-  pdfActaConstitutivaURL: string
-  pdfINEURL: string
+  pdfCurriculumUrl: string
+  pdfDicCdmxUrl: string
+  pdfPeeFideUrl: string
+  pdfGuaranteeSecurityUrl: string
+  pdfActaConstitutivaUrl: string
+  pdfIneUrl: string
 }

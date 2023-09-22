@@ -14,6 +14,6 @@ router.get('/pending', CompanyController.getPendingCompanies)
 
 router.post('/pending/:companyId', CompanyController.updateCompanyInfo)
 
-router.get('/:companyId', CompanyController.getCompanyInfo)
+router.get('/:id', CompanyController.getCompanyById)
 
 export default router

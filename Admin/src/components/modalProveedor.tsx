@@ -10,12 +10,11 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
 
 import { ThemeProvider } from '@mui/material/styles'
 import { Theme } from '@/@types/icons/material'
 
-import { toast } from './ui/use-toast'
+import { useToast } from './ui/use-toast'
 
 import { Company, updateCompany, UpdateCompanyInfoBody } from '@/api/v1/company'
 
@@ -29,8 +28,7 @@ import FileOpenIcon from '@mui/icons-material/FileOpen'
 import { Separator } from './ui/separator'
 import { Button } from './ui/button'
 import { Checkbox } from './ui/checkbox'
-//import { recoverTokens } from '@/utils/authUtils'
-import { AlertDialogFooter, AlertDialogHeader } from './ui/alert-dialog'
+/*import { AlertDialogFooter, AlertDialogHeader } from './ui/alert-dialog'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -39,7 +37,7 @@ import {
   AlertDialogDescription,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@radix-ui/react-alert-dialog'
+} from '@radix-ui/react-alert-dialog'*/
 
 interface ModalProveedorProps {
   setIsModalOpen: (value: boolean) => void
@@ -53,8 +51,7 @@ export default function ModalProveedor({
   fetchPending,
 }: ModalProveedorProps) {
   const [checkboxChecked, setCheckboxChecked] = useState(false)
-
-  //const tokens = recoverTokens()
+  const { toast } = useToast()
   /**
    * @brief Function that allows admin to accept a specific company
    * @param company
@@ -62,6 +59,7 @@ export default function ModalProveedor({
    */
   const handleAccept = async (company: Company, companyId: string) => {
     try {
+      // Create an object with the updated status
       const updatedCompanyInfo: UpdateCompanyInfoBody = {
         name: company.name,
         description: company.description,
@@ -76,10 +74,14 @@ export default function ModalProveedor({
         webPage: company.webPage,
       }
 
+      // Call the updateCompany function with the updated information
       await updateCompany(companyId, updatedCompanyInfo)
     } catch (error) {
-      console.error('Error rejecting company:', error)
+      console.error('Error approving company:', error)
     } finally {
+      toast({
+        description: 'Proveedor aprobado exitosamente.',
+      })
       setIsModalOpen(false)
       fetchPending()
     }
@@ -102,7 +104,7 @@ export default function ModalProveedor({
         state: company.state,
         zipCode: company.zipCode,
         profilePicture: company.profilePicture,
-        status: 'approved',
+        status: 'rejected',
         phone: company.phone,
         webPage: company.webPage,
       }
@@ -150,7 +152,7 @@ export default function ModalProveedor({
         />
         <article className="flex flex-col border border-[#C1C9D2] justify-center items-center rounded-lg w-[823px] py-[25px] bg-white z-10">
           <article className="flex border border-[#C1C9D2] rounded-xl w-[763px]">
-            <Image
+            <img
               src={selectedCompany.profilePicture}
               alt="Green Circle"
               width={350}
@@ -183,7 +185,7 @@ export default function ModalProveedor({
               </h2>
               <section className="flex justify-between items-end mb-3">
                 <a
-                  href={selectedCompany.pdfCurriculumURL}
+                  href={selectedCompany.pdfCurriculumUrl}
                   className="min-w-[31%]"
                   target="_blank"
                 >
@@ -193,7 +195,7 @@ export default function ModalProveedor({
                   </div>
                 </a>
                 <a
-                  href={selectedCompany.pdfDicCdmxURL}
+                  href={selectedCompany.pdfDicCdmxUrl}
                   className="min-w-[31%]"
                   target="_blank"
                 >
@@ -203,7 +205,7 @@ export default function ModalProveedor({
                   </div>
                 </a>
                 <a
-                  href={selectedCompany.pdfPeeFideURL}
+                  href={selectedCompany.pdfPeeFideUrl}
                   className="min-w-[31%]"
                   target="_blank"
                 >
@@ -215,7 +217,7 @@ export default function ModalProveedor({
               </section>
               <section className="flex justify-between items-end mb-3">
                 <a
-                  href={selectedCompany.pdfGuaranteeSecurityURL}
+                  href={selectedCompany.pdfGuaranteeSecurityUrl}
                   className="min-w-[31%]"
                   target="_blank"
                 >
@@ -225,7 +227,7 @@ export default function ModalProveedor({
                   </div>
                 </a>
                 <a
-                  href={selectedCompany.pdfActaConstitutivaURL}
+                  href={selectedCompany.pdfActaConstitutivaUrl}
                   className="min-w-[31%]"
                   target="_blank"
                 >
@@ -235,7 +237,7 @@ export default function ModalProveedor({
                   </div>
                 </a>
                 <a
-                  href={selectedCompany.pdfINEURL}
+                  href={selectedCompany.pdfIneUrl}
                   className="min-w-[31%]"
                   target="_blank"
                 >
@@ -270,7 +272,6 @@ export default function ModalProveedor({
             </div>
             <footer className="flex gap-x-3">
               <Button
-                className="text-slate-200"
                 disabled={!checkboxChecked}
                 onClick={() =>
                   handleAccept(selectedCompany, selectedCompany.companyId)

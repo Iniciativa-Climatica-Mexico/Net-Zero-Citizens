@@ -13,6 +13,9 @@
 
 # XCode
 /**/*.plist
+/**/project.pbxproj
+/**/Package.resolved
+/**/*.xcscheme
 
 ### Node JS ###
 # dependencies

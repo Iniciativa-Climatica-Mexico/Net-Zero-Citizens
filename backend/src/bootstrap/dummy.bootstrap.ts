@@ -3,7 +3,7 @@ import { Bootstrapper } from './Bootstraper'
 
 export default class DummyBootstrap extends Bootstrapper {
   async run() {
-    Dummy.bulkCreate([
+    await Dummy.bulkCreate([
       { name: 'Andres', lastName: 'Garcia' },
       { name: 'Juan', lastName: 'Perez' },
       { name: 'Pedro', lastName: 'Gonzalez' },
