@@ -31,9 +31,8 @@ export type CompanyType = {
   streetNumber: number
   city: string
   state: string
-  zipCode: number
-  latitude: number
-  longitude: number
+  zipCode: string
+  userId: string
   profilePicture?: string | null
   pdfCurriculumUrl: string
   pdfDicCdmxUrl?: string | null
@@ -97,7 +96,11 @@ export const getPendingCompanies = async <T>(
 export type UpdateCompanyInfoBody = {
   name: string
   description: string
-  location: string
+  street: string
+  streetNumber: string
+  city: string
+  state: string
+  zipCode: string
   profilePicture: string
   status: 'approved' | 'pending_approval' | 'rejected'
   phoneNumber: string

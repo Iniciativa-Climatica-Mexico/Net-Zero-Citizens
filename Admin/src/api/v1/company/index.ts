@@ -1,6 +1,28 @@
+import { apiV1Url } from '@/utils/constants'
 import axios from 'axios'
 
-const backendBaseUrl = 'http://localhost:3000'
+export interface Company {
+  companyId: string
+  name: string
+  profilePicture: string
+  state: string
+  city: string
+  street: string
+  zipCode: string
+  status: 'approved' | 'pending_approval' | 'rejected'
+  email: string
+  phone: string
+  webPage: string
+  description: string
+  createdAt: string
+  streetNumber: string
+  pdfCurriculumUrl: string
+  pdfDicCdmxUrl: string
+  pdfPeeFideUrl: string
+  pdfGuaranteeSecurityUrl: string
+  pdfActaConstitutivaUrl: string
+  pdfIneUrl: string
+}
 
 /**
  * @brief
@@ -20,10 +42,14 @@ export const getPendingCompanies = async () => {
 export type UpdateCompanyInfoBody = {
   name: string
   description: string
-  location: string
+  street: string
+  streetNumber: string
+  city: string
+  state: string
+  zipCode: string
   profilePicture: string
   status: 'approved' | 'pending_approval' | 'rejected'
-  phoneNumber: string
+  phone: string
   webPage: string
 }
 
@@ -33,7 +59,7 @@ export const updateCompany = async (
 ) => {
   try {
     const response = await axios.post(
-      `${backendBaseUrl}/api/v1/company/pending/${companyId}`,
+      `${apiV1Url}/company/pending/${companyId}`,
       updateInfo
     )
     return response.data
