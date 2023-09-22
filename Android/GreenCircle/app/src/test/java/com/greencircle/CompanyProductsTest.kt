@@ -48,7 +48,7 @@ class CompanyProductsTest {
             name = "Test Product",
             description = "Test Description",
             imageUrl = "test.jpg",
-            imageAltText = "Test Image Alt Text",
+            imageAltText = "Test Image Alt Text"
         )
 
         val companyProducts = CompanyProducts(
@@ -102,7 +102,7 @@ class CompanyProductsTest {
             name = "Test Product",
             description = "Test Description",
             imageUrl = "test.jpg",
-            imageAltText = "Test Image Alt Text",
+            imageAltText = "Test Image Alt Text"
         )
 
         val companyProducts = CompanyProducts(
@@ -160,7 +160,7 @@ class CompanyProductsTest {
             name = "Test Product",
             description = "Test Description",
             imageUrl = "test.jpg",
-            imageAltText = "Test Image Alt Text",
+            imageAltText = "Test Image Alt Text"
         )
 
         val companyProducts = CompanyProducts(
@@ -218,7 +218,7 @@ class CompanyProductsTest {
             name = "Test Product",
             description = "Test Description",
             imageUrl = "test.jpg",
-            imageAltText = "Test Image Alt Text",
+            imageAltText = "Test Image Alt Text"
         )
 
         val companyProducts = CompanyProducts(

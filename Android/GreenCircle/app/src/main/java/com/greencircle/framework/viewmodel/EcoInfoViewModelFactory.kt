@@ -22,7 +22,8 @@ class EcoInfoViewModelFactory(private val repository: EcoInfoRepository) :
      */
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EcoInfoViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST") return EcoInfoViewModel(repository) as T
+            @Suppress("UNCHECKED_CAST")
+            return EcoInfoViewModel(repository) as T
         }
 
         throw IllegalArgumentException("Unknown ViewModel class")

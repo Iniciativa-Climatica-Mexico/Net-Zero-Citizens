@@ -19,8 +19,10 @@ import com.google.gson.annotations.SerializedName
 enum class Status {
     @SerializedName("approved")
     APPROVED,
+
     @SerializedName("pending")
     PENDING_APPROVAL,
+
     @SerializedName("rejected")
     REJECTED
 }

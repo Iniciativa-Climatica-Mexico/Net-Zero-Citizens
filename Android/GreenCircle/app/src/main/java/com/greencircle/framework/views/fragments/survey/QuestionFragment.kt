@@ -38,7 +38,7 @@ class QuestionFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         binding = FragmentQuestionBinding.inflate(inflater, container, false)
         // add red * at the end of title if question is required
@@ -48,7 +48,7 @@ class QuestionFragment : Fragment() {
                 ForegroundColorSpan(Color.RED),
                 span.length - 1,
                 span.length,
-                0,
+                0
             )
             binding.QuestionText.text = span
         } else {
@@ -60,9 +60,9 @@ class QuestionFragment : Fragment() {
         }
 
         answerField = when (question.questionType) {
-            QuestionType.open -> OpenAnswerField(this, callback)
-            QuestionType.scale -> ScaleAnswerField(this, callback)
-            QuestionType.multiple_choice -> MultipleChoiceAnswerField(this, callback)
+            QuestionType.OPEN -> OpenAnswerField(this, callback)
+            QuestionType.SCALE -> ScaleAnswerField(this, callback)
+            QuestionType.MULTIPLE_CHOISE -> MultipleChoiceAnswerField(this, callback)
         }
         return binding.root
     }
@@ -89,14 +89,14 @@ class OpenAnswerField(parent: QuestionFragment, callback: (String) -> Unit) :
         binding = ItemOpenAnswerFieldBinding.inflate(
             LayoutInflater.from(context),
             parent.binding.AnswerFieldContainer,
-            true,
+            true
         )
         binding.AnswerField.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
                 s: CharSequence?,
                 start: Int,
                 count: Int,
-                after: Int,
+                after: Int
             ) {
             }
 
@@ -104,7 +104,7 @@ class OpenAnswerField(parent: QuestionFragment, callback: (String) -> Unit) :
                 s: CharSequence?,
                 start: Int,
                 before: Int,
-                count: Int,
+                count: Int
             ) {
                 callback(s.toString())
             }
@@ -126,11 +126,11 @@ class ScaleAnswerField(parent: QuestionFragment, callback: (String) -> Unit) :
         binding = ItemScaleAnswerFieldBinding.inflate(
             LayoutInflater.from(context),
             parent.binding.AnswerFieldContainer,
-            true,
+            true
         )
         binding.AnswerField.setOnCheckedChangeListener { radioGroup, checkedId ->
             callback(
-                radioGroup.findViewById<RadioButton>(checkedId).text.toString(),
+                radioGroup.findViewById<RadioButton>(checkedId).text.toString()
             )
             // close keyboard and clear focus
             val view: View? = parent.view?.rootView?.findFocus()
@@ -160,13 +160,13 @@ class MultipleChoiceAnswerField(parent: QuestionFragment, callback: (String) -> 
         binding = ItemMultipleChoiceAnswerFieldBinding.inflate(
             LayoutInflater.from(context),
             parent.binding.AnswerFieldContainer,
-            true,
+            true
         )
         parent.question.questionOptions.forEach { option ->
             ItemMultipleChoiceAnswerOptionBinding.inflate(
                 LayoutInflater.from(context),
                 binding.AnswerField,
-                true,
+                true
             ).apply {
                 this.root.id = generateViewId()
                 this.questionOption.text = option.textOption
@@ -177,7 +177,7 @@ class MultipleChoiceAnswerField(parent: QuestionFragment, callback: (String) -> 
         }
         binding.AnswerField.setOnCheckedChangeListener { radioGroup, checkedId ->
             callback(
-                radioGroup.findViewById<RadioButton>(checkedId).text.toString(),
+                radioGroup.findViewById<RadioButton>(checkedId).text.toString()
             )
             // close keyboard and clear focus
             val view: View? = parent.view?.rootView?.findFocus()

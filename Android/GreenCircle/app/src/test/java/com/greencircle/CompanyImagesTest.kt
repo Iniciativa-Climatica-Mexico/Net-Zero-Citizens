@@ -47,7 +47,7 @@ class CompanyImagesTest {
             companyImageId = UUID(0, 2),
             companyId = UUID(0, 1),
             imageUrl = "test.jpg",
-            altText = "Test Image Alt Text",
+            altText = "Test Image Alt Text"
         )
 
         assertEquals(companyImage.companyImageId, UUID(0, 2))
@@ -89,14 +89,14 @@ class CompanyImagesTest {
             companyImageId = UUID(0, 2),
             companyId = UUID(0, 1),
             imageUrl = "test.jpg",
-            altText = "Test Image Alt Text",
+            altText = "Test Image Alt Text"
         )
 
         val companyImage2 = CompanyImages(
             companyImageId = UUID(0, 2),
             companyId = UUID(0, 1),
             imageUrl = "test.jpg",
-            altText = "Test Image Alt Text",
+            altText = "Test Image Alt Text"
         )
 
         assertEquals(companyImage1, companyImage2)
@@ -135,14 +135,14 @@ class CompanyImagesTest {
             companyImageId = UUID(0, 2),
             companyId = UUID(0, 1),
             imageUrl = "test.jpg",
-            altText = "Test Image Alt Text",
+            altText = "Test Image Alt Text"
         )
 
         val companyImage2 = CompanyImages(
             companyImageId = UUID(0, 3),
             companyId = UUID(0, 1),
             imageUrl = "another.jpg",
-            altText = "Another Image Alt Text",
+            altText = "Another Image Alt Text"
         )
 
         assertNotEquals(companyImage1, companyImage2)
@@ -181,14 +181,14 @@ class CompanyImagesTest {
             companyImageId = UUID(0, 2),
             companyId = UUID(0, 1),
             imageUrl = "test.jpg",
-            altText = "Test Image Alt Text",
+            altText = "Test Image Alt Text"
         )
 
         val companyImage2 = CompanyImages(
             companyImageId = UUID(0, 2),
             companyId = UUID(0, 1),
             imageUrl = "test.jpg",
-            altText = "Test Image Alt Text",
+            altText = "Test Image Alt Text"
         )
 
         assertEquals(companyImage1.hashCode(), companyImage2.hashCode())

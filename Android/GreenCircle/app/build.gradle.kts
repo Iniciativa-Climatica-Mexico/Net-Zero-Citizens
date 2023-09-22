@@ -7,10 +7,13 @@ plugins {
     id("kotlin-android")
 
     // Klint
-    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    id("org.jlleitschuh.gradle.ktlint") version "11.6.0"
 
     // App Sweep
     id("com.guardsquare.appsweep") version "latest.release"
+
+    // Google Secrets
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin") version "2.0.1"
 }
 
 android {
@@ -74,6 +77,7 @@ dependencies {
     implementation("com.google.android.material:material:1.9.0")
     // Google Login
     implementation("com.google.android.gms:play-services-auth:20.7.0")
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.mockito:mockito-core:3.12.4")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

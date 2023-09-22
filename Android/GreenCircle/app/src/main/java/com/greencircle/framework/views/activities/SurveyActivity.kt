@@ -37,22 +37,22 @@ class SurveyActivity : AppCompatActivity() {
         }
         viewModel.submitStatusLiveData.observe(this) { status ->
             when (status) {
-                SurveyViewModel.SubmitStatus.success -> {
+                SurveyViewModel.SubmitStatus.SUCCESS -> {
                     MaterialAlertDialogBuilder(this).setTitle("¡Gracias por responder!")
                         .setMessage("Tus respuestas han sido enviadas.").setCancelable(false)
                         .setPositiveButton("Aceptar") { _, _ -> goToMain() }.show()
                 }
 
-                SurveyViewModel.SubmitStatus.validationError -> {
+                SurveyViewModel.SubmitStatus.VALIDATION_ERROR -> {
                     MaterialAlertDialogBuilder(this)
                         .setTitle("Faltan preguntas")
                         .setMessage(
                             "No puedes enviar sin antes haber " +
-                                "termiandode llenar todas las preguntas obligatorias.",
+                                "termiandode llenar todas las preguntas obligatorias."
                         ).setCancelable(false).setPositiveButton("Seguir") { _, _ -> }.show()
                 }
 
-                SurveyViewModel.SubmitStatus.error -> {
+                SurveyViewModel.SubmitStatus.ERROR -> {
                     MaterialAlertDialogBuilder(this).setTitle("Error")
                         .setMessage("No se pudieron enviar tus respuestas. Inténtalo más tarde.")
                         .setCancelable(false)

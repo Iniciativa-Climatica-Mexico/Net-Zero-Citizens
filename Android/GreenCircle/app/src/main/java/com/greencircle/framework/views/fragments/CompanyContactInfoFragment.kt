@@ -24,7 +24,9 @@ class CompanyContactInfoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCompanyContactInfoBinding.inflate(
-            inflater, container, false
+            inflater,
+            container,
+            false
         )
 
         bindCompanyContactInfo()

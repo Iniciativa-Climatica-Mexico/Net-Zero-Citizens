@@ -52,7 +52,9 @@ class RegisterCompanyFragment : Fragment() {
                         viewModel.googleLogin(token)
                     } catch (e: ApiException) {
                         Toast.makeText(
-                            requireContext(), "Something went wrong", Toast.LENGTH_SHORT
+                            requireContext(),
+                            "Something went wrong",
+                            Toast.LENGTH_SHORT
                         ).show()
                     }
                 }

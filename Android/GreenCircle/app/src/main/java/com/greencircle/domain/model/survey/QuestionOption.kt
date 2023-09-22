@@ -8,5 +8,5 @@ import java.util.UUID
  */
 data class QuestionOption(
     val questionOptionId: UUID,
-    val textOption: String,
+    val textOption: String
 ) : Serializable

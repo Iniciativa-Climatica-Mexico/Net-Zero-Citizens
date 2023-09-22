@@ -7,7 +7,7 @@ import androidx.annotation.DrawableRes
  */
 data class CarouselItem constructor(
     val imageUrl: String? = null,
-    @DrawableRes val imageDrawable: Int? = null,
+    @DrawableRes val imageDrawable: Int? = null
 ) {
     constructor(@DrawableRes imageDrawable: Int) : this(null, imageDrawable)
 

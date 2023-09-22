@@ -60,7 +60,7 @@ class SurveyTest {
                         QuestionOption(testOption2ID, "testOption2")
                     ),
                     "testQuestionText",
-                    QuestionType.multiple_choice,
+                    QuestionType.MULTIPLE_CHOISE,
                     false
                 )
             )
