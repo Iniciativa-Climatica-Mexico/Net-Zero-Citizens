@@ -7,6 +7,6 @@ import retrofit2.http.POST
 public interface AuthAPIService {
     data class GoogleLoginRequest(val googleToken: String)
 
-    @POST("}++}/login/google")
+    @POST("auth/login/google")
     suspend fun googleLogin(@Body request: GoogleLoginRequest): AuthResponse
 }
