@@ -9,5 +9,5 @@ import java.util.UUID
 data class Answer(
     val scaleValue: Int?,
     val answerText: String?,
-    val questionId: UUID?,
+    val questionId: UUID?
 ) : Serializable

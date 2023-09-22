@@ -72,8 +72,9 @@ class CompanyReviewFragment : Fragment() {
 
         ratingBar.setOnRatingBarChangeListener { _, rating, _ ->
             this.rating = rating
-            if (rating > 0.0f)
+            if (rating > 0.0f) {
                 navigateToReviewFormFragment()
+            }
         }
     }
 

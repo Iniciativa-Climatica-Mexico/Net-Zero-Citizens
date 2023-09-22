@@ -10,5 +10,5 @@ data class UserReview(
     @SerializedName("review") val review: String,
     @SerializedName("score") val rating: Int,
     @SerializedName("cratedAt") val createdAt: String,
-    @SerializedName("updatedAt") val updatedAt: String,
+    @SerializedName("updatedAt") val updatedAt: String
 )

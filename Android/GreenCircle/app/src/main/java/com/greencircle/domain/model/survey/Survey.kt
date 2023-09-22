@@ -9,5 +9,5 @@ data class Survey(
     val description: String,
     val questions: ArrayList<Question>,
     val surveyId: UUID,
-    val title: String,
+    val title: String
 )

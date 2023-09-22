@@ -48,7 +48,7 @@ class ProductTest {
             name = "Test Product",
             description = "Test Description",
             imageUrl = "test.jpg",
-            imageAltText = "Test Image Alt Text",
+            imageAltText = "Test Image Alt Text"
         )
 
         assertEquals(product.productId, UUID(0, 2))
@@ -92,7 +92,7 @@ class ProductTest {
             name = "Test Product",
             description = "Test Description",
             imageUrl = "test.jpg",
-            imageAltText = "Test Image Alt Text",
+            imageAltText = "Test Image Alt Text"
         )
 
         val product2 = Product(
@@ -100,7 +100,7 @@ class ProductTest {
             name = "Test Product",
             description = "Test Description",
             imageUrl = "test.jpg",
-            imageAltText = "Test Image Alt Text",
+            imageAltText = "Test Image Alt Text"
         )
 
         assertEquals(product1, product2)
@@ -140,7 +140,7 @@ class ProductTest {
             name = "Test Product",
             description = "Test Description",
             imageUrl = "test.jpg",
-            imageAltText = "Test Image Alt Text",
+            imageAltText = "Test Image Alt Text"
         )
 
         val product2 = Product(
@@ -148,7 +148,7 @@ class ProductTest {
             name = "Another Product",
             description = "Another Description",
             imageUrl = "another.jpg",
-            imageAltText = "Another Image Alt Text",
+            imageAltText = "Another Image Alt Text"
         )
 
         assertNotEquals(product1, product2)
@@ -188,7 +188,7 @@ class ProductTest {
             name = "Test Product",
             description = "Test Description",
             imageUrl = "test.jpg",
-            imageAltText = "Test Image Alt Text",
+            imageAltText = "Test Image Alt Text"
         )
 
         val product2 = Product(
@@ -196,7 +196,7 @@ class ProductTest {
             name = "Test Product",
             description = "Test Description",
             imageUrl = "test.jpg",
-            imageAltText = "Test Image Alt Text",
+            imageAltText = "Test Image Alt Text"
         )
 
         assertEquals(product1.hashCode(), product2.hashCode())

@@ -44,7 +44,7 @@ class QuestionTest {
 
         assert(question.questionId == questionID)
         assert(question.questionText == "testText")
-        assert(question.questionType == QuestionType.multiple_choice)
+        assert(question.questionType == QuestionType.MULTIPLE_CHOISE)
         assert(
             question.questionOptions == listOf(
                 QuestionOption(testOption1ID, "testOption1"),

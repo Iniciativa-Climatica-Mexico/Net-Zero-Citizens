@@ -12,5 +12,5 @@ data class Question(
     val questionText: String,
     val questionType: QuestionType,
     val isRequired: Boolean,
-    var answer: Answer? = null,
+    var answer: Answer? = null
 ) : Serializable

@@ -17,6 +17,6 @@ interface SurveyAPIService {
     suspend fun postSurveyAnswers(
         @Path("surveyId") surveyId: UUID,
         @Path("userId") userId: UUID,
-        @Body surveyAnswers: SurveyAnswersRequest,
+        @Body surveyAnswers: SurveyAnswersRequest
     ): Call<JsonObject>
 }

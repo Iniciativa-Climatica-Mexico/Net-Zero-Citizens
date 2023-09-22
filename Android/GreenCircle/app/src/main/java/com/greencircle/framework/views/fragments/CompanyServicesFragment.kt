@@ -101,7 +101,7 @@ class CompanyServicesFragment : Fragment() {
                     productId = item.productId,
                     name = item.name,
                     description = item.description,
-                    imgUrl = item.imageUrl,
+                    imgUrl = item.imageUrl
                 )
             )
         }

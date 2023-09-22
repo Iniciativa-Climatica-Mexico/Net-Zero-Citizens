@@ -57,7 +57,9 @@ class CreateCompanyFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(
-            R.layout.fragment_create_company, container, false
+            R.layout.fragment_create_company,
+            container,
+            false
         )
         // Set texts
         setTexts(arguments, view)

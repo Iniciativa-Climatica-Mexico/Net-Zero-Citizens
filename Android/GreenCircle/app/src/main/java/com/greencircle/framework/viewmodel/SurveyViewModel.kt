@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class SurveyViewModel : ViewModel() {
     enum class SubmitStatus {
-        success, validationError, error,
+        SUCCESS, VALIDATION_ERROR, ERROR,
     }
 
     val surveyLiveData = MutableLiveData<Survey?>()
@@ -36,13 +36,13 @@ class SurveyViewModel : ViewModel() {
             val survey = surveyLiveData.value
             if (survey == null) {
                 Log.i("Salida", "Survey is null")
-                submitStatusLiveData.postValue(SubmitStatus.error)
+                submitStatusLiveData.postValue(SubmitStatus.ERROR)
                 return
             }
             val answers = survey.questions.map { question ->
                 // chech that all requiered questions are answered
                 if (question.isRequired && question.answer == null) {
-                    submitStatusLiveData.postValue(SubmitStatus.validationError)
+                    submitStatusLiveData.postValue(SubmitStatus.VALIDATION_ERROR)
                     return
                 } else {
                     return@map question.answer
@@ -53,12 +53,12 @@ class SurveyViewModel : ViewModel() {
             viewModelScope.launch(Dispatchers.IO) {
                 surveyPendingRequirement.submitAnswers(survey.surveyId, answers)
                 CoroutineScope(Dispatchers.Main).launch {
-                    submitStatusLiveData.postValue(SubmitStatus.success)
+                    submitStatusLiveData.postValue(SubmitStatus.SUCCESS)
                 }
             }
         } catch (e: Exception) {
             Log.i("Salida", e.toString())
-            submitStatusLiveData.postValue(SubmitStatus.error)
+            submitStatusLiveData.postValue(SubmitStatus.ERROR)
         }
     }
 
@@ -70,7 +70,7 @@ class SurveyViewModel : ViewModel() {
         }
 
         when (question.questionType) {
-            QuestionType.scale -> {
+            QuestionType.SCALE -> {
                 val scaleValue = answer.toInt()
                 question.answer = Answer(scaleValue, null, questionId)
             }

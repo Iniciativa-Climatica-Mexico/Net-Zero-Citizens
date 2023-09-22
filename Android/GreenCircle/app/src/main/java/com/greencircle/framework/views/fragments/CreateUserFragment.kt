@@ -56,7 +56,9 @@ class CreateUserFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(
-            R.layout.fragment_create_user, container, false
+            R.layout.fragment_create_user,
+            container,
+            false
         )
 
         setTexts(arguments, view)
@@ -118,7 +120,7 @@ class CreateUserFragment : Fragment() {
             age,
             state,
             gender,
-            roleId,
+            roleId
         )
 
         viewModel.updateUser(uuid, userInfo, authToken)

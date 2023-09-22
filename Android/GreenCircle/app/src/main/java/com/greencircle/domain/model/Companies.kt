@@ -62,5 +62,5 @@ data class Companies(
     @SerializedName("products") val products: ArrayList<Product>? = arrayListOf(),
     @SerializedName("images") val companyImages: List<CompanyImages>? = listOf(),
     @SerializedName("score") val rating: Float? = null,
-    @SerializedName("oneComment") val oneComment: String? = null,
+    @SerializedName("oneComment") val oneComment: String? = null
 ) : Serializable

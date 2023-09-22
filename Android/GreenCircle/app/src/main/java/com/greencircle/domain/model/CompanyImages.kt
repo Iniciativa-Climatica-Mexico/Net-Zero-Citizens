@@ -18,5 +18,5 @@ data class CompanyImages(
     @SerializedName("companyImageId") val companyImageId: UUID,
     @SerializedName("companyId") val companyId: UUID,
     @SerializedName("imageUrl") val imageUrl: String? = null,
-    @SerializedName("altText") val altText: String? = null,
+    @SerializedName("altText") val altText: String? = null
 ) : Serializable

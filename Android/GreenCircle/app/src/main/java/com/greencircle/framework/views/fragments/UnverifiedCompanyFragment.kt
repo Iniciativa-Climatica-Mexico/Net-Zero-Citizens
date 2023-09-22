@@ -46,7 +46,8 @@ class UnverifiedCompanyFragment : Fragment() {
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(
-            this, onBackPressedCallback
+            this,
+            onBackPressedCallback
         )
     }
 }

@@ -10,5 +10,5 @@ data class ServiceItem(
     @SerializedName("productId") val productId: UUID,
     @SerializedName("name") val name: String,
     @SerializedName("description") val description: String? = null,
-    @SerializedName("imgUrl") val imgUrl: String,
+    @SerializedName("imgUrl") val imgUrl: String
 )
