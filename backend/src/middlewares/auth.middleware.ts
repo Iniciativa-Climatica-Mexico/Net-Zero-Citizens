@@ -11,7 +11,7 @@ import * as AuthService from '../services/auth.service'
  * @param next NextFunction
  * @returns void
  */
-export const validateToken = async (
+/*export const validateToken = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -31,7 +31,7 @@ export const validateToken = async (
     res.json({ message: 'Invalid token' })
     next(err) // Pass the error to the next middleware
   }
-}
+}*/
 
 /**
  * @brief
@@ -42,7 +42,7 @@ export const validateToken = async (
  * @returns void
  */
 
-export const validateRole = (roles: string[]) => {
+/*export const validateRole = (roles: string[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     // TODO Revisar rol en la base de datos
 
@@ -68,4 +68,4 @@ export const validateRole = (roles: string[]) => {
 
     next()
   }
-}
+}*/

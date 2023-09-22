@@ -9,22 +9,22 @@ import Role from '../models/role.model'
  */
 
 export type UserType = {
-  userId?: string,
-  roleId?: string,
-  companyId?: string | null,
-  googleId?: string | null,
-  facebookId?: string | null,
-  appleId?: string | null,
-  firstName: string,
-  lastName: string,
-  secondLastName?: string | null,
-  email: string,
-  password?: string | null,
-  phoneNumber: string | null,
-  age: number,
-  state: string,
-  gender: string,
-  profilePicture?: string | null,
+  userId?: string
+  roleId?: string
+  companyId?: string | null
+  googleId?: string | null
+  facebookId?: string | null
+  appleId?: string | null
+  firstName: string
+  lastName: string
+  secondLastName?: string | null
+  email: string
+  password?: string | null
+  phoneNumber: string | null
+  age: number
+  state: string
+  gender: string
+  profilePicture?: string | null
 }
 
 /**
@@ -32,7 +32,6 @@ export type UserType = {
  * Tipo de dato para el género del usuario
  */
 export type Gender = 'masculine' | 'femenine' | 'other' | 'no_answer'
-
 
 /**
  * @brief
@@ -59,7 +58,6 @@ export const createUser = async (user: UserType): Promise<User | null> => {
   return await User.create(user)
 }
 
-
 /**
  * @function getUserInfo
  * @param userId
@@ -75,30 +73,32 @@ export const getUserInfo = async (userId: string): Promise<User | null> => {
  * @param email User's email
  * @returns User with role or Null
  */
-export const getUserByEmailWithRole = async (email: string): Promise<User | null> => {
+export const getUserByEmailWithRole = async (
+  email: string
+): Promise<User | null> => {
   return await User.findOne({
     where: { email },
     include: [
       {
         model: Role,
         as: 'role',
-        attributes: ['ROLE_ID', 'NAME']
-      }
-    ]
-  })        
+        attributes: ['ROLE_ID', 'NAME'],
+      },
+    ],
+  })
 }
 
 export type UpdateUserInfoBody = {
-  roleId?: string,
-  companyId?: string | null,
-  googleId?: string,
-  facebookId?: string,
-  appleId?: string,
+  roleId?: string
+  companyId?: string | null
+  googleId?: string
+  facebookId?: string
+  appleId?: string
   firstName?: string
   lastName?: string
   secondLastName?: string
-  email?: string,
-  phoneNumber?: string | null,
+  email?: string
+  phoneNumber?: string | null
   age?: number
   state?: string
   gender?: 'masculine' | 'femenine' | 'other' | 'no_answer'

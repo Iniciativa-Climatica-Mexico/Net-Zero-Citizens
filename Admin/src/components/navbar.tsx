@@ -1,3 +1,13 @@
+/**
+ * Represents provisional navbar used in layout
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <Navbar />
+ * ```
+ */
+
 'use client'
 import { signOut, useSession } from 'next-auth/react'
 import { deleteTokens } from '@/utils/authUtils'

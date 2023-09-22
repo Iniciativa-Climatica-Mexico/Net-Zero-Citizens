@@ -23,7 +23,7 @@ export type CompanyType = {
   streetNumber: string
   city: string
   state: string
-  zipCode: number
+  zipCode: string
   userId: string
   profilePicture?: string | null
   pdfCurriculumUrl: string
@@ -104,7 +104,7 @@ export type UpdateCompanyInfoBody = {
   streetNumber: string
   city: string
   state: string
-  zipCode: number
+  zipCode: string
   profilePicture: string
   status: 'approved' | 'pending_approval' | 'rejected'
   phone: string
