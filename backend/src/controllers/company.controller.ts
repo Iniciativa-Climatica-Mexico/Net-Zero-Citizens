@@ -31,7 +31,7 @@ export const getCompanyInfo: RequestHandler<{ companyId: string }> = async (
  */
 export const getAllCompanies: RequestHandler<
   NoRecord,
-  Paginator<Company>,
+  Paginator<Company> | { error: string },
   NoRecord,
   PaginationParams<{ name?: string }>
 > = async (req, res) => {
@@ -43,15 +43,64 @@ export const getAllCompanies: RequestHandler<
     },
   }
 
-  const companies = await CompanyService.getAllCompanies(params)
-  res.json({
-    rows: companies.rows,
-    start: params.start,
-    pageSize: params.pageSize,
-    total: companies.count,
-  })
+  try {
+    const companies = await CompanyService.getAllCompanies(params)
+    res.json({
+      rows: companies.rows,
+      start: params.start,
+      pageSize: params.pageSize,
+      total: companies.count,
+    })
+  } catch (error) {
+    res.status(400).json({ error: 'Error getting users' })
+  }
 }
 
+/**
+ * @brief
+ * Obtiene un proveedor por su id y lo devuelve en la respuesta
+ * @param req Request con el id del proveedor
+ * @param res Response con el proveedor
+ */
+export const getCompanyById: RequestHandler<
+  NoRecord,
+  Company | { message: string },
+  NoRecord,
+  { id: string }
+> = async (req, res) => {
+  try {
+    const company = await CompanyService.getCompanyById(req.params.id)
+
+    if (!company) {
+      res.status(404).json({ message: 'Company not found' })
+    } else {
+      res.json(company)
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error' })
+  }
+}
+
+/**
+ * @brief
+ * Función del controlador que actualiza a un proveedor de la base de datos
+ * @param req
+ * @param res
+ */
+export const updateCompanyInfo: RequestHandler<
+  { companyId: string },
+  { message: string },
+  CompanyService.UpdateCompanyInfoBody
+> = async (req, res) => {
+  const compId = req.params.companyId
+  const companyInfo = await CompanyService.getCompanyById(compId)
+  if (companyInfo) {
+    await CompanyService.updateCompanyInfo(compId, req.body)
+    res.status(201).json({ message: 'Company updated' })
+  } else {
+    res.status(404).json({ message: 'Company not found' })
+  }
+}
 /**
  * @brief
  * Función del controlador para registrar un nuevo proveedor
@@ -104,22 +153,18 @@ export const addProduct: RequestHandler<
 > = async (req, res) => {
   try {
     if (!req.body.companyProduct)
-      res
-        .status(400)
-        .json({
-          companyProductId: '',
-          error: 'Missing company or product data',
-        })
+      res.status(400).json({
+        companyProductId: '',
+        error: 'Missing company or product data',
+      })
     const company = req.body.companyProduct
     const newCompanyProduct = await CompanyService.addProduct(company)
 
     if (!newCompanyProduct)
-      res
-        .status(400)
-        .json({
-          companyProductId: '',
-          error: 'Error adding product to company',
-        })
+      res.status(400).json({
+        companyProductId: '',
+        error: 'Error adding product to company',
+      })
 
     res.json({
       companyProductId: newCompanyProduct?.dataValues.companyId,
@@ -131,6 +176,7 @@ export const addProduct: RequestHandler<
       .json({ companyProductId: '', error: 'Error adding product to company' })
   }
 }
+
 
 /**
  * @brief
@@ -155,28 +201,6 @@ export const getPendingCompanies: RequestHandler<
     pageSize: params.pageSize,
     total: companies.count,
   })
-}
-
-/**
- * @brief
- * Función del controlador que actualiza a un proveedor de la base de datos
- * @param req 
- * @param res 
- */
-export const updateCompanyInfo: RequestHandler<
-  { companyId: string },
-  { message: string },
-  CompanyService.UpdateCompanyInfoBody
-> = async (req, res) => {
-  const compId = req.params.companyId
-  const companyInfo = await CompanyService.getCompanyInfo(compId)
-  if (companyInfo) {
-    await CompanyService.updateCompanyInfo(compId, req.body)
-    res.status(201).json({ message: 'Company updated' })
-  }
-  else {
-    res.status(404).json({ message: 'Company not found' })
-  }
 }
 
 /**

@@ -8,7 +8,10 @@
 
 
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -17,7 +20,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GreenCircle"
-        android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
         <activity
@@ -55,6 +57,17 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.GreenCircle.NoActionBar" />
 
+        <activity
+            android:name=".framework.views.fragments.HomeFragment"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.GreenCircle.NoActionBar" />
+
+        <activity
+            android:name=".framework.views.activities.SurveyActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.GreenCircle.NoActionBar" />
 
 
         <meta-data

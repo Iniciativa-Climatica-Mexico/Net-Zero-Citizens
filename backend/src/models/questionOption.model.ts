@@ -23,7 +23,7 @@ export default class QuestionOption extends Model {
     allowNull: false,
     field: 'TEXT_OPTION',
   })
-  textOption: string | null
+  textOption: string
 
   @ForeignKey(() => Question)
   @Column({
@@ -32,4 +32,11 @@ export default class QuestionOption extends Model {
     field: 'QUESTION_ID',
   })
   questionId: string
+
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+    field: 'ORDER',
+  })
+  order: number
 }

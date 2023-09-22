@@ -7,6 +7,8 @@
 
 import Foundation
 
+// swiftlint:disable identifier_name
+
 /// Struct representando el usuario
 struct User: Codable, Identifiable {
   var id: String {uuid}
@@ -24,3 +26,4 @@ struct User: Codable, Identifiable {
   var age: Int?
 //  var created_at: String
 }
+// swiftlint:enable identifier_name

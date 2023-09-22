@@ -13,6 +13,9 @@
 
 # XCode
 /**/*.plist
+/**/project.pbxproj
+/**/Package.resolved
+/**/*.xcscheme
 
 ### Node JS ###
 # dependencies
@@ -190,5 +193,5 @@ temp/
 *.pem
 *.p12
 
-
 ./Android/GreenCircle/app/google-services.json
+backend/src/services/company.service.ts
