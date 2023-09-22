@@ -10,7 +10,7 @@ const cred = new AWS.Credentials({
 })
 const sns = new AWS.SNS({ credentials: cred, region: 'us-east-2' })
 
-const arn = process.env.AWS_ARN
+// const arn = process.env.AWS_ARN
 
 /**
  * @brief Servicio para obtener el device token de un usuario
