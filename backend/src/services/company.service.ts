@@ -6,6 +6,7 @@ import { col, fn } from 'sequelize'
 import Company from '../models/company.model'
 import CompanyProduct from '../models/companyProducts.model'
 import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
+import { sendNotification } from './notification.service'
 
 // TYPES
 /**
@@ -112,7 +113,23 @@ export const updateCompanyInfo = async (
 ): Promise<Company | null> => {
   const companyInfo = await Company.findByPk(companyId)
   if (companyInfo) {
-    return companyInfo.update(newCompanyInfo)
+    await companyInfo.update(newCompanyInfo)
+    if (newCompanyInfo.status === 'approved') {
+      await sendNotification(
+        'Aprobado',
+        'Tu compañia ha sido aprobada',
+        `${process.env.AWS_ARN}`,
+        companyId
+      )
+    } else if (newCompanyInfo.status === 'rejected') {
+      await sendNotification(
+        'Rechazado',
+        'Tu compañia ha sido rechazada',
+        `${process.env.AWS_ARN}`,
+        companyId
+      )
+    }
+    return companyInfo
   } else {
     return null
   }

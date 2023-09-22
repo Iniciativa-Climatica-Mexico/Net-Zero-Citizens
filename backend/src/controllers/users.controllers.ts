@@ -1,6 +1,6 @@
 import User from '../models/users.model'
 import * as UserService from '../services/users.service'
-import { NoRecord, Paginator, PaginationParams} from '../utils/RequestResponse'
+import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
 
 /**
@@ -38,7 +38,6 @@ export const getAllUsers: RequestHandler<
   }
 }
 
-
 /**
  * @brief
  * Función del controlador para registrar un nuevo usuario
@@ -48,23 +47,24 @@ export const getAllUsers: RequestHandler<
 
 export const createUser: RequestHandler<
   NoRecord,
-  {userId: string, message?: string, error?: string},
-  {user: User},
+  { userId: string; message?: string; error?: string },
+  { user: User },
   NoRecord
-  > = async (req, res) => {
-    try {
-      if(!req.body.user) res.status(400).json({ userId: '', error: 'Missing user data'})
-      const user = req.body.user
-      const newUser = await UserService.createUser(user)    
+> = async (req, res) => {
+  try {
+    if (!req.body.user)
+      res.status(400).json({ userId: '', error: 'Missing user data' })
+    const user = req.body.user
+    const newUser = await UserService.createUser(user)
 
-      if(!newUser) res.status(400).json({ userId: '', error: 'Error creating user'})
+    if (!newUser)
+      res.status(400).json({ userId: '', error: 'Error creating user' })
 
-      res.json({ userId: newUser?.dataValues.userId, message: 'User created'})
-    } catch (error) {
-      res.status(400).json({ userId: '', error: 'Error creating user'})
-    }
+    res.json({ userId: newUser?.dataValues.userId, message: 'User created' })
+  } catch (error) {
+    res.status(400).json({ userId: '', error: 'Error creating user' })
   }
-
+}
 
 /**
  * @function getUserInfo
@@ -92,20 +92,10 @@ export const getUserInfo: RequestHandler<{ userId: string }> = async (
   }
 }
 
-
 /**
- * @brief
- * En espanol
- * The `updateUserInfo` function updates the user information based on the *
- * provided user ID and request
- * body, and returns a success message if the user is found, otherwise returns a 404 error message.
- * @param req - The `req` parameter is the request object that contains information about the incoming
- * HTTP request. It includes properties such as `params` (which contains route parameters), `body`
- * (which contains the request body), and `query` (which contains query parameters).
- * @param res - The `res` parameter is the response object that is used to send the response back to
- * the client. It contains methods and properties that allow you to control the response, such as
- * setting the status code, headers, and sending the response body. In this code snippet, the `res`
- * object is
+ * @brief Función del controlador para actualizar la información de un usuario
+ * @param req -> userId, body
+ * @param res -> message
  */
 
 export const updateUserInfo: RequestHandler<
@@ -123,11 +113,18 @@ export const updateUserInfo: RequestHandler<
     } else {
       res.status(404).json({ message: 'User not found' })
     }
-  } catch(error) {
+  } catch (error) {
     console.log(error)
     res.status(400).json({ message: 'Error updating user' })
   }
 }
+
+/**
+ * @brief Función del controlador para actualizar las credenciales de un usuario
+ * @param req -> userId, body
+ * @param res -> message
+ * @returns
+ */
 
 export const updateUserCredentials: RequestHandler<
   { userId: string },
@@ -138,7 +135,7 @@ export const updateUserCredentials: RequestHandler<
 
   try {
     const userInfo = await UserService.getUserInfo(userId)
-    
+
     if (!userId || !userInfo) {
       res.status(400).json({ message: 'User not found' })
       return
@@ -155,4 +152,3 @@ export const updateUserCredentials: RequestHandler<
     res.status(400).json({ message: 'Error updating user credentials' })
   }
 }
-
