@@ -9,6 +9,7 @@ import com.greencircle.databinding.ActivityMainBinding
 import com.greencircle.databinding.TopBarBinding
 import com.greencircle.framework.views.fragments.CatalogueFragment
 import com.greencircle.framework.views.fragments.HomeFragment
+import com.greencircle.framework.views.fragments.MapFragment
 
 /**
  * Actividad principal que muestra la interfaz de usuario principal de la aplicación.
@@ -63,6 +64,12 @@ class MainActivity : AppCompatActivity() {
                 R.id.proveedores -> {
                     replaceFragment(CatalogueFragment())
                     topBarBinding.title.text = "Catálogo de Proveedores"
+                    true
+                }
+
+                R.id.mapa -> {
+                    replaceFragment(MapFragment())
+                    topBarBinding.title.text = "Mapa"
                     true
                 }
 
