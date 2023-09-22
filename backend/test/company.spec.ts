@@ -17,10 +17,10 @@ const testDataId = [
     phone: '8453728592',
     webPage: 'https://www.sunpower.com',
     street: 'Las Lomas Verdes',
-    streetNumber: 123,
+    streetNumber: '123',
     city: 'Ciudad de México',
     state: 'CDMX',
-    zipCode: 72000,
+    zipCode: '72000',
     score: 4.3,
     profilePicture:
       'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Sunpower_logo.svg/2560px-Sunpower_logo.svg.png',
@@ -29,8 +29,9 @@ const testDataId = [
     pdfPeeFideUrl: 'https://www.company1.com/pdfPeeFide.pdf',
     pdfGuaranteeSecurityUrl:
       'https://www.company1.com/pdfGuaranteeSecurity.pdf',
-    pdfActaConstitutivaUrl: 'https://www.company1.com/pdfActaConstitutiva.pdf',
-    pdfIneUrl: 'https://www.company1.com/pdfIne.pdf',
+    pdfActaConstitutivaUrl:
+      'https://example.com/company1-acta-constitutiva.pdf',
+    pdfIneUrl: 'https://example.com/company1-ine.pdf',
     status: 'approved',
   },
   {
@@ -42,10 +43,10 @@ const testDataId = [
     phone: '0123456799',
     webPage: 'https://www.company2.com',
     street: 'Company 2 street',
-    streetNumber: 123,
+    streetNumber: '123',
     city: 'Queretaro',
     state: 'QRO',
-    zipCode: 76152,
+    zipCode: '76152',
     profilePicture:
       'https://latam.apsystems.com/wp-content/uploads/2018/08/apsystems-exelsolar.png',
     pdfCurriculumUrl: 'https://www.company2.com/pdfCurriculum.pdf',
@@ -53,8 +54,9 @@ const testDataId = [
     pdfPeeFideUrl: 'https://www.company2.com/pdfPeeFide.pdf',
     pdfGuaranteeSecurityUrl:
       'https://www.company2.com/pdfGuaranteeSecurity.pdf',
-    pdfActaConstitutivaUrl: 'https://www.company2.com/pdfActaConstitutiva.pdf',
-    pdfIneUrl: 'https://www.company2.com/pdfIne.pdf',
+    pdfActaConstitutivaUrl:
+      'https://example.com/company2-acta-constitutiva.pdf',
+    pdfIneUrl: 'https://example.com/company2-ine.pdf',
     status: 'rejected',
   },
   {
@@ -66,19 +68,20 @@ const testDataId = [
     phone: '0126756789',
     webPage: 'https://www.company3.com',
     street: 'Company 3 street',
-    streetNumber: 123,
+    streetNumber: '123',
     city: 'Ciudad de México',
     state: 'CDMX',
-    zipCode: 76152,
+    zipCode: '76152',
     profilePicture:
       'https://cdn11.bigcommerce.com/s-3nrr5bfo5i/product_images/uploaded_images/tesla-logo.png',
     pdfCurriculumUrl: 'https://www.company3.com/pdfCurriculum.pdf',
     pdfDicCdmxUrl: 'https://www.company3.com/pdfDicCdmx.pdf',
     pdfPeeFideUrl: 'https://www.company3.com/pdfPeeFide.pdf',
     pdfGuaranteeSecurityUrl:
-      'https://www.company3.com/pdfGuaranteeSecurity.pdf',
-    pdfActaConstitutivaUrl: 'https://www.company3.com/pdfActaConstitutiva.pdf',
-    pdfIneUrl: 'https://www.company3.com/pdfIne.pdf',
+      'https://example.com/company10-guarantee-security.pdf',
+    pdfActaConstitutivaUrl:
+      'https://example.com/company10-acta-constitutiva.pdf',
+    pdfIneUrl: 'https://example.com/company10-ine.pdf',
     status: 'pending_approval',
   },
 ]
@@ -92,6 +95,7 @@ const attributesToExclude = [
 ]
 
 beforeEach(async () => {
+  await db.drop()
   await initDB()
 })
 
