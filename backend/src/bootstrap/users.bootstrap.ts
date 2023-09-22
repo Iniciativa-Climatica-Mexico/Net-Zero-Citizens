@@ -21,6 +21,7 @@ export default class UserBootstrap extends Bootstrapper {
         age: 30,
         state: 'NY',
         gender: 'masculine',
+        deviceToken: '',
       },
       {
         userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',

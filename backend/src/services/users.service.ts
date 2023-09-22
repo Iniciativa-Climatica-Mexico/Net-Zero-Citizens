@@ -88,21 +88,33 @@ export const getUserByEmailWithRole = async (
   })
 }
 
+/**
+ * @brief Servicio para obtener un usuario segun el companyId
+ * @param companyId
+ * @returns User or Null
+ */
+
+export const getUserCompany = async (companyId: string): Promise<User | null> => {
+  return await User.findOne({
+    where: { companyId },
+  })
+}
+
 export type UpdateUserInfoBody = {
-  roleId?: string
+  roleId: string
   companyId?: string | null
-  googleId?: string
-  facebookId?: string
-  appleId?: string
-  firstName?: string
-  lastName?: string
-  secondLastName?: string
-  email?: string
-  phoneNumber?: string | null
-  age?: number
-  state?: string
-  gender?: 'masculine' | 'femenine' | 'other' | 'no_answer'
-  profilePicture?: string
+  googleId?: string | null
+  facebookId?: string | null
+  appleId?: string | null
+  firstName: string
+  lastName: string
+  secondLastName?: string | null
+  phoneNumber: string
+  age: number
+  state: string
+  gender: 'masculine' | 'femenine' | 'other' | 'no_answer'
+  profilePicture?: string | null
+  deviceToken?: string | null
 }
 
 export const updateUserInfo = async (
