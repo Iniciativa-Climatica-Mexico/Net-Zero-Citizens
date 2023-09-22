@@ -143,26 +143,22 @@ export const getReviewByUser: RequestHandler<
  */
 
 export const addReview: RequestHandler<
-  { UUID: string; companyId: string },
+  { userId: string; companyId: string },
   string,
   { reviewTitle: string; review: string; score: number },
   NoRecord
 > = async (req, res) => {
-  const { UUID, companyId } = req.params
+  const { userId, companyId } = req.params
   const { reviewTitle, review, score } = req.body
-  if (!UUID || !companyId) {
+  if (!userId || !companyId) {
     res.status(400).json('Missing UUID or companyId')
-    return
-  }
-  if (!review || !reviewTitle) {
-    res.status(400).json('Missing review')
     return
   } else if (!score) {
     res.status(400).json('Missing score')
     return
   }
   try {
-    await ReviewService.addReview(UUID, companyId, reviewTitle, review, score)
+    await ReviewService.addReview(userId, companyId, reviewTitle, review, score)
     res.status(200).send('Added review')
   } catch (error) {
     console.log(error)
