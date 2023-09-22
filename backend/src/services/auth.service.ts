@@ -200,7 +200,7 @@ const generateAuthToken = (payload: Payload): string => {
   if (!process.env.JWT_AUTH) {
     throw new Error('JWT_AUTH not set')
   }
-  return jwt.sign(payload, process.env.JWT_AUTH, { expiresIn: '300s' })
+  return jwt.sign(payload, process.env.JWT_AUTH, { expiresIn: '86400s' })
 }
 
 /**

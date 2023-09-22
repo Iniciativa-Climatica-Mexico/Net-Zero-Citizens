@@ -4,7 +4,9 @@
     <string name="proveedores">Proveedores</string>
     <string name="mapa">Mapa</string>
     <string name="perfil">Perfil</string>
+    <string name="Cerrar_sesion">Cerrar sesion</string>
     <string name="review_nested_scroll_desc">Scrollable content</string>
+    <string name="review_opinions_count">%d opiniones</string>
     <string name="review_form_title">Comparte tu opinión</string>
     <string name="review_rating_bar_label">¿Cómo calificarías la atención y servicio del proveedor?</string>
     <string name="review_bad_rating_title">Malo</string>
@@ -21,6 +23,7 @@
     <string name="review_comment_section_optional">(Opcional)</string>
     <string name="review_comment_section_desc">Tus comentarios ayudan a otros usuarios a conocer mejor a un proveedor</string>
     <string name="review_submit_toast">Tu reseña se ha registrado exitosamente</string>
+    <string name="update_review_submit_toast">Tu reseña se ha actualizado exitosamente</string>
     <string name="no_reviews_to_display">No hay reseñas para este proveedor ¡Sé el primero en escribir una!</string>
     <string name="no_review_form_review_error">Ingresa una opinión</string>
     <string name="no_title_form_review_error">Ingresa un título para la opinión</string>
@@ -29,4 +32,9 @@
     <string name="servicios">Servicios</string>
     <string name="contacto">Contacto</string>
     <string name="rese_as">Reseñas</string>
+    <string name="review_submit_error">Hubo un error al publicar la review. Por favor intenta de nuevo más tarde</string>
+    <string name="review_placeholder_user">User</string>
+    <string name="review_placeholder_date">Date</string>
+    <string name="review_placeholder_title">Title</string>
+    <string name="review_placeholder_review">Review</string>
 </resources>

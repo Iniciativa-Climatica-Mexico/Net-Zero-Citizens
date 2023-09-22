@@ -68,7 +68,7 @@ export default async function ListSurveys() {
 function SurveyComponent(props: Survey) {
   return (
     <tr className="border-b border-gray-300">
-      <td className="truncate cursor-pointer  text-txt hover:text-primary hover:font-semibold">
+      <td className="truncate cursor-pointer  text-txt hover:text-primary-base hover:font-semibold">
         <a
           href={'/encuestas/' + props.surveyId}
           className="text-center py-8 px-8 "

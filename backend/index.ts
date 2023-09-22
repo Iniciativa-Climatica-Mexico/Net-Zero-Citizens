@@ -2,6 +2,7 @@ import DotEnv from 'dotenv'
 DotEnv.config()
 
 import express from 'express'
+import cors from 'cors'
 import { initRouterV1 } from './src/routes/index.routes'
 import { initDB } from './src/configs/database.config'
 import morgan from 'morgan'
@@ -11,6 +12,7 @@ initDB()
 const app = express()
 
 app.use(morgan('dev'))
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
