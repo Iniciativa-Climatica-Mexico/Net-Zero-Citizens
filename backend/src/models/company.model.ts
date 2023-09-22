@@ -81,7 +81,7 @@ export default class Company extends Model {
   street: string
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(50),
     allowNull: false,
     field: 'STREET_NUMBER',
   })

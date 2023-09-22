@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.greencircle.databinding.ItemServiceBinding
 import com.greencircle.domain.model.ServiceItem
-import com.greencircle.framework.ui.adapters.viewholders.ServiceViewHolder
+import com.greencircle.framework.ui.viewholders.ServiceViewHolder
 
 class ServiceAdapter : RecyclerView.Adapter<ServiceViewHolder>() {
 

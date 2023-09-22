@@ -9,7 +9,7 @@ const { expect } = chai
 
 const testData = [
   {
-    reviewId: 'revw-1234-efgh-0000',
+    reviewId: 'd349a4d4-595c-11ee-8c99-0242ac120000',
     userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
     companyId: 'c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
     reviewTitle: 'This is a review title',
@@ -17,7 +17,7 @@ const testData = [
     review: 'This is a comment',
   },
   {
-    reviewId: 'revw-1234-efgh-0001',
+    reviewId: 'd349a4d4-595c-11ee-8c99-0242ac120001',
     userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
     companyId: 'c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
     reviewTitle: 'This is a review title',
@@ -25,7 +25,7 @@ const testData = [
     review: 'This is a comment',
   },
   {
-    reviewId: 'revw-1234-efgh-0002',
+    reviewId: 'd349a4d4-595c-11ee-8c99-0242ac120002',
     userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
     companyId: 'c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
     reviewTitle: 'This is a review title',
@@ -33,7 +33,7 @@ const testData = [
     review: 'This is a comment',
   },
   {
-    reviewId: 'revw-1234-efgh-0003',
+    reviewId: 'd349a4d4-595c-11ee-8c99-0242ac120003',
     userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
     companyId: 'a2b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
     reviewTitle: 'This is a review title',
@@ -41,7 +41,7 @@ const testData = [
     review: 'This is a comment',
   },
   {
-    reviewId: 'revw-1234-efgh-0004',
+    reviewId: 'd349a4d4-595c-11ee-8c99-0242ac120004',
     userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
     companyId: 'a2b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
     reviewTitle: 'This is a review title',
