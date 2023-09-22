@@ -32,3 +32,21 @@ struct Credentials: Codable {
     let email: String
     let password: String
 }
+
+
+//struct User: Codable, Identifiable {
+//  var id: String {uuid}
+//
+//  var first_name: String
+//  var last_name: String
+//  var uuid: String
+//  var email: String
+//  var login_type: String
+//  var picture: String
+//  var roles: String
+//  var phone: String?
+//  var gender: String?
+//  var state: String?
+//  var age: Int?
+////  var created_at: String
+//}

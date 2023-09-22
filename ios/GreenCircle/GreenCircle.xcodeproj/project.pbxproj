@@ -199,6 +199,7 @@
 		6C4452E22AA6F05F00BE5930 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				6C4452E82AA6F09D00BE5930 /* Models */,
 				6C4452E72AA6F09500BE5930 /* UseCases */,
 			);
 			path = Domain;
@@ -208,7 +209,6 @@
 			isa = PBXGroup;
 			children = (
 				657A83472AB663CA0022F62C /* Local */,
-				6C4452E82AA6F09D00BE5930 /* Models */,
 				6C4452EA2AA6F0AE00BE5930 /* Remote */,
 				6C4452E92AA6F0A800BE5930 /* Repository */,
 			);
@@ -258,7 +258,8 @@
 			children = (
 				B3827EFA2AACF45400AC7213 /* User.swift */,
 			);
-			path = Models;
+			name = Models;
+			path = ../Data/Models;
 			sourceTree = "<group>";
 		};
 		6C4452E92AA6F0A800BE5930 /* Repository */ = {
@@ -276,16 +277,6 @@
 				657A83442AB6509A0022F62C /* Network */,
 			);
 			path = Remote;
-			sourceTree = "<group>";
-		};
-		6CB498282AB0FA9B00B6560C /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				6CB498232AB0DECC00B6560C /* PaginatedQuery.swift */,
-				6CB498292AB0FAA400B6560C /* CustomDateFormatter.swift */,
-				6C9761802AB2B2920046DB50 /* NetworkAPIService.swift */,
-			);
-			path = Network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
