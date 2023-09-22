@@ -11,6 +11,7 @@ import Foundation
 class NetworkAPIService {
   static let shared = NetworkAPIService()
   static let decoder = JSONDecoder()
+  static let shared = CompanyService()
   
   init() {
     NetworkAPIService.decoder.dateDecodingStrategy = .iso8601WithFractionalSeconds
@@ -152,15 +153,6 @@ class NetworkAPIService {
       return false
     }
   }
-
-  class CompanyService {
-    /// Inicialización de singleton
-    static let shared = CompanyService()
-    
-    /// Obtener compañía por id
-    ///  - Parameters:
-    ///     - url: Backend url para obtener datos
-    ///  - Returns: Modelo de compañía o error en cualquier otro caso no válido
     func getCoordinates(url: URL) async -> PaginatedQuery<Company>? {
         let taskRequest = AF.request(url, method: .get).validate()
         let response = await taskRequest.serializingData().response
@@ -177,6 +169,4 @@ class NetworkAPIService {
             return nil
         }
     }
-}
-
 }
