@@ -16,8 +16,8 @@ class UserService {
     private let localService = LocalService.shared
     
     
-    private let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdF9uYW1lIjoiSm9obiIsImxhc3RfbmFtZSI6IkRvZSIsInV1aWQiOiJhYmNkLTEyMzQtZWZnaC01Njc4IiwiZW1haWwiOiJqb2huLmRvZUBleGFtcGxlLmNvbSIsImxvZ2luX3R5cGUiOiJnb29nbGUiLCJyb2xlcyI6WyJhZG1pbiJdLCJnb29nbGVJZCI6IjAxMjM0NTY3ODkiLCJpYXQiOjE2OTUwNTM1MTksImV4cCI6MTY5NTA1MzgxOX0.I2Adb3yn9bF2egDiyfz7k0XuPa065ZmEJxE2gfOZO94"
-    private let refreshToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdF9uYW1lIjoiSm9obiIsImxhc3RfbmFtZSI6IkRvZSIsInV1aWQiOiJhYmNkLTEyMzQtZWZnaC01Njc4IiwiZW1haWwiOiJqb2huLmRvZUBleGFtcGxlLmNvbSIsImxvZ2luX3R5cGUiOiJnb29nbGUiLCJyb2xlcyI6WyJhZG1pbiJdLCJnb29nbGVJZCI6IjAxMjM0NTY3ODkiLCJjcmVhdGVkX2F0IjoxNjk1MDUzNTE5NDE2LCJpYXQiOjE2OTUwNTM1MTksImV4cCI6MTY5NTEzOTkxOX0.DN3yEa_S9IijznVcwSqYgkSIBDJLm3ya4b4NnZShCg8"
+    private let token = ""
+    private let refreshToken = ""
     
     private let headers: HTTPHeaders
 
