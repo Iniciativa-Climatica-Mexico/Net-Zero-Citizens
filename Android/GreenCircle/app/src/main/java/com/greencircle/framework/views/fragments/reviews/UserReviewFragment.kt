@@ -41,7 +41,6 @@ class UserReviewFragment : Fragment() {
         } else {
             userId = UUID.fromString(arguments?.getString("userId"))
         }
-        
         viewModel.setUserId(userId)
         viewModel.getUserReviewsList()
 
