@@ -179,6 +179,7 @@ export default function Home() {
                 </TableCell>
                 <TableCell className="text-right">
                   <CellAction
+                    setIsModalOpen={setIsModalOpen}
                     companyId={company.companyId}
                     fetchPending={fetchPending}
                     company={company}

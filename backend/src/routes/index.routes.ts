@@ -7,7 +7,7 @@ import ReportRouter from './report.routes'
 import ReviewRouter from './review.routes'
 import ProducRouter from './product.routes'
 import EcofinfoRouter from './ecoinfo.routes'
-import { validateToken, validateRole } from '../middlewares/auth.middleware'
+//import { validateToken, validateRole } from '../middlewares/auth.middleware'
 import { Express } from 'express'
 
 export const initRouterV1 = (app: Express) => {

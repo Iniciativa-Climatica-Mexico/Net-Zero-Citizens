@@ -12,7 +12,9 @@
 import { useState } from 'react'
 
 import { ThemeProvider } from '@mui/material/styles'
-import { Theme } from '@/api/v1/material'
+import { Theme } from '@/@types/icons/material'
+
+import { useToast } from './ui/use-toast'
 
 import { Company, updateCompany, UpdateCompanyInfoBody } from '@/api/v1/company'
 
@@ -26,6 +28,16 @@ import FileOpenIcon from '@mui/icons-material/FileOpen'
 import { Separator } from './ui/separator'
 import { Button } from './ui/button'
 import { Checkbox } from './ui/checkbox'
+/*import { AlertDialogFooter, AlertDialogHeader } from './ui/alert-dialog'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@radix-ui/react-alert-dialog'*/
 
 interface ModalProveedorProps {
   setIsModalOpen: (value: boolean) => void
@@ -39,7 +51,7 @@ export default function ModalProveedor({
   fetchPending,
 }: ModalProveedorProps) {
   const [checkboxChecked, setCheckboxChecked] = useState(false)
-
+  const { toast } = useToast()
   /**
    * @brief Function that allows admin to accept a specific company
    * @param company
@@ -47,6 +59,7 @@ export default function ModalProveedor({
    */
   const handleAccept = async (company: Company, companyId: string) => {
     try {
+      // Create an object with the updated status
       const updatedCompanyInfo: UpdateCompanyInfoBody = {
         name: company.name,
         description: company.description,
@@ -61,10 +74,49 @@ export default function ModalProveedor({
         webPage: company.webPage,
       }
 
+      // Call the updateCompany function with the updated information
       await updateCompany(companyId, updatedCompanyInfo)
     } catch (error) {
-      console.error('Error accepting company:', error)
+      console.error('Error approving company:', error)
     } finally {
+      toast({
+        description: 'Proveedor aprobado exitosamente.',
+      })
+      setIsModalOpen(false)
+      fetchPending()
+    }
+  }
+
+  /**
+   * @brief Function that allows admin to reject a specific company
+   * @param company
+   * @param companyId
+   */
+  const handleReject = async (company: Company, companyId: string) => {
+    try {
+      // Create an object with the updated status
+      const updatedCompanyInfo: UpdateCompanyInfoBody = {
+        name: company.name,
+        description: company.description,
+        street: company.street,
+        streetNumber: company.streetNumber,
+        city: company.city,
+        state: company.state,
+        zipCode: company.zipCode,
+        profilePicture: company.profilePicture,
+        status: 'rejected',
+        phone: company.phone,
+        webPage: company.webPage,
+      }
+
+      // Call the updateCompany function with the updated information
+      await updateCompany(companyId, updatedCompanyInfo)
+    } catch (error) {
+      console.error('Error rejecting company:', error)
+    } finally {
+      toast({
+        description: 'Proveedor rechazado exitosamente.',
+      })
       setIsModalOpen(false)
       fetchPending()
     }
@@ -218,7 +270,7 @@ export default function ModalProveedor({
                 He leído los documentos que ha entregado el proveedor
               </label>
             </div>
-            <footer className="flex gap-x-3 text-slate-100">
+            <footer className="flex gap-x-3">
               <Button
                 disabled={!checkboxChecked}
                 onClick={() =>
@@ -228,7 +280,14 @@ export default function ModalProveedor({
               >
                 Aprobar
               </Button>
-              <Button variant="outline">Rechazar</Button>
+              <Button
+                onClick={() =>
+                  handleReject(selectedCompany, selectedCompany.companyId)
+                }
+                variant="outline"
+              >
+                Rechazar
+              </Button>
             </footer>
           </section>
         </article>

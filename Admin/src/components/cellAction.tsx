@@ -9,9 +9,12 @@
  */
 
 import { ThemeProvider } from '@mui/material/styles'
-import { Theme } from '@/api/v1/material'
+import { Company } from '@/@types/company/company'
+import { Theme } from '@/@types/icons/material'
 
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
+import CancelIcon from '@mui/icons-material/Cancel'
+
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 
 import {
@@ -21,15 +24,19 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Company, updateCompany, UpdateCompanyInfoBody } from '@/api/v1/company'
+import { updateCompany, UpdateCompanyInfoBody } from '@/api/v1/company'
+import { toast } from './ui/use-toast'
+import { Toaster } from './ui/toaster'
 
 interface cellActionProps {
+  setIsModalOpen: (value: boolean) => void
   companyId: string
   fetchPending: () => void
   company: Company
 }
 
 export const CellAction = ({
+  setIsModalOpen,
   companyId,
   fetchPending,
   company,
@@ -41,6 +48,7 @@ export const CellAction = ({
    */
   const handleAccept = async (company: Company, companyId: string) => {
     try {
+      // Create an object with the updated status
       const updatedCompanyInfo: UpdateCompanyInfoBody = {
         name: company.name,
         description: company.description,
@@ -54,10 +62,51 @@ export const CellAction = ({
         phone: company.phone,
         webPage: company.webPage,
       }
+
+      // Call the updateCompany function with the updated information
       await updateCompany(companyId, updatedCompanyInfo)
     } catch (error) {
-      console.error('Error accepting company:', error)
+      console.error('Error approving company:', error)
     } finally {
+      toast({
+        description: 'Proveedor aprobado exitosamente.',
+      })
+      setIsModalOpen(false)
+      fetchPending()
+    }
+  }
+
+  /**
+   * @brief Function that allows admin to reject a specific company
+   * @param company
+   * @param companyId
+   */
+  const handleReject = async (company: Company, companyId: string) => {
+    try {
+      // Create an object with the updated status
+      const updatedCompanyInfo: UpdateCompanyInfoBody = {
+        name: company.name,
+        description: company.description,
+        street: company.street,
+        streetNumber: company.streetNumber,
+        city: company.city,
+        state: company.state,
+        zipCode: company.zipCode,
+        profilePicture: company.profilePicture,
+        status: 'rejected',
+        phone: company.phone,
+        webPage: company.webPage,
+      }
+
+      // Call the updateCompany function with the updated information
+      await updateCompany(companyId, updatedCompanyInfo)
+    } catch (error) {
+      console.error('Error rejecting company:', error)
+    } finally {
+      toast({
+        description: 'Proveedor rechazado exitosamente.',
+      })
+      setIsModalOpen(false)
       fetchPending()
     }
   }
@@ -74,8 +123,13 @@ export const CellAction = ({
             <CheckCircleOutlineIcon className="mr-1.5" />
             Aceptar
           </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleReject(company, companyId)}>
+            <CancelIcon className="mr-1.5" />
+            Rechazar
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+      <Toaster />
     </ThemeProvider>
   )
 }
