@@ -101,18 +101,18 @@ export const getUserCompany = async (companyId: string): Promise<User | null> =>
 }
 
 export type UpdateUserInfoBody = {
-  roleId: string
+  roleId?: string
   companyId?: string | null
   googleId?: string | null
   facebookId?: string | null
   appleId?: string | null
-  firstName: string
-  lastName: string
+  firstName?: string
+  lastName?: string
   secondLastName?: string | null
-  phoneNumber: string
-  age: number
-  state: string
-  gender: 'masculine' | 'femenine' | 'other' | 'no_answer'
+  phoneNumber?: string
+  age?: number
+  state?: string
+  gender?: 'masculine' | 'femenine' | 'other' | 'no_answer'
   profilePicture?: string | null
   deviceToken?: string | null
 }
