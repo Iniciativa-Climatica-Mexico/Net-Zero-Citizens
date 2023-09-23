@@ -22,7 +22,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_naSvigation"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/bottom_nav_background"
         app:itemIconTint="@drawable/navbar_selector"
@@ -32,7 +32,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/menu_navbar_navigation"
-        app:elevation="0dp"
     />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
