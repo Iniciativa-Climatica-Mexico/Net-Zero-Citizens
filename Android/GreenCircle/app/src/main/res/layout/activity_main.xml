@@ -14,7 +14,7 @@
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_naSvigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,12 +24,14 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
+        android:background="@drawable/bottom_nav_background"
         app:itemIconTint="@drawable/navbar_selector"
         app:itemTextColor="@drawable/navbar_selector"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/menu_navbar_navigation" />
+        app:menu="@menu/menu_navbar_navigation"
+    />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
