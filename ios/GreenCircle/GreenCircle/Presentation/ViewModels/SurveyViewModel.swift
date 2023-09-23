@@ -24,7 +24,6 @@ class SurveyViewModel: ObservableObject {
     survey.questions.forEach({ question in
       answers.append(Answer(scaleValue: nil, answerText: nil, questionId: question.questionId))
     })
-    print(answers.count)
   }
 
   @MainActor

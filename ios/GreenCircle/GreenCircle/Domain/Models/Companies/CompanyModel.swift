@@ -16,7 +16,8 @@ enum StatusEnum: String, Codable, Equatable {
 }
 
 /// Struct representando la información presente en una compañía
-struct Company: Codable {
+struct Company: Codable, Identifiable {
+  var id: String { companyId.uuidString }
   var companyId: UUID
   var userId: String
   var name: String
@@ -25,12 +26,12 @@ struct Company: Codable {
   var phone: String
   var webPage: String
   var street: String
-  var streetNumber: Int?
+  var streetNumber: String
   var city: String
   var state: String
-  var zipCode: Int
-  var latitude: Double
-  var longitude: Double
+  var zipCode: String
+  // var latitude: Double
+  // var longitude: Double
   var profilePicture: String?
   var pdfCurriculumUrl: String?
   var pdfDicCdmxUrl: String
@@ -43,7 +44,7 @@ struct Company: Codable {
   var createdAt: String
   var updatedAt: String
   var products: [Product]?
-  var score: Double
-  var oneComment: String
+  // var score: Double
+  // var oneComment: String
   var images: [CompanyImages]?
 }

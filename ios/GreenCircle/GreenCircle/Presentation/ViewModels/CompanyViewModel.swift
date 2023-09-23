@@ -12,6 +12,8 @@ class CompanyViewModel: ObservableObject {
   /// Caso de uso para hacer fetch de los datos de compañía
   private let fetchCompanyInfoUseCase: FetchCompanyInfoUseCase
   
+  @Published var companies = [Company]()
+  
   /// La compañía puede cambiar en la vista (se construye .onAppear())
   @Published var contentCompany: Company = Company(
     companyId: UUID(uuidString: "") ?? UUID(),
@@ -22,12 +24,10 @@ class CompanyViewModel: ObservableObject {
     phone: "",
     webPage: "",
     street: "",
-    streetNumber: 0,
+    streetNumber: "",
     city: "",
     state: "",
-    zipCode: 0,
-    latitude: 0.0,
-    longitude: 0.0,
+    zipCode: "",
     profilePicture: "",
     pdfCurriculumUrl: "",
     pdfDicCdmxUrl: "",
@@ -39,14 +39,14 @@ class CompanyViewModel: ObservableObject {
     createdAt: "",
     updatedAt: "",
     products: [],
-    score: 0.0,
-    oneComment: "",
     images: []
     )
+  
   /// Para implementar el caso de uso en la vista que llame al ViewModel Compañía
-  init(fetchCompanyInfoUseCase: FetchCompanyInfoUseCase = FetchCompanyInfoUseCaseImpl.shared) {
+  init(fetchCompanyInfoUseCase: FetchCompanyInfoUseCase = FetchCompanyInfoUseCase.shared) {
     self.fetchCompanyInfoUseCase = fetchCompanyInfoUseCase
   }
+  
   @MainActor
   /// Obtener información de la compañía mediante el caso de uso
   /// Actualización de la compañía si existe el UUID en base de datos
@@ -56,4 +56,10 @@ class CompanyViewModel: ObservableObject {
         contentCompany = resultCompany
     }
   }
+  
+  @MainActor
+  func fetchAllCompanies() async {
+    self.companies = await fetchCompanyInfoUseCase.fetchAllCompanies()!.rows
+  }
+   
 }

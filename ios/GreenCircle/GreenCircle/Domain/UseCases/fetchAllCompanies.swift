@@ -7,25 +7,21 @@
 
 import SwiftUI
 
-/*
 protocol FetchAllCompaniesUseCaseProtocol {
-  func fetchAllCompanies() -> async [Company]?
+  func fetchAllCompanies() async -> PaginatedQuery<Company>?
 }
 
 class FetchAllCompaniesUseCase: FetchAllCompaniesUseCaseProtocol {
-  let fetchCompaniesRepository: CompanyRepository
+  let companyRepository: CompanyRepository
   
   static let shared = FetchAllCompaniesUseCase()
   
-  init(fetchCompaniesRepository: CompanyRepository = CompanyRepository.shared) {
-    self.fetchCompaniesRepository = fetchCompaniesRepository
+  init(companyRepository: CompanyRepository = CompanyRepository.shared) {
+    self.companyRepository = companyRepository
   }
   
-  func fetchAllCompanies() async -> [Company]? {
-    if let resultCompanies = await fetchCompaniesRepository.fetchAllCompanies() {
-      return resultCompanies
-    }
-    return nil
+  func fetchAllCompanies() async -> PaginatedQuery<Company>? {
+    return await companyRepository.fetchAllCompanies()
   }
 }
-*/
+

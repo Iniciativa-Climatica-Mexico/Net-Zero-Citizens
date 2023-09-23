@@ -214,7 +214,7 @@ class NetworkAPIService {
     }
   }
   
-  func fetchAllCompanies(url: URL) async -> Company? {
+  func fetchAllCompanies(url: URL) async -> PaginatedQuery<Company>?{
     let taskRequest = AF.request(url, method: .get).validate()
     let response = await taskRequest.serializingData().response
     switch response.result {
@@ -223,7 +223,7 @@ class NetworkAPIService {
         return
           try NetworkAPIService
           .decoder
-          .decode(Company.self, from: data)
+          .decode(PaginatedQuery<Company>.self, from: data)
       } catch {
         debugPrint(error)
         return nil

@@ -55,9 +55,9 @@ class CompanyRepository: CompanyRepositoryProtocol {
                    authToken: authToken, company: company)
   }
   
-  func fetchAllCompanies(companyId: UUID) async -> Company? {
+  func fetchAllCompanies() async -> PaginatedQuery<Company>? {
     return await service
-      .fetchCompanyById(url: URL(string: "\(CompanyAPI.base)\(CompanyAPI.Routes.company)")!)
+      .fetchAllCompanies(url: URL(string: "\(CompanyAPI.base)")!)
   }
   
 }

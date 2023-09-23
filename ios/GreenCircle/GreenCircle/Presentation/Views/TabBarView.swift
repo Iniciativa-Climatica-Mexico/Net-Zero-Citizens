@@ -20,7 +20,7 @@ struct TabBarView: View {
         }
         .tag(false)
       
-      ContactCompanyView()
+      CardView()
         .tabItem {
           Image(systemName: "book.fill")
           Text("Catálogo")

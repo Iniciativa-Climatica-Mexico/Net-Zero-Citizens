@@ -8,15 +8,15 @@
 import Foundation
 
 /// Inicialización de protocolo de casos de uso
-protocol FetchCompanyInfoUseCase {
+protocol FetchCompanyInfoUseCaseProtocol {
   func fetchCompanyById(id: UUID) async -> Company?
 }
 
-class FetchCompanyInfoUseCaseImpl: FetchCompanyInfoUseCase {
+class FetchCompanyInfoUseCase: FetchCompanyInfoUseCaseProtocol {
 
   let companyDataRepository: CompanyRepository
 
-  static let shared = FetchCompanyInfoUseCaseImpl()
+  static let shared = FetchCompanyInfoUseCase()
 
   init(companyDataRepository: CompanyRepository = CompanyRepository.shared) {
     self.companyDataRepository = companyDataRepository
@@ -32,8 +32,13 @@ class FetchCompanyInfoUseCaseImpl: FetchCompanyInfoUseCase {
       if let profilePicture = company.profilePicture, profilePicture.isEmpty {
         company.profilePicture = "person.crop.circle.badge.xmark"
       }
+      print(company.email)
       return company
     }
     return nil
+  }
+  
+  func fetchAllCompanies() async -> PaginatedQuery<Company>? {
+    return await companyDataRepository.fetchAllCompanies()
   }
 }

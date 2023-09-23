@@ -90,7 +90,7 @@ struct ContactCompanyRatingView: View {
           .font(.system(size: 18))
           .padding(.bottom, 5).bold()
         HStack {
-          ForEach(0..<5) { index in
+          /*ForEach(0..<5) { index in
             if index < Int($modelCompanyRating.contentCompany.score.wrappedValue) {
               Image(systemName: "star.fill")
                 .resizable()
@@ -104,8 +104,8 @@ struct ContactCompanyRatingView: View {
                 .resizable()
                 .frame(width: 11, height: 11)
             }
-          }
-          Text(String(modelCompanyRating.contentCompany.score))
+          }*/
+          //Text(String(modelCompanyRating.contentCompany.score))
         }
           .padding(.bottom, 5)
           .foregroundColor(Color("GreenCustom"))
@@ -115,11 +115,11 @@ struct ContactCompanyRatingView: View {
           .font(.system(size: 16))
           .foregroundColor(Color("BlackCustom")).contrast(12.6)
           .padding(.bottom, 3).bold()
-        VStack(spacing: 6) {
+        /*VStack(spacing: 6) {
           Text(modelCompanyRating.contentCompany.oneComment)
             .font(.system(size: 13))
             .foregroundColor(Color("BlackCustom")).contrast(12.6)
-        }.padding(.bottom, 10)
+        }.padding(.bottom, 10)*/
         HStack {
           Spacer()
           Text("Ver mas...").onTapGesture {
@@ -148,7 +148,7 @@ struct ContactCompanyComponentView: View {
       VStack(alignment: .leading, spacing: 6) {
         Text("Página web").font(.system(size: 13))
           .foregroundColor(Color("BlackCustom")).contrast(12.6)
-        Text(modelCompany.contentCompany.webPage)
+        Text(modelCompany.contentCompany.webPage ?? "")
           .font(.system(size: 10))
           .foregroundColor(Color("GreenCustom"))
       }
@@ -178,7 +178,7 @@ struct ContactCompanyComponentView: View {
             .font(.system(size: 10))
             .foregroundColor(Color("GreenCustom"))
           
-          Text(String(modelCompany.contentCompany.streetNumber!))
+          Text(String(modelCompany.contentCompany.streetNumber))
             .font(.system(size: 10))
             .foregroundColor(Color("GreenCustom"))
         }
