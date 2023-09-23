@@ -99,7 +99,7 @@ struct CatalogView: View {
         .navigationTitle("Proveedores")
         .navigationBarTitleDisplayMode(.inline)
 
-    }
+    }.accentColor(.white)
       .onAppear {
       Task {
         await viewModel.fetchAllCompanies()
