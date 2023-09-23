@@ -9,6 +9,7 @@ import FlowStacks
 import SwiftUI
 
 struct CoordinatorView: View {
+  @State var hasPendingSurvey: Bool = false
   
   enum Screens {
     case login
@@ -55,7 +56,8 @@ struct CoordinatorView: View {
         PendingCompanyView()
         
       case .survey:
-        SurveyView()
+        SurveyView(hasPendingPendingSurvey: $hasPendingSurvey,
+                   goMainMenu: goMainMenu)
           .applyNavBarTheme()
       }
     }
@@ -82,7 +84,12 @@ struct CoordinatorView: View {
   }
   
   private func goMainMenu() {
+    hasPendingSurvey = false
     routes.presentCover(.mainMenuView)
+    
+    if hasPendingSurvey {
+      routes.presentCover(.survey)
+    }
   }
   
   private func goSurvey() {

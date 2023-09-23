@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct SurveyView: View {
+  @Binding var hasPendingPendingSurvey: Bool
   @StateObject var vm = SurveyViewModel()
   @State private var showAlert = false
   @State private var submissionResult: Bool = false
   @State private var requiredQuestion: Bool = false
+  
+  var goMainMenu: () -> Void
   
   var body: some View {
     NavigationView {
@@ -28,10 +31,8 @@ struct SurveyView: View {
         .padding([.leading, .trailing], 22)
         Button("Enviar", action: {
           Task {
-            print(vm.answerRequired())
             submissionResult = await vm.submitAnswers()
             showAlert = true
-            
           }
         })
         .foregroundColor(.white)
@@ -50,9 +51,9 @@ struct SurveyView: View {
     }
     .alert(isPresented: $showAlert) {
       if (submissionResult == true) {
-        return Alert(title: Text("Éxito"), message: Text("Tu encuesta fue enviada con éxito"), dismissButton: .default(Text("OK")))
+        return Alert(title: Text("Éxito"), message: Text("Tu encuesta fue enviada con éxito"), dismissButton: .default(Text("OK"), action: {goMainMenu()}))
       } else {
-        return Alert(title: Text("Error"), message: Text("Error enviando tu encuesta, intenta de nuevo más tarde"), dismissButton: .default(Text("OK")))
+        return Alert(title: Text("Error"), message: Text("Error enviando tu encuesta, intenta de nuevo más tarde"), dismissButton: .default(Text("OK"), action: {goMainMenu()}))
       }
     }
   }
