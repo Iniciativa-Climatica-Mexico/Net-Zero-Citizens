@@ -7,9 +7,14 @@
 
 import Foundation
 
+protocol CompanyUseCaseProtocol {
+  func fetchAllCompanies() async -> PaginatedQuery<Company>?
+  func fetchCompanyById(id: UUID) async -> Company?
+}
+
 /// Clase representando el caso de uso de registrar una compañía nueva
-class RegisterCompanyUseCase {
-  static let shared = RegisterCompanyUseCase()
+class CompanyUseCase {
+  static let shared = CompanyUseCase()
   let repository = CompanyRepository.shared
   
   /// Llama al repositorio para crear una compañía nueva
@@ -19,5 +24,10 @@ class RegisterCompanyUseCase {
   @MainActor
   func registerCompany(authToken: String, company: PostCompanyData) async {
     await repository.postCompany(authToken: authToken, company: company)
+  }
+  
+  @MainActor
+  func fetchAllCompanies() async -> PaginatedQuery<Company>? {
+    return await repository.fetchAllCompanies()
   }
 }
