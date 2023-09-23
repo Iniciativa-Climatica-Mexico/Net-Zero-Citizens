@@ -21,6 +21,7 @@ struct TabBarView: View {
         .tag(false)
       
       CatalogView()
+        .applyNavBarTheme()
         .tabItem {
           Image(systemName: "book.fill")
           Text("Catálogo")

@@ -90,12 +90,12 @@ struct ContactCompanyRatingView: View {
           .font(.system(size: 18))
           .padding(.bottom, 5).bold()
         HStack {
-          /*ForEach(0..<5) { index in
-            if index < Int($modelCompanyRating.contentCompany.score.wrappedValue) {
+          ForEach(0..<5) { index in
+            if index < Int(modelCompanyRating.contentCompany.score ?? 0.0) {
               Image(systemName: "star.fill")
                 .resizable()
                 .frame(width: 11, height: 11)
-            } else if index == Int(modelCompanyRating.contentCompany.score) {
+            } else if index == Int(modelCompanyRating.contentCompany.score ?? 0.0) {
               Image(systemName: "star.leadinghalf.fill")
                 .resizable()
                 .frame(width: 11, height: 11)
@@ -104,8 +104,8 @@ struct ContactCompanyRatingView: View {
                 .resizable()
                 .frame(width: 11, height: 11)
             }
-          }*/
-          //Text(String(modelCompanyRating.contentCompany.score))
+          }
+          Text(String(modelCompanyRating.contentCompany.score ?? 0.0))
         }
           .padding(.bottom, 5)
           .foregroundColor(Color("GreenCustom"))
@@ -115,11 +115,11 @@ struct ContactCompanyRatingView: View {
           .font(.system(size: 16))
           .foregroundColor(Color("BlackCustom")).contrast(12.6)
           .padding(.bottom, 3).bold()
-        /*VStack(spacing: 6) {
-          Text(modelCompanyRating.contentCompany.oneComment)
+        VStack(spacing: 6) {
+          Text(modelCompanyRating.contentCompany.oneComment ?? "No hay comentarios")
             .font(.system(size: 13))
             .foregroundColor(Color("BlackCustom")).contrast(12.6)
-        }.padding(.bottom, 10)*/
+        }.padding(.bottom, 10)
         HStack {
           Spacer()
           Text("Ver mas...").onTapGesture {
@@ -223,21 +223,23 @@ struct CustomButtonOption: View {
 }
 
 struct ContactCompanyView: View {
+  var idCompany: UUID
   @StateObject var contactCompanyViewModel = CompanyViewModel()
+  @State private var showAlert = false
   @State var isPressed: [String: Bool] = ["Producto": true]
   @State var selectedPage: Int = 0
   @State var dispScrollView: Bool = false
   @State var bindImageToDescription: Bool = false
   @State var stringDescription: String = ""
   var body: some View {
-      if !dispScrollView {
-        NavigationStack {
-          VStack(alignment: .leading) {
-            TabView {
-              ForEach(contactCompanyViewModel.contentCompany.images ?? [], id: \.self) { image in
-                if let imageUrl = image.imageUrl {
-                  AsyncImage(url: URL(string: imageUrl)) { phase in
-                    switch phase {
+    if !dispScrollView {
+      NavigationStack {
+        VStack(alignment: .leading) {
+          TabView {
+            ForEach(contactCompanyViewModel.contentCompany.images ?? [], id: \.self) { image in
+              if let imageUrl = image.imageUrl {
+                AsyncImage(url: URL(string: imageUrl)) { phase in
+                  switch phase {
                     case .empty:
                       ProgressView()
                     case .success(let image):
@@ -250,61 +252,59 @@ struct ContactCompanyView: View {
                       Text("Failed to load Image!!")
                     @unknown default:
                       fatalError()
-                    }
                   }
                 }
               }
-            }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-              .frame(height: 155)
-              .padding(.bottom, 15)
-            HStack {
-              CustomButtonOption(isPressed: $isPressed, content: "Producto")
-              CustomButtonOption(isPressed: $isPressed, content: "Contacto")
-              CustomButtonOption(isPressed: $isPressed, content: "Reviews")
             }
-            Spacer()
-            TabViewImagesProducts(productImages: contactCompanyViewModel, bindImageToDescription: $bindImageToDescription)
-            ForEach(Array(isPressed.keys), id: \.self) { key in
-              if let value: Bool = isPressed[key], value == true {
-                  if key == "Producto" {
-                    Text("").onAppear {
-                      bindImageToDescription = true
-                    }
-                  }
-                  if key == "Contacto" {
-                    ContactCompanyComponentView(modelCompany: contactCompanyViewModel).onAppear {
-                      bindImageToDescription = false
-                    }
-                  }
-                  if key == "Reviews" {
-                    ContactCompanyRatingView(modelCompanyRating: contactCompanyViewModel, dispScrollView: $dispScrollView).onAppear {
-                      bindImageToDescription = false
-                    }
-                }
-              }
-            }.frame(height: bindImageToDescription ? 33 : 220)
-            Spacer()
-          }.onAppear {
-            Task {
-              let specificUUIDString = "c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e"
-              if let specificUUID = UUID(uuidString: specificUUIDString) {
-                await contactCompanyViewModel.fetchCompanyById(idCompany: specificUUID)
-              } else {
-                print("Invalid UUID string: \(specificUUIDString)")
-              }
-            }
-          }
-          .navigationTitle(contactCompanyViewModel.contentCompany.name)
-          .navigationBarTitleDisplayMode(.inline)
-          .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-              Image(systemName: "chevron.left").foregroundColor(.white)
-            }
+          }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+            .frame(height: 155)
+            .padding(.bottom, 15)
+          HStack {
+            CustomButtonOption(isPressed: $isPressed, content: "Producto")
+            CustomButtonOption(isPressed: $isPressed, content: "Contacto")
+            CustomButtonOption(isPressed: $isPressed, content: "Reviews")
           }
           Spacer()
+          TabViewImagesProducts(productImages: contactCompanyViewModel, bindImageToDescription: $bindImageToDescription)
+          ForEach(Array(isPressed.keys), id: \.self) { key in
+            if let value: Bool = isPressed[key], value == true {
+              if key == "Producto" {
+                Text("").onAppear {
+                  bindImageToDescription = true
+                }
+              }
+              if key == "Contacto" {
+                ContactCompanyComponentView(modelCompany: contactCompanyViewModel).onAppear {
+                  bindImageToDescription = false
+                }
+              }
+              if key == "Reviews" {
+                ContactCompanyRatingView(modelCompanyRating: contactCompanyViewModel, dispScrollView: $dispScrollView).onAppear {
+                  bindImageToDescription = false
+                }
+              }
+            }
+          }.frame(height: bindImageToDescription ? 33 : 220)
+          Spacer()
+        }.onAppear {
+          Task {
+            await contactCompanyViewModel.fetchCompanyById(idCompany: idCompany)
+            if contactCompanyViewModel.contentCompany.products!.isEmpty {
+              showAlert = true
+            }
+          }
         }
+      .navigationTitle(contactCompanyViewModel.contentCompany.name)
+      .navigationBarTitleDisplayMode(.inline)
+      Spacer()
+          .alert(isPresented: $showAlert){
+            Alert(title: Text("Error"),
+                  message: Text("No contamos con products aún"),
+                  dismissButton: .default(Text("Ok")))
+          }
+    }
       } else {
-        ScrollViewRating(dispScrollView: $dispScrollView, isPressed: $isPressed)
+        ScrollViewRating(idCompany: idCompany, dispScrollView: $dispScrollView, isPressed: $isPressed)
           .onAppear {
             isPressed = ["Producto": false, "Contacto": false, "Reviews": true]
           }

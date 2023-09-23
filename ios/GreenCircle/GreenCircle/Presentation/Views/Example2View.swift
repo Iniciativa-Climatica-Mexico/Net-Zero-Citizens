@@ -13,7 +13,7 @@ struct Example2View: View {
             TitleBarView(title: "Example 2",
                          leftIcon: "chevron.left",
                          rightIcon: nil,
-                         leftDestination: { Example2View() },
+                         leftDestination: { CatalogView() },
                          rightDestination: { })
                 .navigationBarBackButtonHidden(true)
                 .navigationBarBackButtonHidden(true)

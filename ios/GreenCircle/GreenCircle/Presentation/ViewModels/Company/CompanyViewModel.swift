@@ -39,6 +39,8 @@ class CompanyViewModel: ObservableObject {
     createdAt: "",
     updatedAt: "",
     products: [],
+    score: 0.0,
+    oneComment: "",
     images: []
     )
   

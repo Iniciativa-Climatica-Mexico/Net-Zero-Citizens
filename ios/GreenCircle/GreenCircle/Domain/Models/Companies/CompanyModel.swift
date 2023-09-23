@@ -44,7 +44,7 @@ struct Company: Codable, Identifiable {
   var createdAt: String
   var updatedAt: String
   var products: [Product]?
-  // var score: Double
-  // var oneComment: String
+  var score: Double?
+  var oneComment: String?
   var images: [CompanyImages]?
 }

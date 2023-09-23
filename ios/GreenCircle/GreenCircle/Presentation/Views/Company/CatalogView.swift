@@ -14,7 +14,7 @@ struct CatalogView: View {
     
     NavigationStack {
       List(viewModel.companies) { company in
-        NavigationLink(destination: ContactCompanyView()) {
+        NavigationLink(destination: ContactCompanyView(idCompany: company.companyId)) {
           ZStack{
             RoundedRectangle(cornerRadius: 25, style: .continuous)
               .fill(.white)
