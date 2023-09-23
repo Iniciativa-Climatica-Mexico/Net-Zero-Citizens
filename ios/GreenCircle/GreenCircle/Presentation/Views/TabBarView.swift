@@ -33,7 +33,7 @@ struct TabBarView: View {
           Text("Mapa")
         }
       
-      EmptyView()
+      ProfileView(modelUser: UserViewModel())
         .tabItem {
           Image(systemName: "person.fill")
           Text("Perfil")

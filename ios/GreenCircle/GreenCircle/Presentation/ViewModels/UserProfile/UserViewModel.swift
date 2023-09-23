@@ -10,8 +10,8 @@ import Foundation
 /// Implementación de view model de modelo de Compañía
 class UserViewModel: ObservableObject {
     /// Caso de uso para hacer fetch de los datos de compañía
-    private let fetchUserInfoUseCase: UserInfoUseCaseProtocol
-    private let updateUserDataUseCase: UserInfoUseCaseProtocol
+    private let fetchUserInfoUseCase: UserRegisterUseCase
+    private let updateUserDataUseCase: UserRegisterUseCase
     /// La compañía puede cambiar en la vista (se construye .onAppear())
     @Published var contentUser: User = User(
         userId: UUID(),
@@ -35,12 +35,12 @@ class UserViewModel: ObservableObject {
         )
     /// Para implementar el caso de uso en la vista que llame al ViewModel Compañía
     init(
-      fetchUserInfoUseCase: UserInfoUseCaseProtocol = UserRegisterUseCase.shared as! UserInfoUseCaseProtocol,
-      updateUserDataUseCase: UserInfoUseCaseProtocol = UserRegisterUseCase() as! UserInfoUseCaseProtocol
-    ) {
-        self.fetchUserInfoUseCase = fetchUserInfoUseCase
-        self.updateUserDataUseCase = updateUserDataUseCase
-    }
+        userInfoUseCase: UserRegisterUseCase = UserRegisterUseCase.shared,
+        updateRegisterUseCase: UserRegisterUseCase = UserRegisterUseCase()
+      ) {
+          self.fetchUserInfoUseCase = userInfoUseCase
+          self.updateUserDataUseCase = updateRegisterUseCase
+      }
 
     @MainActor
     /// Obtener información de la compañía mediante el caso de uso

@@ -23,8 +23,7 @@ struct ProfileView: View {
         ZStack {
             // Title Bar
             VStack {
-                
-                
+
                 TitleBarView(
                     title: "Mi Perfil",
                     leftIcon: nil,
@@ -125,7 +124,7 @@ struct ProfileView: View {
             }
             
             
-    }
+        }
         
         
       
@@ -142,12 +141,12 @@ struct ProfileView: View {
         
         
         
-}
+    }
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
         ProfileView(modelUser: UserViewModel())
-        
+
     }
 }
 
