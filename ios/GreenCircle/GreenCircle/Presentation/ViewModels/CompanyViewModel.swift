@@ -10,7 +10,7 @@ import Foundation
 /// Implementación de view model de modelo de Compañía
 class CompanyViewModel: ObservableObject {
   /// Caso de uso para hacer fetch de los datos de compañía
-  private let fetchCompanyInfoUseCase: FetchCompanyInfoUseCase
+  private let useCase: CompanyUseCase
   
   @Published var companies = [Company]()
   
@@ -43,15 +43,15 @@ class CompanyViewModel: ObservableObject {
     )
   
   /// Para implementar el caso de uso en la vista que llame al ViewModel Compañía
-  init(fetchCompanyInfoUseCase: FetchCompanyInfoUseCase = FetchCompanyInfoUseCase.shared) {
-    self.fetchCompanyInfoUseCase = fetchCompanyInfoUseCase
+  init(useCase: CompanyUseCase = CompanyUseCase.shared) {
+    self.useCase = useCase
   }
   
   @MainActor
   /// Obtener información de la compañía mediante el caso de uso
   /// Actualización de la compañía si existe el UUID en base de datos
   func fetchCompanyById(idCompany: UUID) async {
-    let resultCompany = await fetchCompanyInfoUseCase.fetchCompanyById(id: idCompany)
+    let resultCompany = await useCase.fetchCompanyById(id: idCompany)
     if let resultCompany = resultCompany {
         contentCompany = resultCompany
     }
@@ -59,7 +59,7 @@ class CompanyViewModel: ObservableObject {
   
   @MainActor
   func fetchAllCompanies() async {
-    self.companies = await fetchCompanyInfoUseCase.fetchAllCompanies()!.rows
+    self.companies = await useCase.fetchAllCompanies()!.rows
   }
    
 }

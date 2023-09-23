@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-struct CardView: View {
+struct CatalogView: View {
   @StateObject var viewModel = CompanyViewModel()
   var body: some View {
     

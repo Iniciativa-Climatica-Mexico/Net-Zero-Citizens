@@ -7,16 +7,17 @@
 
 import Foundation
 
-protocol FetchAllEcoInfoUseCaseProtocol {
+protocol EcoInfoUseCaseProtocol {
   func fetchAllEcoInfo() async -> [EcoInfo]?
 }
 
-class FetchAllEcoInfoUseCase: FetchAllEcoInfoUseCaseProtocol {
-  let ecoInfoRepository: EcoInfoRepository
+class EcoInfoUseCase: EcoInfoUseCaseProtocol {
+  let repository: EcoInfoRepository
   
-  static let shared = FetchAllEcoInfoUseCase()
+  static let shared = EcoInfoUseCase()
+  
   init(ecoInfoRepository: EcoInfoRepository = EcoInfoRepository.shared) {
-    self.ecoInfoRepository = ecoInfoRepository
+    self.repository = ecoInfoRepository
   }
   
   /// Corte del string donde se encuentra un espacio o la longitud es 150
@@ -37,7 +38,7 @@ class FetchAllEcoInfoUseCase: FetchAllEcoInfoUseCaseProtocol {
   /// Obtener toda la información que conforma al modelo EcoInfo
   /// - Returns: [EcoInfo]?
   func fetchAllEcoInfo() async -> [EcoInfo]? {
-    if var resultEcoInfo = await ecoInfoRepository.fetchAllEcoInfo() {
+    if var resultEcoInfo = await repository.fetchAllEcoInfo() {
       resultEcoInfo = resultEcoInfo.map { ecoInfo in
         var modifiedEcoInfo = ecoInfo
         if (modifiedEcoInfo.description ?? "").isEmpty {

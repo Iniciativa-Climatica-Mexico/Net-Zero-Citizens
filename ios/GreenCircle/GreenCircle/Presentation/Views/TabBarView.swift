@@ -20,7 +20,7 @@ struct TabBarView: View {
         }
         .tag(false)
       
-      CardView()
+      CatalogView()
         .tabItem {
           Image(systemName: "book.fill")
           Text("Catálogo")

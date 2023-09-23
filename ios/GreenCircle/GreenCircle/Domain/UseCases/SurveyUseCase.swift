@@ -14,20 +14,20 @@ protocol SurveyUseCaseProtocol {
 }
 
 class SurveyUseCase: SurveyUseCaseProtocol {
-  let surveyRepository: SurveyRepository
+  let repository: SurveyRepository
   
   static let shared = SurveyUseCase()
   
   /// - Description: Inicializa el caso de uso de encuestas
   /// - Parameter surveyRepository: SurveyRepository
   init(surveyRepository: SurveyRepository = SurveyRepository.shared) {
-    self.surveyRepository = surveyRepository
+    self.repository = surveyRepository
   }
   
   /// - Description: Obtener encuesta pendiente
   /// - Returns: Modelo de encuesta o nil (SurveyModel?)
   func getPendingSurvey() async -> SurveyModel? {
-    return await surveyRepository.getPendingSurvey()
+    return await repository.getPendingSurvey()
   }
   
   /// - Description: Enviar respuestas de la encuesta
@@ -36,7 +36,7 @@ class SurveyUseCase: SurveyUseCaseProtocol {
   ///   - answers: Las respuestas de la encuesta
   /// - Returns: Bool
   func submitAnswers(surveyId: String, answers: [Answer]) async -> Bool {
-    return await surveyRepository.submitAnswers(surveyId: surveyId, answers:answers)
+    return await repository.submitAnswers(surveyId: surveyId, answers:answers)
   }
     
 }

@@ -7,11 +7,6 @@
 
 import Foundation
 
-protocol CompanyUseCaseProtocol {
-  func fetchAllCompanies() async -> PaginatedQuery<Company>?
-  func fetchCompanyById(id: UUID) async -> Company?
-}
-
 /// Clase representando el caso de uso de registrar una compañía nueva
 class CompanyUseCase {
   static let shared = CompanyUseCase()
@@ -29,5 +24,20 @@ class CompanyUseCase {
   @MainActor
   func fetchAllCompanies() async -> PaginatedQuery<Company>? {
     return await repository.fetchAllCompanies()
+  }
+  
+  @MainActor
+  func fetchCompanyById(id: UUID) async -> Company? {
+    if var company = await repository.fetchCompanyById(companyId: id) {
+      if !company.webPage.isEmpty {
+        company.webPage = "No contamos con Página Web"
+      }
+      if let profilePicture = company.profilePicture, profilePicture.isEmpty {
+        company.profilePicture = "person.crop.circle.badge.xmark"
+      }
+      print(company.email)
+      return company
+    }
+    return nil
   }
 }
