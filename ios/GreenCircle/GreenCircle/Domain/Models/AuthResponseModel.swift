@@ -16,5 +16,5 @@ struct Tokens: Codable {
 /// Struct representando la respuesta del servidor en autenticación
 struct AuthResponse: Codable {
   var tokens: Tokens
-  var user: User
+  var user: UserAuth
 }

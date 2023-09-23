@@ -50,7 +50,7 @@ class NetworkAPIService {
   ///   - url: el url para realizar el PUT
   ///   - authToken: token de autenticación
   ///   - user: la información del usuario a actualizar
-  func putUser(url: URL, authToken: String, user: User) async {
+  func putUser(url: URL, authToken: String, user: UserAuth) async {
     let params: Parameters = [
       "phoneNumber": user.phone!,
       "age": user.age!,
