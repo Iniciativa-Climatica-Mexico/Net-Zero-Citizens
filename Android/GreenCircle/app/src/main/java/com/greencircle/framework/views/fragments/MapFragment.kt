@@ -15,7 +15,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.greencircle.R
 import com.greencircle.data.repository.GoogleMapsRepository
-import com.greencircle.domain.model.Company
 import com.greencircle.domain.model.CompanyObject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +23,6 @@ import kotlinx.coroutines.launch
 class MapFragment : Fragment(), OnMapReadyCallback {
 
     private var mGoogleMap: GoogleMap? = null
-    private lateinit var data: ArrayList<Company>
 
     private fun getCompanyList() {
         CoroutineScope(Dispatchers.IO).launch {
