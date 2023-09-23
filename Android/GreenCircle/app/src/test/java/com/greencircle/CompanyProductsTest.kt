@@ -49,7 +49,6 @@ class CompanyProductsTest {
             description = "Test Description",
             imageUrl = "test.jpg",
             imageAltText = "Test Image Alt Text",
-            companies = listOf(company),
         )
 
         val companyProducts = CompanyProducts(
@@ -104,7 +103,6 @@ class CompanyProductsTest {
             description = "Test Description",
             imageUrl = "test.jpg",
             imageAltText = "Test Image Alt Text",
-            companies = listOf(company),
         )
 
         val companyProducts = CompanyProducts(
@@ -163,7 +161,6 @@ class CompanyProductsTest {
             description = "Test Description",
             imageUrl = "test.jpg",
             imageAltText = "Test Image Alt Text",
-            companies = listOf(company),
         )
 
         val companyProducts = CompanyProducts(
@@ -222,7 +219,6 @@ class CompanyProductsTest {
             description = "Test Description",
             imageUrl = "test.jpg",
             imageAltText = "Test Image Alt Text",
-            companies = listOf(company),
         )
 
         val companyProducts = CompanyProducts(

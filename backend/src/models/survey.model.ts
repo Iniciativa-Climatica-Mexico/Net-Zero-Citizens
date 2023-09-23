@@ -44,7 +44,7 @@ export default class Survey extends Model {
   @HasMany(() => Question)
   questions!: Question[]
 
-  @BeforeCreate static closeOtherSurvays(instance: Survey) {
+  @BeforeCreate static closeOtherSurvays() {
     return Survey.update(
       { endDate: new Date() },
       {

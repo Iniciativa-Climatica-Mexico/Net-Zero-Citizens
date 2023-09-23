@@ -58,7 +58,6 @@ export default class Review extends Model {
 
   @Column({
     type: DataType.STRING(500),
-    allowNull: false,
     field: 'REVIEW',
   })
   review: string

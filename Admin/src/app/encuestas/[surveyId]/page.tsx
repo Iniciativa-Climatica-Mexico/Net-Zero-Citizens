@@ -33,7 +33,7 @@ export default async function DetailedSurvey(props: DetailedSurveyProps) {
             )}
 
             <Link href={'/reportes/encuesta/' + surveyId}>
-              <button className=" bg-primary hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end">
+              <button className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end">
                 Generar Reporte
               </button>
             </Link>
@@ -85,13 +85,13 @@ function QuestionComponent(props: QuestionDetail) {
       </td>
       <td className="text-center truncate py-8 px-8 text-txt ">
         {props.isRequired ? (
-          <button className="bg-primary text-white py-2 px-4 w-[8rem] rounded cursor-default">
+          <div className="bg-primary-base text-white py-2 px-4 w-[8rem] rounded">
             Obligatorio
-          </button>
+          </div>
         ) : (
-          <button className="text-primary py-2 px-4 w-[8rem] rounded cursor-default border-primary border-2">
+          <div className="text-primary-base py-2 px-4 w-[8rem] rounded border-primary-base border-2">
             Opcional
-          </button>
+          </div>
         )}
       </td>
     </tr>

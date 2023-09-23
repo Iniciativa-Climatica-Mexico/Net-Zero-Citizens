@@ -1,7 +1,6 @@
 package com.greencircle.utils
 
 object Constants {
-    const val CONTACTAR_PROVEEDOR = "CONTACTAR_PROVEEDOR"
     const val SPLASHSCREEN_DURATION = 3000L
     const val SERVER_BASE_URL = "http://10.0.2.2:4000/api/v1/"
     const val GOOGLE_CLIENT_ID =

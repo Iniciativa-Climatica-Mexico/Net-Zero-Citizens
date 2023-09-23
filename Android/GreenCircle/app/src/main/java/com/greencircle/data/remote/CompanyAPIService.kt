@@ -1,11 +1,11 @@
 package com.greencircle.data.remote
 
-import com.greencircle.domain.model.Companies
 import com.greencircle.data.remote.models.Company
-import retrofit2.http.GET
-import retrofit2.http.Path
+import com.greencircle.domain.model.Companies
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 /**
  * Interfaz que define los métodos para realizar operaciones relacionadas con empresas a través de una API.

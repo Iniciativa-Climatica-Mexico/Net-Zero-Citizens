@@ -49,7 +49,6 @@ class ProductTest {
             description = "Test Description",
             imageUrl = "test.jpg",
             imageAltText = "Test Image Alt Text",
-            companies = listOf(company)
         )
 
         assertEquals(product.productId, UUID(0, 2))
@@ -57,8 +56,6 @@ class ProductTest {
         assertEquals(product.description, "Test Description")
         assertEquals(product.imageUrl, "test.jpg")
         assertEquals(product.imageAltText, "Test Image Alt Text")
-        assertEquals(product.companies.size, 1)
-        assertEquals(product.companies[0], company)
     }
 
     @Test
@@ -96,7 +93,6 @@ class ProductTest {
             description = "Test Description",
             imageUrl = "test.jpg",
             imageAltText = "Test Image Alt Text",
-            companies = listOf(company)
         )
 
         val product2 = Product(
@@ -105,7 +101,6 @@ class ProductTest {
             description = "Test Description",
             imageUrl = "test.jpg",
             imageAltText = "Test Image Alt Text",
-            companies = listOf(company)
         )
 
         assertEquals(product1, product2)
@@ -146,7 +141,6 @@ class ProductTest {
             description = "Test Description",
             imageUrl = "test.jpg",
             imageAltText = "Test Image Alt Text",
-            companies = listOf(company)
         )
 
         val product2 = Product(
@@ -155,7 +149,6 @@ class ProductTest {
             description = "Another Description",
             imageUrl = "another.jpg",
             imageAltText = "Another Image Alt Text",
-            companies = listOf(company)
         )
 
         assertNotEquals(product1, product2)
@@ -196,7 +189,6 @@ class ProductTest {
             description = "Test Description",
             imageUrl = "test.jpg",
             imageAltText = "Test Image Alt Text",
-            companies = listOf(company)
         )
 
         val product2 = Product(
@@ -205,7 +197,6 @@ class ProductTest {
             description = "Test Description",
             imageUrl = "test.jpg",
             imageAltText = "Test Image Alt Text",
-            companies = listOf(company)
         )
 
         assertEquals(product1.hashCode(), product2.hashCode())

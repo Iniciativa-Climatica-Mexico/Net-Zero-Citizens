@@ -69,18 +69,13 @@ export const getReviewByUser = async (
   params: PaginationParams<{ userId: string }>
 ): Promise<PaginatedQuery<Review>> => {
   const { userId } = params
-
-  console.log('params', params)
-
-  const test = await Review.findAndCountAll({
+  return await Review.findAndCountAll({
     limit: params.pageSize,
     offset: params.start,
     where: {
       userId: userId,
     },
   })
-
-  return test
 }
 
 /**
