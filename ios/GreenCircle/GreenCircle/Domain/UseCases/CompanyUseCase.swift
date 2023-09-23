@@ -3,7 +3,7 @@
 //  GreenCircle
 //
 //  Created by Ricardo Adolfo Fernández Alvarado on 19/09/23.
-//
+//  Modified by Daniel Gutiérrez Gómez 23/09/23
 
 import Foundation
 
@@ -26,6 +26,9 @@ class CompanyUseCase {
     return await repository.fetchAllCompanies()
   }
   
+  /// Definición de Caso de uso para hacer el fetch
+    ///   - Parameters:UUID de compañía
+    ///   - Returns: Modelo de compañía
   @MainActor
   func fetchCompanyById(id: UUID) async -> Company? {
     if var company = await repository.fetchCompanyById(companyId: id) {

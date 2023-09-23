@@ -17,9 +17,9 @@ class AuthAPI {
 
 /// Clase con la estructura de la API de usuarios
 class UserAPI {
-  static let base = "http://localhost:4000/api/v1/users"
+  static let base = "http://localhost:4000/api/v1"
   struct Routes {
-    static let userId = "/:id"
+    static let userId = "/:userId"
     static let user = "users"
     static let credentials = "users/credentials"
   }
