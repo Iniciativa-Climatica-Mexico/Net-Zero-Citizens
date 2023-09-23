@@ -239,3 +239,21 @@ const getCompanyScore = async (id: string): Promise<Review[] | null> => {
     },
   })
 }
+
+/**
+ * @brief
+ * Regresa compañías ya aprovadas
+ * @param status
+ */
+
+export const getApprovedCompanies = async <T>(
+  params: PaginationParams<T>
+): Promise<PaginatedQuery<Company>> => {
+  return await Company.findAndCountAll({
+    limit: params.pageSize,
+    offset: params.start,
+    where: {
+      status: 'approved',
+    },
+  })
+}
