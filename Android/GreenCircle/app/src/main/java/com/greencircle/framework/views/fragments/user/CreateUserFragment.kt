@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputLayout
 import com.greencircle.R
 import com.greencircle.data.remote.user.UserAPIService
-import com.greencircle.framework.viewmodel.CreateUserViewModel
+import com.greencircle.framework.viewmodel.user.CreateUserViewModel
 import com.greencircle.framework.views.activities.SurveyActivity
 import java.util.UUID
 

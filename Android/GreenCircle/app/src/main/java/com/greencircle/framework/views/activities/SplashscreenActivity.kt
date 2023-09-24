@@ -6,7 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.greencircle.databinding.ActivitySplashscreenBinding
-import com.greencircle.framework.viewmodel.SplashscreenViewModel
+import com.greencircle.framework.viewmodel.splashscreen.SplashscreenViewModel
 
 /**
  * Actividad de presentación que se muestra al iniciar la aplicación.

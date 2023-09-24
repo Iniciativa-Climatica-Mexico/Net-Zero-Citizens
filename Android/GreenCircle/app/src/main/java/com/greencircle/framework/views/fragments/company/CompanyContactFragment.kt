@@ -1,6 +1,6 @@
 package com.greencircle.framework.views.fragments.company
 
-import CompanyContactViewModel
+import com.greencircle.framework.viewmodel.company.CompanyContactViewModel
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

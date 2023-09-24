@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.greencircle.R
 import com.greencircle.databinding.FragmentCompanyReviewBinding
 import com.greencircle.domain.model.reviews.CompanyReview
-import com.greencircle.framework.ui.adapters.reviews.CompanyReviewAdapter
+import com.greencircle.framework.views.fragments.catalogue.ui.adapters.reviews.CompanyReviewAdapter
 import com.greencircle.framework.viewmodel.reviews.CompanyReviewViewModel
 import java.util.UUID
 

@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.greencircle.databinding.FragmentRegisterCompanyBinding
-import com.greencircle.framework.viewmodel.CreateCompanyViewModel
+import com.greencircle.framework.viewmodel.company.CreateCompanyViewModel
 import com.greencircle.framework.views.activities.MainActivity
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
 import com.greencircle.utils.AuthUtils
