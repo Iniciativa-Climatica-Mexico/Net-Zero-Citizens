@@ -2,6 +2,7 @@ package com.greencircle.domain.usecase.auth
 
 import android.content.Context
 import com.greencircle.data.repository.TokenRepository
+import com.greencircle.domain.model.auth.Tokens
 
 /**
  * Caso de uso para recuperar tokens de autenticación y actualización almacenados.
@@ -18,9 +19,9 @@ class RecoverTokensRequirement(private val context: Context) {
     /**
      * Recupera los tokens de autenticación y actualización almacenados.
      *
-     * @return Un objeto [TokenRepository.Tokens] que contiene los tokens recuperados.
+     * @return Un objeto [Tokens] que contiene los tokens recuperados.
      * @throws Exception Si los tokens no se encuentran en el almacenamiento compartido.
      */
-    suspend operator fun invoke(): TokenRepository.Tokens =
+    operator fun invoke(): Tokens =
         repository.recoverTokens() ?: throw Exception("Tokens not found")
 }
