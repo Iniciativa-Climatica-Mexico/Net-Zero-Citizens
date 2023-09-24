@@ -3,8 +3,6 @@
  * @desc This module contains functions that are used to authenticate users.
  */
 
-import { Session } from 'inspector'
-import { AUTH_TOKEN_KEY, REFRESH_TOKEN_KEY } from './constants'
 
 export type AuthResponse = {
   tokens?: {
@@ -59,36 +57,6 @@ const googleLogin = async (
   }
 }
 
-const saveTokensFromSession = (session: Session) => {
-  saveTokens({
-    authToken: session.authToken,
-    refreshToken: session.refreshToken,
-    refreshToken: session.refreshToken,
-  })
-}
-
-const saveTokens = (tokens: { authToken: string; refreshToken: string }) => {
-  localStorage.setItem(AUTH_TOKEN_KEY, tokens.authToken)
-  localStorage.setItem(REFRESH_TOKEN_KEY, tokens.refreshToken)
-}
-
-const recoverTokens = () => {
-  const authToken = localStorage.getItem(AUTH_TOKEN_KEY)
-  const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY)
-
-  return { authToken, refreshToken }
-  return { authToken, refreshToken }
-}
-
-const deleteTokens = () => {
-  localStorage.removeItem(AUTH_TOKEN_KEY)
-  localStorage.removeItem(REFRESH_TOKEN_KEY)
-}
-
 export {
   googleLogin,
-  saveTokens,
-  recoverTokens,
-  saveTokensFromSession,
-  deleteTokens,
 }

@@ -1,6 +1,8 @@
-import { fetchSurveyById, QuestionDetail } from '@/api/survey'
+'use client'
+import { fetchSurveyById, QuestionDetail, Survey } from '@/api/survey'
 import Link from 'next/link'
 import CloseButtonComponent from './components/CloseButtonComponent'
+import { useEffect, useState } from 'react'
 
 type DetailedSurveyProps = {
   params: {
@@ -10,11 +12,14 @@ type DetailedSurveyProps = {
   }
 }
 
-export default async function DetailedSurvey(props: DetailedSurveyProps) {
+export default function DetailedSurvey(props: DetailedSurveyProps) {
   try {
     const surveyId = props.params.surveyId
-    const surveyDetail = await fetchSurveyById(surveyId)
-
+    // const surveyDetail = await fetchSurveyById(surveyId)
+    const [surveyDetail, setSurveyDetail] = useState({} as Survey)
+    useEffect(() => {
+      fetchSurveyById(surveyId).then((res) => setSurveyDetail(res))
+    }, [])
     return (
       <div>
         <div className="flex flex-row items-center  my-8 mx-8">

@@ -1,10 +1,17 @@
+'use client'
 import { Survey, fetchAllSurveys } from '@/api/survey'
 import moment from 'moment'
+import { useEffect, useState } from 'react'
 
-export default async function ListSurveys() {
+export default function ListSurveys() {
   try {
-    const response = await fetchAllSurveys()
-    console.log(response)
+    // const response = await fetchAllSurveys()
+    const [response, setResponse] = useState({ rows: [] } as { rows: Survey[] })
+
+    useEffect(() => {
+      fetchAllSurveys().then((res) => setResponse(res))
+    }, [])
+
     const surveysList = response.rows.sort((a, b) => {
       return moment(b.startDate).diff(moment(a.startDate))
     })

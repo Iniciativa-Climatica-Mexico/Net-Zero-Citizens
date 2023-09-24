@@ -10,7 +10,6 @@
 
 'use client'
 import { signOut, useSession } from 'next-auth/react'
-import { deleteTokens } from '@/utils/authUtils'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import Image from 'next/image'
@@ -95,7 +94,6 @@ export default function Navbar() {
                       <button
                         onClick={() => {
                           signOut()
-                          deleteTokens()
                         }}
                         className="text-red-600"
                       >

@@ -1,19 +1,9 @@
 'use client'
 import { useSession } from 'next-auth/react'
-import { saveTokensFromSession } from '@/utils/authUtils'
 import GoogleButton from '@/components/GoogleButton'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import { useEffect } from 'react'
 
 export default function Login() {
   const { data: session } = useSession()
-
-  useEffect(() => {
-    if (session && session.user) {
-      console.log(session)
-      saveTokensFromSession(session)
-    }
-  }, [session])
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
