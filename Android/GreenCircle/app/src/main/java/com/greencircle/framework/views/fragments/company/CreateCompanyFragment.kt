@@ -1,4 +1,4 @@
-package com.greencircle.framework.views.fragments
+package com.greencircle.framework.views.fragments.company
 
 import android.content.Intent
 import android.os.Bundle

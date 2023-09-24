@@ -1,4 +1,4 @@
-package com.greencircle.framework.views.fragments
+package com.greencircle.framework.views.fragments.company
 
 import android.app.Activity
 import android.content.Intent
@@ -13,22 +13,22 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
-import com.greencircle.databinding.FragmentRegisterUserBinding
-import com.greencircle.framework.viewmodel.CreateUserViewModel
-import com.greencircle.framework.views.MainActivity
-import com.greencircle.framework.views.activities.RegisterUserActivity
+import com.greencircle.databinding.FragmentRegisterCompanyBinding
+import com.greencircle.framework.viewmodel.CreateCompanyViewModel
+import com.greencircle.framework.views.activities.MainActivity
+import com.greencircle.framework.views.activities.RegisterCompanyActivity
 import com.greencircle.utils.AuthUtils
 
-/**Constructor de "RegisterUserFragment"
+/**Constructor de "RegisterCompanyFragment"
  *
- * @constructor Incializa y crea la vista del "RegisterUserFragment". Navega a "CreateUserFragment".
+ * @constructor Incializa y crea la vista del "RegisterCompanyFragment". Navega a "CreateCompanyFragment".
  */
-class RegisterUserFragment : Fragment() {
-    private var _binding: FragmentRegisterUserBinding? = null
-    private lateinit var viewModel: CreateUserViewModel
+class RegisterCompanyFragment : Fragment() {
+    private var _binding: FragmentRegisterCompanyBinding? = null
+    private lateinit var viewModel: CreateCompanyViewModel
     private lateinit var _arguments: Bundle
-    private val binding get() = _binding!!
     private val authUtils = AuthUtils()
+    private val binding get() = _binding!!
 
     /**
      * Una propiedad para manejar el resultado de una operación de inicio de sesión de Google
@@ -68,11 +68,11 @@ class RegisterUserFragment : Fragment() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[CreateUserViewModel::class.java]
+        viewModel = ViewModelProvider(this)[CreateCompanyViewModel::class.java]
     }
 
     /**
-     * Método que se llama cuando se crea la vista del fragmento de registro de usuario.
+     * Método que se llama cuando se crea la vista del fragmento de registro de empresa.
      *
      * @param inflater El inflador de diseño que se utiliza para inflar la vista.
      * @param container El contenedor en el que se debe colocar la vista del fragmento.
@@ -85,7 +85,7 @@ class RegisterUserFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflar el diseño de este fragmento
-        _binding = FragmentRegisterUserBinding.inflate(inflater, container, false)
+        _binding = FragmentRegisterCompanyBinding.inflate(inflater, container, false)
         // Google Login
         authUtils.googleLoginListener(binding, requireActivity(), googleSignInActivityResult)
 
@@ -116,18 +116,18 @@ class RegisterUserFragment : Fragment() {
     }
 
     /**
-     * Navega hacia el fragmento "CreateUserFragment" dentro de la "RegisterUserActivity".
+     * Navega hacia el fragmento "CreateCompanyFragment" dentro de la "RegisterCompanyActivity".
      *
-     * Esta función se encarga de hacer la transición al fragmento "CreateUserFragment" desde el fragmento
-     * actual dentro de la "RegisterUserActivity". Opcionalmente, puede recibir un Bundle de argumentos
+     * Esta función se encarga de hacer la transición al fragmento "CreateCompanyFragment" desde el fragmento
+     * actual dentro de la "RegisterCompanyActivity". Opcionalmente, puede recibir un Bundle de argumentos
      * que se pueden pasar al fragmento de destino.
      *
      * @param arguments Un Bundle opcional de argumentos que contiene la información de la cuenta de Google.
      */
     private fun navigateToForm(arguments: Bundle? = null) {
-        val createUserFragment = CreateUserFragment()
-        val activity = requireActivity() as RegisterUserActivity
-        activity.replaceFragment(createUserFragment, arguments)
+        val createCompanyFragment = CreateCompanyFragment()
+        val activity = requireActivity() as RegisterCompanyActivity
+        activity.replaceFragment(createCompanyFragment, arguments)
     }
 
     private fun navigateToHome() {

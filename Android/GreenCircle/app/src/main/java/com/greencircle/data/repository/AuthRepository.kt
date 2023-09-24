@@ -1,7 +1,7 @@
 package com.greencircle.data.repository
 
 import com.greencircle.data.remote.auth.AuthAPIClient
-import com.greencircle.data.remote.models.AuthResponse
+import com.greencircle.domain.model.auth.AuthResponse
 
 /**
  * Repositorio para gestionar operaciones relacionadas con la autenticación de usuarios.

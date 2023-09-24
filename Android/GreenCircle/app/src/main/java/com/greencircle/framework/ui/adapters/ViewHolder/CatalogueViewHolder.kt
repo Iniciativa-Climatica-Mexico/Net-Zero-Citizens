@@ -6,7 +6,8 @@ import com.bumptech.glide.Glide
 import com.greencircle.R
 import com.greencircle.databinding.CatalogueCardLayoutBinding
 import com.greencircle.domain.model.company.CompanySummary
-import com.greencircle.framework.views.fragments.CompanyContactFragment
+import com.greencircle.framework.views.activities.MainActivity
+import com.greencircle.framework.views.fragments.company.CompanyContactFragment
 
 /**
  * Esta clase se utiliza para almacenar los datos de resumen
@@ -48,7 +49,7 @@ class CatalogueViewHolder(private val binding: CatalogueCardLayoutBinding) :
     fun passViewGoToCompanyDetail(bundle: Bundle) {
         val companyContactFragment = CompanyContactFragment()
         companyContactFragment.arguments = bundle
-        val activity = binding.root.context as com.greencircle.framework.views.MainActivity
+        val activity = binding.root.context as MainActivity
         activity.replaceFragment(companyContactFragment)
     }
 }

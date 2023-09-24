@@ -1,7 +1,7 @@
 package com.greencircle.data.remote.company
 
-import com.greencircle.domain.model.company.Company
 import com.greencircle.domain.model.company.Companies
+import com.greencircle.domain.model.company.Company
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST

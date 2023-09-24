@@ -1,7 +1,7 @@
 package com.greencircle.domain.usecase
 
-import com.greencircle.data.remote.models.AuthResponse
 import com.greencircle.data.repository.AuthRepository
+import com.greencircle.domain.model.auth.AuthResponse
 
 /**
  * Caso de uso para la autenticación con Google.

@@ -1,4 +1,4 @@
-package com.greencircle.framework.views.fragments
+package com.greencircle.framework.views.fragments.proveedores
 
 import android.os.Bundle
 import android.view.LayoutInflater

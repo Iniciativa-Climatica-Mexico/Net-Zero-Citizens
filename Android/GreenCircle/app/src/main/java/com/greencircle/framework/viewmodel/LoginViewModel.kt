@@ -6,8 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.greencircle.data.remote.models.AuthResponse
 import com.greencircle.data.repository.TokenRepository
+import com.greencircle.domain.model.auth.AuthResponse
 import com.greencircle.domain.usecase.GoogleAuthRequirement
 import com.greencircle.domain.usecase.RecoverTokensRequirement
 import com.greencircle.domain.usecase.SaveTokensRequirement

@@ -1,6 +1,6 @@
 package com.greencircle.data.remote.auth
 
-import com.greencircle.data.remote.models.AuthResponse
+import com.greencircle.domain.model.auth.AuthResponse
 import retrofit2.http.Body
 import retrofit2.http.POST
 

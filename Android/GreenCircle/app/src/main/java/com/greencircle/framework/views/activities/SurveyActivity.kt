@@ -10,7 +10,6 @@ import com.greencircle.R
 import com.greencircle.databinding.ActivitySurveyBinding
 import com.greencircle.domain.model.survey.Question
 import com.greencircle.framework.viewmodel.SurveyViewModel
-import com.greencircle.framework.views.MainActivity
 import com.greencircle.framework.views.fragments.survey.QuestionFragment
 import java.util.UUID
 

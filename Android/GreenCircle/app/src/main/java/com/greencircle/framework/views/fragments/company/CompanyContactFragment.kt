@@ -1,4 +1,4 @@
-package com.greencircle.framework.views.fragments
+package com.greencircle.framework.views.fragments.company
 
 import CompanyContactViewModel
 import android.os.Bundle
