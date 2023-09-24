@@ -66,6 +66,31 @@ export const getCompanyById: RequestHandler<
 
 /**
  * @brief
+ * Función del controlador que devuelve todos los proveedores aprobados de la base de datos
+ * @param req La request HTTP al servidor
+ * @param res Un objeto paginador con los proveedores y la información de paginación
+ */
+export const getApprovedCompanies: RequestHandler<
+  NoRecord,
+  Paginator<Company>,
+  NoRecord,
+  PaginationParams<{ status: string }>
+> = async (req, res) => {
+  const params = {
+    start: req.query.start || 0,
+    pageSize: req.query.pageSize || 10,
+  }
+  const companies = await CompanyService.getCompanyByStatus('approved', params)
+  res.json({
+    rows: companies.rows,
+    start: params.start,
+    pageSize: params.pageSize,
+    total: companies.count,
+  })
+}
+
+/**
+ * @brief
  * Función del controlador que devuelve todos los proveedores pendientes por aprobar de la base de datos
  * @param req La request HTTP al servidor
  * @param res Un objeto paginador con los proveedores y la información de paginación
@@ -80,7 +105,10 @@ export const getPendingCompanies: RequestHandler<
     start: req.query.start || 0,
     pageSize: req.query.pageSize || 10,
   }
-  const companies = await CompanyService.getPendingCompanies(params)
+  const companies = await CompanyService.getCompanyByStatus(
+    'pending_approval',
+    params
+  )
   res.json({
     rows: companies.rows,
     start: params.start,

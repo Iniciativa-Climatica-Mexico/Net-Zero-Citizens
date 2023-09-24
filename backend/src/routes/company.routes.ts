@@ -10,6 +10,8 @@ router.post('/create', CompanyController.createCompany)
 router.post('/add/product', CompanyController.addProduct)
 router.post('/upload/image', CompanyImageController.uploadCompanyImage)
 
+router.get('/approved', CompanyController.getApprovedCompanies)
+
 router.get('/pending', CompanyController.getPendingCompanies)
 
 router.post('/pending/:companyId', CompanyController.updateCompanyInfo)
