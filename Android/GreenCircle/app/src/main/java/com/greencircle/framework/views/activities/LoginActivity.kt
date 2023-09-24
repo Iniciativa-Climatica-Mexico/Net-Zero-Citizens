@@ -93,6 +93,7 @@ class LoginActivity : AppCompatActivity() {
         viewModel.googleLoginResult.observe(this) { authResponse ->
             if (authResponse != null) {
                 if (authResponse.user.roles != "new_user") {
+                    Log.d("Test", "User: ${authResponse.user}")
                     navigateToSurvey()
                 } else {
                     Toast.makeText(applicationContext, "Por favor, regístrate", Toast.LENGTH_SHORT)

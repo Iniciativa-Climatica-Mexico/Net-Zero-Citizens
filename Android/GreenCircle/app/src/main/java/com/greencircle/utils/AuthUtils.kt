@@ -45,7 +45,8 @@ class AuthUtils {
         val acct: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(activity)
         Log.d("GoogleSignIn", "acct: $acct")
         if (acct != null) {
-            navigateToMainActivity(activity, getDataFromGoogleAccount(acct))
+            googleSignOut(mGoogleSignInClient)
+            // navigateToMainActivity(activity, getDataFromGoogleAccount(acct))
         }
 
         googleButton.setOnClickListener {
