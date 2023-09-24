@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.greencircle.data.remote.UserAPIService
+import com.greencircle.data.remote.user.UserAPIService
 import com.greencircle.data.remote.models.AuthResponse
-import com.greencircle.domain.model.UpdateUserRequirement
+import com.greencircle.domain.model.user.UpdateUserRequirement
 import com.greencircle.domain.usecase.GoogleAuthRequirement
 import java.util.UUID
 import kotlinx.coroutines.Dispatchers

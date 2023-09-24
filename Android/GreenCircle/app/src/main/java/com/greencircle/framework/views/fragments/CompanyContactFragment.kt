@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.greencircle.R
 import com.greencircle.databinding.FragmentCompanyContactBinding
-import com.greencircle.domain.model.CompanyImages
+import com.greencircle.domain.model.company.CompanyImages
 import com.greencircle.framework.views.fragments.reviews.CompanyReviewFragment
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 

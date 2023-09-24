@@ -3,7 +3,7 @@ package com.greencircle.framework.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.greencircle.domain.model.CompanySummary
+import com.greencircle.domain.model.company.CompanySummary
 import com.greencircle.domain.usecase.CatalogueRequirement
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

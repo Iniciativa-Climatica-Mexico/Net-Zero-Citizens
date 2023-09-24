@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.greencircle.R
-import com.greencircle.data.remote.EcoInfoRetrofit
+import com.greencircle.data.remote.ecoinfo.EcoInfoRetrofit
 import com.greencircle.data.repository.EcoInfoRepository
 import com.greencircle.framework.ui.adapters.EcoInfoAdapter
 import com.greencircle.framework.viewmodel.EcoInfoViewModel

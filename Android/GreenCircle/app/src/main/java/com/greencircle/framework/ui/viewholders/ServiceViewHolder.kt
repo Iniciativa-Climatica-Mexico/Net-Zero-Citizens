@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.greencircle.R
 import com.greencircle.databinding.ItemServiceBinding
-import com.greencircle.domain.model.ServiceItem
+import com.greencircle.domain.model.service.ServiceItem
 
 class ServiceViewHolder(private val binding: ItemServiceBinding) :
 

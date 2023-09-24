@@ -2,7 +2,7 @@ package com.greencircle.domain.usecase
 
 import android.util.Log
 import com.greencircle.data.repository.CatalogueRepository
-import com.greencircle.domain.model.CompanySummary
+import com.greencircle.domain.model.company.CompanySummary
 
 class CatalogueRequirement {
     val catalogueRepository = CatalogueRepository()

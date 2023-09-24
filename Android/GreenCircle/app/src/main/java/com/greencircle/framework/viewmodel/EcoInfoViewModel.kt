@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.greencircle.data.repository.EcoInfoRepository
-import com.greencircle.domain.model.EcoInfo
+import com.greencircle.domain.model.ecoinfo.EcoInfo
 
 /**
  * ViewModel para EcoInfo

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.greencircle.R
-import com.greencircle.domain.model.EcoInfo
+import com.greencircle.domain.model.ecoinfo.EcoInfo
 import com.greencircle.framework.ui.adapters.ViewHolder.EcoInfoViewHolder
 
 /**

@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.greencircle.databinding.CatalogueCardLayoutBinding
-import com.greencircle.domain.model.CompanySummary
+import com.greencircle.domain.model.company.CompanySummary
 import com.greencircle.framework.ui.adapters.ViewHolder.CatalogueViewHolder
 
 /**

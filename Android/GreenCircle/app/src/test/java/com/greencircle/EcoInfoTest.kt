@@ -1,8 +1,8 @@
 package com.greencircle
 
-import com.greencircle.data.remote.EcoInfoAPI
+import com.greencircle.data.remote.ecoinfo.EcoInfoAPI
 import com.greencircle.data.repository.EcoInfoRepository
-import com.greencircle.domain.model.EcoInfo
+import com.greencircle.domain.model.ecoinfo.EcoInfo
 import java.sql.Time
 import java.util.UUID
 import kotlinx.coroutines.runBlocking

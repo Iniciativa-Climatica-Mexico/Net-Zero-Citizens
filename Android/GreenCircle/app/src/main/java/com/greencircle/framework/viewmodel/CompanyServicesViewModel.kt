@@ -2,7 +2,7 @@ package com.greencircle.framework.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.greencircle.domain.model.ServicesObject
+import com.greencircle.domain.model.service.ServicesObject
 
 /**
  * ViewModel para el fragmento de servicios de la empresa

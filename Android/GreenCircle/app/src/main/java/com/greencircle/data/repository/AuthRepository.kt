@@ -1,6 +1,6 @@
 package com.greencircle.data.repository
 
-import com.greencircle.data.remote.AuthAPIClient
+import com.greencircle.data.remote.auth.AuthAPIClient
 import com.greencircle.data.remote.models.AuthResponse
 
 /**

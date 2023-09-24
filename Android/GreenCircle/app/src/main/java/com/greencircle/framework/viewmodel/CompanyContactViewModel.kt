@@ -2,7 +2,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.greencircle.data.repository.CompaniesRepository
-import com.greencircle.domain.model.Companies
+import com.greencircle.domain.model.company.Companies
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

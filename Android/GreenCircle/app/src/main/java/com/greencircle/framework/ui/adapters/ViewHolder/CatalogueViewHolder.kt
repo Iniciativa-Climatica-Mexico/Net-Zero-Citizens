@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.greencircle.R
 import com.greencircle.databinding.CatalogueCardLayoutBinding
-import com.greencircle.domain.model.CompanySummary
+import com.greencircle.domain.model.company.CompanySummary
 import com.greencircle.framework.views.fragments.CompanyContactFragment
 
 /**

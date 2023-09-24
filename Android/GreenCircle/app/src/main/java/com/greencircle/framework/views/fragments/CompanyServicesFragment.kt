@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.greencircle.R
 import com.greencircle.databinding.FragmentCompanyServicesBinding
-import com.greencircle.domain.model.Product
-import com.greencircle.domain.model.ServiceItem
+import com.greencircle.domain.model.product.Product
+import com.greencircle.domain.model.service.ServiceItem
 import com.greencircle.framework.ui.adapters.ServiceAdapter
 import com.greencircle.framework.viewmodel.CompanyServicesViewModel
 
