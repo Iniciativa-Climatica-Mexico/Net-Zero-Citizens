@@ -3,7 +3,7 @@ import CompanyProduct from '../models/companyProducts.model'
 import * as CompanyService from '../services/company.service'
 import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
-import NodeGeocoder from 'node-geocoder';
+import NodeGeocoder from 'node-geocoder'
 
 /**
  * @brief
@@ -190,8 +190,8 @@ export const addProduct: RequestHandler<
  * @brief
  * Función del controlador que convierte las ubicaciones
  * de los proveedores aprovados a longitudes y latitudes
- * @param req 
- * @param res 
+ * @param req
+ * @param res
  */
 
 interface FilteredCompany {
@@ -243,9 +243,13 @@ export const getCoordinates: RequestHandler<
         }
       } catch (error: unknown) {
         if (typeof error === 'string') {
-          console.error(`Error al geocodificar la empresa ${company.dataValues.companyId}: ${error}`)
+          console.error(
+            `Error al geocodificar la empresa ${company.dataValues.companyId}: ${error}`
+          )
         } else {
-          console.error(`Error al geocodificar la empresa ${company.dataValues.companyId}`)
+          console.error(
+            `Error al geocodificar la empresa ${company.dataValues.companyId}`
+          )
         }
       }
 
@@ -255,7 +259,9 @@ export const getCoordinates: RequestHandler<
   )
 
   // Filtra las empresas que no pudieron geocodificarse
-  const filteredCompanies = companiesWithCoordinates.filter((company) => company !== null)
+  const filteredCompanies = companiesWithCoordinates.filter(
+    (company) => company !== null
+  )
 
   const filteredCompaniesTyped: FilteredCompany[] = filteredCompanies.filter(
     (company): company is FilteredCompany => company !== null

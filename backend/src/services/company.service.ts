@@ -177,7 +177,6 @@ export const getCompanyById = async (id: string): Promise<Company | null> => {
   const products: Product[] = []
   const images: CompanyImages[] = []
 
-
   companyProducts?.forEach(function (product) {
     products.push(product.getDataValue('product').dataValues)
   })
