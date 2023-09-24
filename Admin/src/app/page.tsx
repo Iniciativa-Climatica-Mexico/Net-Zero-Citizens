@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Company, getPendingCompanies } from '@/api/v1/company'
+import { Company, getComapniesByStatus } from '@/api/v1/company'
 
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
@@ -64,7 +64,7 @@ export default function Home() {
    */
   const fetchPending = async function fetchingPendingCompanies() {
     try {
-      const companies = await getPendingCompanies()
+      const companies = await getComapniesByStatus('pending_approval')
       setPendingCompanies(companies)
     } catch (error) {
       console.log('Fetch of companies was not succesful', error)

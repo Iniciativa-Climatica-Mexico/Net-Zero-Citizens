@@ -80,7 +80,10 @@ export const getApprovedCompanies: RequestHandler<
     start: req.query.start || 0,
     pageSize: req.query.pageSize || 10,
   }
-  const companies = await CompanyService.getCompanyByStatus('approved', params)
+  const companies = await CompanyService.getCompaniesByStatus(
+    'approved',
+    params
+  )
   res.json({
     rows: companies.rows,
     start: params.start,
@@ -105,7 +108,7 @@ export const getPendingCompanies: RequestHandler<
     start: req.query.start || 0,
     pageSize: req.query.pageSize || 10,
   }
-  const companies = await CompanyService.getCompanyByStatus(
+  const companies = await CompanyService.getCompaniesByStatus(
     'pending_approval',
     params
   )

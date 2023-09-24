@@ -74,7 +74,7 @@ export const getAllCompanies = async <T>(
  * @returns Una promesa con los proveedores y la información de paginación
  */
 
-export const getCompanyByStatus = async <T>(
+export const getCompaniesByStatus = async <T>(
   status: 'approved' | 'rejected' | 'pending_approval',
   params: PaginationParams<T>
 ): Promise<PaginatedQuery<Company>> => {
