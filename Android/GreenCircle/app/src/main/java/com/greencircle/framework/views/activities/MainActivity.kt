@@ -65,6 +65,12 @@ class MainActivity : AppCompatActivity() {
                     topBarBinding.title.text = "Catálogo de Proveedores"
                     true
                 }
+
+                R.id.mapa -> {
+                    replaceFragment(MapFragment())
+                    topBarBinding.title.text = "Mapa Proveedores"
+                    true
+                }
                 R.id.perfil -> {
                     replaceFragment(ProfileFragment())
                     topBarBinding.title.text = "Perfil"

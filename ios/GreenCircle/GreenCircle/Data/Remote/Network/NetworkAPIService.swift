@@ -11,11 +11,11 @@ import Foundation
 class NetworkAPIService {
   static let shared = NetworkAPIService()
   static let decoder = JSONDecoder()
-  
+
   init() {
     NetworkAPIService.decoder.dateDecodingStrategy = .iso8601WithFractionalSeconds
   }
-  
+
   /// Función encargada de postear al backend la información de un nuevo usuario registrado con Google
   /// - Parameters:
   ///   - url: url para hacer el POST
@@ -23,13 +23,13 @@ class NetworkAPIService {
   /// - Returns: respuesta de autenticación con tokens e información del usuario
   func postGoogleSignIn(url: URL, googleToken: String) async -> AuthResponse? {
     let params: Parameters = ["googleToken": googleToken]
-    
+
     let requestTask = AF.request(url, method: .post,
                                  parameters: params,
                                  encoding: JSONEncoding.default)
       .validate()
     let response = await requestTask.serializingData().response
-    
+
     switch response.result {
     case let .success(data):
       do {
@@ -42,9 +42,9 @@ class NetworkAPIService {
       debugPrint(error)
       return nil
     }
-    
+
   }
-  
+
   /// Actualiza un usuario con la información proporcionada
   /// - Parameters:
   ///   - url: el url para realizar el PUT
@@ -63,7 +63,7 @@ class NetworkAPIService {
                                  parameters: params,
                                  headers: headers).validate()
     let response = await requestTask.serializingData().response
-    
+
     switch response.result {
     case .success(_):
       return
@@ -71,7 +71,7 @@ class NetworkAPIService {
       debugPrint(error)
     }
   }
-  
+
   /// Crea una compañía nueva
   /// - Parameters:
   ///   - url: url para hacer el post
@@ -97,12 +97,12 @@ class NetworkAPIService {
         "pdfIneUrl": company.pdfIneUrl
       ] as [String : Any]
     ]
-    
+
     let headers: HTTPHeaders = [.authorization(bearerToken: authToken)]
     let requestTask = AF.request(url, method: .post,
                                  parameters: params,
                                  headers: headers).validate()
-    
+
     let response = await requestTask.serializingData().response
     switch response.result {
     case .success(_):
@@ -111,14 +111,14 @@ class NetworkAPIService {
       debugPrint(error)
     }
   }
-  
+
   /// - Description: Obtener encuesta pendiente
   /// - Parameter url: URL
   /// - Returns: Modelo de encuesta o nil (SurveyModel?)
   func getPendingSurvey(url: URL) async -> SurveyModel? {
     let requestTask = AF.request(url, method: .get).validate()
     let response = await requestTask.serializingData().response
-    
+
     switch response.result {
     case .success(let data):
       do {
@@ -134,16 +134,16 @@ class NetworkAPIService {
       return nil
     }
   }
-  
+
   /// - Description: Enviar respuestas de la encuesta
   /// - Parameters:
   ///   - url: URL
   ///   - answers: Las respuestas de la encuesta
   /// - Returns: Bool
   func submitAnswers(url: URL, answers: [Answer]) async -> Bool {
-    
+
     var processAns = [[String: Any]]()
-    
+
     answers.forEach{
       answer in
       if let answerText = answer.answerText {
@@ -153,11 +153,11 @@ class NetworkAPIService {
         processAns.append(["questionId": answer.questionId, "scaleValue": scaleValue])
       }
     }
-    
+
     let body: Parameters = ["answers":  processAns]
     let requestTask = AF.request(url, method: .post, parameters: body, encoding: JSONEncoding()).validate()
     let response = await requestTask.serializingData().response
-    
+
     switch response.result {
     case .success:
       return true
@@ -166,7 +166,7 @@ class NetworkAPIService {
       return false
     }
   }
-  
+
   ///  Fetch toda la ecoInfo del  backend
   ///  - Parameter url: ruta al endpoint
   ///  - Returns EcoInfo decoded o error
@@ -189,7 +189,7 @@ class NetworkAPIService {
       return nil
     }
   }
-  
+
   /// Obtener compañía por id
   ///  - Parameters:
   ///     - url: Backend url para obtener datos
@@ -213,7 +213,7 @@ class NetworkAPIService {
       return nil
     }
   }
-  
+
   func fetchAllCompanies(url: URL) async -> PaginatedQuery<Company>?{
     let taskRequest = AF.request(url, method: .get).validate()
     let response = await taskRequest.serializingData().response
@@ -233,5 +233,20 @@ class NetworkAPIService {
       return nil
     }
   }
-  
+      func getCoordinates(url: URL) async -> PaginatedQuery<Company>? {
+        let taskRequest = AF.request(url, method: .get).validate()
+        let response = await taskRequest.serializingData().response
+        switch response.result {
+        case .success(let data):
+            do {
+                return try JSONDecoder().decode(PaginatedQuery<Company>.self, from: data)
+            } catch {
+                return nil
+            }
+        case let .failure(error):
+            print(error)
+            debugPrint(error.localizedDescription)
+            return nil
+        }
+    }
 }
