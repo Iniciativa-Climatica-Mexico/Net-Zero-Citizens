@@ -1,6 +1,6 @@
 package com.greencircle
 
-import com.greencircle.data.remote.UserAPIService
+import com.greencircle.data.remote.user.UserAPIService
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

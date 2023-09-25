@@ -6,6 +6,7 @@ import { col, fn } from 'sequelize'
 import Company from '../models/company.model'
 import CompanyProduct from '../models/companyProducts.model'
 import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
+import { sendNotification } from './notification.service'
 
 // TYPES
 /**
@@ -63,15 +64,24 @@ export const getAllCompanies = async <T>(
   return Company.findAndCountAll({
     limit: params.pageSize,
     offset: params.start,
+    include: [
+      // Include the relationships you want to fetch
+      //{
+      // model: Review, // Replace with the actual name of your second relationship model
+      //as: '', // Specify the alias if you have one
+      // You can also add attributes and additional options for this relationship here
+      // },
+      // Add more relationships if needed
+    ],
   })
 }
 
 /**
- * @brief
- * Función del servicio que devuelve todos los proveedores pendientes por aprobar
- * @params Los parametros de paginación
- * @returns Una promesa con los proveedores y la información de paginación
- */
+* @brief
+* Función del servicio que devuelve todos los proveedores pendientes por aprobar
+* @params Los parametros de paginación
+* @returns Una promesa con los proveedores y la información de paginación
+*/
 
 export const getPendingCompanies = async <T>(
   params: PaginationParams<T>
@@ -112,7 +122,23 @@ export const updateCompanyInfo = async (
 ): Promise<Company | null> => {
   const companyInfo = await Company.findByPk(companyId)
   if (companyInfo) {
-    return companyInfo.update(newCompanyInfo)
+    await companyInfo.update(newCompanyInfo)
+    if (newCompanyInfo.status === 'approved') {
+      await sendNotification(
+        'Aprobado',
+        'Tu compañia ha sido aprobada',
+        `${process.env.AWS_ARN}`,
+        companyId
+      )
+    } else if (newCompanyInfo.status === 'rejected') {
+      await sendNotification(
+        'Rechazado',
+        'Tu compañia ha sido rechazada',
+        `${process.env.AWS_ARN}`,
+        companyId
+      )
+    }
+    return companyInfo
   } else {
     return null
   }

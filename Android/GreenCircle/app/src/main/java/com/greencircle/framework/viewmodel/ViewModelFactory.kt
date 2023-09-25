@@ -1,7 +1,7 @@
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.greencircle.framework.viewmodel.LoginViewModel
+import com.greencircle.framework.viewmodel.auth.LoginViewModel
 
 /**
  * Fábrica de ViewModels personalizada para la creación de ViewModels.

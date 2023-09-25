@@ -1,6 +1,6 @@
 package com.greencircle.data.repository
 
-import com.greencircle.data.remote.SurveyAPIClient
+import com.greencircle.data.remote.survey.SurveyAPIClient
 import com.greencircle.domain.model.survey.Answer
 import com.greencircle.domain.model.survey.Survey
 import java.util.UUID

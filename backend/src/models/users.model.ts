@@ -2,37 +2,14 @@ import {
   Table,
   Column,
   Model,
-  ForeignKey,
   DataType,
   HasMany,
+  ForeignKey,
   BelongsTo,
 } from 'sequelize-typescript'
-import Role from './role.model'
 import Company from './company.model'
 import Review from './review.model'
-
-/**
- * @interface User
- * @description User interface
- * @param {string} userId - The user's id
- * @param {number} roleId - The user's role id
- * @param {number} companyId - The user's company id
- * @param {number} googleId - The user's google id
- * @param {number} facebookId - The user's facebook id
- * @param {number} appleId - The user's apple id
- * @param {string} firstName - The user's first name
- * @param {string} lastName - The user's last name
- * @param {string} secondLastName - The user's second last name
- * @param {string} email - The user's email
- * @param {string} password - The user's password
- * @param {string} phoneNumber - The user's phone number
- * @param {number} age - The user's age
- * @param {string} state - The user's state
- * @param {enum} sex - The user's sex
- * @param {string} profilePicture - The user's profile picture url
- * @param {date} createdAt - The user's creation date
- * @param {date} updatedAt - The user's update date
- */
+import Role from './role.model'
 
 /**
  * @brief
@@ -54,24 +31,23 @@ export default class User extends Model {
     type: DataType.UUID,
     allowNull: false,
     field: 'ROLE_ID',
-    defaultValue: DataType.UUIDV4,
   })
   roleId: string
 
-  @BelongsTo(() => Role)
-  role: Role
+  @BelongsTo(() => Role) // Define the association to Role
+  role: Role // This will allow you to access the associated Role model
 
   @ForeignKey(() => Company)
   @Column({
     type: DataType.UUID,
     allowNull: true,
     field: 'COMPANY_ID',
-    defaultValue: DataType.UUIDV4,
+    unique: 'COMPANY_ID',
   })
-  companyId: string | null
+  companyId: string
 
   @BelongsTo(() => Company)
-  company: Company
+  company: Company | null
 
   @Column({
     type: DataType.STRING,
@@ -159,6 +135,13 @@ export default class User extends Model {
   })
   gender: 'masculine' | 'femenine' | 'other' | 'no_answer'
 
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+    field: 'DEVICE_TOKEN',
+  })
+  deviceToken: string | null
+  
   @Column({
     type: DataType.STRING,
     allowNull: true,
