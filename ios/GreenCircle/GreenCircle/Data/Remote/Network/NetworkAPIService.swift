@@ -101,11 +101,9 @@ class NetworkAPIService {
         "pdfIneUrl": company.pdfIneUrl
       ] as [String : Any]
     ]
-    
-    let headers: HTTPHeaders = [.authorization(bearerToken: authToken)]
+
     let requestTask = session.request(url, method: .post,
-                                 parameters: params,
-                                 headers: headers).validate()
+                                 parameters: params).validate()
     
     let response = await requestTask.serializingData().response
     switch response.result {
