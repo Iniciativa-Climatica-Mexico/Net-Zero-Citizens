@@ -186,7 +186,6 @@ export const getCompanyById = async (id: string): Promise<Company | null> => {
   const products: Product[] = []
   const images: CompanyImages[] = []
 
-
   companyProducts?.forEach(function (product) {
     products.push(product.getDataValue('product').dataValues)
   })
@@ -245,6 +244,24 @@ const getCompanyScore = async (id: string): Promise<Review[] | null> => {
     attributes: {
       include: [[fn('AVG', col('score')), 'score'], 'review'],
       exclude: ['reviewId', 'userId', 'createdAt', 'updatedAt'],
+    },
+  })
+}
+
+/**
+ * @brief
+ * Regresa compañías ya aprovadas
+ * @param status
+ */
+
+export const getApprovedCompanies = async <T>(
+  params: PaginationParams<T>
+): Promise<PaginatedQuery<Company>> => {
+  return await Company.findAndCountAll({
+    limit: params.pageSize,
+    offset: params.start,
+    where: {
+      status: 'approved',
     },
   })
 }
