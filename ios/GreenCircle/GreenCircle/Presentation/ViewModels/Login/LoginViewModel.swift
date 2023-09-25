@@ -17,6 +17,7 @@ class LoginViewModel: ObservableObject {
   func handleGoogleSignIn(userData: UserData) async -> Bool {
     let res = await useCase.handleSignInButton()!
 
+    NetworkAPIService.shared.setAuthTokens(res.tokens.authToken)
     userData.user = res.user
     userData.tokens = res.tokens
     
