@@ -1,6 +1,6 @@
 package com.greencircle
 
-import com.greencircle.data.remote.models.Company
+import com.greencircle.domain.model.company.Company
 import java.util.UUID
 import org.junit.Assert.assertEquals
 import org.junit.Test

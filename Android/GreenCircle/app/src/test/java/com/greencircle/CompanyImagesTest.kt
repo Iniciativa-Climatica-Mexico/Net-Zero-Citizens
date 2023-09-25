@@ -1,8 +1,8 @@
 package com.greencircle
 
-import com.greencircle.domain.model.Companies
-import com.greencircle.domain.model.CompanyImages
-import com.greencircle.domain.model.Status
+import com.greencircle.domain.model.company.Companies
+import com.greencircle.domain.model.company.CompanyImages
+import com.greencircle.domain.model.status.Status
 import java.sql.Timestamp
 import java.util.UUID
 import org.junit.Assert.assertEquals

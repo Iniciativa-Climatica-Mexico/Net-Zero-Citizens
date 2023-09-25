@@ -14,7 +14,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.greencircle.R
 import com.greencircle.databinding.ActivityLoginBinding
-import com.greencircle.framework.viewmodel.LoginViewModel
+import com.greencircle.framework.viewmodel.login.LoginViewModel
 import com.greencircle.utils.AuthUtils
 
 /**
@@ -93,6 +93,7 @@ class LoginActivity : AppCompatActivity() {
         viewModel.googleLoginResult.observe(this) { authResponse ->
             if (authResponse != null) {
                 if (authResponse.user.roles != "new_user") {
+                    Log.d("Test", "User: ${authResponse.user}")
                     navigateToSurvey()
                 } else {
                     Toast.makeText(applicationContext, "Por favor, regístrate", Toast.LENGTH_SHORT)

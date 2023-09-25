@@ -64,29 +64,15 @@ export const getAllCompanies = async <T>(
   return Company.findAndCountAll({
     limit: params.pageSize,
     offset: params.start,
-    include: [
-      // Include the relationships you want to fetch
-      {
-        model: CompanyImages, // Replace with the actual name of your relationship model
-        as: 'images', // Specify the alias if you have one
-        // You can also add attributes and additional options for this relationship here
-      },
-      //{
-       // model: Review, // Replace with the actual name of your second relationship model
-        //as: '', // Specify the alias if you have one
-        // You can also add attributes and additional options for this relationship here
-     // },
-      // Add more relationships if needed
-    ],
   })
 }
 
 /**
- * @brief
- * Función del servicio que devuelve todos los proveedores pendientes por aprobar
- * @params Los parametros de paginación
- * @returns Una promesa con los proveedores y la información de paginación
- */
+* @brief
+* Función del servicio que devuelve todos los proveedores pendientes por aprobar
+* @params Los parametros de paginación
+* @returns Una promesa con los proveedores y la información de paginación
+*/
 
 export const getPendingCompanies = async <T>(
   params: PaginationParams<T>
