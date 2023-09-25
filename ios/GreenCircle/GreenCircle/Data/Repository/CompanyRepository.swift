@@ -10,7 +10,7 @@ import Foundation
 
 /// Clase representando la estructura de la API para las compañías
 class CompanyAPI {
-  static let base = "http://localhost:3000/api/v1/company"
+  static let base = "http://localhost:4000/api/v1/company"
   struct Routes {
     static let create = "/create"
     static let company = "/company/"
@@ -21,6 +21,7 @@ class CompanyAPI {
 protocol CompanyRepositoryProtocol {
   func postCompany(authToken: String, company: PostCompanyData) async
   func fetchCompanyById(companyId: UUID) async -> Company?
+  //func fetchAllCompanies() async -> Company?
 }
 
 /// Clase con las funciones del repositorio de las compañías
@@ -33,15 +34,15 @@ class CompanyRepository: CompanyRepositoryProtocol {
   init(service: NetworkAPIService = NetworkAPIService.shared) {
     self.service = service
   }
-
+  
   /// Obtener compañía por UUID llamando al método del servicio del backend
   ///   - Parameters: UUID de la compañía
   ///   - Returns: Modelo de compañía
   func fetchCompanyById(companyId: UUID) async -> Company? {
     return await service
-      .fetchCompanyById(url: URL(string: "\(ApiCompany.baseCompany)/\(companyId.uuidString.lowercased())")!)
+      .fetchCompanyById(url: URL(string: "\(CompanyAPI.base)/\(companyId.uuidString.lowercased())")!)
   }
-
+  
   /// Función que llama al servicio de conexión con la API para postear una  nueva compañía
   /// - Parameters:
   ///   - authToken: token de autenticación
@@ -53,4 +54,10 @@ class CompanyRepository: CompanyRepositoryProtocol {
                       string: "\(CompanyAPI.base)\(CompanyAPI.Routes.create)")!,
                    authToken: authToken, company: company)
   }
+  
+  func fetchAllCompanies() async -> PaginatedQuery<Company>? {
+    return await service
+      .fetchAllCompanies(url: URL(string: "\(CompanyAPI.base)")!)
+  }
+  
 }
