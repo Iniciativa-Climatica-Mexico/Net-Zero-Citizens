@@ -3,7 +3,6 @@ import { Bootstrapper } from './Bootstraper'
 
 export default class EcoinfoBootstrap extends Bootstrapper {
   async run() {
-    console.log('Ecoinfo bootstrapAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
     Ecoinfo.bulkCreate([
       {
         ecoinfoId: '550e8400-e29b-41d4-a716-446655440000',
