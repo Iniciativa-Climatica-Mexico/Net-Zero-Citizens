@@ -60,6 +60,11 @@ class UserReviewFragment : Fragment() {
         viewModel.getUserReviewsList()
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.getUserReviewsList()
+    }
+
     private fun initializeComponents(root: View) {
         recyclerView = root.findViewById(R.id.RV_User_Review)
     }
