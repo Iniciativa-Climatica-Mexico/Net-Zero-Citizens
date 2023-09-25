@@ -10,6 +10,7 @@ const handler = nextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async jwt({ token, account }) {
       if (!token || !account) return token
@@ -18,21 +19,17 @@ const handler = nextAuth({
         account.id_token as string
       )
       if (res) {
-        console.log(res.tokens)
         token.authToken = res.tokens?.authToken
         token.refreshToken = res.tokens?.refreshToken
         token.user = res.user
       }
-      // console.log(token)
       return token
     },
     async session({ session, token }) {
       if (!token) return session
-
       if (token.authToken) session.authToken = token.authToken
       if (token.refreshToken) session.refreshToken = token.refreshToken
       if (token.user) session.user = token.user
-
       return session
     },
   },

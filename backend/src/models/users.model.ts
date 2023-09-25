@@ -112,7 +112,7 @@ export default class User extends Model {
     unique: true,
     field: 'PHONE_NUMBER',
   })
-  phoneNumber: string
+  phoneNumber: string | null
 
   @Column({
     type: DataType.INTEGER,

@@ -19,7 +19,10 @@ class GoogleSignInUseCase {
   /// - Returns: Una response de autenticación con los tokens y el usuario o nil si falla
   @MainActor
   func handleSignInButton() async -> AuthResponse? {
-    guard let presentingViewController = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController else {return nil}
+    guard let presentingViewController =
+            (UIApplication.shared.connectedScenes.first
+             as? UIWindowScene)?.windows.first?
+      .rootViewController else {return nil}
     
     do {
       let res = try await GIDSignIn.sharedInstance.signIn(withPresenting: presentingViewController)

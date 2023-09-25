@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.greencircle.R
 import com.greencircle.databinding.ActivityRegisterUserBinding
-import com.greencircle.framework.views.fragments.RegisterUserFragment
+import com.greencircle.framework.views.fragments.user.RegisterUserFragment
 
 /**
  * Actividad principal para el registro de usuarios.

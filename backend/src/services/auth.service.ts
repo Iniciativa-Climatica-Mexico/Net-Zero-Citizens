@@ -200,7 +200,7 @@ const generateAuthToken = (payload: Payload): string => {
   if (!process.env.JWT_AUTH) {
     throw new Error('JWT_AUTH not set')
   }
-  return jwt.sign(payload, process.env.JWT_AUTH, { expiresIn: '86400s' })
+  return jwt.sign(payload, process.env.JWT_AUTH, { expiresIn: '24h' })
 }
 
 /**
@@ -214,7 +214,7 @@ const generateRefreshToken = (payload: Payload): string => {
     throw new Error('JWT_REFRESH not set')
   }
   payload.created_at = new Date().getTime()
-  return jwt.sign(payload, process.env.JWT_REFRESH, { expiresIn: '24h' })
+  return jwt.sign(payload, process.env.JWT_REFRESH, { expiresIn: '48h' })
 }
 
 /**

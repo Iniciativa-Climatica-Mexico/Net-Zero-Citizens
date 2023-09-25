@@ -1,7 +1,7 @@
 package com.greencircle.data.repository
 
-import com.greencircle.data.remote.UserAPIClient
-import com.greencircle.data.remote.UserAPIService
+import com.greencircle.data.remote.user.UserAPIClient
+import com.greencircle.data.remote.user.UserAPIService
 import java.util.UUID
 
 /**
