@@ -1,4 +1,4 @@
-package com.greencircle.framework.viewmodel.login
+package com.greencircle.framework.viewmodel.auth
 
 import android.content.Context
 import android.util.Log
@@ -7,10 +7,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.greencircle.domain.model.auth.AuthResponse
-import com.greencircle.domain.model.auth.Tokens
 import com.greencircle.domain.usecase.auth.GoogleAuthRequirement
 import com.greencircle.domain.usecase.auth.RecoverTokensRequirement
+import com.greencircle.domain.usecase.auth.RecoverUserSessionRequirement
 import com.greencircle.domain.usecase.auth.SaveTokensRequirement
+import com.greencircle.domain.usecase.auth.SaveUserSessionRequirement
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -25,7 +26,9 @@ import kotlinx.coroutines.launch
 class LoginViewModel(private val context: Context) : ViewModel() {
     private val googleAuthRequirement = GoogleAuthRequirement()
     private val saveTokensRequirement = SaveTokensRequirement(context)
-    private val recoverTokensRequirement = RecoverTokensRequirement(context)
+    private val saveUserSession = SaveUserSessionRequirement(context)
+    private val recoverTokens = RecoverTokensRequirement(context)
+    private val recoverUserSession = RecoverUserSessionRequirement(context)
     private val _googleLoginResult = MutableLiveData<AuthResponse?>()
     val googleLoginResult: LiveData<AuthResponse?> = _googleLoginResult
 
@@ -38,12 +41,22 @@ class LoginViewModel(private val context: Context) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             val result: AuthResponse? = googleAuthRequirement(token)
             _googleLoginResult.postValue(result)
+
+            // Guardar tokens
             val authToken = result?.tokens?.authToken
             val refreshToken = result?.tokens?.refreshToken
             saveTokensRequirement(authToken!!, refreshToken!!)
-            val tokens: Tokens? = recoverTokensRequirement()
-            // Registra en el log los tokens recuperados (solo para depuración).
-            Log.d("Tokens", tokens.toString())
+
+            // Recuperar tokens
+            val tokens = recoverTokens()
+            Log.d("LoginViewModel", "Tokens: $tokens")
+
+            // Guardar usuario global
+            saveUserSession(result.user)
+
+            // Recuperar usuario global
+            val user = recoverUserSession()
+            Log.d("LoginViewModel", "User: $user")
         }
     }
 }
