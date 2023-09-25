@@ -56,7 +56,7 @@ export const refreshTokens = async () => {
     session.authToken = tokens.authToken
     session.refreshToken = tokens.refreshToken
   } catch (e) {
-    console.log('Erro updating tokens: ' + e)
+    console.log('Error updating tokens: ' + e)
     signOut()
     deleteSession()
   }
