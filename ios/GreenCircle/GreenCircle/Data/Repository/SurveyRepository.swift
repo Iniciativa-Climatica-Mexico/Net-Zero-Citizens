@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 class SurveyApi {
-  static let base = "http://localhost:5050/api/v1"
+  static let base = "http://localhost:4000/api/v1"
   struct Routes {
     static let survey = "/survey/pending/:userId"
     static let submitSurvey = "/survey/:surveyId/answer/:userId"
@@ -44,8 +44,7 @@ class SurveyRepository: SurveyApiProtocol {
   ///   - answers: Las respuestas de la encuesta
   /// - Returns: Bool
   func submitAnswers(surveyId: String, answers : [Answer]) async -> Bool {
-    let userId = "abcd-1234-efgh-5678"
-    let surveyId = "surv-5555-efgh-3333"
+    let userId = "8de45630-2e76-4d97-98c2-9ec0d1f3a5b8"
     let surveyRoute = SurveyApi.Routes.submitSurvey.replacingOccurrences(of: ":userId", with: userId)
       .replacingOccurrences(of: ":surveyId", with: surveyId)
     
