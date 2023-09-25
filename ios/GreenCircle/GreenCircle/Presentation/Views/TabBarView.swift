@@ -8,32 +8,37 @@
 import SwiftUI
 
 struct TabBarView: View {
+  @State private var dispScrollView = false
+
   var body: some View {
-    TabView {
+    TabView (selection: $dispScrollView) {
       EcoInfoView()
         .applyNavBarTheme()
-      .tabItem {
-        Image(systemName: "leaf.fill")
-        Text("Eco-Info")
-      }
-
-    EmptyView()
-      .tabItem {
-        Image(systemName: "book.fill")
-        Text("Catálogo")
-      }
-
-    EmptyView()
-      .tabItem {
-        Image(systemName: "map.fill")
-        Text("Mapa")
-      }
-
+        .tabItem {
+          Image(systemName: "leaf.fill")
+          Text("Eco-Info")
+        }
+        .tag(false)
+      
+      CatalogView()
+        .applyNavBarTheme()
+        .tabItem {
+          Image(systemName: "book.fill")
+          Text("Catálogo")
+        }
+        .tag(true)
+      
       EmptyView()
-      .tabItem {
-        Image(systemName: "person.fill")
-        Text("Perfil")
-      }
+        .tabItem {
+          Image(systemName: "map.fill")
+          Text("Mapa")
+        }
+      
+      ProfileView(modelUser: UserViewModel())
+        .tabItem {
+          Image(systemName: "person.fill")
+          Text("Perfil")
+        }
     }
     .accentColor(Color("GreenCustom"))
   }
