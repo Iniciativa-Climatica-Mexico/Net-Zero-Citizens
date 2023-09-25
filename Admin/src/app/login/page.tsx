@@ -4,17 +4,14 @@ import { useSession } from 'next-auth/react'
 import { saveSession } from '@/utils/sessionHooks'
 
 export default function Login() {
-  // const sessionLS = recoverSession()
-  
   const sessionContext = useSession()
-  if (sessionContext.status === 'loading') return <div>Loading...</div>
-  
   let isLogged = false
   const sessionData = sessionContext.data
-  
+
   if (sessionContext.status === 'authenticated') {
     isLogged = true
     saveSession(sessionContext.data)
+    window.location.href = '/'
   }
 
   return (
