@@ -16,15 +16,23 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import Logo from '../../public/LogoBloque.png'
 import { usePathname } from 'next/navigation'
-import { deleteSession } from '@/utils/sessionHooks'
+import { deleteSession, refreshTokens } from '@/utils/sessionHooks'
 
 export default function Navbar() {
   const { data: session } = useSession()
   const pathname = usePathname()
 
   const [condition, setCondition] = useState(false)
+  let created = false
+
   useEffect(() => {
     setCondition(true)
+
+    if (!created) {
+      created = true
+      console.log('Creating interval')
+      setInterval(refreshTokens, 1 * 60 * 60 * 1000) // 1 hour
+    }
   }, [])
 
   if (pathname == '/login') {
