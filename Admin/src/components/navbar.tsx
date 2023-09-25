@@ -31,7 +31,7 @@ export default function Navbar() {
     if (!created) {
       created = true
       console.log('Creating interval')
-      setInterval(refreshTokens, 3600000)
+      setInterval(refreshTokens, 1 * 60 * 60 * 1000) // 1 hour
     }
   }, [])
 
