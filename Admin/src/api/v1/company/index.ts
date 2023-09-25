@@ -31,7 +31,7 @@ type StatusEnum = 'approved' | 'pending_approval' | 'rejected'
  * @param status
  * @returns Una respuesta conteniendo todos los proveedores pendientes
  */
-export const getComapniesByStatus = async (status: StatusEnum) => {
+export const getCompaniesByStatus = async (status: StatusEnum) => {
   try {
     if (status === 'pending_approval') {
       const response = await authAxios().get('/company/pending')

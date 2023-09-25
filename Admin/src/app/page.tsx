@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Company, getComapniesByStatus } from '@/api/v1/company'
+import { Company, getCompaniesByStatus } from '@/api/v1/company'
 
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
@@ -15,6 +15,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 import { CellAction } from '@/components/cellAction'
 import ModalProveedor from '@/components/modalProveedor'
@@ -45,62 +47,135 @@ export default function Home() {
   const [modalOpen, setIsModalOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 8
-  const startIndex = (currentPage - 1) * itemsPerPage
-  const endIndex = startIndex + itemsPerPage
   const [pendingCompanies, setPendingCompanies] = useState<Company[]>([])
+  const [approvedCompanies, setApprovedCompanies] = useState<Company[]>([])
   const [searchTerm, setSearchTerm] = useState('')
+  const [activeTab, setActiveTab] = useState<'pending' | 'approved'>('pending')
 
-  /**
-   * @brief Function that opens the modal and passes the attributes of the selected company to a component
-   * @param company
-   */
   const handleTableRowClick = (company: Company) => {
     setSelectedCompany(company)
     setIsModalOpen(true)
   }
 
-  /**
-   * @brief Function that gets pending companies from the db
-   */
-  const fetchPending = async function fetchingPendingCompanies() {
+  const fetchCompaniesByStatus = async (
+    status: 'pending_approval' | 'approved' | 'rejected'
+  ) => {
     try {
-      const companies = await getComapniesByStatus('pending_approval')
-      setPendingCompanies(companies)
+      const companies = await getCompaniesByStatus(status)
+      if (status === 'pending_approval') {
+        setPendingCompanies(companies)
+      } else {
+        setApprovedCompanies(companies)
+      }
     } catch (error) {
-      console.log('Fetch of companies was not succesful', error)
+      console.error(`Fetch of ${status} companies was not successful`, error)
     }
   }
 
-  const filteredCompanies = pendingCompanies?.filter((company) =>
-    company.name.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  const filteredCompanies =
+    activeTab === 'pending'
+      ? pendingCompanies.filter((company) =>
+        company.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+      : approvedCompanies.filter((company) =>
+        company.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
 
-  /**
-   * @brief Function that updates current page for pagination
-   * @param newPage
-   * @returns updates the current page
-   */
+  const startIndex = (currentPage - 1) * itemsPerPage
+  const endIndex = startIndex + itemsPerPage
+  const paginatedCompanies = filteredCompanies.slice(startIndex, endIndex)
+
   const handlePageChange = (newPage: number) => setCurrentPage(newPage)
 
   useEffect(() => {
-    fetchPending()
+    fetchCompaniesByStatus('pending_approval')
+    fetchCompaniesByStatus('approved')
   }, [])
+
+  const renderTable = (companies: Company[]) => (
+    <Table className="border border-[#C1C9D2] rounded">
+      <TableCaption></TableCaption>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="w-[100px]">Imagen</TableHead>
+          <TableHead>Nombre</TableHead>
+          <TableHead>Correo</TableHead>
+          <TableHead>Ubicación</TableHead>
+          <TableHead>Estado</TableHead>
+          <TableHead className="text-right"></TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {companies.map((company) => (
+          <TableRow key={company.companyId}>
+            <TableCell
+              className="cursor-pointer"
+              onClick={() => handleTableRowClick(company)}
+            >
+              <Avatar>
+                <AvatarImage src={company.profilePicture} />
+              </Avatar>
+            </TableCell>
+            <TableCell
+              className="cursor-pointer"
+              onClick={() => handleTableRowClick(company)}
+            >
+              {company.name}
+            </TableCell>
+            <TableCell
+              className="cursor-pointer"
+              onClick={() => handleTableRowClick(company)}
+            >
+              {company.email}
+            </TableCell>
+            <TableCell
+              className="cursor-pointer"
+              onClick={() => handleTableRowClick(company)}
+            >
+              {`${company.street} ${company.city}, ${company.state} ${company.zipCode}`}
+            </TableCell>
+            <TableCell
+              className="cursor-pointer"
+              onClick={() => handleTableRowClick(company)}
+            >
+              <div
+                className={`${
+                  company.status === 'approved'
+                    ? 'bg-[#547C8B] text-white'
+                    : 'bg-[#FFE6C2] text-jet'
+                }
+                text-center rounded-xl py-2`}
+              >
+                {company.status === 'approved' ? 'Aprobado' : 'Pendiente'}
+              </div>
+            </TableCell>
+            <TableCell className="text-right">
+              <CellAction
+                setIsModalOpen={setIsModalOpen}
+                companyId={company.companyId}
+                fetchPending={() => fetchCompaniesByStatus('pending_approval')}
+                company={company}
+              />
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  )
 
   return (
     <>
-      {modalOpen ? (
+      {modalOpen && (
         <div className="fixed top-0 left-0 right-0 bottom-0 bg-black opacity-60 z-20"></div>
-      ) : null}
-      {modalOpen ? (
+      )}
+      {modalOpen && (
         <div className="flex flex-col items-center justify-center h-screen absolute left-1/2 right-1/2 z-30">
           <ModalProveedor
             selectedCompany={selectedCompany}
             setIsModalOpen={setIsModalOpen}
-            fetchPending={fetchPending}
+            fetchPending={() => fetchCompaniesByStatus('pending_approval')}
           />
         </div>
-      ) : (
-        <></>
       )}
       <main className="border border-[#C1C9D2] m-[30px] mt-[15px] p-[20px] pb-5 rounded-lg">
         <h1 className="text-[20px] font-bold">Descubre Proveedores</h1>
@@ -112,100 +187,38 @@ export default function Home() {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <Table className="border border-[#C1C9D2] rounded">
-          <TableCaption></TableCaption>
-
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[100px]">Imagen</TableHead>
-              <TableHead>Nombre</TableHead>
-              <TableHead>Correo</TableHead>
-              <TableHead>Ubicacion</TableHead>
-              <TableHead>Estado</TableHead>
-              <TableHead className="text-right"></TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {filteredCompanies?.slice(startIndex, endIndex).map((company) => (
-              <TableRow key={company.companyId}>
-                <TableCell
-                  className="cursor-pointer"
-                  onClick={() => {
-                    handleTableRowClick(company)
-                  }}
-                >
-                  <Avatar>
-                    <AvatarImage src={company.profilePicture} />
-                  </Avatar>
-                </TableCell>
-                <TableCell
-                  className="cursor-pointer"
-                  onClick={() => {
-                    handleTableRowClick(company)
-                  }}
-                >
-                  {company.name}
-                </TableCell>
-                <TableCell
-                  className="cursor-pointer"
-                  onClick={() => {
-                    handleTableRowClick(company)
-                  }}
-                >
-                  {company.email}
-                </TableCell>
-                <TableCell
-                  className="cursor-pointer"
-                  onClick={() => {
-                    handleTableRowClick(company)
-                  }}
-                >{`${company.street} ${company.city}, ${company.state} ${company.zipCode}`}</TableCell>
-                <TableCell
-                  className="cursor-pointer"
-                  onClick={() => {
-                    handleTableRowClick(company)
-                  }}
-                >
-                  <div
-                    className={`${
-                      company.status === 'approved'
-                        ? 'bg-[#547C8B] text-white'
-                        : 'bg-[#FFE6C2] text-jet'
-                    }
-                    text-center rounded-xl py-2`}
-                  >
-                    Pendiente
-                  </div>
-                </TableCell>
-                <TableCell className="text-right">
-                  <CellAction
-                    setIsModalOpen={setIsModalOpen}
-                    companyId={company.companyId}
-                    fetchPending={fetchPending}
-                    company={company}
-                  />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <Tabs defaultValue="pending">
+          <TabsList>
+            <TabsTrigger
+              value="pending"
+              onClick={() => setActiveTab('pending')}
+            >
+              Pendientes
+            </TabsTrigger>
+            <TabsTrigger
+              value="approved"
+              onClick={() => setActiveTab('approved')}
+            >
+              Aprobados
+            </TabsTrigger>
+          </TabsList>
+          <TabsContent value={activeTab}>
+            {renderTable(paginatedCompanies)}
+          </TabsContent>
+        </Tabs>
         <div className="flex justify-end items-center pt-2 gap-x-2">
           <Button
             variant="outline"
             className="px-4"
-            onClick={() => {
-              handlePageChange(currentPage - 1)
-            }}
+            onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
           >
             Anterior
           </Button>
           <Button
             variant="outline"
-            onClick={() => {
-              handlePageChange(currentPage + 1)
-            }}
-            disabled={endIndex >= filteredCompanies?.length}
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={endIndex >= filteredCompanies.length}
           >
             Siguiente
           </Button>
