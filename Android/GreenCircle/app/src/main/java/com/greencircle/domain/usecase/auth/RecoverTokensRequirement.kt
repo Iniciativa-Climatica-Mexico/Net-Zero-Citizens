@@ -22,6 +22,6 @@ class RecoverTokensRequirement(private val context: Context) {
      * @return Un objeto [Tokens] que contiene los tokens recuperados.
      * @throws Exception Si los tokens no se encuentran en el almacenamiento compartido.
      */
-    operator fun invoke(): Tokens =
-        repository.recoverTokens() ?: throw Exception("Tokens not found")
+    operator fun invoke(): Tokens? =
+        repository.recoverTokens() ?: null
 }
