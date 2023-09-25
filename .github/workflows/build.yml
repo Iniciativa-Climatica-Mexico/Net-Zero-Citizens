@@ -11,31 +11,50 @@ on:
 jobs:
   # Prevent File Change for Husky configuration
   prevent_change:
+    name: CHECK IF HUSKY FILE IS MODIFIED
     runs-on: ubuntu-latest
+    outputs:
+      husky_file_modified: ${{ steps.check_file.outputs.husky_file_modified }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Get all File changes
+      - name: Get all file changes
         id: changed_files
         uses: jitterbit/get-changed-files@v1
 
       - name: Check if .husky files are modified
         id: check_file
         run: |
-          echo "::set-output name=modified::$(echo '${{ steps.changed_files.outputs.all }}' | grep -q '.husky/commit-msg' && echo 'true' || echo 'false')"
+          if echo "${{ steps.changed_files.outputs.all }}" | grep -q ".husky/commit-msg"; then
+           echo "true" > husky_file_modified.txt
+          else 
+            echo "false" > husky_file_modified.txt
+          fi
+        shell: bash
 
+      - name: Set output from file
+        id: set_output
+        run: echo ::set-output name=husky_file_modified::$(cat husky_file_modified.txt)
+
+  # Prevent File Change for Husky configuration
+  prevent_file_change:
+    name: PREVENT FILE CHANGE FOR HUSKY
+    needs: prevent_change
+    if: needs.prevent_change.outputs.husky_file_modified == 'true'
+    runs-on: ubuntu-latest
+    steps:
       - name: Prevent File Change
-        if: steps.check_file.outputs.modified == 'true'
         uses: xalvarez/prevent-file-change-action@v1
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           pattern: ".husky/commit-msg"
-          trustedAuthors: "salgue441, drlangh"
+          trustedAuthors: "drlangh"
 
   # Run yarn install when a branch is created
   yarn_install:
-    name: YARN INSTALL
+    name: YARN INSTALL FOR GIT HOOKS
     runs-on: ubuntu-latest
     if: github.event_name == 'create' && github.event.ref_type == 'branch'
 
@@ -48,24 +67,87 @@ jobs:
         with:
           node-version: "18.17.1"
 
+      - name: Cache Node modules and Yarn cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            ~/.yarn
+          key: ${{ runner.OS }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-yarn-
+
       - name: Install dependencies
         run: yarn install
 
       - name: Husky Git Hooks
         run: yarn husky install
 
-  # Android Test
-  unit_test:
-    name: UNIT TEST
+  # Security scan
+  security_scan:
+    name: SECURITY SCAN WITH SNYK
     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    # Pipeline to continue Android Test Report Step
-    continue-on-error: true
-    if: contains(github.ref, 'android/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+      - name: Run snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+  # Android Vulnerability Scan
+  android_app_sweep:
+    name: ANDROID APP SWEEP
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Decrypt local.properties
+        run: |
+          echo "${{ secrets.GPG_PASS }}" | gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.GPG_PASSPHRASE }}" --output Android/GreenCircle/local.properties Android/GreenCircle/local.properties.gpg
+
+      - name: Append SDK location to local.properties
+        run: echo "sdk.dir=$ANDROID_SDK_ROOT" >> Android/GreenCircle/local.properties
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: gradle
+
+      - name: Print Java Version
+        run: javac -version
+
+      - name: Change wrapper permissions
+        run: chmod +x Android/GreenCircle/gradlew
+
+      - name: Upload app to AppSweep with gradle
+        working-directory: Android/GreenCircle
+        run: ./gradlew uploadToAppSweepRelease
+        env:
+          APPSWEEP_API_KEY: ${{ secrets.APPSWEEP_API_KEY }}
+
+  ## Android Linter test
+  linter_test:
+    name: ANDROID LINTER TEST
+    runs-on: ubuntu-latest
+    if: contains(github.ref, 'android/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/G')
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Decrypt local.properties
+        run: |
+          echo "${{ secrets.GPG_PASS }}" | gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.GPG_PASSPHRASE }}" --output Android/GreenCircle/local.properties Android/GreenCircle/local.properties.gpg
+
+      - name: Set SDK location in local.properties
+        run: |
+          sed -i '/^sdk.dir=/d' Android/GreenCircle/local.properties
+          echo "sdk.dir=$ANDROID_SDK_ROOT" >> Android/GreenCircle/local.properties
 
       - name: Set up JDK
         uses: actions/setup-java@v3
@@ -91,9 +173,60 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: Linter test
+        working-directory: Android/GreenCircle
+        run: ./gradlew ktlintCheck
+
+  # Android Test
+  unit_test:
+    name: ANDROID UNIT TEST
+    runs-on: ubuntu-latest
+
+    # Pipeline to continue Android Test Report Step
+    continue-on-error: true
+    if: contains(github.ref, 'android/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/G')
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Decrypt local.properties
+        run: |
+          echo "${{ secrets.GPG_PASS }}" | gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.GPG_PASSPHRASE }}" --output Android/GreenCircle/local.properties Android/GreenCircle/local.properties.gpg
+
+      - name: Set SDK location in local.properties
+        run: |
+          sed -i '/^sdk.dir=/d' Android/GreenCircle/local.properties
+          echo "sdk.dir=$ANDROID_SDK_ROOT" >> Android/GreenCircle/local.properties
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: gradle
+
+      - name: Print Java Version
+        run: javac -version
+
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+        working-directory: Android/GreenCircle
+        env:
+          GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
+
+      - name: Restore cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
       - name: Unit tests
         working-directory: Android/GreenCircle
-        # Juni test: ./gradlew testDebugUnitTest
         run: ./gradlew testDebugUnitTest --continue
 
       - name: Make unit test report
@@ -109,14 +242,23 @@ jobs:
 
   # Android Build
   apk_generate:
-    name: APK GENERATE
+    name: ANDROID APK GENERATE
     runs-on: ubuntu-latest
     continue-on-error: true
-    if: contains(github.ref, 'android/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    if: contains(github.ref, 'android/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/G')
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Decrypt local.properties
+        run: |
+          echo "${{ secrets.GPG_PASS }}" | gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.GPG_PASSPHRASE }}" --output Android/GreenCircle/local.properties Android/GreenCircle/local.properties.gpg
+
+      - name: Set SDK location in local.properties
+        run: |
+          sed -i '/^sdk.dir=/d' Android/GreenCircle/local.properties
+          echo "sdk.dir=$ANDROID_SDK_ROOT" >> Android/GreenCircle/local.properties
 
       - name: Set up JDK
         uses: actions/setup-java@v3
@@ -156,11 +298,10 @@ jobs:
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
 
-  # Backend Testing with JEST
-  node_test:
-    name: Backend Unit Tests
+  backend_linter_test:
+    name: BACKEND LINTER TEST
     runs-on: ubuntu-latest
-    if: contains(github.ref, 'backend/')  || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    if: contains(github.ref, 'backend/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/G')
 
     steps:
       - name: Checkout
@@ -175,13 +316,58 @@ jobs:
         working-directory: backend
         run: yarn install
 
-      - name: Run Jest with Coverage
+      - name: Cache Node modules and Yarn cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            ~/.yarn
+          key: ${{ runner.OS }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-yarn-
+
+      - name: Run ESLint
+        working-directory: backend
+        run: yarn eslint --config .eslintrc.json .
+
+  # Backend Testing with JEST
+  node_test:
+    name: BACKEND UNIT TESTS
+    runs-on: ubuntu-latest
+    if: contains(github.ref, 'backend/')  || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/G')
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.JS
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18.17.1"
+
+      - name: Cache Node modules and Yarn cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            ~/.yarn
+          key: ${{ runner.OS }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-yarn-
+
+      - name: Install dependencies
+        working-directory: backend
+        run: yarn install
+
+      - name: Run Mocha & Chai Test
         working-directory: backend
         run: yarn test
         env:
           JWT_AUTH: ${{ secrets.JWT_AUTH }}
           JWT_REFRESH: ${{ secrets.JWT_REFRESH }}
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          ECO_INFO_PAGE_ID: ${{ secrets.ECO_INFO_PAGE_ID }}
+          ECO_INFO_TOKEN: ${{ secrets.ECO_INFO_TOKEN }}
 
       - name: Upload Mocha & Chai Test Report
         if: always()
@@ -190,11 +376,11 @@ jobs:
           name: mocha-chai-test-report
           path: ./test-results/test-report.xml
 
-  # Admin panel unit testing
-  node_test_admin:
-    name: Admin Panel Unit Tests
+  # Admin panel linter test
+  admin_linter_test:
+    name: ADMIN PANEL LINTER TEST
     runs-on: ubuntu-latest
-    if: contains(github.ref, 'Admin/')  || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    if: contains(github.ref, 'Admin/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/G')
 
     steps:
       - name: Checkout
@@ -205,11 +391,54 @@ jobs:
         with:
           node-version: "18.17.1"
 
+      - name: Cache Node modules and Yarn cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            ~/.yarn
+          key: ${{ runner.OS }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-yarn-
+
       - name: Install dependencies
         working-directory: Admin
         run: yarn install
 
-      - name: Run Jest with Coverage
+      - name: Run ESLint
+        working-directory: Admin
+        run: yarn eslint --config .eslintrc.json .
+
+  # Admin panel unit testing
+  node_test_admin:
+    name: ADMIN PANEL UNIT TESTS
+    runs-on: ubuntu-latest
+    if: contains(github.ref, 'Admin/')  || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/G')
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.JS
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18.17.1"
+
+      - name: Cache Node modules and Yarn cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            ~/.yarn
+          key: ${{ runner.OS }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-yarn-
+
+      - name: Install dependencies
+        working-directory: Admin
+        run: yarn install
+
+      - name: Run Mocho & Chai Test
         working-directory: Admin
         run: yarn test
 

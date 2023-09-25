@@ -1,30 +1,63 @@
-import { UsersModel } from '../models/users.model'
+import User from '../models/users.model'
 import { Bootstrapper } from './Bootstraper'
 
 export default class UserBootstrap extends Bootstrapper {
   async run() {
-    UsersModel.bulkCreate([
+    await User.bulkCreate([
       {
-        userId: 'abcd-1234-efgh-5678',
-        roleId: 1,
+        userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
+        roleId: 'ADMIN_ROLE_ID',
+        companyId: null,
+        appleId: null,
+        facebookId: null,
+        googleId: null,
+        password: null,
+        profilePicture: null,
+        secondLastName: null,
         firstName: 'John',
         lastName: 'Doe',
         email: 'john.doe@example.com',
-        phoneNumber: '1234567890',
+        phoneNumber: '8453728592',
         age: 30,
         state: 'NY',
-        sex: 'masculine',
+        gender: 'masculine',
+        deviceToken: '',
       },
       {
-        userId: 'abcd-1234-efgh-5679',
-        roleId: 2,
+        userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
+        roleId: 'CUSTOMER_ROLE_ID',
+        companyId: null,
+        appleId: null,
+        facebookId: null,
+        googleId: null,
+        password: null,
+        profilePicture: null,
+        secondLastName: null,
         firstName: 'Jane',
         lastName: 'Doe',
         email: 'jane.doe@example.com',
         phoneNumber: '0987654321',
         age: 25,
         state: 'CA',
-        sex: 'femenine',
+        gender: 'femenine',
+      },
+      {
+        userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b7',
+        roleId: 'ADMIN_ROLE_ID',
+        companyId: null,
+        appleId: null,
+        facebookId: null,
+        googleId: null,
+        password: null,
+        profilePicture: null,
+        secondLastName: null,
+        firstName: 'Sergio',
+        lastName: 'Garnica González',
+        email: 'a01704025@tec.mx',
+        phoneNumber: '4424396065',
+        age: 22,
+        state: 'QRO',
+        gender: 'masculine',
       },
     ])
   }

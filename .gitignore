@@ -11,6 +11,12 @@
 .idea/dictionaries
 .idea/libraries
 
+# XCode
+/**/*.plist
+/**/project.pbxproj
+/**/Package.resolved
+/**/*.xcscheme
+
 ### Node JS ###
 # dependencies
 /node_modules

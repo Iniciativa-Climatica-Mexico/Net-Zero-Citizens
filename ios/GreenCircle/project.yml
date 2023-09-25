@@ -1,0 +1,34 @@
+name: GreenCircle
+options:
+  bundleIdPrefix: organization.GreenCircle
+packages:
+  Alamofire:
+    url: https://github.com/Alamofire/Alamofire
+    from: 5.0.0
+  FlowStacks:
+    url: https://github.com/johnpatrickmorgan/FlowStacks
+    from: 0.3.0
+  GoogleSignIn:
+    url: https://github.com/google/GoogleSignIn-iOS
+    from: 7.0.0
+  GoogleSignInSwift:
+    url: https://github.com/google/GoogleSignIn-iOS
+    from: 7.0.0
+targets:
+  GreenCircle:
+    info:
+      path: GreenCircle/Info.plist
+    type: application
+    platform: iOS
+    deploymentTarget: "16.0"
+    settings:
+      configs:
+        Debug: debug
+        Beta: release
+        AppStore: release
+    sources: [GreenCircle]
+    dependencies:
+      - package: Alamofire
+      - package: FlowStacks
+      - package: GoogleSignIn
+      - package: GoogleSignInSwift

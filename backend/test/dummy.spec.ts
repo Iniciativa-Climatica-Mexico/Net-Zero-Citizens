@@ -3,11 +3,8 @@ import { getGreeting } from '../src/services/dummy.service'
 import { expect } from 'chai'
 
 beforeEach(async () => {
-  await initDB()
-})
-
-afterEach(async () => {
   await db.drop()
+  await initDB()
 })
 
 describe('Dummy Service', () => {

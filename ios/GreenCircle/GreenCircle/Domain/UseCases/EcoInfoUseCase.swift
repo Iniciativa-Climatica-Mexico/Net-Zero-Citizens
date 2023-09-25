@@ -1,0 +1,57 @@
+//
+//  fetchAllEcoInfo.swift
+//  GreenCircle
+//
+//  Created by Dani Gutiérrez on 14/09/23.
+//
+
+import Foundation
+
+protocol EcoInfoUseCaseProtocol {
+  func fetchAllEcoInfo() async -> [EcoInfo]?
+}
+
+class EcoInfoUseCase: EcoInfoUseCaseProtocol {
+  let repository: EcoInfoRepository
+  
+  static let shared = EcoInfoUseCase()
+  
+  init(ecoInfoRepository: EcoInfoRepository = EcoInfoRepository.shared) {
+    self.repository = ecoInfoRepository
+  }
+  
+  /// Corte del string donde se encuentra un espacio o la longitud es 150
+  /// - Parameters: string de la descripción y entero con máximo de longitud
+  /// - Returns: El string cortado
+  func truncateText(ecoText: String, maxLength: Int) -> String {
+    if ecoText.count <= maxLength {
+      return ecoText
+    }
+    var tuncatedText = String(ecoText.prefix(maxLength))
+    
+    if let lastNonSpaceIndex = tuncatedText.lastIndex(where: { !$0.isWhitespace }) {
+      tuncatedText = String(tuncatedText[...lastNonSpaceIndex])
+    }
+    return tuncatedText
+  }
+  
+  /// Obtener toda la información que conforma al modelo EcoInfo
+  /// - Returns: [EcoInfo]?
+  func fetchAllEcoInfo() async -> [EcoInfo]? {
+    if var resultEcoInfo = await repository.fetchAllEcoInfo() {
+      resultEcoInfo = resultEcoInfo.map { ecoInfo in
+        var modifiedEcoInfo = ecoInfo
+        if (modifiedEcoInfo.description ?? "").isEmpty {
+          modifiedEcoInfo.description = "No se ha puesto descripción en este post..."
+        }
+        if (modifiedEcoInfo.coverImage ?? "").isEmpty {
+          modifiedEcoInfo.coverImage = "person.crop.circle.badge.xmark"
+        }
+        modifiedEcoInfo.description = truncateText(ecoText: modifiedEcoInfo.description ?? "", maxLength: 150)
+        return modifiedEcoInfo
+      }
+      return resultEcoInfo
+    }
+    return nil
+  }
+}
