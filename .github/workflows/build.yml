@@ -108,6 +108,9 @@ jobs:
         run: |
           echo "${{ secrets.GPG_PASS }}" | gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.GPG_PASSPHRASE }}" --output Android/GreenCircle/local.properties Android/GreenCircle/local.properties.gpg
 
+      - name: Append SDK location to local.properties
+        run: echo "sdk.dir=$ANDROID_SDK_ROOT" >> Android/GreenCircle/local.properties
+
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
@@ -178,11 +181,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Decrypt google-service.json
+      - name: Decrypt local.properties
         run: |
-          echo "${{ secrets.FIREBASE_ACCOUNT }}" | gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.GPG_PASSPHRASE }}" --output google-services.json google-services.json.gpg
+          echo "${{ secrets.GPG_PASS }}" | gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.GPG_PASSPHRASE }}" --output Android/GreenCircle/local.properties Android/GreenCircle/local.properties.gpg
 
-        working-directory: Android/GreenCircle/app
+      - name: Set SDK location in local.properties
+        run: |
+          sed -i '/^sdk.dir=/d' Android/GreenCircle/local.properties
+          echo "sdk.dir=$ANDROID_SDK_ROOT" >> Android/GreenCircle/local.properties
 
       - name: Set up JDK
         uses: actions/setup-java@v3
