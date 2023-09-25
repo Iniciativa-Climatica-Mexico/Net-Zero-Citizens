@@ -37,4 +37,6 @@
     <string name="review_placeholder_date">Date</string>
     <string name="review_placeholder_title">Title</string>
     <string name="review_placeholder_review">Review</string>
+    <string name="reviews_written_user">Reseñas Escritas (</string>
+    <string name="user_review_empty_view">No haz escrito ninguna reseña</string>
 </resources>
