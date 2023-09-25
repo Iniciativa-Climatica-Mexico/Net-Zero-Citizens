@@ -1,5 +1,6 @@
 'use client'
 import { QuestionWrapper } from '../../../components/surveyQuestions/questionWrapper'
+import AddIcon from '@mui/icons-material/Add'
 
 export default function CreateSurvey() {
   return (
@@ -9,10 +10,7 @@ export default function CreateSurvey() {
           <h1 className="self-start font-extrabold my-8 mx-8 text-4xl text-txt">
             Crear Encuesta
           </h1>
-          <a
-            href="/encuestas/crear"
-            className="flex items-center justify-center px-4 py-2 my-8 mx-8 text-white bg-primary-base rounded hover:bg-primary-dark"
-          >
+          <a className="flex items-center justify-center px-4 py-2 my-8 mx-8 text-white bg-primary-base rounded hover:bg-primary-dark">
             Crear
           </a>
         </div>
@@ -32,7 +30,15 @@ export default function CreateSurvey() {
         </div>
         <div className="w-full flex justify-center">
           <div className="w-1/2">
-            <QuestionWrapper />
+            <div className="w-ful">
+              <QuestionWrapper />
+            </div>
+            <div className="flex flex-row">
+              <a className=" w-full flex items-center justify-center px-4 py-2 my-8 text-white bg-primary-base rounded cursor-pointer hover:bg-primary-dark">
+                Anadir Pregunta
+                <AddIcon />
+              </a>
+            </div>
           </div>
         </div>
       </form>
