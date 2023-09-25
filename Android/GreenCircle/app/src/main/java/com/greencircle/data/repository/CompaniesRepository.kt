@@ -1,8 +1,8 @@
 package com.greencircle.data.repository
 
 import android.util.Log
-import com.greencircle.data.remote.CompanyAPIClient
-import com.greencircle.domain.model.Companies
+import com.greencircle.data.remote.company.CompanyAPIClient
+import com.greencircle.domain.model.company.Companies
 
 class CompaniesRepository {
     private val api = CompanyAPIClient()

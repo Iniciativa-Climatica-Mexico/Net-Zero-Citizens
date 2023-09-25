@@ -7,16 +7,28 @@
 
 import Foundation
 
+/// Un enum representando el estado de la operación de login
+enum SignInState {
+  case newUser
+  case success
+  case fail
+}
+
 class LoginViewModel: ObservableObject {
   var useCase = GoogleSignInUseCase.shared
   var lService = LocalService.shared
+  @Published var showAlert = false
   
   /// Función encargada de realizar el SignIn con Google y actualizar la información de entorno
   /// - Parameter userData: objeto de entorno
-  /// - Returns: un booleano indicando el éxito de la operación
+  /// - Returns: un enum indicando el estado de la operación
   @MainActor
-  func handleGoogleSignIn(userData: UserData) async -> Bool {
-    let res = await useCase.handleSignInButton()!
+  func handleGoogleSignIn(userData: UserData) async -> SignInState {
+    guard let res = await useCase.handleSignInButton()
+    else {
+      showAlert = true
+      return .fail
+    }
 
     NetworkAPIService.shared.setAuthTokens(res.tokens.authToken)
     lService.setToken(res.tokens.authToken)
@@ -24,8 +36,8 @@ class LoginViewModel: ObservableObject {
     userData.tokens = res.tokens
     
     if res.user.roles == "new_user" {
-      return true
+      return .newUser
     }
-    return false
+    return .success
   }
 }

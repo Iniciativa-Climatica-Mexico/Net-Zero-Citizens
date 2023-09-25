@@ -44,3 +44,8 @@ export type Paginator<T> = {
   pageSize: number
   total: number
 }
+
+
+export function statusOk(status: number): boolean {
+  return status >= 200 && status < 300
+}

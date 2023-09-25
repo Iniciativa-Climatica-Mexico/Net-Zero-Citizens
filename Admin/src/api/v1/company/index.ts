@@ -1,5 +1,4 @@
-import { apiV1Url } from '@/utils/constants'
-import axios from 'axios'
+import { authAxios } from '../axios.config'
 
 export interface Company {
   companyId: string
@@ -32,7 +31,7 @@ export interface Company {
  */
 export const getPendingCompanies = async () => {
   try {
-    const response = await axios.get(`${apiV1Url}/company/pending`)
+    const response = await authAxios().get('/company/pending')
     return response.data.rows
   } catch (error) {
     console.error('Error fetching pending companies:', error)
@@ -59,8 +58,8 @@ export const updateCompany = async (
   updateInfo: UpdateCompanyInfoBody
 ) => {
   try {
-    const response = await axios.post(
-      `${apiV1Url}/company/pending/${companyId}`,
+    const response = await authAxios().post(
+      `/company/pending/${companyId}`,
       updateInfo
     )
     return response.data

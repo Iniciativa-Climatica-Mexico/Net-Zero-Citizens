@@ -1,7 +1,7 @@
 package com.greencircle
 
 import com.google.gson.Gson
-import com.greencircle.domain.model.CompanySummary
+import com.greencircle.domain.model.company.CompanySummary
 import org.junit.Test
 
 class CompanySummaryTest {
