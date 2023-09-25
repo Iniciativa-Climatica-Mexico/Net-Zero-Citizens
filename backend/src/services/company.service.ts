@@ -64,6 +64,7 @@ export const getAllCompanies = async <T>(
   return Company.findAndCountAll({
     limit: params.pageSize,
     offset: params.start,
+<<<<<<< HEAD
     include: [
       // Include the relationships you want to fetch
       {
@@ -78,15 +79,17 @@ export const getAllCompanies = async <T>(
       // },
       // Add more relationships if needed
     ],
+=======
+>>>>>>> 44bbdfa5bd5dab43aff8c860f62306a8ffa81cc6
   })
 }
 
 /**
- * @brief
- * Función del servicio que devuelve todos los proveedores pendientes por aprobar
- * @params Los parametros de paginación
- * @returns Una promesa con los proveedores y la información de paginación
- */
+* @brief
+* Función del servicio que devuelve todos los proveedores pendientes por aprobar
+* @params Los parametros de paginación
+* @returns Una promesa con los proveedores y la información de paginación
+*/
 
 export const getPendingCompanies = async <T>(
   params: PaginationParams<T>
