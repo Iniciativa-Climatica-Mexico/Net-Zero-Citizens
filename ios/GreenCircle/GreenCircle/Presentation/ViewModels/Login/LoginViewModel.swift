@@ -9,6 +9,7 @@ import Foundation
 
 class LoginViewModel: ObservableObject {
   var useCase = GoogleSignInUseCase.shared
+  var lService = LocalService.shared
   
   /// Función encargada de realizar el SignIn con Google y actualizar la información de entorno
   /// - Parameter userData: objeto de entorno
@@ -18,6 +19,7 @@ class LoginViewModel: ObservableObject {
     let res = await useCase.handleSignInButton()!
 
     NetworkAPIService.shared.setAuthTokens(res.tokens.authToken)
+    lService.setToken(res.tokens.authToken)
     userData.user = res.user
     userData.tokens = res.tokens
     
