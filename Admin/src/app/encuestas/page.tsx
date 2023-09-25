@@ -21,6 +21,9 @@ export default function ListSurveys() {
           <h1 className="self-start font-extrabold my-8 mx-8 text-4xl text-txt">
             Encuestas
           </h1>
+          <a
+            href="/encuestas/crear"
+            className="flex items-center justify-center px-4 py-2 my-8 mx-8 text-white bg-primary-base rounded hover:bg-primary-dark">Crear Encuesta</a>
         </div>
         <div className="flex flex-col items-center w-full justify-center">
           <table className="table-fixed border-collapse w-4/5">
