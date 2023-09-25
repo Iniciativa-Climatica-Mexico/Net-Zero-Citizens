@@ -140,6 +140,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Decrypt local.properties
+        run: |
+          echo "${{ secrets.GPG_PASS }}" | gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.GPG_PASSPHRASE }}" --output Android/GreenCircle/local.properties Android/GreenCircle/local.properties.gpg
+
+      - name: Set SDK location in local.properties
+        run: |
+          sed -i '/^sdk.dir=/d' Android/GreenCircle/local.properties
+          echo "sdk.dir=$ANDROID_SDK_ROOT" >> Android/GreenCircle/local.properties
+
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
@@ -241,6 +250,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Decrypt local.properties
+        run: |
+          echo "${{ secrets.GPG_PASS }}" | gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.GPG_PASSPHRASE }}" --output Android/GreenCircle/local.properties Android/GreenCircle/local.properties.gpg
+
+      - name: Set SDK location in local.properties
+        run: |
+          sed -i '/^sdk.dir=/d' Android/GreenCircle/local.properties
+          echo "sdk.dir=$ANDROID_SDK_ROOT" >> Android/GreenCircle/local.properties
 
       - name: Set up JDK
         uses: actions/setup-java@v3
