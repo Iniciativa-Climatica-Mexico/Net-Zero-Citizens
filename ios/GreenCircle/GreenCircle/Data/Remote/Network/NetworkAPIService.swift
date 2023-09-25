@@ -50,7 +50,7 @@ class NetworkAPIService {
   ///   - url: el url para realizar el PUT
   ///   - authToken: token de autenticación
   ///   - user: la información del usuario a actualizar
-  func putUser(url: URL, authToken: String, user: User) async {
+  func putUser(url: URL, authToken: String, user: UserAuth) async {
     let params: Parameters = [
       "phoneNumber": user.phone!,
       "age": user.age!,
@@ -141,9 +141,23 @@ class NetworkAPIService {
   ///   - answers: Las respuestas de la encuesta
   /// - Returns: Bool
   func submitAnswers(url: URL, answers: [Answer]) async -> Bool {
-    let requestTask = AF.request(url, method: .post, parameters: answers, encoder: JSONParameterEncoder.default).validate()
+    
+    var processAns = [[String: Any]]()
+    
+    answers.forEach{
+      answer in
+      if let answerText = answer.answerText {
+        processAns.append(["questionId": answer.questionId, "answerText": answerText])
+      }
+      if let scaleValue = answer.scaleValue {
+        processAns.append(["questionId": answer.questionId, "scaleValue": scaleValue])
+      }
+    }
+    
+    let body: Parameters = ["answers":  processAns]
+    let requestTask = AF.request(url, method: .post, parameters: body, encoding: JSONEncoding()).validate()
     let response = await requestTask.serializingData().response
-
+    
     switch response.result {
     case .success:
       return true
@@ -152,4 +166,72 @@ class NetworkAPIService {
       return false
     }
   }
+  
+  ///  Fetch toda la ecoInfo del  backend
+  ///  - Parameter url: ruta al endpoint
+  ///  - Returns EcoInfo decoded o error
+  func fetchAllEcoInfo(url: URL) async -> [EcoInfo]? {
+    let requestTask = AF.request(url, method: .get).validate()
+    let response = await requestTask.serializingData().response
+    switch response.result {
+    case .success(let data):
+      do {
+        return
+          try NetworkAPIService
+          .decoder
+          .decode([EcoInfo].self, from: data)
+      } catch {
+        debugPrint(error)
+        return nil
+      }
+    case let .failure(error):
+      debugPrint(error)
+      return nil
+    }
+  }
+  
+  /// Obtener compañía por id
+  ///  - Parameters:
+  ///     - url: Backend url para obtener datos
+  ///  - Returns: Modelo de compañía o error en cualquier otro caso no válido
+  func fetchCompanyById(url: URL) async -> Company? {
+    let taskRequest = AF.request(url, method: .get).validate()
+    let response = await taskRequest.serializingData().response
+    switch response.result {
+    case .success(let data):
+      do {
+        return
+          try NetworkAPIService
+          .decoder
+          .decode(Company.self, from: data)
+      } catch {
+        debugPrint(error)
+        return nil
+      }
+    case let .failure(error):
+      debugPrint(error.localizedDescription)
+      return nil
+    }
+  }
+  
+  func fetchAllCompanies(url: URL) async -> PaginatedQuery<Company>?{
+    let taskRequest = AF.request(url, method: .get).validate()
+    let response = await taskRequest.serializingData().response
+    switch response.result {
+    case .success(let data):
+      do {
+        return
+          try NetworkAPIService
+          .decoder
+          .decode(PaginatedQuery<Company>.self, from: data)
+      } catch {
+        debugPrint(error)
+        return nil
+      }
+    case let .failure(error):
+      debugPrint(error.localizedDescription)
+      return nil
+    }
+  }
+  
 }

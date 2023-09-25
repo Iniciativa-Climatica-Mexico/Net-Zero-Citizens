@@ -29,7 +29,7 @@ struct PostCompanyData {
 /// ViewModel de la vista del formulario para registrar compañía
 class CompanyRegisterFormViewModel: ObservableObject {
   @Published var formState = PostCompanyData()
-  var useCase = RegisterCompanyUseCase.shared
+  var useCase = CompanyUseCase.shared
   
   /// Función para manejar el submit de la información de la compañía
   /// - Parameter userData: objeto en el entorno con la información del usuario

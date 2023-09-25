@@ -102,7 +102,7 @@ struct CompanyRegisterFormView_Previews: PreviewProvider {
   static var previews: some View {
     CompanyRegisterFormView(goPending: {})
       .environmentObject(UserData(
-        User(first_name: "Ricardo",
+        UserAuth(first_name: "Ricardo",
              last_name: "Fernandez",
              uuid: "1",
              email: "ricardo@mail.com",

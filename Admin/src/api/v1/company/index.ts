@@ -1,5 +1,4 @@
-import { apiV1Url } from '@/utils/constants'
-import axios from 'axios'
+import { authAxios } from '../axios.config'
 
 export interface Company {
   companyId: string
@@ -35,10 +34,10 @@ type StatusEnum = 'approved' | 'pending_approval' | 'rejected'
 export const getComapniesByStatus = async (status: StatusEnum) => {
   try {
     if (status === 'pending_approval') {
-      const response = await axios.get(`${apiV1Url}/company/pending`)
+      const response = await authAxios().get('/company/pending')
       return response.data.rows
     } else {
-      const response = await axios.get(`${apiV1Url}/company/approved`)
+      const response = await authAxios().get('/company/approved')
       return response.data.rows
     }
   } catch (error) {
@@ -73,8 +72,8 @@ export const updateCompany = async (
   updateInfo: UpdateCompanyInfoBody
 ) => {
   try {
-    const response = await axios.post(
-      `${apiV1Url}/company/pending/${companyId}`,
+    const response = await authAxios().post(
+      `/company/pending/${companyId}`,
       updateInfo
     )
     return response.data

@@ -64,6 +64,15 @@ export const getAllCompanies = async <T>(
   return Company.findAndCountAll({
     limit: params.pageSize,
     offset: params.start,
+    include: [
+      // Include the relationships you want to fetch
+      //{
+      // model: Review, // Replace with the actual name of your second relationship model
+      //as: '', // Specify the alias if you have one
+      // You can also add attributes and additional options for this relationship here
+      // },
+      // Add more relationships if needed
+    ],
   })
 }
 
