@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.greencircle.databinding.FragmentCompanyCatalogueBinding
-import com.greencircle.framework.views.fragments.catalogue.ui.adapters.catalogue.CatalogueAdapter
+import com.greencircle.framework.ui.adapters.catalogue.CatalogueAdapter
 import com.greencircle.framework.viewmodel.catalogue.CatalogueViewModel
 import kotlinx.coroutines.launch
 

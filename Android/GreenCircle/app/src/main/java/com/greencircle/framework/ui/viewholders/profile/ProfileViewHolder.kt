@@ -1,4 +1,4 @@
-package com.greencircle.framework.views.fragments.catalogue.ui.viewholders.profile
+package com.greencircle.framework.ui.viewholders.profile
 
 import androidx.recyclerview.widget.RecyclerView
 import com.greencircle.databinding.FragmentProfileBinding

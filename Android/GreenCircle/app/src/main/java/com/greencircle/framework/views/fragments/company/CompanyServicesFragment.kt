@@ -15,7 +15,7 @@ import com.greencircle.R
 import com.greencircle.databinding.FragmentCompanyServicesBinding
 import com.greencircle.domain.model.product.Product
 import com.greencircle.domain.model.service.ServiceItem
-import com.greencircle.framework.views.fragments.catalogue.ui.adapters.service.ServiceAdapter
+import com.greencircle.framework.ui.adapters.service.ServiceAdapter
 import com.greencircle.framework.viewmodel.company.CompanyServicesViewModel
 
 /*

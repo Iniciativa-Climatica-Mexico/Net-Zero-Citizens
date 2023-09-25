@@ -1,4 +1,4 @@
-package com.greencircle.framework.views.fragments.catalogue.ui.viewholders.reviews
+package com.greencircle.framework.ui.viewholders.reviews
 
 import android.content.Context
 import androidx.recyclerview.widget.RecyclerView

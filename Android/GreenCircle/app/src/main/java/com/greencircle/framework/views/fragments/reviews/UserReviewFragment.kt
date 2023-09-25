@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.greencircle.R
 import com.greencircle.databinding.FragmentUserReviewBinding
 import com.greencircle.domain.model.reviews.UserReview
-import com.greencircle.framework.views.fragments.catalogue.ui.adapters.reviews.UserReviewAdapter
+import com.greencircle.framework.ui.adapters.reviews.UserReviewAdapter
 import com.greencircle.framework.viewmodel.reviews.UserReviewViewModel
 import java.util.UUID
 
