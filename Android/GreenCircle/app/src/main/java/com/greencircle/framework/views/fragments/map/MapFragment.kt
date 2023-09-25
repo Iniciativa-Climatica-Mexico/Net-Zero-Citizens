@@ -1,4 +1,4 @@
-package com.greencircle.framework.views.fragments
+package com.greencircle.framework.views.fragments.map
 
 import android.os.Bundle
 import android.util.Log
@@ -21,7 +21,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MapFragment : Fragment(), OnMapReadyCallback {
-
     private var mGoogleMap: GoogleMap? = null
 
     private fun getCompanyList() {
