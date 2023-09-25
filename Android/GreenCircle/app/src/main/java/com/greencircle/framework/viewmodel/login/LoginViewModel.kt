@@ -6,8 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.greencircle.data.repository.TokenRepository
 import com.greencircle.domain.model.auth.AuthResponse
+import com.greencircle.domain.model.auth.Tokens
 import com.greencircle.domain.usecase.auth.GoogleAuthRequirement
 import com.greencircle.domain.usecase.auth.RecoverTokensRequirement
 import com.greencircle.domain.usecase.auth.SaveTokensRequirement
@@ -41,7 +41,7 @@ class LoginViewModel(private val context: Context) : ViewModel() {
             val authToken = result?.tokens?.authToken
             val refreshToken = result?.tokens?.refreshToken
             saveTokensRequirement(authToken!!, refreshToken!!)
-            val tokens: TokenRepository.Tokens? = recoverTokensRequirement()
+            val tokens: Tokens? = recoverTokensRequirement()
             // Registra en el log los tokens recuperados (solo para depuración).
             Log.d("Tokens", tokens.toString())
         }
