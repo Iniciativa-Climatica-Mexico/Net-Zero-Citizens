@@ -1,5 +1,5 @@
 import CompanyProducts from '../models/companyProducts.model'
-import CompanyImages from '../models/companyImages.model'
+import CompanyFiles from '../models/companyFiles.model'
 import Product from '../models/products.model'
 import Review from '../models/review.model'
 import { col, fn } from 'sequelize'
@@ -27,12 +27,6 @@ export type CompanyType = {
   zipCode: string
   userId: string
   profilePicture?: string | null
-  pdfCurriculumUrl: string
-  pdfDicCdmxUrl?: string | null
-  pdfPeeFideUrl?: string | null
-  pdfGuaranteeSecurityUrl: string
-  pdfActaConstitutivaUrl: string
-  pdfIneUrl: string
   status?: string
 }
 
@@ -65,18 +59,10 @@ export const getAllCompanies = async <T>(
     limit: params.pageSize,
     offset: params.start,
     include: [
-      // Include the relationships you want to fetch
       {
-        model: CompanyImages, // Replace with the actual name of your relationship model
-        as: 'images', // Specify the alias if you have one
-        // You can also add attributes and additional options for this relationship here
+        model: CompanyFiles,
+        as: 'CompanyFiles',
       },
-      //{
-       // model: Review, // Replace with the actual name of your second relationship model
-        //as: '', // Specify the alias if you have one
-        // You can also add attributes and additional options for this relationship here
-     // },
-      // Add more relationships if needed
     ],
   })
 }
@@ -189,8 +175,7 @@ export const getCompanyById = async (id: string): Promise<Company | null> => {
   const rating = Math.round(companyScore?.[0].getDataValue('score') * 10) / 10
   const comment = companyScore?.[0].getDataValue('review')
   const products: Product[] = []
-  const images: CompanyImages[] = []
-
+  const images: CompanyFiles[] = [] // TODO: Hacer cambios correpondientes, para que se devuelvan las imagenes de la compañia
 
   companyProducts?.forEach(function (product) {
     products.push(product.getDataValue('product').dataValues)
@@ -210,10 +195,11 @@ export const getCompanyById = async (id: string): Promise<Company | null> => {
 
 const getCompanyImages = async (
   id: string
-): Promise<CompanyImages[] | null> => {
-  return await CompanyImages.findAll({
+): Promise<CompanyFiles[] | null> => {
+  return await CompanyFiles.findAll({
     where: {
       companyId: id,
+      fieldDescription: 'Imagen',
     },
     attributes: {
       exclude: ['createdAt', 'updatedAt'],

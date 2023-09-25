@@ -1,6 +1,6 @@
 import express from 'express'
 import * as CompanyController from '../controllers/company.controller'
-import * as CompanyImageController from '../controllers/companyImage.controller'
+import * as CompanyImageController from '../controllers/companyFiles.controller'
 
 const router = express.Router()
 

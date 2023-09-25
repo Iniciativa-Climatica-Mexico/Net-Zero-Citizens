@@ -1,5 +1,5 @@
 import { Bootstrapper } from './Bootstraper'
-import CompanyImage from '../models/companyImages.model'
+import CompanyImage from '../models/companyFiles.model'
 
 export default class CompanyImageBootstrap extends Bootstrapper {
   async run() {

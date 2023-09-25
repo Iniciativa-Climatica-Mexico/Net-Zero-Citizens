@@ -1,4 +1,4 @@
-import CompanyImages from '../models/companyImages.model'
+import CompanyImages from '../models/companyFiles.model'
 import { Bootstrapper } from './Bootstraper'
 
 export default class CompanyImagesBootstrap extends Bootstrapper {
