@@ -36,9 +36,11 @@ export const getCompaniesByStatus = async (status: StatusEnum) => {
     if (status === 'pending_approval') {
       const response = await authAxios().get('/company/pending')
       return response.data.rows
-    } else {
+    } else if (status === 'approved') {
       const response = await authAxios().get('/company/approved')
       return response.data.rows
+    } else {
+      console.log('Status is not valid')
     }
   } catch (error) {
     console.error('Error fetching pending companies:', error)

@@ -64,8 +64,10 @@ export default function Home() {
       const companies = await getCompaniesByStatus(status)
       if (status === 'pending_approval') {
         setPendingCompanies(companies)
-      } else {
+      } else if (status === 'approved') {
         setApprovedCompanies(companies)
+      } else {
+        console.log('Status is not valid')
       }
     } catch (error) {
       console.error(`Fetch of ${status} companies was not successful`, error)
