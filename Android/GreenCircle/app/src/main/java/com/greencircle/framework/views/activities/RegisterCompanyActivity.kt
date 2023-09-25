@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.greencircle.R
 import com.greencircle.databinding.ActivityRegisterCompanyBinding
-import com.greencircle.framework.views.fragments.RegisterCompanyFragment
+import com.greencircle.framework.views.fragments.company.RegisterCompanyFragment
 
 /**
  * Actividad principal para el registro de empresas.

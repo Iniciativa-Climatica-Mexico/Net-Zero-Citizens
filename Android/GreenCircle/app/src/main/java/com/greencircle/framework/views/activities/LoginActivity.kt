@@ -14,7 +14,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.greencircle.R
 import com.greencircle.databinding.ActivityLoginBinding
-import com.greencircle.framework.viewmodel.LoginViewModel
+import com.greencircle.framework.viewmodel.login.LoginViewModel
 import com.greencircle.utils.AuthUtils
 
 /**

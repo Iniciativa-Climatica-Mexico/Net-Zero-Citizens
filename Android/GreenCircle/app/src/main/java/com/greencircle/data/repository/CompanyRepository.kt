@@ -1,7 +1,7 @@
 package com.greencircle.data.repository
 
-import com.greencircle.data.remote.CompanyAPIClient
-import com.greencircle.data.remote.CompanyAPIService
+import com.greencircle.data.remote.company.CompanyAPIClient
+import com.greencircle.data.remote.company.CompanyAPIService
 
 /**
  * Repositorio para gestionar operaciones relacionadas con empresas.
