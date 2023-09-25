@@ -1,4 +1,4 @@
-package com.greencircle.framework.views
+package com.greencircle.framework.views.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -7,11 +7,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.greencircle.R
 import com.greencircle.databinding.ActivityMainBinding
 import com.greencircle.databinding.TopBarBinding
-import com.greencircle.framework.views.fragments.CatalogueFragment
 import com.greencircle.framework.views.fragments.HomeFragment
-import com.greencircle.framework.views.fragments.MapFragment
+import com.greencircle.framework.views.fragments.catalogue.CatalogueFragment
 import com.greencircle.framework.views.fragments.profile.ProfileFragment
-
 /**
  * Actividad principal que muestra la interfaz de usuario principal de la aplicación.
  *

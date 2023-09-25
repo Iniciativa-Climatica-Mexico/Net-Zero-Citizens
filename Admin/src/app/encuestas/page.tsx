@@ -1,5 +1,5 @@
 'use client'
-import { Survey, fetchAllSurveys } from '@/api/survey'
+import { Survey, fetchAllSurveys } from '@/api/v1/survey'
 import moment from 'moment'
 import { useEffect, useState } from 'react'
 
@@ -9,7 +9,7 @@ export default function ListSurveys() {
     const [response, setResponse] = useState({ rows: [] } as { rows: Survey[] })
 
     useEffect(() => {
-      fetchAllSurveys().then((res) => setResponse(res))
+      fetchAllSurveys().then((res) => setResponse(res || { rows: [] }))
     }, [])
 
     const surveysList = response.rows.sort((a, b) => {
