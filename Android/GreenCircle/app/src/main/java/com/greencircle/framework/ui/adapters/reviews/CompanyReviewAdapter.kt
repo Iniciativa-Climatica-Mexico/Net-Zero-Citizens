@@ -1,4 +1,4 @@
-package com.greencircle.framework.views.fragments.catalogue.ui.adapters.reviews
+package com.greencircle.framework.ui.adapters.reviews
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.greencircle.databinding.ItemCompanyReviewBinding
 import com.greencircle.domain.model.reviews.CompanyReview
-import com.greencircle.framework.views.fragments.catalogue.ui.viewholders.reviews.CompanyReviewViewHolder
+import com.greencircle.framework.ui.viewholders.reviews.CompanyReviewViewHolder
 
 class CompanyReviewAdapter : RecyclerView.Adapter<CompanyReviewViewHolder>() {
     var data: ArrayList<CompanyReview> = ArrayList()

@@ -1,4 +1,4 @@
-package com.greencircle.framework.views.fragments.catalogue.ui.viewholders.ecoinfo
+package com.greencircle.framework.ui.viewholders.ecoinfo
 
 import android.view.View
 import android.widget.ImageView

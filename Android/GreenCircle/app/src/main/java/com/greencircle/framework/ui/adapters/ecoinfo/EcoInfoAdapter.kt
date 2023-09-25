@@ -1,4 +1,4 @@
-package com.greencircle.framework.views.fragments.catalogue.ui.adapters.ecoinfo
+package com.greencircle.framework.ui.adapters.ecoinfo
 
 import android.content.Intent
 import android.net.Uri
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.greencircle.R
 import com.greencircle.domain.model.ecoinfo.EcoInfo
-import com.greencircle.framework.views.fragments.catalogue.ui.viewholders.ecoinfo.EcoInfoViewHolder
+import com.greencircle.framework.ui.viewholders.ecoinfo.EcoInfoViewHolder
 
 /**
  * Adaptador para la lista de EcoInfo

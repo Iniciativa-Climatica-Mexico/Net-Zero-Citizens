@@ -1,4 +1,4 @@
-package com.greencircle.framework.views.fragments.catalogue.ui.adapters.service
+package com.greencircle.framework.ui.adapters.service
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.greencircle.databinding.ItemServiceBinding
 import com.greencircle.domain.model.service.ServiceItem
-import com.greencircle.framework.views.fragments.catalogue.ui.viewholders.service.ServiceViewHolder
+import com.greencircle.framework.ui.viewholders.service.ServiceViewHolder
 
 class ServiceAdapter : RecyclerView.Adapter<ServiceViewHolder>() {
 

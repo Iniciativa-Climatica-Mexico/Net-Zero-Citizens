@@ -1,11 +1,11 @@
-package com.greencircle.framework.views.fragments.catalogue.ui.adapters.profile
+package com.greencircle.framework.ui.adapters.profile
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.greencircle.databinding.FragmentProfileBinding
 import com.greencircle.domain.model.profile.Profile
-import com.greencircle.framework.views.fragments.catalogue.ui.viewholders.profile.ProfileViewHolder
+import com.greencircle.framework.ui.viewholders.profile.ProfileViewHolder
 
 class ProfileAdapter : RecyclerView.Adapter<ProfileViewHolder>() {
     var data: ArrayList<Profile> = ArrayList()

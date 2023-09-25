@@ -1,4 +1,4 @@
-package com.greencircle.framework.views.fragments.catalogue.ui.viewholders.reviews
+package com.greencircle.framework.ui.viewholders.reviews
 
 import android.app.AlertDialog
 import android.content.Context
