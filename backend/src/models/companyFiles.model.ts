@@ -90,7 +90,7 @@ export default class CompanyFiles extends Model {
       '.xlsx',
       '.pptx'
     ),
-    allowNull: false,
+    allowNull: true,
     field: 'FILE_FORMAT',
   })
   fileFormat: FileFormat
