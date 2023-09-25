@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ScaleQuestion: View {
-  @Binding var question: SurveyQuestion
+  var question: SurveyQuestion
+  @Binding var answer: Answer 
   @State private var isSelected: Int = -1
   
   var body: some View {
@@ -33,6 +34,7 @@ struct ScaleQuestion: View {
         ForEach(1..<6, id: \.self) { rating in
           Button(action: {
             self.isSelected = rating
+            answer.scaleValue = rating
           }) {
             Text("\(rating)")
               .frame(width: 30, height: 30)
