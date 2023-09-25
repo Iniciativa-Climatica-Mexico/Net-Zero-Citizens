@@ -32,4 +32,15 @@ class UserSessionRepository(private val sharedPreferences: SharedPreferences) {
             null
         }
     }
+
+    /**
+     * Elimina los datos de sesión del usuario almacenados previamente.
+     *
+     * @return [null]
+     */
+    fun deleteUserSession() {
+        val editor = sharedPreferences.edit()
+        editor.remove(userSession)
+        editor.apply()
+    }
 }

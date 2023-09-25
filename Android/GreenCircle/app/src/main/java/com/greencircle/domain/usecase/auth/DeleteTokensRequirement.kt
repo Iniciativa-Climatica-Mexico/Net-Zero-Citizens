@@ -18,5 +18,5 @@ class DeleteTokensRequirement(private val context: Context) {
      *
      * @return [null]
      */
-    suspend operator fun invoke() = repository.deleteTokens()
+    operator fun invoke() = repository.deleteTokens()
 }

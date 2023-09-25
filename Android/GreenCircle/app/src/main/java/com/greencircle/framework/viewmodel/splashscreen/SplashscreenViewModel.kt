@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.greencircle.domain.model.auth.AuthResponse
 import com.greencircle.domain.usecase.auth.DeleteTokensRequirement
+import com.greencircle.domain.usecase.auth.DeleteUserSessionRequirement
 import com.greencircle.domain.usecase.auth.RecoverTokensRequirement
 import com.greencircle.domain.usecase.auth.SaveTokensRequirement
 import com.greencircle.domain.usecase.auth.SaveUserSessionRequirement
@@ -27,6 +28,7 @@ class SplashscreenViewModel(private val context: Context) : ViewModel() {
     val updateTokens = UpdateTokensRequirement()
     val saveTokens = SaveTokensRequirement(context)
     val deleteTokens = DeleteTokensRequirement(context)
+    val deleteUserSession = DeleteUserSessionRequirement(context)
     val saveUserSession = SaveUserSessionRequirement(context)
     private var _res: AuthResponse? = null
 
@@ -57,6 +59,7 @@ class SplashscreenViewModel(private val context: Context) : ViewModel() {
             isUserLoggedIn.postValue(true)
         } else {
             deleteTokens()
+            deleteUserSession()
         }
     }
 }
