@@ -28,17 +28,25 @@ struct UserRegisterView: View {
         Spacer()
         
         VStack {
-          GoogleSignInButton(style: .wide){
+          GoogleSignInButton(style: .wide) {
             Task {
-              let newUser = await viewModel
+              let state = await viewModel
                 .handleGoogleSignIn(userData: userData)
-              if newUser {
+              switch state {
+              case .newUser:
                 goForm()
-              } else {
+              case .success:
                 goMainMenu()
+              case .fail:
+                break
               }
             }
-          }
+          }.alert("Algo salió mal",
+                   isPresented: $viewModel.showAlert) {
+             Button("Entendido", role: .cancel) {}
+           } message: {
+             Text("Intenta de nuevo por favor")
+           }
         }
         .padding(.horizontal)
         

@@ -10,20 +10,25 @@ import Foundation
 /// ViewModel de la vista de registro de usuario
 class UserRegisterViewModel: ObservableObject {
   var useCase = GoogleSignInUseCase.shared
+  @Published var showAlert = false
 
   /// Función encargada de actualizar el objeto de entorno y realizar el login de Google
   /// - Parameter userData: el objeto de entorno
-  /// - Returns: un booleano indicando el éxito de la función
+  /// - Returns: un enum indicando el estado de la operación
   @MainActor
-  func handleGoogleSignIn(userData: UserData) async -> Bool {
-    let res = await useCase.handleSignInButton()!
+  func handleGoogleSignIn(userData: UserData) async -> SignInState {
+    guard let res = await useCase.handleSignInButton()
+    else {
+      showAlert = true
+      return .fail
+    }
 
     userData.user = res.user
     userData.tokens = res.tokens
     
     if res.user.roles == "new_user" {
-      return true
+      return .newUser
     }
-    return false
+    return .success
   }
 }
