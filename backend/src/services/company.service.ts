@@ -200,7 +200,7 @@ const getCompanyImages = async (
   return await CompanyFiles.findAll({
     where: {
       companyId: id,
-      fieldDescription: 'Imagen',
+      fileDescription: 'Imagen',
     },
     attributes: {
       exclude: ['createdAt', 'updatedAt'],

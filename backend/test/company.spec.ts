@@ -27,14 +27,6 @@ const testData = [
     score: 4.3,
     profilePicture:
       'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Sunpower_logo.svg/2560px-Sunpower_logo.svg.png',
-    pdfCurriculumUrl: 'https://www.company1.com/pdfCurriculum.pdf',
-    pdfDicCdmxUrl: 'https://www.company1.com/pdfDicCdmx.pdf',
-    pdfPeeFideUrl: 'https://www.company1.com/pdfPeeFide.pdf',
-    pdfGuaranteeSecurityUrl:
-      'https://www.company1.com/pdfGuaranteeSecurity.pdf',
-    pdfActaConstitutivaUrl:
-      'https://example.com/company1-acta-constitutiva.pdf',
-    pdfIneUrl: 'https://example.com/company1-ine.pdf',
     status: 'approved',
   },
   {
@@ -52,14 +44,6 @@ const testData = [
     zipCode: '76152',
     profilePicture:
       'https://latam.apsystems.com/wp-content/uploads/2018/08/apsystems-exelsolar.png',
-    pdfCurriculumUrl: 'https://www.company2.com/pdfCurriculum.pdf',
-    pdfDicCdmxUrl: 'https://www.company2.com/pdfDicCdmx.pdf',
-    pdfPeeFideUrl: 'https://www.company2.com/pdfPeeFide.pdf',
-    pdfGuaranteeSecurityUrl:
-      'https://www.company2.com/pdfGuaranteeSecurity.pdf',
-    pdfActaConstitutivaUrl:
-      'https://example.com/company2-acta-constitutiva.pdf',
-    pdfIneUrl: 'https://example.com/company2-ine.pdf',
     status: 'rejected',
   },
   {
@@ -77,14 +61,6 @@ const testData = [
     zipCode: '76152',
     profilePicture:
       'https://cdn11.bigcommerce.com/s-3nrr5bfo5i/product_images/uploaded_images/tesla-logo.png',
-    pdfCurriculumUrl: 'https://www.company3.com/pdfCurriculum.pdf',
-    pdfDicCdmxUrl: 'https://www.company3.com/pdfDicCdmx.pdf',
-    pdfPeeFideUrl: 'https://www.company3.com/pdfPeeFide.pdf',
-    pdfGuaranteeSecurityUrl:
-      'https://example.com/company10-guarantee-security.pdf',
-    pdfActaConstitutivaUrl:
-      'https://example.com/company10-acta-constitutiva.pdf',
-    pdfIneUrl: 'https://example.com/company10-ine.pdf',
     status: 'pending_approval',
   },
 ]
