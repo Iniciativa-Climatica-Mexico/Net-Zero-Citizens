@@ -1,6 +1,6 @@
 'use client'
 
-import { QuestionReport, SurveyReport } from '@/api/report'
+import { QuestionReport, SurveyReport } from '@/api/v1/report'
 
 import ScaleChart from './ScaleChart'
 import { useState } from 'react'

@@ -16,6 +16,7 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import Logo from '../../public/LogoBloque.png'
 import { usePathname } from 'next/navigation'
+import { deleteSession } from '@/utils/sessionHooks'
 
 export default function Navbar() {
   const { data: session } = useSession()
@@ -94,6 +95,7 @@ export default function Navbar() {
                       <button
                         onClick={() => {
                           signOut()
+                          deleteSession()
                         }}
                         className="text-red-600"
                       >
