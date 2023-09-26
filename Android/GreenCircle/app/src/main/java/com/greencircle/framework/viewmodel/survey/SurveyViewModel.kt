@@ -21,9 +21,9 @@ class SurveyViewModel : ViewModel() {
     val surveyLiveData = MutableLiveData<Survey?>()
     val submitStatusLiveData = MutableLiveData<SubmitStatus>()
     val surveyPendingRequirement = SurveyRequirement()
-    fun getSurveyPending() {
+    fun getSurveyPending(userId: UUID) {
         viewModelScope.launch(Dispatchers.IO) {
-            val data = surveyPendingRequirement.getSurveyPending()
+            val data = surveyPendingRequirement.getSurveyPending(userId)
             Log.d("Salida", data?.toString() ?: "null")
             CoroutineScope(Dispatchers.Main).launch {
                 surveyLiveData.postValue(data)
@@ -31,7 +31,7 @@ class SurveyViewModel : ViewModel() {
         }
     }
 
-    fun submitAnswers() {
+    fun submitAnswers(userId: UUID) {
         try {
             val survey = surveyLiveData.value
             if (survey == null) {
@@ -51,7 +51,7 @@ class SurveyViewModel : ViewModel() {
 
             Log.i("Salida", answers.toString())
             viewModelScope.launch(Dispatchers.IO) {
-                surveyPendingRequirement.submitAnswers(survey.surveyId, answers)
+                surveyPendingRequirement.submitAnswers(survey.surveyId, userId, answers)
                 CoroutineScope(Dispatchers.Main).launch {
                     submitStatusLiveData.postValue(SubmitStatus.success)
                 }
