@@ -23,21 +23,13 @@ class LoginViewModel: ObservableObject {
   /// - Parameter userData: objeto de entorno
   /// - Returns: un enum indicando el estado de la operación
   @MainActor
-  func handleGoogleSignIn(userData: UserData) async -> SignInState {
-    guard let res = await useCase.handleSignInButton()
-    else {
-      showAlert = true
-      return .fail
-    }
-
-    NetworkAPIService.shared.setAuthTokens(res.tokens.authToken)
-    lService.setToken(res.tokens.authToken)
-    userData.user = res.user
-    userData.tokens = res.tokens
+  func handleGoogleSignIn() async -> SignInState {
+    let res = await useCase.handleSignInButton()
     
-    if res.user.roles == "new_user" {
-      return .newUser
+    if res == .fail {
+      showAlert = true
     }
-    return .success
+    
+    return res
   }
 }
