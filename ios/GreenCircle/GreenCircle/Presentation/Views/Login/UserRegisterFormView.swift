@@ -10,15 +10,14 @@ import SwiftUI
 struct UserRegisterFormView: View {
   @ObservedObject var viewModel =
   UserRegisterFormViewModel()
-  @EnvironmentObject var userData: UserData
   
   var goMainMenu: () -> Void
   
   var body: some View {
     VStack(spacing: 10) {
       RegisterHeaderView(
-        mail: userData.user!.email,
-        name: "\(userData.user!.first_name) \(userData.user!.last_name)")
+        mail: viewModel.userData!.user.email,
+        name: "\(viewModel.userData!.user.first_name) \(viewModel.userData!.user.last_name)")
       Spacer()
       VStack(alignment: .leading, spacing: 10) {
         Text("Completa tu registro por favor")
@@ -51,7 +50,7 @@ struct UserRegisterFormView: View {
       MainButton("Continuar", action: {
         Task {
           let success = await viewModel
-            .handleSubmit(userData: userData)
+            .handleSubmit()
           if(success) {
             goMainMenu()
           }
