@@ -142,6 +142,12 @@ class CreateUserFragment : Fragment() {
         }
     }
 
+    /**
+     * Valida los campos de un formulario.
+     *
+     * @param view La vista que contiene los campos del formulario.
+     * @return `true` si todos los campos son válidos, `false` en caso contrario.
+     */
     private fun validateForm(view: View): Boolean {
         Log.d("Testing", "Form validating")
         val phoneInputLayout: TextInputLayout = view.findViewById(R.id.userPhoneTextField)
@@ -195,6 +201,9 @@ class CreateUserFragment : Fragment() {
         return isValid
     }
 
+    /**
+     * Oculta el teclado del teléfono.
+     */
     private fun hideKeyboard() {
         val imm = requireContext()
             .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -202,6 +211,12 @@ class CreateUserFragment : Fragment() {
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
+    /**
+     * Verifica si un número de teléfono es válido.
+     *
+     * @param phone El número de teléfono a verificar.
+     * @return `true` si el número de teléfono es válido, `false` en caso contrario.
+     */
     private fun isValidPhoneNumber(phone: String): Boolean {
         return phone.length == 10 && phone.all { it.isDigit() }
     }
