@@ -1,12 +1,15 @@
 import chai from 'chai'
 import chaiExclude from 'chai-exclude'
 import { db, initDB } from '../src/configs/database.config'
-import { getCompanyById } from '../src/services/company.service'
+import {
+  getCompaniesByStatus,
+  getCompanyById,
+} from '../src/services/company.service'
 
 chai.use(chaiExclude)
 
 const { expect } = chai
-const testDataId = [
+const testData = [
   {
     companyId: 'c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
     userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
@@ -107,7 +110,7 @@ describe('Company Service', () => {
 
     expect(response?.get())
       .excludingEvery(attributesToExclude)
-      .to.deep.equal(testDataId[0])
+      .to.deep.equal(testData[0])
   })
 
   it('should return null if company does not exist', async () => {
