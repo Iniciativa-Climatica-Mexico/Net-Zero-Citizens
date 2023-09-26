@@ -10,6 +10,8 @@ import SwiftUI
 
 struct CoordinatorView: View {
   @State var hasPendingSurvey: Bool = false
+  @State var photovoltaicToggle: Bool = false
+  @State var solarToggle: Bool = false
   
   enum Screens {
     case login
@@ -17,6 +19,8 @@ struct CoordinatorView: View {
     case userRegisterForm
     case companyRegister
     case companyRegisterForm
+    case companyRegisterDivider
+    case uploadCompanyFiles
     case mainMenuView
     case pendingCompany
     case survey
@@ -47,8 +51,18 @@ struct CoordinatorView: View {
                             goMainMenu: goMainMenu)
         
       case .companyRegisterForm:
-        CompanyRegisterFormView(goPending: goPending)
-        
+          CompanyRegisterFormView(goCompanyRegisterDivider: goCompanyRegisterDivider, goPending: goPending)
+      
+      case .companyRegisterDivider:
+          CompanyRegisterDividerView(goUploadCompanyFiles: goUploadCompanyFiles,
+                                     photovoltaicToggle: $photovoltaicToggle,
+                                     solarToggle: $solarToggle)
+          
+      case .uploadCompanyFiles:
+          CompanyUploadFilesView(goPending: goPending,
+                                 photovoltaicToggle: $photovoltaicToggle,
+                                 solarToggle: $solarToggle)
+          
       case .mainMenuView:
         TabBarView()
         
@@ -94,6 +108,14 @@ struct CoordinatorView: View {
   
   private func goSurvey() {
     routes.presentCover(.survey)
+  }
+  
+  private func goCompanyRegisterDivider() {
+    routes.presentCover(.companyRegisterDivider)
+  }
+  
+  private func goUploadCompanyFiles(photovoltaicToggle: Binding<Bool>, solarToggle: Binding<Bool>) {
+    routes.presentCover(.uploadCompanyFiles)
   }
   
   private func goPending() {
