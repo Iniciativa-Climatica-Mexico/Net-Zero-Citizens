@@ -22,34 +22,38 @@ struct UserRegisterFormView: View {
       VStack(alignment: .leading, spacing: 10) {
         Text("Completa tu registro por favor")
           .font(.system(size: 24))
-        InputFormView(bindingValue: $viewModel.phone,
+        InputFormView(bindingValue:
+                        $viewModel.formState.phone,
                       label: "Teléfono",
                       prompt: "123-456-7890")
         .keyboardType(.phonePad)
-        InputFormView(bindingValue: $viewModel.age,
+        InputFormView(bindingValue:
+                        $viewModel.formState.age,
                       label: "Edad",
                       prompt: "Ingresa tu edad...")
         .keyboardType(.numberPad)
-        PickerFormView(selectedOption: $viewModel.state,
+        PickerFormView(selectedOption:
+                        $viewModel.formState.state,
                        label: "Estado",
                        options: Constants.states)
-        PickerFormView(selectedOption: $viewModel.gender,
+        PickerFormView(selectedOption:
+                        $viewModel.formState.gender,
                        label: "Género",
                        options: viewModel.genders)
         HStack {
           HStack {
             Text("Acepto las")
             Button("políticas de privacidad"){
-              showingDetail = true
+             showingDetail = true
             }
             .foregroundColor(.blue)
-            .sheet(isPresented: $showingDetail) {
-              PrivacyUserView()
-            }
+           .sheet(isPresented: $showingDetail) {
+             PrivacyUserView()
+           }
             
           }.frame(width: 270)
           
-          Toggle("", isOn: $viewModel.privacy)
+          Toggle("", isOn: $viewModel.formState.privacy)
         }
         Spacer()
       }.padding(.horizontal)
@@ -65,6 +69,8 @@ struct UserRegisterFormView: View {
       }).alert("Oops! Algo salió mal",
                isPresented: $viewModel.showAlert) {
         Button("Ok", role: .cancel){}
+      } message: {
+        Text(viewModel.errorMessage)
       }
       Spacer()
       
