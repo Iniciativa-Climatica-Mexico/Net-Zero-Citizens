@@ -1,32 +1,29 @@
 import { useState } from 'react'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 
-export const MulOPQuestion = ({
-  onQQuantityChange,
-}: {
-  onQQuantityChange: (newQQuantity: number) => void
-}) => {
-  type option = {
+export const MulOPQuestion = () => {
+  type Option = {
     id: number
     value: string
   }
-  const [options, setOptions] = useState<{ id: number; value: string }[]>([])
-  const [qQuantity, setQQuantity] = useState<number>(0)
-
+  const [options, setOptions] = useState<Option[]>([
+    { id: 1, value: '' },
+    { id: 2, value: '' },
+  ])
+  const [counter, setCounter] = useState(2)
   const createOption = () => {
-    setQQuantity((prevQuantity) => prevQuantity + 1)
-    onQQuantityChange(qQuantity + 1)
+    event.preventDefault()
     const newOption = {
-      id: qQuantity,
+      id: counter,
       value: '',
     }
+    setCounter(counter + 1)
     setOptions([...options, newOption])
   }
 
   const deleteQuestion = (id: number) => {
+    event.preventDefault()
     return () => {
-      setQQuantity((prevQuantity) => prevQuantity - 1)
-      onQQuantityChange(qQuantity - 1)
       setOptions((prevOptions) => {
         const newOptions = prevOptions.filter((option) => option.id !== id)
         return newOptions
@@ -35,14 +32,7 @@ export const MulOPQuestion = ({
   }
 
   return (
-    <div className="w-full h-11">
-      <input
-        id="title"
-        name="title"
-        type="text"
-        className="px-2 py-2 mb-3 rounded border border-solid border-gray-300 w-3/4 h-full"
-        placeholder="Cual es tu huella de carbono?"
-      />
+    <div className="w-full">
       <h2 className="text-sm mb-3">Opciones</h2>
       {options.map((option) => (
         <div
@@ -53,7 +43,7 @@ export const MulOPQuestion = ({
             id={option.id.toString()}
             name={option.id.toString()}
             type="text"
-            className="px-2 py-2 rounded border border-solid border-gray-300 w-3/4 h-full"
+            className="px-2 py-2 rounded border border-solid border-gray-300 w-3/4"
             placeholder="Cual es tu huella de carbono?"
           />
           <a onClick={deleteQuestion(option.id)}>
