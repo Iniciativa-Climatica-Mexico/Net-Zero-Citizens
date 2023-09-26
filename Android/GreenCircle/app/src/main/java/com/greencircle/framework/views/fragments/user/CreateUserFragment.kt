@@ -18,7 +18,9 @@ import com.greencircle.data.remote.user.UserAPIService
 import com.greencircle.framework.viewmodel.auth.LoginViewModel
 import com.greencircle.framework.viewmodel.auth.LoginViewModelFactory
 import com.greencircle.framework.viewmodel.user.CreateUserViewModel
+import com.greencircle.framework.views.activities.RegisterUserActivity
 import com.greencircle.framework.views.activities.SurveyActivity
+import com.greencircle.framework.views.fragments.TermsAndConditions.TermsAndConditions
 import java.util.UUID
 
 /**Constructor de "CreateUserFragment"
@@ -69,6 +71,14 @@ class CreateUserFragment : Fragment() {
         val view = inflater.inflate(
             R.layout.fragment_create_user, container, false
         )
+
+        val button = view.findViewById<Button>(R.id.login_register)
+        button.setOnClickListener {
+            val termsAndConditionsFragment = TermsAndConditions()
+            val activity = requireActivity() as RegisterUserActivity
+
+            activity.replaceFragment(termsAndConditionsFragment)
+        }
 
         setTexts(arguments, view)
         onSubmitListener(view)
@@ -219,6 +229,7 @@ class CreateUserFragment : Fragment() {
     private fun isValidPhoneNumber(phone: String): Boolean {
         return phone.length == 10 && phone.all { it.isDigit() }
     }
+
     /**
      * Establece los textos en la vista con datos proporcionados en los argumentos.
      *

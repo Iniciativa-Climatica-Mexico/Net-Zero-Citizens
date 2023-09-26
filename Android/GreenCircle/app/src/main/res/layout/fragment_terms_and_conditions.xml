@@ -66,8 +66,13 @@
             android:text="Respecto de la información de sus datos personales, proporcionada personal y directamente por usted, ya sea de manera verbal o por escrito, por correo electrónico o correspondencia, tarjetas de presentación, o por llenado de formularios de contactos y de datos personales, y también recabada a través de nuestro sitio de Internet, o cualesquier otro medio, le comunicamos que seguimos los principios exigidos por la legislación vigente: licitud, consentimiento, información, finalidad, lealtad, confidencialidad, seguridad, proporcionalidad y responsabilidad."
             android:textColor="@color/black"
             android:textSize="20sp" />
-
-
+        <Button
+            android:id="@+id/dismiss_button"
+            android:layout_width="365dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="CERRAR"
+            android:layout_marginBottom="16dp"></Button>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
