@@ -13,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputLayout
 import com.greencircle.R
 import com.greencircle.data.remote.user.UserAPIService
+import com.greencircle.framework.viewmodel.auth.LoginViewModel
+import com.greencircle.framework.viewmodel.auth.LoginViewModelFactory
 import com.greencircle.framework.viewmodel.user.CreateUserViewModel
 import com.greencircle.framework.views.activities.SurveyActivity
 import java.util.UUID
@@ -22,7 +24,8 @@ import java.util.UUID
  * @constructor Incializa y crea la vista del "CreateUserFragment"
  */
 class CreateUserFragment : Fragment() {
-    private lateinit var viewModel: CreateUserViewModel
+    private lateinit var createUserViewModel: CreateUserViewModel
+    private lateinit var loginViewModel: LoginViewModel
     private var arguments = Bundle()
     private lateinit var authToken: String
     private lateinit var uuid: UUID
@@ -34,11 +37,17 @@ class CreateUserFragment : Fragment() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[CreateUserViewModel::class.java]
+        // Get ViewModel
+        loginViewModel = ViewModelProvider(
+            this,
+            LoginViewModelFactory(requireContext())
+        )[LoginViewModel::class.java]
+        createUserViewModel = ViewModelProvider(this)[CreateUserViewModel::class.java]
+        // Get arguments
         arguments = requireArguments()
         // Google Login
         val token: String = arguments.getString("idToken").toString()
-        viewModel.googleLogin(token)
+        loginViewModel.googleLogin(token)
     }
 
     /**
@@ -73,7 +82,7 @@ class CreateUserFragment : Fragment() {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.googleLoginResult.observe(viewLifecycleOwner) { result ->
+        loginViewModel.googleLoginResult.observe(viewLifecycleOwner) { result ->
             // Handle the result here
             if (result != null) {
                 authToken = result.tokens.authToken
@@ -121,7 +130,7 @@ class CreateUserFragment : Fragment() {
             roleId,
         )
 
-        viewModel.updateUser(uuid, userInfo, authToken)
+        createUserViewModel.updateUser(uuid, userInfo, authToken)
         navigateToHome()
     }
 
