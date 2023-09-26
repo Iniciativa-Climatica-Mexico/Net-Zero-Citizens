@@ -3,7 +3,7 @@
 //  GreenCircle
 //
 //  Created by Ricardo Adolfo Fernández Alvarado on 12/09/23.
-//
+//  Modified by Daniel Gutiérrez Gómez 26/09/23 
 
 import FlowStacks
 import SwiftUI
@@ -12,7 +12,7 @@ struct CoordinatorView: View {
   @State var hasPendingSurvey: Bool = false
   @State var photovoltaicToggle: Bool = false
   @State var solarToggle: Bool = false
-  
+
   enum Screens {
     case login
     case userRegister
@@ -70,8 +70,7 @@ struct CoordinatorView: View {
         PendingCompanyView()
         
       case .survey:
-        SurveyView(hasPendingPendingSurvey: $hasPendingSurvey,
-                   goMainMenu: goMainMenu)
+        SurveyView(goMainMenu: goMainMenu)
           .applyNavBarTheme()
       }
     }
@@ -98,12 +97,7 @@ struct CoordinatorView: View {
   }
   
   private func goMainMenu() {
-    hasPendingSurvey = false
     routes.presentCover(.mainMenuView)
-    
-    if hasPendingSurvey {
-      routes.presentCover(.survey)
-    }
   }
   
   private func goSurvey() {
