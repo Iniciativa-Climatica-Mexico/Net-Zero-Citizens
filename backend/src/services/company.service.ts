@@ -182,8 +182,6 @@ export const getCompanyById = async (id: string): Promise<Company | null> => {
     products.push(product.getDataValue('product').dataValues)
   })
 
-  console.log(companyImages)
-
   companyImages?.forEach(function (image) {
     images.push(image.dataValues)
   })
