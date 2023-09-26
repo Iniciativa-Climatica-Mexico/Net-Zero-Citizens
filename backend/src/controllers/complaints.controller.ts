@@ -34,3 +34,5 @@ export const getAllComplaints: RequestHandler<
     total: complaints.count,
   })
 }
+
+export const 
