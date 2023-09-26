@@ -61,7 +61,7 @@ export const getAllCompanies = async <T>(
     include: [
       {
         model: CompanyFiles,
-        as: 'CompanyFiles',
+        as: 'companyFiles',
       },
     ],
   })
