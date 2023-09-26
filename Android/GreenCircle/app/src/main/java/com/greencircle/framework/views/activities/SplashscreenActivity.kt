@@ -48,6 +48,12 @@ class SplashscreenActivity : AppCompatActivity() {
                             else passViewGoToLogin()
                         }
                     )
+                    viewModel.userUncompletedRegister.observe(
+                        this,
+                        Observer { userUncompletedRegister ->
+                            if (userUncompletedRegister) passViewGoToLogin()
+                        }
+                    )
                 }
             }
         )

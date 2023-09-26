@@ -24,6 +24,7 @@ import kotlinx.coroutines.launch
 class SplashscreenViewModel(private val context: Context) : ViewModel() {
     val finishedLoading = MutableLiveData<Boolean>()
     val isUserLoggedIn = MutableLiveData<Boolean>()
+    val userUncompletedRegister = MutableLiveData<Boolean>()
     val recoverTokens = RecoverTokensRequirement(context)
     val updateTokens = UpdateTokensRequirement()
     val saveTokens = SaveTokensRequirement(context)
@@ -39,6 +40,7 @@ class SplashscreenViewModel(private val context: Context) : ViewModel() {
     fun onCreate() {
         finishedLoading.postValue(false)
         isUserLoggedIn.postValue(false)
+        userUncompletedRegister.postValue(false)
 
         viewModelScope.launch {
             updateTokens()
@@ -56,7 +58,10 @@ class SplashscreenViewModel(private val context: Context) : ViewModel() {
         if (_res != null && _res?.tokens?.authToken != null) {
             saveTokens(_res?.tokens?.authToken!!, _res?.tokens?.refreshToken!!)
             saveUserSession(_res?.user!!)
-            isUserLoggedIn.postValue(true)
+            if (_res?.user?.roles == "new_user")
+                userUncompletedRegister.postValue(true)
+            else
+                isUserLoggedIn.postValue(true)
         } else {
             deleteTokens()
             deleteUserSession()
