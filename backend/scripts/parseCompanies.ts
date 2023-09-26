@@ -14,6 +14,20 @@ type MapsResponse = {
   }[]
 }
 
+export type ParsedCompany = {
+  name: string
+  description: string
+  email: string
+  phone: string
+  street: string
+  streetNumber: string
+  city: string
+  state: string
+  zipCode: string
+  status: string
+  products: string[]
+}
+
 readCSVFile('PADRON.EMPRESAS.FIDE.AGOSTO2023.csv').then(async (data) => {
   const companies = await Promise.all(
     data.map(async (c) => {
@@ -61,7 +75,7 @@ readCSVFile('PADRON.EMPRESAS.FIDE.AGOSTO2023.csv').then(async (data) => {
 
       if (city.length == 0) city = company['Colonia']
 
-      const parsedCompany = {
+      const parsedCompany: ParsedCompany = {
         name: company['Proveedor'],
         description: company['Rama Especialización'],
         email: company['Correo Electrónico'].split(',')[0].trim(),
@@ -78,11 +92,12 @@ readCSVFile('PADRON.EMPRESAS.FIDE.AGOSTO2023.csv').then(async (data) => {
         status: 'approved',
         products: [] as string[],
       }
+
       if (company['Rama Especialización'].includes('Sistemas fotovoltaicos')) {
         parsedCompany.products.push('Paneles Solares')
       }
 
-      if (company['Rama Especialización'].includes('Calentadores solares')) {
+      if (company['Rama Especialización'].includes('Calentadores Solares')) {
         parsedCompany.products.push('Calentadores solares')
       }
       return parsedCompany

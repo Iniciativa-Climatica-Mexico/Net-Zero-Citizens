@@ -1947,7 +1947,7 @@
     "state": "Estado de México",
     "zipCode": "53370",
     "status": "approved",
-    "products": ["Paneles Solares", "Calentadores solares"]
+    "products": ["Paneles Solares", "Calentadores Solares"]
   },
   {
     "name": "HELIOS ENERGIA SOLAR S. DE R.L. DE C.V.",
@@ -2285,7 +2285,7 @@
     "state": "Jalisco",
     "zipCode": "45070",
     "status": "approved",
-    "products": ["Paneles Solares", "Calentadores solares"]
+    "products": ["Paneles Solares", "Calentadores Solares"]
   },
   {
     "name": "IONE INTEGRAR Y OPTIMIZAR NUESTRA ENERGIA SA DE CV",
@@ -4183,7 +4183,7 @@
     "state": "Jalisco",
     "zipCode": "44220",
     "status": "approved",
-    "products": ["Calentadores solares"]
+    "products": ["Calentadores Solares"]
   },
   {
     "name": "ZRO BASE MEXICO S.A. DE C.V.",
