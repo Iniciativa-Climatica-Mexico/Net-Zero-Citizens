@@ -149,7 +149,6 @@ class CreateUserFragment : Fragment() {
      * @return `true` si todos los campos son válidos, `false` en caso contrario.
      */
     private fun validateForm(view: View): Boolean {
-        Log.d("Testing", "Form validating")
         val phoneInputLayout: TextInputLayout = view.findViewById(R.id.userPhoneTextField)
         val ageInputLayout: TextInputLayout = view.findViewById(R.id.userAgeTextFIeld)
         val stateInputLayout: TextInputLayout = view.findViewById(R.id.userStateTextField)
