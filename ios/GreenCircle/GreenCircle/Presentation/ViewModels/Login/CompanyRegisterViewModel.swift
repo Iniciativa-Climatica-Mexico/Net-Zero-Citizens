@@ -10,20 +10,19 @@ import Foundation
 /// View model del registro de la compañía
 class CompanyRegisterViewModel: ObservableObject {
   var useCase = GoogleSignInUseCase.shared
+  @Published var showAlert = false
   
   /// Función que maneja el SignIn con Google
   /// - Parameter userData: la variable de entorno con los datos del usuario
   /// - Returns: un booleano indicando si el usuario es nuevo o ya está registrado
   @MainActor
-  func handleGoogleSignIn(userData: UserData) async -> Bool {
-    let res = await useCase.handleSignInButton()!
-
-    userData.user = res.user
-    userData.tokens = res.tokens
+  func handleGoogleSignIn() async -> SignInState {
+    let res = await useCase.handleSignInButton()
     
-    if res.user.roles == "new_user" {
-      return true
+    if res == .fail {
+      showAlert = true
     }
-    return false
+    
+    return res
   }
 }

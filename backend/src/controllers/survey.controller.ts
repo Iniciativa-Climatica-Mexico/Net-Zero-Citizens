@@ -20,7 +20,7 @@ export const getAllSurveys: RequestHandler<
 > = async (req, res) => {
   const params = {
     start: req.query.start || 0,
-    pageSize: req.query.pageSize || 10,
+    pageSize: req.query.pageSize || 1000,
     filters: {
       title: req.query.name || '',
     },
