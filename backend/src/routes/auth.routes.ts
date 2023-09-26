@@ -5,6 +5,4 @@ const router = express.Router()
 router.post('/login/google', controller.googleLogin)
 router.post('/refresh', controller.updateTokens)
 
-router.post('/test', controller.test)
-
 export default router

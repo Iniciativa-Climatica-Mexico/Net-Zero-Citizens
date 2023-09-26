@@ -37,8 +37,8 @@ describe('AuthService', () => {
     if (!token?.refreshToken) throw new Error('Fail creating refreshToken')
 
     const updateTokens = await AuthService.updateTokens(token?.refreshToken)
-    expect(updateTokens?.authToken).to.be.a('string')
-    expect(updateTokens?.refreshToken).to.be.a('string')
+    expect(updateTokens?.tokens?.authToken).to.be.a('string')
+    expect(updateTokens?.tokens?.refreshToken).to.be.a('string')
   })
 
   it('should verify an auth & refresh token', async () => {
@@ -63,9 +63,9 @@ describe('AuthService', () => {
 
     // A new pair of tokens must be created
     const updateTokens = await AuthService.updateTokens(token.refreshToken)
-    if (!updateTokens?.refreshToken)
+    if (!updateTokens?.tokens?.refreshToken)
       throw new Error('Fail creating refreshToken')
-    expect(updateTokens.refreshToken).to.be.not.null
+    expect(updateTokens.tokens?.refreshToken).to.be.not.null
 
     // A new pair of tokens should not be created as a the same refreshToken is used twice
     const savedToken = await AuthService.updateTokens(token.refreshToken)
