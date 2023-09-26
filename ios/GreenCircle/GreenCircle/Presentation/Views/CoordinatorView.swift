@@ -3,7 +3,7 @@
 //  GreenCircle
 //
 //  Created by Ricardo Adolfo Fernández Alvarado on 12/09/23.
-//
+//  Modified by Daniel Gutiérrez Gómez 26/09/23 
 
 import FlowStacks
 import SwiftUI
@@ -11,7 +11,9 @@ import SwiftUI
 struct CoordinatorView: View {
   @StateObject var viewModel = CoordinatorViewModel()
   @State var hasPendingSurvey: Bool = false
-  
+  @State var photovoltaicToggle: Bool = false
+  @State var solarToggle: Bool = false
+
   enum Screens {
     case splashScreen
     case login
@@ -19,6 +21,8 @@ struct CoordinatorView: View {
     case userRegisterForm
     case companyRegister
     case companyRegisterForm
+    case companyRegisterDivider
+    case uploadCompanyFiles
     case mainMenuView
     case pendingCompany
     case survey
@@ -52,8 +56,18 @@ struct CoordinatorView: View {
                             goMainMenu: goMainMenu)
         
       case .companyRegisterForm:
-        CompanyRegisterFormView(goPending: goPending)
-        
+          CompanyRegisterFormView(goCompanyRegisterDivider: goCompanyRegisterDivider, goPending: goPending)
+      
+      case .companyRegisterDivider:
+          CompanyRegisterDividerView(goUploadCompanyFiles: goUploadCompanyFiles,
+                                     photovoltaicToggle: $photovoltaicToggle,
+                                     solarToggle: $solarToggle)
+          
+      case .uploadCompanyFiles:
+          CompanyUploadFilesView(goPending: goPending,
+                                 photovoltaicToggle: $photovoltaicToggle,
+                                 solarToggle: $solarToggle)
+          
       case .mainMenuView:
         TabBarView()
         
@@ -61,8 +75,7 @@ struct CoordinatorView: View {
         PendingCompanyView()
         
       case .survey:
-        SurveyView(hasPendingPendingSurvey: $hasPendingSurvey,
-                   goMainMenu: goMainMenu)
+        SurveyView(goMainMenu: goMainMenu)
           .applyNavBarTheme()
       }
     }
@@ -103,16 +116,19 @@ struct CoordinatorView: View {
   }
   
   private func goMainMenu() {
-    hasPendingSurvey = false
     routes.presentCover(.mainMenuView)
-    
-    if hasPendingSurvey {
-      routes.presentCover(.survey)
-    }
   }
   
   private func goSurvey() {
     routes.presentCover(.survey)
+  }
+  
+  private func goCompanyRegisterDivider() {
+    routes.presentCover(.companyRegisterDivider)
+  }
+  
+  private func goUploadCompanyFiles(photovoltaicToggle: Binding<Bool>, solarToggle: Binding<Bool>) {
+    routes.presentCover(.uploadCompanyFiles)
   }
   
   private func goPending() {

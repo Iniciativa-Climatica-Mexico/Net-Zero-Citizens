@@ -39,7 +39,14 @@ struct UserRegisterFormView: View {
         HStack {
           HStack {
             Text("Acepto las")
-            LinkButton("políticas de privacidad", buttonColor: .blue){}
+            Button("políticas de privacidad"){
+              showingDetail = true
+            }
+            .foregroundColor(.blue)
+            .sheet(isPresented: $showingDetail) {
+              PrivacyUserView()
+            }
+            
           }.frame(width: 270)
           
           Toggle("", isOn: $viewModel.privacy)
@@ -72,11 +79,11 @@ struct UserRegisterFormView_Previews: PreviewProvider {
     UserRegisterFormView(goMainMenu: {})
       .environmentObject(UserData(
         UserAuth(first_name: "Ricardo",
-             last_name: "Fernandez",
-             uuid: "1",
-             email: "ricardo@mail.com",
-             login_type: "google",
-             picture: "picture",
-             roles: "new_user")))
+                 last_name: "Fernandez",
+                 uuid: "1",
+                 email: "ricardo@mail.com",
+                 login_type: "google",
+                 picture: "picture",
+                 roles: "new_user")))
   }
 }

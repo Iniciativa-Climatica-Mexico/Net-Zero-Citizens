@@ -43,7 +43,7 @@ export default class CompanyProducts extends Model {
 
   @Column({
     type: DataType.STRING(255),
-    allowNull: false,
+    allowNull: true,
     field: 'PDF_PRODUCT_CERTIFICATION_URL',
     unique: true,
   })
