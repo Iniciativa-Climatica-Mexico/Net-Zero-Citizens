@@ -19,10 +19,10 @@ export const bootstrapDB = async () => {
       SurveysBootstrapper,
       ReviewBootstrap,
       ProductBootstrap,
-      CompanyFilesBootstrap,
       CompanyProductsBootstrap,
       DummyBootstrap,
       EcoinfoBootstrap,
+      CompanyFilesBootstrap,
     ]
     const pool = bootstrappers.map((bootstrapper) => {
       const instance = new bootstrapper()
