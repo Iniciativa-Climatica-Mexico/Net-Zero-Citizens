@@ -31,7 +31,7 @@ export const getAllDummys: RequestHandler<
 > = async (req, res) => {
   const params = {
     start: req.query.start || 0,
-    pageSize: req.query.pageSize || 10,
+    pageSize: req.query.pageSize || 1000,
     name: req.query.name || '',
   }
   const dummys = await DummyService.getAllDummys(params)
