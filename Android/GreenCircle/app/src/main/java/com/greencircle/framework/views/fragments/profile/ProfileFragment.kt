@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import com.greencircle.R
 import com.greencircle.databinding.FragmentProfileBinding
@@ -24,7 +25,7 @@ class ProfileFragment : Fragment() {
     private lateinit var viewModel: ProfileViewModel
     private lateinit var userId: UUID
     private lateinit var profile: Profile
-    private var reviewsCount: Int = 100
+    private var reviewsCount: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,14 +56,18 @@ class ProfileFragment : Fragment() {
     }
 
     private fun displayUserReviewFragment() {
-        val bundle = Bundle()
-        bundle.putInt("ReviewsCount", reviewsCount)
-
         val userReviewFragment = UserReviewFragment()
+
         val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
-        userReviewFragment.arguments = bundle
+        fragmentManager.setFragmentResultListener(
+            "reviewsCountKey",
+            viewLifecycleOwner
+        ) { _, bundle ->
+            reviewsCount = bundle.getInt("bundleReviewsCount")
+            binding.resenasCountTextView.text = "$reviewsCount"
+        }
         val transaction: FragmentTransaction = fragmentManager.beginTransaction()
-        transaction.add(R.id.userReviewFragment, userReviewFragment, "child_fragment_tag")
+        transaction.add(R.id.userReviewFragment, userReviewFragment, "User Review")
         transaction.commit()
     }
 

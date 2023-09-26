@@ -77,20 +77,21 @@ export const getAllCompanies = async <T>(
 }
 
 /**
-* @brief
-* Función del servicio que devuelve todos los proveedores pendientes por aprobar
-* @params Los parametros de paginación
-* @returns Una promesa con los proveedores y la información de paginación
-*/
+ * @brief
+ * Función del servicio que devuelve todos los proveedores con el status especificado
+ * @params Los parametros de paginación
+ * @returns Una promesa con los proveedores y la información de paginación
+ */
 
-export const getPendingCompanies = async <T>(
+export const getCompaniesByStatus = async <T>(
+  status: 'approved' | 'rejected' | 'pending_approval',
   params: PaginationParams<T>
 ): Promise<PaginatedQuery<Company>> => {
   return await Company.findAndCountAll({
     limit: params.pageSize,
     offset: params.start,
     where: {
-      status: 'pending_approval',
+      status,
     },
   })
 }
@@ -185,7 +186,6 @@ export const getCompanyById = async (id: string): Promise<Company | null> => {
   const comment = companyScore?.[0].getDataValue('review')
   const products: Product[] = []
   const images: CompanyImages[] = []
-
 
   companyProducts?.forEach(function (product) {
     products.push(product.getDataValue('product').dataValues)
