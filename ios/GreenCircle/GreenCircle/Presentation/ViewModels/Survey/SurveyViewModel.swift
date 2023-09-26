@@ -21,9 +21,11 @@ class SurveyViewModel: ObservableObject {
   /// - Description: Obtener encuesta pendiente
   func getPendingSurvey() async {
     self.survey = await surveyUseCase.getPendingSurvey()!
+    print(survey)
     survey.questions.forEach({ question in
       answers.append(Answer(scaleValue: nil, answerText: nil, questionId: question.questionId))
     })
+    
   }
 
   @MainActor
