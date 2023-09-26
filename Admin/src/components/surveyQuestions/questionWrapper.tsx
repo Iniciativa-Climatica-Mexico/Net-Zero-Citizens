@@ -3,10 +3,37 @@ import { useState } from 'react'
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'
 import { OpenQuestion } from './questionsTypes/openQuestion'
 import { MulOPQuestion } from './questionsTypes/mulOpQuestion'
+import { useEffect } from 'react'
+import { use } from 'chai'
 
 export const QuestionWrapper = () => {
   const [required, setRequired] = useState(false)
   const [questionType, setQuestionType] = useState('openQuestion')
+  const [wrapperHeight, setWrapperHeight] = useState(200)
+  const [switchMargin, setSwitchMargin] = useState(0.75)
+  const [mulOpQuestionQuantity, setMulOpQuestionQuantity] = useState(0)
+
+  useEffect(() => {
+    const newHeight = questionType === 'mulOptionQuestion' ? 400 : 200
+    setWrapperHeight(newHeight)
+    const newMargin = questionType === 'mulOptionQuestion' ? 14 : 0.75
+    setSwitchMargin(newMargin)
+  }, [questionType])
+
+  useEffect(() => {
+    if (mulOpQuestionQuantity > 0) {
+      const newHeight = 400 + mulOpQuestionQuantity * 50
+      setWrapperHeight(newHeight)
+      const newMargin = 14 + mulOpQuestionQuantity * 3.5
+      setSwitchMargin(newMargin)
+    }
+  }, [mulOpQuestionQuantity])
+
+  const handleMulOpQQuantityChange = (newQQuantity: number) => {
+    event?.preventDefault()
+    setMulOpQuestionQuantity(newQQuantity)
+    console.log('New quantity:', newQQuantity)
+  }
 
   const handleQuestionTypeChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -23,14 +50,17 @@ export const QuestionWrapper = () => {
       case 'openQuestion':
         return <OpenQuestion />
       case 'mulOptionQuestion':
-        return <MulOPQuestion />
+        return <MulOPQuestion onQQuantityChange={handleMulOpQQuantityChange} />
       default:
         return <OpenQuestion />
     }
   }
 
   return (
-    <div className="rounded border border-solid border-gray-300 p-3.5 h-full">
+    <div
+      className="rounded border border-solid border-gray-300 p-3.5 h-f"
+      style={{ minHeight: `${wrapperHeight}px` }}
+    >
       <div className="flex flex-row justify-between">
         <h2>Pregunta 1</h2>
         <RemoveCircleOutlineIcon className="hover:text-red-600 cursor-pointer" />
@@ -51,7 +81,10 @@ export const QuestionWrapper = () => {
         </div>
       </div>
 
-      <div className="mt-3 flex flex-row">
+      <div
+        className="flex flex-row"
+        style={{ marginTop: `${switchMargin}rem` }}
+      >
         <label
           className="flex items-center space-x-2"
           style={{ pointerEvents: 'none' }}
