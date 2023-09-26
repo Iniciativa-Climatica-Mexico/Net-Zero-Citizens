@@ -19,7 +19,8 @@ class RegisterCompanyActivity : AppCompatActivity() {
     /**
      * Método llamado cuando se crea la actividad.
      *
-     * @param savedInstanceState La instancia de Bundle que contiene datos previamente guardados de la actividad.
+     * @param savedInstanceState La instancia de Bundle que contiene
+     *                           datos previamente guardados de la actividad.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
