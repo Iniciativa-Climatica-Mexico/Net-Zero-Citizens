@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SurveyView: View {
-  @Binding var hasPendingPendingSurvey: Bool
   @StateObject var vm = SurveyViewModel()
   @State private var showAlert = false
   @State private var submissionResult: Bool = false
