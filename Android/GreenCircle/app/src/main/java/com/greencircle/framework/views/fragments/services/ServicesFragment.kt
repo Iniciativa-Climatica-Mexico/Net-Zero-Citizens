@@ -31,12 +31,7 @@ class ServicesFragment : Fragment() {
         val nextBtn = view.findViewById<Button>(R.id.nextFragment)
 
         nextBtn.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putBoolean("fotovoltaics", fotoVoltaicSwitch.isChecked)
-            bundle.putBoolean("solarHeaters", solarHeaterSwitch.isChecked)
-
-            // Change to the next view
-            // val fragment = ServicesFragment()
+            nextFragment()
         }
 
         return view
@@ -87,5 +82,17 @@ class ServicesFragment : Fragment() {
                 )
             }
         }
+    }
+
+    /**
+     * Sends the selected services to the next fragment.
+     */
+    private fun nextFragment() {
+        val bundle = Bundle()
+        bundle.putBoolean("fotovoltaics", fotoVoltaicSwitch.isChecked)
+        bundle.putBoolean("solarHeaters", solarHeaterSwitch.isChecked)
+
+        // Change to the next view
+        // val fragment = ServicesFragment()
     }
 }
