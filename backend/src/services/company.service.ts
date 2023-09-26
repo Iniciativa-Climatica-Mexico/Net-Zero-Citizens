@@ -176,7 +176,7 @@ export const getCompanyById = async (id: string): Promise<Company | null> => {
   const rating = Math.round(companyScore?.[0].getDataValue('score') * 10) / 10
   const comment = companyScore?.[0].getDataValue('review')
   const products: Product[] = []
-  const images: CompanyFiles[] = [] // TODO: Hacer cambios correpondientes, para que se devuelvan las imagenes de la compañia
+  const images: CompanyFiles[] = []
 
   companyProducts?.forEach(function (product) {
     products.push(product.getDataValue('product').dataValues)
@@ -194,15 +194,14 @@ export const getCompanyById = async (id: string): Promise<Company | null> => {
   return company
 }
 
-const getCompanyImages = async (
-  id: string
-): Promise<CompanyFiles[] | null> => {
+const getCompanyImages = async (id: string): Promise<CompanyFiles[] | null> => {
   return await CompanyFiles.findAll({
     where: {
       companyId: id,
       fileDescription: 'Imagen',
     },
     attributes: {
+      include: ['companyFileId', 'fileUrl'],
       exclude: ['createdAt', 'updatedAt'],
     },
   })

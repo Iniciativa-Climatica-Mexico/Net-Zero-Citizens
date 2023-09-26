@@ -36,7 +36,7 @@ export const getAllCompanies: RequestHandler<
       total: companies.count,
     })
   } catch (error) {
-    res.status(400).json({ error: 'Error getting users' })
+    res.status(400).json({ error: 'Error getting companies' })
   }
 }
 
