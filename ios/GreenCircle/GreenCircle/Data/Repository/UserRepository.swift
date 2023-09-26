@@ -65,10 +65,11 @@ class UserRepository: UserRepositoryProtocol {
   /// - Parameter googleToken: token proporcionado por Google
   /// - Returns: Una respuesta de autenticación, con Tokens e información del usuario
   func postGoogleLogin(googleToken: String) async -> AuthResponse? {
+    let params: [String: Any] = ["googleToken": googleToken]
     return await nService
-      .postGoogleSignIn(url: URL(
+      .postRequest(URL(
         string: "\(AuthAPI.base)\(AuthAPI.Routes.googleLogin)")!,
-                        googleToken: googleToken)
+                   body: params)
   }
   
   /// Actualiza la información de un usuario
@@ -76,14 +77,21 @@ class UserRepository: UserRepositoryProtocol {
   ///   - authToken: token de autenticación
   ///   - user: información del usuario a actualizar
   func putUser(authToken: String, user: UserAuth) async {
+    let params: [String: Any] = [
+      "phoneNumber": user.phone!,
+      "age": user.age!,
+      "gender": user.gender!,
+      "state": user.state!,
+      "roleId": "CUSTOMER_ROLE_ID"
+    ]
+    
     let url = URL(
       string: "\(UserAPI.base)\(UserAPI.Routes.userId)"
         .replacingOccurrences(
           of: ":userId",
           with: user.id))!
     
-    await nService.putUser(url: url,
-                           user: user)
+    let _: NoResponse? = await nService.putRequest(url, body: params)
   }
   
   func fetchUserById(userId: String) async -> User? {
