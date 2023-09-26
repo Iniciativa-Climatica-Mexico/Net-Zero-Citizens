@@ -2,23 +2,22 @@
 
 | US ID | Module | User Story                                                                  | System  | Priority | Size | Testing | Documentation |
 | ----- | ------ | --------------------------------------------------------------------------- | ------- | -------- | ---- | ------- | ------------- |
-| 261   | AUTH   | Seleccionar productos que ofrece una empresa al registrar una nueva empresa | Android | High     | 2    | Done    | Done          |
+| 318   | AUTH   | Validar formulario de registro al crear nuevo usuario  | Android | High     | 2    | Done    | Done          |
 
 ### Description
 
-Como Proveedor quiero seleccionar los servicios que ofrece mi empresa para subir la información correspondiente y que mi empresa pueda aparecer en el catálogo de proveedores de la app móvil en la sección correspondiente
+Como desarrollador quiero validar los campos del formulario de registro de nuevo usuario para asegurarme que se registre de manera correcta
 
 ### Acceptance Criteria
 
-- [x] Visualizar la lista de los servicios disponibles para proveedores dentro de la app móvil
-- [] Marcar los servicios que ofrece su empresa
-- [] Continuar con la subida de documentos en la siguiente vista
+- [x] Validar que el tipo de dato ingresado por el usuario en cada campo sea correcto y coincida con el modelo definido en el backend
+- [x] Mostrar un aviso al usuario en caso de haber ingresado un dato incorrecto
+- [x] Los avisos deben ser informativos para el usuario
 
 ## UI Design (or Program Flow)
 
-Insert pictures, gifs, or videos that show the UI design from figma, program flow, or any programmed
-views running on the emulator.
+NA
 
 ## Additional Changes
 
-Any changes that are not covered by the user story and acceptance criteria (if any).
+None
