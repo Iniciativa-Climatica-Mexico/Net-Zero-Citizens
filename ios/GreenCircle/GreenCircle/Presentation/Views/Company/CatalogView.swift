@@ -25,7 +25,7 @@ struct CatalogView: View {
               .frame(width: 350, height: 160) // Adjusted card size
 
             HStack {
-              if let imageURL = URL(string: company.images?.first?.imageUrl ?? "") {
+              if let imageURL = URL(string: company.images?.first?.fileUrl ?? "") {
                 AsyncImage(url: imageURL) { phase in
                   switch phase {
                     case .empty:
@@ -101,10 +101,14 @@ struct CatalogView: View {
 
     }.accentColor(.white)
       .onAppear {
-      Task {
-        await viewModel.fetchAllCompanies()
+          Task {
+              do {
+                  try await viewModel.fetchAllCompanies()
+              } catch {
+                  print("Error al obtener las compañías: \(error.localizedDescription)")
+              }
+          }
       }
-    }
   }
 }
 
