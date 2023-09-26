@@ -83,7 +83,7 @@ class RegisterCompanyFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflar el diseño de este fragmento
         _binding = FragmentRegisterCompanyBinding.inflate(inflater, container, false)
         // Google Login
