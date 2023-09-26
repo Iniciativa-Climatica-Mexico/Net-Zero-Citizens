@@ -1,11 +1,13 @@
 package com.greencircle.framework.views.fragments.user
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -122,18 +124,87 @@ class CreateUserFragment : Fragment() {
         val gender = genderInputLayout.editText?.text.toString()
         val roleId = "CUSTOMER_ROLE_ID"
 
-        val userInfo: UserAPIService.UpdateUserRequest = UserAPIService.UpdateUserRequest(
-            phone,
-            age,
-            state,
-            gender,
-            roleId,
-        )
+        val validation = validateForm(view)
 
-        createUserViewModel.updateUser(uuid, userInfo, authToken)
-        navigateToHome()
+        if (validation) {
+            val userInfo: UserAPIService.UpdateUserRequest = UserAPIService.UpdateUserRequest(
+                phone,
+                age,
+                state,
+                gender,
+                roleId,
+            )
+
+            createUserViewModel.updateUser(uuid, userInfo, authToken)
+            navigateToHome()
+        } else {
+            hideKeyboard()
+        }
     }
 
+    private fun validateForm(view: View): Boolean {
+        Log.d("Testing", "Form validating")
+        val phoneInputLayout: TextInputLayout = view.findViewById(R.id.userPhoneTextField)
+        val ageInputLayout: TextInputLayout = view.findViewById(R.id.userAgeTextFIeld)
+        val stateInputLayout: TextInputLayout = view.findViewById(R.id.userStateTextField)
+        val genderInputLayout: TextInputLayout = view.findViewById(R.id.userGenderTextField)
+
+        val phone = phoneInputLayout.editText?.text.toString()
+        val age = ageInputLayout.editText?.text.toString()
+        val state = stateInputLayout.editText?.text.toString()
+        val gender = genderInputLayout.editText?.text.toString()
+
+        var isValid = true
+
+        // Validar el teléfono
+        if (!isValidPhoneNumber(phone)) {
+            phoneInputLayout.error = "Teléfono inválido"
+            isValid = false
+        } else {
+            phoneInputLayout.error = null
+        }
+
+        // Validar la edad
+        val ageValue = age.toIntOrNull()
+        if (ageValue == null || ageValue < 18 || ageValue > 90) {
+            if (ageValue == null || ageValue < 0 || ageValue > 90) {
+                ageInputLayout.error = "Ingresa una edad válida"
+            } else if (ageValue >= 0 && ageValue <= 17) {
+                ageInputLayout.error = "Debes ser mayor de edad"
+            }
+            isValid = false
+        } else {
+            ageInputLayout.error = null
+        }
+
+        // Validar los dropdown
+        if (state.isEmpty()) {
+            stateInputLayout.error = "Este campo no puede estar vacío"
+            isValid = false
+        } else {
+            stateInputLayout.error = null
+        }
+
+        if (gender.isEmpty()) {
+            genderInputLayout.error = "Este campo no puede estar vacío"
+            isValid = false
+        } else {
+            genderInputLayout.error = null
+        }
+
+        return isValid
+    }
+
+    private fun hideKeyboard() {
+        val imm = requireContext()
+            .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val view = requireView()
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    private fun isValidPhoneNumber(phone: String): Boolean {
+        return phone.length == 10 && phone.all { it.isDigit() }
+    }
     /**
      * Establece los textos en la vista con datos proporcionados en los argumentos.
      *
