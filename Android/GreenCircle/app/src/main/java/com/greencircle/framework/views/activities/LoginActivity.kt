@@ -46,6 +46,7 @@ class LoginActivity : AppCompatActivity() {
                 // Handle the case where the user canceled the registration
             }
         }
+
     private val googleSignInActivityResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -60,9 +61,7 @@ class LoginActivity : AppCompatActivity() {
                         viewModel.googleLogin(account.idToken!!)
                     } catch (e: ApiException) {
                         Toast.makeText(
-                            applicationContext,
-                            "Something went wrong",
-                            Toast.LENGTH_SHORT
+                            applicationContext, "Something went wrong", Toast.LENGTH_SHORT
                         ).show()
                     }
                 }
@@ -96,13 +95,16 @@ class LoginActivity : AppCompatActivity() {
                     Log.d("Test", "User: ${authResponse.user}")
                     navigateToSurvey()
                 } else {
-                    Toast.makeText(applicationContext, "Por favor, regístrate", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(
+                        applicationContext, "Por favor, regístrate", Toast.LENGTH_SHORT
+                    ).show()
                     navigateToRegisterUser()
                 }
             } else {
                 // Handle the case where the Google login failed
-                Toast.makeText(applicationContext, "Google login failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    applicationContext, "Google login failed", Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

@@ -19,6 +19,7 @@
             android:layout_marginTop="9dp"
             android:src="@drawable/arrow_back_icon"
             app:tint="@color/green"
+            app:backgroundTint="@color/white"
             android:contentDescription="Back arrow" />
 
         <View
@@ -114,7 +115,7 @@
             android:orientation="horizontal">
 
             <com.google.android.material.materialswitch.MaterialSwitch
-                android:id="@+id/solar_heaters"
+                android:id="@+id/solarHeaters"
                 style="@style/Widget.Material3.CompoundButton.MaterialSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -142,13 +143,21 @@
         </LinearLayout>
     </LinearLayout>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+    </FrameLayout>
+
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/nextFragment"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="center|bottom"
         android:background="@drawable/rounded_btn"
+        android:layout_marginBottom="15dp"
         android:text="Siguiente"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        />
 
 </LinearLayout>
