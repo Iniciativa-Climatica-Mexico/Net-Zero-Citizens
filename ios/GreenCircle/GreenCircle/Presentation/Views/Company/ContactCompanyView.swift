@@ -234,25 +234,25 @@ struct ContactCompanyView: View {
   var body: some View {
     if !dispScrollView {
       NavigationStack {
-        VStack(alignment: .leading) {
-          TabView {
-            ForEach(contactCompanyViewModel.contentCompany.images ?? [], id: \.self) { image in
-              if let imageUrl = image.imageUrl {
-                AsyncImage(url: URL(string: imageUrl)) { phase in
-                  switch phase {
-                    case .empty:
-                      ProgressView()
-                    case .success(let image):
-                      image
-                        .resizable()
-                        .scaledToFill()
-                        .frame(maxWidth: .infinity, maxHeight: 155)
-                        .cornerRadius(10, corners: [.bottomLeft, .bottomRight])
-                    case .failure:
-                      Text("Failed to load Image!!")
-                    @unknown default:
-                      fatalError()
-                  }
+          VStack(alignment: .leading) {
+           TabView {
+             ForEach(contactCompanyViewModel.contentCompany.images ?? [], id: \.self) { image in
+               if let fileUrl = image.fileUrl {
+                 AsyncImage(url: URL(string: fileUrl)) { phase in
+                   switch phase {
+                     case .empty:
+                       ProgressView()
+                     case .success(let image):
+                       image
+                         .resizable()
+                         .scaledToFill()
+                         .frame(maxWidth: .infinity, maxHeight: 155)
+                         .cornerRadius(10, corners: [.bottomLeft, .bottomRight])
+                     case .failure:
+                       Text("Failed to load Image!!")
+                     @unknown default:
+                       fatalError()
+                   }
                 }
               }
             }

@@ -82,7 +82,6 @@ class UserRepository: UserRepositoryProtocol {
           of: ":id",
           with: user.id))!
     await nService.putUser(url: url,
-                           authToken: authToken,
                            user: user)
   }
   
