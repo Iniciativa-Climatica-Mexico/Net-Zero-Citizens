@@ -17,6 +17,7 @@ import com.greencircle.databinding.FragmentRegisterCompanyBinding
 import com.greencircle.framework.viewmodel.company.CreateCompanyViewModel
 import com.greencircle.framework.views.activities.MainActivity
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
+import com.greencircle.framework.views.fragments.company.upload_documents.UploadDocumentsFragment
 import com.greencircle.utils.AuthUtils
 
 /**Constructor de "RegisterCompanyFragment"
@@ -107,7 +108,9 @@ class RegisterCompanyFragment : Fragment() {
                 if (result.user.roles != "new_user") {
                     navigateToHome()
                 } else {
-                    navigateToForm(_arguments)
+//                    TODO: QUITAR DEL COMENTARIO ESTO
+//                    navigateToForm(_arguments)
+                    navigateToUploadDocumentFragment()
                 }
             } else {
                 Log.d("CreateCompanyFragment", "Google login failed")
@@ -128,6 +131,26 @@ class RegisterCompanyFragment : Fragment() {
         val createCompanyFragment = CreateCompanyFragment()
         val activity = requireActivity() as RegisterCompanyActivity
         activity.replaceFragment(createCompanyFragment, arguments)
+    }
+
+    /**
+     * TODO: ELIMINAR FUNCION, NO VA AQUI
+     * Navega hacia el fragmento "SubmitDocumentsFragment" dentro de la "RegisterCompanyActivity".
+     *
+     * Esta función se encarga de hacer la transición al fragmento "SubmitDocumentsFragment" desde el fragmento
+     * actual dentro de la "RegisterCompanyActivity". Opcionalmente, puede recibir un Bundle de argumentos
+     * que se pueden pasar al fragmento de destino.
+     *
+     * @param arguments Un Bundle opcional de argumentos que contiene la información de la cuenta de Google.
+     */
+    private fun navigateToUploadDocumentFragment(arguments: Bundle? = null) {
+        val uploadDocumentsFragment = UploadDocumentsFragment()
+        val activity = requireActivity() as RegisterCompanyActivity
+
+        val intent = Intent(activity, RegisterCompanyActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+        activity.replaceFragment(uploadDocumentsFragment, arguments, false)
     }
 
     private fun navigateToHome() {
