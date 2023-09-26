@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SurveyModel: Decodable, Identifiable {
+struct SurveyModel: Codable, Identifiable {
   let surveyId: String
   let title: String
   let description: String
@@ -18,7 +18,7 @@ struct SurveyModel: Decodable, Identifiable {
   }
 }
 
-struct SurveyQuestion: Decodable, Identifiable, Hashable {
+struct SurveyQuestion: Codable, Identifiable, Hashable {
   var questionId: String
   let questionOptions: [QuestionOption]
   let questionText: String
@@ -29,14 +29,14 @@ struct SurveyQuestion: Decodable, Identifiable, Hashable {
     return questionId
   }
   
-  enum QuestionType: String, Decodable, Hashable {
+  enum QuestionType: String, Codable, Hashable {
     case open = "open"
     case scale = "scale"
     case multiple_choice = "multiple_choice"
   }
 }
 
-struct QuestionOption: Decodable, Identifiable, Hashable {
+struct QuestionOption: Codable, Identifiable, Hashable {
   let questionOptionId: String
   let textOption: String
   
