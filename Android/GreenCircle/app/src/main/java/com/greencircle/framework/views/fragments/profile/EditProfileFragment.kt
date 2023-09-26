@@ -1,7 +1,9 @@
 package com.greencircle.framework.views.fragments.profile
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +15,7 @@ import com.greencircle.databinding.FragmentEditProfileBinding
 import com.greencircle.domain.model.profile.Profile
 import com.greencircle.framework.viewmodel.profile.ProfileViewModel
 import java.util.UUID
+import org.json.JSONObject
 
 class EditProfileFragment : Fragment() {
     private var _binding: FragmentEditProfileBinding? = null
@@ -25,11 +28,12 @@ class EditProfileFragment : Fragment() {
 
         val userId: UUID
 
-        if (arguments?.getString("userId") == null) {
-            userId = UUID.fromString("8de45630-2e76-4d97-98c2-9ec0d1f3a5b8")
-        } else {
-            userId = UUID.fromString(arguments?.getString("userId"))
-        }
+        val sharedPreferences =
+            context?.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+        val userJson = sharedPreferences?.getString("user_session", null)
+        val userJSON = JSONObject(userJson!!)
+        Log.d("SalidaUserJson", userJSON.getString("uuid"))
+        userId = UUID.fromString(userJSON.getString("uuid"))
         viewModel = ViewModelProvider(this)[ProfileViewModel::class.java]
         viewModel.setUserId(userId)
         viewModel.getUserProfile()
