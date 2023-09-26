@@ -12,6 +12,7 @@ jobs:
   # Auto fill template for PR
   auto-fill-template:
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -19,20 +20,17 @@ jobs:
       - name: Auto-fill PR
         run: |
           PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
-          BRANCH_NAME=$(jq --raw-output .pull_request.head.ref "$GITHUB_EVENT_PATH")
 
-          if [[ $BRANCH_NAME == bugfix/* ]]; then
-            PR_TEMPLATE_CONTENT=$(cat .github/PULL_REQUEST_TEMPLATE/pull_request_template.md)
+          PR_TEMPLATE_CONTENT=$(cat .github/PULL_REQUEST_TEMPLATE/pull_request_template.md)
             
-            UPDATE_DATA=$(jq --null-input --arg body "$PR_TEMPLATE_CONTENT" '{body: $body}')
+          UPDATE_DATA=$(jq --null-input --arg body "$PR_TEMPLATE_CONTENT" '{body: $body}')
 
-            curl \
-              -X PATCH \
-              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-              -H "Accept: application/vnd.github.v3+json" \
-              -d "$UPDATE_DATA" \
-              "https://api.github.com/repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER"
-          fi
+          curl \
+            -X PATCH \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -d "$UPDATE_DATA" \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER"
 
   # Prevent File Change for Husky configuration
   prevent_change:
