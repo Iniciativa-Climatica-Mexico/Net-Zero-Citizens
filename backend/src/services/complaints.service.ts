@@ -24,11 +24,18 @@ export type ComplaintType = {
 export const getAllComplaints = async <T>(
   params: PaginationParams<T>
 ): Promise<PaginatedQuery<Complaint>> => {
-  return await Complaint.findAndCountAll({
-    limit: params.pageSize,
-    offset: params.start,
-  })
+  try {
+    const complaints = await Complaint.findAndCountAll({
+      limit: params.pageSize,
+      offset: params.start,
+    })
+    return complaints
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
 }
+
 
 
 /**
@@ -41,10 +48,16 @@ export const getAllComplaints = async <T>(
 /** metodo para obtener una complaint por id */
 
 export const getComplaintById = async (
-  complaintId: string
-): Promise<Complaint | null> => {
-  const complaint = await Complaint.findByPk(complaintId, {
-    plain: true,
+  params: PaginationParams<{ complaintId: string }>
+): Promise<PaginatedQuery<Complaint>> => {
+  const { complaintId } = params
+  return await Complaint.findAndCountAll({
+    limit: params.pageSize,
+    offset: params.start,
+    where: {
+      complaintId: complaintId,
+    },
+
     include: [
       {
         model: User,
@@ -52,11 +65,10 @@ export const getComplaintById = async (
       },
       {
         model: Company,
-        attributes: ['companyName', 'companyId'],
-      }
+        attributes: ['companyId'],
+      },	
     ],
   })
-  return complaint
 }
 
 
