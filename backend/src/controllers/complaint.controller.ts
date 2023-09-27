@@ -8,7 +8,7 @@ import { RequestHandler } from 'express'
  * Función del controlador que devuelve todos los complaints
  * de la base de datos
  * @param req La request HTTP al servidor
- * @param res Un objeto paginador con los complaints y la
+ * @param res Un objeto paginador con las complaints y la
  *            información de paginación
  */
 
@@ -43,7 +43,7 @@ export const getAllComplaints: RequestHandler<
  * @brief
  * Función del controlador que devuelve un complaint por id de la base de datos
  * @param req La request HTTP al servidor
- * @param res Un objeto paginador con el complaint y la
+ * @param res Un objeto paginador con la complaint y la
  *           información de paginación
  */
 
@@ -67,6 +67,41 @@ export const getComplaintById: RequestHandler<
     total: complaint.count,
   })
 }
+
+/**
+ * @brief
+ * Función del controlador que devuelve una complaint por idCompany
+ * de la base de datos
+ * @param req La request HTTP al servidor
+ * @param res Un objeto paginador con la complaint y la
+ *            información de paginación
+ */
+
+export const getComplaintByCompany: RequestHandler<
+  { companyId: string },
+  Paginator<Complaint>,
+  NoRecord,
+  NoRecord
+> = async (req, res) => {
+  const { companyId } = req.params
+  const params = {
+    start: req.query.start || 0,
+    pageSize: req.query.pageSize || 10,
+    companyId: companyId,
+  }
+  const complaint = await ComplaintService.getComplaintByCompany(params)
+  res.json({
+    rows: complaint.rows,
+    start: params.start,
+    pageSize: params.pageSize,
+    total: complaint.count,
+  })
+}
+
+
+
+
+
 
 
 export const getComplaintByUser: RequestHandler<

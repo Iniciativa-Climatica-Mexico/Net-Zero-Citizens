@@ -79,18 +79,25 @@ export const getComplaintById = async (
  * @returns Una promesa con la(s) complaint(s) de una compañia o null
  */
 
-export const getComplaintByCompany = async<T>(
-  companyId: string, params: PaginationParams<T>
+export const getComplaintByCompany = async (
+  params: PaginationParams<{ companyId: string }>
 ): Promise<PaginatedQuery<Complaint>> => {
+  const { companyId } = params
   return await Complaint.findAndCountAll({
     limit: params.pageSize,
     offset: params.start,
     where: {
       companyId: companyId,
     },
+
+    include: [
+      {
+        model: User,
+        attributes: ['firstName', 'lastName'],
+      },
+    ],
   })
 }
-
 
 
 /**
@@ -112,8 +119,6 @@ export const getComplaintByUser = async <T>(
     },
   })
 }
-
-
 
 
 /**
