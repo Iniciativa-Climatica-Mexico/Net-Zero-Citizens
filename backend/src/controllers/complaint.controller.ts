@@ -59,39 +59,15 @@ export const getComplaintById: RequestHandler<
     pageSize: req.query.pageSize || 10,
     complaintId: complaintId,
   }
-  const review = await ComplaintService.getComplaintById(params)
+  const complaint = await ComplaintService.getComplaintById(params)
   res.json({
-    rows: review.rows,
+    rows: complaint.rows,
     start: params.start,
     pageSize: params.pageSize,
-    total: review.count,
+    total: complaint.count,
   })
 }
 
-
-
-export const getComplaintByCompany: RequestHandler<
-  NoRecord,
-  PaginatedQuery<Complaint> | { message: string },
-  NoRecord,
-  PaginationParams<{ companyId: string }>
-> = async (req, res) => {
-  const params = {
-    start: req.query.start || 0,
-    pageSize: req.query.pageSize || 10,
-  }
-  try {
-    const complaint = await ComplaintService.getComplaintByCompany(req.params.companyId, params)
-
-    if (!complaint) {
-      res.status(404).json({ message: 'Complaint not found' })
-    } else {
-      res.json()
-    }
-  } catch (error) {
-    res.status(500).json({ message: 'Internal server error' })
-  }
-}
 
 export const getComplaintByUser: RequestHandler<
   NoRecord,
