@@ -1,4 +1,5 @@
 import CompanyFile from '../models/companyFiles.model'
+import * as CompanyService from '../services/company.service'
 import { s3 } from '../configs/aws.config'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -77,26 +78,41 @@ export const uploadCompanyFile = async (
     throw new Error('AWS_BUCKET_NAME is not defined')
   }
 
-  // Definir los parámetros para subir el archivo
-  const params = {
-    Bucket: bucketName,
-    Key: `${companyId}/${file.originalname}/${fileDescription}`,
-    Body: file.buffer,
-    ACL: 'public-read',
+  try {
+    // Obtener la información de la empresa
+    const company = await CompanyService.getCompanyById(companyId)
+
+    // Convertir el archivo a base64
+    var base64data = Buffer.from(file.buffer, 'binary')
+
+    // Definir los parámetros para subir el archivo
+    const params = {
+      Bucket: bucketName,
+      Key: `${company?.name}/${fileDescription}`,
+      Body: base64data,
+    }
+
+    // Subir el archivo al bucket
+    const s3Response = await s3.upload(params).promise()
+    console.log(s3Response)
+
+    // // Crear el registro en la base de datos
+    const companyFileId = uuidv4()
+    const newFile = await CompanyFile.create({
+      companyFileId: companyFileId,
+      companyId: companyId,
+      fileUrl: s3Response.Location,
+      fileDescription: fileDescription,
+      fileFormat: fileFormat,
+    })
+
+    return newFile
+  } catch (error) {
+    console.log(error)
+    return null
   }
+}
 
-  // Subir el archivo al bucket
-  const s3Response = await s3.upload(params).promise()
-  console.log(s3Response)
-
-  // Crear el registro en la base de datos
-  const companyFileId = uuidv4()
-  const newFile = await CompanyFile.create({
-    companyFileId: companyFileId,
-    companyId: companyId,
-    fileUrl: s3Response.Location,
-    fileDescription: fileDescription,
-    fileFormat: fileFormat,
-  })
-  return newFile
+export const getCompanyFiles = async (): Promise<CompanyFile[] | null> => {
+  return await CompanyFile.findAll()
 }

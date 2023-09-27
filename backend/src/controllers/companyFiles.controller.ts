@@ -1,6 +1,28 @@
+import CompanyFiles from '../models/companyFiles.model'
 import * as CompanyFileService from '../services/companyFiles.service'
 import { NoRecord } from '../utils/RequestResponse'
+import upload from '../utils/fileUploadUtil'
 import { RequestHandler } from 'express'
+
+export const uploadCompanyFile: RequestHandler = async (req, res) => {
+  try {
+    console.log(req)
+    // if (!companyId) return res.status(400).send('No company provided')
+    // // inputId es el id del input del formulario
+    // upload.array(inputId)(req, res, async (err) => {
+    //   CompanyFileService.uploadCompanyFile(
+    //     req.file,
+    //     companyId,
+    //     fileDescription,
+    //     fileFormat
+    //   )
+    //   return res.status(200).send('File uploaded!')
+    // })
+    return res.status(200).send('File uploaded!')
+  } catch (error) {
+    return res.status(500).send('Error uploading file')
+  }
+}
 
 /**
  * @brief
@@ -50,35 +72,12 @@ export const uploadCompanyImage: RequestHandler<
  * @param res Respuesta HTTP del servidor
  */
 
-export const uploadCompanyFileController: RequestHandler = async (req, res) => {
-  try {
-    const { companyId, fileDescription, fileFormat } = req.body
-    const file = req.file
-
-    if (!file || !companyId || !fileDescription || !fileFormat) {
-      return res.status(400).json({ message: 'Datos incompletos.' })
-    }
-
-    const companyFile = await CompanyFileService.uploadCompanyFile(
-      file,
-      companyId,
-      fileDescription,
-      fileFormat
-    )
-
-    if (!companyFile) {
-      return res.status(500).json({
-        message: 'Error al subir el archivo de la empresa.',
-      })
-    }
-
-    return res.status(201).json({
-      message: 'Archivo subido exitosamente.',
-    })
-  } catch (error) {
-    console.error('Error uploading company file:', error)
-    return res.status(500).json({
-      message: 'Ocurrió un error interno al intentar subir el archivo.',
-    })
-  }
+export const getCompanyFiles: RequestHandler<
+  NoRecord,
+  CompanyFiles[] | null,
+  NoRecord,
+  NoRecord
+> = async (req, res) => {
+  const companyFiles = await CompanyFileService.getCompanyFiles()
+  return res.json(companyFiles)
 }
