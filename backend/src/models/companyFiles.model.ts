@@ -52,9 +52,12 @@ export default class CompanyFiles extends Model {
   })
   companyId: string
 
+  @BelongsTo(() => Company)
+  company: Company
+
   @Column({
     type: DataType.STRING(500),
-    allowNull: true,
+    allowNull: false,
     field: 'FILE_URL',
   })
   fileUrl: string | null
@@ -94,7 +97,4 @@ export default class CompanyFiles extends Model {
     field: 'FILE_FORMAT',
   })
   fileFormat: FileFormat
-
-  @BelongsTo(() => Company)
-  company: Company
 }

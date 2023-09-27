@@ -1,6 +1,24 @@
 import CompanyFile from '../models/companyFiles.model'
-import { s3 } from '../configs/aws.config'
+import { s3, s3Client } from '../configs/aws.config'
 import { v4 as uuidv4 } from 'uuid'
+import multer from 'multer'
+import multerS3 from 'multer-s3'
+import { Request } from 'express'
+
+const uploadToS3 = multer({
+  storage: multerS3({
+    s3: s3Client,
+    bucket: process.env.AWS_BUCKET_NAME || '',
+    metadata: (req: Request, file, cb) => {
+      cb(null, { fieldName: file.fieldname })
+    },
+    key: (req: Request, file, cb) => {
+      const { companyId, fileDescription } = req.body
+      cb(null, `${companyId}/${file.originalname}/${fileDescription}`)
+    },
+    acl: 'public-read',
+  }),
+}).single('file')
 
 export type CompanyImageType = {
   companyId: string

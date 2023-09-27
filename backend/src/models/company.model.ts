@@ -130,5 +130,5 @@ export default class Company extends Model {
   products!: Product[]
 
   @HasMany(() => CompanyFiles)
-  files!: CompanyFiles[]
+  companyFiles: CompanyFiles[]
 }

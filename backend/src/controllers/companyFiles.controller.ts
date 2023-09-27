@@ -1,4 +1,4 @@
-import * as CompanyImageService from '../services/companyFiles.service'
+import * as CompanyFileService from '../services/companyFiles.service'
 import { NoRecord } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
 
@@ -12,7 +12,7 @@ import { RequestHandler } from 'express'
 export const uploadCompanyImage: RequestHandler<
   NoRecord,
   { companyImageId: string; message?: string; error?: string },
-  { companyImage: CompanyImageService.CompanyImageType },
+  { companyImage: CompanyFileService.CompanyImageType },
   NoRecord
 > = async (req, res) => {
   if (!req.body.companyImage)
@@ -27,7 +27,7 @@ export const uploadCompanyImage: RequestHandler<
   if (!req.body.companyImage.fileUrl)
     return res.json({ companyImageId: '', message: 'No image provided' })
 
-  const companyImage = await CompanyImageService.uploadCompanyImage(
+  const companyImage = await CompanyFileService.uploadCompanyImage(
     req.body.companyImage
   )
 
@@ -43,4 +43,42 @@ export const uploadCompanyImage: RequestHandler<
   })
 }
 
-// se cambia con s3 de aws
+/**
+ * @brief
+ * Función del controlador para subir un archivo de una empresa
+ * @param req La solicitud HTTP al servidor
+ * @param res Respuesta HTTP del servidor
+ */
+
+export const uploadCompanyFileController: RequestHandler = async (req, res) => {
+  try {
+    const { companyId, fileDescription, fileFormat } = req.body
+    const file = req.file
+
+    if (!file || !companyId || !fileDescription || !fileFormat) {
+      return res.status(400).json({ message: 'Datos incompletos.' })
+    }
+
+    const companyFile = await CompanyFileService.uploadCompanyFile(
+      file,
+      companyId,
+      fileDescription,
+      fileFormat
+    )
+
+    if (!companyFile) {
+      return res.status(500).json({
+        message: 'Error al subir el archivo de la empresa.',
+      })
+    }
+
+    return res.status(201).json({
+      message: 'Archivo subido exitosamente.',
+    })
+  } catch (error) {
+    console.error('Error uploading company file:', error)
+    return res.status(500).json({
+      message: 'Ocurrió un error interno al intentar subir el archivo.',
+    })
+  }
+}
