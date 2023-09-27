@@ -40,6 +40,7 @@ class UserRepository: UserRepositoryProtocol {
   
   let backEndService: UserService
   let nService = NetworkAPIService.shared
+  let lService = LocalService.shared
   static let shared = UserRepository()
   
   init(backEndService: UserService = UserService.shared){
@@ -106,5 +107,11 @@ class UserRepository: UserRepositoryProtocol {
     return await backEndService.UpdateUserCredentials(url: url, newUserCredentials: newUserCredentials)
   }
   
+  func saveAuthData(authData: AuthResponse) {
+    lService.setToken(userData: authData)
+  }
   
+  func getAuthData() -> AuthResponse? {
+    return lService.getToken()
+  }
 }

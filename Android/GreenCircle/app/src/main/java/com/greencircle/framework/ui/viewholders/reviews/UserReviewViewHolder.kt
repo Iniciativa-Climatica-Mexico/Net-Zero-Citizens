@@ -19,10 +19,11 @@ import java.util.UUID
 
 class UserReviewViewHolder(
     private var binding: ItemUserReviewBinding,
+    private var context: Context,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private lateinit var reviewId: UUID
-    private val viewModel: DeleteUserReviewViewModel = DeleteUserReviewViewModel()
+    private val viewModel: DeleteUserReviewViewModel = DeleteUserReviewViewModel(context)
     private val menuButton: ImageButton = binding.reviewCardOptionsButton
 
     init {
@@ -36,16 +37,13 @@ class UserReviewViewHolder(
                         navigateToUpdateReviewFormFragment()
                         true
                     }
-
                     R.id.delete_review -> {
                         buildAlertDialog()
                         true
                     }
-
                     else -> false
                 }
             }
-
             popupMenu.show()
         }
     }

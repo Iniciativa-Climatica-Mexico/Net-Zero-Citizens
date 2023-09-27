@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.greencircle.databinding.FragmentCompanyCatalogueBinding
 import com.greencircle.framework.ui.adapters.catalogue.CatalogueAdapter
+import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.catalogue.CatalogueViewModel
 import kotlinx.coroutines.launch
 
@@ -58,6 +59,9 @@ class CatalogueFragment : Fragment() {
      * Configura el ViewModel
      */
     private fun setUpViewModel() {
-        viewModel = ViewModelProvider(this)[CatalogueViewModel::class.java]
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(requireContext(), CatalogueViewModel::class.java)
+        )[CatalogueViewModel::class.java]
     }
 }
