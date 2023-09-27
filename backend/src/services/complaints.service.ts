@@ -107,19 +107,25 @@ export const getComplaintByCompany = async (
  * @returns Una promesa con la(s) complaint(s) de un usuario o null
  */
 
-export const getComplaintByUser = async <T>(
-  userId: string, params: PaginationParams<T>
+export const getComplaintByUser = async (
+  params: PaginationParams<{ userId: string }>
 ): Promise<PaginatedQuery<Complaint>> => {
+  const { userId } = params
   return await Complaint.findAndCountAll({
     limit: params.pageSize,
-    
     offset: params.start,
     where: {
       userId: userId,
     },
+    
+    include: [
+      {
+        model: User,
+        attributes: ['firstName', 'lastName'],
+      },
+    ],
   })
 }
-
 
 /**
  * @brief

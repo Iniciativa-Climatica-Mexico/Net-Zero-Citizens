@@ -99,31 +99,39 @@ export const getComplaintByCompany: RequestHandler<
 }
 
 
-
-
-
-
+/**
+ * @brief
+ * Función del controlador que devuelve una complaint por userId
+ * de la base de datos
+ * @param req La request HTTP al servidor
+ * @param res Un objeto paginador con la complaint y la
+ *            información de paginación
+ */
 
 export const getComplaintByUser: RequestHandler<
+  { userId: string },
+  Paginator<Complaint> | { message: string },
   NoRecord,
-  PaginatedQuery<Complaint> | { message: string },
-  NoRecord,
-  PaginationParams<{ userId: string }>
+  NoRecord
 > = async (req, res) => {
+  const { userId } = req.params
   const params = {
     start: req.query.start || 0,
     pageSize: req.query.pageSize || 10,
+    userId: userId,
   }
-  try {
-    const complaint = await ComplaintService.getComplaintByUser(req.params.userId, params)
 
-    if (!complaint) {
-      res.status(404).json({ message: 'Complaint not found' })
-    } else {
-      res.json(complaint)
-    }
+  const review = await ComplaintService.getComplaintByUser(params)
+
+  try {
+    res.json({
+      rows: review.rows,
+      start: params.start,
+      pageSize: params.pageSize,
+      total: review.count,
+    })
   } catch (error) {
-    res.status(500).json({ message: 'Internal server error' })
+    console.log(error)
+    res.status(500).json({ message: 'Error' })
   }
 }
-
