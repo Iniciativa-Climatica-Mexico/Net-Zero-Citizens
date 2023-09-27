@@ -15,9 +15,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputLayout
 import com.greencircle.R
 import com.greencircle.data.remote.user.UserAPIService
-import com.greencircle.framework.viewmodel.auth.CreateUserViewModelFactory
+import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.auth.LoginViewModel
-import com.greencircle.framework.viewmodel.auth.LoginViewModelFactory
 import com.greencircle.framework.viewmodel.user.CreateUserViewModel
 import com.greencircle.framework.views.activities.SurveyActivity
 import java.util.UUID
@@ -43,11 +42,11 @@ class CreateUserFragment : Fragment() {
         // Get ViewModel
         loginViewModel = ViewModelProvider(
             this,
-            LoginViewModelFactory(requireContext())
+            ViewModelFactory(requireContext(), LoginViewModel::class.java)
         )[LoginViewModel::class.java]
         createUserViewModel = ViewModelProvider(
             this,
-            CreateUserViewModelFactory(requireContext())
+            ViewModelFactory(requireContext(), CreateUserViewModel::class.java)
         )[CreateUserViewModel::class.java]
         // Get arguments
         arguments = requireArguments()

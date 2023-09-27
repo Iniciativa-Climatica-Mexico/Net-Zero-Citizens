@@ -6,8 +6,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.greencircle.databinding.ActivitySplashscreenBinding
+import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.splashscreen.SplashscreenViewModel
-import com.greencircle.framework.viewmodel.splashscreen.SplashscreenViewModelFactory
 
 /**
  * Actividad de presentación que se muestra al iniciar la aplicación.
@@ -18,7 +18,7 @@ import com.greencircle.framework.viewmodel.splashscreen.SplashscreenViewModelFac
 class SplashscreenActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashscreenBinding
     private val viewModel: SplashscreenViewModel by viewModels {
-        SplashscreenViewModelFactory(applicationContext)
+        ViewModelFactory(applicationContext, SplashscreenViewModel::class.java)
     }
 
     /**
