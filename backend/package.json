@@ -43,7 +43,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "@types/node-geocoder": "^4.2.1",
+    "@types/node-geocoder": "^4.2.2",
     "aws-sdk": "^2.1463.0",
     "chai-exclude": "^2.1.0",
     "cors": "^2.8.5",

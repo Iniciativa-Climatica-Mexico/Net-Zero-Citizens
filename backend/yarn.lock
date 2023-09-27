@@ -334,10 +334,10 @@
   resolved "https://registry.yarnpkg.com/@types/ms/-/ms-0.7.31.tgz#31b7ca6407128a3d2bbc27fe2d21b345397f6197"
   integrity sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==
 
-"@types/node-geocoder@^4.2.1":
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/@types/node-geocoder/-/node-geocoder-4.2.1.tgz#5d1b0f45be74299fcb1112552f919026581d4fd6"
-  integrity sha512-ScEcsgUuy6OGMH83EGqa+OH/ZiM5J9ht7sYROeNuJUuRBSi1jxOqlh0lcjawnPfASDRKLYxNjF3DDenw2bhQrQ==
+"@types/node-geocoder@^4.2.2":
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/@types/node-geocoder/-/node-geocoder-4.2.2.tgz#175a567bc694f79508310606a19c5ff547d80583"
+  integrity sha512-lkj6aNQc/vaIA0B2Y27Ssj1woxQ88iZfxqE4LlaT8jtrR/fY4jdYc9c2+Tyo9yIAE9GxPI3hHYq05Vnc5bkaow==
   dependencies:
     "@types/node" "*"
     node-fetch "^3.3.0"
@@ -1041,6 +1041,13 @@ cross-spawn@^7.0.2, cross-spawn@^7.0.3:
     path-key "^3.1.0"
     shebang-command "^2.0.0"
     which "^2.0.1"
+
+csv-parser@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/csv-parser/-/csv-parser-3.0.0.tgz#b88a6256d79e090a97a1b56451f9327b01d710e7"
+  integrity sha512-s6OYSXAK3IdKqYO33y09jhypG/bSDHPuyCme/IdEHfWpLf/jKcpitVFyOC6UemgGk8v7Q5u2XE0vvwmanxhGlQ==
+  dependencies:
+    minimist "^1.2.0"
 
 data-uri-to-buffer@^4.0.0:
   version "4.0.1"

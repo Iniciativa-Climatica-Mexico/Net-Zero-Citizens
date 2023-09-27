@@ -15,6 +15,8 @@ struct EditProfileView: View {
     @State private var newPassword: String = ""
     @State private var confirmPassword: String = ""
     @State private var passwordErrorMessage: String? = nil
+    @State private var showUpdateConfirmation = false
+   
     @State private var estados = [
         "Aguascalientes",
         "Baja California",
@@ -327,52 +329,50 @@ struct EditProfileView: View {
                         
                         //Botón guardar
                         Button(action: {
-                            
-                            //Verificar si passwords coinciden para ver si se puede guardar o manda error
                             if newPassword == confirmPassword {
-                                    modelUser.contentUser.password = newPassword
-                                    passwordErrorMessage = nil
-                                } else {
-                                    passwordErrorMessage = "Las contraseñas no coinciden"
-                                }
-                            //Al guardar actualiza los datos
-                            Task {
-                                let updatedUser = User(
-                                    userId: modelUser.contentUser.userId,
-                                    roleId: modelUser.contentUser.roleId,
-                                    companyId: modelUser.contentUser.companyId,
-                                    googleId: modelUser.contentUser.googleId,
-                                    facebookId: modelUser.contentUser.facebookId,
-                                    appleId: modelUser.contentUser.appleId,
-                                    firstName: modelUser.contentUser.firstName,
-                                    lastName: modelUser.contentUser.lastName,
-                                    secondLastName: modelUser.contentUser.secondLastName,
-                                    email: modelUser.contentUser.email,
-                                    password: modelUser.contentUser.password,
-                                    phoneNumber: modelUser.contentUser.phoneNumber,
-                                    age: modelUser.contentUser.age,
-                                    state: modelUser.contentUser.state,
-                                    gender: modelUser.contentUser.gender,
-                                    profilePicture: modelUser.contentUser.profilePicture,
-                                    createdAt: modelUser.contentUser.createdAt,
-                                    updatedAt: Date()
-                                    
-                                
-                                )
-                                //Updatear Usuarios
-                                await modelUser.updateUserData(updatedUserData: updatedUser, userId: "8de45630-2e76-4d97-98c2-9ec0d1f3a5b8")
-                                //Regresar a vista anterior
-                                self.presentationMode.wrappedValue.dismiss()
-                            }
-                        }) {
-                            Text("Guardar")
-                                .foregroundColor(.white)
-                                .padding(.vertical, 12)
-                                .padding(.horizontal)
-                                .frame(maxWidth: .infinity)
-                                .background(TitleBarColor.TitleBarColor)
-                                .cornerRadius(8)
-                        }
+                                modelUser.contentUser.password = newPassword
+                                passwordErrorMessage = nil
+                                    } else {
+                                        passwordErrorMessage = "Las contraseñas no coinciden"
+                                    }
+                                        Task {
+                                            let updatedUser = User(
+                                                    userId: modelUser.contentUser.userId,
+                                                    roleId: modelUser.contentUser.roleId,
+                                                    companyId: modelUser.contentUser.companyId,
+                                                    googleId: modelUser.contentUser.googleId,
+                                                    facebookId: modelUser.contentUser.facebookId,
+                                                    appleId: modelUser.contentUser.appleId,
+                                                    firstName: modelUser.contentUser.firstName,
+                                                    lastName: modelUser.contentUser.lastName,
+                                                    secondLastName: modelUser.contentUser.secondLastName,
+                                                    email: modelUser.contentUser.email,
+                                                    password: modelUser.contentUser.password,
+                                                    phoneNumber: modelUser.contentUser.phoneNumber,
+                                                    age: modelUser.contentUser.age,
+                                                    state: modelUser.contentUser.state,
+                                                    gender: modelUser.contentUser.gender,
+                                                    profilePicture: modelUser.contentUser.profilePicture,
+                                                    createdAt: modelUser.contentUser.createdAt,
+                                                    updatedAt: Date()
+                                                        )
+                                                        await modelUser.updateUserData(updatedUserData: updatedUser, userId: "8de45630-2e76-4d97-98c2-9ec0d1f3a5b8")
+                                                        self.showUpdateConfirmation = true
+                                                    }
+                                                }) {
+                                                    Text("Guardar")
+                                                        .foregroundColor(.white)
+                                                        .padding(.vertical, 12)
+                                                        .padding(.horizontal)
+                                                        .frame(maxWidth: .infinity)
+                                                        .background(TitleBarColor.TitleBarColor)
+                                                        .cornerRadius(8)
+                                                }
+                                                .alert(isPresented: $showUpdateConfirmation) {
+                                                    Alert(title: Text("Usuario actualizado"),
+                                                          message: Text("El usuario ha sido actualizado exitosamente."),
+                                                          dismissButton: .default(Text("OK")))
+                                                }
                       
                         .padding(.leading, 8) // padding para crear espacio entre los botones
                     }
