@@ -168,11 +168,13 @@ class CreateUserFragment : Fragment() {
         val ageInputLayout: TextInputLayout = view.findViewById(R.id.userAgeTextFIeld)
         val stateInputLayout: TextInputLayout = view.findViewById(R.id.userStateTextField)
         val genderInputLayout: TextInputLayout = view.findViewById(R.id.userGenderTextField)
+        val switchError: TextView = view.findViewById(R.id.switchError)
 
         val phone = phoneInputLayout.editText?.text.toString()
         val age = ageInputLayout.editText?.text.toString()
         val state = stateInputLayout.editText?.text.toString()
         val gender = genderInputLayout.editText?.text.toString()
+        val terms = view.findViewById<MaterialSwitch>(R.id.avisoPrivacidad).isChecked
 
         var isValid = true
 
@@ -210,6 +212,11 @@ class CreateUserFragment : Fragment() {
             isValid = false
         } else {
             genderInputLayout.error = null
+        }
+
+        if (!terms) {
+            isValid = false
+            switchError.visibility = View.VISIBLE
         }
 
         return isValid
