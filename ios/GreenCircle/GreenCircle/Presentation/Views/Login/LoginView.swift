@@ -33,7 +33,7 @@ struct LoginView: View {
           GoogleSignInButton(style: .wide) {
             Task {
               let state = await viewModel
-                .handleGoogleSignIn(userData: user)
+                .handleGoogleSignIn()
               switch state {
               case .fail:
                 break

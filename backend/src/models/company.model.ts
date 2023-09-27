@@ -33,7 +33,7 @@ export default class Company extends Model {
   @ForeignKey(() => User)
   @Column({
     type: DataType.UUID,
-    allowNull: false,
+    allowNull: true,
     field: 'USER_ID',
   })
   userId: string
@@ -117,7 +117,7 @@ export default class Company extends Model {
 
   @Column({
     type: DataType.STRING(500),
-    allowNull: false,
+    allowNull: true,
     field: 'PDF_CURRICULUM_URL',
   })
   pdfCurriculumUrl: string
@@ -138,21 +138,21 @@ export default class Company extends Model {
 
   @Column({
     type: DataType.STRING(500),
-    allowNull: false,
+    allowNull: true,
     field: 'PDF_GUARANTEE_SECURITY_URL',
   })
   pdfGuaranteeSecurityUrl: string
 
   @Column({
     type: DataType.STRING(500),
-    allowNull: false,
+    allowNull: true,
     field: 'PDF_ACTA_CONSTITUTIVA_URL',
   })
   pdfActaConstitutivaUrl: string
 
   @Column({
     type: DataType.STRING(500),
-    allowNull: false,
+    allowNull: true,
     field: 'PDF_INE_URL',
   })
   pdfIneUrl: string

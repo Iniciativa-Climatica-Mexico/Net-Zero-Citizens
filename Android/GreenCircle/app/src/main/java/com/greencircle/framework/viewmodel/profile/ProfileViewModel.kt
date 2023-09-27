@@ -12,7 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ProfileViewModel : ViewModel() {
+class ProfileViewModel() : ViewModel() {
     val userLiveData = MutableLiveData<Profile>()
     private val userListRequirement = ProfileListRequirement()
     private val editUserRequirement = EditProfileRequirement()
@@ -20,6 +20,7 @@ class ProfileViewModel : ViewModel() {
     fun setUserId(userId: UUID) {
         this.userId = userId
     }
+
     fun getUserProfile() {
         Log.d("SalidaGetUser", userId.toString())
         viewModelScope.launch(Dispatchers.IO) {
