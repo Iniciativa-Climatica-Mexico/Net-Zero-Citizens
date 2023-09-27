@@ -1,6 +1,6 @@
 import Complaint from '../models/complaint.model'
 import * as ComplaintService from '../services/complaints.service'
-import { NoRecord, Paginator, PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
+import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
 
 /**
@@ -121,14 +121,14 @@ export const getComplaintByUser: RequestHandler<
     userId: userId,
   }
 
-  const review = await ComplaintService.getComplaintByUser(params)
+  const complaint = await ComplaintService.getComplaintByUser(params)
 
   try {
     res.json({
-      rows: review.rows,
+      rows: complaint.rows,
       start: params.start,
       pageSize: params.pageSize,
-      total: review.count,
+      total: complaint.count,
     })
   } catch (error) {
     console.log(error)
@@ -141,7 +141,7 @@ export const getComplaintByUser: RequestHandler<
  * @brief
  * Función del controlador que agrega una complaint a la base de datos
  * @param req La request HTTP al servidor
- * @param res Un objeto con la review creada
+ * @param res Un objeto con la complaint creada
  * @returns
  * - 400 si no se envía el userId o el companyId
  * - 200 si se crea la complaint
@@ -164,7 +164,7 @@ export const addComplaint: RequestHandler<
     return
   }
   try {
-    await ComplaintService.addReview(userId, companyId, complaintSubject, complaintDescription, complaintStatus)
+    await ComplaintService.addComplaint(userId, companyId, complaintSubject, complaintDescription, complaintStatus)
     res.status(200).send('Added complaint')
   } catch (error) {
     console.log(error)

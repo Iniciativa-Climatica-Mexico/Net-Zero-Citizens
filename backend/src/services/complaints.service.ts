@@ -134,7 +134,7 @@ export const getComplaintByUser = async (
  * @returns Una promesa con la complaint creada
  */
 
-export const addReview = async (
+export const addComplaint = async (
   userId: string,
   companyId: string,
   complaintSubject: string,
