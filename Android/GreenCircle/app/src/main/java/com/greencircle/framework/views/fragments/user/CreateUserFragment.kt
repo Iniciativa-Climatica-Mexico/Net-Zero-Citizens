@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputLayout
 import com.greencircle.R
 import com.greencircle.data.remote.user.UserAPIService
+import com.greencircle.framework.viewmodel.auth.CreateUserViewModelFactory
 import com.greencircle.framework.viewmodel.auth.LoginViewModel
 import com.greencircle.framework.viewmodel.auth.LoginViewModelFactory
 import com.greencircle.framework.viewmodel.user.CreateUserViewModel
@@ -44,7 +45,10 @@ class CreateUserFragment : Fragment() {
             this,
             LoginViewModelFactory(requireContext())
         )[LoginViewModel::class.java]
-        createUserViewModel = ViewModelProvider(this)[CreateUserViewModel::class.java]
+        createUserViewModel = ViewModelProvider(
+            this,
+            CreateUserViewModelFactory(requireContext())
+        )[CreateUserViewModel::class.java]
         // Get arguments
         arguments = requireArguments()
         // Google Login
@@ -219,6 +223,7 @@ class CreateUserFragment : Fragment() {
     private fun isValidPhoneNumber(phone: String): Boolean {
         return phone.length == 10 && phone.all { it.isDigit() }
     }
+
     /**
      * Establece los textos en la vista con datos proporcionados en los argumentos.
      *

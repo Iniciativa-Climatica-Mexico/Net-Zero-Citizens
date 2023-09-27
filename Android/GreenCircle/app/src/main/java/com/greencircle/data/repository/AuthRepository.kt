@@ -30,4 +30,14 @@ class AuthRepository {
      */
     suspend fun refreshTokens(refreshToken: String): AuthResponse? =
         api.refreshTokens(refreshToken)
+
+    /**
+     * Actualiza la información de los tokens utilizando un auth token.
+     *
+     * @param authToken El token de actualización.
+     * @return Un objeto [UpdateTokensDataResponse] que contiene los nuevos tokens y usuario
+     * si hay un error.
+     */
+    suspend fun updateTokensData(authToken: String): AuthResponse? =
+        api.updateTokensData(authToken)
 }
