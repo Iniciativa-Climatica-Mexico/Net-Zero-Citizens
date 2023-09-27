@@ -8,5 +8,6 @@ router.get('/:complaintId', controller.getComplaintById)
 router.get('/company/:companyId', controller.getComplaintByCompany)
 router.get('/user/:userId', controller.getComplaintByUser)
 router.post('/:userId/:companyId', controller.addComplaint)
+router.put('/:complaintId', controller.updateComplaintStatus)
 
 export default router
