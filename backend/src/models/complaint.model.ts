@@ -9,6 +9,16 @@ import {
 import User from './users.model'
 import Company from './company.model'
 
+export type ComplaintSubjectEnum =
+  | 'Productos Defectuosos'
+  | 'Inconformidad con el producto / servicio'
+  | 'Comportamiento Inapropiado'
+  | 'Mal Servicio'
+  | 'Fraudes o estafas'
+  | 'Violación legal o ética'
+
+export type ComplaintStatusEnum = 'active' | 'inactive' | 'invalid'
+
 @Table({ tableName: 'COMPLAINTS' })
 export default class Complaint extends Model {
   @Column({
@@ -44,13 +54,18 @@ export default class Complaint extends Model {
   company: Company
 
   @Column({
-    type: DataType.ENUM('Productos Defectuosos','Inconformidad con el producto / servicio', 'Comportamiento Inapropiado', 
-      'Mal Servicio', 'Fraudes o estafas', 'Violación legal o ética'),
+    type: DataType.ENUM(
+      'Productos Defectuosos',
+      'Inconformidad con el producto / servicio',
+      'Comportamiento Inapropiado',
+      'Mal Servicio',
+      'Fraudes o estafas',
+      'Violación legal o ética'
+    ),
     allowNull: false,
     field: 'COMPLAINT_SUBJECT',
   })
-  complaintSubject: 'Productos Defectuosos'|'Inconformidad con el producto / servicio'|'Comportamiento Inapropiado'| 
-  'Mal Servicio'| 'Fraudes o estafas'|'Violación legal o ética'
+  complaintSubject: ComplaintSubjectEnum
 
   @Column({
     type: DataType.STRING(500),
@@ -63,5 +78,5 @@ export default class Complaint extends Model {
     allowNull: false,
     field: 'STATUS',
   })
-  complaintStatus: 'active'|'inactive'|'invalid'
+  complaintStatus: ComplaintStatusEnum
 }
