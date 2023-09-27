@@ -58,6 +58,7 @@ struct TabViewImagesProducts: View {
     }
 }
 
+
 struct ContactCompanyProductView: View {
   var productDescription: String
   var productName: String
@@ -253,15 +254,17 @@ struct ReportReasonView: View {
     }
 }
 
-
-
 struct CompanyReportView: View {
-    
-    @ObservedObject var modelCompanyRating: CompanyViewModel
+
+    //@ObservedObject var modelCompanyRating: CompanyViewModel
+    @ObservedObject var modelComplaint: CompanyViewModel
     @Binding var dispScrollView: Bool
     @State private var selectedReportReason: String?
-    @State private var description: String = ""
-    
+    @State private var description: String
+    @ObservedObject var viewModel: ComplaintViewModel = ComplaintViewModel()
+
+
+
     let reportReasons = ["Productos defectuosos.",
                          "Inconformidad con el producto/servicio.",
                          "Comportamiento inapropiado.",
@@ -269,70 +272,72 @@ struct CompanyReportView: View {
                          "Fraudes o estafas.",
                          "Violación legal o ética."]
 
-    
+
     var body: some View {
-        
-            VStack(alignment: .leading, spacing: 5) {
-                Text("Reportar Proveedor")
-                    .font(.system(size: 18))
-                    .padding(.bottom, 5).bold()
-                    
+
+        VStack(alignment: .leading, spacing: 5) {
+            Text("Reportar Proveedor")
+                .font(.system(size: 18))
+                .padding(.bottom, 5).bold()
+
+            Divider()
+
+            Text("Seleccione la opción por la que desea reportar:")
+                .font(.system(size: 12))
+                .foregroundColor(Color("BlackCustom")).contrast(12.6)
+                .padding(.bottom, 20).bold()
+
+
+            ScrollView{
+                ForEach(reportReasons, id: \.self) { reason in
+                    ReportReasonView(reason: reason, selectedReason: $selectedReportReason)
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(8)
+                        .padding(.vertical, 2)
+                }
+
+
                 Divider()
-                  
-                Text("Seleccione la opción por la que desea reportar:")
+                    .padding(.top, 20)
+
+                Text("Comentario adicional (opcional)")
                     .font(.system(size: 12))
                     .foregroundColor(Color("BlackCustom")).contrast(12.6)
-                    .padding(.bottom, 20).bold()
-                  
-                    
-                ScrollView{
-                    ForEach(reportReasons, id: \.self) { reason in
-                        ReportReasonView(reason: reason, selectedReason: $selectedReportReason)
-                            .background(Color.gray.opacity(0.1))
-                            .cornerRadius(8)
-                            .padding(.vertical, 2)
-                    }
-                    
-                    
-                    Divider()
-                        .padding(.top, 20)
-                    
-                    Text("Comentario adicional (opcional)")
-                        .font(.system(size: 12))
-                        .foregroundColor(Color("BlackCustom")).contrast(12.6)
-                        .padding(.top ,10).bold()
-                        .padding(.leading ,-160)
-                        
-                    TextField("Escribe algún comentario adicional al reporte...", text: $description)
+                    .padding(.top ,10).bold()
+                    .padding(.leading ,-160)
+
+                TextField("Escribe algún comentario adicional al reporte...",   text: $description )
                     .disableAutocorrection(true)
                     .padding(.top, 3)
                     .font(.system(size: 13))
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                    
-                    HStack {
-                        
-                        
-                        Spacer()
-                        Button(action: {}) {
-                            Text("Mandar Reporte")
-                                .foregroundColor(.white)
-                                .padding(.vertical, 12)
-                                .padding(.horizontal, 36)
-                                .background(TitleBarColor.TitleBarColor)
-                                .cornerRadius(8)
+
+                HStack {
+
+
+                    Spacer()
+                    Button(action: {
+                        async {
+                            await viewModel.handleSubmit(complaintSubject: selectedReportReason ?? "", complaintDescription: description.isEmpty ? nil : description)
                         }
-                        Spacer()
+                    })
+                    {
+                        Text("Mandar Reporte")
+                            .foregroundColor(.white)
+                            .padding(.vertical, 12)
+                            .padding(.horizontal, 36)
+                            .background(TitleBarColor.TitleBarColor)
+                            .cornerRadius(8)
                     }
-                    .padding(.top, 30)
-                } .frame(height: 300)
-                
-            }
-            .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
-            .foregroundColor(Color("BlackCustom"))
-        
+                    Spacer()
+                }
+                .padding(.top, 30)
+            } .frame(height: 300)
+
+        }
+        .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
+        .foregroundColor(Color("BlackCustom"))
     }
-    
-    
 }
 
 
@@ -345,6 +350,7 @@ struct ContactCompanyView: View {
   @State var dispScrollView: Bool = false
   @State var bindImageToDescription: Bool = false
   @State var stringDescription: String = ""
+    
   var body: some View {
     if !dispScrollView {
       NavigationStack {
@@ -404,7 +410,7 @@ struct ContactCompanyView: View {
               }
               if key == "Report" {
                 // TODO: Report component
-                  CompanyReportView(modelCompanyRating: contactCompanyViewModel, dispScrollView: $dispScrollView).onAppear {
+                  CompanyReportView(modelComplaint: contactCompanyViewModel, dispScrollView: $dispScrollView).onAppear {
                     bindImageToDescription = false
                   }
 
