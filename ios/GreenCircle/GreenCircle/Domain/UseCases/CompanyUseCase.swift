@@ -29,18 +29,36 @@ class CompanyUseCase {
   /// Definición de Caso de uso para hacer el fetch
     ///   - Parameters:UUID de compañía
     ///   - Returns: Modelo de compañía
-  @MainActor
-  func fetchCompanyById(id: UUID) async -> Company? {
-    if var company = await repository.fetchCompanyById(companyId: id) {
-      if !company.webPage.isEmpty {
-        company.webPage = "No contamos con Página Web"
-      }
-      if let profilePicture = company.profilePicture, profilePicture.isEmpty {
-        company.profilePicture = "person.crop.circle.badge.xmark"
-      }
-      print(company.email)
-      return company
+// @MainActor
+//  func fetchCompanyById(id: UUID) async -> Company? {
+//    if var company = await repository.fetchCompanyById(companyId: id) {
+//      if !company.webPage.isEmpty {
+//        company.webPage = "No contamos con Página Web"
+//      }
+//      if let profilePicture = company.profilePicture, profilePicture.isEmpty {
+//        company.profilePicture = "person.crop.circle.badge.xmark"
+//      }
+//      print(company.email)
+//      return company
+//    }
+//    return nil
+//  }
+    
+    @MainActor
+    func fetchCompanyById(id: UUID) async -> Company? {
+        if var company = await repository.fetchCompanyById(companyId: id) {
+            
+            if let webPage = company.webPage, webPage.isEmpty {
+                company.webPage = "No contamos con Página Web"
+            }
+            
+            if let profilePicture = company.profilePicture, profilePicture.isEmpty {
+                company.profilePicture = "person.crop.circle.badge.xmark"
+            }
+            
+            print(company.email)
+            return company
+        }
+        return nil
     }
-    return nil
-  }
 }

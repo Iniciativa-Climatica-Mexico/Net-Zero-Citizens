@@ -229,6 +229,93 @@ struct CustomButtonOption: View {
   }
 }
 
+struct ReportReasonView: View {
+    var reason: String
+    @Binding var selectedReason: String?
+
+    var body: some View {
+        Button(action: {
+            selectedReason = reason
+        }) {
+            HStack {
+                Text(reason)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
+                
+                Spacer()
+                if reason == selectedReason {
+                    Image(systemName: "checkmark")
+                        .foregroundColor(Color("GreenCustom"))
+                }
+            }
+        }
+        .padding()
+    }
+}
+
+
+
+struct CompanyReportView: View {
+    
+    @ObservedObject var modelCompanyRating: CompanyViewModel
+    @Binding var dispScrollView: Bool
+    @State private var selectedReportReason: String?
+    let reportReasons = ["Productos defectuosos.",
+                         "Inconformidad con el producto/servicio.",
+                         "Comportamiento inapropiado.",
+                         "Mal servicio.",
+                         "Fraudes o estafas.",
+                         "Violación legal o ética."]
+
+    
+    var body: some View {
+        
+            VStack(alignment: .leading, spacing: 5) {
+                Text("Reportar Proveedor")
+                    .font(.system(size: 18))
+                    .padding(.bottom, 5).bold()
+                    //.padding(.top, 20)
+                Divider()
+                   // .padding(.top, -70)
+                Text("Seleccione la opción por la que desea reportar:")
+                    .font(.system(size: 12))
+                    .foregroundColor(Color("BlackCustom")).contrast(12.6)
+                    .padding(.bottom, 20).bold()
+                    //.padding(.top, -65)
+                    
+                ScrollView{
+                    ForEach(reportReasons, id: \.self) { reason in
+                        ReportReasonView(reason: reason, selectedReason: $selectedReportReason)
+                            .background(Color.gray.opacity(0.1))
+                            .cornerRadius(8)
+                            .padding(.vertical, 2)
+                    }
+                    
+                    HStack {
+                        Spacer()
+                        Button(action: {}) {
+                            Text("Mandar Reporte")
+                                .foregroundColor(.white)
+                                .padding(.vertical, 12)
+                                .padding(.horizontal, 36)
+                                .background(TitleBarColor.TitleBarColor)
+                                .cornerRadius(8)
+                        }
+                        Spacer()
+                    }
+                    .padding(.top, 30)
+                } .frame(height: 300)
+                
+            }
+            .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
+            .foregroundColor(Color("BlackCustom"))
+        
+    }
+    
+    
+}
+
+
 struct ContactCompanyView: View {
   var idCompany: UUID
   @StateObject var contactCompanyViewModel = CompanyViewModel()
@@ -297,7 +384,10 @@ struct ContactCompanyView: View {
               }
               if key == "Report" {
                 // TODO: Report component
-                EmptyView()
+                  CompanyReportView(modelCompanyRating: contactCompanyViewModel, dispScrollView: $dispScrollView).onAppear {
+                    bindImageToDescription = false
+                  }
+
               }
             }
           }.frame(height: bindImageToDescription ? 33 : 220)

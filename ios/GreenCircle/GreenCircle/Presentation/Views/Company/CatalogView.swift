@@ -61,7 +61,7 @@ struct CatalogView: View {
                 HStack {
                     Image(systemName: "location.fill")
                       .foregroundColor(.green)
-                    Text("\(company.streetNumber) \(company.street)")
+                    Text("\(company.streetNumber ?? "") \(company.street ?? "")")
                       .foregroundColor(.green)
                 }
                 HStack {
