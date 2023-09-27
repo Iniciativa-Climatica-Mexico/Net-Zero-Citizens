@@ -181,7 +181,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="horizontal"
-                android:paddingLeft="30dp"
+                android:paddingLeft="20dp"
                 android:paddingRight="30dp"
                 android:paddingBottom="10dp">
 
@@ -192,7 +192,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="false"
-                    android:layout_marginStart="2dp"
                     android:text=""
                     android:thumbTint="@color/white"
                     android:trackTint="@color/green"
@@ -208,22 +207,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Acepto las"
-                    android:paddingLeft="40dp"
-                    android:paddingRight="0dp"
+                    android:paddingLeft="10dp"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
                 <Button
                     android:id="@+id/login_register"
                     style="@style/Widget.Material3.Button.TextButton"
-                    android:layout_width="wrap_content"
+                    android:layout_width="192dp"
                     android:layout_height="wrap_content"
                     android:text="políticas de privacidad"
-                    android:paddingLeft="5dp"
+                    android:textAlignment="textStart"
                     android:textColorLink="@color/blue"
                     android:textSize="14sp"
-                    android:textStyle="bold"
-                    />
+                    android:paddingLeft="0dp"
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
@@ -233,7 +231,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Debes aceptar las políticas de privacidad"
-                android:textColor="@color/green"
+                android:textColor="@color/red"
                 android:textSize="14sp"
                 android:visibility="gone"
                 />
