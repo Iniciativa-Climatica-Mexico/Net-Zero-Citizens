@@ -22,11 +22,11 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
           <h1 className="self-start font-extrabold mt-8 mx-8 text-4xl text-txt">
             {surveyReport.title}
           </h1>
-          <button 
-                  //onClick={() => setIsOpen(true)}
-                  className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end mt-4 ml-auto left-500"
-                  >
-                  Descargar reporte 
+          <button
+            //onClick={() => setIsOpen(true)}
+            className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end mt-4 ml-auto left-500"
+          >
+            Descargar reporte
           </button>
         </div>
         <div className="flex pl-10 pb-2">
@@ -84,8 +84,8 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
                         <div className="bg-zinc-900 text-white rounded-full text-xl font-semibold p-2 px-4 inline-block">
                           {question.answers.length > 0
                             ? question.answers
-                              .map((ans) => ans.count)
-                              .reduce((prev, curr) => prev + curr)
+                                .map((ans) => ans.count)
+                                .reduce((prev, curr) => prev + curr)
                             : 0}
                         </div>
                       </td>
