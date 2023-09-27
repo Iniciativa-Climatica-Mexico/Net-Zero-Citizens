@@ -1,28 +1,30 @@
 package com.greencircle.framework.views.fragments.profile
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import com.greencircle.R
 import com.greencircle.databinding.FragmentProfileBinding
 import com.greencircle.domain.model.profile.Profile
+import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.profile.ProfileViewModel
 import com.greencircle.framework.views.fragments.reviews.UserReviewFragment
 import java.util.UUID
+import org.json.JSONObject
 
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: ProfileViewModel
     private lateinit var userId: UUID
-    private lateinit var user: Profile
-
+    private lateinit var profile: Profile
     private var reviewsCount: Int = 0
 
     override fun onCreateView(
@@ -31,16 +33,19 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        viewModel = ViewModelProvider(this)[ProfileViewModel::class.java]
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(requireContext(), ProfileViewModel::class.java)
+        )[ProfileViewModel::class.java]
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         var root: View = binding.root
 
-        if (arguments?.getString("userId") == null) {
-            userId = UUID.fromString("8de45630-2e76-4d97-98c2-9ec0d1f3a5b8")
-        } else {
-            userId = UUID.fromString(arguments?.getString("userId"))
-        }
-
+        val sharedPreferences =
+            context?.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+        val userJson = sharedPreferences?.getString("user_session", null)
+        val userJSON = JSONObject(userJson!!)
+        Log.d("SalidaUserJson", userJSON.getString("uuid"))
+        userId = UUID.fromString(userJSON.getString("uuid"))
         viewModel.setUserId(userId)
         viewModel.getUserProfile()
 
@@ -71,7 +76,7 @@ class ProfileFragment : Fragment() {
 
     private fun InitializeObservers() {
         viewModel.userLiveData.observe(viewLifecycleOwner) {
-            user = it
+            profile = it
             setUserData()
         }
     }
@@ -86,8 +91,8 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setUserData() {
-        if (user != null) {
-            val name = user.firstName + " " + user.lastName
+        if (profile != null) {
+            val name = profile.firstName + " " + profile.lastName
             binding.username.text = name
             // binding.profileImage.setImageResource(user.profilePicture)
         }

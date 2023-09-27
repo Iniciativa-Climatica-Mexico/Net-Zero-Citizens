@@ -6,11 +6,11 @@ import java.util.UUID
 
 class ProfileRepository {
     private val api = ProfileAPIClient()
-    suspend fun getUser(userId: UUID): Profile? {
-        return api.getProfile(userId)
+    suspend fun getUser(authToken: String, userId: UUID): Profile? {
+        return api.getProfile(authToken, userId)
     }
 
-    suspend fun updateUser(userId: UUID, profile: Profile): Profile? {
-        return api.updateProfile(userId, profile)
+    suspend fun updateUser(authToken: String, userId: UUID, profile: Profile): Profile? {
+        return api.updateProfile(authToken, userId, profile)
     }
 }

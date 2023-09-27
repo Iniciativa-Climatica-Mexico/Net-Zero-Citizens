@@ -41,4 +41,16 @@ class TokenRepository(private val sharedPreferences: SharedPreferences) {
             null
         }
     }
+
+    /**
+     * Elimina los tokens de autenticación y actualización almacenados previamente.
+     *
+     * @return [null]
+     */
+    fun deleteTokens() {
+        val editor = sharedPreferences.edit()
+        editor.remove(authTokenKey)
+        editor.remove(refreshTokenKey)
+        editor.apply()
+    }
 }

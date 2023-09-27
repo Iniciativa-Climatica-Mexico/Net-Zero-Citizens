@@ -3,11 +3,12 @@
 //  GreenCircle
 //
 //  Created by Ricardo Adolfo Fernández Alvarado on 19/09/23.
-//
+//  Modified by Daniel Gutiérrez Gómez on 25/09/23
 
 import SwiftUI
 
 struct CompanyRegisterFormView: View {
+  var goCompanyRegisterDivider: () -> Void
   var goPending: () -> Void
   
   @ObservedObject var viewModel =
@@ -91,7 +92,7 @@ struct CompanyRegisterFormView: View {
       MainButton("Continuar", action: {
         Task {
           await viewModel.handleSubmit(userData: userData)
-          goPending()
+          goCompanyRegisterDivider()
         }
       })
     }.foregroundColor(Color("MainText"))
@@ -100,7 +101,7 @@ struct CompanyRegisterFormView: View {
 
 struct CompanyRegisterFormView_Previews: PreviewProvider {
   static var previews: some View {
-    CompanyRegisterFormView(goPending: {})
+    CompanyRegisterFormView(goCompanyRegisterDivider: {}, goPending: {})
       .environmentObject(UserData(
         UserAuth(first_name: "Ricardo",
              last_name: "Fernandez",

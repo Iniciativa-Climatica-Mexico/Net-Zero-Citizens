@@ -21,7 +21,6 @@ export default class CompanyProducts extends Model {
     allowNull: false,
     defaultValue: DataType.UUIDV4,
     field: 'COMPANY_PRODUCT_ID',
-    unique: true,
   })
   companyProductId: string
 
@@ -43,9 +42,8 @@ export default class CompanyProducts extends Model {
 
   @Column({
     type: DataType.STRING(255),
-    allowNull: false,
+    allowNull: true,
     field: 'PDF_PRODUCT_CERTIFICATION_URL',
-    unique: true,
   })
   pdfProductCertificationUrl: string
 
