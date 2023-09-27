@@ -9,12 +9,12 @@ import java.util.UUID
 class SurveyRequirement {
     private val repository = SurveyRepository()
 
-    suspend fun getSurveyPending(): Survey? =
-        repository.getSurveyPending()
+    suspend fun getSurveyPending(userId: UUID): Survey? =
+        repository.getSurveyPending(userId)
 
-    suspend fun submitAnswers(surveyId: UUID, answers: List<Answer>) {
+    suspend fun submitAnswers(surveyId: UUID, userId: UUID, answers: List<Answer>) {
         try {
-            repository.submitAnswers(surveyId, answers)
+            repository.submitAnswers(surveyId, userId, answers)
         } catch (e: Exception) {
             Log.i("Salida", e.toString())
         }
