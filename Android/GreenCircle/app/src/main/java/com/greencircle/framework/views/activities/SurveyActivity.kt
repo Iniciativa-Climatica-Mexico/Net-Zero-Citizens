@@ -12,8 +12,8 @@ import com.greencircle.domain.model.survey.Question
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.survey.SurveyViewModel
 import com.greencircle.framework.views.fragments.survey.QuestionFragment
-import org.json.JSONObject
 import java.util.UUID
+import org.json.JSONObject
 
 class SurveyActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySurveyBinding
@@ -56,8 +56,8 @@ class SurveyActivity : AppCompatActivity() {
                 SurveyViewModel.SubmitStatus.validationError -> {
                     MaterialAlertDialogBuilder(this).setTitle("Faltan preguntas")
                         .setMessage(
-                            "No puedes enviar sin antes haber "
-                                    + "termiandode llenar todas las preguntas obligatorias.",
+                            "No puedes enviar sin antes haber " +
+                                "termiandode llenar todas las preguntas obligatorias.",
                         ).setCancelable(false).setPositiveButton("Seguir") { _, _ -> }.show()
                 }
 
