@@ -170,15 +170,15 @@ struct ContactCompanyComponentView: View {
           .foregroundColor(Color("BlackCustom"))
           .contrast(12.6)
         HStack(spacing: 5) {
-          Text("\(modelCompany.contentCompany.state), ")
+          Text("\(modelCompany.contentCompany.state ?? ""), ")
             .font(.system(size: 10))
             .foregroundColor(Color("GreenCustom"))
 
-          Text("\(modelCompany.contentCompany.street), ")
+          Text("\(modelCompany.contentCompany.street ?? ""), ")
             .font(.system(size: 10))
             .foregroundColor(Color("GreenCustom"))
           
-          Text(String(modelCompany.contentCompany.streetNumber))
+          Text(String(modelCompany.contentCompany.streetNumber ?? ""))
             .font(.system(size: 10))
             .foregroundColor(Color("GreenCustom"))
         }
@@ -212,11 +212,18 @@ struct CustomButtonOption: View {
       }
       
       }, label: {
-      Text(content)
-        .font(.system(size: 15))
-        .scaleEffect(isPressed[content] ?? false ? 1.1 : 1.0)
-        .shadow(color: isPressed[content] ?? false ? Color("GreenCustom") : Color.clear, radius: 10, y: 9)
-        .foregroundColor(isPressed[content] ?? false ? Color("GreenCustom") : Color("BlackCustom"))
+        if content == "Report"{
+          Image(systemName: "exclamationmark.bubble")
+          .shadow(color: isPressed[content] ?? false ? Color("GreenCustom") : Color.clear, radius: 10, y: 9)
+          .foregroundColor(isPressed[content] ?? false ? Color("GreenCustom") : Color("BlackCustom"))
+          
+        } else {
+          Text(content)
+          .font(.system(size: 15))
+          .scaleEffect(isPressed[content] ?? false ? 1.1 : 1.0)
+          .shadow(color: isPressed[content] ?? false ? Color("GreenCustom") : Color.clear, radius: 10, y: 9)
+          .foregroundColor(isPressed[content] ?? false ? Color("GreenCustom") : Color("BlackCustom"))
+        }
       })
     .frame(maxWidth: .infinity, maxHeight: 20)
   }
@@ -263,9 +270,14 @@ struct ContactCompanyView: View {
             CustomButtonOption(isPressed: $isPressed, content: "Producto")
             CustomButtonOption(isPressed: $isPressed, content: "Contacto")
             CustomButtonOption(isPressed: $isPressed, content: "Reviews")
+            CustomButtonOption(isPressed: $isPressed, content: "Report")
+              .frame(maxWidth: 35).padding(.trailing, 10)
           }
           Spacer()
-          TabViewImagesProducts(productImages: contactCompanyViewModel, bindImageToDescription: $bindImageToDescription)
+          if isPressed["Producto"] ?? false || isPressed["Contacto"] ?? false
+              || isPressed["Reviews"] ?? false {
+            TabViewImagesProducts(productImages: contactCompanyViewModel, bindImageToDescription: $bindImageToDescription)
+          }
           ForEach(Array(isPressed.keys), id: \.self) { key in
             if let value: Bool = isPressed[key], value == true {
               if key == "Producto" {
@@ -282,6 +294,10 @@ struct ContactCompanyView: View {
                 ContactCompanyRatingView(modelCompanyRating: contactCompanyViewModel, dispScrollView: $dispScrollView).onAppear {
                   bindImageToDescription = false
                 }
+              }
+              if key == "Report" {
+                // TODO: Report component
+                EmptyView()
               }
             }
           }.frame(height: bindImageToDescription ? 33 : 220)
