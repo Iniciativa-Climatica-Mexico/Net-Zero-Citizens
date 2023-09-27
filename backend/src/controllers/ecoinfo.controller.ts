@@ -18,9 +18,12 @@ export const getAllEcoinfos: RequestHandler<
   NoRecord
 > = async (_req, res) => {
   try {
+    console.log('GET /ecoinfo')
     const ecoinfos: Ecoinfo[] = await EcoinfoService.getAllEcoinfo()
-    res.json(ecoinfos)
+    if(!ecoinfos) return res.status(404).json({ error: 'No hay ecoinfo' })
+    res.status(200).json(ecoinfos)
   } catch (err) {
+    console.error(err)
     res
       .status(500)
       .json({ error: 'Error al obtener la información de ecoinfo' })
