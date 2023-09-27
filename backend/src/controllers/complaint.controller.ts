@@ -135,3 +135,39 @@ export const getComplaintByUser: RequestHandler<
     res.status(500).json({ message: 'Error' })
   }
 }
+
+
+/**
+ * @brief
+ * Función del controlador que agrega una complaint a la base de datos
+ * @param req La request HTTP al servidor
+ * @param res Un objeto con la review creada
+ * @returns
+ * - 400 si no se envía el userId o el companyId
+ * - 200 si se crea la complaint
+ * - 500 si ocurre un error en el servidor
+ */
+
+export const addComplaint: RequestHandler<
+  { userId: string; companyId: string },
+  string,
+  { complaintSubject: string; complaintDescription: string; complaintStatus: string },
+  NoRecord
+> = async (req, res) => {
+  const { userId, companyId } = req.params
+  const { complaintSubject, complaintDescription, complaintStatus } = req.body
+  if (!userId || !companyId) {
+    res.status(400).json('Missing userId or companyId!')
+    return
+  } else if (!complaintSubject || !complaintStatus) {
+    res.status(400).json('Missing subject or status!')
+    return
+  }
+  try {
+    await ComplaintService.addReview(userId, companyId, complaintSubject, complaintDescription, complaintStatus)
+    res.status(200).send('Added complaint')
+  } catch (error) {
+    console.log(error)
+    res.status(500).send('Error')
+  }
+}

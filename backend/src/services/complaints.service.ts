@@ -117,7 +117,7 @@ export const getComplaintByUser = async (
     where: {
       userId: userId,
     },
-    
+
     include: [
       {
         model: User,
@@ -127,6 +127,7 @@ export const getComplaintByUser = async (
   })
 }
 
+
 /**
  * @brief
  * Función del servicio que agrega una complaint a la base de datos
@@ -134,11 +135,20 @@ export const getComplaintByUser = async (
  * @returns Una promesa con la complaint creada
  */
 
-export const createComplaint = async (
-  complaint: ComplaintType
-): Promise<Complaint | null> => {
-  const res = await Complaint.create(complaint)
-  return res
+export const addReview = async (
+  userId: string,
+  companyId: string,
+  complaintSubject: string,
+  complaintDescription: string,
+  complaintStatus: string,
+): Promise<Complaint> => {
+  return await Complaint.create({
+    userId: userId,
+    companyId: companyId,
+    complaintSubject: complaintSubject,
+    complaintDescription: complaintDescription,
+    complaintStatus: complaintStatus,
+  })
 }
 
 
