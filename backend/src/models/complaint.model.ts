@@ -23,10 +23,14 @@ export default class Complaint extends Model {
   @ForeignKey(() => User)
   @Column({
     type: DataType.UUID,
+    defaultValue: DataType.UUIDV4,
     allowNull: false,
     field: 'USER_ID',
   })
   userId: string
+
+  @BelongsTo(() => User)
+  user: User
 
   @ForeignKey(() => Company)
   @Column({
@@ -36,12 +40,8 @@ export default class Complaint extends Model {
   })
   companyId: string
 
-  @Column({
-    type: DataType.DATE,
-    allowNull: false,
-    field: 'COMPLAINT_DATE',
-  })
-  complaintDate: Date
+  @BelongsTo(() => Company)
+  company: Company
 
   @Column({
     type: DataType.ENUM('Productos Defectuosos','Inconformidad con el producto / servicio', 'Comportamiento Inapropiado', 
