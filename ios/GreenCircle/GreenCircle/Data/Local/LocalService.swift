@@ -8,14 +8,31 @@
 import Foundation
 
 class LocalService {
-    static let shared = LocalService()
-    private let TOKEN_KEY = "userToken"
-
-    func getToken() -> String? {
-        return UserDefaults.standard.string(forKey: TOKEN_KEY)
+  static let shared = LocalService()
+  private var decoder = JSONDecoder()
+  private var encoder = JSONEncoder()
+  private let USER_DATA = "USER_DATA"
+  
+  func getToken() -> AuthResponse? {
+    guard let userData = UserDefaults.standard.data(forKey: USER_DATA)
+    else {
+      return nil
     }
-
-    func setToken(_ token: String) {
-        UserDefaults.standard.set(token, forKey: TOKEN_KEY)
+    do {
+      return try decoder.decode(AuthResponse.self, from: userData)
+    } catch {
+      debugPrint(error)
+      return nil
     }
+  }
+  
+  func setToken(userData: AuthResponse) {
+    do {
+      let encodedData = try encoder.encode(userData)
+      UserDefaults.standard.set(encodedData, forKey: USER_DATA)
+    } catch {
+      debugPrint(error)
+      return
+    }
+  }
 }
