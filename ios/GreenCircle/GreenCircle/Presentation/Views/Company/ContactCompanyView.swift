@@ -260,6 +260,8 @@ struct CompanyReportView: View {
     @ObservedObject var modelCompanyRating: CompanyViewModel
     @Binding var dispScrollView: Bool
     @State private var selectedReportReason: String?
+    @State private var description: String = ""
+    
     let reportReasons = ["Productos defectuosos.",
                          "Inconformidad con el producto/servicio.",
                          "Comportamiento inapropiado.",
@@ -274,14 +276,14 @@ struct CompanyReportView: View {
                 Text("Reportar Proveedor")
                     .font(.system(size: 18))
                     .padding(.bottom, 5).bold()
-                    //.padding(.top, 20)
+                    
                 Divider()
-                   // .padding(.top, -70)
+                  
                 Text("Seleccione la opción por la que desea reportar:")
                     .font(.system(size: 12))
                     .foregroundColor(Color("BlackCustom")).contrast(12.6)
                     .padding(.bottom, 20).bold()
-                    //.padding(.top, -65)
+                  
                     
                 ScrollView{
                     ForEach(reportReasons, id: \.self) { reason in
@@ -291,7 +293,25 @@ struct CompanyReportView: View {
                             .padding(.vertical, 2)
                     }
                     
+                    
+                    Divider()
+                        .padding(.top, 20)
+                    
+                    Text("Comentario adicional (opcional)")
+                        .font(.system(size: 12))
+                        .foregroundColor(Color("BlackCustom")).contrast(12.6)
+                        .padding(.top ,10).bold()
+                        .padding(.leading ,-160)
+                        
+                    TextField("Escribe algún comentario adicional al reporte...", text: $description)
+                    .disableAutocorrection(true)
+                    .padding(.top, 3)
+                    .font(.system(size: 13))
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    
                     HStack {
+                        
+                        
                         Spacer()
                         Button(action: {}) {
                             Text("Mandar Reporte")
