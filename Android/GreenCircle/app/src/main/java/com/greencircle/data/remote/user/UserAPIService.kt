@@ -18,7 +18,6 @@ interface UserAPIService {
      * @property message Un mensaje informativo relacionado con la actualización.
      */
     data class UpdateUserResponse(
-        val userId: String?,
         val message: String?
     )
 
@@ -36,7 +35,6 @@ interface UserAPIService {
         val state: String,
         val gender: String,
         val roleId: String?
-
     )
 
     /**
