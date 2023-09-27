@@ -211,7 +211,7 @@
                         android:layout_width="match_parent"
                         android:id="@+id/inputEstado"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
+                        app:simpleItems="@array/state_options"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
