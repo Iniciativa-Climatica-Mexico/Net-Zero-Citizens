@@ -238,6 +238,8 @@ struct ContactCompanyView: View {
   @State var dispScrollView: Bool = false
   @State var bindImageToDescription: Bool = false
   @State var stringDescription: String = ""
+  @Environment(\.presentationMode) var presentationMode
+
   var body: some View {
     if !dispScrollView {
       NavigationStack {
@@ -313,10 +315,14 @@ struct ContactCompanyView: View {
       .navigationTitle(contactCompanyViewModel.contentCompany.name)
       .navigationBarTitleDisplayMode(.inline)
       Spacer()
-          .alert(isPresented: $showAlert){
+          .alert(isPresented: $showAlert) {
             Alert(title: Text("Error"),
                   message: Text("No contamos con products aún"),
-                  dismissButton: .default(Text("Ok")))
+                  dismissButton: .default(Text("Ok")) {
+              presentationMode.wrappedValue.dismiss()
+              
+            }
+        )
           }
     }
       } else {

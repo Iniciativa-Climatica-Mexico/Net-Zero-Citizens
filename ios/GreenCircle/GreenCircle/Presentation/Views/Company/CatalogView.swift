@@ -3,108 +3,126 @@
 //  catalogo
 //
 //  Created by Diego Iturbe on 18/09/23.
-//
+//  Modified by Daniel Gutiérrez Gómez 26/09/23
 
 import SwiftUI
 
+struct CardCatalogView: View {
+  var companyId: UUID
+  var companyImage: String?
+  var companyName: String
+  var streetNumber: String?
+  var street: String?
+  
+  var body: some View {
+    NavigationLink(destination: ContactCompanyView(idCompany: companyId)){
+    ZStack {
+      RoundedRectangle(cornerRadius: 10, style:.continuous)
+        .fill(.white)
+        .frame(width: 335, height: 150)
+        .shadow(color: Color("BlueCustom"), radius: 1)
+        HStack {
+          VStack (alignment: .leading) {
+            if let imageURL = URL(string: companyImage ?? "") {
+              AsyncImage(url: imageURL) { phase in
+                switch phase {
+                  case .empty:
+                    Image(systemName: "square.fill")
+                      .resizable()
+                      .frame(width: 100, height: 100)
+                      .foregroundColor(.gray)
+                      .opacity(0.3)
+                  case .success(let image):
+                    image
+                      .resizable()
+                      .scaledToFit()
+                      .cornerRadius(10, corners: [.bottomLeft, .bottomRight, .topLeft, .topRight])
+                      .frame(width: 100, height: 100)
+                  case .failure:
+                    Text("Failed to load Image!!")
+                  @unknown default:
+                    fatalError()
+                }
+              }
+            } else {
+              Image(systemName: "square.fill")
+                .resizable()
+                .frame(width: 100, height: 100)
+                .foregroundColor(.gray)
+                .opacity(0.3)
+            }
+          }
+          Spacer()
+          VStack(alignment: .leading, spacing: 7) {
+            HStack(alignment: .top) {
+              Text(companyName)
+                .font(.system(size: 17))
+                .lineLimit(2)
+                .foregroundColor(Color("MainText"))
+                .fontWeight(.bold)
+            }
+            HStack {
+              Image(systemName: "location.fill")
+                .foregroundColor(Color("BlueCustom"))
+              Text("\(streetNumber ?? "") \(street ?? "")")
+                .font(.system(size: 13))
+                .lineSpacing(2)
+            }.foregroundColor(Color("MainText"))
+              .padding(.bottom, 3)
+            
+            HStack {
+              Image(systemName: "star.fill")
+                .foregroundColor(Color("GreenCustom"))
+              Image(systemName: "star.fill")
+                .foregroundColor(Color("GreenCustom"))
+              Image(systemName: "star")
+                .foregroundColor(Color("GreenCustom"))
+              Image(systemName: "star")
+                .foregroundColor(Color("GreenCustom"))
+              Image(systemName: "star")
+                .foregroundColor(Color("GreenCustom"))
+              Text(String(0))
+                .foregroundColor(Color("GreenCustom"))
+            }.font(.system(size: 13))
+          }
+          .frame(maxWidth: 180, maxHeight: 120)
+          .multilineTextAlignment(.leading)
+          Spacer()
+          VStack {
+            Image(systemName: "heart")
+              .foregroundColor(Color("BlueCustom"))
+              .font(.system(size: 24))
+              .padding(.top, 20)
+            Spacer()
+          }.frame(maxWidth: 25)
+        }
+        .frame(maxWidth: 300, maxHeight: 140)
+      }
+    }
+    .navigationTitle("Proveedores")
+    .navigationBarTitleDisplayMode(.inline)
+  }
+}
 
 struct CatalogView: View {
   @StateObject var viewModel = CompanyViewModel()
-  @State var availableProducts = false
   var body: some View {
-    
     NavigationStack {
-      List(viewModel.companies) { company in
-          ZStack {
-            NavigationLink(destination: ContactCompanyView(idCompany: company.companyId)) {
-              EmptyView()
-            }.buttonStyle(PlainButtonStyle())
-            RoundedRectangle(cornerRadius: 25, style: .continuous)
-              .fill(.white)
-              .shadow(color: .gray, radius: 2)
-              .frame(width: 350, height: 160) // Adjusted card size
-
-            HStack {
-              if let imageURL = URL(string: company.images?.first?.imageUrl ?? "") {
-                AsyncImage(url: imageURL) { phase in
-                  switch phase {
-                    case .empty:
-                      Image(systemName: "square.fill")
-                        .resizable()
-                        .frame(width: 90, height: 100)
-                        .foregroundColor(.gray)
-                    case .success(let image):
-                      image
-                        .resizable()
-                        .scaledToFit()
-                        .cornerRadius(10, corners: [.bottomLeft, .bottomRight, .topLeft, .topRight])
-                        .frame(width: 100, height: 100)
-                    case .failure:
-                      Text("Failed to load Image!!")
-                    @unknown default:
-                      fatalError()
-                  }
-                }
-              } else {
-                Image(systemName: "square.fill")
-                  .resizable()
-                  .frame(width: 90, height: 90)
-                  .foregroundColor(.gray)
-              }
-
-              VStack(spacing: 10) {
-                Text(company.name)
-                  .font(.title)
-                
-                  .fontWeight(.bold)
-                  .foregroundColor(.black)
-                HStack {
-                    Image(systemName: "location.fill")
-                      .foregroundColor(.green)
-                    Text("\(company.streetNumber) \(company.street)")
-                      .foregroundColor(.green)
-                }
-                HStack {
-                  Image(systemName: "star.fill")
-                    .foregroundColor(.green)
-                  Image(systemName: "star.fill")
-                    .foregroundColor(.green)
-                  Image(systemName: "star")
-                    .foregroundColor(.green)
-                  Image(systemName: "star")
-                    .foregroundColor(.green)
-                  Image(systemName: "star")
-                    .foregroundColor(.green)
-                  Text(String(0))
-                    .foregroundColor(.green)
-                }
-              }
-              .multilineTextAlignment(.center)
-              Image(systemName: "heart")
-                .foregroundColor(.gray)
-              
-            }
-            .frame(width: 330, height: 180)
-          }
-
-          .listRowSeparator(.hidden)
-          .listRowInsets(.init(top: 10, leading:10, bottom:0, trailing:10))
-          .padding(.vertical, 5)
-        }
-      .padding(EdgeInsets(top: 0, leading: 2, bottom: 0, trailing: 2))
-
-        .listRowInsets(.init(top: 10, leading:10, bottom:0, trailing:10))
-        
-        .listStyle(.plain)
-        .navigationTitle("Proveedores")
-        .navigationBarTitleDisplayMode(.inline)
-
-    }.accentColor(.white)
+      ScrollView {
+        LazyVStack{
+          ForEach(viewModel.companies, id: \.id) { company in
+            CardCatalogView(companyId: company.companyId, companyImage: company.images?.first?.imageUrl,
+                            companyName: company.name, streetNumber: company.streetNumber, street: company.street)
+          }.padding(.top, 5)
+        }.padding(.top, 10)
+      }
       .onAppear {
-      Task {
-        await viewModel.fetchAllCompanies()
+        Task {
+          await viewModel.fetchAllCompanies()
+        }
       }
     }
+    .accentColor(.white)
   }
 }
 
