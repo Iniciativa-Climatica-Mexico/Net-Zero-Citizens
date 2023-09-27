@@ -11,20 +11,21 @@ import retrofit2.Response
 
 class ReviewRepository {
     private val api = ReviewAPIClient()
-    suspend fun getCompanyReviews(companyId: UUID): CompanyReviewObject? {
-        return api.getCompanyReviews(companyId)
+    suspend fun getCompanyReviews(authToken: String, companyId: UUID): CompanyReviewObject? {
+        return api.getCompanyReviews(authToken, companyId)
     }
 
-    suspend fun getUserReviews(userId: UUID): UserReviewObject? {
-        return api.getUserReviews(userId)
+    suspend fun getUserReviews(authToken: String, userId: UUID): UserReviewObject? {
+        return api.getUserReviews(authToken, userId)
     }
 
     suspend fun addReview(
+        authToken: String,
         userId: UUID,
         companyId: UUID,
         review: ReviewBase
     ): Response<ResponseBody>? {
-        val response = api.addReview(userId, companyId, review)
+        val response = api.addReview(authToken, userId, companyId, review)
         if (response != null && response.isSuccessful) {
             Log.d("POST", response.toString())
         } else {
@@ -34,15 +35,17 @@ class ReviewRepository {
     }
 
     suspend fun updateReview(
+        authToken: String,
         reviewId: UUID,
         review: ReviewBase
     ): Response<ResponseBody>? {
-        return api.updateReview(reviewId, review)
+        return api.updateReview(authToken, reviewId, review)
     }
 
     suspend fun deleteReview(
+        authToken: String,
         reviewId: UUID
     ): Response<ResponseBody>? {
-        return api.deleteReview(reviewId)
+        return api.deleteReview(authToken, reviewId)
     }
 }
