@@ -1,4 +1,4 @@
-package com.greencircle.domain.model
+package com.greencircle.domain.model.googlemaps
 
 import com.google.gson.annotations.SerializedName
 import java.util.UUID

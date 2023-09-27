@@ -14,6 +14,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.greencircle.R
 import com.greencircle.databinding.FragmentReviewFormBinding
 import com.greencircle.domain.model.reviews.ReviewBase
+import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.reviews.ReviewFormViewModel
 import com.greencircle.framework.views.fragments.catalogue.CatalogueFragment
 import java.util.UUID
@@ -35,7 +36,13 @@ class ReviewFormFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProvider(this)[ReviewFormViewModel::class.java]
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(
+                requireContext(),
+                ReviewFormViewModel::class.java
+            )
+        )[ReviewFormViewModel::class.java]
 
         _binding = FragmentReviewFormBinding.inflate(inflater, container, false)
         val root: View = binding.root

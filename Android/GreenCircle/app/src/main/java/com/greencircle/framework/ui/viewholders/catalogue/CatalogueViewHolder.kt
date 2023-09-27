@@ -46,7 +46,7 @@ class CatalogueViewHolder(private val binding: CatalogueCardLayoutBinding) :
      * Esta función se utiliza para pasar a la vista de detalle de la empresa
      * @param bundle: Objeto Bundle
      */
-    fun passViewGoToCompanyDetail(bundle: Bundle) {
+    private fun passViewGoToCompanyDetail(bundle: Bundle) {
         val companyContactFragment = CompanyContactFragment()
         companyContactFragment.arguments = bundle
         val activity = binding.root.context as MainActivity

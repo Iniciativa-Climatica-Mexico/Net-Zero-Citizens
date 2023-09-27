@@ -1,14 +1,12 @@
 package com.greencircle.domain.usecase.catalogue
 
-import android.util.Log
 import com.greencircle.data.repository.CatalogueRepository
 import com.greencircle.domain.model.company.CompanySummary
 
 class CatalogueRequirement {
-    val catalogueRepository = CatalogueRepository()
+    private val catalogueRepository = CatalogueRepository()
 
-    suspend fun getCatalogue(): ArrayList<CompanySummary> ? {
-        Log.i("Salida", "CatalogueRequirement")
-        return catalogueRepository.getCatalogue()
+    suspend fun getCatalogue(authToken: String): ArrayList<CompanySummary> ? {
+        return catalogueRepository.getCatalogue(authToken)
     }
 }
