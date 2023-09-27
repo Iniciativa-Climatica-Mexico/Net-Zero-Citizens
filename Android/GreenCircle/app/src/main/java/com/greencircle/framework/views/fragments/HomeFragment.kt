@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.greencircle.R
 import com.greencircle.data.remote.ecoinfo.EcoInfoRetrofit
 import com.greencircle.data.repository.EcoInfoRepository
+import com.greencircle.domain.usecase.auth.RecoverTokensRequirement
 import com.greencircle.framework.ui.adapters.ecoinfo.EcoInfoAdapter
 import com.greencircle.framework.viewmodel.ecoinfo.EcoInfoViewModel
 import com.greencircle.framework.viewmodel.ecoinfo.EcoInfoViewModelFactory
@@ -24,6 +25,7 @@ import kotlinx.coroutines.launch
 class HomeFragment : Fragment() {
     private lateinit var viewModel: EcoInfoViewModel
     private lateinit var recyclerView: RecyclerView
+    private lateinit var recoverTokens: RecoverTokensRequirement
 
     /**
      * Infla el layout del fragmento y configura el RecyclerView
@@ -39,12 +41,16 @@ class HomeFragment : Fragment() {
     ): View {
         val view = inflateView(inflater, container)
 
-        setUpViewModel()
         setUpRecyclerView(view!!)
         fetchData()
         observeData()
 
         return view
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setUpViewModel()
     }
 
     /**
@@ -61,7 +67,12 @@ class HomeFragment : Fragment() {
      * Configura el ViewModel
      */
     private fun setUpViewModel() {
-        val repository = EcoInfoRepository(EcoInfoRetrofit.api)
+        recoverTokens = RecoverTokensRequirement(requireContext())
+        val tokens = recoverTokens() ?: return
+        val authToken = tokens.authToken
+
+        val ecoInfoRetroFit = EcoInfoRetrofit(authToken)
+        val repository = EcoInfoRepository(ecoInfoRetroFit.api)
         val viewModelFactory = EcoInfoViewModelFactory(repository)
 
         viewModel = ViewModelProvider(this, viewModelFactory)[EcoInfoViewModel::class.java]

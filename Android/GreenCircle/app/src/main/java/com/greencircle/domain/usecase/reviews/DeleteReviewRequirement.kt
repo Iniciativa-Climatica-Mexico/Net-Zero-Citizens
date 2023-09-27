@@ -9,6 +9,7 @@ class DeleteReviewRequirement {
     private val repository = ReviewRepository()
 
     suspend operator fun invoke(
+        authToken: String,
         reviewId: UUID
-    ): Response<ResponseBody>? = repository.deleteReview(reviewId)
+    ): Response<ResponseBody>? = repository.deleteReview(authToken, reviewId)
 }

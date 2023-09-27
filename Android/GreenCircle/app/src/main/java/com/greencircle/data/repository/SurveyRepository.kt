@@ -7,14 +7,20 @@ import java.util.UUID
 
 class SurveyRepository {
     private var apiSurvey = SurveyAPIClient()
-    suspend fun getSurveyPending(userId: UUID): Survey? {
+    suspend fun getSurveyPending(authToken: String, userId: UUID): Survey? {
         return apiSurvey
-            .getSurveyPending(userId)
+            .getSurveyPending(authToken, userId)
     }
 
-    suspend fun submitAnswers(surveyId: UUID, userId: UUID, answers: List<Answer>) {
+    suspend fun submitAnswers(
+        authToken: String,
+        surveyId: UUID,
+        userId: UUID,
+        answers: List<Answer>
+    ) {
         // send answers to server
         apiSurvey.submitAnswers(
+            authToken,
             userId,
             surveyId,
             answers,
