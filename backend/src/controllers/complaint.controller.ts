@@ -171,3 +171,41 @@ export const addComplaint: RequestHandler<
     res.status(500).send('Error')
   }
 }
+
+
+/**
+ * @brief
+ * Función del controlador que actualiza el status de una complaint de la base de datos
+ * @param req La request HTTP al servidor
+ * @param res Un objeto con la complaint actualizada
+ * @returns
+ * - 400 si no se envía el complaintId
+ * - 200 si se actualiza correctamente el status
+ * - 500 si ocurre un error en el servidor
+ */
+
+export const updateComplaintStatus: RequestHandler<
+  { complaintId: string },
+  string,
+  { complaintStatus: typeof Complaint.prototype.complaintStatus },
+  NoRecord
+> = async (req, res) => {
+  const { complaintId } = req.params
+  const { complaintStatus } = req.body
+  
+  if (!complaintId) {
+    res.status(400).json('Missing complaintId!')
+    return
+  }
+  if (!complaintStatus) {
+    res.status(400).json('Missing status!')
+    return
+  }
+  try {
+    await ComplaintService.updateComplaintStatus(complaintId, complaintStatus)
+    res.status(200).send('Updated complaint status')
+  } catch (error) {
+    console.log(error)
+    res.status(500).send('Error')
+  }
+}

@@ -37,7 +37,6 @@ export const getAllComplaints = async <T>(
 }
 
 
-
 /**
  * @brief
  * Función del servicio que devuelve un complaint por id de la base de datos
@@ -159,8 +158,9 @@ export const addReview = async (
  * @returns Una promesa con la complaintStatus actualizada
  */
 
-export const flagComplaintAsInactive = async (
+export const updateComplaintStatus = async (
   complaintId: string,
+  complaintStatus: typeof Complaint.prototype.complaintStatus,
 ): Promise<Complaint> => {
   const res = await Complaint.findOne({
     where: {
@@ -168,41 +168,11 @@ export const flagComplaintAsInactive = async (
     },
   })
 
-  const complaintStatus = 'inactive'
-
   if (res) {
     res.complaintStatus = complaintStatus
     await res.save()
     return res
   } else {
-    throw new Error('Complaint not found.')
-  }
-}
-
-/**
- * @brief
- * Función del servicio que marca como no válida una complaint
- * @param params complaintId, complaintStatus
- * @returns Una promesa con el status de la complaint actualizada
- */
-
-
-export const flagComplaintAsInvalid = async (
-  complaintId: string,
-): Promise<Complaint> => {
-  const res = await Complaint.findOne({
-    where: {
-      complaintId: complaintId,
-    },
-  })
-
-  const complaintStatus = 'invalid'
-
-  if (res) {
-    res.complaintStatus = complaintStatus
-    await res.save()
-    return res
-  } else {
-    throw new Error('Complaint not found.')
+    throw new Error('Review not found')
   }
 }
