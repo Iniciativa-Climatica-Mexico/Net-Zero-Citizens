@@ -10,8 +10,10 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.textfield.TextInputLayout
 import com.greencircle.R
 import com.greencircle.data.remote.user.UserAPIService
@@ -82,6 +84,7 @@ class CreateUserFragment : Fragment() {
 
         setTexts(arguments, view)
         onSubmitListener(view)
+
         return view
     }
 
@@ -103,6 +106,8 @@ class CreateUserFragment : Fragment() {
                 Log.d("CreateUserFragment", "Google login failed")
             }
         }
+
+        setSwitch(view.findViewById(R.id.avisoPrivacidad))
     }
 
     /**
@@ -257,5 +262,40 @@ class CreateUserFragment : Fragment() {
         var intent: Intent = Intent(requireContext(), SurveyActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
+    }
+
+    private fun setSwitch(mSwitch: MaterialSwitch) {
+        mSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                mSwitch.thumbTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.white
+                )
+                mSwitch.trackTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.green
+                )
+
+                mSwitch.thumbIconTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.green
+                )
+            } else {
+                // Colors when the switch is OFF
+                mSwitch.thumbTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.white
+                )
+                mSwitch.trackTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.gray_500
+                )
+
+                mSwitch.thumbIconTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.white
+                )
+            }
+        }
     }
 }

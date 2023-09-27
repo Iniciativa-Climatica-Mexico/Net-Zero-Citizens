@@ -190,14 +190,21 @@
 
 
             <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/avisoPrivacidad"
                 style="@style/Widget.Material3.CompoundButton.MaterialSwitch"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:checked="true"
-                android:paddingLeft="10dp"
-                app:trackTint="@color/green"
-                app:thumbIconTint="@color/green"
-                app:thumbIcon="@drawable/baseline_check_24" />
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:layout_marginStart="2dp"
+                android:text=""
+                android:thumbTint="@color/white"
+                android:trackTint="@color/green"
+                app:thumbIcon="@drawable/baseline_check_24"
+                app:thumbIconTint="@color/white"
+                app:thumbTint="@color/white"
+                app:trackTint="@color/gray_500"
+                android:padding="4dp"
+                />
 
             <TextView
                 style="@style/Widget.Material3.Button.TextButton"
