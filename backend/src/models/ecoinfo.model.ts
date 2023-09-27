@@ -12,7 +12,6 @@ export default class Ecoinfo extends Model {
     primaryKey: true,
     allowNull: false,
     defaultValue: DataType.UUIDV4,
-    unique: 'ECOINFO_ID',
     field: 'ECOINFO_ID',
   })
   ecoinfoId: string

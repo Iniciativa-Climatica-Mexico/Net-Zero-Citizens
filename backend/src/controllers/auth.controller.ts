@@ -35,6 +35,38 @@ export const googleLogin: RequestHandler<
 
 /**
  * @brief
+ * Función para generar un nuevo par de tokens a partir de nueva información de usuario
+ * @param authToken token de autenticación
+ * @param userData información del usuario
+ * @returns {AuthResponse} objeto con los tokens generados y los datos del usuario
+ */
+export const updateUserTokensData: RequestHandler<
+  NoRecord,
+  AuthService.AuthResponse,
+  { authToken: string },
+  NoRecord> = async (req, res) => {
+    let authResponse: AuthService.AuthResponse = {tokens: null, user: null, error: null}
+    // Verificar el token
+    if(!req.body.authToken) {
+      authResponse.error = 'No auth token provided'
+      return res.json(authResponse)
+    }
+    const { authToken } = req.body
+
+    const data = await AuthService.updateUserTokensData(authToken)
+
+    if(!data?.user || !data.tokens) {
+      authResponse.error = 'Invalid user'
+      return res.json(authResponse)
+    }
+
+    authResponse = data
+    // Devolver los tokens
+    res.status(200).json(authResponse)
+  }
+
+/**
+ * @brief
  * Función del controlador que genera un token de autenticación y un token de refresco
  * @param req La request HTTP al servidor
  * @param res Un objeto paginador con los proveedores y la información de paginación
