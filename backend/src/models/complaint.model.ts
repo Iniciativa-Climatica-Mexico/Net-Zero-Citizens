@@ -44,6 +44,13 @@ export default class Complaint extends Model {
   company: Company
 
   @Column({
+    type: DataType.DATE,
+    allowNull: false,
+    field: 'COMPLAINT_DATE',
+  })
+  complaintDate: Date
+
+  @Column({
     type: DataType.ENUM('Productos Defectuosos','Inconformidad con el producto / servicio', 'Comportamiento Inapropiado', 
       'Mal Servicio', 'Fraudes o estafas', 'Violación legal o ética'),
     allowNull: false,

@@ -1,6 +1,19 @@
 import Complaint from '../models/complaint.model'
 import User from '../models/users.model'
+import Company from '../models/company.model'
 import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
+
+export type ComplaintType = {
+  complaintId?: string
+  userId: string
+  companyId: string
+  complaintStatus: string
+  complaintSubject: 'Productos Defectuosos'|'Inconformidad con el producto / servicio'|'Comportamiento Inapropiado'| 
+  'Mal Servicio'| 'Fraudes o estafas'|'Violación legal o ética'
+  complaintDescription: string
+  complaintDate: Date
+}
+
 
 /**
  * @brief
@@ -26,17 +39,25 @@ export const getAllComplaints = async <T>(
  * @returns Una promesa con la(s) complaint(s) o null
  */
 
+/** metodo para obtener una complaint por id */
+
 export const getComplaintById = async (
-  params: PaginationParams<{ ComplaintId: string }>
-): Promise<PaginatedQuery<Complaint>> => {
-  const { ComplaintId } = params
-  return await Complaint.findAndCountAll({
-    limit: params.pageSize,
-    offset: params.start,
-    where: {
-      ComplaintId: ComplaintId,
-    },
+  complaintId: string
+): Promise<Complaint | null> => {
+  const complaint = await Complaint.findByPk(complaintId, {
+    plain: true,
+    include: [
+      {
+        model: User,
+        attributes: ['firstName', 'lastName'],
+      },
+      {
+        model: Company,
+        attributes: ['companyName', 'companyId'],
+      }
+    ],
   })
+  return complaint
 }
 
 
@@ -47,25 +68,18 @@ export const getComplaintById = async (
  * @returns Una promesa con la(s) complaint(s) de una compañia o null
  */
 
-export const getComplaintByCompany = async (
-  params: PaginationParams<{ companyId: string }>
+export const getComplaintByCompany = async<T>(
+  companyId: string, params: PaginationParams<T>
 ): Promise<PaginatedQuery<Complaint>> => {
-  const { companyId } = params
   return await Complaint.findAndCountAll({
     limit: params.pageSize,
     offset: params.start,
     where: {
       companyId: companyId,
     },
-
-    include: [
-      {
-        model: User,
-        attributes: ['firstName', 'lastName'],
-      },
-    ],
   })
 }
+
 
 
 /**
@@ -75,18 +89,20 @@ export const getComplaintByCompany = async (
  * @returns Una promesa con la(s) complaint(s) de un usuario o null
  */
 
-export const getComplaintByUser = async (
-  params: PaginationParams<{ userId: string }>
+export const getComplaintByUser = async <T>(
+  userId: string, params: PaginationParams<T>
 ): Promise<PaginatedQuery<Complaint>> => {
-  const { userId } = params
   return await Complaint.findAndCountAll({
     limit: params.pageSize,
+    
     offset: params.start,
     where: {
       userId: userId,
     },
   })
 }
+
+
 
 
 /**
@@ -96,41 +112,11 @@ export const getComplaintByUser = async (
  * @returns Una promesa con la complaint creada
  */
 
-export const addComplaint = async (
-  userId: string,
-  companyId: string,
-  complaintDescription: string,
-  complaintStatus: string
-): Promise<Complaint> => {
-  const complaint = await Complaint.create({
-    userId: userId,
-    companyId: companyId,
-    complaintDescription: complaintDescription,
-    complaintStatus: complaintStatus,
-  })
-  return complaint
-}
-
-
-/**
- * @brief
- * Función del servicio que elimina una complaint de la base de datos
- * @param params complaintId
- * @returns Una promesa con la complaint eliminada
- */
-
-export const deleteComplaint = async (complaintId: string): Promise<Complaint> => {
-  const complaint = await Complaint.findOne({
-    where: {
-      complaintId: complaintId,
-    },
-  })
-  if (complaint) {
-    await complaint.destroy()
-    return complaint
-  } else {
-    throw new Error('Complaint not found.')
-  }
+export const createComplaint = async (
+  complaint: ComplaintType
+): Promise<Complaint | null> => {
+  const res = await Complaint.create(complaint)
+  return res
 }
 
 
