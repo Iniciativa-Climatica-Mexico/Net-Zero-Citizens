@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { MouseEventHandler, useState, MouseEvent } from 'react'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 
 export const MulOPQuestion = () => {
@@ -7,11 +7,12 @@ export const MulOPQuestion = () => {
     value: string
   }
   const [options, setOptions] = useState<Option[]>([
+    { id: 0, value: '' },
     { id: 1, value: '' },
-    { id: 2, value: '' },
   ])
   const [counter, setCounter] = useState(2)
-  const createOption = () => {
+
+  const createOption: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault()
     const newOption = {
       id: counter,
@@ -19,16 +20,30 @@ export const MulOPQuestion = () => {
     }
     setCounter(counter + 1)
     setOptions([...options, newOption])
+    console.log(options)
   }
 
-  const deleteQuestion = (id: number) => {
+  const deleteQuestion = (
+    event: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>,
+    id: number
+  ) => {
     event.preventDefault()
-    return () => {
-      setOptions((prevOptions) => {
-        const newOptions = prevOptions.filter((option) => option.id !== id)
-        return newOptions
+    setOptions((prevOptions) => {
+      const newOptions = prevOptions.filter((option) => option.id !== id)
+      return newOptions
+    })
+  }
+
+  const handleOptionChange = (id: number, newValue: string) => {
+    setOptions((prevOptions) => {
+      const newOptions = prevOptions.map((option) => {
+        if (option.id === id) {
+          option.value = newValue
+        }
+        return option
       })
-    }
+      return newOptions
+    })
   }
 
   return (
@@ -45,15 +60,18 @@ export const MulOPQuestion = () => {
             type="text"
             className="px-2 py-2 rounded border border-solid border-gray-300 w-3/4"
             placeholder="Cual es tu huella de carbono?"
+            onChange={(event) => {
+              handleOptionChange(option.id, event.target.value)
+            }}
           />
-          <a onClick={deleteQuestion(option.id)}>
+          <a onClick={(e) => deleteQuestion(e, option.id)}>
             <DeleteForeverIcon className="hover:text-red-600 cursor-pointer" />
           </a>
         </div>
       ))}
       <div className="x-2 py-2 mt-3">
         <button
-          onClick={createOption}
+          onClick={(e) => createOption(e)}
           className="flex items-center justify-center px-4 py-2 text-white bg-primary-base rounded hover:bg-primary-dark"
         >
           Agregar Opcion

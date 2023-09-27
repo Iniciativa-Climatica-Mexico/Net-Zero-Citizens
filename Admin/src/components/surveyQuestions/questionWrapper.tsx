@@ -1,10 +1,26 @@
 import Switch from '@mui/material/Switch'
 import { useState } from 'react'
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'
-import { OpenQuestion } from './questionsTypes/openQuestion'
 import { MulOPQuestion } from './questionsTypes/mulOpQuestion'
 
-export const QuestionWrapper = () => {
+export type Question = {
+  id: number
+  title: string
+  type: string
+  required: boolean
+  options?: string[]
+}
+
+type QuestionWrapperProps = {
+  questions: Question[]
+  id: number
+  setQuestions: React.Dispatch<React.SetStateAction<Question[]>>
+}
+export const QuestionWrapper = ({
+  questions,
+  id,
+  setQuestions,
+}: QuestionWrapperProps) => {
   const [required, setRequired] = useState(false)
   const [questionType, setQuestionType] = useState('openQuestion')
 
@@ -19,21 +35,27 @@ export const QuestionWrapper = () => {
   }
 
   const questionSwitch = () => {
-    switch (questionType) {
-    case 'openQuestion':
-      return <OpenQuestion />
-    case 'mulOptionQuestion':
+    if (questionType === 'mulOptionQuestion') {
       return <MulOPQuestion />
-    default:
-      return <OpenQuestion />
+    } else {
+      return
     }
   }
 
+  const deleteQuestion = () => {
+    const newQuestions = questions.filter((question) => question.id !== id)
+    setQuestions(newQuestions)
+  }
+
   return (
-    <div className="rounded border border-solid border-gray-300 p-3.5 h-fit flex flex-col">
+    <div className="rounded border-2 border-solid border-gray-300 p-3.5 h-fit flex flex-col mb-3">
       <div className="flex flex-row justify-between">
-        <h2>Pregunta 1</h2>
-        <RemoveCircleOutlineIcon className="hover:text-red-600 cursor-pointer" />
+        <h2 className="font-bold">
+          Pregunta {questions.map((q) => q.id).indexOf(id) + 1}
+        </h2>
+        <a onClick={deleteQuestion}>
+          <RemoveCircleOutlineIcon className="hover:text-red-600 cursor-pointer" />
+        </a>
       </div>
 
       <div className="flex flex-row justify-between mt-3">
@@ -41,7 +63,7 @@ export const QuestionWrapper = () => {
           id="title"
           name="title"
           type="text"
-          className="px-2 py-2 mb-3 rounded border border-solid border-gray-300 w-3/4 h-full"
+          className="px-2 py-2 mb-3 rounded border border-solid border-gray-300 w-3/4 h-11"
           placeholder="Cual es tu huella de carbono?"
         />
         <select
