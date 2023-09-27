@@ -1,6 +1,6 @@
-package com.greencircle.data.remote
+package com.greencircle.data.remote.googlemaps
 
-import com.greencircle.domain.model.CompanyObject
+import com.greencircle.domain.model.googlemaps.CompanyObject
 import retrofit2.http.GET
 
 /**
