@@ -14,7 +14,6 @@ const complaint = {
     complaintSubject: "Productos Defectuosos",
     complaintDescription: "El producto no funciona",
     complaintStatus: "active",
-    createdAt: "2021-05-31T22:00:00.000Z",
 };
 const complaint2 = {
     complaintId: "8de45630-2e76-4d97-98c2-9ec0d1f3a5b9",
@@ -22,7 +21,6 @@ const complaint2 = {
     companyId: "8de45630-2e76-4d97-98c2-9ec0d1f3a5b9",
     complaintSubject: "Productos",
     complaintStatus: "active",
-    createdAt: "2021-05-31T22:00:00.000Z",
 };
 
 
@@ -38,6 +36,7 @@ describe("Complaints", () => {
             await Complaint.create(complaint2);
             const res = await ComplaintService.getAllComplaints({start:0, pageSize:3});
             expect(res).to.have.lengthOf(2);
+            console.log(res);
         });
     }
     );
@@ -67,8 +66,7 @@ describe("Complaints", () => {
     );
     describe("createComplaint", () => {
         it("should create a complaint", async () => {
-            const date = new Date();
-            const res = await unwrap(ComplaintService.createComplaint({complaintId:'8de45630-2e76-4d97-98c2-9ec0d1f3a5b8', companyId:'8de45630-2e76-4d97-98c2-9ec0d1f3a5b8', userId:'56786543fhgf', complaintSubject: 'Productos Defectuosos', complaintDescription: 'El producto no funciona', complaintStatus: 'active', complaintDate: date}));
+            const res = await unwrap(ComplaintService.createComplaint({complaintId:'8de45630-2e76-4d97-98c2-9ec0d1f3a5b8', companyId:'8de45630-2e76-4d97-98c2-9ec0d1f3a5b8', userId:'56786543fhgf', complaintSubject: 'Productos Defectuosos', complaintDescription: 'El producto no funciona', complaintStatus: 'active'}));
             expect(res).excluding("createdAt").to.deep.equal(complaint);
         });
     }

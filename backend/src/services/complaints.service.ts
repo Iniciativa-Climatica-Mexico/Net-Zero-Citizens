@@ -11,7 +11,6 @@ export type ComplaintType = {
   complaintSubject: 'Productos Defectuosos'|'Inconformidad con el producto / servicio'|'Comportamiento Inapropiado'| 
   'Mal Servicio'| 'Fraudes o estafas'|'Violación legal o ética'
   complaintDescription: string
-  complaintDate: Date
 }
 
 

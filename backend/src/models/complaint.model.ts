@@ -23,14 +23,10 @@ export default class Complaint extends Model {
   @ForeignKey(() => User)
   @Column({
     type: DataType.UUID,
-    defaultValue: DataType.UUIDV4,
     allowNull: false,
     field: 'USER_ID',
   })
   userId: string
-
-  @BelongsTo(() => User)
-  user: User
 
   @ForeignKey(() => Company)
   @Column({
@@ -39,9 +35,6 @@ export default class Complaint extends Model {
     field: 'COMPANY_ID',
   })
   companyId: string
-
-  @BelongsTo(() => Company)
-  company: Company
 
   @Column({
     type: DataType.DATE,
