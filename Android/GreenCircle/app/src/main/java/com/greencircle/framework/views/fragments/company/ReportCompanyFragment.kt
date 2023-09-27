@@ -12,6 +12,13 @@ import androidx.fragment.app.Fragment
 import com.greencircle.R
 
 class ReportCompanyFragment: Fragment() {
+    /**
+     * Se ejecuta cuando se crea la vista
+     * @param inflater: LayoutInflater -> Inflador de la vista
+     * @param container: ViewGroup? -> Contenedor de la vista
+     * @param savedInstanceState: Bundle? -> Bundle
+     * @return View -> Vista
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -24,6 +31,11 @@ class ReportCompanyFragment: Fragment() {
         )
     }
 
+    /**
+     * Se ejecuta cuando la vista se ha creado
+     * @param view: View -> Vista
+     * @param savedInstanceState: Bundle? -> Bundle
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -38,10 +50,21 @@ class ReportCompanyFragment: Fragment() {
 
         spinnerOptions.adapter = adapter
         spinnerOptions.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            /**
+             * Se ejecuta cuando no se selecciona ningún elemento del spinner
+             * @param parent: AdapterView<*> -> Spinner
+             */
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 Toast.makeText(requireContext(), "No issue selected", Toast.LENGTH_SHORT).show()
             }
 
+            /**
+             * Se ejecuta cuando se selecciona un elemento del spinner
+             * @param parent: AdapterView<*> -> Spinner
+             * @param view: View? -> Vista del elemento seleccionado
+             * @param position: Int -> Posición del elemento seleccionado
+             * @param id: Long -> Id del elemento seleccionado
+             */
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,

@@ -43,8 +43,8 @@
     <string-array name="options_array">
         <item>Products</item>
         <item>Comportamiento inapropiado</item>
-        <item>fraudes</item>
-        <item>violacion legal</item>
-        <item>violacion a los terminos y condiciones</item>
+        <item>Fraudes</item>
+        <item>Violacion legal</item>
+        <item>Violacion a los terminos y condiciones</item>
     </string-array>
 </resources>
