@@ -39,4 +39,12 @@
     <string name="review_placeholder_review">Review</string>
     <string name="reviews_written_user">Reseñas Escritas (</string>
     <string name="user_review_empty_view">No haz escrito ninguna reseña</string>
+
+    <string-array name="options_array">
+        <item>Products</item>
+        <item>Comportamiento inapropiado</item>
+        <item>fraudes</item>
+        <item>violacion legal</item>
+        <item>violacion a los terminos y condiciones</item>
+    </string-array>
 </resources>

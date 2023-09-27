@@ -58,18 +58,6 @@
                 app:layout_scrollFlags="scroll|enterAlways" />
             />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnReportCompany"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignTop="@id/TVCompanyName"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/rounded_corner"
-                android:text="Reportar proveedor"
-                android:backgroundTint="@color/red"
-            />
-
             <com.google.android.material.button.MaterialButtonToggleGroup
                 android:id="@+id/toggleButtonGroup"
                 style="@style/ShapeAppearance.App.SmallComponent"
@@ -118,4 +106,15 @@
 
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/reportButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/baseline_warning_amber_24"
+        android:contentDescription="report"
+        app:backgroundTint="@color/red"
+        />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
