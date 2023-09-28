@@ -1,4 +1,4 @@
-package com.greencircle.domain.model.user
+package com.greencircle.domain.usecase.user
 
 import com.greencircle.data.remote.user.UserAPIService
 import com.greencircle.data.repository.UserRepository

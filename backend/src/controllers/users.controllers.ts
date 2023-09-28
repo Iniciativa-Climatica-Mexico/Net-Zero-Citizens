@@ -164,11 +164,11 @@ export const updateUserCredentials: RequestHandler<
  */
 export const deleteUserById: RequestHandler<
   { userId: string },
-  { message: string, error?: string },
+  { message: string, error?: string, status?: number },
   NoRecord> = async (req, res) => {
     try {
       if(!req.params.userId) {
-        res.status(400).json({ message: 'Missing user uuid' })
+        res.status(400).json({ message: 'Missing user uuid', status: 400 })
         return
       }
       const uuid = req.params.userId
@@ -180,19 +180,19 @@ export const deleteUserById: RequestHandler<
       await updateAnswersByUserId(uuid)
 
       if(!user) {
-        res.status(404).json({ message: 'User not found' })
+        res.status(404).json({ message: 'User not found', status: 404 })
         return
       }
 
       const _res = await UserService.deleteUserById(uuid)
       if(_res) {
-        res.status(200).json({ message: 'User deleted' })
+        res.status(200).json({ message: 'User deleted', status: 200 })
       } else {
-        res.status(404).json({ message: 'User not found' })
+        res.status(404).json({ message: 'User not found', status: 404 })
       }
 
     } catch(error) {
       console.log(error)
-      res.status(400).json({ message: 'Error deleting user' })
+      res.status(400).json({ message: 'Error deleting user', status: 400 })
     }
   }
