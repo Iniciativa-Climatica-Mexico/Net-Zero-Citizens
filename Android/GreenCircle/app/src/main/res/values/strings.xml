@@ -42,10 +42,11 @@
     <string name="select_problem_prompt">Selecciona el problema</string>
 
     <string-array name="options_array">
-        <item>Products</item>
-        <item>Comportamiento inapropiado</item>
-        <item>Fraudes</item>
-        <item>Violacion legal</item>
-        <item>Violacion a los terminos y condiciones</item>
+        <item>Productos Defectuosos</item>
+        <item>Inconformidad con el producto / servicio</item>
+        <item>Comportamiento Inapropiado</item>
+        <item>Mal Servicio</item>
+        <item>Fraudes o estafas</item>
+        <item>Violación legal o ética</item>
     </string-array>
 </resources>
