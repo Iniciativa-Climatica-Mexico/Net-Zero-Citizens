@@ -1,4 +1,12 @@
 package com.greencircle.domain.model.company.files
 
-class CompanyFile {
-}
+import com.google.gson.annotations.SerializedName
+import java.util.UUID
+
+data class CompanyFile(
+    @SerializedName("companyFileId") val companyFileId: UUID,
+    @SerializedName("companyId") val companyId: UUID,
+    @SerializedName("fileURL") val fileURL: String,
+    @SerializedName("fileDescription") val fileDescription: FileDescription,
+    @SerializedName("fileFormat") val fileFormat: FileFormat
+)
