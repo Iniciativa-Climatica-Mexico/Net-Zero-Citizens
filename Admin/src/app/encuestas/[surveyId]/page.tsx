@@ -37,10 +37,23 @@ export default function DetailedSurvey(props: DetailedSurveyProps) {
 
     return (
       <div>
-        <div className="flex flex-row items-center  my-8 mx-8">
+        <div className="flex flex-row items-center justify-between my-8 mx-8">
           <h1 className="self-start font-extrabold mt-8 mx-8 text-4xl text-txt">
             {surveyDetail.title}
           </h1>
+          <div className="flex flex-row gap-4">
+            <button
+              onClick={() => setIsOpen(true)}
+              className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end mt-4"
+            >
+              Cerrar Encuesta
+            </button>
+            <Link href={'/reportes/encuesta/' + surveyId}>
+              <button className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end mt-4">
+                Generar Reporte
+              </button>
+            </Link>
+          </div>
         </div>
         <div className="flex mx-8 justify-between">
           <p className="self-start mb-8 mx-8 text-secondary">
@@ -49,12 +62,6 @@ export default function DetailedSurvey(props: DetailedSurveyProps) {
           <div className="flex gap-4">
             {surveyDetail.endDate == null && (
               <div>
-                <button
-                  onClick={() => setIsOpen(true)}
-                  className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end"
-                >
-                  Cerrar Encuesta
-                </button>
                 <Modal
                   isOpen={modalIsOpen}
                   style={{
@@ -99,12 +106,6 @@ export default function DetailedSurvey(props: DetailedSurveyProps) {
                 </Modal>
               </div>
             )}
-
-            <Link href={'/reportes/encuesta/' + surveyId}>
-              <button className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end">
-                Generar Reporte
-              </button>
-            </Link>
           </div>
         </div>
         <div className="flex flex-col items-center w-full justify-center">
