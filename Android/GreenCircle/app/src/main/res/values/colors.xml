@@ -38,4 +38,6 @@
     <color name="gray_800">#CC333333</color>
     <color name="gray_900">#E6333333</color>
 
+    <color name="red">#B85C5C</color>
+
 </resources>
