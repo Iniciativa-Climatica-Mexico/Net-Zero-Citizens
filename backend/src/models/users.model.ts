@@ -10,7 +10,6 @@ import {
 import Company from './company.model'
 import Review from './review.model'
 import Role from './role.model'
-import Complaint from './complaint.model'
 
 /**
  * @brief
@@ -35,8 +34,8 @@ export default class User extends Model {
   })
   roleId: string
 
-  @BelongsTo(() => Role)
-  role: Role
+  @BelongsTo(() => Role) // Define the association to Role
+  role: Role // This will allow you to access the associated Role model
 
   @ForeignKey(() => Company)
   @Column({
@@ -150,7 +149,4 @@ export default class User extends Model {
 
   @HasMany(() => Review)
   reviews: Review[]
-
-  @HasMany(() => Complaint)
-  complaints: Complaint[]
 }
