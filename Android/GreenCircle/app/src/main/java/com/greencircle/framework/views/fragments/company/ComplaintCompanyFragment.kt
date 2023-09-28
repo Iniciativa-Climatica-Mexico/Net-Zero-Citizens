@@ -50,7 +50,6 @@ class ComplaintCompanyFragment : DialogFragment() {
         )
 
         companyId = arguments?.getString("CompanyId")?.let { UUID.fromString(it) }!!
-        authToken = arguments?.getString("AuthToken")!!
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         val spinnerOptions: Spinner = view!!.findViewById(R.id.spinnerProblems)
@@ -99,6 +98,8 @@ class ComplaintCompanyFragment : DialogFragment() {
                 val userJson = sharedPreferences?.getString("user_session", null)
                 val userJSON = JSONObject(userJson!!)
                 val userId = UUID.fromString(userJSON.getString("uuid"))
+
+                authToken = sharedPreferences.getString("auth_token", null)!!
 
                 val complaint = Complaint(
                     userId = userId,

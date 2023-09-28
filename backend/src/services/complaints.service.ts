@@ -138,7 +138,6 @@ export const addComplaint = async (
   complaint: ComplaintType
 ): Promise<Complaint> => {
   try {
-    console.log('Service Complaint:', complaint)
     return await Complaint.create(complaint)
   } catch (error) {
     console.error('Error creating complaint:', error)

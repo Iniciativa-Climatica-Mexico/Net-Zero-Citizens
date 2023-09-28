@@ -155,9 +155,6 @@ export const addComplaint: RequestHandler = async (req, res) => {
       complaintDescription,
       complaintStatus,
     } = req.body
-
-    console.log(userId, companyId, complaintSubject, complaintDescription)
-
     if (
       !userId ||
       !companyId ||
