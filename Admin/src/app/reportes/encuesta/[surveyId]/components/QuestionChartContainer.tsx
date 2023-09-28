@@ -18,9 +18,17 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
     const data = question.answers?.map((answer) => answer.count)
     return (
       <div>
-        <h1 className="text-black text-5xl font-extrabold p-10">
-          {surveyReport.title}
-        </h1>
+        <div className="flex flex-row items-center justify-between my-8 mx-8">
+          <h1 className="self-start font-extrabold mt-8 mx-8 text-4xl text-txt">
+            {surveyReport.title}
+          </h1>
+          <button
+            //onClick={() => setIsOpen(true)}
+            className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end mt-4 ml-auto left-500"
+          >
+            Descargar reporte
+          </button>
+        </div>
         <div className="flex pl-10 pb-2">
           <button className="pr-5" onClick={onPrevPage}>
             <svg
