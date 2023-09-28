@@ -12,7 +12,7 @@ class CompanyViewModel: ObservableObject {
   /// Caso de uso para hacer fetch de los datos de compañía
   private let useCase: CompanyUseCase
   
-  @Published var companies = [Company]()
+  @Published var companies = [BasicCompany]()
   
   /// La compañía puede cambiar en la vista (se construye .onAppear())
   @Published var contentCompany: Company = Company(
