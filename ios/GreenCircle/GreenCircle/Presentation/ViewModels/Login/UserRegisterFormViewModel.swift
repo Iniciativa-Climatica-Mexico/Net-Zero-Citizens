@@ -7,22 +7,27 @@
 
 import Foundation
 
+struct BasicUserInfo {
+  var phone = ""
+  var age = ""
+  var state = ""
+  var gender = ""
+  var privacy = false
+}
+
+let GENDERS = ["Masculino", "Femenino", "Otro", "Prefiero no contestar"]
+
 /// ViewModel de la vista de formulario de Registro de Usuario
 class UserRegisterFormViewModel: ObservableObject {
   var useCase = UserRegisterUseCase.shared
   
-  let genders = ["Masculino", "Femenino", "Otro", "Prefiero no decirlo"]
-  
-  @Published var phone = ""
-  @Published var age = ""
-  @Published var state = ""
-  @Published var gender = ""
-  @Published var privacy = false
+  @Published var formState = BasicUserInfo()
+  @Published var errorMessage = ""
   @Published var showAlert = false
-  @Published var userData: AuthResponse?
+  @Published var userData: UserAuth
   
   init() {
-    userData = useCase.getLocalUserData()
+    userData = useCase.getLocalUserData()!.user
   }
   
   /// Función encargada de enviar el post al backend y actualizar el objeto de entorno
@@ -32,32 +37,58 @@ class UserRegisterFormViewModel: ObservableObject {
   func handleSubmit() async -> Bool {
     do {
       try validateInformation()
-      
-      userData!.user.phone = phone
-      userData!.user.age = Int(age)!
-      userData!.user.state = state
-      userData!.user.gender = gender
-      
-      await useCase.postNewUser(authToken: userData!.tokens.authToken,
-                                user: userData!.user)
+      formState.phone = formState.phone
+        .replacingOccurrences(of: "-", with: "")
+      try await useCase.postNewUser(formState)
       return true
+    } catch GCError.validationError(let message){
+      errorMessage = message
+      showAlert = true
+      return false
     } catch {
+      errorMessage = "Intenta de nuevo más tarde :("
       showAlert = true
       return false
     }
   }
   
+  func format(with mask: String, for string: String) -> String {
+    let numbers = string.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
+    var result = ""
+    var index = numbers.startIndex
+    for ch in mask where index < numbers.endIndex {
+      if ch == "X" {
+        result.append(numbers[index])
+        index = numbers.index(after: index)
+      } else {
+        result.append(ch)
+      }
+    }
+    return result
+  }
+  
   /// Valida los datos del formulario
   private func validateInformation() throws {
-    if phone.isEmpty
-        || phone.count != 10
-        || phone.rangeOfCharacter(from: NSCharacterSet.letters) != nil
-        || age.isEmpty
-        || Int(age) == nil
-        || state.isEmpty
-        || gender.isEmpty
-        || !privacy {
-      throw CustomError.mainError
+    if formState.phone.isEmpty
+        || formState.phone.count != 12 {
+      throw GCError.validationError("Por favor introduce un teléfono válido.")
+    }
+    
+    if formState.age.isEmpty
+        || Int(formState.age)! < 16 {
+      throw GCError.validationError("Por favor introduce una edad válida.")
+    }
+    
+    if formState.state.isEmpty {
+      throw GCError.validationError("Por favor selecciona un estado.")
+    }
+    
+    if formState.gender.isEmpty {
+      throw GCError.validationError("Por favor selecciona tu género.")
+    }
+    
+    if !formState.privacy {
+      throw GCError.validationError("Debes aceptar la política de privacidad.")
     }
   }
 }
