@@ -2,7 +2,6 @@ package com.greencircle.data.repository
 
 import com.greencircle.data.remote.complaints.ComplaintAPI
 import com.greencircle.domain.model.complaints.Complaint
-import java.util.UUID
 import okhttp3.ResponseBody
 import retrofit2.Response
 
@@ -13,11 +12,7 @@ import retrofit2.Response
  * @since 2.0.0
  */
 class ComplaintRepository(private val api: ComplaintAPI) {
-    suspend fun postComplaint(
-        idUser: UUID,
-        idCompany: UUID,
-        complaint: Complaint
-    ): Response<ResponseBody> {
-        return api.postComplaint(idUser, idCompany, complaint)
+    suspend fun postComplaint(complaint: Complaint): Response<ResponseBody> {
+        return api.postComplaint(complaint)
     }
 }

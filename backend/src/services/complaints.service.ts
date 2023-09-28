@@ -1,4 +1,7 @@
-import Complaint from '../models/complaint.model'
+import Complaint, {
+  ComplaintStatusEnum,
+  ComplaintSubjectEnum,
+} from '../models/complaint.model'
 import User from '../models/users.model'
 import Company from '../models/company.model'
 import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
@@ -7,14 +10,8 @@ export type ComplaintType = {
   complaintId?: string
   userId: string
   companyId: string
-  complaintStatus: string
-  complaintSubject:
-    | 'Productos Defectuosos'
-    | 'Inconformidad con el producto / servicio'
-    | 'Comportamiento Inapropiado'
-    | 'Mal Servicio'
-    | 'Fraudes o estafas'
-    | 'Violación legal o ética'
+  complaintStatus: ComplaintStatusEnum
+  complaintSubject: ComplaintSubjectEnum
   complaintDescription: string
 }
 
@@ -24,7 +21,6 @@ export type ComplaintType = {
  * @param params pageSize, start
  * @returns Una promesa con la(s) complaint(s) o null
  */
-
 export const getAllComplaints = async <T>(
   params: PaginationParams<T>
 ): Promise<PaginatedQuery<Complaint>> => {
@@ -32,6 +28,16 @@ export const getAllComplaints = async <T>(
     const complaints = await Complaint.findAndCountAll({
       limit: params.pageSize,
       offset: params.start,
+      include: [
+        {
+          model: User,
+          attributes: ['firstName', 'lastName'],
+        },
+        {
+          model: Company,
+          attributes: ['name'],
+        },
+      ],
     })
     return complaints
   } catch (error) {
@@ -47,19 +53,8 @@ export const getAllComplaints = async <T>(
  * @returns Una promesa con la(s) complaint(s) o null
  */
 
-/** metodo para obtener una complaint por id */
-
-export const getComplaintById = async (
-  params: PaginationParams<{ complaintId: string }>
-): Promise<PaginatedQuery<Complaint>> => {
-  const { complaintId } = params
-  return await Complaint.findAndCountAll({
-    limit: params.pageSize,
-    offset: params.start,
-    where: {
-      complaintId: complaintId,
-    },
-
+export const getComplaintById = async (complaintId: string): Promise<Complaint | null> => {
+  const complaint = await Complaint.findByPk(complaintId, {
     include: [
       {
         model: User,
@@ -67,10 +62,16 @@ export const getComplaintById = async (
       },
       {
         model: Company,
-        attributes: ['companyId'],
+        attributes: ['name'],
       },
     ],
   })
+
+  if (complaint) {
+    return complaint
+  } else {
+    throw new Error('Complaint not found')
+  }
 }
 
 /**
@@ -79,8 +80,7 @@ export const getComplaintById = async (
  * @param params companyId
  * @returns Una promesa con la(s) complaint(s) de una compañia o null
  */
-
-export const getComplaintByCompany = async (
+export const getComplaintsByCompany = async (
   params: PaginationParams<{ companyId: string }>
 ): Promise<PaginatedQuery<Complaint>> => {
   const { companyId } = params
@@ -106,8 +106,7 @@ export const getComplaintByCompany = async (
  * @param params userId
  * @returns Una promesa con la(s) complaint(s) de un usuario o null
  */
-
-export const getComplaintByUser = async (
+export const getComplaintsByUser = async (
   params: PaginationParams<{ userId: string }>
 ): Promise<PaginatedQuery<Complaint>> => {
   const { userId } = params
@@ -120,8 +119,8 @@ export const getComplaintByUser = async (
 
     include: [
       {
-        model: User,
-        attributes: ['firstName', 'lastName'],
+        model: Company,
+        attributes: ['name'],
       },
     ],
   })
@@ -134,19 +133,9 @@ export const getComplaintByUser = async (
  * @returns Una promesa con la complaint creada
  */
 export const addComplaint = async (
-  userId: string,
-  companyId: string,
-  complaintSubject: string,
-  complaintDescription: string,
-  complaintStatus: string
+  complaint: ComplaintType
 ): Promise<Complaint> => {
-  return await Complaint.create({
-    userId: userId,
-    companyId: companyId,
-    complaintSubject: complaintSubject,
-    complaintDescription: complaintDescription,
-    complaintStatus: complaintStatus,
-  })
+  return await Complaint.create(complaint)
 }
 
 /**
@@ -155,10 +144,9 @@ export const addComplaint = async (
  * @param params complaintId, complaintStatus
  * @returns Una promesa con la complaintStatus actualizada
  */
-
 export const updateComplaintStatus = async (
   complaintId: string,
-  complaintStatus: typeof Complaint.prototype.complaintStatus
+  complaintStatus: ComplaintStatusEnum
 ): Promise<Complaint> => {
   const res = await Complaint.findOne({
     where: {
@@ -171,6 +159,6 @@ export const updateComplaintStatus = async (
     await res.save()
     return res
   } else {
-    throw new Error('Review not found')
+    throw new Error('Complaint not found')
   }
 }

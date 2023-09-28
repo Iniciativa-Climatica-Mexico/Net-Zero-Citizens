@@ -309,25 +309,3 @@ export const getCoordinates: RequestHandler<
   }
   res.json(paginator)
 }
-
-/**
- * @brief
- * Función del controller para asignarle un usuario a una compañia
- * @param req La request HTTP al servidor
- * @param res Un resultado de la operación
- */
-export const assignCompanyUser: RequestHandler<
-  { companyId: string },
-  { message: string },
-  { userId: string },
-  NoRecord
-> = async (req, res) => {
-  const companyId = req.params.companyId
-  const userId = req.body.userId
-  const assign = await CompanyService.assignCompanyUser(companyId, userId)
-  if (assign === 'success') {
-    res.status(200).json({ message: assign })
-  } else {
-    res.status(400).json({ message: assign })
-  }
-}

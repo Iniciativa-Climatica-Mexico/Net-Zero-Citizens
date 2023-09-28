@@ -1,6 +1,7 @@
 import express from 'express'
 import * as CompanyController from '../controllers/company.controller'
 import * as CompanyImageController from '../controllers/companyImage.controller'
+import Company from '../models/company.model'
 
 const router = express.Router()
 
@@ -18,6 +19,5 @@ router.get('/geocoding', CompanyController.getCoordinates)
 router.post('/pending/:companyId', CompanyController.updateCompanyInfo)
 
 router.get('/:id', CompanyController.getCompanyById)
-router.put('/:id/assign', CompanyController.assignCompanyUser)
 
 export default router

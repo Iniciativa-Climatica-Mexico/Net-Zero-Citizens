@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
@@ -101,20 +102,19 @@ class ComplaintCompanyFragment : DialogFragment() {
                 val userId = UUID.fromString(userJSON.getString("uuid"))
 
                 val complaint = Complaint(
-                    complaintTitle = complaintTitle,
+                    userId = userId,
+                    companyId = companyId,
+                    complaintSubject = complaintTitle,
                     complaintDescription = complaintDescription,
-                    status = ComplaintStatus.ACTIVE
+                    complaintStatus = ComplaintStatus.ACTIVE.toString()
                 )
 
                 CoroutineScope(Dispatchers.Main).launch {
                     val response = withContext(Dispatchers.IO) {
-                        complaintClient.postComplaint(
-                            idUser = userId,
-                            idCompany = companyId,
-                            authToken = authToken,
-                            complaint = complaint
-                        )
+                        complaintClient.postComplaint(authToken, complaint)
                     }
+
+                    Log.d("Response", response.toString())
 
                     if (isAdded) {
                         if (response?.isSuccessful == true) {

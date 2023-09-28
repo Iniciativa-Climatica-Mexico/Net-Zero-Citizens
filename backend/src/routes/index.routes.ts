@@ -1,13 +1,15 @@
 import DummyRouter from './dummy.routes'
 import UserRouter from './user.routes'
 import CompanyRouter from './company.routes'
-import ComplaintRouter from './complaints.routes'
 import AuthRouter from './auth.routes'
 import SurveyRouter from './survey.routes'
 import ReportRouter from './report.routes'
 import ReviewRouter from './review.routes'
 import ProducRouter from './product.routes'
 import EcofinfoRouter from './ecoinfo.routes'
+import ComplaintRouter from './complaints.routes'
+
+// import { validateToken } from '../middlewares/auth.middleware'
 import { validateToken } from '../middlewares/auth.middleware'
 import { Express } from 'express'
 

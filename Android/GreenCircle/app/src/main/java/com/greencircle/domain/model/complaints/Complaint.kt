@@ -1,9 +1,11 @@
 package com.greencircle.domain.model.complaints
 
-import com.google.gson.annotations.SerializedName
+import java.util.UUID
 
 data class Complaint(
-    @SerializedName("complaintSubject") val complaintTitle: String,
-    @SerializedName("complaintDescription") val complaintDescription: String,
-    @SerializedName("complaintStatus") val status: ComplaintStatus,
+    val userId: UUID,
+    val companyId: UUID,
+    val complaintSubject: String,
+    val complaintDescription: String,
+    val complaintStatus: String
 )

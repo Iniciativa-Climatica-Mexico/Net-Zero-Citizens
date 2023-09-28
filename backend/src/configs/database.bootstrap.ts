@@ -1,7 +1,6 @@
 import CompanyBootstrap from '../bootstrap/company.bootstrap'
 import CompanyImagesBootstrap from '../bootstrap/companyImages.bootstrap'
 import CompanyProductsBootstrap from '../bootstrap/companyProducts.bootstrap'
-import ComplaintBootstrap from '../bootstrap/complaint.bootstrap'
 import DummyBootstrap from '../bootstrap/dummy.bootstrap'
 import ProductBootstrap from '../bootstrap/product.bootstrap'
 import ReviewBootstrap from '../bootstrap/reviews.bootstrap'
@@ -9,6 +8,7 @@ import UserBootstrap from '../bootstrap/users.bootstrap'
 import RolesBootstrap from '../bootstrap/roles.bootstrap'
 import EcoinfoBootstrap from '../bootstrap/ecoinfo.bootstrap'
 import SurveysBootstrapper from '../bootstrap/survey.bootstrap'
+import ComplaintsBootstrapper from '../bootstrap/complaint.bootstrap'
 
 
 export const bootstrapDB = async () => {
@@ -17,7 +17,6 @@ export const bootstrapDB = async () => {
       RolesBootstrap,
       CompanyBootstrap,
       UserBootstrap,
-      ComplaintBootstrap,
       SurveysBootstrapper,
       ReviewBootstrap,
       ProductBootstrap,
@@ -25,6 +24,7 @@ export const bootstrapDB = async () => {
       CompanyProductsBootstrap,
       DummyBootstrap,
       EcoinfoBootstrap,
+      ComplaintsBootstrapper,
     ]
     const pool = bootstrappers.map((bootstrapper) => {
       const instance = new bootstrapper()
