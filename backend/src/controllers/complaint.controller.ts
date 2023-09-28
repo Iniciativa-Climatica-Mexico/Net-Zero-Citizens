@@ -71,7 +71,7 @@ export const getComplaintById: RequestHandler<
  * @brief
  * Función del controlador que devuelve las complaints por idCompany
  * de la base de datos
- * @param req La request HTTP al servidor
+ * @param req La request HTTP al servidor 
  * @param res Un objeto paginador con las complaint y la
  *            información de paginación
  */
