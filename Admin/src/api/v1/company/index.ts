@@ -23,25 +23,32 @@ export interface Company {
   pdfIneUrl: string
 }
 
-type StatusEnum = 'approved' | 'pending_approval' | 'rejected'
-
 /**
  * @brief
- * Funcion que regresa los proveedores del status especificado
+ * Funcion que regresa los proveedores pendientes por aprobar
  * @param status
  * @returns Una respuesta conteniendo todos los proveedores pendientes
  */
-export const getCompaniesByStatus = async (status: StatusEnum) => {
+export const getPendingCompanies = async () => {
   try {
-    if (status === 'pending_approval') {
-      const response = await authAxios().get('/company/pending')
-      return response.data.rows
-    } else if (status === 'approved') {
-      const response = await authAxios().get('/company/approved')
-      return response.data.rows
-    } else {
-      console.log('Status is not valid')
-    }
+    const response = await authAxios().get('/company/pending')
+    return response.data.rows
+  } catch (error) {
+    console.error('Error fetching pending companies:', error)
+    throw error
+  }
+}
+
+/**
+ * @brief
+ * Funcion que regresa los proveedores aprobados
+ * @param status
+ * @returns Una respuesta conteniendo todos los proveedores aprobados
+ */
+export const getApprovedCompanies = async () => {
+  try {
+    const response = await authAxios().get('/company/approved')
+    return response.data.rows
   } catch (error) {
     console.error('Error fetching pending companies:', error)
     throw error

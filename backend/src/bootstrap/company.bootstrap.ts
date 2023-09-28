@@ -29,7 +29,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         pdfActaConstitutivaUrl:
           'https://example.com/company1-acta-constitutiva.pdf',
         pdfIneUrl: 'https://example.com/company1-ine.pdf',
-        status: 'approved',
+        status: 'pending_approval',
       },
       {
         companyId: 'a2b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
@@ -54,7 +54,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         pdfActaConstitutivaUrl:
           'https://example.com/company2-acta-constitutiva.pdf',
         pdfIneUrl: 'https://example.com/company2-ine.pdf',
-        status: 'rejected',
+        status: 'pending_approval',
       },
       {
         companyId: 'a2c0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
