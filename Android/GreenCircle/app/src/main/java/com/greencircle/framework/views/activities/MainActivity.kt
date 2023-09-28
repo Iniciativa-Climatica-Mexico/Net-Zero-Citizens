@@ -10,7 +10,9 @@ import com.greencircle.databinding.TopBarBinding
 import com.greencircle.framework.views.fragments.HomeFragment
 import com.greencircle.framework.views.fragments.MapFragment
 import com.greencircle.framework.views.fragments.catalogue.CatalogueFragment
+import com.greencircle.framework.views.fragments.map.MapFragment
 import com.greencircle.framework.views.fragments.profile.ProfileFragment
+
 /**
  * Actividad principal que muestra la interfaz de usuario principal de la aplicación.
  *
@@ -72,6 +74,7 @@ class MainActivity : AppCompatActivity() {
                     topBarBinding.title.text = "Mapa Proveedores"
                     true
                 }
+
                 R.id.perfil -> {
                     replaceFragment(ProfileFragment())
                     topBarBinding.title.text = "Perfil"

@@ -14,7 +14,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.greencircle.databinding.FragmentRegisterUserBinding
-import com.greencircle.framework.viewmodel.user.CreateUserViewModel
+import com.greencircle.framework.viewmodel.ViewModelFactory
+import com.greencircle.framework.viewmodel.auth.LoginViewModel
 import com.greencircle.framework.views.activities.MainActivity
 import com.greencircle.framework.views.activities.RegisterUserActivity
 import com.greencircle.utils.AuthUtils
@@ -25,7 +26,7 @@ import com.greencircle.utils.AuthUtils
  */
 class RegisterUserFragment : Fragment() {
     private var _binding: FragmentRegisterUserBinding? = null
-    private lateinit var viewModel: CreateUserViewModel
+    private lateinit var loginViewModel: LoginViewModel
     private lateinit var _arguments: Bundle
     private val binding get() = _binding!!
     private val authUtils = AuthUtils()
@@ -49,7 +50,7 @@ class RegisterUserFragment : Fragment() {
                         _arguments = authUtils.getDataFromGoogleAccount(account)
                         // Google Login
                         val token: String = _arguments.getString("idToken").toString()
-                        viewModel.googleLogin(token)
+                        loginViewModel.googleLogin(token)
                     } catch (e: ApiException) {
                         Toast.makeText(
                             requireContext(), "Something went wrong", Toast.LENGTH_SHORT
@@ -68,7 +69,10 @@ class RegisterUserFragment : Fragment() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[CreateUserViewModel::class.java]
+        loginViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(requireContext(), LoginViewModel::class.java)
+        )[LoginViewModel::class.java]
     }
 
     /**
@@ -101,7 +105,7 @@ class RegisterUserFragment : Fragment() {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.googleLoginResult.observe(viewLifecycleOwner) { result ->
+        loginViewModel.googleLoginResult.observe(viewLifecycleOwner) { result ->
             // Handle the result here
             if (result != null) {
                 if (result.user.roles != "new_user") {

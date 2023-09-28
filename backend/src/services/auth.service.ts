@@ -99,8 +99,6 @@ export const googleLogin = async (
       if (user) user = await UserService.getUserByEmailWithRole(data.email)
     }
 
-    console.log(user)
-
     // Si ya está registrado, crear un Payload con la información del usuario
     const userPayload: Payload = {
       first_name: '',
@@ -119,7 +117,47 @@ export const googleLogin = async (
       userPayload.roles = user.role.dataValues.NAME
     }
 
-    console.log(user)
+    const tokens = await createTokens(userPayload)
+    if (!tokens) return null
+
+    return {
+      tokens: tokens,
+      user: userPayload,
+    }
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
+
+/**
+ * @brief
+ * Función para generar un nuevo par de tokens a partir de nueva información de usuario
+ * @param authToken token de autenticación
+ * @param userData información del usuario
+ * @returns {AuthResponse} objeto con los tokens generados y los datos del usuario
+ */
+export const updateUserTokensData = async (
+  authToken: string
+): Promise<AuthResponse | null> => {
+  // Verificar el token de Google
+  try {
+    const data = verifyToken(authToken, 'auth')
+    if (!data) return null
+
+    const user = await UserService.getUserByEmailWithRole(data.email)
+    
+    if(!user) return null
+
+    // Si ya está registrado, crear un Payload con la información del usuario
+    const userPayload: Payload = {
+      first_name: user.firstName,
+      last_name: user.lastName,
+      uuid: user.userId,
+      email: user.email,
+      picture: user.profilePicture != null ? user.profilePicture : undefined,
+      roles: user.role.dataValues.NAME,
+    }
 
     const tokens = await createTokens(userPayload)
     if (!tokens) return null
@@ -158,14 +196,13 @@ export const createTokens = async (
  * @brief
  * Función para actualizar un nuevo par de tokens
  * @param refreshToken token de refresco con la información del usuario
- * @returns {authToken, refreshToken} objeto con los tokens generados
+ * @returns {AuthResponse} objeto con los tokens generados y los datos del usuario
  */
 export const updateTokens = async (
   token: string
-): Promise<TokenPair | null> => {
+): Promise<AuthResponse | null> => {
   const userData = verifyToken(token, 'refresh')
   if (!userData) return null
-
   const res = await getTokenById(token)
   if (res) return null
 
@@ -184,8 +221,8 @@ export const updateTokens = async (
 
   if (!tokens) return null
   return {
-    authToken: tokens.authToken,
-    refreshToken: tokens.refreshToken,
+    tokens: tokens,
+    user: payload,
   }
 }
 
@@ -254,8 +291,6 @@ export const verifyGoogleToken = async (
     const payload = ticket.getPayload()
 
     if (!payload) throw new Error('Invalid Google token')
-
-    console.log(payload)
 
     return {
       first_name: payload.given_name!,

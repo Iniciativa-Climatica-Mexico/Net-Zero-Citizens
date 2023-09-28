@@ -145,3 +145,14 @@ export const updateUserCredentials = async (
     return null
   }
 }
+
+/**
+ * @function deleteUserById
+ * @param uuid User's uuid
+ * @returns Null
+ */
+export const deleteUserById = async (uuid: string): Promise<number | null> => {
+  return await User.destroy({
+    where: { userId: uuid },
+  })
+}

@@ -1,6 +1,7 @@
 package com.greencircle.framework.views.fragments.reviews
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,9 @@ import com.greencircle.R
 import com.greencircle.databinding.FragmentCompanyReviewBinding
 import com.greencircle.domain.model.reviews.CompanyReview
 import com.greencircle.framework.ui.adapters.reviews.CompanyReviewAdapter
+import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.reviews.CompanyReviewViewModel
+import com.greencircle.framework.views.fragments.company.ComplaintCompanyFragment
 import java.util.UUID
 
 class CompanyReviewFragment : Fragment() {
@@ -27,7 +30,6 @@ class CompanyReviewFragment : Fragment() {
     private lateinit var data: ArrayList<CompanyReview>
     private lateinit var reviewButton: Button
     private lateinit var ratingBar: RatingBar
-
     private var rating: Float = 0.0f
     private var reviewsCount: Int = 0
     private var companyId: UUID = UUID.randomUUID()
@@ -37,7 +39,9 @@ class CompanyReviewFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProvider(this)[CompanyReviewViewModel::class.java]
+        viewModel = ViewModelProvider(
+            this, ViewModelFactory(requireContext(), CompanyReviewViewModel::class.java)
+        )[CompanyReviewViewModel::class.java]
         _binding = FragmentCompanyReviewBinding.inflate(inflater, container, false)
         val root: View = binding.root
         data = ArrayList()
@@ -47,6 +51,8 @@ class CompanyReviewFragment : Fragment() {
         } else {
             companyId = UUID.fromString(arguments?.getString("CompanyId"))
         }
+
+        Log.d("CompanyId", companyId.toString())
         viewModel.setCompanyId(companyId)
         viewModel.getReviewsList()
 
@@ -56,6 +62,11 @@ class CompanyReviewFragment : Fragment() {
 
         setRating()
         setCompanyReviewsData()
+
+        val complaintButton = binding.reportBtn
+        complaintButton.setOnClickListener {
+            complainsFragment()
+        }
 
         return root
     }
@@ -109,8 +120,7 @@ class CompanyReviewFragment : Fragment() {
 
         ratingBar.setOnRatingBarChangeListener { _, rating, _ ->
             this.rating = rating
-            if (rating > 0.0f)
-                navigateToReviewFormFragment()
+            if (rating > 0.0f) navigateToReviewFormFragment()
         }
     }
 
@@ -163,5 +173,21 @@ class CompanyReviewFragment : Fragment() {
         } else {
             showEmptyView()
         }
+    }
+
+    /**
+     * Abre el modal para reportar una empresa
+     * Internamente cambia el fragmento actual por el de reportar empresa
+     */
+    private fun complainsFragment() {
+        val bundle = Bundle()
+        bundle.putString("CompanyId", arguments?.getString("CompanyId"))
+
+        val complaintCompanyFragment = ComplaintCompanyFragment()
+        complaintCompanyFragment.arguments = bundle
+        complaintCompanyFragment.show(
+            requireActivity().supportFragmentManager,
+            "ComplaintCompanyFragment"
+        )
     }
 }

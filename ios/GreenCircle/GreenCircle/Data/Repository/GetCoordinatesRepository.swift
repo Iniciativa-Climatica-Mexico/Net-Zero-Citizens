@@ -32,8 +32,8 @@ class GetCoordinatesRepossitory: GetCoordinatesAPIProtocol {
   }
   /// Obtener compañía por UUID llamando al método del servicio del backend
   ///   - Parameters: UUID de la compañía
-  ///   - Returns: Coordenadas
-  func getCoordinates() async -> PaginatedQuery<Company>? {
-      return await service.getCoordinates(url: URL(string: "\(ApiCompany.baseCompany)/\(ApiCompany.Routes.company)")!)
+  ///   - Returns: Modelo de compañía
+  func getCoordinates(companyId: UUID) async -> PaginatedQuery<Company>? {
+    return await service.getRequest(URL(string: "\(ApiCompany.baseCompany)/\(companyId.uuidString.lowercased())")!)
   }
 }
