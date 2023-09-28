@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.greencircle.R
 import com.greencircle.databinding.FragmentEditProfileBinding
 import com.greencircle.domain.model.profile.Profile
+import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.profile.ProfileViewModel
 import java.util.UUID
 import org.json.JSONObject
@@ -34,7 +35,10 @@ class EditProfileFragment : Fragment() {
         val userJSON = JSONObject(userJson!!)
         Log.d("SalidaUserJson", userJSON.getString("uuid"))
         userId = UUID.fromString(userJSON.getString("uuid"))
-        viewModel = ViewModelProvider(this)[ProfileViewModel::class.java]
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(requireContext(), ProfileViewModel::class.java)
+        )[ProfileViewModel::class.java]
         viewModel.setUserId(userId)
         viewModel.getUserProfile()
     }
@@ -58,6 +62,7 @@ class EditProfileFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
     private fun InitializeObservers() {
         viewModel.userLiveData.observe(viewLifecycleOwner, {
             user = it
@@ -77,6 +82,7 @@ class EditProfileFragment : Fragment() {
         binding.inputEstado.setText(user.state)
         // binding.profileImage.setImageResource(user.profilePicture)
     }
+
     // call to update user from viewmodel and repository
     private fun updateUser() {
         val user = Profile(
@@ -96,6 +102,7 @@ class EditProfileFragment : Fragment() {
         )
         viewModel.updateUser(user)
     }
+
     private fun InitializeAceptarCambiosButton() {
         binding.aceptarCambiosButton.setOnClickListener {
             updateUser()
@@ -108,6 +115,7 @@ class EditProfileFragment : Fragment() {
             transaction.commit()
         }
     }
+
     // function to go back to fragment profile if user cancels changes
     private fun InitializeCancelarCambiosButton() {
         binding.cancelarCambiosButton.setOnClickListener {

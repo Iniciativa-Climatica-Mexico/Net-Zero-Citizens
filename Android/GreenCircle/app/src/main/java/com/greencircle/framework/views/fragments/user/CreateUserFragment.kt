@@ -10,15 +10,19 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.textfield.TextInputLayout
 import com.greencircle.R
 import com.greencircle.data.remote.user.UserAPIService
+import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.auth.LoginViewModel
-import com.greencircle.framework.viewmodel.auth.LoginViewModelFactory
 import com.greencircle.framework.viewmodel.user.CreateUserViewModel
+import com.greencircle.framework.views.activities.RegisterUserActivity
 import com.greencircle.framework.views.activities.SurveyActivity
+import com.greencircle.framework.views.fragments.TermsAndConditions.TermsAndConditions
 import java.util.UUID
 
 /**Constructor de "CreateUserFragment"
@@ -42,9 +46,12 @@ class CreateUserFragment : Fragment() {
         // Get ViewModel
         loginViewModel = ViewModelProvider(
             this,
-            LoginViewModelFactory(requireContext())
+            ViewModelFactory(requireContext(), LoginViewModel::class.java)
         )[LoginViewModel::class.java]
-        createUserViewModel = ViewModelProvider(this)[CreateUserViewModel::class.java]
+        createUserViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(requireContext(), CreateUserViewModel::class.java)
+        )[CreateUserViewModel::class.java]
         // Get arguments
         arguments = requireArguments()
         // Google Login
@@ -70,8 +77,17 @@ class CreateUserFragment : Fragment() {
             R.layout.fragment_create_user, container, false
         )
 
+        val button = view.findViewById<Button>(R.id.login_register)
+        button.setOnClickListener {
+            val termsAndConditionsFragment = TermsAndConditions()
+            val activity = requireActivity() as RegisterUserActivity
+
+            activity.replaceFragment(termsAndConditionsFragment)
+        }
+
         setTexts(arguments, view)
         onSubmitListener(view)
+
         return view
     }
 
@@ -93,6 +109,8 @@ class CreateUserFragment : Fragment() {
                 Log.d("CreateUserFragment", "Google login failed")
             }
         }
+
+        setSwitch(view.findViewById(R.id.avisoPrivacidad))
     }
 
     /**
@@ -153,11 +171,13 @@ class CreateUserFragment : Fragment() {
         val ageInputLayout: TextInputLayout = view.findViewById(R.id.userAgeTextFIeld)
         val stateInputLayout: TextInputLayout = view.findViewById(R.id.userStateTextField)
         val genderInputLayout: TextInputLayout = view.findViewById(R.id.userGenderTextField)
+        val switchError: TextView = view.findViewById(R.id.switchError)
 
         val phone = phoneInputLayout.editText?.text.toString()
         val age = ageInputLayout.editText?.text.toString()
         val state = stateInputLayout.editText?.text.toString()
         val gender = genderInputLayout.editText?.text.toString()
+        val terms = view.findViewById<MaterialSwitch>(R.id.avisoPrivacidad).isChecked
 
         var isValid = true
 
@@ -197,6 +217,11 @@ class CreateUserFragment : Fragment() {
             genderInputLayout.error = null
         }
 
+        if (!terms) {
+            isValid = false
+            switchError.visibility = View.VISIBLE
+        }
+
         return isValid
     }
 
@@ -219,6 +244,7 @@ class CreateUserFragment : Fragment() {
     private fun isValidPhoneNumber(phone: String): Boolean {
         return phone.length == 10 && phone.all { it.isDigit() }
     }
+
     /**
      * Establece los textos en la vista con datos proporcionados en los argumentos.
      *
@@ -246,5 +272,40 @@ class CreateUserFragment : Fragment() {
         var intent: Intent = Intent(requireContext(), SurveyActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
+    }
+
+    private fun setSwitch(mSwitch: MaterialSwitch) {
+        mSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                mSwitch.thumbTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.white
+                )
+                mSwitch.trackTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.green
+                )
+
+                mSwitch.thumbIconTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.green
+                )
+            } else {
+                // Colors when the switch is OFF
+                mSwitch.thumbTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.white
+                )
+                mSwitch.trackTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.gray_500
+                )
+
+                mSwitch.thumbIconTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.white
+                )
+            }
+        }
     }
 }
