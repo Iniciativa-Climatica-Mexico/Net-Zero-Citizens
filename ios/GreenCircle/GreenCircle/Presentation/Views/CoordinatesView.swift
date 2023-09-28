@@ -1,3 +1,4 @@
+
 import SwiftUI
 import MapKit
 
@@ -29,7 +30,6 @@ struct CoordinatesView: View {
 //
 //        region = coordinatesRegion
 //    }
-//    
 //    struct CoordinatesView_Previews: PreviewProvider {
 //        static var previews: some View {
 //            CoordinatesView(viewModel: CompanyViewModel(), region: MKCoordinateRegion())

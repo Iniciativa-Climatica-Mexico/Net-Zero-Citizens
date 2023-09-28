@@ -43,8 +43,8 @@ class UserRepository: UserRepositoryProtocol {
   static let shared = UserRepository()
   
   init(backEndService: UserService = UserService.shared){
-      self.backEndService = backEndService
-      
+    self.backEndService = backEndService
+    
   }
   
   /// Llama al serivicio de API para postear un nuevo usuario por Google
@@ -106,6 +106,8 @@ class UserRepository: UserRepositoryProtocol {
     
     let _: NoResponse? = await nService.putRequest(url, body: params)
   }
+  
+  //func updateUserData()
   
   func fetchUserById(userId: String) async -> User? {
     return await backEndService.fetchUserById(url: URL(string: "\(UserAPI.base)/\(userId)")!)
