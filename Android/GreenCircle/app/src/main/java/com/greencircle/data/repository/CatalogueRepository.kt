@@ -6,7 +6,7 @@ import com.greencircle.domain.model.company.CompanySummary
 class CatalogueRepository {
     private var apiCatalogue = CatalogueAPIClient()
 
-    suspend fun getCatalogue(): ArrayList<CompanySummary> ? {
-        return apiCatalogue.getCatalogue()
+    suspend fun getCatalogue(authToken: String): ArrayList<CompanySummary> ? {
+        return apiCatalogue.getCatalogue(authToken)
     }
 }

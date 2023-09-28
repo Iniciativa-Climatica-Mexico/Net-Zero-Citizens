@@ -1,6 +1,7 @@
 package com.greencircle.framework.viewmodel.splashscreen
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -58,6 +59,7 @@ class SplashscreenViewModel(private val context: Context) : ViewModel() {
         if (_res != null && _res?.tokens?.authToken != null) {
             saveTokens(_res?.tokens?.authToken!!, _res?.tokens?.refreshToken!!)
             saveUserSession(_res?.user!!)
+            Log.d("SplashscreenViewModel", "User: $_res")
             if (_res?.user?.roles == "new_user")
                 userUncompletedRegister.postValue(true)
             else

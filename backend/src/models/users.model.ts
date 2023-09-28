@@ -43,7 +43,6 @@ export default class User extends Model {
     type: DataType.UUID,
     allowNull: true,
     field: 'COMPANY_ID',
-    unique: 'COMPANY_ID',
   })
   companyId: string
 
@@ -110,7 +109,6 @@ export default class User extends Model {
   @Column({
     type: DataType.STRING,
     allowNull: true,
-    unique: true,
     field: 'PHONE_NUMBER',
   })
   phoneNumber: string | null
