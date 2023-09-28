@@ -9,6 +9,7 @@ import com.greencircle.domain.model.profile.Profile
 import com.greencircle.domain.usecase.auth.RecoverTokensRequirement
 import com.greencircle.domain.usecase.profile.EditProfileRequirement
 import com.greencircle.domain.usecase.profile.ProfileListRequirement
+import com.greencircle.domain.usecase.user.DeleteUserRequirement
 import java.util.UUID
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,6 +19,7 @@ class ProfileViewModel(private val context: Context) : ViewModel() {
     val userLiveData = MutableLiveData<Profile>()
     private val userListRequirement = ProfileListRequirement()
     private val editUserRequirement = EditProfileRequirement()
+    private val deleteUser = DeleteUserRequirement()
     private val recoverTokens = RecoverTokensRequirement(context)
     private lateinit var userId: UUID
     fun setUserId(userId: UUID) {
@@ -44,6 +46,14 @@ class ProfileViewModel(private val context: Context) : ViewModel() {
             val tokens = recoverTokens() ?: return@launch
             val authToken = tokens.authToken
             val response = editUserRequirement(authToken, userId, user)
+        }
+    }
+
+    fun deleteUser(userId: UUID) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val tokens = recoverTokens() ?: return@launch
+            val authToken = tokens.authToken
+            val response = deleteUser(authToken, userId)
         }
     }
 }
