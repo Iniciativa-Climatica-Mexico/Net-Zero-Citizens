@@ -43,8 +43,8 @@ struct UserRegisterFormView: View {
                       label: "Edad",
                       prompt: "Ingresa tu edad...")
         .onChange(of: viewModel.formState.age) { newValue in
-            viewModel.formState.age =
-            viewModel.format(with: "XXX", for: newValue)
+          viewModel.formState.age =
+          viewModel.format(with: "XXX", for: newValue)
         }
         .keyboardType(.numberPad)
         PickerFormView(selectedOption:
@@ -59,12 +59,12 @@ struct UserRegisterFormView: View {
           HStack {
             Text("Acepto las")
             Button("políticas de privacidad"){
-                           showingDetail = true
+              showingDetail = true
             }
             .foregroundColor(.blue)
-                       .sheet(isPresented: $showingDetail) {
-                         PrivacyUserView()
-                       }
+            .sheet(isPresented: $showingDetail) {
+              PrivacyUserView()
+            }
             
           }.frame(width: 270)
           
