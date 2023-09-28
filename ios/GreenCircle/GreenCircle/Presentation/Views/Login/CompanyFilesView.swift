@@ -58,7 +58,7 @@ struct CompanyFilesView: View {
                             .font(.system(size: 14))
                             .lineSpacing(10)
                             .padding(.bottom, 3)
-                    }.padding(.leading, 34)
+                    }.padding(.leading, 29.6)
                         .padding(.bottom, 30)
                         .padding(. trailing, 30)
                     VStack(){

@@ -30,19 +30,22 @@ struct CompanyFileInput: View {
                             .bold()
                             .font(.system(size: 14))
                             .padding(.leading, 30)
-                            .truncationMode(.tail)
+                            .multilineTextAlignment(.leading)
+
                         
                         Text(description)
                             .foregroundColor(Color("GrayColor"))
                             .font(.system(size: 10))
                             .padding(.leading, 30)
-                            .truncationMode(.tail)
+                            .multilineTextAlignment(.leading)
+
                         
                         Text(bulletPoint ?? "")
                             .foregroundColor(Color("GrayColor"))
                             .font(.system(size: 10))
                             .padding(.leading, 30)
-                            .truncationMode(.tail)
+                            .multilineTextAlignment(.leading)
+
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
@@ -73,6 +76,6 @@ struct DocumentPicker: UIViewControllerRepresentable {
 
 struct CompanyFileInput_Previews: PreviewProvider {
     static var previews: some View {
-        CompanyFileInput(title: "Example Title", description: "Example Description")
+        CompanyFileInput(title: "Example Title dasdhiasdhas dahdiahdiaohsdiahidhaishdoasdhad dashdiaohsdaños", description: "Example Description")
     }
 }
