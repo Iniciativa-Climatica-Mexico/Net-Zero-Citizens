@@ -3,7 +3,6 @@ package com.greencircle.framework.views.fragments.map
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,12 +14,14 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.greencircle.R
 import com.greencircle.data.repository.GoogleMapsRepository
 import com.greencircle.domain.model.googlemaps.Company
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MapFragment : Fragment(), OnMapReadyCallback {
     private var mGoogleMap: GoogleMap? = null
@@ -79,7 +80,22 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         CoroutineScope(Dispatchers.IO).launch {
             val companyRepository = GoogleMapsRepository()
             val result: List<Company>? = companyRepository.getCompanyList()
-            Log.d("CompanyObject", result.toString())
+
+            withContext(Dispatchers.Main) {
+                result?.forEach { company ->
+                    addMarkerForCompany(company)
+                }
+            }
         }
+    }
+
+    private fun addMarkerForCompany(company: Company) {
+        val companyLatLng = LatLng(company.latitude, company.longitude)
+        mGoogleMap?.addMarker(
+            MarkerOptions()
+                .position(companyLatLng)
+                .title(company.name)
+                .snippet(company.profilePicture)
+        )
     }
 }
