@@ -2,16 +2,10 @@ import chai from 'chai'
 import chaiExclude from 'chai-exclude'
 import { db, initDB } from '../src/configs/database.config'
 import * as UserService from '../src/services/users.service'
-import {
-  getCompanyByUserId,
-  unbindUserFromCompany,
-} from '../src/services/company.service'
-import {
-  deleteAllReviewsByUser,
-  getReviewByUser,
-} from '../src/services/review.service'
-import { updateAnswersByUserId } from '../src/services/survey.service'
+import { getCompanyByUserId, unbindUserFromCompany } from '../src/services/company.service'
+import { deleteAllReviewsByUser, getReviewByUser } from '../src/services/review.service'
 import { ubindUserFromComplaint } from '../src/services/complaints.service'
+import { updateAnswersByUserId } from '../src/services/survey.service'
 
 chai.use(chaiExclude)
 
@@ -182,11 +176,11 @@ describe('UserService', () => {
       const res = await UserService.deleteUserById(newUserInfo.userId)
       expect(res).to.be.equal(1)
     })
-
+    
     it('should return null while recovering a deleted user', async () => {
       await unbindUserFromCompany(user.userId)
       await deleteAllReviewsByUser(user.userId)
-      await updateAnswersByUserId(user.userId)
+      await updateAnswersByUserId(user.userId)      
       await UserService.deleteUserById(newUserInfo.userId)
 
       const res = await UserService.getUserInfo(newUserInfo.userId)
@@ -196,7 +190,7 @@ describe('UserService', () => {
     it('should return userId = null in company table', async () => {
       const company = await getCompanyByUserId(user.userId)
       expect(company?.userId).to.be.equal(user.userId)
-
+      
       await unbindUserFromCompany(user.userId)
       const company2 = await getCompanyByUserId(user.userId)
       expect(company2).to.be.null
@@ -207,11 +201,7 @@ describe('UserService', () => {
       const res = await deleteAllReviewsByUser(user.userId)
       expect(res).to.be.equal(1)
 
-      const reviews = await getReviewByUser({
-        pageSize: 10,
-        start: 0,
-        userId: user.userId,
-      })
+      const reviews = await getReviewByUser({ pageSize: 10, start: 0, userId: user.userId })
       expect(reviews.count).to.be.equal(0)
     })
   })

@@ -1,7 +1,6 @@
 import DummyRouter from './dummy.routes'
 import UserRouter from './user.routes'
 import CompanyRouter from './company.routes'
-import ComplaintRouter from './complaints.routes'
 import AuthRouter from './auth.routes'
 import SurveyRouter from './survey.routes'
 import ReportRouter from './report.routes'
@@ -17,7 +16,7 @@ export const initRouterV1 = (app: Express) => {
   app.use('/api/v1/auth', AuthRouter)
 
   // Middleware
-  // app.use(validateToken)
+  app.use(validateToken)
 
   // Private Routes
   app.use('/api/v1/dummy', DummyRouter)

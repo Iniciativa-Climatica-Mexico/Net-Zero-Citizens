@@ -53,9 +53,7 @@ export const getAllComplaints = async <T>(
  * @returns Una promesa con la(s) complaint(s) o null
  */
 
-export const getComplaintById = async (
-  complaintId: string
-): Promise<Complaint | null> => {
+export const getComplaintById = async (complaintId: string): Promise<Complaint | null> => {
   const complaint = await Complaint.findByPk(complaintId, {
     include: [
       {

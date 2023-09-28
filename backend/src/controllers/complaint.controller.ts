@@ -97,6 +97,7 @@ export const getComplaintsByCompany: RequestHandler<
   })
 }
 
+
 /**
  * @brief
  * Función del controlador que devuelve las complaint por userId
@@ -133,6 +134,7 @@ export const getComplaintByUser: RequestHandler<
     res.status(500).json({ message: 'Error' })
   }
 }
+
 
 /**
  * @brief
