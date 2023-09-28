@@ -33,7 +33,7 @@ struct CoordinatesView: View {
     func setRegion() async {
         await viewModel.getCoordinates()
         let coordinates = viewModel.coordinates
-        print(coordinates.count)
+        
 
         annotations = coordinates.map { company -> IdentifiablePointAnnotation in
             let annotation = MKPointAnnotation()
