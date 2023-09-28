@@ -30,11 +30,11 @@ struct UserRegisterFormView: View {
         .onChange(of: viewModel.formState.phone) { newValue in
           if newValue.hasPrefix("55") {
             viewModel.formState.phone =
-            viewModel.format(with: "XX-XXXX-XXXX",
+            Utils.formatNumber(with: "XX-XXXX-XXXX",
                              for: newValue)
           } else {
             viewModel.formState.phone =
-            viewModel.format(with: "XXX-XXX-XXXX",
+            Utils.formatNumber(with: "XXX-XXX-XXXX",
                              for: newValue)
           }
         }
@@ -45,7 +45,7 @@ struct UserRegisterFormView: View {
                       prompt: "Ingresa tu edad...")
         .onChange(of: viewModel.formState.age) { newValue in
           viewModel.formState.age =
-          viewModel.format(with: "XXX", for: newValue)
+          Utils.formatNumber(with: "XXX", for: newValue)
         }
         .keyboardType(.numberPad)
         PickerFormView(selectedOption:
