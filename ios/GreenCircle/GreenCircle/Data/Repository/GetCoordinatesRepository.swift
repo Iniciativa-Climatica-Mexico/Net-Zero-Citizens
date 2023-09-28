@@ -16,7 +16,7 @@ struct ApiCompany {
 }
 
 protocol GetCoordinatesAPIProtocol {
-    func getCoordinates(companyId: UUID) async -> PaginatedQuery<Company>?
+    func getCoordinates() async -> PaginatedQuery<Company>?
 }
 
 
@@ -32,8 +32,8 @@ class GetCoordinatesRepossitory: GetCoordinatesAPIProtocol {
   }
   /// Obtener compañía por UUID llamando al método del servicio del backend
   ///   - Parameters: UUID de la compañía
-  ///   - Returns: Modelo de compañía
-  func getCoordinates(companyId: UUID) async -> PaginatedQuery<Company>? {
-    return await service.getCoordinates(url: URL(string: "\(ApiCompany.baseCompany)/\(companyId.uuidString.lowercased())")!)
+  ///   - Returns: Coordenadas
+  func getCoordinates() async -> PaginatedQuery<Company>? {
+      return await service.getCoordinates(url: URL(string: "\(ApiCompany.baseCompany)/\(ApiCompany.Routes.company)")!)
   }
 }
