@@ -19,7 +19,7 @@ class CompanyAPI {
 
 /// Protocolo con las funciones del repositorio de Compañías
 protocol CompanyRepositoryProtocol {
-  func postCompany(authToken: String, company: PostCompanyData) async
+  func postCompany(company: PostCompanyData) async
   func fetchCompanyById(companyId: UUID) async -> Company?
   //func fetchAllCompanies() async -> Company?
 }
@@ -48,7 +48,7 @@ class CompanyRepository: CompanyRepositoryProtocol {
   /// - Parameters:
   ///   - authToken: token de autenticación
   ///   - company: el objeto con la información de la compañía
-  func postCompany(authToken: String, company: PostCompanyData) async {
+  func postCompany(company: PostCompanyData) async {
     let params: [String: Any] = [
       "company": [
         "name": company.name,
