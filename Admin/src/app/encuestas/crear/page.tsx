@@ -28,6 +28,12 @@ export default function CreateSurvey() {
     },
   ])
 
+  const [survey, setSurvey] = useState<CreateSurveyBody>({
+    description: '',
+    title: '',
+    questions: questions,
+  })
+
   const createQuestion: MouseEventHandler<HTMLAnchorElement> = (e) => {
     e.preventDefault()
     const newQuestion = {
@@ -37,7 +43,31 @@ export default function CreateSurvey() {
       required: false,
     }
     setCounter(counter + 1)
-    setQuestions([...questions, newQuestion])
+    setQuestions((prevQuestions) => [...prevQuestions, newQuestion])
+    setSurvey((prevSurvey) => {
+      const newSurvey = { ...prevSurvey }
+      newSurvey.questions = [...prevSurvey.questions, newQuestion]
+      console.log(newSurvey)
+      return newSurvey
+    })
+  }
+
+  const handleSurveyTitleChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSurvey((prevSurvey) => {
+      const newSurvey = { ...prevSurvey, title: event.target.value }
+      return newSurvey
+    })
+  }
+
+  const handleSurveyDescriptionChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSurvey((prevSurvey) => {
+      const newSurvey = { ...prevSurvey, description: event.target.value }
+      return newSurvey
+    })
   }
 
   return (
@@ -62,6 +92,7 @@ export default function CreateSurvey() {
               type="text"
               className="px-4 py-2 mb-3 border border-gray-700 rounded"
               placeholder="Calcula tu huella de carbono"
+              onChange={handleSurveyTitleChange}
             />
             <label className="text-m font-bold text-txt mb-2">
               Descripción
@@ -72,6 +103,7 @@ export default function CreateSurvey() {
               type="text"
               className="px-4 py-2 border border-gray-700 rounded h"
               placeholder="Encuesta para calcular tu huella de carbono"
+              onChange={handleSurveyDescriptionChange}
             />
           </div>
           <div className="flex flex-col w-1/2">
@@ -82,6 +114,8 @@ export default function CreateSurvey() {
                   id={question.id}
                   setQuestions={setQuestions}
                   key={question.id}
+                  survey={survey}
+                  setSurvey={setSurvey}
                 />
               ))}
             </div>

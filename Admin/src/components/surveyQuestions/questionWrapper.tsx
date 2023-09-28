@@ -1,18 +1,23 @@
 import Switch from '@mui/material/Switch'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'
 import { MulOPQuestion } from './questionsTypes/mulOpQuestion'
-import { Question } from '../../app/encuestas/crear/page'
+import { Question, CreateSurveyBody } from '../../app/encuestas/crear/page'
+import { useEffect } from 'react'
 
 type QuestionWrapperProps = {
   questions: Question[]
   id: number
   setQuestions: React.Dispatch<React.SetStateAction<Question[]>>
+  survey: React.Dispatch<React.SetStateAction<CreateSurveyBody>>
+  setSurvey: React.Dispatch<React.SetStateAction<CreateSurveyBody>>
 }
 export const QuestionWrapper = ({
   questions,
   id,
   setQuestions,
+  survey,
+  setSurvey,
 }: QuestionWrapperProps) => {
   const [required, setRequired] = useState(false)
   const [questionType, setQuestionType] = useState('openQuestion')
@@ -21,23 +26,64 @@ export const QuestionWrapper = ({
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     setQuestionType(event.target.value)
-  }
-
-  const handleSwitchChange = () => {
-    setRequired(!required)
-  }
-
-  const questionSwitch = () => {
-    if (questionType === 'mulOptionQuestion') {
-      return <MulOPQuestion />
-    } else {
-      return
-    }
+    setSurvey((prevSurvey) => {
+      const newSurvey = { ...prevSurvey }
+      newSurvey.questions.map((question) => {
+        if (question.id === id) {
+          question.type = event.target.value
+        }
+        return question
+      })
+      return newSurvey
+    })
   }
 
   const deleteQuestion = () => {
     const newQuestions = questions.filter((question) => question.id !== id)
-    setQuestions(newQuestions)
+    setQuestions((prevQuestions) => newQuestions)
+    setSurvey((prevSurvey) => {
+      const newSurvey = { ...prevSurvey }
+      newSurvey.questions = newQuestions
+      return newSurvey
+    })
+  }
+
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSurvey((prevSurvey) => {
+      const newSurvey = { ...prevSurvey }
+      newSurvey.questions.map((question) => {
+        if (question.id === id) {
+          question.title = event.target.value
+        }
+        return question
+      })
+      return newSurvey
+    })
+  }
+
+  const handleSwitchChange = () => {
+    setRequired((prevRequired) => !prevRequired)
+  }
+
+  useEffect(() => {
+    setSurvey((prevSurvey) => {
+      const newSurvey = { ...prevSurvey }
+      newSurvey.questions.map((question) => {
+        if (question.id === id) {
+          question.required = required
+        }
+        return question
+      })
+      return newSurvey
+    })
+  }, [required])
+
+  const questionSwitch = () => {
+    if (questionType === 'mulOptionQuestion') {
+      return <MulOPQuestion survey={survey} setSurvey={setSurvey} />
+    } else {
+      return
+    }
   }
 
   return (
@@ -58,6 +104,7 @@ export const QuestionWrapper = ({
           type="text"
           className="px-2 py-2 mb-3 rounded border border-solid border-gray-300 w-3/4 h-11"
           placeholder="Cual es tu huella de carbono?"
+          onChange={handleTitleChange}
         />
         <select
           className="rounded border border-solid border-gray-300 px-2 py-2 h-11"

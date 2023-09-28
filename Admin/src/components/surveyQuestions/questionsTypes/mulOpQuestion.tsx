@@ -1,7 +1,18 @@
 import { MouseEventHandler, useState, MouseEvent } from 'react'
+import { useEffect } from 'react'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import { CreateSurveyBody } from '../../../app/encuestas/crear/page'
+import { Question } from '../../../app/encuestas/crear/page'
 
-export const MulOPQuestion = () => {
+export type MulOPQuestionProps = {
+  survey: React.Dispatch<React.SetStateAction<CreateSurveyBody>>
+  setSurvey: React.Dispatch<React.SetStateAction<CreateSurveyBody>>
+}
+
+export const MulOPQuestion = ({
+  survey,
+  setSurvey,
+}: MulOPQuestionProps) => {
   type Option = {
     id: number
     value: string
@@ -19,9 +30,22 @@ export const MulOPQuestion = () => {
       value: '',
     }
     setCounter(counter + 1)
-    setOptions([...options, newOption])
-    console.log(options)
+
+    setOptions((prevOptions) => [...prevOptions, newOption])
   }
+
+  useEffect(() => {
+    setSurvey((prevSurvey) => {
+      const newSurvey = { ...prevSurvey }
+      newSurvey.questions.map((question) => {
+        if (question.type === 'mulOptionQuestion') {
+          question.options = options.map((option) => option.value)
+        }
+        return question
+      })
+      return newSurvey
+    })
+  }, [options])
 
   const deleteQuestion = (
     event: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>,

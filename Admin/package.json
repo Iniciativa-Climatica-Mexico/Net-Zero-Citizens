@@ -52,6 +52,7 @@
     "typescript": "^5.2.2"
   },
   "devDependencies": {
+    "@mui/material": "^5.0.0",
     "@types/chai": "^4.3.5",
     "@types/mocha": "^10.0.1",
     "@types/react-modal": "^3.16.0",
@@ -71,7 +72,6 @@
     "prettier": "^3.0.3",
     "sequelize-cli": "^6.6.1",
     "ts-mocha": "^10.0.0",
-    "ts-node": "^10.9.1",
-    "@mui/material": "^5.0.0"
+    "ts-node": "^10.9.1"
   }
 }
