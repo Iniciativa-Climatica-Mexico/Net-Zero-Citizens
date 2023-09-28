@@ -16,6 +16,12 @@ class UploadDocumentsFragment : Fragment() {
 
     private var _binding: FragmentUploadDocumentsBinding? = null
     private val binding get() = _binding!!
+    private var arguments = Bundle()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments = requireArguments()
+    }
 
     /**
      * Método que se llama cuando se crea la vista del fragmento de subir los documentos.
@@ -58,6 +64,7 @@ class UploadDocumentsFragment : Fragment() {
      */
     private fun displaySubmitIdFragment() {
         val uploadIdFragment = UploadIdFragment()
+        uploadIdFragment.arguments = arguments
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_submit_documents_layout, uploadIdFragment)
         transaction.addToBackStack(null)

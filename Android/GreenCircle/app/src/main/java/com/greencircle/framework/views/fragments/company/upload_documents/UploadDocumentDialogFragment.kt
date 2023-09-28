@@ -3,8 +3,9 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import android.provider.OpenableColumns
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -15,13 +16,23 @@ import com.greencircle.R
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.company.files.UploadFilesViewModel
 import java.io.File
-import okhttp3.MediaType.Companion.toMediaType
+import java.io.FileOutputStream
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+
 class UploadDocumentDialogFragment(title: String) : DialogFragment() {
     private lateinit var viewModel: UploadFilesViewModel
     private val title = title
-    private lateinit var uploadFilePart: MultipartBody.Part
+    private lateinit var uploadFile: File
+    private var arguments = Bundle()
+    private lateinit var authToken: String
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments = requireArguments()
+        authToken = arguments.getString("authToken").toString()
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val inflater = requireActivity().layoutInflater
@@ -40,7 +51,7 @@ class UploadDocumentDialogFragment(title: String) : DialogFragment() {
         builder.setView(view)
             .setTitle(title)
             .setPositiveButton("Upload") { dialog: DialogInterface, which: Int ->
-                uploadSelectedFile()
+                uploadSelectedFile(uploadFile)
             }
             .setNegativeButton("Cancel") { dialog: DialogInterface, which: Int ->
                 dialog.dismiss()
@@ -67,45 +78,70 @@ class UploadDocumentDialogFragment(title: String) : DialogFragment() {
         if (requestCode == PICK_PDF_REQUEST && resultCode == Activity.RESULT_OK) {
             val selectedFileUri = data?.data
             if (selectedFileUri != null) {
-                // Convert the URI to a File object
-                val selectedFile = File(selectedFileUri.path)
-                val mediaType = "application/pdf".toMediaType()
+                uploadFile = getFileFromContentUri(selectedFileUri)!!
+                if (uploadFile != null) {
+                    data?.data?.let { uri ->
+                        val cursor =
+                            requireActivity().contentResolver.query(uri, null, null, null, null)
+                        cursor?.use {
+                            val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                            cursor.moveToFirst()
+                            val fileName = cursor.getString(nameIndex)
 
-                // Create a RequestBody from the File
-                val requestFile = selectedFile.asRequestBody(mediaType)
-
-                // Create a MultipartBody.Part from the RequestBody
-                val filePart = MultipartBody.Part
-                    .createFormData("file", selectedFile.name, requestFile)
-
-                // Store the filePart for later use if needed
-                uploadFilePart = filePart
-
-                // Update the UI as needed
-                val uploadFileImage = dialog?.findViewById<ImageView>(R.id.uploadFileImage)
-                uploadFileImage?.visibility = View.GONE
-                val checkmarkImageView = dialog?.findViewById<ImageView>(R.id.checkmarkImageView)
-                checkmarkImageView?.visibility = View.VISIBLE
-                val selectedFileName = dialog?.findViewById<TextView>(R.id.selectedFileName)
-                selectedFileName?.text = selectedFile.name + ".pdf"
+                            // Update the UI as needed
+                            val uploadFileImage =
+                                dialog?.findViewById<ImageView>(R.id.uploadFileImage)
+                            uploadFileImage?.visibility = View.GONE
+                            val checkmarkImageView =
+                                dialog?.findViewById<ImageView>(R.id.checkmarkImageView)
+                            checkmarkImageView?.visibility = View.VISIBLE
+                            val selectedFileName =
+                                dialog?.findViewById<TextView>(R.id.selectedFileName)
+                            selectedFileName?.text = fileName
+                        }
+                    }
+                }
             }
-        } else {
-            Log.d("customErr", "Something went wrong")
         }
     }
 
     // Function to upload the selected file
-    private fun uploadSelectedFile() {
-        // Check if you have a valid filePart, which was created in onActivityResult
-        if (uploadFilePart != null) {
-            // Call your API service to upload the file
-            try {
-                viewModel.uploadFile("companyId", uploadFilePart)
-            } catch (e: Exception) {
-                Log.d("noUpload", e.toString())
-            }
-        } else {
-            Log.d("customErr", "No file selected")
+    private fun uploadSelectedFile(file: File) {
+        val requestFile = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+        val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+        try {
+            viewModel.uploadFile("companyId", body, authToken)
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
+    }
+
+    // Function to get a File object from a content URI
+    private fun getFileFromContentUri(contentUri: Uri): File? {
+        val inputStream = requireActivity().contentResolver.openInputStream(contentUri)
+        if (inputStream != null) {
+            val fileName = getFileName(contentUri)
+            val tempFile = File(requireContext().cacheDir, fileName)
+            tempFile.deleteOnExit()
+            FileOutputStream(tempFile).use { output ->
+                inputStream.copyTo(output)
+            }
+            return tempFile
+        }
+        return null
+    }
+
+    // Function to get the file name from a content URI
+    private fun getFileName(uri: Uri): String {
+        var result: String? = null
+        if (uri.scheme == "content") {
+            val cursor = requireActivity().contentResolver.query(uri, null, null, null, null)
+            cursor?.use {
+                val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                cursor.moveToFirst()
+                result = cursor.getString(nameIndex)
+            }
+        }
+        return result ?: "unknown"
     }
 }

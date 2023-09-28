@@ -1,5 +1,6 @@
 package com.greencircle.framework.views.fragments.company
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,7 +16,7 @@ import com.greencircle.data.remote.company.CompanyAPIService
 import com.greencircle.domain.model.company.Company
 import com.greencircle.framework.viewmodel.company.CreateCompanyViewModel
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
-import com.greencircle.framework.views.fragments.services.ServicesFragment
+import com.greencircle.framework.views.fragments.company.upload_documents.UploadDocumentsFragment
 import java.util.UUID
 
 /**Constructor de "CreateCompanyFragment"
@@ -81,6 +82,7 @@ class CreateCompanyFragment : Fragment() {
             // Handle the result here
             if (result != null) {
                 authToken = result.tokens.authToken
+                arguments.putString("authToken", authToken)
                 uuid = result.user.uuid
             } else {
                 Log.d("CreateCompanyFragment", "Google login failed")
@@ -154,7 +156,7 @@ class CreateCompanyFragment : Fragment() {
         val createCompanyRequest = CompanyAPIService.CreateCompanyRequest(companyData)
 
         viewModel.createCompany(createCompanyRequest, authToken)
-        nextFragment()
+        navigateToUploadDocumentFragment(arguments)
     }
 
     /**
@@ -176,18 +178,20 @@ class CreateCompanyFragment : Fragment() {
     }
 
     /**
-     * Navega hacia el fragmento "UnverifiedCompanyFragment" dentro de la "RegisterCompanyActivity".
+     * Navega hacia el fragmento "SubmitDocumentsFragment" dentro de la "RegisterCompanyActivity".
      *
-     * Esta función se encarga de hacer la transición al fragmento "UnverifiedCompanyFragment" desde el fragmento
+     * Esta función se encarga de hacer la transición al fragmento "SubmitDocumentsFragment" desde el fragmento
      * actual dentro de la "RegisterCompanyActivity". Opcionalmente, puede recibir un Bundle de argumentos
      * que se pueden pasar al fragmento de destino.
      *
      * @param arguments Un Bundle opcional de argumentos que contiene la información de la cuenta de Google.
      */
-    private fun nextFragment(arguments: Bundle? = null) {
-        val companyServices = ServicesFragment()
+    private fun navigateToUploadDocumentFragment(arguments: Bundle? = null) {
+        val uploadDocumentsFragment = UploadDocumentsFragment()
         val activity = requireActivity() as RegisterCompanyActivity
+        val intent = Intent(activity, RegisterCompanyActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 
-        activity.replaceFragment(companyServices, arguments)
+        activity.replaceFragment(uploadDocumentsFragment, arguments)
     }
 }

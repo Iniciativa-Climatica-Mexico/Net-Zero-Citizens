@@ -16,6 +16,8 @@ import com.greencircle.databinding.FragmentUploadIdBinding
 class UploadIdFragment : Fragment() {
     private var _binding: FragmentUploadIdBinding? = null
     private val binding get() = _binding!!
+    private var arguments = Bundle()
+    private lateinit var authToken: String
 
     /**
      * Método que se llama cuando se crea la vista del fragmento de subir los documentos de identificación.
@@ -25,6 +27,10 @@ class UploadIdFragment : Fragment() {
      * @param savedInstanceState La instancia de Bundle que contiene datos previamente guardados del fragmento.
      * @return La vista inflada para el fragmento.
      */
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments = requireArguments()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,6 +43,7 @@ class UploadIdFragment : Fragment() {
 
         binding.ineUpload.setOnClickListener {
             val dialogFragment = UploadDocumentDialogFragment("INE")
+            dialogFragment.arguments = arguments
             dialogFragment.show(childFragmentManager, "UploadImageDialog")
         }
 

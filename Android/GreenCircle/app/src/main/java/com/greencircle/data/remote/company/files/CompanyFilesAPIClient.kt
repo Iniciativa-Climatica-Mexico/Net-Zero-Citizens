@@ -11,16 +11,13 @@ class CompanyFilesAPIClient {
         authToken: String,
         companyId: String,
         file: MultipartBody.Part
-    ): String? {
+    ): String {
         api = NetworkModel(authToken, CompanyFilesAPIService::class.java)
-        Log.d("FILE", file.toString())
         return try {
-            val response = api.uploadFile(companyId, file)
-            Log.d("UploadFile", response)
-            return response
+            return api.uploadFile(companyId, file)
         } catch (e: Exception) {
-            Log.d("customErr", e.toString())
-            return ""
+            Log.d("NOPE", e.toString())
+            ""
         }
     }
 }
