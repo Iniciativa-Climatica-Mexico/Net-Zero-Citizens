@@ -27,8 +27,7 @@ class CompanyContactFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(requireContext(), CompanyContactViewModel::class.java)
+            this, ViewModelFactory(requireContext(), CompanyContactViewModel::class.java)
         )[CompanyContactViewModel::class.java]
     }
 
@@ -57,9 +56,9 @@ class CompanyContactFragment : Fragment() {
             val direction: String =
                 (
                     companyData?.street + " " + companyData?.streetNumber + ", " +
-                    companyData?.zipCode + ", " + companyData?.state + ", " +
-                    companyData?.city
-                ).toString()
+                        companyData?.zipCode + ", " + companyData?.state + ", " +
+                        companyData?.city
+                    ).toString()
 
             bundle.putString("Direction", direction)
             contactInfoFragment.arguments = bundle
@@ -73,20 +72,6 @@ class CompanyContactFragment : Fragment() {
                 .add(R.id.fragmentContainer, contactInfoFragment)
                 .add(R.id.fragmentContainer, companyReviewsFragment).hide(contactInfoFragment)
                 .hide(companyReviewsFragment).commit()
-        }
-
-        // Report button
-        val reportButton = binding.reportButton
-        reportButton.setOnClickListener {
-            val reportCompanyFragment = ReportCompanyFragment()
-            val bundle = Bundle()
-            bundle.putString("CompanyId", viewModel.companyData.value?.companyId.toString())
-            reportCompanyFragment.arguments = bundle
-
-            val transaction = parentFragmentManager.beginTransaction()
-            transaction.replace(R.id.fragmentContainer, reportCompanyFragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
         }
 
         val companyId = arguments?.getString("id")
