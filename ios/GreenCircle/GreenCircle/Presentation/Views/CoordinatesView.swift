@@ -8,11 +8,10 @@ struct CoordinatesView: View {
     var body: some View {
         Map(coordinateRegion: $region)
             .onAppear {
-                //setRegion()
+                setRegion()
             }
     }
     
-  /*
     func setRegion() {
         guard let coordinates = viewModel.companiesCoordinates?.rows else { return }
         print(coordinates.count)
@@ -29,8 +28,7 @@ struct CoordinatesView: View {
         )
         
         region = coordinatesRegion
-    }*/
-    
+    }
     
     struct CoordinatesView_Previews: PreviewProvider {
         static var previews: some View {
