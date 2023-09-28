@@ -12,6 +12,7 @@ import CompanyImages from './companyImages.model'
 import CompanyProducts from './companyProducts.model'
 import Product from './products.model'
 import User from './users.model'
+import Complaint from './complaint.model'
 
 type StatusEnum = 'approved' | 'pending_approval' | 'rejected'
 
@@ -36,7 +37,7 @@ export default class Company extends Model {
     allowNull: true,
     field: 'USER_ID',
   })
-  userId: string
+  userId: string | null
 
   @Column({
     type: DataType.STRING(100),
@@ -173,4 +174,7 @@ export default class Company extends Model {
 
   @HasMany(() => CompanyImages)
   images!: CompanyImages[]
+
+  @HasMany(() => Complaint)
+  complaints: Complaint[]
 }

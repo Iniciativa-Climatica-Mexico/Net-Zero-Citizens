@@ -4,7 +4,13 @@
  * @component
  * @example
  * ```tsx
- * <CellAction companyId={company.companyId} fetchPending={fetchPending} company={company} />
+ * <CellAction
+      setIsModalOpen={setIsModalOpen}
+      companyId={company.companyId}
+      fetchPendingCompanies={() => fetchPendingCompanies()}
+      fetchApprovedCompanies={() => fetchApprovedCompanies()}
+      company={company}
+      activeTab={activeTab}>
  * ```
  */
 
@@ -14,6 +20,7 @@ import { Theme } from '@/@types/icons/material'
 
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import CancelIcon from '@mui/icons-material/Cancel'
+import DeleteIcon from '@mui/icons-material/Delete'
 
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 
@@ -31,15 +38,19 @@ import { Toaster } from './ui/toaster'
 interface cellActionProps {
   setIsModalOpen: (value: boolean) => void
   companyId: string
-  fetchPending: () => void
+  fetchPendingCompanies: () => void
+  fetchApprovedCompanies: () => void
   company: Company
+  activeTab: 'pending_approval' | 'approved'
 }
 
 export const CellAction = ({
   setIsModalOpen,
   companyId,
-  fetchPending,
+  fetchPendingCompanies,
+  fetchApprovedCompanies,
   company,
+  activeTab,
 }: cellActionProps) => {
   /**
    * @brief Function that allows admin to accept a specific company
@@ -68,11 +79,12 @@ export const CellAction = ({
     } catch (error) {
       console.error('Error approving company:', error)
     } finally {
+      fetchPendingCompanies()
+      fetchApprovedCompanies()
       toast({
         description: 'Proveedor aprobado exitosamente.',
       })
       setIsModalOpen(false)
-      fetchPending()
     }
   }
 
@@ -103,11 +115,9 @@ export const CellAction = ({
     } catch (error) {
       console.error('Error rejecting company:', error)
     } finally {
-      toast({
-        description: 'Proveedor rechazado exitosamente.',
-      })
       setIsModalOpen(false)
-      fetchPending()
+      fetchPendingCompanies()
+      fetchApprovedCompanies()
     }
   }
 
@@ -119,14 +129,41 @@ export const CellAction = ({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" style={{ background: 'white' }}>
           <DropdownMenuLabel>Acciones rápidas</DropdownMenuLabel>
-          <DropdownMenuItem onClick={() => handleAccept(company, companyId)}>
-            <CheckCircleOutlineIcon className="mr-1.5" />
-            Aceptar
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => handleReject(company, companyId)}>
-            <CancelIcon className="mr-1.5" />
-            Rechazar
-          </DropdownMenuItem>
+          {activeTab === 'pending_approval' ? (
+            <>
+              <DropdownMenuItem
+                onClick={() => {
+                  handleAccept(company, companyId)
+                  toast({
+                    description: 'Proveedor rechazado exitosamente.',
+                  })
+                }}
+              >
+                <CheckCircleOutlineIcon className="mr-1.5" />
+                Aceptar
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  handleReject(company, companyId)
+                }}
+              >
+                <CancelIcon className="mr-1.5" />
+                Rechazar
+              </DropdownMenuItem>
+            </>
+          ) : (
+            <DropdownMenuItem
+              onClick={() => {
+                handleReject(company, companyId)
+                toast({
+                  description: 'Proveedor eliminado exitosamente.',
+                })
+              }}
+            >
+              <DeleteIcon className="mr-1.5" />
+              Eliminar
+            </DropdownMenuItem>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
       <Toaster />

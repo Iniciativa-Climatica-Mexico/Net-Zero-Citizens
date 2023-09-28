@@ -24,6 +24,9 @@ class CompanyUseCase {
   @MainActor
   func registerCompany(company: PostCompanyData) async {
     await cRepository.postCompany(company: company)
+    await uRepository
+      .updateUserRole(userId: company.userId!,
+                      newRole: "COMAPNY_ROLE_ID")
   }
   
   @MainActor
@@ -32,12 +35,12 @@ class CompanyUseCase {
   }
   
   /// Definición de Caso de uso para hacer el fetch
-    ///   - Parameters:UUID de compañía
-    ///   - Returns: Modelo de compañía
+  ///   - Parameters:UUID de compañía
+  ///   - Returns: Modelo de compañía
   @MainActor
   func fetchCompanyById(id: UUID) async -> Company? {
     if var company = await cRepository.fetchCompanyById(companyId: id) {
-      if !company.webPage.isEmpty {
+      if company.webPage?.isEmpty ?? false {
         company.webPage = "No contamos con Página Web"
       }
       if let profilePicture = company.profilePicture, profilePicture.isEmpty {
