@@ -10,7 +10,7 @@ import com.greencircle.domain.model.auth.AuthResponse
  * como el inicio de sesión de Google.
  */
 class AuthRepository {
-    private val apiGoogleAuth = AuthAPIClient()
+    private val api = AuthAPIClient()
 
     /**
      * Realiza el inicio de sesión con Google utilizando el token proporcionado.
@@ -19,5 +19,25 @@ class AuthRepository {
      * @return Un objeto [AuthResponse] que contiene la respuesta de la autenticación, o null
      * si hay un error.
      */
-    suspend fun googleLogin(token: String): AuthResponse? = apiGoogleAuth.googleLogin(token)
+    suspend fun googleLogin(token: String): AuthResponse? = api.googleLogin(token)
+
+    /**
+     * Actualiza los tokens utilizando un refresh token.
+     *
+     * @param refreshToken El token de actualización.
+     * @return Un objeto [UpdateTokenResponse] que contiene los nuevos tokens, o null
+     * si hay un error.
+     */
+    suspend fun refreshTokens(refreshToken: String): AuthResponse? =
+        api.refreshTokens(refreshToken)
+
+    /**
+     * Actualiza la información de los tokens utilizando un auth token.
+     *
+     * @param authToken El token de actualización.
+     * @return Un objeto [UpdateTokensDataResponse] que contiene los nuevos tokens y usuario
+     * si hay un error.
+     */
+    suspend fun updateTokensData(authToken: String): AuthResponse? =
+        api.updateTokensData(authToken)
 }

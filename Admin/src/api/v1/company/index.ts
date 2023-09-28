@@ -26,12 +26,28 @@ export interface Company {
 /**
  * @brief
  * Funcion que regresa los proveedores pendientes por aprobar
- * @param authToken - The authentication token to be passed in the request headers.
+ * @param status
  * @returns Una respuesta conteniendo todos los proveedores pendientes
  */
 export const getPendingCompanies = async () => {
   try {
     const response = await authAxios().get('/company/pending')
+    return response.data.rows
+  } catch (error) {
+    console.error('Error fetching pending companies:', error)
+    throw error
+  }
+}
+
+/**
+ * @brief
+ * Funcion que regresa los proveedores aprobados
+ * @param status
+ * @returns Una respuesta conteniendo todos los proveedores aprobados
+ */
+export const getApprovedCompanies = async () => {
+  try {
+    const response = await authAxios().get('/company/approved')
     return response.data.rows
   } catch (error) {
     console.error('Error fetching pending companies:', error)
@@ -52,6 +68,13 @@ export type UpdateCompanyInfoBody = {
   phone: string
   webPage: string
 }
+
+/**
+ * @brief Actualiza la información de un proveedor
+ * @param companyId
+ * @param updateInfo
+ * @returns
+ */
 
 export const updateCompany = async (
   companyId: string,

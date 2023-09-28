@@ -24,6 +24,7 @@ class SurveyViewModel: ObservableObject {
     survey.questions.forEach({ question in
       answers.append(Answer(scaleValue: nil, answerText: nil, questionId: question.questionId))
     })
+    
   }
 
   @MainActor
@@ -32,16 +33,6 @@ class SurveyViewModel: ObservableObject {
   /// - Returns: Bool
   func submitAnswers() async -> Bool {
     return await surveyUseCase.submitAnswers(surveyId: self.survey.surveyId, answers: self.answers)
-  }
-
-  @MainActor
-  func answerRequired() -> Bool {
-    for (question, answer) in zip(survey.questions, answers) {
-      
-    }
-    return self.answers.contains(where: { answer in
-      answer.scaleValue == nil && answer.answerText == nil
-    })
   }
   
 }

@@ -1,20 +1,26 @@
+package com.greencircle.framework.viewmodel
+
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.greencircle.framework.viewmodel.auth.LoginViewModel
 
 /**
- * Fábrica de ViewModels personalizada para la creación de ViewModels.
+ * Fábrica personalizada de ViewModels para la creación de ViewModels.
  *
- * Esta clase se utiliza como una fábrica para crear instancias de ViewModels específicos, incluyendo el [LoginViewModel].
+ * Esta clase se utiliza como una fábrica para crear instancias de ViewModels específicos.
  *
  * @param context El contexto de la aplicación Android necesario para la creación de algunos ViewModels.
+ * @param viewModelClass La clase del ViewModel que deseas crear.
  */
-class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+
+class ViewModelFactory(
+    private val context: Context,
+    private val viewModelClass: Class<out ViewModel>
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(viewModelClass)) {
             @Suppress("UNCHECKED_CAST")
-            return LoginViewModel(context) as T
+            return viewModelClass.getConstructor(Context::class.java).newInstance(context) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
