@@ -53,7 +53,9 @@ export const getAllComplaints = async <T>(
  * @returns Una promesa con la(s) complaint(s) o null
  */
 
-export const getComplaintById = async (complaintId: string): Promise<Complaint | null> => {
+export const getComplaintById = async (
+  complaintId: string
+): Promise<Complaint | null> => {
   const complaint = await Complaint.findByPk(complaintId, {
     include: [
       {
@@ -135,7 +137,13 @@ export const getComplaintsByUser = async (
 export const addComplaint = async (
   complaint: ComplaintType
 ): Promise<Complaint> => {
-  return await Complaint.create(complaint)
+  try {
+    console.log('Service Complaint:', complaint)
+    return await Complaint.create(complaint)
+  } catch (error) {
+    console.error('Error creating complaint:', error)
+    throw error
+  }
 }
 
 /**

@@ -1,6 +1,7 @@
 package com.greencircle.framework.views.fragments.reviews
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,6 +51,8 @@ class CompanyReviewFragment : Fragment() {
         } else {
             companyId = UUID.fromString(arguments?.getString("CompanyId"))
         }
+
+        Log.d("CompanyId", companyId.toString())
         viewModel.setCompanyId(companyId)
         viewModel.getReviewsList()
 
@@ -178,8 +181,7 @@ class CompanyReviewFragment : Fragment() {
      */
     private fun complainsFragment() {
         val bundle = Bundle()
-        bundle.putString("CompanyId", companyId.toString())
-        bundle.putString("CompanyName", arguments?.getString("CompanyName"))
+        bundle.putString("CompanyId", arguments?.getString("CompanyId"))
         bundle.putString("AuthToken", arguments?.getString("AuthToken"))
 
         val complaintCompanyFragment = ComplaintCompanyFragment()

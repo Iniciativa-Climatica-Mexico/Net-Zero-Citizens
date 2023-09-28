@@ -14,7 +14,7 @@ import { RequestHandler } from 'express'
 
 export const getAllComplaints: RequestHandler<
   NoRecord,
-  Paginator<Complaint>| { error: string },
+  Paginator<Complaint> | { error: string },
   NoRecord,
   PaginationParams<{ name?: string }>
 > = async (req, res) => {
@@ -25,7 +25,7 @@ export const getAllComplaints: RequestHandler<
       name: req.query.name || '',
     },
   }
-  try{
+  try {
     const complaints = await ComplaintService.getAllComplaints(params)
     res.json({
       rows: complaints.rows,
@@ -33,9 +33,8 @@ export const getAllComplaints: RequestHandler<
       pageSize: params.pageSize,
       total: complaints.count,
     })
-  }
-  catch(error){
-    res.status(400).json({error: 'Error getting complaints'})
+  } catch (error) {
+    res.status(400).json({ error: 'Error getting complaints' })
   }
 }
 
@@ -54,7 +53,9 @@ export const getComplaintById: RequestHandler<
   { complaintId: string }
 > = async (req, res) => {
   try {
-    const complaint = await ComplaintService.getComplaintById(req.params.complaintId)
+    const complaint = await ComplaintService.getComplaintById(
+      req.params.complaintId
+    )
 
     if (!complaint) {
       res.status(404).json({ message: 'Complaint not found' })
@@ -71,7 +72,7 @@ export const getComplaintById: RequestHandler<
  * @brief
  * Función del controlador que devuelve las complaints por idCompany
  * de la base de datos
- * @param req La request HTTP al servidor 
+ * @param req La request HTTP al servidor
  * @param res Un objeto paginador con las complaint y la
  *            información de paginación
  */
@@ -96,7 +97,6 @@ export const getComplaintsByCompany: RequestHandler<
     total: complaint.count,
   })
 }
-
 
 /**
  * @brief
@@ -135,7 +135,6 @@ export const getComplaintByUser: RequestHandler<
   }
 }
 
-
 /**
  * @brief
  * Función del controlador que agrega una complaint a la base de datos
@@ -149,10 +148,26 @@ export const getComplaintByUser: RequestHandler<
 
 export const addComplaint: RequestHandler = async (req, res) => {
   try {
-    const { userId, companyId, complaintSubject, complaintDescription, complaintStatus } = req.body
+    const {
+      userId,
+      companyId,
+      complaintSubject,
+      complaintDescription,
+      complaintStatus,
+    } = req.body
 
-    if (!userId || !companyId || !complaintSubject || !complaintDescription || !complaintStatus) {
-      return res.status(400).json({ complaintId: '', error: 'Missing required data!' })
+    console.log(userId, companyId, complaintSubject, complaintDescription)
+
+    if (
+      !userId ||
+      !companyId ||
+      !complaintSubject ||
+      !complaintDescription ||
+      !complaintStatus
+    ) {
+      return res
+        .status(400)
+        .json({ complaintId: '', error: 'Missing required data!' })
     }
 
     const newComplaint = await ComplaintService.addComplaint({
@@ -160,24 +175,28 @@ export const addComplaint: RequestHandler = async (req, res) => {
       companyId,
       complaintSubject,
       complaintDescription,
-      complaintStatus
+      complaintStatus,
     })
 
+    console.log('Complaint: ' + newComplaint)
+
     if (!newComplaint) {
-      return res.status(500).json({ complaintId: '', error: 'Error creating complaint!' })
+      return res
+        .status(500)
+        .json({ complaintId: '', error: 'Error creating complaint!' })
     }
 
     return res.status(201).json({
       complaintId: newComplaint?.dataValues.complaintId,
-      message: 'Complaint created'
+      message: 'Complaint created',
     })
   } catch (error) {
     console.error(error)
-    res.status(500).json({ complaintId: '', error: 'Error creating complaint!' })
+    res
+      .status(500)
+      .json({ complaintId: '', error: 'Error creating complaint!' })
   }
 }
-
-
 
 /**
  * @brief
@@ -198,7 +217,7 @@ export const updateComplaintStatus: RequestHandler<
 > = async (req, res) => {
   const { complaintId } = req.params
   const { complaintStatus } = req.body
-  
+
   if (!complaintId) {
     res.status(400).json('Missing complaintId!')
     return

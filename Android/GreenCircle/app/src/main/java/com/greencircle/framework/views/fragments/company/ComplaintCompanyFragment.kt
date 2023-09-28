@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
@@ -32,11 +31,8 @@ import org.json.JSONObject
  * @since 2.0.0
  */
 class ComplaintCompanyFragment : DialogFragment() {
-    private val companyId: UUID =
-        arguments?.getString("CompanyId")?.let { UUID.fromString(it) } ?: UUID.randomUUID()
-
-    private val companyName: String = arguments?.getString("CompanyName") ?: "Company"
-    private val authToken: String = arguments?.getString("AuthToken") ?: "AuthToken"
+    private lateinit var companyId: UUID
+    private lateinit var authToken: String
     private val complaintClient = ComplaintClient()
 
     /**
@@ -52,6 +48,9 @@ class ComplaintCompanyFragment : DialogFragment() {
         val adapter = ArrayAdapter.createFromResource(
             requireContext(), R.array.options_array, android.R.layout.simple_spinner_item
         )
+
+        companyId = arguments?.getString("CompanyId")?.let { UUID.fromString(it) }!!
+        authToken = arguments?.getString("AuthToken")!!
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         val spinnerOptions: Spinner = view!!.findViewById(R.id.spinnerProblems)
@@ -106,15 +105,13 @@ class ComplaintCompanyFragment : DialogFragment() {
                     companyId = companyId,
                     complaintSubject = complaintTitle,
                     complaintDescription = complaintDescription,
-                    complaintStatus = ComplaintStatus.ACTIVE.toString()
+                    complaintStatus = ComplaintStatus.ACTIVE.toLowerCase().toString()
                 )
 
                 CoroutineScope(Dispatchers.Main).launch {
                     val response = withContext(Dispatchers.IO) {
                         complaintClient.postComplaint(authToken, complaint)
                     }
-
-                    Log.d("Response", response.toString())
 
                     if (isAdded) {
                         if (response?.isSuccessful == true) {
