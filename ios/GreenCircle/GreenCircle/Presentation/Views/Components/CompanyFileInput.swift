@@ -13,6 +13,8 @@ struct CompanyFileInput: View {
     var title: String
     var description: String
     
+    @ObservedObject var viewModel: CompanyViewModel
+    
     @State private var isPickerPresented: Bool = false
     @State private var selectedFile: URL? = nil
 
@@ -20,7 +22,13 @@ struct CompanyFileInput: View {
         VStack{
             Divider()
             Button(action: {
-                isPickerPresented = true
+                if let fileURL = Bundle.main.url(forResource: "migration-digital-assets-survey", withExtension: "pdf") {
+                                    selectedFile = fileURL
+                                    Task {
+                                        await viewModel.uploadFile(fileURL: fileURL)
+                                    }
+                                }
+                //isPickerPresented = true
             }) {
                 HStack{
                     VStack(alignment: .leading, spacing: 5) {
@@ -47,13 +55,20 @@ struct CompanyFileInput: View {
             }
             Divider()
         }
-        .sheet(isPresented: $isPickerPresented, onDismiss:{}) {
-            DocumentPicker()
+        .sheet(isPresented: $isPickerPresented, onDismiss:{
+            if let selectedFileURL = selectedFile {
+                Task {
+                    await viewModel.uploadFile(fileURL: selectedFileURL)
+                }
+            }
+        }) {
+            DocumentPicker(selectedFile: $selectedFile)
         }
     }
 }
 
 struct DocumentPicker: UIViewControllerRepresentable {
+    @Binding var selectedFile: URL?
     func makeUIViewController(context: Context) -> some UIViewController {
         let documentPicker = UIDocumentPickerViewController(documentTypes: [kUTTypePDF as String], in: .import)
         return documentPicker
@@ -66,6 +81,6 @@ struct DocumentPicker: UIViewControllerRepresentable {
 
 struct CompanyFileInput_Previews: PreviewProvider {
     static var previews: some View {
-        CompanyFileInput(title: "Example Title", description: "Example Description")
+        CompanyFileInput(title: "Example Title", description: "Example Description", viewModel: CompanyViewModel())
     }
 }

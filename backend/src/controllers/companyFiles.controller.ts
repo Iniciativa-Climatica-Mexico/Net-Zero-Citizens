@@ -5,20 +5,20 @@ import upload from '../utils/fileUploadUtil'
 import { RequestHandler } from 'express'
 
 export const uploadCompanyFile: RequestHandler = async (req, res) => {
+  console.log(req)
   try {
-    console.log(req)
-    // if (!companyId) return res.status(400).send('No company provided')
-    // // inputId es el id del input del formulario
-    // upload.array(inputId)(req, res, async (err) => {
-    //   CompanyFileService.uploadCompanyFile(
-    //     req.file,
-    //     companyId,
-    //     fileDescription,
-    //     fileFormat
-    //   )
-    //   return res.status(200).send('File uploaded!')
-    // })
-    return res.status(200).send('File uploaded!')
+    const { companyId, fileDescription, fileFormat, inputId } = req.body
+    if (!companyId) return res.status(400).send('No company provided')
+    // inputId es el id del input del formulario
+    upload.array(inputId)(req, res, async (err) => {
+      CompanyFileService.uploadCompanyFile(
+        req.file,
+        companyId,
+        fileDescription,
+        fileFormat
+      )
+      return res.status(200).json({ message: 'File uploaded' });
+    })
   } catch (error) {
     return res.status(500).send('Error uploading file')
   }

@@ -101,4 +101,39 @@ class NetworkAPIService {
       return nil
     }
   }
+    /// Realiza un put request a la url dada
+    /// - Parameters:
+    ///   - url: la url a la cual hacer el put request
+    ///   - fileURL: url a donde esta almacenado el archivo en el dispositivo
+    ///   
+    ///   - body: el body de la request
+    /// - Returns: la respuesta inferida o nil si falla
+    
+    func uploadFileRequest<T: Codable>(_ url: URL, fileURL: URL, fileParameterName: String = "file", additionalParameters: [String: Any] = [:]) async -> T? {
+        var responseResult: T?
+
+        let uploadTask = session.upload(multipartFormData: { (multipartFormData) in
+            multipartFormData.append(fileURL, withName: fileParameterName)
+            for (key, value) in additionalParameters {
+                        if let stringValue = value as? String {
+                            multipartFormData.append(stringValue.data(using: .utf8)!, withName: key)
+                        }
+                    }
+                }, to: url)
+        .validate()
+        .responseDecodable(of: T.self) { response in
+            switch response.result {
+            case let .success(data):
+                print(data)
+                responseResult = data
+            case let .failure(error):
+                print("Respoonse Error: \(error)")
+                debugPrint(error)
+            }
+        }
+
+        _ = try? await uploadTask.serializingData().response
+        return responseResult
+    }
+
 }

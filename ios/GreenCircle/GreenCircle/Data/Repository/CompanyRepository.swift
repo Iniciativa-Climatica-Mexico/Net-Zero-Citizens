@@ -14,7 +14,12 @@ class CompanyAPI {
   struct Routes {
     static let create = "/create"
     static let company = "/company/"
+    static let uploadFile = "/upload/file"
   }
+}
+
+struct APIResponse: Codable {
+    let message: String
 }
 
 /// Protocolo con las funciones del repositorio de Compañías
@@ -22,7 +27,9 @@ protocol CompanyRepositoryProtocol {
   func postCompany(authToken: String, company: PostCompanyData) async
   func fetchCompanyById(companyId: UUID) async -> Company?
   //func fetchAllCompanies() async -> Company?
+  func uploadCompanyFile(fileURL: URL) async -> APIResponse?
 }
+
 
 /// Clase con las funciones del repositorio de las compañías
 class CompanyRepository: CompanyRepositoryProtocol {
@@ -79,4 +86,16 @@ class CompanyRepository: CompanyRepositoryProtocol {
       .getRequest(URL(string: "\(CompanyAPI.base)")!)
   }
   
+    func uploadCompanyFile(fileURL: URL) async -> APIResponse? {
+        let uploadURL = URL(string: "\(CompanyAPI.base)\(CompanyAPI.Routes.uploadFile)")!
+        let additionalParameters: [String: Any] = [
+            "companyId": "c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e",
+            "fileDescription": "Curriculum",
+            "fileFormat": ".pdf",
+            "inputId": "input1"
+        ]
+        print("Additional params: \(additionalParameters)")
+        return await service.uploadFileRequest(uploadURL, fileURL: fileURL, additionalParameters: additionalParameters)
+    }
+
 }

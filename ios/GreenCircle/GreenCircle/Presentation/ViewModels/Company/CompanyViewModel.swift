@@ -11,6 +11,7 @@ import Foundation
 class CompanyViewModel: ObservableObject {
   /// Caso de uso para hacer fetch de los datos de compañía
   private let useCase: CompanyUseCase
+  private let repository: CompanyRepository
   
   @Published var companies = [Company]()
     
@@ -44,9 +45,10 @@ class CompanyViewModel: ObservableObject {
     )
   
   /// Para implementar el caso de uso en la vista que llame al ViewModel Compañía
-  init(useCase: CompanyUseCase = CompanyUseCase.shared) {
-    self.useCase = useCase
-  }
+    init(useCase: CompanyUseCase = CompanyUseCase.shared, repository: CompanyRepository = CompanyRepository.shared) {
+        self.useCase = useCase
+        self.repository = repository
+    }
   
   @MainActor
   /// Obtener información de la compañía mediante el caso de uso
@@ -64,5 +66,10 @@ class CompanyViewModel: ObservableObject {
             throw CompanyViewModelError.failedToFetchCompanies
         }
         self.companies = fetchedCompanies.rows
+    }
+    
+    @MainActor
+    func uploadFile(fileURL: URL) async {
+        await repository.uploadCompanyFile(fileURL: fileURL)
     }
 }

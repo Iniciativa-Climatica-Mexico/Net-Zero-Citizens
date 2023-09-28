@@ -105,7 +105,6 @@ export const uploadCompanyFile = async (
       fileDescription: fileDescription,
       fileFormat: fileFormat,
     })
-
     return newFile
   } catch (error) {
     console.log(error)
