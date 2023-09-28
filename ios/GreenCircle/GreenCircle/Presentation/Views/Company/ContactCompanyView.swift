@@ -257,14 +257,14 @@ struct ReportReasonView: View {
 struct CompanyReportView: View {
 
     //@ObservedObject var modelCompanyRating: CompanyViewModel
-    
     @ObservedObject var modelComplaint: CompanyViewModel
     @ObservedObject var viewModel: ComplaintViewModel
     @Binding var dispScrollView: Bool
-    @State var selectedReportReason: String? = ""
+    @State var hasTriedToSubmit: Bool = false
+    @State var selectedReportReason: String? = nil
     @State var description: String = ""
     @State private var showAlert: Bool = false
-
+    @State private var showReportAlert: Bool = false
 
     let reportReasons = ["Productos defectuosos.",
                          "Inconformidad con el producto/servicio.",
@@ -273,11 +273,7 @@ struct CompanyReportView: View {
                          "Fraudes o estafas.",
                          "Violación legal o ética."]
 
-
     var body: some View {
-        
-        
-
         VStack(alignment: .leading, spacing: 5) {
             Text("Reportar Proveedor")
                 .font(.system(size: 18))
@@ -289,16 +285,21 @@ struct CompanyReportView: View {
                 .font(.system(size: 12))
                 .foregroundColor(Color("BlackCustom")).contrast(12.6)
                 .padding(.bottom, 20).bold()
+            
+            if hasTriedToSubmit && (selectedReportReason == nil || selectedReportReason!.isEmpty) {
+                Text("Por favor, selecciona una razón para reportar.")
+                    .font(.system(size: 14))
+                    .foregroundColor(.red)
+                    .padding(.bottom, 10)
+            }
 
-
-            ScrollView{
+            ScrollView {
                 ForEach(reportReasons, id: \.self) { reason in
                     ReportReasonView(reason: reason, selectedReason: $selectedReportReason)
                         .background(Color.gray.opacity(0.1))
                         .cornerRadius(8)
                         .padding(.vertical, 2)
                 }
-
 
                 Divider()
                     .padding(.top, 20)
@@ -309,24 +310,26 @@ struct CompanyReportView: View {
                     .padding(.top ,10).bold()
                     .padding(.leading ,-160)
 
-                TextField("Escribe algún comentario adicional al reporte...",   text: $description )
+                TextField("Escribe algún comentario adicional al reporte...", text: $description)
                     .disableAutocorrection(true)
                     .padding(.top, 3)
                     .font(.system(size: 13))
                     .textFieldStyle(RoundedBorderTextFieldStyle())
 
                 HStack {
-
-
                     Spacer()
                     Button(action: {
-                        async {
-                            print("print.......")
-                            print(await viewModel.handleSubmit(complaintSubject: selectedReportReason ?? "", complaintDescription: description.isEmpty ? nil : description))
-                            showAlert = true
+                        if selectedReportReason == nil || selectedReportReason!.isEmpty {
+                            hasTriedToSubmit = true
+//                            showReportAlert = true
+                        } else {
+                            Task {
+                                print("print.......")
+                                print(await viewModel.handleSubmit(complaintSubject: selectedReportReason ?? "", complaintDescription: description.isEmpty ? nil : description))
+                                showAlert = true
+                            }
                         }
-                    })
-                    {
+                    })  {
                         Text("Mandar Reporte")
                             .foregroundColor(.white)
                             .padding(.vertical, 12)
@@ -337,17 +340,20 @@ struct CompanyReportView: View {
                     Spacer()
                 }
                 .padding(.top, 30)
-            } .frame(height: 300)
-
+            }
+            .frame(height: 300)
         }
         .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
         .foregroundColor(Color("BlackCustom"))
         .alert(isPresented: $showAlert) {
             Alert(title: Text("Confirmación"), message: Text("El reporte ha sido enviado con éxito."), dismissButton: .default(Text("Ok")))
         }
-
+//        .alert(isPresented: $showReportAlert) {
+//            Alert(title: Text("Atención"), message: Text("Por favor, selecciona una razón para reportar."), dismissButton: .default(Text("Entendido")))
+//        }
     }
 }
+
 
 
 struct ContactCompanyView: View {
