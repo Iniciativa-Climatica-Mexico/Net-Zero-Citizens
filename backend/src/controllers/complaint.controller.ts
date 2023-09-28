@@ -144,7 +144,6 @@ export const getComplaintByUser: RequestHandler<
  * - 200 si se crea la complaint
  * - 500 si ocurre un error en el servidor
  */
-
 export const addComplaint: RequestHandler<
   { userId: string; companyId: string },
   string,

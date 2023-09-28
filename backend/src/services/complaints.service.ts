@@ -133,7 +133,6 @@ export const getComplaintByUser = async (
  * @param params userId, companyId, complaintDescription, complaintStatus
  * @returns Una promesa con la complaint creada
  */
-
 export const addComplaint = async (
   userId: string,
   companyId: string,
