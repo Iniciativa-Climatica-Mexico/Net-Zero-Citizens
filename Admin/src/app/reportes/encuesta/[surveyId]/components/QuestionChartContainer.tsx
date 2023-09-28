@@ -1,6 +1,6 @@
 'use client'
 
-import { QuestionReport, SurveyReport } from '@/api/v1/report'
+import { QuestionReport, SurveyReport, jsonToCsv } from '@/api/v1/report'
 
 import ScaleChart from './ScaleChart'
 import { useState } from 'react'
@@ -23,7 +23,7 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
             {surveyReport.title}
           </h1>
           <button
-            //onClick={() => setIsOpen(true)}
+            onClick={() => jsonToCsv}
             className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end mt-4 ml-auto left-500"
           >
             Descargar reporte
@@ -214,4 +214,7 @@ function QuestionComponent(props: QuestionReport) {
       </div>
     </div>
   )
+
+  const csv = jsonToCsv(answers.QuestionReport);
+
 }
