@@ -13,14 +13,13 @@ struct CompanyRegisterFormView: View {
   
   @ObservedObject var viewModel =
   CompanyRegisterFormViewModel()
-  @EnvironmentObject var userData: UserData
   
   var body: some View {
     ScrollView{
       VStack {
         RegisterHeaderView(
-          mail: userData.user!.email,
-          name: "\(userData.user!.first_name) \(userData.user!.last_name)")
+          mail: viewModel.userData.email,
+          name: "\(viewModel.userData.first_name) \(viewModel.userData.last_name)")
         .padding(.bottom)
         VStack(alignment: .leading, spacing: 10) {
           VStack(alignment: .leading, spacing: 20) {
@@ -91,7 +90,7 @@ struct CompanyRegisterFormView: View {
       }.padding(.bottom, 50)
       MainButton("Continuar", action: {
         Task {
-          await viewModel.handleSubmit(userData: userData)
+          await viewModel.handleSubmit()
           goCompanyRegisterDivider()
         }
       })
@@ -102,13 +101,5 @@ struct CompanyRegisterFormView: View {
 struct CompanyRegisterFormView_Previews: PreviewProvider {
   static var previews: some View {
     CompanyRegisterFormView(goCompanyRegisterDivider: {}, goPending: {})
-      .environmentObject(UserData(
-        UserAuth(first_name: "Ricardo",
-             last_name: "Fernandez",
-             uuid: "1",
-             email: "ricardo@mail.com",
-             login_type: "google",
-             picture: "picture",
-             roles: "new_user")))
   }
 }

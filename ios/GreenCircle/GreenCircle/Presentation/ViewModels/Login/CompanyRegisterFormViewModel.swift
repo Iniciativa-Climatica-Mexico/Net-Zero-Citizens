@@ -29,15 +29,19 @@ struct PostCompanyData {
 /// ViewModel de la vista del formulario para registrar compañía
 class CompanyRegisterFormViewModel: ObservableObject {
   @Published var formState = PostCompanyData()
+  @Published var userData: UserAuth
   var useCase = CompanyUseCase.shared
+  
+  init() {
+    userData = useCase.getLocalUserData()!.user
+  }
   
   /// Función para manejar el submit de la información de la compañía
   /// - Parameter userData: objeto en el entorno con la información del usuario
   @MainActor
-  func handleSubmit(userData: UserData) async {
-    formState.userId = userData.user!.id
-    await useCase.registerCompany(authToken: userData.tokens!.authToken,
-                                  company: formState)
+  func handleSubmit() async {
+    formState.userId = userData.id
+    await useCase.registerCompany(company: formState)
   }
   
   /// Función para validar los datos del formulario

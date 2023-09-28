@@ -10,6 +10,7 @@ import SwiftUI
 struct UserRegisterFormView: View {
   @ObservedObject var viewModel =
   UserRegisterFormViewModel()
+  @State private var showingDetail = false
   
   var goMainMenu: () -> Void
   
@@ -36,6 +37,7 @@ struct UserRegisterFormView: View {
         PickerFormView(selectedOption: $viewModel.gender,
                        label: "Género",
                        options: viewModel.genders)
+        .padding(.bottom)
         HStack {
           HStack {
             Text("Acepto las")
@@ -48,7 +50,6 @@ struct UserRegisterFormView: View {
             }
             
           }.frame(width: 270)
-          
           Toggle("", isOn: $viewModel.privacy)
         }
         Spacer()
