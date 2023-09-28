@@ -250,12 +250,7 @@ const getCompanyScore = async (id: string): Promise<Review[] | null> => {
   })
 }
 
-/**
- * @brief
- * Función del servicio para asignarle un usuario a una compañia
- * @param req La request HTTP al servidor
- * @param res Un resultado de la operación
- */
+
 
 type assignCompanyUserResponse =
   | 'success'
@@ -264,7 +259,13 @@ type assignCompanyUserResponse =
   | 'La companía no existe'
   | 'El usuario no existe'
   | 'Error no esperado'
-
+  
+/**
+ * @brief
+ * Función del servicio para asignarle un usuario a una compañia
+ * @param req La request HTTP al servidor
+ * @param res Un resultado de la operación
+ */
 export const assignCompanyUser = async (
   companyId: string,
   userId: string
