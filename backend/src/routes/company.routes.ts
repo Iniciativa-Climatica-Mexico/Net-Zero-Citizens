@@ -19,5 +19,6 @@ router.get('/geocoding', CompanyController.getCoordinates)
 router.post('/pending/:companyId', CompanyController.updateCompanyInfo)
 
 router.get('/:id', CompanyController.getCompanyById)
+router.put('/:id/assign', CompanyController.assignCompanyUser)
 
 export default router
