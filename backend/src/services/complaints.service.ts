@@ -52,10 +52,8 @@ export const getAllComplaints = async <T>(
  * @param params ComplaintId
  * @returns Una promesa con la(s) complaint(s) o null
  */
-export const getComplaintById = async (params: {
-  complaintId: string
-}): Promise<Complaint> => {
-  const { complaintId } = params
+
+export const getComplaintById = async (complaintId: string): Promise<Complaint | null> => {
   const complaint = await Complaint.findByPk(complaintId, {
     include: [
       {
