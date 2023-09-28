@@ -29,6 +29,7 @@ struct CompanyRegisterFormView: View {
                             $viewModel.formState.name,
                           label: "Nombre de la empresa*",
                           prompt: "Ingresa el nombre...")
+            .autocorrectionDisabled()
             VStack(alignment: .leading) {
               Text("Descripción*")
                 .foregroundColor(Color("SecondaryText"))
@@ -51,28 +52,49 @@ struct CompanyRegisterFormView: View {
                             $viewModel.formState.email,
                           label: "Email de contacto*",
                           prompt: "empresa@ejemplo.com")
+            .textInputAutocapitalization(.never)
+            .autocorrectionDisabled()
             .keyboardType(.emailAddress)
             InputFormView(bindingValue:
-                          $viewModel.formState.phone,
+                            $viewModel.formState.phone,
                           label: "Teléfono de contacto*",
                           prompt: "123-123-1234")
             .keyboardType(.phonePad)
+            .onChange(of: viewModel.formState.phone) { newValue in
+              if newValue.hasPrefix("55") {
+                viewModel.formState.phone =
+                Utils.formatNumber(with: "XX-XXXX-XXXX",
+                                   for: newValue)
+              } else {
+                viewModel.formState.phone =
+                Utils.formatNumber(with: "XXX-XXX-XXXX",
+                                   for: newValue)
+              }
+            }
             InputFormView(bindingValue:
                             $viewModel.formState.webPage,
                           label: "Sitio Web",
                           prompt: "empresa.com.mx")
             .keyboardType(.URL)
-            
+            .autocorrectionDisabled()
+            .textInputAutocapitalization(.never)
           }
+          
           VStack(alignment: .leading, spacing: 20) {
             Text("Dirección de la empresa")
               .font(.system(size: 24))
             InputFormView(bindingValue: $viewModel.formState.street,
                           label: "Calle*",
                           prompt: "Calle Asombrosa")
-            NumberInputFormView(bindingValue: $viewModel.formState.streetNumber,
+            InputFormView(bindingValue: $viewModel.formState.streetNumber,
                           label: "Número*",
                           prompt: "111")
+            .onChange(of: viewModel.formState.streetNumber) { newValue in
+              viewModel.formState.streetNumber =
+              Utils.formatNumber(with: "XXXXX",
+                                 for: newValue)
+              
+            }
             .keyboardType(.numberPad)
             InputFormView(bindingValue: $viewModel.formState.city,
                           label: "Ciudad*",
@@ -80,18 +102,34 @@ struct CompanyRegisterFormView: View {
             PickerFormView(selectedOption: $viewModel.formState.state,
                            label: "Estado*",
                            options: Constants.states)
-            NumberInputFormView(bindingValue: $viewModel.formState.zipCode,
-                          label: "Código postal*",
-                          prompt: "12345")
+            InputFormView(bindingValue: $viewModel.formState.zipCode,
+                                label: "Código postal*",
+                                prompt: "12345")
+            .onChange(of: viewModel.formState.zipCode) { newValue in
+              viewModel.formState.zipCode =
+              Utils.formatNumber(with: "XXXXX",
+                                 for: newValue)
+              
+            }
             .keyboardType(.numberPad)
             
           }
-        }.padding(.horizontal)
+        }
+        .padding(.horizontal)
+        .alert("Oops! Algo salió mal",
+                 isPresented: $viewModel.showAlert) {
+          Button("Ok", role: .cancel){}
+        } message: {
+          Text(viewModel.errorMessage)
+        }
       }.padding(.bottom, 50)
       MainButton("Continuar", action: {
         Task {
-          await viewModel.handleSubmit()
-          goCompanyRegisterDivider()
+          let success = await viewModel.handleSubmit()
+          
+          if success {
+            goCompanyRegisterDivider()
+          }
         }
       })
     }.foregroundColor(Color("MainText"))

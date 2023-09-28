@@ -93,6 +93,20 @@ class UserRepository: UserRepositoryProtocol {
     return res != nil
   }
   
+  func updateUserRole(userId: String, newRole: String) async {
+    let params: [String: Any] = [
+      "roleId": newRole
+    ]
+    
+    let url = URL(
+      string: "\(UserAPI.base)\(UserAPI.Routes.userId)"
+        .replacingOccurrences(
+          of: ":userId",
+          with: userId))!
+    
+    let _: NoResponse? = await nService.putRequest(url, body: params)
+  }
+  
   func fetchUserById(userId: String) async -> User? {
     return await backEndService.fetchUserById(url: URL(string: "\(UserAPI.base)/\(userId)")!)
   }

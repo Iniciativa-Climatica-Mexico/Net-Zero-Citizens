@@ -84,25 +84,6 @@ struct InputFormView: View {
   }
 }
 
-struct NumberInputFormView: View {
-  var bindingValue: Binding<Int?>
-  var label: String
-  var prompt: String
-  
-  var body: some View {
-    VStack(alignment: .leading) {
-      Text(label)
-        .foregroundColor(Color("SecondaryText"))
-      TextField(prompt, value: bindingValue, format: .number)
-        .padding(10)
-        .overlay {
-          RoundedRectangle(cornerRadius: 10)
-            .stroke(.gray, lineWidth: 1)
-        }
-    }.font(.system(size: 20, weight: .medium))
-  }
-}
-
 struct PickerFormView: View {
   @Binding var selectedOption: String
   var label: String
