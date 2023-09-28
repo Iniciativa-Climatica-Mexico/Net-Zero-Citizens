@@ -38,7 +38,7 @@ const testData = [
     pdfActaConstitutivaUrl:
       'https://example.com/company1-acta-constitutiva.pdf',
     pdfIneUrl: 'https://example.com/company1-ine.pdf',
-    status: 'approved',
+    status: 'pending_approval',
   },
   {
     companyId: 'a2b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',

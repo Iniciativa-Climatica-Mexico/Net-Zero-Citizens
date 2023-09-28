@@ -8,10 +8,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="150dp"
-        android:paddingHorizontal="30dp">
-
+        android:paddingHorizontal="30dp"
+    >
         <!--  CALIFICA AL PROVEEDOR  -->
-
         <LinearLayout
             android:id="@+id/ratingWrapper"
             android:layout_width="match_parent"
@@ -130,7 +129,6 @@
                         android:textSize="12sp" />
 
                 </LinearLayout>
-
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -140,7 +138,17 @@
                 android:orientation="vertical"
                 android:scrollbars="vertical" />
         </LinearLayout>
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/reportBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@android:color/transparent"
+        android:text="Reportar"
+        android:textColor="@color/blue" />
 </RelativeLayout>

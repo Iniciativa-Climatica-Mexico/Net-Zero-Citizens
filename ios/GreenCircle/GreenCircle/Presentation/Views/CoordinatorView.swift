@@ -43,15 +43,15 @@ struct CoordinatorView: View {
                   goCompanyRegister: goCompanyRegister)
         
       case .userRegister:
-        UserRegisterView(goLogin: goLogin,
+        UserRegisterView(goLogin: goBack,
                          goForm: goUserForm,
                          goMainMenu: goMainMenu)
         
       case .userRegisterForm:
-        UserRegisterFormView(goMainMenu: goMainMenu)
+        UserRegisterFormView(goSurvey: goSurvey)
         
       case .companyRegister:
-        CompanyRegisterView(goLogin: goLogin,
+        CompanyRegisterView(goLogin: goBack,
                             goForm: goCompanyForm,
                             goMainMenu: goMainMenu)
         
@@ -133,5 +133,9 @@ struct CoordinatorView: View {
   
   private func goPending() {
     routes.presentCover(.pendingCompany)
+  }
+  
+  private func goBack() {
+    routes.goBack()
   }
 }
