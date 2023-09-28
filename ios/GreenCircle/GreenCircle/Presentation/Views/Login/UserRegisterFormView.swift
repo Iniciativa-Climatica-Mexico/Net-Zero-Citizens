@@ -10,6 +10,7 @@ import SwiftUI
 struct UserRegisterFormView: View {
   @ObservedObject var viewModel =
   UserRegisterFormViewModel()
+  @State private var showingDetail = false
   
   var goMainMenu: () -> Void
   
