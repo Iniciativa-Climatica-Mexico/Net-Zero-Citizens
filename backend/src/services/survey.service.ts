@@ -293,3 +293,24 @@ export const answerSurvey = async (answers: FullAnswers): Promise<Answer[]> => {
   const s = await Answer.bulkCreate(answersToInsert)
   return unwrap(s)
 }
+
+
+/**
+ * @brieg Función del servicio que asigna un string vacío a las respuestas de una encuesta 
+ * de un usuario eliminado
+ * @param uuid El id del usuario eliminado
+ * @returns Una promesa con las respuestas actualizadas
+ */
+export const updateAnswersByUserId = async (uuid: string): Promise<Answer[]> => {
+  const answers = await Answer.findAll({
+    where: {
+      userId: uuid,
+    },
+  })
+  const answersToUpdate = answers.map((a) => {
+    a.userId = null
+    a.save()
+    return a
+  })
+  return answersToUpdate
+}
