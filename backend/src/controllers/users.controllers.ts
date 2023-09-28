@@ -1,6 +1,6 @@
 import User from '../models/users.model'
 import * as UserService from '../services/users.service'
-import { getCompanyByUserId, unbindUserFromCompany } from '../services/company.service'
+import { unbindUserFromCompany } from '../services/company.service'
 import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
 import { deleteAllReviewsByUser } from '../services/review.service'
