@@ -8,7 +8,6 @@ import UserBootstrap from '../bootstrap/users.bootstrap'
 import RolesBootstrap from '../bootstrap/roles.bootstrap'
 import EcoinfoBootstrap from '../bootstrap/ecoinfo.bootstrap'
 import SurveysBootstrapper from '../bootstrap/survey.bootstrap'
-import ComplaintsBootstrapper from '../bootstrap/complaint.bootstrap'
 
 
 export const bootstrapDB = async () => {
@@ -24,7 +23,6 @@ export const bootstrapDB = async () => {
       CompanyProductsBootstrap,
       DummyBootstrap,
       EcoinfoBootstrap,
-      ComplaintsBootstrapper,
     ]
     const pool = bootstrappers.map((bootstrapper) => {
       const instance = new bootstrapper()
