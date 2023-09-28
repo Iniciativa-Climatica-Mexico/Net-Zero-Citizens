@@ -162,3 +162,25 @@ export const updateComplaintStatus = async (
     throw new Error('Complaint not found')
   }
 }
+
+/**
+ * Designa un usuario de la queja
+ * @param complaintId Id de la queja
+ * @returns Promise<Complaint | null> La queja actualizada
+ */
+export const ubindUserFromComplaint = async (
+  userId: string
+): Promise<Complaint | null> => {
+  const complaint = await Complaint.findOne({
+    where: {
+      userId: userId,
+    },
+  })
+
+  if (complaint) {
+    complaint.userId = null
+    await complaint.save()
+  }
+
+  return complaint
+}

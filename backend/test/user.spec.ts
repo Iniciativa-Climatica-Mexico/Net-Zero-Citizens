@@ -4,6 +4,7 @@ import { db, initDB } from '../src/configs/database.config'
 import * as UserService from '../src/services/users.service'
 import { getCompanyByUserId, unbindUserFromCompany } from '../src/services/company.service'
 import { deleteAllReviewsByUser, getReviewByUser } from '../src/services/review.service'
+import { ubindUserFromComplaint } from '../src/services/complaints.service'
 import { updateAnswersByUserId } from '../src/services/survey.service'
 
 chai.use(chaiExclude)
@@ -170,7 +171,8 @@ describe('UserService', () => {
       await unbindUserFromCompany(user.userId)
       await deleteAllReviewsByUser(user.userId)
       await updateAnswersByUserId(user.userId)
-      
+      await ubindUserFromComplaint(user.userId)
+
       const res = await UserService.deleteUserById(newUserInfo.userId)
       expect(res).to.be.equal(1)
     })

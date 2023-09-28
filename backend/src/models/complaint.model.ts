@@ -37,7 +37,7 @@ export default class Complaint extends Model {
       allowNull: false,
       field: 'USER_ID',
     })
-    userId: string
+    userId: string | null
   
     @BelongsTo(() => User)
     user: User
