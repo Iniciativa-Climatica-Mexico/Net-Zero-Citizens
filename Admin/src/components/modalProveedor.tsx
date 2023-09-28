@@ -42,15 +42,17 @@ import {
 interface ModalProveedorProps {
   setIsModalOpen: (value: boolean) => void
   selectedCompany: Company
-  fetchCompaniesByStatus: (status: 'pending_approval' | 'approved' | 'rejected' ) => void
-  activeTab: 'pending' | 'approved' | 'rejected'
+  fetchPendingCompanies: () => void
+  fetchApprovedCompanies: () => void
+  activeTab: 'pending_approval' | 'approved' | 'rejected'
 }
 
 export default function ModalProveedor({
   setIsModalOpen,
   selectedCompany,
-  fetchCompaniesByStatus,
-  activeTab
+  fetchPendingCompanies,
+  fetchApprovedCompanies,
+  activeTab,
 }: ModalProveedorProps) {
   const [checkboxChecked, setCheckboxChecked] = useState(false)
   const { toast } = useToast()
@@ -85,7 +87,8 @@ export default function ModalProveedor({
         description: 'Proveedor aprobado exitosamente.',
       })
       setIsModalOpen(false)
-      fetchCompaniesByStatus('pending_approval')
+      fetchPendingCompanies()
+      fetchApprovedCompanies()
     }
   }
 
@@ -119,9 +122,9 @@ export default function ModalProveedor({
       toast({
         description: 'Proveedor rechazado exitosamente.',
       })
-      fetchCompaniesByStatus('pending_approval')
-      fetchCompaniesByStatus('approved')
       setIsModalOpen(false)
+      fetchPendingCompanies()
+      fetchApprovedCompanies()
     }
   }
 
@@ -258,42 +261,44 @@ export default function ModalProveedor({
           <section className="text-[13px] px-[35px] pt-[25px] w-full">
             <h3 className="font-bold">Descripción</h3>
             <p className="text-sm py-[15px]">{selectedCompany.description}</p>
-            {activeTab === 'pending' ? <>
-              <Separator />
-              <div className="flex items-center space-x-2 py-[25px]">
-                <Checkbox
-                  onClick={() => {
-                    setCheckboxChecked(!checkboxChecked)
-                  }}
-                  id="terms"
-                />
-                <label
-                  htmlFor="terms"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  He leído los documentos que ha entregado el proveedor
-                </label>
-              </div>
-              <footer className="flex gap-x-3">
-                <Button
-                  disabled={!checkboxChecked}
-                  onClick={() =>
-                    handleAccept(selectedCompany, selectedCompany.companyId)
-                  }
-                  variant="default"
-                >
-                  Aprobar
-                </Button>
-                <Button
-                  onClick={() =>
-                    handleReject(selectedCompany, selectedCompany.companyId)
-                  }
-                  variant="outline"
-                >
-                  Rechazar
-                </Button>
-              </footer>
-            </> :
+            {activeTab === 'pending_approval' ? (
+              <>
+                <Separator />
+                <div className="flex items-center space-x-2 py-[25px]">
+                  <Checkbox
+                    onClick={() => {
+                      setCheckboxChecked(!checkboxChecked)
+                    }}
+                    id="terms"
+                  />
+                  <label
+                    htmlFor="terms"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    He leído los documentos que ha entregado el proveedor
+                  </label>
+                </div>
+                <footer className="flex gap-x-3">
+                  <Button
+                    disabled={!checkboxChecked}
+                    onClick={() =>
+                      handleAccept(selectedCompany, selectedCompany.companyId)
+                    }
+                    variant="default"
+                  >
+                    Aprobar
+                  </Button>
+                  <Button
+                    onClick={() =>
+                      handleReject(selectedCompany, selectedCompany.companyId)
+                    }
+                    variant="outline"
+                  >
+                    Rechazar
+                  </Button>
+                </footer>
+              </>
+            ) : (
               <Button
                 onClick={() =>
                   handleReject(selectedCompany, selectedCompany.companyId)
@@ -302,7 +307,7 @@ export default function ModalProveedor({
               >
                 Eliminar
               </Button>
-            }
+            )}
           </section>
         </article>
       </ThemeProvider>

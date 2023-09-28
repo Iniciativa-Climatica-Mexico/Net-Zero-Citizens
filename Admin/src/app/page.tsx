@@ -1,7 +1,11 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Company, getCompaniesByStatus } from '@/api/v1/company'
+import {
+  Company,
+  getPendingCompanies,
+  getApprovedCompanies,
+} from '@/api/v1/company'
 
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
@@ -50,32 +54,35 @@ export default function Home() {
   const [pendingCompanies, setPendingCompanies] = useState<Company[]>([])
   const [approvedCompanies, setApprovedCompanies] = useState<Company[]>([])
   const [searchTerm, setSearchTerm] = useState('')
-  const [activeTab, setActiveTab] = useState<'pending' | 'approved'>('pending')
+  const [activeTab, setActiveTab] = useState<'pending_approval' | 'approved'>(
+    'pending_approval'
+  )
 
   const handleTableRowClick = (company: Company) => {
     setSelectedCompany(company)
     setIsModalOpen(true)
   }
 
-  const fetchCompaniesByStatus = async (
-    status: 'pending_approval' | 'approved' | 'rejected'
-  ) => {
+  const fetchPendingCompanies = async () => {
     try {
-      const companies = await getCompaniesByStatus(status)
-      if (status === 'pending_approval') {
-        setPendingCompanies(companies)
-      } else if (status === 'approved') {
-        setApprovedCompanies(companies)
-      } else {
-        console.log('Status is not valid')
-      }
+      const companies = await getPendingCompanies()
+      setPendingCompanies(companies)
     } catch (error) {
-      console.error(`Fetch of ${status} companies was not successful`, error)
+      console.error('Fetch of pending companies was not successful', error)
+    }
+  }
+
+  const fetchApprovedCompanies = async () => {
+    try {
+      const companies = await getApprovedCompanies()
+      setApprovedCompanies(companies)
+    } catch (error) {
+      console.error('Fetch of approved companies was not successful', error)
     }
   }
 
   const filteredCompanies =
-    activeTab === 'pending'
+    activeTab === 'pending_approval'
       ? pendingCompanies?.filter((company) =>
         company.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
@@ -90,8 +97,8 @@ export default function Home() {
   const handlePageChange = (newPage: number) => setCurrentPage(newPage)
 
   useEffect(() => {
-    fetchCompaniesByStatus('approved')
-    fetchCompaniesByStatus('pending_approval')
+    fetchPendingCompanies()
+    fetchApprovedCompanies()
   }, [])
 
   const renderTable = (companies: Company[]) => (
@@ -155,7 +162,8 @@ export default function Home() {
               <CellAction
                 setIsModalOpen={setIsModalOpen}
                 companyId={company.companyId}
-                fetchCompaniesByStatus={() => fetchCompaniesByStatus('approved' || 'pending_approval')}
+                fetchPendingCompanies={() => fetchPendingCompanies()}
+                fetchApprovedCompanies={() => fetchApprovedCompanies()}
                 company={company}
                 activeTab={activeTab}
               />
@@ -176,7 +184,8 @@ export default function Home() {
           <ModalProveedor
             selectedCompany={selectedCompany}
             setIsModalOpen={setIsModalOpen}
-            fetchCompaniesByStatus={() => fetchCompaniesByStatus('pending_approval'||'approved')}
+            fetchPendingCompanies={() => fetchPendingCompanies()}
+            fetchApprovedCompanies={() => fetchApprovedCompanies()}
             activeTab={activeTab}
           />
         </div>
@@ -191,11 +200,11 @@ export default function Home() {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <Tabs defaultValue="pending">
+        <Tabs defaultValue="pending_approval">
           <TabsList>
             <TabsTrigger
-              value="pending"
-              onClick={() => setActiveTab('pending')}
+              value="pending_approval"
+              onClick={() => setActiveTab('pending_approval')}
             >
               Pendientes
             </TabsTrigger>
