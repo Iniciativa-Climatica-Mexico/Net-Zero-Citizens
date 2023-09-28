@@ -82,7 +82,7 @@ export const getComplaintById = async (params: {
  * @param params companyId
  * @returns Una promesa con la(s) complaint(s) de una compañia o null
  */
-export const getComplaintByCompany = async (
+export const getComplaintsByCompany = async (
   params: PaginationParams<{ companyId: string }>
 ): Promise<PaginatedQuery<Complaint>> => {
   const { companyId } = params
@@ -108,7 +108,7 @@ export const getComplaintByCompany = async (
  * @param params userId
  * @returns Una promesa con la(s) complaint(s) de un usuario o null
  */
-export const getComplaintByUser = async (
+export const getComplaintsByUser = async (
   params: PaginationParams<{ userId: string }>
 ): Promise<PaginatedQuery<Complaint>> => {
   const { userId } = params
