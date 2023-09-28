@@ -24,10 +24,12 @@ import BusinessIcon from '@mui/icons-material/Business'
 import LanguageIcon from '@mui/icons-material/Language'
 import PlaceIcon from '@mui/icons-material/Place'
 import FileOpenIcon from '@mui/icons-material/FileOpen'
+import Logo from '../../public/Logo.svg'
 
 import { Separator } from './ui/separator'
 import { Button } from './ui/button'
 import { Checkbox } from './ui/checkbox'
+import Image from 'next/image'
 /*import { AlertDialogFooter, AlertDialogHeader } from './ui/alert-dialog'
 import {
   AlertDialog,
@@ -128,6 +130,8 @@ export default function ModalProveedor({
     }
   }
 
+  console.log(selectedCompany.profilePicture)
+
   /**
    * @brief Function to format companies approval date to: DD/MM/YY
    * @param date
@@ -158,101 +162,128 @@ export default function ModalProveedor({
         />
         <article className="flex flex-col border border-[#C1C9D2] justify-center items-center rounded-lg w-[823px] py-[25px] bg-white z-10">
           <article className="flex border border-[#C1C9D2] rounded-xl w-[763px]">
-            <img
-              src={selectedCompany.profilePicture}
-              alt="Green Circle"
-              width={350}
-              height={350}
-              className="basis-6/12 mr-[10px] rounded-l-xl object-cover"
-            />
+            {selectedCompany.profilePicture  != null ? (
+              <img
+                src={selectedCompany.profilePicture}
+                alt="Company Profile"
+                width={350}
+                height={350}
+                className="basis-6/12 mr-[10px] rounded-l-xl object-cover border-r"
+              />
+            ) : (
+              <Image
+                src={Logo}
+                alt="Placeholder"
+                width={350}
+                height={350}
+                className="basis-6/12 mr-[10px] rounded-l-xl object-cover border-r"
+              />
+            )}
+
             <aside className="basis-6/12 pl-[15px] pr-[25px] py-[20px] text-[14px]">
               <h2 className="text-[20px] font-bold">{selectedCompany.name}</h2>
               <section className="flex items-center text-[#589A74] py-[10px] gap-x-2">
                 <PlaceIcon color="primary" />
                 {`${selectedCompany.city} ${selectedCompany.state} ${selectedCompany.zipCode}`}
               </section>
-              <Separator />
-              <section className="flex items-center text-[#589A74] py-[10px] gap-x-2">
-                <BusinessIcon color="primary" />
-                {`${selectedCompany.street} ${selectedCompany.streetNumber}`}
-              </section>
+              {selectedCompany.street && (
+                <>
+                  <Separator />
+                  <section className="flex items-center text-[#589A74] py-[10px] gap-x-2">
+                    <BusinessIcon color="primary" />
+                    {`${selectedCompany.street} ${selectedCompany.streetNumber}`}
+                  </section>
+                </>
+              )}
+
               <Separator />
               <section className="flex items-center text-[#589A74] py-[10px] gap-x-2">
                 <PhoneIcon color="primary" />
                 {selectedCompany.phone}
               </section>
-              <Separator />
-              <section className="flex items-center text-[#589A74] py-[10px] gap-x-2">
-                <LanguageIcon color="primary" />
-                {selectedCompany.webPage}
-              </section>
+              {selectedCompany.webPage && (
+                <>
+                  <Separator />
+                  <section className="flex items-center text-[#589A74] py-[10px] gap-x-2">
+                    <LanguageIcon color="primary" />
+                    <span>{selectedCompany.webPage}</span>
+                  </section>
+                </>
+              )}
+              {selectedCompany.pdfCurriculumUrl && selectedCompany.pdfDicCdmxUrl && selectedCompany.pdfPeeFideUrl && selectedCompany.pdfGuaranteeSecurityUrl && selectedCompany.pdfActaConstitutivaUrl && selectedCompany.pdfIneUrl &&
               <h2 className="text-[14px] font-bold mt-[10px] mb-[10px]">
                 Documentos
               </h2>
-              <section className="flex justify-between items-end mb-3">
-                <a
-                  href={selectedCompany.pdfCurriculumUrl}
-                  className="min-w-[31%]"
-                  target="_blank"
-                >
-                  <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                    <FileOpenIcon color="info" className="mt-3" />
-                    <p className="my-2 text-[11px]">Curriculum</p>
-                  </div>
-                </a>
-                <a
-                  href={selectedCompany.pdfDicCdmxUrl}
-                  className="min-w-[31%]"
-                  target="_blank"
-                >
-                  <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                    <FileOpenIcon color="info" className="mt-3" />
-                    <p className="my-2 text-[11px]">Dic CDMX</p>
-                  </div>
-                </a>
-                <a
-                  href={selectedCompany.pdfPeeFideUrl}
-                  className="min-w-[31%]"
-                  target="_blank"
-                >
-                  <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                    <FileOpenIcon color="info" className="mt-3" />
-                    <p className="my-2 text-[11px]">Pee Fide</p>
-                  </div>
-                </a>
-              </section>
-              <section className="flex justify-between items-end mb-3">
-                <a
-                  href={selectedCompany.pdfGuaranteeSecurityUrl}
-                  className="min-w-[31%]"
-                  target="_blank"
-                >
-                  <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                    <FileOpenIcon color="info" className="mt-3" />
-                    <p className="my-2 text-[11px]">Guarantee</p>
-                  </div>
-                </a>
-                <a
-                  href={selectedCompany.pdfActaConstitutivaUrl}
-                  className="min-w-[31%]"
-                  target="_blank"
-                >
-                  <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                    <FileOpenIcon color="info" className="mt-3" />
-                    <p className="my-2 text-[11px]">Acta Constitutiva</p>
-                  </div>
-                </a>
-                <a
-                  href={selectedCompany.pdfIneUrl}
-                  className="min-w-[31%]"
-                  target="_blank"
-                >
-                  <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                    <FileOpenIcon color="info" className="mt-3" />
-                    <p className="my-2 text-[11px]">INE</p>
-                  </div>
-                </a>
-              </section>
+              }
+              {selectedCompany.pdfCurriculumUrl && selectedCompany.pdfDicCdmxUrl && selectedCompany.pdfPeeFideUrl &&
+
+                <section className="flex justify-between items-end mb-3">
+                  <a
+                    href={selectedCompany.pdfCurriculumUrl}
+                    className="min-w-[31%]"
+                    target="_blank"
+                  >
+                    <div className="border px-[5px] rounded flex flex-col justify-center items-center">
+                      <FileOpenIcon color="info" className="mt-3" />
+                      <p className="my-2 text-[11px]">Curriculum</p>
+                    </div>
+                  </a>
+                  <a
+                    href={selectedCompany.pdfDicCdmxUrl}
+                    className="min-w-[31%]"
+                    target="_blank"
+                  >
+                    <div className="border px-[5px] rounded flex flex-col justify-center items-center">
+                      <FileOpenIcon color="info" className="mt-3" />
+                      <p className="my-2 text-[11px]">Dic CDMX</p>
+                    </div>
+                  </a>
+                  <a
+                    href={selectedCompany.pdfPeeFideUrl}
+                    className="min-w-[31%]"
+                    target="_blank"
+                  >
+                    <div className="border px-[5px] rounded flex flex-col justify-center items-center">
+                      <FileOpenIcon color="info" className="mt-3" />
+                      <p className="my-2 text-[11px]">Pee Fide</p>
+                    </div>
+                  </a>
+                </section>
+              }
+              {selectedCompany.pdfGuaranteeSecurityUrl && selectedCompany.pdfActaConstitutivaUrl && selectedCompany.pdfIneUrl &&
+                <section className="flex justify-between items-end mb-3">
+                  <a
+                    href={selectedCompany.pdfGuaranteeSecurityUrl}
+                    className="min-w-[31%]"
+                    target="_blank"
+                  >
+                    <div className="border px-[5px] rounded flex flex-col justify-center items-center">
+                      <FileOpenIcon color="info" className="mt-3" />
+                      <p className="my-2 text-[11px]">Guarantee</p>
+                    </div>
+                  </a>
+                  <a
+                    href={selectedCompany.pdfActaConstitutivaUrl}
+                    className="min-w-[31%]"
+                    target="_blank"
+                  >
+                    <div className="border px-[5px] rounded flex flex-col justify-center items-center">
+                      <FileOpenIcon color="info" className="mt-3" />
+                      <p className="my-2 text-[11px]">Acta Constitutiva</p>
+                    </div>
+                  </a>
+                  <a
+                    href={selectedCompany.pdfIneUrl}
+                    className="min-w-[31%]"
+                    target="_blank"
+                  >
+                    <div className="border px-[5px] rounded flex flex-col justify-center items-center">
+                      <FileOpenIcon color="info" className="mt-3" />
+                      <p className="my-2 text-[11px]">INE</p>
+                    </div>
+                  </a>
+                </section>
+              }
               <p className="text-right text-[#858585] text-[14px]">
                 {formatDate(selectedCompany.createdAt)}
               </p>

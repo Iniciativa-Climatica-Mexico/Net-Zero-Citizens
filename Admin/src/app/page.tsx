@@ -21,9 +21,11 @@ import {
 } from '@/components/ui/table'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import Logo from './../../public/Logo.svg'
 
 import { CellAction } from '@/components/cellAction'
 import ModalProveedor from '@/components/modalProveedor'
+import Image from 'next/image'
 
 export default function Home() {
   const [selectedCompany, setSelectedCompany] = useState<Company>({
@@ -121,9 +123,19 @@ export default function Home() {
               className="cursor-pointer"
               onClick={() => handleTableRowClick(company)}
             >
-              <Avatar>
-                <AvatarImage src={company.profilePicture} />
-              </Avatar>
+              {company.profilePicture != null ?
+                <Avatar>
+                  <AvatarImage src={company.profilePicture} />
+                </Avatar>
+                :
+                <Image
+                  src={Logo}
+                  alt="Placeholder"
+                  width={350}
+                  height={350}
+                  className="basis-6/12 mr-[10px] rounded-l-xl object-cover"
+                />
+              }
             </TableCell>
             <TableCell
               className="cursor-pointer"
@@ -153,7 +165,7 @@ export default function Home() {
                     ? 'bg-[#547C8B] text-white'
                     : 'bg-[#FFE6C2] text-jet'
                 }
-                text-center rounded-xl py-2`}
+                text-center rounded-xl p-2.5`}
               >
                 {company.status === 'approved' ? 'Aprobado' : 'Pendiente'}
               </div>

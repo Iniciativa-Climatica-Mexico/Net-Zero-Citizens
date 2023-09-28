@@ -14,7 +14,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import Logo from '../../public/LogoBloque.png'
+import Logo from '../../public/Logo.svg'
 import { usePathname } from 'next/navigation'
 import { deleteSession, refreshTokens } from '@/utils/sessionHooks'
 
