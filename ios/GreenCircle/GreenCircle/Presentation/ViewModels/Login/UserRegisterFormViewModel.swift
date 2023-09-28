@@ -15,11 +15,11 @@ struct BasicUserInfo {
   var privacy = false
 }
 
+let GENDERS = ["Masculino", "Femenino", "Otro", "Prefiero no contestar"]
+
 /// ViewModel de la vista de formulario de Registro de Usuario
 class UserRegisterFormViewModel: ObservableObject {
   var useCase = UserRegisterUseCase.shared
-  
-  let genders = ["Masculino", "Femenino", "Otro", "Prefiero no decirlo"]
   
   @Published var formState = BasicUserInfo()
   @Published var errorMessage = ""

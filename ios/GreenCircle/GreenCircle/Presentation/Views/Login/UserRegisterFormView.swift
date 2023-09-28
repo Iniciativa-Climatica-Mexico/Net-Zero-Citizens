@@ -55,7 +55,7 @@ struct UserRegisterFormView: View {
         PickerFormView(selectedOption:
                         $viewModel.formState.gender,
                        label: "Género",
-                       options: viewModel.genders)
+                       options: GENDERS)
         HStack {
           HStack {
             Text("Acepto las")

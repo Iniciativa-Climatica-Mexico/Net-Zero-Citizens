@@ -62,10 +62,23 @@ class UserRepository: UserRepositoryProtocol {
   /// - Parameters:
   ///   - user: información del usuario a actualizar
   func putUser(_ user: UserAuth) async -> Bool{
+    var gender: String
+    
+    switch user.gender {
+    case "Masculino":
+      gender = "masculine"
+    case "Femenino":
+      gender = "femenine"
+    case "Otro":
+      gender = "other"
+    default:
+      gender = "no_answer"
+    }
+    
     let params: [String: Any] = [
       "phoneNumber": user.phone!,
       "age": user.age!,
-      "gender": user.gender!,
+      "gender": gender,
       "state": user.state!,
       "roleId": "CUSTOMER_ROLE_ID"
     ]
