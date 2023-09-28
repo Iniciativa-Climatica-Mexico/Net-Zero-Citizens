@@ -57,7 +57,7 @@ struct SurveyView: View {
         return Alert(title: Text("Error"), message: Text("Hay preguntas requeridas que no se han respondido"), dismissButton: .default(Text("OK")))
       }
     }.onTapGesture {
-      //hideKeyboard()
+      hideKeyboard()
     }
   }
 }

@@ -92,7 +92,7 @@ struct UserRegisterFormView: View {
       
     }
     .onTapGesture {
-      //hideKeyboard()
+      hideKeyboard()
     }
     .foregroundColor(Color("MainText"))
   }
