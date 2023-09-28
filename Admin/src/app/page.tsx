@@ -21,7 +21,7 @@ import {
 } from '@/components/ui/table'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import Logo from './../../public/Logo.svg'
+import LogoSm from './../../public/LogoSm.svg'
 
 import { CellAction } from '@/components/cellAction'
 import ModalProveedor from '@/components/modalProveedor'
@@ -129,7 +129,7 @@ export default function Home() {
                 </Avatar>
                 :
                 <Image
-                  src={Logo}
+                  src={LogoSm}
                   alt="Placeholder"
                   width={350}
                   height={350}

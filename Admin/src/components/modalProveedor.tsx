@@ -30,16 +30,13 @@ import { Separator } from './ui/separator'
 import { Button } from './ui/button'
 import { Checkbox } from './ui/checkbox'
 import Image from 'next/image'
-/*import { AlertDialogFooter, AlertDialogHeader } from './ui/alert-dialog'
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@radix-ui/react-alert-dialog'*/
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 
 interface ModalProveedorProps {
   setIsModalOpen: (value: boolean) => void
@@ -56,6 +53,7 @@ export default function ModalProveedor({
   fetchApprovedCompanies,
   activeTab,
 }: ModalProveedorProps) {
+  const [viewModal, setViewModal] = useState<boolean>(false)
   const [checkboxChecked, setCheckboxChecked] = useState(false)
   const { toast } = useToast()
   /**
@@ -121,16 +119,11 @@ export default function ModalProveedor({
     } catch (error) {
       console.error('Error rejecting company:', error)
     } finally {
-      toast({
-        description: 'Proveedor rechazado exitosamente.',
-      })
       setIsModalOpen(false)
       fetchPendingCompanies()
       fetchApprovedCompanies()
     }
   }
-
-  console.log(selectedCompany.profilePicture)
 
   /**
    * @brief Function to format companies approval date to: DD/MM/YY
@@ -151,71 +144,106 @@ export default function ModalProveedor({
   }
 
   return (
-    <div className="bg h-screen flex flex-col items-end">
-      <ThemeProvider theme={Theme}>
-        <CloseIcon
-          color="secondary"
-          className="cursor-pointer mb-2"
-          onClick={() => {
-            setIsModalOpen(false)
-          }}
-        />
-        <article className="flex flex-col border border-[#C1C9D2] justify-center items-center rounded-lg w-[823px] py-[25px] bg-white z-10">
-          <article className="flex border border-[#C1C9D2] rounded-xl w-[763px]">
-            {selectedCompany.profilePicture  != null ? (
-              <img
-                src={selectedCompany.profilePicture}
-                alt="Company Profile"
-                width={350}
-                height={350}
-                className="basis-6/12 mr-[10px] rounded-l-xl object-cover border-r"
-              />
-            ) : (
-              <Image
-                src={Logo}
-                alt="Placeholder"
-                width={350}
-                height={350}
-                className="basis-6/12 mr-[10px] rounded-l-xl object-cover border-r"
-              />
-            )}
-
-            <aside className="basis-6/12 pl-[15px] pr-[25px] py-[20px] text-[14px]">
-              <h2 className="text-[20px] font-bold">{selectedCompany.name}</h2>
-              <section className="flex items-center text-[#589A74] py-[10px] gap-x-2">
-                <PlaceIcon color="primary" />
-                {`${selectedCompany.city} ${selectedCompany.state} ${selectedCompany.zipCode}`}
-              </section>
-              {selectedCompany.street && (
-                <>
-                  <Separator />
-                  <section className="flex items-center text-[#589A74] py-[10px] gap-x-2">
-                    <BusinessIcon color="primary" />
-                    {`${selectedCompany.street} ${selectedCompany.streetNumber}`}
-                  </section>
-                </>
+    <div>
+      {viewModal && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="modal-container">
+            <Card className="w-[450px] modal-card">
+              <CardHeader>
+                <CardTitle>Confirmar Acción</CardTitle>
+                <CardDescription>Seguro que desea eliminar al proveedor?</CardDescription>
+              </CardHeader>
+              <CardFooter className="flex justify-between">
+                <Button
+                  onClick={() => {
+                    handleReject(selectedCompany, selectedCompany.companyId)
+                    toast({
+                      description: 'Proveedor eliminado exitosamente.',
+                    })
+                  }
+                  }
+                  variant="default"
+                >
+                  Confirmar
+                </Button>
+                <Button
+                  onClick={() => setViewModal(false)}
+                  variant="outline"
+                >
+                  Cancelar
+                </Button>
+              </CardFooter>
+            </Card>
+          </div>
+        </div>
+      )}
+      <div className="fixed inset-0 flex flex-col items-center justify-center">
+        <ThemeProvider theme={Theme}>
+          <div className="flex justify-end w-50 pr-4 pb-2">
+            <CloseIcon
+              color="secondary"
+              className="cursor-pointer"
+              onClick={() => {
+                setIsModalOpen(false)
+              }}
+            />
+          </div>
+          <article className="flex flex-col border border-[#C1C9D2] justify-center items-center rounded-lg w-[823px] py-[25px] bg-white z-10">
+            <article className="flex border border-[#C1C9D2] rounded-xl w-[763px]">
+              {selectedCompany.profilePicture  != null ? (
+                <img
+                  src={selectedCompany.profilePicture}
+                  alt="Company Profile"
+                  width={350}
+                  height={350}
+                  className="basis-6/12 mr-[10px] rounded-l-xl object-cover border-r"
+                />
+              ) : (
+                <Image
+                  src={Logo}
+                  alt="Placeholder"
+                  width={350}
+                  height={350}
+                  className="basis-6/12 mr-[10px] rounded-l-xl object-cover border-r"
+                />
               )}
 
-              <Separator />
-              <section className="flex items-center text-[#589A74] py-[10px] gap-x-2">
-                <PhoneIcon color="primary" />
-                {selectedCompany.phone}
-              </section>
-              {selectedCompany.webPage && (
-                <>
-                  <Separator />
-                  <section className="flex items-center text-[#589A74] py-[10px] gap-x-2">
-                    <LanguageIcon color="primary" />
-                    <span>{selectedCompany.webPage}</span>
-                  </section>
-                </>
-              )}
-              {selectedCompany.pdfCurriculumUrl && selectedCompany.pdfDicCdmxUrl && selectedCompany.pdfPeeFideUrl && selectedCompany.pdfGuaranteeSecurityUrl && selectedCompany.pdfActaConstitutivaUrl && selectedCompany.pdfIneUrl &&
-              <h2 className="text-[14px] font-bold mt-[10px] mb-[10px]">
-                Documentos
-              </h2>
-              }
-              {selectedCompany.pdfCurriculumUrl && selectedCompany.pdfDicCdmxUrl && selectedCompany.pdfPeeFideUrl &&
+              <aside className="basis-6/12 pl-[15px] pr-[25px] py-[20px] text-[14px]">
+                <h2 className="text-[20px] font-bold">{selectedCompany.name}</h2>
+                <section className="flex items-center text-[#589A74] py-[10px] gap-x-2">
+                  <PlaceIcon color="primary" />
+                  {`${selectedCompany.city} ${selectedCompany.state} ${selectedCompany.zipCode}`}
+                </section>
+                {selectedCompany.street && (
+                  <>
+                    <Separator />
+                    <section className="flex items-center text-[#589A74] py-[10px] gap-x-2">
+                      <BusinessIcon color="primary" />
+                      {`${selectedCompany.street} ${selectedCompany.streetNumber}`}
+                    </section>
+                  </>
+                )}
+
+                <Separator />
+                <section className="flex items-center text-[#589A74] py-[10px] gap-x-2">
+                  <PhoneIcon color="primary" />
+                  {selectedCompany.phone}
+                </section>
+                {selectedCompany.webPage && (
+                  <>
+                    <Separator />
+                    <section className="flex items-center text-[#589A74] py-[10px] gap-x-2">
+                      <LanguageIcon color="primary" />
+                      <span>{selectedCompany.webPage}</span>
+                    </section>
+                  </>
+                )}
+                {selectedCompany.pdfCurriculumUrl && selectedCompany.pdfDicCdmxUrl && selectedCompany.pdfPeeFideUrl && selectedCompany.pdfGuaranteeSecurityUrl && selectedCompany.pdfActaConstitutivaUrl && selectedCompany.pdfIneUrl &&
+                <h2 className="text-[14px] font-bold mt-[10px] mb-[10px]">
+                  Documentos
+                </h2>
+                }
+                {selectedCompany.pdfCurriculumUrl && selectedCompany.pdfDicCdmxUrl && selectedCompany.pdfPeeFideUrl &&
 
                 <section className="flex justify-between items-end mb-3">
                   <a
@@ -249,8 +277,8 @@ export default function ModalProveedor({
                     </div>
                   </a>
                 </section>
-              }
-              {selectedCompany.pdfGuaranteeSecurityUrl && selectedCompany.pdfActaConstitutivaUrl && selectedCompany.pdfIneUrl &&
+                }
+                {selectedCompany.pdfGuaranteeSecurityUrl && selectedCompany.pdfActaConstitutivaUrl && selectedCompany.pdfIneUrl &&
                 <section className="flex justify-between items-end mb-3">
                   <a
                     href={selectedCompany.pdfGuaranteeSecurityUrl}
@@ -283,65 +311,70 @@ export default function ModalProveedor({
                     </div>
                   </a>
                 </section>
-              }
-              <p className="text-right text-[#858585] text-[14px]">
-                {formatDate(selectedCompany.createdAt)}
-              </p>
-            </aside>
-          </article>
-          <section className="text-[13px] px-[35px] pt-[25px] w-full">
-            <h3 className="font-bold">Descripción</h3>
-            <p className="text-sm py-[15px]">{selectedCompany.description}</p>
-            {activeTab === 'pending_approval' ? (
-              <>
-                <Separator />
-                <div className="flex items-center space-x-2 py-[25px]">
-                  <Checkbox
-                    onClick={() => {
-                      setCheckboxChecked(!checkboxChecked)
-                    }}
-                    id="terms"
-                  />
-                  <label
-                    htmlFor="terms"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    He leído los documentos que ha entregado el proveedor
-                  </label>
-                </div>
-                <footer className="flex gap-x-3">
-                  <Button
-                    disabled={!checkboxChecked}
-                    onClick={() =>
-                      handleAccept(selectedCompany, selectedCompany.companyId)
-                    }
-                    variant="default"
-                  >
-                    Aprobar
-                  </Button>
-                  <Button
-                    onClick={() =>
-                      handleReject(selectedCompany, selectedCompany.companyId)
-                    }
-                    variant="outline"
-                  >
-                    Rechazar
-                  </Button>
-                </footer>
-              </>
-            ) : (
-              <Button
-                onClick={() =>
-                  handleReject(selectedCompany, selectedCompany.companyId)
                 }
-                variant="default"
-              >
-                Eliminar
-              </Button>
-            )}
-          </section>
-        </article>
-      </ThemeProvider>
+                <p className="text-right text-[#858585] text-[14px]">
+                  {formatDate(selectedCompany.createdAt)}
+                </p>
+              </aside>
+            </article>
+            <section className="text-[13px] px-[35px] pt-[25px] w-full">
+              <h3 className="font-bold">Descripción</h3>
+              <p className="text-sm py-[15px]">{selectedCompany.description}</p>
+              {activeTab === 'pending_approval' ? (
+                <>
+                  <Separator />
+                  <div className="flex items-center space-x-2 py-[25px]">
+                    <Checkbox
+                      onClick={() => {
+                        setCheckboxChecked(!checkboxChecked)
+                      }}
+                      id="terms"
+                    />
+                    <label
+                      htmlFor="terms"
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      He leído los documentos que ha entregado el proveedor
+                    </label>
+                  </div>
+                  <footer className="flex gap-x-3">
+                    <Button
+                      disabled={!checkboxChecked}
+                      onClick={() =>
+                        handleAccept(selectedCompany, selectedCompany.companyId)
+                      }
+                      variant="default"
+                    >
+                      Aprobar
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        handleReject(selectedCompany, selectedCompany.companyId)
+                        toast({
+                          description: 'Proveedor rechazado exitosamente.',
+                        })
+                      }
+                      }
+                      variant="outline"
+                    >
+                      Rechazar
+                    </Button>
+                  </footer>
+                </>
+              ) : (
+                <Button
+                  onClick={() =>
+                    setViewModal(true)
+                  }
+                  variant="default"
+                >
+                  Eliminar
+                </Button>
+              )}
+            </section>
+          </article>
+        </ThemeProvider>
+      </div>
     </div>
   )
 }
