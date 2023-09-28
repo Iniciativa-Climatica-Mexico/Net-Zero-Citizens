@@ -17,7 +17,7 @@ interface ComplaintAPI {
      * @return Response<ResponseBody> -> Respuesta de la petición
      * @since 2.0.0
      */
-    @POST("{userId}/{companyId}")
+    @POST("complaints/{userId}/{companyId}")
     suspend fun postComplaint(
         @Path("userId") userId: UUID,
         @Path("companyId") companyId: UUID,

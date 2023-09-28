@@ -15,9 +15,15 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.greencircle.R
+import com.greencircle.data.remote.complaints.ComplaintClient
 import com.greencircle.domain.model.complaints.Complaint
+import com.greencircle.domain.model.complaints.ComplaintStatus
 import java.util.UUID
 import kotlin.math.roundToInt
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
 /**
@@ -30,6 +36,8 @@ class ComplaintCompanyFragment : DialogFragment() {
         arguments?.getString("CompanyId")?.let { UUID.fromString(it) } ?: UUID.randomUUID()
 
     private val companyName: String = arguments?.getString("CompanyName") ?: "Company"
+    private val authToken: String = arguments?.getString("AuthToken") ?: "AuthToken"
+    private val complaintClient = ComplaintClient()
 
     /**
      * Se ejecuta cuando la vista se ha creado
@@ -94,14 +102,37 @@ class ComplaintCompanyFragment : DialogFragment() {
                 val userId = UUID.fromString(userJSON.getString("uuid"))
 
                 val complaint = Complaint(
-                    idUser = userId,
-                    idCompany = companyId,
-                    companyName = companyName,
                     complaintTitle = complaintTitle,
-                    complaintDescription = complaintDescription
+                    complaintDescription = complaintDescription,
+                    status = ComplaintStatus.ACTIVE
                 )
 
-                Log.d("Complaint", complaint.toString())
+                CoroutineScope(Dispatchers.Main).launch {
+                    val response = withContext(Dispatchers.IO) {
+                        complaintClient.postComplaint(
+                            idUser = userId,
+                            idCompany = companyId,
+                            authToken = authToken,
+                            complaint = complaint
+                        )
+                    }
+
+                    if (isAdded) {
+                        if (response?.isSuccessful == true) {
+                            Toast.makeText(
+                                requireContext(),
+                                "Report sent successfully",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            Toast.makeText(
+                                requireContext(),
+                                "Error sending report",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
 
                 Toast.makeText(requireContext(), "Report", Toast.LENGTH_SHORT).show()
             }.create()

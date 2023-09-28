@@ -180,6 +180,7 @@ class CompanyReviewFragment : Fragment() {
         val bundle = Bundle()
         bundle.putString("CompanyId", companyId.toString())
         bundle.putString("CompanyName", arguments?.getString("CompanyName"))
+        bundle.putString("AuthToken", arguments?.getString("AuthToken"))
 
         val complaintCompanyFragment = ComplaintCompanyFragment()
         complaintCompanyFragment.arguments = bundle

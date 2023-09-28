@@ -1,6 +1,7 @@
 import CompanyBootstrap from '../bootstrap/company.bootstrap'
 import CompanyImagesBootstrap from '../bootstrap/companyImages.bootstrap'
 import CompanyProductsBootstrap from '../bootstrap/companyProducts.bootstrap'
+import ComplaintBootstrap from '../bootstrap/complaint.bootstrap'
 import DummyBootstrap from '../bootstrap/dummy.bootstrap'
 import ProductBootstrap from '../bootstrap/product.bootstrap'
 import ReviewBootstrap from '../bootstrap/reviews.bootstrap'
@@ -16,6 +17,7 @@ export const bootstrapDB = async () => {
       RolesBootstrap,
       CompanyBootstrap,
       UserBootstrap,
+      ComplaintBootstrap,
       SurveysBootstrapper,
       ReviewBootstrap,
       ProductBootstrap,

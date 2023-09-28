@@ -14,10 +14,10 @@ import retrofit2.Response
  */
 class ComplaintRepository(private val api: ComplaintAPI) {
     suspend fun postComplaint(
-        userId: UUID,
-        companyId: UUID,
+        idUser: UUID,
+        idCompany: UUID,
         complaint: Complaint
     ): Response<ResponseBody> {
-        return api.postComplaint(userId, companyId, complaint)
+        return api.postComplaint(idUser, idCompany, complaint)
     }
 }
