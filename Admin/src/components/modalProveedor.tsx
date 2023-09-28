@@ -31,6 +31,7 @@ import LanguageIcon from '@mui/icons-material/Language'
 import PlaceIcon from '@mui/icons-material/Place'
 import FileOpenIcon from '@mui/icons-material/FileOpen'
 import Logo from '../../public/Logo.svg'
+import { formatDate } from '@/utils/dateUtils'
 
 import { Separator } from './ui/separator'
 import { Button } from './ui/button'
@@ -128,25 +129,7 @@ export default function ModalProveedor({
       fetchApprovedCompanies()
     }
   }
-
-  /**
-   * @brief Function to format companies approval date to: DD/MM/YY
-   * @param date
-   * @returns formatted date
-   */
-  const formatDate = (date: string) => {
-    const dateObject = new Date(date)
-
-    const day = dateObject.getDate()
-    const month = dateObject.getMonth() + 1
-    const year = dateObject.getFullYear()
-
-    const formattedDay = day < 10 ? `0${day}` : day
-    const formattedMonth = month < 10 ? `0${month}` : month
-
-    return `${formattedDay}/${formattedMonth}/${year}`
-  }
-
+  
   return (
     <div>
       {viewModal && (

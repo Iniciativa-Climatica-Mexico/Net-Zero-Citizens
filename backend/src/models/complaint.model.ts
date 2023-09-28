@@ -80,3 +80,4 @@ export default class Complaint extends Model {
     })
     complaintStatus: ComplaintStatusEnum
 }
+
