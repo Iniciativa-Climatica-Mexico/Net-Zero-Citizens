@@ -53,7 +53,6 @@ export default function Home() {
   const fetchCompaniesWithComplaints = async () => {
     try {
       const companies = await getCompaniesWithComplaints()
-      console.log('companies', companies)
       setCompaniesWithComplaints(companies)
     } catch (error) {
       console.error('Fetch of complaints by company was not successful', error)
