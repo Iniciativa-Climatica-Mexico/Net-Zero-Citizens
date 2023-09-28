@@ -10,28 +10,36 @@ import Foundation
 /// Clase representando el caso de uso de registrar una compañía nueva
 class CompanyUseCase {
   static let shared = CompanyUseCase()
-  let repository = CompanyRepository.shared
+  let cRepository = CompanyRepository.shared
+  let uRepository = UserRepository.shared
+  
+  func getLocalUserData() -> AuthResponse? {
+    return uRepository.getAuthData()
+  }
   
   /// Llama al repositorio para crear una compañía nueva
   /// - Parameters:
   ///   - authToken: token de autenticación del usuario
   ///   - company: datos de la compañía
   @MainActor
-  func registerCompany(authToken: String, company: PostCompanyData) async {
-    await repository.postCompany(authToken: authToken, company: company)
+  func registerCompany(company: PostCompanyData) async {
+    await cRepository.postCompany(company: company)
+    await uRepository
+      .updateUserRole(userId: company.userId!,
+                      newRole: "COMAPNY_ROLE_ID")
   }
   
   @MainActor
   func fetchAllCompanies() async -> PaginatedQuery<Company>? {
-    return await repository.fetchAllCompanies()
+    return await cRepository.fetchAllCompanies()
   }
   
   /// Definición de Caso de uso para hacer el fetch
-    ///   - Parameters:UUID de compañía
-    ///   - Returns: Modelo de compañía
+  ///   - Parameters:UUID de compañía
+  ///   - Returns: Modelo de compañía
   @MainActor
   func fetchCompanyById(id: UUID) async -> Company? {
-    if var company = await repository.fetchCompanyById(companyId: id) {
+    if var company = await cRepository.fetchCompanyById(companyId: id) {
       if !company.webPage.isEmpty {
         company.webPage = "No contamos con Página Web"
       }
