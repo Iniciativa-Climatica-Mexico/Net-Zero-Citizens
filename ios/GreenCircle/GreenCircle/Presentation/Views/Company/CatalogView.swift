@@ -8,11 +8,19 @@
 import SwiftUI
 
 struct CardCatalogView: View {
+  @StateObject var viewModel: CompanyViewModel
   var companyId: UUID
-  var companyImage: String?
   var companyName: String
-  var streetNumber: String?
-  var street: String?
+  var city: String
+  var state: String
+
+  init(companyId: UUID, companyName: String, city: String, state: String) {
+    _viewModel = StateObject(wrappedValue: CompanyViewModel())
+    self.companyId = companyId
+    self.companyName = companyName
+    self.city = city
+    self.state = state
+  }
   
   var body: some View {
     NavigationLink(destination: ContactCompanyView(idCompany: companyId)){
@@ -23,7 +31,7 @@ struct CardCatalogView: View {
         .shadow(color: Color("BlueCustom"), radius: 1)
         HStack {
           VStack (alignment: .leading) {
-            if let imageURL = URL(string: companyImage ?? "") {
+            if let imageURL = URL(string: viewModel.contentCompany.images?.first?.imageUrl ?? "") {
               AsyncImage(url: imageURL) { phase in
                 switch phase {
                   case .empty:
@@ -64,26 +72,19 @@ struct CardCatalogView: View {
             HStack {
               Image(systemName: "location.fill")
                 .foregroundColor(Color("BlueCustom"))
-              Text("\(streetNumber ?? "") \(street ?? "")")
+              Text("\(city), \(state)")
                 .font(.system(size: 13))
                 .lineSpacing(2)
             }.foregroundColor(Color("MainText"))
               .padding(.bottom, 3)
             
             HStack {
-              Image(systemName: "star.fill")
-                .foregroundColor(Color("GreenCustom"))
-              Image(systemName: "star.fill")
-                .foregroundColor(Color("GreenCustom"))
-              Image(systemName: "star")
-                .foregroundColor(Color("GreenCustom"))
-              Image(systemName: "star")
-                .foregroundColor(Color("GreenCustom"))
-              Image(systemName: "star")
-                .foregroundColor(Color("GreenCustom"))
-              Text(String(0))
-                .foregroundColor(Color("GreenCustom"))
+              ForEach(0..<5, id: \.self) { index in
+                Image(systemName: index < Int(viewModel.contentCompany.score!) ? "star.fill" : "star")
+              }.foregroundColor(Color("GreenCustom"))
+              Text("\(Int(viewModel.contentCompany.score!))")
             }.font(.system(size: 13))
+              .foregroundColor(Color("GreenCustom"))
           }
           .frame(maxWidth: 180, maxHeight: 120)
           .multilineTextAlignment(.leading)
@@ -98,6 +99,10 @@ struct CardCatalogView: View {
         }
         .frame(maxWidth: 300, maxHeight: 140)
       }
+    }.onAppear {
+      Task {
+        await viewModel.fetchCompanyById(idCompany: companyId)
+      }
     }
     .navigationTitle("Proveedores")
     .navigationBarTitleDisplayMode(.inline)
@@ -111,8 +116,8 @@ struct CatalogView: View {
       ScrollView {
         LazyVStack{
           ForEach(viewModel.companies, id: \.id) { company in
-            CardCatalogView(companyId: company.companyId, companyImage: company.images?.first?.imageUrl,
-                            companyName: company.name, streetNumber: company.streetNumber, street: company.street)
+            CardCatalogView(companyId: company.companyId,
+                            companyName: company.name, city: company.city, state: company.state)
           }.padding(.top, 5)
         }.padding(.top, 10)
       }
