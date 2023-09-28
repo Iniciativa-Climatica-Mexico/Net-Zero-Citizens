@@ -179,28 +179,29 @@ export const addProduct = async (
  * @returns Promise<Company | Null> Proveedor con el id especificado
  */
 export const getCompanyById = async (id: string): Promise<Company | null> => {
-  return await Company.findByPk(id, {
-    include: [
-      {
-        model: Review,
-        attributes: {
-          include: [[fn('AVG', col('score')), 'score']],
-        },
-      },
-      {
-        model: Product,
-        attributes: {
-          exclude: ['createdAt', 'updatedAt'],
-        },
-      },
-      {
-        model: CompanyImages,
-        attributes: {
-          exclude: ['createdAt', 'updatedAt'],
-        },
-      },
-    ],
+  const company = await Company.findByPk(id)
+  const companyScore = await getCompanyScore(id)
+  const companyProducts = await getCompanyProducts(id)
+  const companyImages = await getCompanyImages(id)
+  const rating = Math.round(companyScore?.[0].getDataValue('score') * 10) / 10
+  const comment = companyScore?.[0].getDataValue('review')
+  const products: Product[] = []
+  const images: CompanyImages[] = []
+
+  companyProducts?.forEach(function (product) {
+    products.push(product.getDataValue('product').dataValues)
   })
+
+  companyImages?.forEach(function (image) {
+    images.push(image.dataValues)
+  })
+
+  company?.setDataValue('products', products)
+  company?.setDataValue('score', rating)
+  company?.setDataValue('oneComment', comment)
+  company?.setDataValue('images', images)
+
+  return company
 }
 
 /**
@@ -209,9 +210,7 @@ export const getCompanyById = async (id: string): Promise<Company | null> => {
  * @param uuid Id del usuario
  * @returns Promise<Company | Null> Proveedor con el id especificado
  */
-export const getCompanyByUserId = async (
-  uuid: string
-): Promise<Company | null> => {
+export const getCompanyByUserId = async (uuid: string): Promise<Company | null> => {
   const company = await Company.findOne({
     where: {
       userId: uuid,
@@ -227,9 +226,7 @@ export const getCompanyByUserId = async (
  * @param uuid Id del usuario
  * @returns Promise<Company | Null> Proveedor con el id especificado
  */
-export const unbindUserFromCompany = async (
-  uuid: string
-): Promise<Company | null> => {
+export const unbindUserFromCompany = async (uuid: string): Promise<Company | null> => {
   const company = await Company.findOne({
     where: {
       userId: uuid,
@@ -290,6 +287,8 @@ const getCompanyScore = async (id: string): Promise<Review[] | null> => {
   })
 }
 
+
+
 type assignCompanyUserResponse =
   | 'success'
   | 'El usuario ya tiene una compañía asignada'
@@ -297,7 +296,7 @@ type assignCompanyUserResponse =
   | 'La companía no existe'
   | 'El usuario no existe'
   | 'Error no esperado'
-
+  
 /**
  * @brief
  * Función del servicio para asignarle un usuario a una compañia
