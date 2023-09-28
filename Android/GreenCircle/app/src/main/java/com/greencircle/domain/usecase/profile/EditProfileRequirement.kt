@@ -6,6 +6,6 @@ import java.util.UUID
 
 class EditProfileRequirement {
     private val repository = ProfileRepository()
-    suspend operator fun invoke(userId: UUID, profile: Profile): Profile? =
-        repository.updateUser(userId, profile)
+    suspend operator fun invoke(authToken: String, userId: UUID, profile: Profile): Profile? =
+        repository.updateUser(authToken, userId, profile)
 }

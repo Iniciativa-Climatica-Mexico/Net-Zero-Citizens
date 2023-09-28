@@ -31,4 +31,16 @@ class AuthAPIClient {
             null
         }
     }
+
+    suspend fun updateTokensData(authToken: String): AuthResponse? {
+        api = AuthNetworkModel()
+        return try {
+            val body = AuthAPIService.UpdateTokensDataRequest(authToken)
+            val response = api.updateTokensData(body)
+            response
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
 }

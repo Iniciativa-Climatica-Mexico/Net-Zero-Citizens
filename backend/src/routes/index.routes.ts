@@ -7,7 +7,10 @@ import ReportRouter from './report.routes'
 import ReviewRouter from './review.routes'
 import ProducRouter from './product.routes'
 import EcofinfoRouter from './ecoinfo.routes'
+import ComplaintRouter from './complaints.routes'
+
 // import { validateToken } from '../middlewares/auth.middleware'
+import { validateToken } from '../middlewares/auth.middleware'
 import { Express } from 'express'
 
 export const initRouterV1 = (app: Express) => {
@@ -15,7 +18,7 @@ export const initRouterV1 = (app: Express) => {
   app.use('/api/v1/auth', AuthRouter)
 
   // Middleware
-  // app.use(validateToken)
+  app.use(validateToken)
 
   // Private Routes
   app.use('/api/v1/dummy', DummyRouter)
@@ -26,4 +29,5 @@ export const initRouterV1 = (app: Express) => {
   app.use('/api/v1/product', ProducRouter)
   app.use('/api/v1/ecoinfo', EcofinfoRouter)
   app.use('/api/v1/report', ReportRouter)
+  app.use('/api/v1/complaints', ComplaintRouter)
 }

@@ -1,6 +1,6 @@
 package com.greencircle.data.remote.user
 
-import android.util.Log
+import com.greencircle.data.remote.NetworkModel
 import java.util.UUID
 
 /**
@@ -21,17 +21,12 @@ class UserAPIClient {
         userInfo: UserAPIService.UpdateUserRequest,
         authToken: String
     ): UserAPIService.UpdateUserResponse? {
-        // Inicializa el cliente de la API de usuario.
-        api = UserNetworkModel(authToken)
+        api = NetworkModel(authToken, UserAPIService::class.java)
         return try {
-            // Realiza la actualización del usuario llamando al método en la API.
             val response = api.updateUser(userId, userInfo)
-            Log.d("UserAPIClient", "Response: $response")
             response
         } catch (e: Exception) {
-            // Maneja cualquier excepción que pueda ocurrir durante la actualización.
             e.printStackTrace()
-            Log.e("UpdateUser", "Error: $e")
             null
         }
     }
