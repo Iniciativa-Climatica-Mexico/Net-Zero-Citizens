@@ -76,22 +76,22 @@ export default function Home() {
 
   const filteredCompanies =
     activeTab === 'pending'
-      ? pendingCompanies.filter((company) =>
+      ? pendingCompanies?.filter((company) =>
         company.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
-      : approvedCompanies.filter((company) =>
+      : approvedCompanies?.filter((company) =>
         company.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
 
   const startIndex = (currentPage - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
-  const paginatedCompanies = filteredCompanies.slice(startIndex, endIndex)
+  const paginatedCompanies = filteredCompanies?.slice(startIndex, endIndex)
 
   const handlePageChange = (newPage: number) => setCurrentPage(newPage)
 
   useEffect(() => {
-    fetchCompaniesByStatus('pending_approval')
     fetchCompaniesByStatus('approved')
+    fetchCompaniesByStatus('pending_approval')
   }, [])
 
   const renderTable = (companies: Company[]) => (
@@ -108,7 +108,7 @@ export default function Home() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {companies.map((company) => (
+        {companies?.map((company) => (
           <TableRow key={company.companyId}>
             <TableCell
               className="cursor-pointer"
@@ -155,8 +155,9 @@ export default function Home() {
               <CellAction
                 setIsModalOpen={setIsModalOpen}
                 companyId={company.companyId}
-                fetchPending={() => fetchCompaniesByStatus('pending_approval')}
+                fetchCompaniesByStatus={() => fetchCompaniesByStatus('approved' || 'pending_approval')}
                 company={company}
+                activeTab={activeTab}
               />
             </TableCell>
           </TableRow>
@@ -175,7 +176,8 @@ export default function Home() {
           <ModalProveedor
             selectedCompany={selectedCompany}
             setIsModalOpen={setIsModalOpen}
-            fetchPending={() => fetchCompaniesByStatus('pending_approval')}
+            fetchCompaniesByStatus={() => fetchCompaniesByStatus('pending_approval'||'approved')}
+            activeTab={activeTab}
           />
         </div>
       )}
@@ -220,7 +222,7 @@ export default function Home() {
           <Button
             variant="outline"
             onClick={() => handlePageChange(currentPage + 1)}
-            disabled={endIndex >= filteredCompanies.length}
+            disabled={endIndex >= filteredCompanies?.length}
           >
             Siguiente
           </Button>

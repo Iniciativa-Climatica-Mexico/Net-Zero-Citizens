@@ -42,13 +42,15 @@ import {
 interface ModalProveedorProps {
   setIsModalOpen: (value: boolean) => void
   selectedCompany: Company
-  fetchPending: () => void
+  fetchCompaniesByStatus: (status: 'pending_approval' | 'approved' | 'rejected' ) => void
+  activeTab: 'pending' | 'approved' | 'rejected'
 }
 
 export default function ModalProveedor({
   setIsModalOpen,
   selectedCompany,
-  fetchPending,
+  fetchCompaniesByStatus,
+  activeTab
 }: ModalProveedorProps) {
   const [checkboxChecked, setCheckboxChecked] = useState(false)
   const { toast } = useToast()
@@ -83,7 +85,7 @@ export default function ModalProveedor({
         description: 'Proveedor aprobado exitosamente.',
       })
       setIsModalOpen(false)
-      fetchPending()
+      fetchCompaniesByStatus('pending_approval')
     }
   }
 
@@ -117,8 +119,9 @@ export default function ModalProveedor({
       toast({
         description: 'Proveedor rechazado exitosamente.',
       })
+      fetchCompaniesByStatus('pending_approval')
+      fetchCompaniesByStatus('approved')
       setIsModalOpen(false)
-      fetchPending()
     }
   }
 
@@ -144,7 +147,7 @@ export default function ModalProveedor({
     <div className="bg h-screen flex flex-col items-end">
       <ThemeProvider theme={Theme}>
         <CloseIcon
-          color="info"
+          color="secondary"
           className="cursor-pointer mb-2"
           onClick={() => {
             setIsModalOpen(false)
@@ -162,22 +165,22 @@ export default function ModalProveedor({
             <aside className="basis-6/12 pl-[15px] pr-[25px] py-[20px] text-[14px]">
               <h2 className="text-[20px] font-bold">{selectedCompany.name}</h2>
               <section className="flex items-center text-[#589A74] py-[10px] gap-x-2">
-                <PlaceIcon color="secondary" />
+                <PlaceIcon color="primary" />
                 {`${selectedCompany.city} ${selectedCompany.state} ${selectedCompany.zipCode}`}
               </section>
               <Separator />
               <section className="flex items-center text-[#589A74] py-[10px] gap-x-2">
-                <BusinessIcon color="secondary" />
+                <BusinessIcon color="primary" />
                 {`${selectedCompany.street} ${selectedCompany.streetNumber}`}
               </section>
               <Separator />
               <section className="flex items-center text-[#589A74] py-[10px] gap-x-2">
-                <PhoneIcon color="secondary" />
+                <PhoneIcon color="primary" />
                 {selectedCompany.phone}
               </section>
               <Separator />
               <section className="flex items-center text-[#589A74] py-[10px] gap-x-2">
-                <LanguageIcon color="secondary" />
+                <LanguageIcon color="primary" />
                 {selectedCompany.webPage}
               </section>
               <h2 className="text-[14px] font-bold mt-[10px] mb-[10px]">
@@ -190,7 +193,7 @@ export default function ModalProveedor({
                   target="_blank"
                 >
                   <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                    <FileOpenIcon color="primary" className="mt-3" />
+                    <FileOpenIcon color="info" className="mt-3" />
                     <p className="my-2 text-[11px]">Curriculum</p>
                   </div>
                 </a>
@@ -200,7 +203,7 @@ export default function ModalProveedor({
                   target="_blank"
                 >
                   <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                    <FileOpenIcon color="primary" className="mt-3" />
+                    <FileOpenIcon color="info" className="mt-3" />
                     <p className="my-2 text-[11px]">Dic CDMX</p>
                   </div>
                 </a>
@@ -210,7 +213,7 @@ export default function ModalProveedor({
                   target="_blank"
                 >
                   <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                    <FileOpenIcon color="primary" className="mt-3" />
+                    <FileOpenIcon color="info" className="mt-3" />
                     <p className="my-2 text-[11px]">Pee Fide</p>
                   </div>
                 </a>
@@ -222,7 +225,7 @@ export default function ModalProveedor({
                   target="_blank"
                 >
                   <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                    <FileOpenIcon color="primary" className="mt-3" />
+                    <FileOpenIcon color="info" className="mt-3" />
                     <p className="my-2 text-[11px]">Guarantee</p>
                   </div>
                 </a>
@@ -232,7 +235,7 @@ export default function ModalProveedor({
                   target="_blank"
                 >
                   <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                    <FileOpenIcon color="primary" className="mt-3" />
+                    <FileOpenIcon color="info" className="mt-3" />
                     <p className="my-2 text-[11px]">Acta Constitutiva</p>
                   </div>
                 </a>
@@ -242,7 +245,7 @@ export default function ModalProveedor({
                   target="_blank"
                 >
                   <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                    <FileOpenIcon color="primary" className="mt-3" />
+                    <FileOpenIcon color="info" className="mt-3" />
                     <p className="my-2 text-[11px]">INE</p>
                   </div>
                 </a>
@@ -255,40 +258,51 @@ export default function ModalProveedor({
           <section className="text-[13px] px-[35px] pt-[25px] w-full">
             <h3 className="font-bold">Descripción</h3>
             <p className="text-sm py-[15px]">{selectedCompany.description}</p>
-            <Separator />
-            <div className="flex items-center space-x-2 py-[25px]">
-              <Checkbox
-                onClick={() => {
-                  setCheckboxChecked(!checkboxChecked)
-                }}
-                id="terms"
-              />
-              <label
-                htmlFor="terms"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                He leído los documentos que ha entregado el proveedor
-              </label>
-            </div>
-            <footer className="flex gap-x-3">
-              <Button
-                disabled={!checkboxChecked}
-                onClick={() =>
-                  handleAccept(selectedCompany, selectedCompany.companyId)
-                }
-                variant="default"
-              >
-                Aprobar
-              </Button>
+            {activeTab === 'pending' ? <>
+              <Separator />
+              <div className="flex items-center space-x-2 py-[25px]">
+                <Checkbox
+                  onClick={() => {
+                    setCheckboxChecked(!checkboxChecked)
+                  }}
+                  id="terms"
+                />
+                <label
+                  htmlFor="terms"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  He leído los documentos que ha entregado el proveedor
+                </label>
+              </div>
+              <footer className="flex gap-x-3">
+                <Button
+                  disabled={!checkboxChecked}
+                  onClick={() =>
+                    handleAccept(selectedCompany, selectedCompany.companyId)
+                  }
+                  variant="default"
+                >
+                  Aprobar
+                </Button>
+                <Button
+                  onClick={() =>
+                    handleReject(selectedCompany, selectedCompany.companyId)
+                  }
+                  variant="outline"
+                >
+                  Rechazar
+                </Button>
+              </footer>
+            </> :
               <Button
                 onClick={() =>
                   handleReject(selectedCompany, selectedCompany.companyId)
                 }
-                variant="outline"
+                variant="default"
               >
-                Rechazar
+                Eliminar
               </Button>
-            </footer>
+            }
           </section>
         </article>
       </ThemeProvider>
