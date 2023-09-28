@@ -257,11 +257,14 @@ struct ReportReasonView: View {
 struct CompanyReportView: View {
 
     //@ObservedObject var modelCompanyRating: CompanyViewModel
+    
     @ObservedObject var modelComplaint: CompanyViewModel
     @ObservedObject var viewModel: ComplaintViewModel
     @Binding var dispScrollView: Bool
     @State var selectedReportReason: String? = ""
     @State var description: String = ""
+    @State private var showAlert: Bool = false
+
 
     let reportReasons = ["Productos defectuosos.",
                          "Inconformidad con el producto/servicio.",
@@ -272,6 +275,8 @@ struct CompanyReportView: View {
 
 
     var body: some View {
+        
+        
 
         VStack(alignment: .leading, spacing: 5) {
             Text("Reportar Proveedor")
@@ -317,8 +322,8 @@ struct CompanyReportView: View {
                     Button(action: {
                         async {
                             print("print.......")
-                           print(await viewModel.handleSubmit(complaintSubject: selectedReportReason ?? "", complaintDescription: description.isEmpty ? nil : description))
-            
+                            print(await viewModel.handleSubmit(complaintSubject: selectedReportReason ?? "", complaintDescription: description.isEmpty ? nil : description))
+                            showAlert = true
                         }
                     })
                     {
@@ -337,6 +342,10 @@ struct CompanyReportView: View {
         }
         .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
         .foregroundColor(Color("BlackCustom"))
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text("Confirmación"), message: Text("El reporte ha sido enviado con éxito."), dismissButton: .default(Text("Ok")))
+        }
+
     }
 }
 
