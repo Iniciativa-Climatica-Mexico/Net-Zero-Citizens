@@ -151,11 +151,11 @@ export const getComplaintByUser: RequestHandler<
 export const addComplaint: RequestHandler<
   { userId: string; companyId: string },
   string,
-  { complaintSubject: string; complaintDescription: string; complaintStatus: string },
+  { complaint: { complaintSubject: string; complaintDescription: string; complaintStatus: string } },
   NoRecord
 > = async (req, res) => {
   const { userId, companyId } = req.params
-  const { complaintSubject, complaintDescription, complaintStatus } = req.body
+  const { complaintSubject, complaintDescription, complaintStatus } = req.body.complaint;
   if (!userId || !companyId) {
     res.status(400).json('Missing userId or companyId!')
     return

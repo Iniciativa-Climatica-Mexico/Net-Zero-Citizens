@@ -15,3 +15,4 @@ struct Complaint: Codable {
     let complaintDescription: String
     let complaintStatus: String
 }
+

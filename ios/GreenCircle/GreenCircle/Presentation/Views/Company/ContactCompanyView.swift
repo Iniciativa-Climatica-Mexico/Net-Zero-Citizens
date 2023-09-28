@@ -258,12 +258,10 @@ struct CompanyReportView: View {
 
     //@ObservedObject var modelCompanyRating: CompanyViewModel
     @ObservedObject var modelComplaint: CompanyViewModel
+    @ObservedObject var viewModel: ComplaintViewModel
     @Binding var dispScrollView: Bool
-    @State private var selectedReportReason: String?
-    @State private var description: String
-    @ObservedObject var viewModel: ComplaintViewModel = ComplaintViewModel()
-
-
+    @State var selectedReportReason: String? = ""
+    @State var description: String = ""
 
     let reportReasons = ["Productos defectuosos.",
                          "Inconformidad con el producto/servicio.",
@@ -318,7 +316,9 @@ struct CompanyReportView: View {
                     Spacer()
                     Button(action: {
                         async {
-                            await viewModel.handleSubmit(complaintSubject: selectedReportReason ?? "", complaintDescription: description.isEmpty ? nil : description)
+                            print("print.......")
+                           print(await viewModel.handleSubmit(complaintSubject: selectedReportReason ?? "", complaintDescription: description.isEmpty ? nil : description))
+            
                         }
                     })
                     {
@@ -344,6 +344,7 @@ struct CompanyReportView: View {
 struct ContactCompanyView: View {
   var idCompany: UUID
   @StateObject var contactCompanyViewModel = CompanyViewModel()
+  @StateObject var viewModel = ComplaintViewModel()
   @State private var showAlert = false
   @State var isPressed: [String: Bool] = ["Producto": true]
   @State var selectedPage: Int = 0
@@ -409,8 +410,7 @@ struct ContactCompanyView: View {
                 }
               }
               if key == "Report" {
-                // TODO: Report component
-                  CompanyReportView(modelComplaint: contactCompanyViewModel, dispScrollView: $dispScrollView).onAppear {
+                CompanyReportView(modelComplaint: contactCompanyViewModel, viewModel: viewModel, dispScrollView: $dispScrollView).onAppear {
                     bindImageToDescription = false
                   }
 

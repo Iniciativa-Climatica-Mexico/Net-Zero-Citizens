@@ -53,22 +53,30 @@ class ComplaintRepository: ComplaintRepositoryProtocol {
         
         let body: [String: Any] = [
             "complaint": [
-                "complaintId": complaintId,
+                "complaintId": complaintId.uuidString,
                 "userId": userId,
                 "companyId": companyId,
                 "complaintSubject": complaint.complaintSubject,
-                "complaintDescription": complaint.complaintDescription,
+                "complaintDescription": complaint.complaintDescription ?? "",
                 "complaintStatus": "active"
             ] as [String : Any]
         ]
         
-        let _: NoResponse? = await service
-            .postRequest(URL(
-                string: "\(ComplaintAPI.base)/\(userId)/\(complaintId.uuidString.lowercased())")!, body: body)
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: body, options: .prettyPrinted)
+            print(String(data: jsonData, encoding: .utf8) ?? "Invalid JSON")
+        } catch {
+            print("Error encoding JSON: \(error)")
+        }
+        
+        let enpoint = "\(ComplaintAPI.base)/\(userId)/\(companyId)"
+        print("Enpoint: \(enpoint)")
+        let _: NoResponse? = await NetworkAPIService.shared
+            .postRequest(URL(string: enpoint)!, body: body)
         
         // http://localhost:4000/api/v1/complaints/:userId/:complaintId
-  }
-  
+    }
+
   // If you need functions to fetch all complaints or other operations,
   // you can add them below in a similar fashion as `CompanyRepository`.
 }
