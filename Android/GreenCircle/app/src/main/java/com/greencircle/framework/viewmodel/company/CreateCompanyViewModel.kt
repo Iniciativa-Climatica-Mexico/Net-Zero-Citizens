@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.greencircle.data.remote.company.CompanyAPIService
 import com.greencircle.domain.model.auth.AuthResponse
-import com.greencircle.domain.model.company.CreateCompanyRequirement
 import com.greencircle.domain.usecase.auth.GoogleAuthRequirement
+import com.greencircle.domain.usecase.company.CreateCompanyRequirement
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

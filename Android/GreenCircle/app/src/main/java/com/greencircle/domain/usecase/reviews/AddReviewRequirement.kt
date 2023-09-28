@@ -10,8 +10,9 @@ class AddReviewRequirement {
     private val repository = ReviewRepository()
 
     suspend operator fun invoke(
+        authToken: String,
         userId: UUID,
         companyId: UUID,
         review: ReviewBase
-    ): Response<ResponseBody>? = repository.addReview(userId, companyId, review)
+    ): Response<ResponseBody>? = repository.addReview(authToken, userId, companyId, review)
 }

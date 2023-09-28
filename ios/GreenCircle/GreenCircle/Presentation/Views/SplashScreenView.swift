@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct SplashScreenView: View {
+  var goLogin: () -> Void
+  
     var body: some View {
       VStack {
         Image("Logo")
@@ -19,6 +21,6 @@ struct SplashScreenView: View {
 
 struct SplashScreenView_Previews: PreviewProvider {
     static var previews: some View {
-        SplashScreenView()
+        SplashScreenView(goLogin: {})
     }
 }

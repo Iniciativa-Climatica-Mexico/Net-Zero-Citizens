@@ -20,7 +20,7 @@ export const getAllReviews: RequestHandler<
 > = async (req, res) => {
   const params = {
     start: req.query.start || 0,
-    pageSize: req.query.pageSize || 10,
+    pageSize: req.query.pageSize || 1000,
     filters: {
       name: req.query.name || '',
     },
@@ -52,7 +52,7 @@ export const getReviewById: RequestHandler<
   const { reviewId } = req.params
   const params = {
     start: req.query.start || 0,
-    pageSize: req.query.pageSize || 10,
+    pageSize: req.query.pageSize || 1000,
     reviewId: reviewId,
   }
   const review = await ReviewService.getReviewById(params)
@@ -82,7 +82,7 @@ export const getReviewByCompany: RequestHandler<
   const { companyId } = req.params
   const params = {
     start: req.query.start || 0,
-    pageSize: req.query.pageSize || 10,
+    pageSize: req.query.pageSize || 1000,
     companyId: companyId,
   }
   const review = await ReviewService.getReviewByCompany(params)
@@ -112,7 +112,7 @@ export const getReviewByUser: RequestHandler<
   const { userId } = req.params
   const params = {
     start: req.query.start || 0,
-    pageSize: req.query.pageSize || 10,
+    pageSize: req.query.pageSize || 1000,
     userId: userId,
   }
 
