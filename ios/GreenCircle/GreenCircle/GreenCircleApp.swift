@@ -7,16 +7,18 @@
 
 import SwiftUI
 import GoogleSignIn
+import MapKit
 
 @main
 struct GreenCircleApp: App {
   
   var body: some Scene {
     WindowGroup {
-      CoordinatorView()
-        .onOpenURL { url in
-          GIDSignIn.sharedInstance.handle(url)
-        }
+        CoordinatesView(region: MKCoordinateRegion())
+//      CoordinatorView()
+//        .onOpenURL { url in
+//          GIDSignIn.sharedInstance.handle(url)
+//        }
     }
   }
 }

@@ -11,10 +11,7 @@ import Foundation
 class CompanyViewModel: ObservableObject {
   /// Caso de uso para hacer fetch de los datos de compañía
   private let useCase: CompanyUseCase
-  private let getCoordinatesRepository: GetCoordinatesRepossitory
-        
-
-  @Published var companiesCoordinates: PaginatedQuery<Company>?
+  
   
   @Published var companies = [Company]()
   
@@ -53,9 +50,6 @@ class CompanyViewModel: ObservableObject {
     self.useCase = useCase
   }
   
-  init(getCoordinatesRepository: GetCoordinatesRepossitory = .shared) {
-    self.getCoordinatesRepository = getCoordinatesRepository
-  }
   @MainActor
   /// Obtener información de la compañía mediante el caso de uso
   /// Actualización de la compañía si existe el UUID en base de datos
@@ -65,15 +59,7 @@ class CompanyViewModel: ObservableObject {
         contentCompany = resultCompany
     }
   }
-  @MainActor
-    func getCoordinates() async {
-        let resultCompany = await getCoordinatesRepository.getCoordinates()
-        DispatchQueue.main.async {
-             self.contentCompany = resultCompany
-        }
-    }
 
-  
   @MainActor
   func fetchAllCompanies() async {
     self.companies = await useCase.fetchAllCompanies()!.rows
