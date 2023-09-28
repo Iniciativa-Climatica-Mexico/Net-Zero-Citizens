@@ -37,7 +37,9 @@ class UserRegisterFormViewModel: ObservableObject {
   func handleSubmit() async -> Bool {
     do {
       try validateInformation()
-      await useCase.postNewUser(formState)
+      formState.phone = formState.phone
+        .replacingOccurrences(of: "-", with: "")
+      try await useCase.postNewUser(formState)
       return true
     } catch GCError.validationError(let message){
       errorMessage = message
@@ -68,14 +70,13 @@ class UserRegisterFormViewModel: ObservableObject {
   /// Valida los datos del formulario
   private func validateInformation() throws {
     if formState.phone.isEmpty
-        || formState.phone.count != 10
-        || formState.phone.rangeOfCharacter(from: NSCharacterSet.letters) != nil {
-      throw GCError.validationError("El teléfono introducido es inválido.")
+        || formState.phone.count != 12 {
+      throw GCError.validationError("Por favor introduce un teléfono válido.")
     }
     
     if formState.age.isEmpty
-        || Int(formState.age) == nil {
-      throw GCError.validationError("La edad introducida es inválida.")
+        || Int(formState.age)! < 16 {
+      throw GCError.validationError("Por favor introduce una edad válida.")
     }
     
     if formState.state.isEmpty {

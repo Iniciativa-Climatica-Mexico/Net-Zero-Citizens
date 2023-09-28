@@ -30,7 +30,7 @@ protocol UserRepositoryProtocol {
   func updateUserData(updatedUserData: User, userId: String) async -> User?
   func updateUserCredentials(userId: String, newUserCredentials: Credentials) async -> User?;
   func postGoogleLogin(googleToken: String) async -> AuthResponse?
-  func putUser(_ user: UserAuth) async
+  func putUser(_ user: UserAuth) async -> Bool
 }
 
 
@@ -61,7 +61,7 @@ class UserRepository: UserRepositoryProtocol {
   /// Actualiza la información de un usuario
   /// - Parameters:
   ///   - user: información del usuario a actualizar
-  func putUser(_ user: UserAuth) async {
+  func putUser(_ user: UserAuth) async -> Bool{
     let params: [String: Any] = [
       "phoneNumber": user.phone!,
       "age": user.age!,
@@ -76,7 +76,8 @@ class UserRepository: UserRepositoryProtocol {
           of: ":userId",
           with: user.id))!
     
-    let _: NoResponse? = await nService.putRequest(url, body: params)
+    let res: NoResponse? = await nService.putRequest(url, body: params)
+    return res != nil
   }
   
   func fetchUserById(userId: String) async -> User? {

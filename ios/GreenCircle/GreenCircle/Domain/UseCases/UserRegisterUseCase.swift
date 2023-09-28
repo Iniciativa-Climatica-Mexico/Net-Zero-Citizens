@@ -27,7 +27,7 @@ class UserRegisterUseCase {
   ///   - authToken: token de autenticación
   ///   - user: información de usuario
   @MainActor
-  func postNewUser(_ user: BasicUserInfo) async {
+  func postNewUser(_ user: BasicUserInfo) async throws {
     guard var userData = repository.getAuthData() else { return }
     
     userData.user.age = Int(user.age)
@@ -35,8 +35,11 @@ class UserRegisterUseCase {
     userData.user.phone = user.phone
     userData.user.state = user.state
     
-    await repository.putUser(userData.user)
-    repository.saveAuthData(authData: userData)
+    if await repository.putUser(userData.user) {
+      repository.saveAuthData(authData: userData)
+      return
+    }
+    throw GCError.requestFailed
   }
   
   @MainActor
