@@ -6,6 +6,6 @@ import java.util.UUID
 
 class ProfileListRequirement {
     private val repository = ProfileRepository()
-    suspend operator fun invoke(userId: UUID): Profile? =
-        repository.getUser(userId)
+    suspend operator fun invoke(authToken: String, userId: UUID): Profile? =
+        repository.getUser(authToken, userId)
 }
