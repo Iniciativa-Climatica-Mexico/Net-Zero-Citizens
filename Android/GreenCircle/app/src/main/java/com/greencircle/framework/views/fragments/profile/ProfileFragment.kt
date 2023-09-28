@@ -1,8 +1,7 @@
 package com.greencircle.framework.views.fragments.profile
 
-import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,17 +12,21 @@ import androidx.lifecycle.ViewModelProvider
 import com.greencircle.R
 import com.greencircle.databinding.FragmentProfileBinding
 import com.greencircle.domain.model.profile.Profile
+import com.greencircle.domain.usecase.auth.DeleteTokensRequirement
+import com.greencircle.domain.usecase.auth.DeleteUserSessionRequirement
+import com.greencircle.domain.usecase.auth.RecoverUserSessionRequirement
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.profile.ProfileViewModel
+import com.greencircle.framework.views.activities.LoginActivity
 import com.greencircle.framework.views.fragments.reviews.UserReviewFragment
-import java.util.UUID
-import org.json.JSONObject
 
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: ProfileViewModel
-    private lateinit var userId: UUID
+    private lateinit var recoverUserSession: RecoverUserSessionRequirement
+    private lateinit var deleteTokens: DeleteTokensRequirement
+    private lateinit var deleteUserSession: DeleteUserSessionRequirement
     private lateinit var profile: Profile
     private var reviewsCount: Int = 0
 
@@ -40,21 +43,25 @@ class ProfileFragment : Fragment() {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         var root: View = binding.root
 
-        val sharedPreferences =
-            context?.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
-        val userJson = sharedPreferences?.getString("user_session", null)
-        val userJSON = JSONObject(userJson!!)
-        Log.d("SalidaUserJson", userJSON.getString("uuid"))
-        userId = UUID.fromString(userJSON.getString("uuid"))
-        viewModel.setUserId(userId)
+        // Inicializar variables
+        recoverUserSession = RecoverUserSessionRequirement(requireContext())
+        deleteTokens = DeleteTokensRequirement(requireContext())
+        deleteUserSession = DeleteUserSessionRequirement(requireContext())
+
+        // Obtener la sesión del usuario
+        val userSession = recoverUserSession()
+
+        // Inicializar ViewModel
+        viewModel.setUserId(userSession.uuid)
         viewModel.getUserProfile()
 
-        InitializeObservers()
-        InitializeEditarPerfilButton()
+        // Inicializar Observers
+        initializeObservers()
+        initializeEditarPerfilButton()
+        logoutOnClickListener()
         displayUserReviewFragment()
 
         binding.resenasCountTextView.text = "$reviewsCount"
-
         return root
     }
 
@@ -74,14 +81,14 @@ class ProfileFragment : Fragment() {
         transaction.commit()
     }
 
-    private fun InitializeObservers() {
+    private fun initializeObservers() {
         viewModel.userLiveData.observe(viewLifecycleOwner) {
             profile = it
             setUserData()
         }
     }
 
-    private fun InitializeEditarPerfilButton() {
+    private fun initializeEditarPerfilButton() {
         binding.editarPerfilButton.setOnClickListener {
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.frame_layout, EditProfileFragment())
@@ -90,12 +97,32 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    private fun navigateToLogin() {
+        // Navigate to LoginActivity
+        val intent: Intent = Intent(requireContext(), LoginActivity::class.java)
+        startActivity(intent)
+        requireActivity().finish()
+    }
+
     private fun setUserData() {
         if (profile != null) {
             val name = profile.firstName + " " + profile.lastName
             binding.username.text = name
             // binding.profileImage.setImageResource(user.profilePicture)
         }
+    }
+
+    private fun logoutOnClickListener() {
+        val logoutButton = binding.root.findViewById<View>(R.id.logout)
+        logoutButton.setOnClickListener {
+            logout()
+        }
+    }
+
+    private fun logout() {
+        deleteTokens()
+        deleteUserSession()
+        navigateToLogin()
     }
 
     override fun onDestroyView() {
