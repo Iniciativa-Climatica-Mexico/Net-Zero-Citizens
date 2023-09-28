@@ -179,6 +179,7 @@ class CompanyReviewFragment : Fragment() {
     private fun complainsFragment() {
         val bundle = Bundle()
         bundle.putString("CompanyId", companyId.toString())
+        bundle.putString("CompanyName", arguments?.getString("CompanyName"))
 
         val complaintCompanyFragment = ComplaintCompanyFragment()
         complaintCompanyFragment.arguments = bundle

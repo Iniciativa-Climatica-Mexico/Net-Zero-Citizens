@@ -4,16 +4,21 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.greencircle.R
+import com.greencircle.domain.model.complaints.Complaint
+import java.util.UUID
 import kotlin.math.roundToInt
+import org.json.JSONObject
 
 /**
  * Modal para reportar una empresa
@@ -21,6 +26,11 @@ import kotlin.math.roundToInt
  * @since 2.0.0
  */
 class ComplaintCompanyFragment : DialogFragment() {
+    private val companyId: UUID =
+        arguments?.getString("CompanyId")?.let { UUID.fromString(it) } ?: UUID.randomUUID()
+
+    private val companyName: String = arguments?.getString("CompanyName") ?: "Company"
+
     /**
      * Se ejecuta cuando la vista se ha creado
      * @param view: View -> Vista
@@ -72,6 +82,27 @@ class ComplaintCompanyFragment : DialogFragment() {
             .setNegativeButton("Cancelar") { _, _ ->
                 Toast.makeText(requireContext(), "Cancel", Toast.LENGTH_SHORT).show()
             }.setPositiveButton("Reportar") { _, _ ->
+                val complaintTitle = spinnerOptions.selectedItem.toString()
+                val complaintDescription =
+                    view.findViewById<EditText>(R.id.TellUsMore).text.toString()
+
+                val sharedPreferences =
+                    context?.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+
+                val userJson = sharedPreferences?.getString("user_session", null)
+                val userJSON = JSONObject(userJson!!)
+                val userId = UUID.fromString(userJSON.getString("uuid"))
+
+                val complaint = Complaint(
+                    idUser = userId,
+                    idCompany = companyId,
+                    companyName = companyName,
+                    complaintTitle = complaintTitle,
+                    complaintDescription = complaintDescription
+                )
+
+                Log.d("Complaint", complaint.toString())
+
                 Toast.makeText(requireContext(), "Report", Toast.LENGTH_SHORT).show()
             }.create()
     }

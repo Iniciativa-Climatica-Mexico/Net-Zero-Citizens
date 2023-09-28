@@ -10,7 +10,7 @@ import { z } from 'zod'
  *            información de paginación
  */
 export const getAllEcoinfo = async (): Promise<Ecoinfo[]> => {
-  // await fetchEcoInfo()
+  await fetchEcoInfo()
   return await Ecoinfo.findAll()
 }
 
