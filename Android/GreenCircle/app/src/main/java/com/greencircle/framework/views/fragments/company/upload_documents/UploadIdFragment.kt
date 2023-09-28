@@ -34,6 +34,11 @@ class UploadIdFragment : Fragment() {
         _binding = FragmentUploadIdBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        binding.ineUpload.setOnClickListener {
+            val dialogFragment = UploadDocumentDialogFragment("INE")
+            dialogFragment.show(childFragmentManager, "UploadImageDialog")
+        }
+
         initializeButton()
 
         return root
