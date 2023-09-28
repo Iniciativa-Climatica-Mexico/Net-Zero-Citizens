@@ -16,7 +16,7 @@ import com.greencircle.domain.model.company.Company
 import com.greencircle.framework.viewmodel.company.CreateCompanyViewModel
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
 import com.greencircle.framework.views.activities.RegisterUserActivity
-import com.greencircle.framework.views.fragments.TermsAndConditions.TermsAndConditionsCompany
+import com.greencircle.framework.views.fragments.TermsAndConditionsCompany.TermsAndConditionsCompany
 import com.greencircle.framework.views.fragments.services.ServicesFragment
 import java.util.UUID
 

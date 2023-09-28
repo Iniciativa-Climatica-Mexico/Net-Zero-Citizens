@@ -1,4 +1,4 @@
-package com.greencircle.framework.views.fragments.TermsAndConditions
+package com.greencircle.framework.views.fragments.TermsAndConditionsCompany
 
 import android.os.Bundle
 import android.view.LayoutInflater
