@@ -7,6 +7,7 @@ import Company from '../models/company.model'
 import CompanyProduct from '../models/companyProducts.model'
 import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
 import { sendNotification } from './notification.service'
+import User from '../models/users.model'
 
 // TYPES
 /**
@@ -284,4 +285,51 @@ const getCompanyScore = async (id: string): Promise<Review[] | null> => {
       exclude: ['reviewId', 'userId', 'createdAt', 'updatedAt'],
     },
   })
+}
+
+
+
+type assignCompanyUserResponse =
+  | 'success'
+  | 'El usuario ya tiene una compañía asignada'
+  | 'La compañía ya tiene un usuario asignado'
+  | 'La companía no existe'
+  | 'El usuario no existe'
+  | 'Error no esperado'
+  
+/**
+ * @brief
+ * Función del servicio para asignarle un usuario a una compañia
+ * @param req La request HTTP al servidor
+ * @param res Un resultado de la operación
+ */
+export const assignCompanyUser = async (
+  companyId: string,
+  userId: string
+): Promise<assignCompanyUserResponse> => {
+  try {
+    console.log('assignCompanyUser')
+    const user = await User.findByPk(userId)
+    if (!user) return 'El usuario no existe'
+    if (user.companyId !== null)
+      return 'El usuario ya tiene una compañía asignada'
+
+    const company = await Company.findByPk(companyId)
+    if (!company) return 'La companía no existe'
+    if (company.userId !== null)
+      return 'La compañía ya tiene un usuario asignado'
+
+    company.userId = userId
+    user.companyId = companyId
+    await company.save()
+    try {
+      await user.save()
+    } catch (error) {
+      console.log(error)
+    }
+    return 'success'
+  } catch (error) {
+    console.log(error)
+    return 'Error no esperado'
+  }
 }

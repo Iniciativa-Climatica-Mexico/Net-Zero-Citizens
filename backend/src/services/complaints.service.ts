@@ -137,12 +137,7 @@ export const getComplaintsByUser = async (
 export const addComplaint = async (
   complaint: ComplaintType
 ): Promise<Complaint> => {
-  try {
-    return await Complaint.create(complaint)
-  } catch (error) {
-    console.error('Error creating complaint:', error)
-    throw error
-  }
+  return await Complaint.create(complaint)
 }
 
 /**
