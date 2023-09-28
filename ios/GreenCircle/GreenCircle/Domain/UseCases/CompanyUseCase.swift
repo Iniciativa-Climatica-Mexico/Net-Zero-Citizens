@@ -40,7 +40,7 @@ class CompanyUseCase {
   @MainActor
   func fetchCompanyById(id: UUID) async -> Company? {
     if var company = await cRepository.fetchCompanyById(companyId: id) {
-      if !company.webPage.isEmpty {
+      if company.webPage?.isEmpty ?? false {
         company.webPage = "No contamos con Página Web"
       }
       if let profilePicture = company.profilePicture, profilePicture.isEmpty {
