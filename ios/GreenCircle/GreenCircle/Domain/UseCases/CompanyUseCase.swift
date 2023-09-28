@@ -30,7 +30,7 @@ class CompanyUseCase {
   }
   
   @MainActor
-  func fetchAllCompanies() async -> PaginatedQuery<BasicCompany>? {
+  func fetchAllCompanies() async -> PaginatedQuery<Company>? {
     return await cRepository.fetchAllCompanies()
   }
   
@@ -39,7 +39,7 @@ class CompanyUseCase {
   ///   - Returns: Modelo de compañía
   @MainActor
   func fetchCompanyById(id: UUID) async -> Company? {
-    if var company = await repository.fetchCompanyById(companyId: id) {
+    if var company = await cRepository.fetchCompanyById(companyId: id) {
       if company.webPage?.isEmpty ?? false {
         company.webPage = "No contamos con Página Web"
       }
