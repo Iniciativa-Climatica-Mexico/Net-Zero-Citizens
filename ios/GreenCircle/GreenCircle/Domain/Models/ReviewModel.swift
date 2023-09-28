@@ -7,10 +7,13 @@
 
 import Foundation
 
-struct Dummy: Codable {
-  var dummyId: String
-  var name: String
-  var lastName: String
-  var createdAt: Date
-  var updatedAt: Date
+struct Review: Codable {
+    var reviewId: UUID
+    var userID: UUID
+    var companyId: UUID
+    var reviewTitle: String
+    var score: Int
+    var review: String
+    var createdAt: Date
+    var updatedAt: Date
 }
