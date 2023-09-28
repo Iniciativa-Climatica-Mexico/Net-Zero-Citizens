@@ -1,13 +1,9 @@
 'use client'
-
 import { useState, useEffect } from 'react'
 import { Company } from '@/api/v1/company'
 import { CompanyComplaints } from '@/@types/complaint/complaint'
-
 import { getCompaniesWithComplaints } from '@/api/v1/complaints'
 import { formatDate } from '@/utils/dateUtils'
-
-
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
