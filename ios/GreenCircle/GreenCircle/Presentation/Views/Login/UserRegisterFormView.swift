@@ -36,21 +36,21 @@ struct UserRegisterFormView: View {
         PickerFormView(selectedOption: $viewModel.gender,
                        label: "Género",
                        options: viewModel.genders)
-        HStack {
-          HStack {
-            Text("Acepto las")
-            Button("políticas de privacidad"){
-              showingDetail = true
-            }
-            .foregroundColor(.blue)
-            .sheet(isPresented: $showingDetail) {
-              PrivacyUserView()
-            }
-            
-          }.frame(width: 270)
-          
-          Toggle("", isOn: $viewModel.privacy)
-        }
+//        HStack {
+//          HStack {
+//            Text("Acepto las")
+//            Button("políticas de privacidad"){
+//              showingDetail = true
+//            }
+//            .foregroundColor(.blue)
+//            .sheet(isPresented: $showingDetail) {
+//              PrivacyUserView()
+//            }
+//
+//          }.frame(width: 270)
+//
+//          Toggle("", isOn: $viewModel.privacy)
+//        }
         Spacer()
       }.padding(.horizontal)
       Spacer()

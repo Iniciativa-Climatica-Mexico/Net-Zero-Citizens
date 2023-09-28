@@ -12,6 +12,7 @@ import MobileCoreServices
 struct CompanyFileInput: View {
     var title: String
     var description: String
+    var bulletPoint : String?
     
     @State private var isPickerPresented: Bool = false
     @State private var selectedFile: URL? = nil
@@ -32,6 +33,12 @@ struct CompanyFileInput: View {
                             .truncationMode(.tail)
                         
                         Text(description)
+                            .foregroundColor(Color("GrayColor"))
+                            .font(.system(size: 10))
+                            .padding(.leading, 30)
+                            .truncationMode(.tail)
+                        
+                        Text(bulletPoint ?? "")
                             .foregroundColor(Color("GrayColor"))
                             .font(.system(size: 10))
                             .padding(.leading, 30)
