@@ -17,26 +17,45 @@ struct UserRegisterFormView: View {
   var body: some View {
     VStack(spacing: 10) {
       RegisterHeaderView(
-        mail: viewModel.userData!.user.email,
-        name: "\(viewModel.userData!.user.first_name) \(viewModel.userData!.user.last_name)")
+        mail: viewModel.userData.email,
+        name: "\(viewModel.userData.first_name) \(viewModel.userData.last_name)")
       Spacer()
       VStack(alignment: .leading, spacing: 10) {
         Text("Completa tu registro por favor")
           .font(.system(size: 24))
-        InputFormView(bindingValue: $viewModel.phone,
+        InputFormView(bindingValue:
+                        $viewModel.formState.phone,
                       label: "Teléfono",
                       prompt: "123-456-7890")
+        .onChange(of: viewModel.formState.phone) { newValue in
+          if newValue.hasPrefix("55") {
+            viewModel.formState.phone =
+            Utils.formatNumber(with: "XX-XXXX-XXXX",
+                             for: newValue)
+          } else {
+            viewModel.formState.phone =
+            Utils.formatNumber(with: "XXX-XXX-XXXX",
+                             for: newValue)
+          }
+        }
         .keyboardType(.phonePad)
-        InputFormView(bindingValue: $viewModel.age,
+        InputFormView(bindingValue:
+                        $viewModel.formState.age,
                       label: "Edad",
                       prompt: "Ingresa tu edad...")
+        .onChange(of: viewModel.formState.age) { newValue in
+          viewModel.formState.age =
+          Utils.formatNumber(with: "XXX", for: newValue)
+        }
         .keyboardType(.numberPad)
-        PickerFormView(selectedOption: $viewModel.state,
+        PickerFormView(selectedOption:
+                        $viewModel.formState.state,
                        label: "Estado",
                        options: Constants.states)
-        PickerFormView(selectedOption: $viewModel.gender,
+        PickerFormView(selectedOption:
+                        $viewModel.formState.gender,
                        label: "Género",
-                       options: viewModel.genders)
+                       options: GENDERS)
         HStack {
           HStack {
             Text("Acepto las")
@@ -50,7 +69,7 @@ struct UserRegisterFormView: View {
             
           }.frame(width: 270)
           
-          Toggle("", isOn: $viewModel.privacy)
+          Toggle("", isOn: $viewModel.formState.privacy)
         }
         Spacer()
       }.padding(.horizontal)
@@ -66,6 +85,8 @@ struct UserRegisterFormView: View {
       }).alert("Oops! Algo salió mal",
                isPresented: $viewModel.showAlert) {
         Button("Ok", role: .cancel){}
+      } message: {
+        Text(viewModel.errorMessage)
       }
       Spacer()
       
