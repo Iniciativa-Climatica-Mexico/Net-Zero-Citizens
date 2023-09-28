@@ -48,36 +48,35 @@ export const getAllComplaints: RequestHandler<
  */
 
 export const getComplaintById: RequestHandler<
-  { complaintId: string },
-  Paginator<Complaint>,
   NoRecord,
-  NoRecord
+  Complaint | { message: string },
+  NoRecord,
+  { complaintId: string }
 > = async (req, res) => {
-  const { complaintId } = req.params
-  const params = {
-    start: req.query.start || 0,
-    pageSize: req.query.pageSize || 10,
-    complaintId: complaintId,
+  try {
+    const complaint = await ComplaintService.getComplaintById(req.params.complaintId)
+
+    if (!complaint) {
+      res.status(404).json({ message: 'Complaint not found' })
+    } else {
+      res.json(complaint)
+    }
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ message: 'Error' })
   }
-  const complaint = await ComplaintService.getComplaintById(params)
-  res.json({
-    rows: complaint.rows,
-    start: params.start,
-    pageSize: params.pageSize,
-    total: complaint.count,
-  })
 }
 
 /**
  * @brief
- * Función del controlador que devuelve una complaint por idCompany
+ * Función del controlador que devuelve las complaints por idCompany
  * de la base de datos
  * @param req La request HTTP al servidor
- * @param res Un objeto paginador con la complaint y la
+ * @param res Un objeto paginador con las complaint y la
  *            información de paginación
  */
 
-export const getComplaintByCompany: RequestHandler<
+export const getComplaintsByCompany: RequestHandler<
   { companyId: string },
   Paginator<Complaint>,
   NoRecord,
@@ -89,7 +88,7 @@ export const getComplaintByCompany: RequestHandler<
     pageSize: req.query.pageSize || 10,
     companyId: companyId,
   }
-  const complaint = await ComplaintService.getComplaintByCompany(params)
+  const complaint = await ComplaintService.getComplaintsByCompany(params)
   res.json({
     rows: complaint.rows,
     start: params.start,
@@ -101,10 +100,10 @@ export const getComplaintByCompany: RequestHandler<
 
 /**
  * @brief
- * Función del controlador que devuelve una complaint por userId
+ * Función del controlador que devuelve las complaint por userId
  * de la base de datos
  * @param req La request HTTP al servidor
- * @param res Un objeto paginador con la complaint y la
+ * @param res Un objeto paginador con las complaint y la
  *            información de paginación
  */
 
@@ -121,7 +120,7 @@ export const getComplaintByUser: RequestHandler<
     userId: userId,
   }
 
-  const complaint = await ComplaintService.getComplaintByUser(params)
+  const complaint = await ComplaintService.getComplaintsByUser(params)
 
   try {
     res.json({
@@ -143,34 +142,45 @@ export const getComplaintByUser: RequestHandler<
  * @param req La request HTTP al servidor
  * @param res Un objeto con la complaint creada
  * @returns
- * - 400 si no se envía el userId o el companyId
- * - 200 si se crea la complaint
+ * - 400 si no se envía el userId o el complaintId
+ * - 201 si se crea la complaint
  * - 500 si ocurre un error en el servidor
  */
 
-export const addComplaint: RequestHandler<
-  { userId: string; companyId: string },
-  string,
-  { complaint: { complaintSubject: string; complaintDescription: string; complaintStatus: string } },
-  NoRecord
-> = async (req, res) => {
-  const { userId, companyId } = req.params
-  const { complaintSubject, complaintDescription, complaintStatus } = req.body.complaint;
-  if (!userId || !companyId) {
-    res.status(400).json('Missing userId or companyId!')
-    return
-  } else if (!complaintSubject || !complaintStatus) {
-    res.status(400).json('Missing subject or status!')
-    return
-  }
+export const addComplaint: RequestHandler = async (req, res) => {
   try {
-    await ComplaintService.addComplaint(userId, companyId, complaintSubject, complaintDescription, complaintStatus)
-    res.status(200).send('Added complaint')
+
+    console.log("Petición POST recibida en addComplaint");   // <-- Este console.log indica que la petición ha llegado
+    console.log(req.body);   // <-- Este imprime el cuerpo de la petición para ver qué datos trae
+
+    const { userId, companyId, complaintSubject, complaintDescription, complaintStatus } = req.body
+
+    if (!userId || !companyId || !complaintSubject || !complaintDescription || !complaintStatus) {
+      return res.status(400).json({ complaintId: '', error: 'Missing required data!' })
+    }
+
+    const newComplaint = await ComplaintService.addComplaint({
+      userId,
+      companyId,
+      complaintSubject,
+      complaintDescription,
+      complaintStatus
+    })
+
+    if (!newComplaint) {
+      return res.status(500).json({ complaintId: '', error: 'Error creating complaint!' })
+    }
+
+    return res.status(201).json({
+      complaintId: newComplaint?.dataValues.complaintId,
+      message: 'Complaint created'
+    })
   } catch (error) {
-    console.log(error)
-    res.status(500).send('Error')
+    console.error(error)
+    res.status(500).json({ complaintId: '', error: 'Error creating complaint!' })
   }
 }
+
 
 
 /**
