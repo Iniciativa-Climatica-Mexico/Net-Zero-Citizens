@@ -9,14 +9,12 @@ import SwiftUI
 import GoogleSignInSwift
 
 struct UserRegisterView: View {
-    @EnvironmentObject var userData: UserData
-    @ObservedObject var viewModel = UserRegisterViewModel()
-    var goLogin: () -> Void
-    var goForm: () -> Void
-    var goMainMenu: () -> Void
-    
-    @State private var isPopoverPresented = false // Add this line
-    
+  @EnvironmentObject var userData: UserData
+  @ObservedObject var viewModel = UserRegisterViewModel()
+  var goLogin: () -> Void
+  var goForm: () -> Void
+  var goMainMenu: () -> Void
+  @State private var isPopoverPresented = false // Add this line
     var body: some View {
         ZStack {
             BackgroundView()
@@ -63,7 +61,7 @@ struct UserRegisterView: View {
                 }.padding(.horizontal)
                 
                 LinkButton("Aviso de privacidad", buttonColor: .blue) {
-                    isPopoverPresented.toggle() // Add this line
+                    isPopoverPresented.toggle() 
                 }
                 .padding(.bottom)
             }
