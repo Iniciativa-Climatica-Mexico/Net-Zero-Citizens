@@ -1,7 +1,10 @@
 import User from '../models/users.model'
 import * as UserService from '../services/users.service'
+import { getCompanyByUserId, unbindUserFromCompany } from '../services/company.service'
 import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
+import { deleteAllReviewsByUser } from '../services/review.service'
+import { updateAnswersByUserId } from '../services/survey.service'
 
 /**
  * @brief
@@ -152,3 +155,44 @@ export const updateUserCredentials: RequestHandler<
     res.status(400).json({ message: 'Error updating user credentials' })
   }
 }
+
+/**
+ * @brief Función del controlador para eliminar un usuario
+ * @param req -> body
+ * @param res -> message
+ * @returns
+ */
+export const deleteUserById: RequestHandler<
+  { userId: string },
+  { message: string, error?: string },
+  NoRecord> = async (req, res) => {
+    try {
+      if(!req.params.userId) {
+        res.status(400).json({ message: 'Missing user uuid' })
+        return
+      }
+      const uuid = req.params.userId
+      const user = await UserService.getUserInfo(uuid)
+
+      // Actualizar las relaciones del usuario
+      await unbindUserFromCompany(uuid)
+      await deleteAllReviewsByUser(uuid)
+      await updateAnswersByUserId(uuid)
+
+      if(!user) {
+        res.status(404).json({ message: 'User not found' })
+        return
+      }
+
+      const _res = await UserService.deleteUserById(uuid)
+      if(_res) {
+        res.status(200).json({ message: 'User deleted' })
+      } else {
+        res.status(404).json({ message: 'User not found' })
+      }
+
+    } catch(error) {
+      console.log(error)
+      res.status(400).json({ message: 'Error deleting user' })
+    }
+  }
