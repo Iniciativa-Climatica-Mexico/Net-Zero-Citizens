@@ -27,8 +27,7 @@ class CompanyContactFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(requireContext(), CompanyContactViewModel::class.java)
+            this, ViewModelFactory(requireContext(), CompanyContactViewModel::class.java)
         )[CompanyContactViewModel::class.java]
     }
 
