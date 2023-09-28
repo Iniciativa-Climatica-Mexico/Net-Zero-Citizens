@@ -39,7 +39,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         email: 'company2@outlook.com',
         phone: '0123456799',
         webPage: 'https://www.company2.com',
-        street: 'Company 2 street',
+        street: 'Nezahualcóyotl, Estado de México, 57430',
         streetNumber: '123',
         city: 'Queretaro',
         state: 'QRO',
@@ -64,7 +64,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         email: 'company3@outlook.com',
         phone: '0126756789',
         webPage: 'https://www.company3.com',
-        street: 'Company 3 street',
+        street: 'Nezahualcóyotl, Estado de México, 57430',
         streetNumber: '123',
         city: 'Ciudad de México',
         state: 'CDMX',
@@ -79,7 +79,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         pdfActaConstitutivaUrl:
           'https://example.com/company10-acta-constitutiva.pdf',
         pdfIneUrl: 'https://example.com/company10-ine.pdf',
-        status: 'pending_approval',
+        status: 'approved',
       },
     ])
   }

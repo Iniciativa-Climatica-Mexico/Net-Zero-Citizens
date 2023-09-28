@@ -235,7 +235,7 @@ interface FilteredCompany {
 
 export const getCoordinates: RequestHandler<
   NoRecord,
-  Paginator<FilteredCompany>,
+  FilteredCompany[] | { error: string },
   NoRecord,
   PaginationParams<{ status: string }>
 > = async (req, res) => {
@@ -249,65 +249,50 @@ export const getCoordinates: RequestHandler<
     params
   )
 
-  // Configura el geocoder con tu clave de API
   const geocoder = NodeGeocoder({
     provider: 'google',
-    apiKey: process.env.GOOGLE_MAPS_API,
+    apiKey: process.env.GOOGLE_MAPS_API_KEY,
   })
 
   const companiesWithCoordinates = await Promise.all(
     companies.rows.map(async (company) => {
-      const { street, streetNumber, city, state, zipCode } = company.dataValues
-
-      // Crea la dirección a partir de los campos de la empresa
+      const {
+        companyId,
+        name,
+        profilePicture,
+        street,
+        streetNumber,
+        city,
+        state,
+        zipCode,
+      } = company.dataValues
       const address = `${street} ${streetNumber}, ${city}, ${state}, ${zipCode}`
 
       try {
-        // Realiza la geocodificación
         const geocodeResult = await geocoder.geocode(address)
         if (geocodeResult.length > 0) {
           const { latitude, longitude } = geocodeResult[0]
           return {
-            companyId: company.dataValues.companyId,
-            name: company.dataValues.name,
+            companyId,
+            name,
             latitude,
             longitude,
-            profilePicture: company.dataValues.profilePicture,
-          }
+            profilePicture,
+          } as FilteredCompany
         }
-      } catch (error: unknown) {
-        if (typeof error === 'string') {
-          console.error(
-            `Error al geocodificar la empresa ${company.dataValues.companyId}: ${error}`
-          )
-        } else {
-          console.error(
-            `Error al geocodificar la empresa ${company.dataValues.companyId}`
-          )
-        }
+      } catch (error) {
+        return res.json({ error: 'Error getting coordinates' })
       }
-
-      // Si la geocodificación falla o no se encuentra, regresa null
       return null
     })
   )
 
-  // Filtra las empresas que no pudieron geocodificarse
+  // Filter out null values
   const filteredCompanies = companiesWithCoordinates.filter(
-    (company) => company !== null
-  )
+    Boolean
+  ) as FilteredCompany[]
 
-  const filteredCompaniesTyped: FilteredCompany[] = filteredCompanies.filter(
-    (company): company is FilteredCompany => company !== null
-  )
-
-  const paginator: Paginator<FilteredCompany> = {
-    rows: filteredCompaniesTyped,
-    start: 0,
-    pageSize: filteredCompanies.length,
-    total: filteredCompanies.length,
-  }
-  res.json(paginator)
+  return res.json(filteredCompanies)
 }
 
 /**
