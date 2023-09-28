@@ -1,5 +1,6 @@
 package com.greencircle.framework.views.fragments.company.upload_documents
 
+import UploadDocumentDialogFragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
