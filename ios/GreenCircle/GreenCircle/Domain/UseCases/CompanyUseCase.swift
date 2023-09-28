@@ -30,7 +30,7 @@ class CompanyUseCase {
   }
   
   @MainActor
-  func fetchAllCompanies() async -> PaginatedQuery<Company>? {
+  func fetchAllCompanies() async -> PaginatedQuery<BasicCompany>? {
     return await cRepository.fetchAllCompanies()
   }
   

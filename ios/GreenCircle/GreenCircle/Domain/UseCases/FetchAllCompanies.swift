@@ -8,7 +8,7 @@
 import SwiftUI
 
 protocol FetchAllCompaniesUseCaseProtocol {
-  func fetchAllCompanies() async -> PaginatedQuery<Company>?
+  func fetchAllCompanies() async -> PaginatedQuery<BasicCompany>?
 }
 
 class FetchAllCompaniesUseCase: FetchAllCompaniesUseCaseProtocol {
@@ -20,7 +20,7 @@ class FetchAllCompaniesUseCase: FetchAllCompaniesUseCaseProtocol {
     self.companyRepository = companyRepository
   }
   
-  func fetchAllCompanies() async -> PaginatedQuery<Company>? {
+  func fetchAllCompanies() async -> PaginatedQuery<BasicCompany>? {
     return await companyRepository.fetchAllCompanies()
   }
 }
