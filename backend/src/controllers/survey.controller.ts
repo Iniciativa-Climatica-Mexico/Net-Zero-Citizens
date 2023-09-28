@@ -141,8 +141,10 @@ export const answerSurvey: RequestHandler<
       userId,
       surveyId,
     })
+    console.log(answers)
     res.json(answers)
   } catch (err) {
+    console.log(err)
     res.status(500).json({ message: 'Error creating answer' })
   }
 }
