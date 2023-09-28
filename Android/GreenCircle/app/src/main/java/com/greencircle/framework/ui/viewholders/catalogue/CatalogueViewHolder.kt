@@ -32,7 +32,7 @@ class CatalogueViewHolder(private val binding: CatalogueCardLayoutBinding) :
         binding.companyRatingText.text = companySummary.rating.toString()
         binding.companyRatingBar.rating = companySummary.rating
         Glide.with(binding.root.context).load(companySummary.profilePicture)
-            .placeholder(R.drawable.ic_launcher_background).into(binding.companyProfilePic)
+            .placeholder(R.drawable.main_logo).into(binding.companyProfilePic)
 
         // set onclick listener
         binding.root.setOnClickListener {
