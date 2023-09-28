@@ -57,7 +57,7 @@ class CompanyRegisterFormViewModel: ObservableObject {
         || formState.zipCode == nil
         || formState.zipCode! > 99999
         || formState.zipCode! < 10000 {
-      throw CustomError.mainError
+      throw GCError.validationError("")
     }
   }
 }
