@@ -52,21 +52,6 @@ class UserRegisterFormViewModel: ObservableObject {
     }
   }
   
-  func format(with mask: String, for string: String) -> String {
-    let numbers = string.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
-    var result = ""
-    var index = numbers.startIndex
-    for ch in mask where index < numbers.endIndex {
-      if ch == "X" {
-        result.append(numbers[index])
-        index = numbers.index(after: index)
-      } else {
-        result.append(ch)
-      }
-    }
-    return result
-  }
-  
   /// Valida los datos del formulario
   private func validateInformation() throws {
     if formState.phone.isEmpty
