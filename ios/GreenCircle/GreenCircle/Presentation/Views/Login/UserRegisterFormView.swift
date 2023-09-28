@@ -10,7 +10,7 @@ import SwiftUI
 struct UserRegisterFormView: View {
   @ObservedObject var viewModel =
   UserRegisterFormViewModel()
-  @State private var showingDetail = false
+  @State private var showingPrivacy = false
   
   var goSurvey: () -> Void
   
@@ -60,7 +60,7 @@ struct UserRegisterFormView: View {
           HStack {
             Text("Acepto las")
             Button("políticas de privacidad"){
-              showingDetail = true
+              showingPrivacy = true
             }
             .foregroundColor(.blue)
             .sheet(isPresented: $showingDetail) {

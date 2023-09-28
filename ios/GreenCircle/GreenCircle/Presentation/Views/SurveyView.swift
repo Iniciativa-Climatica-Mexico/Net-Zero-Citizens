@@ -32,10 +32,19 @@ struct SurveyView: View {
         
         Button("Enviar", action: {
           Task {
-            submissionResult = await vm.submitAnswers()
-            showAlert = true
+            await vm.handleSubmit()
           }
         })
+        .alert("Mensaje",
+               isPresented: $vm.showAlert) {
+          Button("Ok", role: .cancel){
+            if vm.success {
+              goMainMenu()
+            }
+          }
+        } message: {
+          Text(vm.errMessage)
+        }
         .foregroundColor(.white)
         .frame(width: 178, height: 40)
         .background(Color(red: 0.33, green: 0.49, blue: 0.55))
@@ -50,13 +59,7 @@ struct SurveyView: View {
         await vm.getPendingSurvey()
       }
     }
-    .alert(isPresented: $showAlert) {
-      if (submissionResult == true) {
-        return Alert(title: Text("Éxito"), message: Text("Tu encuesta fue enviada con éxito"), dismissButton: .default(Text("OK"), action: {goMainMenu()}))
-      } else {
-        return Alert(title: Text("Error"), message: Text("Hay preguntas requeridas que no se han respondido"), dismissButton: .default(Text("OK")))
-      }
-    }.onTapGesture {
+    .onTapGesture {
       hideKeyboard()
     }
   }
