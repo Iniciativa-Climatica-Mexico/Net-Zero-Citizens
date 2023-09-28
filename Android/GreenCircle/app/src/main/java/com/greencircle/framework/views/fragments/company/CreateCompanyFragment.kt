@@ -15,6 +15,8 @@ import com.greencircle.data.remote.company.CompanyAPIService
 import com.greencircle.domain.model.company.Company
 import com.greencircle.framework.viewmodel.company.CreateCompanyViewModel
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
+import com.greencircle.framework.views.activities.RegisterUserActivity
+import com.greencircle.framework.views.fragments.TermsAndConditions.TermsAndConditionsCompany
 import com.greencircle.framework.views.fragments.services.ServicesFragment
 import java.util.UUID
 
@@ -59,6 +61,14 @@ class CreateCompanyFragment : Fragment() {
         val view = inflater.inflate(
             R.layout.fragment_create_company, container, false
         )
+
+        val button = view.findViewById<Button>(R.id.login_register)
+        button.setOnClickListener {
+            val termsAndConditionsCompanyFragment = TermsAndConditionsCompany()
+            val activity = requireActivity() as RegisterUserActivity
+
+            activity.replaceFragment(termsAndConditionsCompanyFragment)
+        }
         // Set texts
         setTexts(arguments, view)
 
