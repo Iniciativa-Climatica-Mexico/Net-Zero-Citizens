@@ -111,6 +111,8 @@ export type UpdateCompanyInfoBody = {
   webPage: string
 }
 
+
+
 /**
  * @brief
  * Actualiza en la base de datos el proveedor con los datos pasados en los parametros
