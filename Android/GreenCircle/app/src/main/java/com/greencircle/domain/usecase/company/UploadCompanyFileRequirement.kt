@@ -1,8 +1,8 @@
 package com.greencircle.domain.usecase.company
 
-import android.util.Log
 import com.greencircle.data.repository.CompanyFilesRepository
 import okhttp3.MultipartBody
+import retrofit2.Call
 
 class UploadCompanyFileRequirement {
     private val repository = CompanyFilesRepository()
@@ -11,7 +11,7 @@ class UploadCompanyFileRequirement {
         companyId: String,
         file: MultipartBody.Part,
         authToken: String
-    ): String? {
+    ): Call<Void>? {
         try {
             return repository.uploadFile(authToken, companyId, file)
         } catch (e: Exception) {
