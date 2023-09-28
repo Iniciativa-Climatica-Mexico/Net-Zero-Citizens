@@ -11,8 +11,8 @@ import Foundation
 class ComplaintAPI {
   static let base = "http://localhost:4000/api/v1/complaints"
   struct Routes {
-    static let create = "/:userId/:companyId"
-    //static let create = "/create"
+    //static let create = "/:userId/:companyId"
+    static let create = "/create"
   }
 }
 
@@ -70,7 +70,8 @@ class ComplaintRepository: ComplaintRepositoryProtocol {
             print("Error encoding JSON: \(error)")
         }
         
-        let enpoint = "\(ComplaintAPI.base)/\(userId)/\(companyId)"
+        //let enpoint = "\(ComplaintAPI.base)/\(userId)/\(companyId)"
+        let enpoint = "\(ComplaintAPI.base)\(ComplaintAPI.Routes.create)"
         print("Enpoint: \(enpoint)")
         let _: NoResponse? = await NetworkAPIService.shared
             .postRequest(URL(string: enpoint)!, body: body)
