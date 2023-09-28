@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.materialswitch.MaterialSwitch
@@ -20,9 +21,7 @@ class ServicesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(
-            R.layout.fragment_product_selection_layout,
-            container,
-            false
+            R.layout.fragment_product_selection_layout, container, false
         )
 
         fotoVoltaicSwitch = view.findViewById(R.id.fotovoltaics)
@@ -31,7 +30,12 @@ class ServicesFragment : Fragment() {
         val nextBtn = view.findViewById<Button>(R.id.nextFragment)
 
         nextBtn.setOnClickListener {
-            nextFragment()
+            if (!fotoVoltaicSwitch.isChecked && !solarHeaterSwitch.isChecked) {
+                val errorText = view.findViewById<TextView>(R.id.errorMsg)
+                errorText.visibility = View.VISIBLE
+            } else {
+                nextFragment()
+            }
         }
 
         return view
@@ -53,32 +57,26 @@ class ServicesFragment : Fragment() {
         mSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 mSwitch.thumbTintList = ContextCompat.getColorStateList(
-                    requireContext(),
-                    R.color.white
+                    requireContext(), R.color.white
                 )
                 mSwitch.trackTintList = ContextCompat.getColorStateList(
-                    requireContext(),
-                    R.color.green
+                    requireContext(), R.color.green
                 )
 
                 mSwitch.thumbIconTintList = ContextCompat.getColorStateList(
-                    requireContext(),
-                    R.color.green
+                    requireContext(), R.color.green
                 )
             } else {
                 // Colors when the switch is OFF
                 mSwitch.thumbTintList = ContextCompat.getColorStateList(
-                    requireContext(),
-                    R.color.white
+                    requireContext(), R.color.white
                 )
                 mSwitch.trackTintList = ContextCompat.getColorStateList(
-                    requireContext(),
-                    R.color.gray_500
+                    requireContext(), R.color.gray_500
                 )
 
                 mSwitch.thumbIconTintList = ContextCompat.getColorStateList(
-                    requireContext(),
-                    R.color.white
+                    requireContext(), R.color.white
                 )
             }
         }
