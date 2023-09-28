@@ -131,22 +131,22 @@ struct EditProfileView: View {
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                         }
                         //------------------------Field Segundo Apellido----------------------------------------------------------
-                        Group {
-                            Text("Segundo Apellido")
-                                .padding(.top, 16)
-                                .foregroundColor(Color("GreenColor"))
-                                .font(.system(size: 13))
-                                .fontWeight(.semibold)
-                            TextField("Segundo Apellido", text: Binding(get: {
-                                modelUser.contentUser.secondLastName ?? "" //Opcional
-                            }, set: { newValue in
-                                modelUser.contentUser.secondLastName = newValue
-                            }))
-                            .disableAutocorrection(true)
-                            .padding(.top, 3)
-                            .font(.system(size: 13))
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                        }
+//                        Group {
+//                            Text("Segundo Apellido")
+//                                .padding(.top, 16)
+//                                .foregroundColor(Color("GreenColor"))
+//                                .font(.system(size: 13))
+//                                .fontWeight(.semibold)
+//                            TextField("Segundo Apellido", text: Binding(get: {
+//                                modelUser.contentUser.secondLastName ?? "" //Opcional
+//                            }, set: { newValue in
+//                                modelUser.contentUser.secondLastName = newValue
+//                            }))
+//                            .disableAutocorrection(true)
+//                            .padding(.top, 3)
+//                            .font(.system(size: 13))
+//                            .textFieldStyle(RoundedBorderTextFieldStyle())
+//                        }
                         
                         HStack {
                             //------------------------Picker Edad----------------------------------------------------------

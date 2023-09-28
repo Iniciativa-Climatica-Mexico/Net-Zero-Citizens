@@ -60,12 +60,12 @@ struct UserRegisterFormView: View {
           HStack {
             Text("Acepto las")
             Button("políticas de privacidad"){
-              //showingDetail = true
+              showingDetail = true
             }
             .foregroundColor(.blue)
-            //.sheet(isPresented: $showingDetail) {
-             // PrivacyUserView()
-           // }
+            .sheet(isPresented: $showingDetail) {
+             PrivacyUserView()
+            }
             
           }.frame(width: 270)
           

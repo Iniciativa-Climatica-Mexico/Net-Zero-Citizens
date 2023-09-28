@@ -304,16 +304,16 @@ struct CompanyReportView: View {
                 Divider()
                     .padding(.top, 20)
 
-                Text("Comentario adicional (opcional)")
+                Text(" Añade un comentario adicional (opcional)")
                     .font(.system(size: 12))
                     .foregroundColor(Color("BlackCustom")).contrast(12.6)
                     .padding(.top ,10).bold()
-                    .padding(.leading ,-160)
+                    .padding(.leading ,-100)
 
-                TextField("Escribe algún comentario adicional al reporte...", text: $description)
+                TextField("Comentario adicional al reporte...", text: $description)
                     .disableAutocorrection(true)
                     .padding(.top, 3)
-                    .font(.system(size: 13))
+                    .font(.system(size: 16))
                     .textFieldStyle(RoundedBorderTextFieldStyle())
 
                 HStack {

@@ -115,12 +115,7 @@ struct ProfileView: View {
               await modelUser.fetchUserById(idUser: "8de45630-2e76-4d97-98c2-9ec0d1f3a5b8")
             }
           }
-          
-          
         }
-        
-        
-        
         
         .onAppear {
           Task {
