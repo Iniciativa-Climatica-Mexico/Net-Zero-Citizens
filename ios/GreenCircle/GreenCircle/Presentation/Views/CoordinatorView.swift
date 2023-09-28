@@ -48,7 +48,7 @@ struct CoordinatorView: View {
                          goMainMenu: goMainMenu)
         
       case .userRegisterForm:
-        UserRegisterFormView(goMainMenu: goMainMenu)
+        UserRegisterFormView(goSurvey: goSurvey)
         
       case .companyRegister:
         CompanyRegisterView(goLogin: goLogin,
