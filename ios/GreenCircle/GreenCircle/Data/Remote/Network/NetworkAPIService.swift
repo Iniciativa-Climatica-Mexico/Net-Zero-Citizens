@@ -40,6 +40,7 @@ class NetworkAPIService {
       do {
         return try decoder.decode(T.self, from: data)
       } catch {
+        debugPrint(error)
         return nil
       }
     case let .failure(error):
@@ -67,6 +68,7 @@ class NetworkAPIService {
       do {
         return try decoder.decode(T.self, from: data)
       } catch {
+        debugPrint(error)
         return nil
       }
     case let .failure(error):
@@ -94,6 +96,7 @@ class NetworkAPIService {
       do {
         return try decoder.decode(T.self, from: data)
       } catch {
+        debugPrint(error)
         return nil
       }
     case let .failure(error):

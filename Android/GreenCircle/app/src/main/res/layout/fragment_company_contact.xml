@@ -56,7 +56,7 @@
                 android:textStyle="bold"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways" />
-                />
+            />
 
             <com.google.android.material.button.MaterialButtonToggleGroup
                 android:id="@+id/toggleButtonGroup"
@@ -105,7 +105,5 @@
                 android:layout_below="@+id/toggleButtonGroup"/>
 
         </RelativeLayout>
-
     </androidx.core.widget.NestedScrollView>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

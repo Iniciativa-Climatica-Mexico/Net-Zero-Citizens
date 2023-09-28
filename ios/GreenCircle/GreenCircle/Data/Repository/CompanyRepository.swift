@@ -24,7 +24,7 @@ struct APIResponse: Codable {
 
 /// Protocolo con las funciones del repositorio de Compañías
 protocol CompanyRepositoryProtocol {
-  func postCompany(authToken: String, company: PostCompanyData) async
+  func postCompany(company: PostCompanyData) async
   func fetchCompanyById(companyId: UUID) async -> Company?
   //func fetchAllCompanies() async -> Company?
   func uploadCompanyFile(fileURL: URL) async -> APIResponse?
@@ -55,7 +55,7 @@ class CompanyRepository: CompanyRepositoryProtocol {
   /// - Parameters:
   ///   - authToken: token de autenticación
   ///   - company: el objeto con la información de la compañía
-  func postCompany(authToken: String, company: PostCompanyData) async {
+  func postCompany(company: PostCompanyData) async {
     let params: [String: Any] = [
       "company": [
         "name": company.name,
@@ -64,10 +64,10 @@ class CompanyRepository: CompanyRepositoryProtocol {
         "phone": company.phone,
         "webPage": company.webPage,
         "street": company.street,
-        "streetNumber": company.streetNumber!,
+        "streetNumber": company.streetNumber,
         "city": company.city,
         "state": company.state,
-        "zipCode": company.zipCode!,
+        "zipCode": company.zipCode,
         "userId": company.userId!,
         "pdfCurriculumUrl": company.pdfCurriculumUrl,
         "pdfGuaranteeSecurityUrl": company.pdfGuaranteeSecurityUrl,

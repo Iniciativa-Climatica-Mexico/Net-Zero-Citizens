@@ -30,7 +30,7 @@ protocol UserRepositoryProtocol {
   func updateUserData(updatedUserData: User, userId: String) async -> User?
   func updateUserCredentials(userId: String, newUserCredentials: Credentials) async -> User?;
   func postGoogleLogin(googleToken: String) async -> AuthResponse?
-  func putUser(authToken: String, user: UserAuth) async
+  func putUser(_ user: UserAuth) async -> Bool
 }
 
 
@@ -60,13 +60,25 @@ class UserRepository: UserRepositoryProtocol {
   
   /// Actualiza la información de un usuario
   /// - Parameters:
-  ///   - authToken: token de autenticación
   ///   - user: información del usuario a actualizar
-  func putUser(authToken: String, user: UserAuth) async {
+  func putUser(_ user: UserAuth) async -> Bool{
+    var gender: String
+    
+    switch user.gender {
+    case "Masculino":
+      gender = "masculine"
+    case "Femenino":
+      gender = "femenine"
+    case "Otro":
+      gender = "other"
+    default:
+      gender = "no_answer"
+    }
+    
     let params: [String: Any] = [
       "phoneNumber": user.phone!,
       "age": user.age!,
-      "gender": user.gender!,
+      "gender": gender,
       "state": user.state!,
       "roleId": "CUSTOMER_ROLE_ID"
     ]
@@ -76,6 +88,21 @@ class UserRepository: UserRepositoryProtocol {
         .replacingOccurrences(
           of: ":userId",
           with: user.id))!
+    
+    let res: NoResponse? = await nService.putRequest(url, body: params)
+    return res != nil
+  }
+  
+  func updateUserRole(userId: String, newRole: String) async {
+    let params: [String: Any] = [
+      "roleId": newRole
+    ]
+    
+    let url = URL(
+      string: "\(UserAPI.base)\(UserAPI.Routes.userId)"
+        .replacingOccurrences(
+          of: ":userId",
+          with: userId))!
     
     let _: NoResponse? = await nService.putRequest(url, body: params)
   }
