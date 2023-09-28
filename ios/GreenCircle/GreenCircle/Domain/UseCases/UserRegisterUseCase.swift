@@ -18,6 +18,10 @@ class UserRegisterUseCase {
   var repository = UserRepository.shared
   static var shared = UserRegisterUseCase()
   
+  func getLocalUserData() -> AuthResponse? {
+    return repository.getAuthData()
+  }
+  
   /// Llama al repositorio para actualizar el usuario creado automáticamente
   /// - Parameters:
   ///   - authToken: token de autenticación

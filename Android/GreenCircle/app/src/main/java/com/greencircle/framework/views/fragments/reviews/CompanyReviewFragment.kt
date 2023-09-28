@@ -14,6 +14,7 @@ import com.greencircle.R
 import com.greencircle.databinding.FragmentCompanyReviewBinding
 import com.greencircle.domain.model.reviews.CompanyReview
 import com.greencircle.framework.ui.adapters.reviews.CompanyReviewAdapter
+import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.reviews.CompanyReviewViewModel
 import java.util.UUID
 
@@ -37,7 +38,10 @@ class CompanyReviewFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProvider(this)[CompanyReviewViewModel::class.java]
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(requireContext(), CompanyReviewViewModel::class.java)
+        )[CompanyReviewViewModel::class.java]
         _binding = FragmentCompanyReviewBinding.inflate(inflater, container, false)
         val root: View = binding.root
         data = ArrayList()

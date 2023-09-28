@@ -4,7 +4,7 @@ import {
   Model,
   DataType,
   BelongsTo,
-  ForeignKey
+  ForeignKey,
 } from 'sequelize-typescript'
 import Company from './company.model'
 
@@ -16,7 +16,6 @@ export default class CompanyImages extends Model {
     allowNull: false,
     defaultValue: DataType.UUIDV4,
     field: 'COMPANY_IMAGE_ID',
-    unique: true,
   })
   companyImageId: string
 

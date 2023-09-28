@@ -13,6 +13,11 @@ class CompanyViewModel: ObservableObject {
   private let useCase: CompanyUseCase
   
   @Published var companies = [Company]()
+    
+    enum CompanyViewModelError: Error {
+        case failedToFetchCompanies
+    }
+
   
   /// La compañía puede cambiar en la vista (se construye .onAppear())
   @Published var contentCompany: Company = Company(
@@ -29,12 +34,6 @@ class CompanyViewModel: ObservableObject {
     state: "",
     zipCode: "",
     profilePicture: "",
-    pdfCurriculumUrl: "",
-    pdfDicCdmxUrl: "",
-    pdfPeeFideUrl: "",
-    pdfGuaranteeSecurityUrl: "",
-    pdfActaConstitutivaUrl: "",
-    pdfIneUrl: "",
     status: .approved,
     createdAt: "",
     updatedAt: "",
@@ -59,9 +58,11 @@ class CompanyViewModel: ObservableObject {
     }
   }
   
-  @MainActor
-  func fetchAllCompanies() async {
-    self.companies = await useCase.fetchAllCompanies()!.rows
-  }
-   
+    @MainActor
+    func fetchAllCompanies() async throws {
+        guard let fetchedCompanies = await useCase.fetchAllCompanies() else {
+            throw CompanyViewModelError.failedToFetchCompanies
+        }
+        self.companies = fetchedCompanies.rows
+    }
 }

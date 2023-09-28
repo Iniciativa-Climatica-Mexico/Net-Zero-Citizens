@@ -21,7 +21,7 @@ export const getAllCompanies: RequestHandler<
 > = async (req, res) => {
   const params = {
     start: req.query.start || 0,
-    pageSize: req.query.pageSize || 10,
+    pageSize: req.query.pageSize || 1000,
     filters: {
       name: req.query.name || '',
     },
@@ -36,7 +36,7 @@ export const getAllCompanies: RequestHandler<
       total: companies.count,
     })
   } catch (error) {
-    res.status(400).json({ error: 'Error getting users' })
+    res.status(400).json({ error: 'Error getting companies' })
   }
 }
 
@@ -79,7 +79,7 @@ export const getApprovedCompanies: RequestHandler<
 > = async (req, res) => {
   const params = {
     start: req.query.start || 0,
-    pageSize: req.query.pageSize || 10,
+    pageSize: req.query.pageSize || 1000,
   }
   const companies = await CompanyService.getCompaniesByStatus(
     'approved',
@@ -107,7 +107,7 @@ export const getPendingCompanies: RequestHandler<
 > = async (req, res) => {
   const params = {
     start: req.query.start || 0,
-    pageSize: req.query.pageSize || 10,
+    pageSize: req.query.pageSize || 1000,
   }
   const companies = await CompanyService.getCompaniesByStatus(
     'pending_approval',
@@ -241,7 +241,7 @@ export const getCoordinates: RequestHandler<
 > = async (req, res) => {
   const params = {
     start: req.query.start || 0,
-    pageSize: req.query.pageSize || 10,
+    pageSize: req.query.pageSize || 1000,
   }
 
   const companies = await CompanyService.getCompaniesByStatus(

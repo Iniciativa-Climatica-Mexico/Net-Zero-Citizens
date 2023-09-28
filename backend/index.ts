@@ -21,6 +21,10 @@ app.use(express.urlencoded({ extended: true }))
 
 initRouterV1(app)
 
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/form.html')
+})
+
 const PORT = process.env.PORT || 4000
 app.listen(PORT, () => {
   console.log(`Server is running on port http://localhost:${PORT}`)

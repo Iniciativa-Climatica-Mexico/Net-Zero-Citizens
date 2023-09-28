@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Upload</title>
+  </head>
+  <body>
+    <h1>File Upload</h1>
+    <form
+      action="/api/v1/company/upload/file"
+      method="POST"
+      enctype="multipart/form-data"
+      name="fileUploadForm"
+    >
+      <input type="file" name="fileInput" accept=".pdf, .jpg, .jpeg" />
+
+      <!-- Campos ocultos para los parámetros -->
+      <input type="hidden" name="companyId" value="123" />
+      <input type="hidden" name="fileDescription" value="Curriculum" />
+      <input type="hidden" name="fileFormat" value=".pdf" />
+      <input type="hidden" name="inputId" value="CurriculumInput" />
+
+      <button type="submit">Upload</button>
+    </form>
+  </body>
+</html>
