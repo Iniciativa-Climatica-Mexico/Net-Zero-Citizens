@@ -25,7 +25,7 @@ struct CatalogView: View {
               .frame(width: 350, height: 160) // Adjusted card size
 
             HStack {
-              if let imageURL = URL(string: company.images?.first?.imageUrl ?? "") {
+              if let imageURL = URL(string: company.profilePicture ?? "") {
                 AsyncImage(url: imageURL) { phase in
                   switch phase {
                     case .empty:
