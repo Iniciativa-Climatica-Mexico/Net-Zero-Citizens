@@ -16,8 +16,8 @@ struct UserRegisterFormView: View {
   var body: some View {
     VStack(spacing: 10) {
       RegisterHeaderView(
-        mail: viewModel.userData!.user.email,
-        name: "\(viewModel.userData!.user.first_name) \(viewModel.userData!.user.last_name)")
+        mail: viewModel.userData.email,
+        name: "\(viewModel.userData.first_name) \(viewModel.userData.last_name)")
       Spacer()
       VStack(alignment: .leading, spacing: 10) {
         Text("Completa tu registro por favor")
@@ -26,11 +26,26 @@ struct UserRegisterFormView: View {
                         $viewModel.formState.phone,
                       label: "Teléfono",
                       prompt: "123-456-7890")
+        .onChange(of: viewModel.formState.phone) { newValue in
+          if newValue.hasPrefix("55") {
+            viewModel.formState.phone =
+            viewModel.format(with: "XX-XXXX-XXXX",
+                             for: newValue)
+          } else {
+            viewModel.formState.phone =
+            viewModel.format(with: "XXX-XXX-XXXX",
+                             for: newValue)
+          }
+        }
         .keyboardType(.phonePad)
         InputFormView(bindingValue:
                         $viewModel.formState.age,
                       label: "Edad",
                       prompt: "Ingresa tu edad...")
+        .onChange(of: viewModel.formState.age) { newValue in
+            viewModel.formState.age =
+            viewModel.format(with: "XXX", for: newValue)
+        }
         .keyboardType(.numberPad)
         PickerFormView(selectedOption:
                         $viewModel.formState.state,
@@ -44,12 +59,12 @@ struct UserRegisterFormView: View {
           HStack {
             Text("Acepto las")
             Button("políticas de privacidad"){
-             showingDetail = true
+              //             showingDetail = true
             }
             .foregroundColor(.blue)
-           .sheet(isPresented: $showingDetail) {
-             PrivacyUserView()
-           }
+            //           .sheet(isPresented: $showingDetail) {
+            //             PrivacyUserView()
+            //           }
             
           }.frame(width: 270)
           

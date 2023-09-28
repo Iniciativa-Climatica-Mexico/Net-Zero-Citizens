@@ -24,10 +24,10 @@ class UserRegisterFormViewModel: ObservableObject {
   @Published var formState = BasicUserInfo()
   @Published var errorMessage = ""
   @Published var showAlert = false
-  @Published var userData: AuthResponse?
+  @Published var userData: UserAuth
   
   init() {
-    userData = useCase.getLocalUserData()
+    userData = useCase.getLocalUserData()!.user
   }
   
   /// Función encargada de enviar el post al backend y actualizar el objeto de entorno
@@ -48,6 +48,21 @@ class UserRegisterFormViewModel: ObservableObject {
       showAlert = true
       return false
     }
+  }
+  
+  func format(with mask: String, for string: String) -> String {
+    let numbers = string.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
+    var result = ""
+    var index = numbers.startIndex
+    for ch in mask where index < numbers.endIndex {
+      if ch == "X" {
+        result.append(numbers[index])
+        index = numbers.index(after: index)
+      } else {
+        result.append(ch)
+      }
+    }
+    return result
   }
   
   /// Valida los datos del formulario
