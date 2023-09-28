@@ -149,10 +149,6 @@ export const getComplaintByUser: RequestHandler<
 
 export const addComplaint: RequestHandler = async (req, res) => {
   try {
-
-    console.log("Petición POST recibida en addComplaint");   // <-- Este console.log indica que la petición ha llegado
-    console.log(req.body);   // <-- Este imprime el cuerpo de la petición para ver qué datos trae
-
     const { userId, companyId, complaintSubject, complaintDescription, complaintStatus } = req.body
 
     if (!userId || !companyId || !complaintSubject || !complaintDescription || !complaintStatus) {

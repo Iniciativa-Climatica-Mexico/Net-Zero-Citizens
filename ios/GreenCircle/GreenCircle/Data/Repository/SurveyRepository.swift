@@ -1,4 +1,4 @@
-// 
+//
 // SurveyRepository.swift
 //  GreenCircle
 //
@@ -33,9 +33,9 @@ class SurveyRepository: SurveyApiProtocol {
   /// - Returns: Modelo de encuesta o nil (SurveyModel?)
   func getPendingSurvey() async -> SurveyModel? {
     let userId = "abcd-1234-efgh-5678"
-    let url = URL(string: SurveyApi.Routes.survey
-      .replacingOccurrences(of: ":userId", with: userId))!
-    return await service.getRequest(url)
+    let surveyRoute = SurveyApi.base + SurveyApi.Routes.survey.replacingOccurrences(of: ":userId", with: userId)
+    let url = URL(string: surveyRoute) ?? URL(string: SurveyApi.base + userId)
+    return await service.getRequest(url!)
   }
   
   /// - Description: Enviar respuestas de la encuesta

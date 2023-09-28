@@ -31,7 +31,7 @@ class ComplaintViewModel: ObservableObject {
     
     private func validate(_ data: PostComplaintData) throws {
         if data.complaintSubject.isEmpty {
-            throw CustomError.mainError
+            print("Error submitting complaint subject")
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.greencircle.data.remote.user
 
-import android.util.Log
+import com.greencircle.data.remote.NetworkModel
+import com.greencircle.data.remote.user.UserAPIService.DeleteUserResponse
 import java.util.UUID
 
 /**
@@ -21,18 +22,37 @@ class UserAPIClient {
         userInfo: UserAPIService.UpdateUserRequest,
         authToken: String
     ): UserAPIService.UpdateUserResponse? {
-        // Inicializa el cliente de la API de usuario.
-        api = UserNetworkModel(authToken)
+        api = NetworkModel(authToken, UserAPIService::class.java)
         return try {
-            // Realiza la actualización del usuario llamando al método en la API.
             val response = api.updateUser(userId, userInfo)
-            Log.d("UserAPIClient", "Response: $response")
             response
         } catch (e: Exception) {
-            // Maneja cualquier excepción que pueda ocurrir durante la actualización.
             e.printStackTrace()
-            Log.e("UpdateUser", "Error: $e")
             null
+        }
+    }
+
+    /**
+     * Elimina el usuario de la base de datos.
+     * @param authToken El token del usuario.
+     * @param userId El ID del usuario que se va a eliminar.
+     * @return Un objeto [DeleteUserResponse] que puede contener un mensaje, error y status.
+     */
+    suspend fun deleteUser(
+        authToken: String,
+        userId: UUID
+    ): UserAPIService.DeleteUserResponse {
+        api = NetworkModel(authToken, UserAPIService::class.java)
+        return try {
+            val response = api.deleteUser(userId)
+            response
+        } catch (e: Exception) {
+            e.printStackTrace()
+            DeleteUserResponse(
+                message = "Error al eliminar el usuario",
+                error = e.message,
+                status = "400"
+            )
         }
     }
 }

@@ -37,7 +37,7 @@ export default class Company extends Model {
     allowNull: true,
     field: 'USER_ID',
   })
-  userId: string
+  userId: string | null
 
   @Column({
     type: DataType.STRING(100),

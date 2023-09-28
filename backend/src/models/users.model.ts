@@ -9,8 +9,8 @@ import {
 } from 'sequelize-typescript'
 import Company from './company.model'
 import Review from './review.model'
-import Role from './role.model'
 import Complaint from './complaint.model'
+import Role from './role.model'
 
 /**
  * @brief
@@ -35,15 +35,14 @@ export default class User extends Model {
   })
   roleId: string
 
-  @BelongsTo(() => Role)
-  role: Role
+  @BelongsTo(() => Role) // Define the association to Role
+  role: Role // This will allow you to access the associated Role model
 
   @ForeignKey(() => Company)
   @Column({
     type: DataType.UUID,
     allowNull: true,
     field: 'COMPANY_ID',
-    unique: 'COMPANY_ID',
   })
   companyId: string
 
@@ -110,7 +109,6 @@ export default class User extends Model {
   @Column({
     type: DataType.STRING,
     allowNull: true,
-    unique: true,
     field: 'PHONE_NUMBER',
   })
   phoneNumber: string | null

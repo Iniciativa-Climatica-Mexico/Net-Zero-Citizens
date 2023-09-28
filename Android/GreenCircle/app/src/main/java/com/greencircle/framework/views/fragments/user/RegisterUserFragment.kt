@@ -14,8 +14,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.greencircle.databinding.FragmentRegisterUserBinding
+import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.auth.LoginViewModel
-import com.greencircle.framework.viewmodel.auth.LoginViewModelFactory
 import com.greencircle.framework.views.activities.MainActivity
 import com.greencircle.framework.views.activities.RegisterUserActivity
 import com.greencircle.utils.AuthUtils
@@ -71,7 +71,7 @@ class RegisterUserFragment : Fragment() {
         super.onCreate(savedInstanceState)
         loginViewModel = ViewModelProvider(
             this,
-            LoginViewModelFactory(requireContext())
+            ViewModelFactory(requireContext(), LoginViewModel::class.java)
         )[LoginViewModel::class.java]
     }
 

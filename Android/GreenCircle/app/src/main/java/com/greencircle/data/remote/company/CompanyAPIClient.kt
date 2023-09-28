@@ -1,6 +1,6 @@
 package com.greencircle.data.remote.company
 
-import android.util.Log
+import com.greencircle.data.remote.NetworkModel
 import com.greencircle.domain.model.company.Companies
 
 /**
@@ -9,12 +9,11 @@ import com.greencircle.domain.model.company.Companies
 class CompanyAPIClient {
     private lateinit var api: CompanyAPIService
 
-    suspend fun getCompanyById(companyID: String): Companies? {
-        api = CompanyNetworkModuleDI()
+    suspend fun getCompanyById(authToken: String, companyID: String): Companies? {
+        api = NetworkModel(authToken, CompanyAPIService::class.java)
         return try {
             api.getCompany(companyID)
         } catch (e: java.lang.Exception) {
-            Log.d("customErrCompany", e.toString())
             e.printStackTrace()
             null
         }
@@ -31,17 +30,12 @@ class CompanyAPIClient {
         company: CompanyAPIService.CreateCompanyRequest,
         authToken: String
     ): CompanyAPIService.CreateCompanyResponse? {
-        // Inicializa el cliente de la API de empresa.
-        api = CompanyNetworkModel(authToken)
+        api = NetworkModel(authToken, CompanyAPIService::class.java)
         return try {
-            // Realiza la creación de la empresa llamando al método en la API.
             val response = api.createCompany(company)
-            Log.d("CompanyAPIClient", "Response: $response")
             response
         } catch (e: Exception) {
-            // Maneja cualquier excepción que pueda ocurrir durante la creación.
             e.printStackTrace()
-            Log.e("CreateCompany", "Error: $e")
             null
         }
     }
