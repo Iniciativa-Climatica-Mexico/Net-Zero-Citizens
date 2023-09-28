@@ -8,6 +8,7 @@ import ReportRouter from './report.routes'
 import ReviewRouter from './review.routes'
 import ProducRouter from './product.routes'
 import EcofinfoRouter from './ecoinfo.routes'
+import ComplaintRouter from './complaints.routes'
 import { validateToken } from '../middlewares/auth.middleware'
 import { Express } from 'express'
 

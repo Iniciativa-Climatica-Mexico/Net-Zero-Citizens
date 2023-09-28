@@ -89,9 +89,7 @@ describe('Complaints Service', () => {
   })
 
   it('should return a complaint by id', async () => {
-    const response = await ComplaintService.getComplaintById(
-      testComplaints[0].complaintId
-    )
+    const response = await ComplaintService.getComplaintById(testComplaints[0].complaintId)
     expect(unwrap(response))
       .excluding(attributesToExclude)
       .to.deep.equal(testComplaints[0])
