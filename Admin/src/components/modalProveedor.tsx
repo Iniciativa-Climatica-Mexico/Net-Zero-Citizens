@@ -4,7 +4,13 @@
  * @component
  * @example
  * ```tsx
- * <ModalProveedor selectedCompany={selectedCompany} setIsModalOpen={setIsModalOpen}fetchPending={fetchPending} />
+ * <ModalProveedor
+      selectedCompany={selectedCompany}
+      setIsModalOpen={setIsModalOpen}
+      fetchPendingCompanies={() => fetchPendingCompanies()}
+      fetchApprovedCompanies={() => fetchApprovedCompanies()}
+      activeTab={activeTab}
+    />
  * ```
  */
 'use client'
@@ -78,7 +84,6 @@ export default function ModalProveedor({
         webPage: company.webPage,
       }
 
-      // Call the updateCompany function with the updated information
       await updateCompany(companyId, updatedCompanyInfo)
     } catch (error) {
       console.error('Error approving company:', error)
@@ -114,7 +119,6 @@ export default function ModalProveedor({
         webPage: company.webPage,
       }
 
-      // Call the updateCompany function with the updated information
       await updateCompany(companyId, updatedCompanyInfo)
     } catch (error) {
       console.error('Error rejecting company:', error)

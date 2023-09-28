@@ -4,7 +4,13 @@
  * @component
  * @example
  * ```tsx
- * <CellAction companyId={company.companyId} fetchPending={fetchPending} company={company} />
+ * <CellAction
+      setIsModalOpen={setIsModalOpen}
+      companyId={company.companyId}
+      fetchPendingCompanies={() => fetchPendingCompanies()}
+      fetchApprovedCompanies={() => fetchApprovedCompanies()}
+      company={company}
+      activeTab={activeTab}>
  * ```
  */
 
