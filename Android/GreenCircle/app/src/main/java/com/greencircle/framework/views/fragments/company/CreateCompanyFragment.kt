@@ -1,6 +1,5 @@
 package com.greencircle.framework.views.fragments.company
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,6 +15,7 @@ import com.greencircle.data.remote.company.CompanyAPIService
 import com.greencircle.domain.model.company.Company
 import com.greencircle.framework.viewmodel.company.CreateCompanyViewModel
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
+import com.greencircle.framework.views.fragments.services.ServicesFragment
 import java.util.UUID
 
 /**Constructor de "CreateCompanyFragment"
@@ -154,7 +154,7 @@ class CreateCompanyFragment : Fragment() {
         val createCompanyRequest = CompanyAPIService.CreateCompanyRequest(companyData)
 
         viewModel.createCompany(createCompanyRequest, authToken)
-        navigateToUnverifiedFragment()
+        nextFragment()
     }
 
     /**
@@ -184,13 +184,10 @@ class CreateCompanyFragment : Fragment() {
      *
      * @param arguments Un Bundle opcional de argumentos que contiene la información de la cuenta de Google.
      */
-    private fun navigateToUnverifiedFragment(arguments: Bundle? = null) {
-        val unverifiedCompanyFragment = UnverifiedCompanyFragment()
+    private fun nextFragment(arguments: Bundle? = null) {
+        val companyServices = ServicesFragment()
         val activity = requireActivity() as RegisterCompanyActivity
 
-        val intent = Intent(activity, RegisterCompanyActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-
-        activity.replaceFragment(unverifiedCompanyFragment, arguments, false)
+        activity.replaceFragment(companyServices, arguments)
     }
 }

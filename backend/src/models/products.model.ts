@@ -16,7 +16,6 @@ export default class Product extends Model {
     allowNull: false,
     defaultValue: DataType.UUIDV4,
     field: 'PRODUCT_ID',
-    unique: true,
   })
   productId: string
 
@@ -38,7 +37,6 @@ export default class Product extends Model {
     type: DataType.STRING(500),
     allowNull: false,
     field: 'IMAGE_URL',
-    unique: true,
   })
   imageUrl: string
 

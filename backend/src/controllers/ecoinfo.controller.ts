@@ -19,7 +19,8 @@ export const getAllEcoinfos: RequestHandler<
 > = async (_req, res) => {
   try {
     const ecoinfos: Ecoinfo[] = await EcoinfoService.getAllEcoinfo()
-    res.json(ecoinfos)
+    if(!ecoinfos) return res.status(404).json({ error: 'No hay ecoinfo' })
+    res.status(200).json(ecoinfos)
   } catch (err) {
     res
       .status(500)

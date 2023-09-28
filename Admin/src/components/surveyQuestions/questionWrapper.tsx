@@ -2,14 +2,7 @@ import Switch from '@mui/material/Switch'
 import { useState } from 'react'
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'
 import { MulOPQuestion } from './questionsTypes/mulOpQuestion'
-
-export type Question = {
-  id: number
-  title: string
-  type: string
-  required: boolean
-  options?: string[]
-}
+import { Question } from '../../app/encuestas/crear/page'
 
 type QuestionWrapperProps = {
   questions: Question[]

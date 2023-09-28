@@ -19,22 +19,27 @@ class UserRegisterFormViewModel: ObservableObject {
   @Published var gender = ""
   @Published var privacy = false
   @Published var showAlert = false
+  @Published var userData: AuthResponse?
+  
+  init() {
+    userData = useCase.getLocalUserData()
+  }
   
   /// Función encargada de enviar el post al backend y actualizar el objeto de entorno
   /// - Parameter userData: objeto con la información del usuario
   /// - Returns: un booleano representando si ocurrió un error al validar el formulario
   @MainActor
-  func handleSubmit(userData: UserData) async -> Bool {
+  func handleSubmit() async -> Bool {
     do {
       try validateInformation()
       
-      userData.user!.phone = phone
-      userData.user!.age = Int(age)!
-      userData.user!.state = state
-      userData.user!.gender = gender
+      userData!.user.phone = phone
+      userData!.user.age = Int(age)!
+      userData!.user.state = state
+      userData!.user.gender = gender
       
-      await useCase.postNewUser(authToken: userData.tokens!.authToken,
-                                user: userData.user!)
+      await useCase.postNewUser(authToken: userData!.tokens.authToken,
+                                user: userData!.user)
       return true
     } catch {
       showAlert = true

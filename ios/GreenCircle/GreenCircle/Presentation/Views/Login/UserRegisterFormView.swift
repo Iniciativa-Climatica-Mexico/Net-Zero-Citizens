@@ -10,15 +10,14 @@ import SwiftUI
 struct UserRegisterFormView: View {
   @ObservedObject var viewModel =
   UserRegisterFormViewModel()
-  @EnvironmentObject var userData: UserData
   
   var goMainMenu: () -> Void
   
   var body: some View {
     VStack(spacing: 10) {
       RegisterHeaderView(
-        mail: userData.user!.email,
-        name: "\(userData.user!.first_name) \(userData.user!.last_name)")
+        mail: viewModel.userData!.user.email,
+        name: "\(viewModel.userData!.user.first_name) \(viewModel.userData!.user.last_name)")
       Spacer()
       VStack(alignment: .leading, spacing: 10) {
         Text("Completa tu registro por favor")
@@ -40,7 +39,14 @@ struct UserRegisterFormView: View {
         HStack {
           HStack {
             Text("Acepto las")
-            LinkButton("políticas de privacidad", buttonColor: .blue){}
+            Button("políticas de privacidad"){
+              showingDetail = true
+            }
+            .foregroundColor(.blue)
+            .sheet(isPresented: $showingDetail) {
+              PrivacyUserView()
+            }
+            
           }.frame(width: 270)
           
           Toggle("", isOn: $viewModel.privacy)
@@ -51,7 +57,7 @@ struct UserRegisterFormView: View {
       MainButton("Continuar", action: {
         Task {
           let success = await viewModel
-            .handleSubmit(userData: userData)
+            .handleSubmit()
           if(success) {
             goMainMenu()
           }
@@ -73,11 +79,11 @@ struct UserRegisterFormView_Previews: PreviewProvider {
     UserRegisterFormView(goMainMenu: {})
       .environmentObject(UserData(
         UserAuth(first_name: "Ricardo",
-             last_name: "Fernandez",
-             uuid: "1",
-             email: "ricardo@mail.com",
-             login_type: "google",
-             picture: "picture",
-             roles: "new_user")))
+                 last_name: "Fernandez",
+                 uuid: "1",
+                 email: "ricardo@mail.com",
+                 login_type: "google",
+                 picture: "picture",
+                 roles: "new_user")))
   }
 }

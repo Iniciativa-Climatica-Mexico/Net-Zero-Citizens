@@ -1,10 +1,21 @@
 'use client'
-import {
-  QuestionWrapper,
-  Question,
-} from '../../../components/surveyQuestions/questionWrapper'
+import { QuestionWrapper } from '../../../components/surveyQuestions/questionWrapper'
 import AddIcon from '@mui/icons-material/Add'
 import { MouseEventHandler, useState } from 'react'
+
+export type CreateSurveyBody = {
+  description: string
+  title: string
+  questions: Question[]
+}
+
+export type Question = {
+  id: number
+  title: string
+  type: string
+  required: boolean
+  options?: string[]
+}
 
 export default function CreateSurvey() {
   const [counter, setCounter] = useState(1)
