@@ -13,7 +13,7 @@ struct SurveyView: View {
   @State private var submissionResult: Bool = false
   @State private var requiredQuestion: Bool = false
   
-  var goMainMenu: () -> Void
+  var goBack: () -> Void
   
   var body: some View {
     NavigationView {
@@ -39,7 +39,7 @@ struct SurveyView: View {
                isPresented: $vm.showAlert) {
           Button("Ok", role: .cancel){
             if vm.success {
-              goMainMenu()
+              goBack()
             }
           }
         } message: {
@@ -56,7 +56,7 @@ struct SurveyView: View {
     }
     .onAppear {
       Task {
-        await vm.getPendingSurvey()
+        print(await vm.getPendingSurvey())
       }
     }
     .onTapGesture {
