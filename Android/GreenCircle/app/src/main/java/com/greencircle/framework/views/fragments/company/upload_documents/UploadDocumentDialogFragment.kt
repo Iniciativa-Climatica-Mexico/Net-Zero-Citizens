@@ -1,12 +1,12 @@
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
@@ -16,11 +16,13 @@ import com.greencircle.framework.viewmodel.company.files.UploadFilesViewModel
 import java.io.File
 
 class UploadDocumentDialogFragment(title: String) : DialogFragment() {
+    private lateinit var view: View
     private lateinit var viewModel: UploadFilesViewModel
     private val title = title
     private var arguments = Bundle()
     private lateinit var authToken: String
     private lateinit var fileToUpload: File
+    private var isFileSelected = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,23 +32,22 @@ class UploadDocumentDialogFragment(title: String) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val inflater = requireActivity().layoutInflater
-        val view = inflater.inflate(R.layout.modal_upload_document, null)
+        view = inflater.inflate(R.layout.modal_upload_document, null)
         viewModel = UploadFilesViewModel(requireContext())
 
         val cardView = view.findViewById<CardView>(R.id.uploadFileCard)
         cardView.setOnClickListener {
             launchPicker()
         }
+        val cancelFileButton = view.findViewById<Button>(R.id.cancelFileButton)
+        cancelFileButton.setOnClickListener {
+            dialog?.dismiss()
+        }
 
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(view)
             .setTitle(title)
-            .setPositiveButton("Upload") { dialog: DialogInterface, which: Int ->
-                uploadFile(fileToUpload)
-            }
-            .setNegativeButton("Cancel") { dialog: DialogInterface, which: Int ->
-                dialog.dismiss()
-            }
+            .setMessage("Sube tu archivo aqui")
         return builder.create()
     }
 
@@ -64,6 +65,16 @@ class UploadDocumentDialogFragment(title: String) : DialogFragment() {
                 fileToUpload = File(filePath)
                 val fileName = fileToUpload.name
                 changeDialogAfterSelection(fileName)
+
+                isFileSelected = true
+                val uploadFileButton = view.findViewById<Button>(R.id.uploadFileButton)
+                if (isFileSelected) {
+                    uploadFileButton.isEnabled = true
+                    uploadFileButton.setOnClickListener {
+                        uploadFile(fileToUpload)
+                        dialog?.dismiss()
+                    }
+                }
             }
         }
     }

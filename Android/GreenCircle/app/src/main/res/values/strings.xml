@@ -96,4 +96,6 @@
     <string name="enroll_company_button_txt">Finalizar registro</string>
     <string name="next">Siguiente</string>
     <string name="continue_no_documents">Continuar sin subir documentos</string>
+    <string name="upload">Subir</string>
+    <string name="cancel">Cancelar</string>
 </resources>
