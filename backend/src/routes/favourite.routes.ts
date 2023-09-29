@@ -7,3 +7,7 @@ router.post('/create', controller.addFavourite)
 router.get('/:favouriteId', controller.getFavouriteById)
 
 router.delete('/delete/:favouriteId', controller.deleteFavouriteById)
+
+router.get('/:userId', controller.getAllFavouritesByUser)
+
+export default router

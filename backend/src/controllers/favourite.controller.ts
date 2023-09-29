@@ -1,4 +1,3 @@
-import { timestamp } from 'aws-sdk/clients/cloudfront'
 import Favourite from '../models/favourite.model'
 import * as FavouriteService from '../services/favourite.service'
 import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
@@ -97,5 +96,40 @@ export const deleteFavouriteById: RequestHandler<
   } catch (error) {
     console.log(error)
     res.status(500).json({ message: 'Error' })
+  }
+}
+
+/**
+ * @brief
+ * Función del controlador que se encarga de hacer fetch
+ * de favoritos de un usuario
+ * @param req La request el userId
+ * @returns Una response
+ */
+
+export const getAllFavouritesByUser: RequestHandler<
+  { userId: string },
+  Paginator<Favourite> | { message: string },
+  NoRecord,
+  NoRecord
+> = async (req, res) => {
+  const { userId } = req.params
+  const params = {
+    start: req.query.start || 0,
+    pageSize: req.query.pageSize || 10,
+    userId: userId,
+  }
+  const favourites = await FavouriteService.getAllFavouritesByUser(params)
+
+  try {
+    res.json({
+      rows: favourites.rows,
+      start: params.start,
+      pageSize: params.pageSize,
+      total: favourites.count,
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ message: 'Error favourites not found!' })
   }
 }

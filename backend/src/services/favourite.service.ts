@@ -2,13 +2,11 @@ import User from '../models/users.model'
 import Company from '../models/company.model'
 import Favourite from '../models/favourite.model'
 import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
-import { error } from 'console'
-import { getFavouriteById } from '../controllers/favourite.controller'
 
 export type FavouriteType = {
   companyId: string
   userId: string
-  savedAt: string
+  savedAt: Date
 }
 
 /**
@@ -71,4 +69,26 @@ export const deleteFavouriteById = async (
   } else {
     throw new Error('Favourite not found')
   }
+}
+
+/**
+ * @brief
+ * Función del controlador que devuelve todos los favoritos
+ * de la base de datos
+ * @param req La request HTTP al servidor
+ * @param res Un objeto paginador con los proveedores y la
+ *            información de paginación
+ * @returns Una promesa con los objetos de favourite
+ */
+export const getAllFavouritesByUser = async (
+  params: PaginationParams<{ userId: string }>
+): Promise<PaginatedQuery<Favourite>> => {
+  const { userId } = params
+  return Favourite.findAndCountAll({
+    limit: params.pageSize,
+    offset: params.start,
+    where: {
+      userId: userId,
+    },
+  })
 }
