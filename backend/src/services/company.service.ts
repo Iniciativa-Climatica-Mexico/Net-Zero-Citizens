@@ -26,7 +26,7 @@ export type CompanyType = {
   city: string
   state: string
   zipCode: string
-  userId: string
+  userId: string | null
   profilePicture?: string | null
   pdfCurriculumUrl: string
   pdfDicCdmxUrl?: string | null
@@ -200,6 +200,43 @@ export const getCompanyById = async (id: string): Promise<Company | null> => {
   company?.setDataValue('score', rating)
   company?.setDataValue('oneComment', comment)
   company?.setDataValue('images', images)
+
+  return company
+}
+
+/**
+ * @brief
+ * Valida si el usuario tiene una compañia asignada
+ * @param uuid Id del usuario
+ * @returns Promise<Company | Null> Proveedor con el id especificado
+ */
+export const getCompanyByUserId = async (uuid: string): Promise<Company | null> => {
+  const company = await Company.findOne({
+    where: {
+      userId: uuid,
+    },
+  })
+
+  return company
+}
+
+/**
+ * @brief
+ * Desasigna un usuario de una compañia
+ * @param uuid Id del usuario
+ * @returns Promise<Company | Null> Proveedor con el id especificado
+ */
+export const unbindUserFromCompany = async (uuid: string): Promise<Company | null> => {
+  const company = await Company.findOne({
+    where: {
+      userId: uuid,
+    },
+  })
+
+  if (company) {
+    company.userId = null
+    await company.save()
+  }
 
   return company
 }

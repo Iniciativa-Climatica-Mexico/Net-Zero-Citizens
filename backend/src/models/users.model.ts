@@ -9,6 +9,7 @@ import {
 } from 'sequelize-typescript'
 import Company from './company.model'
 import Review from './review.model'
+import Complaint from './complaint.model'
 import Role from './role.model'
 
 /**
@@ -149,4 +150,7 @@ export default class User extends Model {
 
   @HasMany(() => Review)
   reviews: Review[]
+
+  @HasMany(() => Complaint)
+  complaints: Complaint[]
 }

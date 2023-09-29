@@ -43,7 +43,7 @@ struct CoordinatorView: View {
                   goCompanyRegister: goCompanyRegister)
         
       case .userRegister:
-        UserRegisterView(goLogin: goLogin,
+        UserRegisterView(goLogin: goBack,
                          goForm: goUserForm,
                          goMainMenu: goMainMenu)
         
@@ -51,7 +51,7 @@ struct CoordinatorView: View {
         UserRegisterFormView(goMainMenu: goMainMenu)
         
       case .companyRegister:
-        CompanyRegisterView(goLogin: goLogin,
+        CompanyRegisterView(goLogin: goBack,
                             goForm: goCompanyForm,
                             goMainMenu: goMainMenu)
         
@@ -69,13 +69,13 @@ struct CoordinatorView: View {
                                  solarToggle: $solarToggle)
           
       case .mainMenuView:
-        TabBarView()
+        TabBarView(goSurvey: goSurvey)
         
       case .pendingCompany:
         PendingCompanyView()
         
       case .survey:
-        SurveyView(goMainMenu: goMainMenu)
+        SurveyView(goBack: goBack)
           .applyNavBarTheme()
       }
     }
@@ -133,5 +133,9 @@ struct CoordinatorView: View {
   
   private func goPending() {
     routes.presentCover(.pendingCompany)
+  }
+  
+  private func goBack() {
+    routes.goBack()
   }
 }
