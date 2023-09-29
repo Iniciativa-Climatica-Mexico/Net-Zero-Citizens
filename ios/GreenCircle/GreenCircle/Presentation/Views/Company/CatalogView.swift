@@ -31,7 +31,7 @@ struct CardCatalogView: View {
         .shadow(color: Color("BlueCustom"), radius: 1)
         HStack {
           VStack (alignment: .leading) {
-            if let imageURL = URL(string: viewModel.contentCompany.images?.first?.imageUrl ?? "") {
+            if let imageURL = URL(string: viewModel.contentCompany.images?.first?.fileUrl ?? "") {
               AsyncImage(url: imageURL) { phase in
                 switch phase {
                   case .empty:
@@ -123,7 +123,7 @@ struct CatalogView: View {
       }
       .onAppear {
         Task {
-          await viewModel.fetchAllCompanies()
+          try await viewModel.fetchAllCompanies()
         }
       }
     }

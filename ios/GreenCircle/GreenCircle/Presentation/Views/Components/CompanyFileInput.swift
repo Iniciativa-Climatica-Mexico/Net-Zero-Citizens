@@ -16,19 +16,19 @@ struct CompanyFileInput: View {
     @ObservedObject var viewModel: CompanyViewModel
     
     @State private var isPickerPresented: Bool = false
-    @State private var selectedFile: URL? = nil
+    @State private var selectedFile: Data? = nil
 
     var body: some View {
         VStack{
             Divider()
             Button(action: {
-                if let fileURL = Bundle.main.url(forResource: "migration-digital-assets-survey", withExtension: "pdf") {
-                                    selectedFile = fileURL
-                                    Task {
-                                        await viewModel.uploadFile(fileURL: fileURL)
-                                    }
-                                }
-                //isPickerPresented = true
+//                if let fileURL = Bundle.main.url(forResource: "migration-digital-assets-survey", withExtension: "pdf") {
+//                                    selectedFile = fileURL
+//                                    Task {
+//                                        await viewModel.uploadFile(fileURL: fileURL)
+//                                    }
+//                                }
+                isPickerPresented = true
             }) {
                 HStack{
                     VStack(alignment: .leading, spacing: 5) {
@@ -58,7 +58,7 @@ struct CompanyFileInput: View {
         .sheet(isPresented: $isPickerPresented, onDismiss:{
             if let selectedFileURL = selectedFile {
                 Task {
-                    await viewModel.uploadFile(fileURL: selectedFileURL)
+                    await viewModel.uploadFile(file: selectedFileURL)
                 }
             }
         }) {
@@ -68,9 +68,41 @@ struct CompanyFileInput: View {
 }
 
 struct DocumentPicker: UIViewControllerRepresentable {
-    @Binding var selectedFile: URL?
+    @Environment(\.presentationMode) var presentationMode
+    @Binding var selectedFile: Data?
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+
+    class Coordinator: NSObject, UIDocumentPickerDelegate{
+        let parent: DocumentPicker
+        
+        init (_ parent: DocumentPicker){
+            self.parent = parent
+        }
+        
+        func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+            do{
+                Task{
+                    let (data, _) = try await URLSession.shared.data(from: urls.first!)
+                    parent.selectedFile = data
+                    parent.presentationMode.wrappedValue.dismiss()
+                }
+            }
+            catch{
+                print("Invalid Data")
+            }
+        }
+        
+        func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+            parent.presentationMode.wrappedValue.dismiss()
+        }
+    }
+    
     func makeUIViewController(context: Context) -> some UIViewController {
         let documentPicker = UIDocumentPickerViewController(documentTypes: [kUTTypePDF as String], in: .import)
+        documentPicker.delegate = context.coordinator
         return documentPicker
     }
     

@@ -6,18 +6,22 @@ import { RequestHandler } from 'express'
 
 export const uploadCompanyFile: RequestHandler = async (req, res) => {
   console.log(req)
+  console.log('Body ---------', req.body)
   try {
-    const { companyId, fileDescription, fileFormat, inputId } = req.body
-    if (!companyId) return res.status(400).send('No company provided')
-    // inputId es el id del input del formulario
-    upload.array(inputId)(req, res, async (err) => {
+    upload.single('file')(req, res, async (err) => {
+      const companyId = req.body.companyId
+      const fileDescription = 'Curriculum'
+      const fileFormat = '.pdf'
+      console.log('Company ID: ', companyId)
+      console.log('File ---------', req.file)
+      console.log(typeof req.file)
       CompanyFileService.uploadCompanyFile(
         req.file,
         companyId,
         fileDescription,
         fileFormat
       )
-      return res.status(200).json({ message: 'File uploaded' });
+      return res.status(200).json({ message: 'File uploaded' })
     })
   } catch (error) {
     return res.status(500).send('Error uploading file')

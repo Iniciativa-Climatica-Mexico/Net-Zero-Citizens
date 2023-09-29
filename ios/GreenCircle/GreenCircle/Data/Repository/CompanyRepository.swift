@@ -27,7 +27,7 @@ protocol CompanyRepositoryProtocol {
   func postCompany(company: PostCompanyData) async
   func fetchCompanyById(companyId: UUID) async -> Company?
   //func fetchAllCompanies() async -> Company?
-  func uploadCompanyFile(fileURL: URL) async -> APIResponse?
+    func uploadCompanyFile(file: Data) async -> APIResponse?
 }
 
 
@@ -35,11 +35,13 @@ protocol CompanyRepositoryProtocol {
 class CompanyRepository: CompanyRepositoryProtocol {
   /// Inicialización de servicio backEnd
   let service: NetworkAPIService
+    let local: LocalService
   /// Inicialización de singleton de repositorio de compañía
   static let shared = CompanyRepository()
   /// Constructor que toma el valor del servicio del backEnd
-  init(service: NetworkAPIService = NetworkAPIService.shared) {
+    init(service: NetworkAPIService = NetworkAPIService.shared, local: LocalService = LocalService.shared) {
     self.service = service
+        self.local = local
   }
   
   /// Obtener compañía por UUID llamando al método del servicio del backend
@@ -86,16 +88,18 @@ class CompanyRepository: CompanyRepositoryProtocol {
       .getRequest(URL(string: "\(CompanyAPI.base)")!)
   }
   
-    func uploadCompanyFile(fileURL: URL) async -> APIResponse? {
+    func uploadCompanyFile(file: Data) async -> APIResponse? {
         let uploadURL = URL(string: "\(CompanyAPI.base)\(CompanyAPI.Routes.uploadFile)")!
+        let companyId = local.getCompanyId()
         let additionalParameters: [String: Any] = [
+            // "companyId": companyId!,
             "companyId": "c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e",
-            "fileDescription": "Curriculum",
-            "fileFormat": ".pdf",
-            "inputId": "input1"
+//            "fileDescription": "Curriculum",
+//            "fileFormat": ".pdf",
+//            "inputId": "input1"
         ]
         print("Additional params: \(additionalParameters)")
-        return await service.uploadFileRequest(uploadURL, fileURL: fileURL, additionalParameters: additionalParameters)
+        return await service.uploadFileRequest(uploadURL, file: file, additionalParameters: additionalParameters)
     }
 
 }

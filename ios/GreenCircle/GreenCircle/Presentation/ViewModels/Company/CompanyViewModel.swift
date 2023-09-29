@@ -69,7 +69,7 @@ class CompanyViewModel: ObservableObject {
     }
     
     @MainActor
-    func uploadFile(fileURL: URL) async {
-        await repository.uploadCompanyFile(fileURL: fileURL)
+    func uploadFile(file: Data) async {
+        await repository.uploadCompanyFile(file: file)
     }
 }

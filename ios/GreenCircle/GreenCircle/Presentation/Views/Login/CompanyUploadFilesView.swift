@@ -20,12 +20,12 @@ struct CompanyUploadFilesView: View {
     // TODO: Also, get Company Observable object and modify it
     VStack {
       if photovoltaicToggle && !solarToggle {
-        Text("Yes photovoltaic toggle!")
+        CompanyFileInput(title: "Example Title", description: "Example Description", viewModel: CompanyViewModel())
       } else if solarToggle && !photovoltaicToggle {
-        Text("Yes solar toggle!")
+        CompanyFileInput(title: "Example Title", description: "Example Description", viewModel: CompanyViewModel())
       }
       else {
-        Text("Yes both!")
+          CompanyFileInput(title: "Example Title", description: "Example Description", viewModel: CompanyViewModel())
       }
     }
   }
