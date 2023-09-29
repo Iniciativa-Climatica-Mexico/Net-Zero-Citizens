@@ -32,7 +32,7 @@ class CatalogueViewHolder(private val binding: CatalogueCardLayoutBinding) :
         binding.companyRatingText.text = companySummary.rating.toString()
         binding.companyRatingBar.rating = companySummary.rating
         Glide.with(binding.root.context).load(companySummary.profilePicture)
-            .placeholder(R.drawable.ic_launcher_background).into(binding.companyProfilePic)
+            .placeholder(R.drawable.main_logo).into(binding.companyProfilePic)
 
         // set onclick listener
         binding.root.setOnClickListener {
@@ -46,7 +46,7 @@ class CatalogueViewHolder(private val binding: CatalogueCardLayoutBinding) :
      * Esta función se utiliza para pasar a la vista de detalle de la empresa
      * @param bundle: Objeto Bundle
      */
-    fun passViewGoToCompanyDetail(bundle: Bundle) {
+    private fun passViewGoToCompanyDetail(bundle: Bundle) {
         val companyContactFragment = CompanyContactFragment()
         companyContactFragment.arguments = bundle
         val activity = binding.root.context as MainActivity

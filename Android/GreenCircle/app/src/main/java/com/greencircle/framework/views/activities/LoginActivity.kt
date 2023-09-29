@@ -13,9 +13,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.greencircle.R
 import com.greencircle.databinding.ActivityLoginBinding
+import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.auth.LoginViewModel
-import com.greencircle.framework.viewmodel.auth.LoginViewModelFactory
 import com.greencircle.utils.AuthUtils
+import com.greencircle.utils.RequestPermissions
 
 /**
  * Actividad principal para la autenticación y registro de usuarios.
@@ -27,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private val authUtils = AuthUtils()
     private val viewModel: LoginViewModel by viewModels {
-        LoginViewModelFactory(applicationContext)
+        ViewModelFactory(applicationContext, LoginViewModel::class.java)
     }
 
     private val registerCompanyActivityResult =
@@ -80,6 +81,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        validatePermissions()
 
         // Configuración de los listeners para los botones de registro de empresa y usuario
         registerCompanyOnClickListener()
@@ -139,5 +142,11 @@ class LoginActivity : AppCompatActivity() {
     private fun navigateToRegisterUser() {
         var intent: Intent = Intent(this, RegisterUserActivity::class.java)
         registerUserActivityResult.launch(intent)
+    }
+
+    private fun validatePermissions() {
+        val requested: RequestPermissions = RequestPermissions()
+
+        requested.requestPermissions(this)
     }
 }

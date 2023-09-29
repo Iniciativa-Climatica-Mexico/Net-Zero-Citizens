@@ -1,17 +1,18 @@
-//import SwiftUI
-//import MapKit
-//
-//struct CoordinatesView: View {
-//    @ObservedObject var viewModel: CompanyViewModel
-//    @State var region: MKCoordinateRegion
-//
-//    var body: some View {
-//        Map(coordinateRegion: $region)
-//            .onAppear {
+
+import SwiftUI
+import MapKit
+
+struct CoordinatesView: View {
+    @ObservedObject var viewModel: CompanyViewModel
+    @State var region: MKCoordinateRegion
+    
+    var body: some View {
+        Map(coordinateRegion: $region)
+            .onAppear {
 //                setRegion()
-//            }
-//    }
-//
+            }
+    }
+    
 //    func setRegion() {
 //        guard let coordinates = viewModel.companiesCoordinates?.rows else { return }
 //        print(coordinates.count)
@@ -29,12 +30,9 @@
 //
 //        region = coordinatesRegion
 //    }
-//
-//
 //    struct CoordinatesView_Previews: PreviewProvider {
 //        static var previews: some View {
 //            CoordinatesView(viewModel: CompanyViewModel(), region: MKCoordinateRegion())
 //        }
 //    }
-//}
-////
+}

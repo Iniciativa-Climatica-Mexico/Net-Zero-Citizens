@@ -1,4 +1,4 @@
-// 
+//
 // SurveyRepository.swift
 //  GreenCircle
 //
@@ -16,10 +16,11 @@ class SurveyApi {
 }
 
 protocol SurveyApiProtocol {
-  func getPendingSurvey() async -> SurveyModel?
+  func getPendingSurvey(userId: String) async -> SurveyModel?
 }
 
 class SurveyRepository: SurveyApiProtocol {
+  
   let service: NetworkAPIService
   static let shared = SurveyRepository()
   
@@ -31,11 +32,10 @@ class SurveyRepository: SurveyApiProtocol {
   
   /// - Description: Obtener encuesta pendiente
   /// - Returns: Modelo de encuesta o nil (SurveyModel?)
-  func getPendingSurvey() async -> SurveyModel? {
-    let userId = "abcd-1234-efgh-5678"
-    let url = URL(string: SurveyApi.Routes.survey
-      .replacingOccurrences(of: ":userId", with: userId))!
-    return await service.getRequest(url)
+  func getPendingSurvey(userId: String) async -> SurveyModel? {
+    let surveyRoute = SurveyApi.base + SurveyApi.Routes.survey.replacingOccurrences(of: ":userId", with: userId)
+    let url = URL(string: surveyRoute) ?? URL(string: SurveyApi.base + userId)
+    return await service.getRequest(url!)
   }
   
   /// - Description: Enviar respuestas de la encuesta
@@ -43,8 +43,7 @@ class SurveyRepository: SurveyApiProtocol {
   ///   - surveyId: El id de la encuesta
   ///   - answers: Las respuestas de la encuesta
   /// - Returns: Bool
-  func submitAnswers(surveyId: String, answers : [Answer]) async -> Bool {
-    let userId = "8de45630-2e76-4d97-98c2-9ec0d1f3a5b8"
+  func submitAnswers(surveyId: String, userId: String ,answers : [Answer]) async -> Bool {
     let surveyRoute = SurveyApi.Routes.submitSurvey
       .replacingOccurrences(of: ":userId", with: userId)
       .replacingOccurrences(of: ":surveyId", with: surveyId)

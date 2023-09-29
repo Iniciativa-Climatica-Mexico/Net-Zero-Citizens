@@ -9,11 +9,13 @@ import FlowStacks
 import SwiftUI
 
 struct CoordinatorView: View {
+  @StateObject var viewModel = CoordinatorViewModel()
   @State var hasPendingSurvey: Bool = false
   @State var photovoltaicToggle: Bool = false
   @State var solarToggle: Bool = false
 
   enum Screens {
+    case splashScreen
     case login
     case userRegister
     case userRegisterForm
@@ -26,11 +28,14 @@ struct CoordinatorView: View {
     case survey
   }
   
-  @State var routes: Routes<Screens> = [.root(.login)]
+  @State var routes: Routes<Screens> = [.root(.splashScreen)]
   
   var body: some View {
     Router($routes) { screen, _ in
       switch screen {
+      case .splashScreen:
+        SplashScreenView(goLogin: goLogin)
+        
       case .login:
         LoginView(goUserRegister: goUserRegister,
                   goForm: goUserForm,
@@ -38,7 +43,7 @@ struct CoordinatorView: View {
                   goCompanyRegister: goCompanyRegister)
         
       case .userRegister:
-        UserRegisterView(goLogin: goLogin,
+        UserRegisterView(goLogin: goBack,
                          goForm: goUserForm,
                          goMainMenu: goMainMenu)
         
@@ -46,7 +51,7 @@ struct CoordinatorView: View {
         UserRegisterFormView(goMainMenu: goMainMenu)
         
       case .companyRegister:
-        CompanyRegisterView(goLogin: goLogin,
+        CompanyRegisterView(goLogin: goBack,
                             goForm: goCompanyForm,
                             goMainMenu: goMainMenu)
         
@@ -64,20 +69,34 @@ struct CoordinatorView: View {
                                  solarToggle: $solarToggle)
           
       case .mainMenuView:
-        TabBarView()
+        TabBarView(goSurvey: goSurvey)
         
       case .pendingCompany:
         PendingCompanyView()
         
       case .survey:
-        SurveyView(goMainMenu: goMainMenu)
+        SurveyView(goBack: goBack)
           .applyNavBarTheme()
+      }
+    }
+    .onAppear {
+      Task {
+        let res = await viewModel.handleSignIn()
+        
+        switch res {
+        case .newUser:
+          goUserForm()
+        case .success:
+          goMainMenu()
+        case .fail:
+          goLogin()
+        }
       }
     }
   }
   
   private func goLogin() {
-    routes.goBackToRoot()
+    routes.presentCover(.login)
   }
   
   private func goUserRegister() {
@@ -114,5 +133,9 @@ struct CoordinatorView: View {
   
   private func goPending() {
     routes.presentCover(.pendingCompany)
+  }
+  
+  private func goBack() {
+    routes.goBack()
   }
 }

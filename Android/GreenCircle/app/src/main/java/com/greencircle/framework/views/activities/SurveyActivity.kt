@@ -9,6 +9,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.greencircle.R
 import com.greencircle.databinding.ActivitySurveyBinding
 import com.greencircle.domain.model.survey.Question
+import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.survey.SurveyViewModel
 import com.greencircle.framework.views.fragments.survey.QuestionFragment
 import java.util.UUID
@@ -16,8 +17,13 @@ import org.json.JSONObject
 
 class SurveyActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySurveyBinding
-    private val viewModel: SurveyViewModel by viewModels()
+    private val viewModel: SurveyViewModel by viewModels {
+        ViewModelFactory(applicationContext, SurveyViewModel::class.java)
+    }
     private val fragmentManager = supportFragmentManager
+
+    private var currentProgress = 0
+    private var totalQuestions = 0
     lateinit var userId: UUID
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,10 +33,9 @@ class SurveyActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("my_preferences", MODE_PRIVATE)
         val userJson = sharedPreferences?.getString("user_session", null)
         val userJSON = JSONObject(userJson!!)
-        Log.d("SalidaUserJson", userJSON.getString("uuid"))
         userId = UUID.fromString(userJSON.getString("uuid"))
-
         viewModel.getSurveyPending(userId)
+        updateProgressBar()
     }
 
     private fun initializeObservers() {
@@ -52,10 +57,11 @@ class SurveyActivity : AppCompatActivity() {
                 }
 
                 SurveyViewModel.SubmitStatus.validationError -> {
-                    MaterialAlertDialogBuilder(this).setTitle("Faltan preguntas").setMessage(
-                        "No puedes enviar sin antes haber " +
-                            "termiandode llenar todas las preguntas obligatorias.",
-                    ).setCancelable(false).setPositiveButton("Seguir") { _, _ -> }.show()
+                    MaterialAlertDialogBuilder(this).setTitle("Faltan preguntas")
+                        .setMessage(
+                            "No puedes enviar sin antes haber " +
+                                "termiandode llenar todas las preguntas obligatorias.",
+                        ).setCancelable(false).setPositiveButton("Seguir") { _, _ -> }.show()
                 }
 
                 SurveyViewModel.SubmitStatus.error -> {
@@ -85,6 +91,7 @@ class SurveyActivity : AppCompatActivity() {
     }
 
     private fun loadQuestions(questions: ArrayList<Question>) {
+        totalQuestions = questions.size
         val fragmentTransaction = fragmentManager.beginTransaction()
         questions.forEach { question ->
             val questionFragment = QuestionFragment()
@@ -98,6 +105,8 @@ class SurveyActivity : AppCompatActivity() {
 
     fun onQuestionAnswered(questionId: UUID, answer: String) {
         viewModel.onQuestionAnswered(questionId, answer)
+        currentProgress++
+        updateProgressBar()
     }
 
     private fun goToMain() {
@@ -105,5 +114,10 @@ class SurveyActivity : AppCompatActivity() {
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         startActivity(intent)
         finish()
+    }
+
+    private fun updateProgressBar() {
+        val progress = (currentProgress.toFloat() / totalQuestions.toFloat() * 100).toInt()
+        binding.progressBar.progress = progress
     }
 }
