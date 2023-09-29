@@ -164,23 +164,16 @@ export const updateComplaintStatus = async (
 }
 
 /**
- * Designa un usuario de la queja
- * @param complaintId Id de la queja
- * @returns Promise<Complaint | null> La queja actualizada
+ * Elimina todas las quejas de un usuario
+ * @param userId El id del usuario
+ * @returns Promise<number | null> La queja actualizada
  */
-export const ubindUserFromComplaint = async (
+export const deleteAllComplaintsFromUser = async (
   userId: string
-): Promise<Complaint | null> => {
-  const complaint = await Complaint.findOne({
+): Promise<number | null> => {
+  return await Complaint.destroy({
     where: {
       userId: userId,
     },
   })
-
-  if (complaint) {
-    complaint.userId = null
-    await complaint.save()
-  }
-
-  return complaint
 }
