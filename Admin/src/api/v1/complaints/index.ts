@@ -19,9 +19,9 @@ export const getCompaniesWithComplaints = async () => {
     for (const company of companies) {
       const companyComplaints = await authAxios().get(`/complaints/company/${company.companyId}`)
       const numberComplaints = companyComplaints.data.rows.length
-        if (numberComplaints > 0) {
-            companiesWithComplaints.push({...company, numberComplaints: numberComplaints, complaints: companyComplaints.data.rows})
-        }
+      if (numberComplaints > 0) {
+        companiesWithComplaints.push({...company, numberComplaints: numberComplaints, complaints: companyComplaints.data.rows})
+      }
     }
     
     return companiesWithComplaints
