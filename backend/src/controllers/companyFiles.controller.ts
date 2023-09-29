@@ -2,18 +2,24 @@ import CompanyFiles from '../models/companyFiles.model'
 import * as CompanyFileService from '../services/companyFiles.service'
 import { NoRecord } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
-import { FileFormat } from '../models/companyFiles.model'
+import { FileFormat, FileDescription } from '../models/companyFiles.model'
 
 export const uploadCompanyFile: RequestHandler = async (req, res) => {
   try {
-    console.log(req.body)
-    console.log(req.file)
-    // CompanyFileService.uploadCompanyFile(
-    //   req.file,
-    //   companyId,
-    //   'INE representante legal', // TODO: Cambiar este valor
-    //   fileFormat as FileFormat
-    // )
+    let { companyId, fileFormat, fileDescription } = req.body
+
+    // Format the string from android petitions
+    companyId = companyId.replace(/"/g, '')
+    fileFormat = fileFormat.replace(/"/g, '')
+    fileDescription = fileDescription.replace(/"/g, '')
+
+    // Service to upload the file
+    CompanyFileService.uploadCompanyFile(
+      req.file,
+      companyId,
+      fileDescription as FileDescription | 'INE representante legal', // TODO: Cambiar este valor
+      fileFormat as FileFormat
+    )
     return res.status(200).send('File uploaded!')
   } catch (error) {
     return res.status(500).send('Error uploading file')

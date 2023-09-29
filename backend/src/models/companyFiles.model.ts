@@ -8,7 +8,7 @@ import {
 } from 'sequelize-typescript'
 import Company from './company.model'
 
-type FileDescription =
+export type FileDescription =
   | 'INE representante legal'
   | 'Acta constitutiva'
   | 'Curriculum'
