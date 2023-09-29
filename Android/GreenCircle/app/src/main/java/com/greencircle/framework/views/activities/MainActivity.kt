@@ -8,7 +8,6 @@ import com.greencircle.R
 import com.greencircle.databinding.ActivityMainBinding
 import com.greencircle.databinding.TopBarBinding
 import com.greencircle.framework.views.fragments.HomeFragment
-import com.greencircle.framework.views.fragments.MapFragment
 import com.greencircle.framework.views.fragments.catalogue.CatalogueFragment
 import com.greencircle.framework.views.fragments.map.MapFragment
 import com.greencircle.framework.views.fragments.profile.ProfileFragment
