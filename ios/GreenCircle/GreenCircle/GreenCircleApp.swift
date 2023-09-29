@@ -5,8 +5,8 @@
 //  Created by Ricardo Adolfo Fernández Alvarado on 04/09/23.
 //
 
-import SwiftUI/Users/fridabg/Desktop/Net-Zero-Citizens
 import GoogleSignIn
+import SwiftUI
 
 @main
 struct GreenCircleApp: App {
