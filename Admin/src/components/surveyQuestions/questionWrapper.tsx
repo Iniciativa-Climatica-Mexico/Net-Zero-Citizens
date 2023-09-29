@@ -19,8 +19,8 @@ export const QuestionWrapper = ({
   survey,
   setSurvey,
 }: QuestionWrapperProps) => {
-  const [required, setRequired] = useState(false)
-  const [questionType, setQuestionType] = useState('openQuestion')
+  const [isRequired, setisRequired] = useState(false)
+  const [questionType, setQuestionType] = useState('open')
 
   const handleQuestionTypeChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -30,7 +30,7 @@ export const QuestionWrapper = ({
       const newSurvey = { ...prevSurvey }
       newSurvey.questions.map((question) => {
         if (question.id === id) {
-          question.type = event.target.value
+          question.questionType = event.target.value
         }
         return question
       })
@@ -53,7 +53,7 @@ export const QuestionWrapper = ({
       const newSurvey = { ...prevSurvey }
       newSurvey.questions.map((question) => {
         if (question.id === id) {
-          question.title = event.target.value
+          question.questionText = event.target.value
         }
         return question
       })
@@ -62,7 +62,7 @@ export const QuestionWrapper = ({
   }
 
   const handleSwitchChange = () => {
-    setRequired((prevRequired) => !prevRequired)
+    setisRequired((previsRequired) => !previsRequired)
   }
 
   useEffect(() => {
@@ -70,16 +70,16 @@ export const QuestionWrapper = ({
       const newSurvey = { ...prevSurvey }
       newSurvey.questions.map((question) => {
         if (question.id === id) {
-          question.required = required
+          question.isRequired = isRequired
         }
         return question
       })
       return newSurvey
     })
-  }, [required])
+  }, [isRequired])
 
   const questionSwitch = () => {
-    if (questionType === 'mulOptionQuestion') {
+    if (questionType === 'multiple_choice') {
       return <MulOPQuestion survey={survey} setSurvey={setSurvey} />
     } else {
       return
@@ -105,14 +105,15 @@ export const QuestionWrapper = ({
           className="px-2 py-2 mb-3 rounded border border-solid border-gray-300 w-3/4 h-11"
           placeholder="Cual es tu huella de carbono?"
           onChange={handleTitleChange}
+          required
         />
         <select
           className="rounded border border-solid border-gray-300 px-2 py-2 h-11"
           onChange={handleQuestionTypeChange}
         >
-          <option value="openQuestion">Pregunta Abierta</option>
-          <option value="mulOptionQuestion">Opcion Multiple</option>
-          <option value="scalenQuestion">Pregunta Escalar</option>
+          <option value="open">Pregunta Abierta</option>
+          <option value="multiple_choice">Opcion Multiple</option>
+          <option value="scale">Pregunta Escalar</option>
         </select>
       </div>
       <div className="flex flex-col w-full">{questionSwitch()}</div>
@@ -126,7 +127,7 @@ export const QuestionWrapper = ({
         </label>
         <div style={{ pointerEvents: 'auto' }}>
           <Switch
-            checked={required}
+            checked={isRequired}
             onChange={handleSwitchChange}
             color="primary"
             inputProps={{ 'aria-label': 'toggle switch' }}

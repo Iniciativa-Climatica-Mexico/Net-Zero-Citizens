@@ -4,16 +4,16 @@ import AddIcon from '@mui/icons-material/Add'
 import { MouseEventHandler, useState } from 'react'
 
 export type CreateSurveyBody = {
-  description: string
   title: string
+  description: string
   questions: Question[]
 }
 
 export type Question = {
   id: number
-  title: string
-  type: string
-  required: boolean
+  questionText: string
+  questionType: string
+  isRequired: boolean
   options?: string[]
 }
 
@@ -22,9 +22,9 @@ export default function CreateSurvey() {
   const [questions, setQuestions] = useState<Question[]>([
     {
       id: 0,
-      title: '',
-      type: 'openQuestion',
-      required: false,
+      questionText: '',
+      questionType: 'open',
+      isRequired: false,
     },
   ])
 
@@ -38,9 +38,9 @@ export default function CreateSurvey() {
     e.preventDefault()
     const newQuestion = {
       id: counter,
-      title: '',
-      type: 'openQuestion',
-      required: false,
+      questionText: '',
+      questionType: 'open',
+      isRequired: false,
     }
     setCounter(counter + 1)
     setQuestions((prevQuestions) => [...prevQuestions, newQuestion])
@@ -93,6 +93,7 @@ export default function CreateSurvey() {
               className="px-4 py-2 mb-3 border border-gray-700 rounded"
               placeholder="Calcula tu huella de carbono"
               onChange={handleSurveyTitleChange}
+              required
             />
             <label className="text-m font-bold text-txt mb-2">
               Descripción
@@ -104,6 +105,7 @@ export default function CreateSurvey() {
               className="px-4 py-2 border border-gray-700 rounded h"
               placeholder="Encuesta para calcular tu huella de carbono"
               onChange={handleSurveyDescriptionChange}
+              required
             />
           </div>
           <div className="flex flex-col w-1/2">

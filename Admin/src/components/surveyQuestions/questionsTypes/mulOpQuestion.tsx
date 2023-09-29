@@ -2,24 +2,20 @@ import { MouseEventHandler, useState, MouseEvent } from 'react'
 import { useEffect } from 'react'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import { CreateSurveyBody } from '../../../app/encuestas/crear/page'
-import { Question } from '../../../app/encuestas/crear/page'
 
 export type MulOPQuestionProps = {
   survey: React.Dispatch<React.SetStateAction<CreateSurveyBody>>
   setSurvey: React.Dispatch<React.SetStateAction<CreateSurveyBody>>
 }
 
-export const MulOPQuestion = ({
-  survey,
-  setSurvey,
-}: MulOPQuestionProps) => {
+export const MulOPQuestion = ({ setSurvey }: MulOPQuestionProps) => {
   type Option = {
     id: number
-    value: string
+    textOption: string
   }
   const [options, setOptions] = useState<Option[]>([
-    { id: 0, value: '' },
-    { id: 1, value: '' },
+    { id: 0, textOption: '' },
+    { id: 1, textOption: '' },
   ])
   const [counter, setCounter] = useState(2)
 
@@ -27,7 +23,7 @@ export const MulOPQuestion = ({
     event.preventDefault()
     const newOption = {
       id: counter,
-      value: '',
+      textOption: '',
     }
     setCounter(counter + 1)
 
@@ -38,8 +34,18 @@ export const MulOPQuestion = ({
     setSurvey((prevSurvey) => {
       const newSurvey = { ...prevSurvey }
       newSurvey.questions.map((question) => {
-        if (question.type === 'mulOptionQuestion') {
-          question.options = options.map((option) => option.value)
+        if (question.questionType === 'multiple_choice') {
+          question.options = options.map((option) => option.textOption)
+        }
+        if (
+          question.options &&
+          question.options.length &&
+          question.options.length >= 2
+        ) {
+          const errorText = document.getElementById('errorText')
+          if (errorText) {
+            errorText.style.display = 'none'
+          }
         }
         return question
       })
@@ -54,6 +60,12 @@ export const MulOPQuestion = ({
     event.preventDefault()
     setOptions((prevOptions) => {
       const newOptions = prevOptions.filter((option) => option.id !== id)
+      if (newOptions.length < 2) {
+        const errorText = document.getElementById('errorText')
+        if (errorText) {
+          errorText.style.display = 'block'
+        }
+      }
       return newOptions
     })
   }
@@ -62,7 +74,7 @@ export const MulOPQuestion = ({
     setOptions((prevOptions) => {
       const newOptions = prevOptions.map((option) => {
         if (option.id === id) {
-          option.value = newValue
+          option.textOption = newValue
         }
         return option
       })
@@ -87,12 +99,16 @@ export const MulOPQuestion = ({
             onChange={(event) => {
               handleOptionChange(option.id, event.target.value)
             }}
+            required
           />
           <a onClick={(e) => deleteQuestion(e, option.id)}>
             <DeleteForeverIcon className="hover:text-red-600 cursor-pointer" />
           </a>
         </div>
       ))}
+      <p id="errorText" className="text-red-600">
+        Se necesitan al menos 2 opciones
+      </p>
       <div className="x-2 py-2 mt-3">
         <button
           onClick={(e) => createOption(e)}
