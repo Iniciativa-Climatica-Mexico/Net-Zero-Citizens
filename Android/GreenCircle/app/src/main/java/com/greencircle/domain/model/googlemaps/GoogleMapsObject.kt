@@ -14,10 +14,7 @@ import java.util.UUID
  * @property profilePircure Imagen de perfil de la empresa
  */
 data class CompanyObject(
-    @SerializedName("rows") val companies: List<Company>,
-    @SerializedName("start") val start: Int,
-    @SerializedName("pageSize") val pageSize: Int,
-    @SerializedName("total") val total: Int
+    val companies: Array<Company>,
 )
 
 data class Company(
@@ -25,5 +22,5 @@ data class Company(
     @SerializedName("name") val name: String,
     @SerializedName("latitude") val latitude: Double,
     @SerializedName("longitude") val longitude: Double,
-    @SerializedName("profilePicture") val profilePicture: String
+    @SerializedName("profilePicture") val profilePicture: String? = null
 )

@@ -16,6 +16,7 @@ import com.greencircle.databinding.ActivityLoginBinding
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.auth.LoginViewModel
 import com.greencircle.utils.AuthUtils
+import com.greencircle.utils.RequestPermissions
 
 /**
  * Actividad principal para la autenticación y registro de usuarios.
@@ -81,6 +82,8 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        validatePermissions()
+
         // Configuración de los listeners para los botones de registro de empresa y usuario
         registerCompanyOnClickListener()
         registerUserOnClickListener()
@@ -139,5 +142,11 @@ class LoginActivity : AppCompatActivity() {
     private fun navigateToRegisterUser() {
         var intent: Intent = Intent(this, RegisterUserActivity::class.java)
         registerUserActivityResult.launch(intent)
+    }
+
+    private fun validatePermissions() {
+        val requested: RequestPermissions = RequestPermissions()
+
+        requested.requestPermissions(this)
     }
 }
