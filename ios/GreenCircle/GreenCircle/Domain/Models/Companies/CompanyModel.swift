@@ -19,12 +19,12 @@ enum StatusEnum: String, Codable, Equatable {
 struct Company: Codable, Identifiable {
   var id: String { companyId.uuidString }
   var companyId: UUID
-  var userId: String
+  var userId: String?
   var name: String
   var description: String
   var email: String
   var phone: String
-  var webPage: String
+  var webPage: String?
   var street: String
   var streetNumber: String
   var city: String
@@ -33,6 +33,12 @@ struct Company: Codable, Identifiable {
 //  var latitude: Double
 //  var longitude: Double
   var profilePicture: String?
+  var pdfCurriculumUrl: String?
+  var pdfDicCdmxUrl: String?
+  var pdfPeeFideUrl: String?
+  var pdfGuaranteeSecurityUrl: String?
+  var pdfActaConstitutivaUrl: String?
+  var pdfIneUrl: String?
   var status: StatusEnum
   // var reviews: [Review]
   var createdAt: String
@@ -40,5 +46,25 @@ struct Company: Codable, Identifiable {
   var products: [Product]?
   var score: Double?
   var oneComment: String?
-  var images: [CompanyFiles]?
+  var images: [CompanyImages]?
+}
+
+struct BasicCompany: Codable, Identifiable {
+  var id: String { companyId.uuidString }
+  var companyId: UUID
+  var userId: String?
+  var name: String
+  var description: String
+  var email: String
+  var phone: String
+  var webPage: String?
+  var street: String
+  var streetNumber: String
+  var city: String
+  var state: String
+  var zipCode: String
+  // var latitude: Double
+  // var longitude: Double
+  var profilePicture: String?
+  var status: StatusEnum
 }
