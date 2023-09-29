@@ -19,12 +19,17 @@ class SurveyActivity : AppCompatActivity() {
     private val fragmentManager = supportFragmentManager
     private var currentProgress = 0
     private var totalQuestions = 0
+    lateinit var userId: UUID
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initializeBinding()
         initializeObservers()
-        viewModel.getSurveyPending()
+        val sharedPreferences = getSharedPreferences("my_preferences", MODE_PRIVATE)
+        val userJson = sharedPreferences?.getString("user_session", null)
+        val userJSON = JSONObject(userJson!!)
+        userId = UUID.fromString(userJSON.getString("uuid"))
+        viewModel.getSurveyPending(userId)
         updateProgressBar()
     }
 
