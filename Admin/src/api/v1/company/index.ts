@@ -2,6 +2,7 @@ import { authAxios } from '../axios.config'
 
 export interface Company {
   companyId: string
+  userId: string | null
   name: string
   profilePicture: string
   state: string

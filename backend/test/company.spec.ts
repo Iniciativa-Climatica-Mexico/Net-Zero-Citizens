@@ -67,7 +67,7 @@ const testData = [
   },
   {
     companyId: 'a2c0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
-    userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
+    userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b7',
     name: 'TESLA ENERGY',
     description: 'Company 3 description',
     email: 'company3@outlook.com',
@@ -88,7 +88,7 @@ const testData = [
     pdfActaConstitutivaUrl:
       'https://example.com/company10-acta-constitutiva.pdf',
     pdfIneUrl: 'https://example.com/company10-ine.pdf',
-    status: 'pending_approval',
+    status: 'approved',
   },
 ]
 
