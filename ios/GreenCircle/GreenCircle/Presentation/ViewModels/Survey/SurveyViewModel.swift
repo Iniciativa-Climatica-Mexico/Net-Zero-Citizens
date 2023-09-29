@@ -1,4 +1,4 @@
-// 
+//
 // SurveyViewModel.swift
 //  GreenCircle
 //
@@ -12,9 +12,32 @@ class SurveyViewModel: ObservableObject {
   
   @Published var survey: SurveyModel = SurveyModel(surveyId: "", title: "", description: "", questions: [])
   @Published var answers: [Answer] = []
+  @Published var errMessage = ""
+  @Published var showAlert = false
+  @Published var success = false
   
   init(getPendingSurveyUseCase: SurveyUseCaseProtocol = SurveyUseCase.shared) {
     self.surveyUseCase = getPendingSurveyUseCase as! SurveyUseCase
+  }
+  
+  @MainActor
+  func handleSubmit() async {
+    do {
+      try validateResponses()
+      try await submitAnswers()
+      errMessage = "Se han enviado tus respuestas con éxito"
+      showAlert = true
+      success = true
+      return
+    } catch GCError.validationError(let message) {
+      errMessage = message
+      showAlert = true
+      return
+    } catch {
+      errMessage = "Intenta de nuevo más tarde :("
+      showAlert = true
+      return
+    }
   }
   
   @MainActor
@@ -28,13 +51,27 @@ class SurveyViewModel: ObservableObject {
     })
     
   }
-
+  
   @MainActor
   /// - Description: Enviar respuestas de la encuesta
   /// - Parameter answers: Respuestas de la encuesta
   /// - Returns: Bool
-  func submitAnswers() async -> Bool {
-    return await surveyUseCase.submitAnswers(surveyId: self.survey.surveyId, answers: self.answers)
+  func submitAnswers() async throws {
+    if await !surveyUseCase.submitAnswers(surveyId: self.survey.surveyId, answers: self.answers){
+      throw GCError.requestFailed
+    }
+    
   }
   
+  /// - Description: Corroborar que una pregunta requerida este respondida
+  /// - Returns: Bool
+  func validateResponses() throws {
+    for (index, question) in survey.questions.enumerated() {
+      if question.isRequired
+          && (answers[index].answerText == "" || answers[index].answerText == nil)
+          && (answers[index].scaleValue == 0 || answers[index].scaleValue == nil) {
+        throw GCError.validationError("No has respondido una pregunta requerida")
+      }
+    }
+  }
 }

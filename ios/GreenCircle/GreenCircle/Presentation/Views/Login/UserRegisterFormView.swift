@@ -10,9 +10,9 @@ import SwiftUI
 struct UserRegisterFormView: View {
   @ObservedObject var viewModel =
   UserRegisterFormViewModel()
-  @State private var showingDetail = false
+  @State private var showingPrivacy = false
   
-  var goSurvey: () -> Void
+  var goMainMenu: () -> Void
   
   var body: some View {
     VStack(spacing: 10) {
@@ -60,10 +60,10 @@ struct UserRegisterFormView: View {
           HStack {
             Text("Acepto las")
             Button("políticas de privacidad"){
-              showingDetail = true
+              showingPrivacy = true
             }
             .foregroundColor(.blue)
-            .sheet(isPresented: $showingDetail) {
+            .sheet(isPresented: $showingPrivacy) {
              PrivacyUserView()
             }
             
@@ -79,7 +79,7 @@ struct UserRegisterFormView: View {
           let success = await viewModel
             .handleSubmit()
           if(success) {
-            goSurvey()
+            goMainMenu()
           }
         }
       }).alert("Oops! Algo salió mal",
@@ -101,7 +101,7 @@ struct UserRegisterFormView: View {
 struct UserRegisterFormView_Previews: PreviewProvider {
   
   static var previews: some View {
-    UserRegisterFormView(goSurvey: {})
+    UserRegisterFormView(goMainMenu: {})
       .environmentObject(UserData(
         UserAuth(first_name: "Ricardo",
                  last_name: "Fernandez",
