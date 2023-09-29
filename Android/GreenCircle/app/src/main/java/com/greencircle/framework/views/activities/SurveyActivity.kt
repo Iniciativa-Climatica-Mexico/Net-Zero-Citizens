@@ -17,11 +17,15 @@ class SurveyActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySurveyBinding
     private val viewModel: SurveyViewModel by viewModels()
     private val fragmentManager = supportFragmentManager
+    private var currentProgress = 0
+    private var totalQuestions = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initializeBinding()
         initializeObservers()
         viewModel.getSurveyPending()
+        updateProgressBar()
     }
 
     private fun initializeObservers() {
@@ -79,6 +83,7 @@ class SurveyActivity : AppCompatActivity() {
     }
 
     private fun loadQuestions(questions: ArrayList<Question>) {
+        totalQuestions = questions.size
         val fragmentTransaction = fragmentManager.beginTransaction()
         questions.forEach { question ->
             val questionFragment = QuestionFragment()
@@ -92,6 +97,8 @@ class SurveyActivity : AppCompatActivity() {
 
     fun onQuestionAnswered(questionId: UUID, answer: String) {
         viewModel.onQuestionAnswered(questionId, answer)
+        currentProgress++
+        updateProgressBar()
     }
 
     private fun goToMain() {
@@ -99,5 +106,10 @@ class SurveyActivity : AppCompatActivity() {
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         startActivity(intent)
         finish()
+    }
+
+    private fun updateProgressBar() {
+        val progress = (currentProgress.toFloat() / totalQuestions.toFloat() * 100).toInt()
+        binding.progressBar.progress = progress
     }
 }
