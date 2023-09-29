@@ -32,7 +32,7 @@ class EcoInfoRepository: EcoInfoApiProtocol {
   func fetchAllEcoInfo() async -> [EcoInfo]? {
     return
       await service
-      .fetchAllEcoInfo(url: URL(string: "\(ApiEcoInfo.base)\(ApiEcoInfo.Routes.ecoInfo)")!)
+      .getRequest(URL(string: "\(ApiEcoInfo.base)\(ApiEcoInfo.Routes.ecoInfo)")!)
   }
 
 }
