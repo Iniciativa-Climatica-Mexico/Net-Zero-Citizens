@@ -280,7 +280,7 @@ export const getCoordinatesIos: RequestHandler<
   // Configura el geocoder con tu clave de API
   const geocoder = NodeGeocoder({
     provider: 'google',
-    apiKey: process.env.GOOGLE_MAPS_API,
+    apiKey: process.env.GOOGLE_MAPS_API_KEY,
   })
 
   const companiesWithCoordinates = await Promise.all(
