@@ -14,11 +14,10 @@ struct GreenCircleApp: App {
   
   var body: some Scene {
     WindowGroup {
-        CoordinatesView(region: MKCoordinateRegion())
-//      CoordinatorView()
-//        .onOpenURL { url in
-//          GIDSignIn.sharedInstance.handle(url)
-//        }
+      CoordinatorView()
+        .onOpenURL { url in
+          GIDSignIn.sharedInstance.handle(url)
+        }
     }
   }
 }
