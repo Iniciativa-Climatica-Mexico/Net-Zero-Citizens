@@ -1,9 +1,10 @@
 'use client'
 
-import { QuestionReport, SurveyReport } from '@/api/v1/report'
+import { QuestionReport, SurveyReport, jsonToCsv } from '@/api/v1/report'
 
 import ScaleChart from './ScaleChart'
 import { useState } from 'react'
+import { CSVLink } from 'react-csv'
 
 export function QuestionChartContainer(surveyReport: SurveyReport) {
   try {
@@ -16,17 +17,25 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
     const question = surveyReport.questions[page]
     const labels = question.answers?.map((answer) => answer.label)
     const data = question.answers?.map((answer) => answer.count)
+    const filename = question.questionText
+
     return (
       <div>
         <div className="flex flex-row items-center justify-between my-8 mx-8">
           <h1 className="self-start font-extrabold mt-8 mx-8 text-4xl text-txt">
             {surveyReport.title}
           </h1>
-          <button
-            //onClick={() => setIsOpen(true)}
-            className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end mt-4 ml-auto left-500"
-          >
-            Descargar reporte
+          <button className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end mt-4 ml-auto left-500">
+            <CSVLink
+              headers={[
+                { label: 'Opción', key: 'label' },
+                { label: 'Total de respuestas', key: 'count' },
+              ]}
+              data={question.answers}
+              filename={filename}
+            >
+              Descargar respuestas
+            </CSVLink>
           </button>
         </div>
         <div className="flex pl-10 pb-2">
