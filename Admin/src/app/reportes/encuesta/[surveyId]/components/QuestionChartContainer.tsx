@@ -4,7 +4,7 @@ import { QuestionReport, SurveyReport, jsonToCsv } from '@/api/v1/report'
 
 import ScaleChart from './ScaleChart'
 import { useState } from 'react'
-import { CSVLink } from "react-csv";
+import { CSVLink } from 'react-csv'
 
 export function QuestionChartContainer(surveyReport: SurveyReport) {
   try {
@@ -25,13 +25,14 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
           <h1 className="self-start font-extrabold mt-8 mx-8 text-4xl text-txt">
             {surveyReport.title}
           </h1>
-          <button
-            className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end mt-4 ml-auto left-500"
-          >
-            <CSVLink 
-            headers = {[{label: "Opción", key: "label"}, {label: "Total de respuestas", key: "count"}]}
-            data={question.answers} 
-            filename={filename}
+          <button className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end mt-4 ml-auto left-500">
+            <CSVLink
+              headers={[
+                { label: 'Opción', key: 'label' },
+                { label: 'Total de respuestas', key: 'count' },
+              ]}
+              data={question.answers}
+              filename={filename}
             >
               Descargar respuestas
             </CSVLink>
@@ -92,8 +93,8 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
                         <div className="bg-zinc-900 text-white rounded-full text-xl font-semibold p-2 px-4 inline-block">
                           {question.answers.length > 0
                             ? question.answers
-                              .map((ans) => ans.count)
-                              .reduce((prev, curr) => prev + curr)
+                                .map((ans) => ans.count)
+                                .reduce((prev, curr) => prev + curr)
                             : 0}
                         </div>
                       </td>
