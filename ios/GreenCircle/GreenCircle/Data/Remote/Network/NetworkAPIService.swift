@@ -111,46 +111,38 @@ class NetworkAPIService {
     ///   
     ///   - body: el body de la request
     /// - Returns: la respuesta inferida o nil si falla
-    
-    func uploadFileRequest<T: Codable>(_ url: URL, file: Data, fileParameterName: String = "file", additionalParameters: [String: Any] = [:]) async -> T? {
-        var responseResult: T?
-        print("File------\(file)")
-        do {
-                let response = try await AF.upload(multipartFormData: { multipartFormData in
-                    multipartFormData.append(Data("c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e".utf8), withName: "companyId")
-                    multipartFormData.append(file, withName: fileParameterName, fileName: "archivo.pdf", mimeType: "application/pdf")
-                }, to: url, headers: nil).serializingData().value
-        } catch{print(error)}
-
-//        let uploadTask = await session.upload(multipartFormData: { (multipartFormData) in
-//            multipartFormData.append(file, withName: fileParameterName)
-//            multipartFormData.append(Data("c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e".utf8), withName: "COMPANY_ID")
-//            for (key, value) in additionalParameters {
-//                        if let stringValue = value as? String {
-//                            multipartFormData.append(stringValue.data(using: .utf8)!, withName: key)
-//                        }
-//                    }
-//            let additionalParameters: [String: Any] = [
-//                // "companyId": companyId!,
-//                "comapnyId": "c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e",
-//                "fileDescription": "Curriculum",
-//                "fileFormat": ".pdf",
-//                "inputId": "input1"
-//            ]
-//                }, to: url, headers: nil).serializingData()
-//        .responseDecodable(of: T.self)
-//        { response in
-//            switch response.result {
-//            case let .success(data):
-//                print(data)
-//                responseResult = data
-//            case let .failure(error):
-//                print("Respoonse Error: \(error)")
-//                debugPrint(error)
-//            }
-//        }
-
-        return responseResult
+    ///
+    enum UploadStatus {
+        case success(message: String)
+        case failure(message: String)
     }
-
+    
+    func uploadFileRequest<T: Codable>(
+        _ url: URL,
+        file: Data,
+        fileParameterName: String = "file",
+        fileName: String?,
+        mimeType: String?,
+        additionalParameters: [String: Any] = [:]
+    ) async -> T? {
+        var responseResult: T?
+        
+        do {
+            let response = try await AF.upload(multipartFormData: { multipartFormData in
+                multipartFormData.append(file, withName: fileParameterName, fileName: fileName, mimeType: mimeType)
+                
+                for (key, value) in additionalParameters{
+                    if let stringValue = value as? String{
+                        multipartFormData.append(stringValue.data(using: .utf8)!, withName: key)
+                    } else if let dataValue = value as? Data{
+                        multipartFormData.append(dataValue, withName: key)
+                    }
+                }
+            }, to: url, headers: nil).serializingData().value
+            return responseResult
+        } catch{
+            print(error)
+            return nil
+        }
+    }
 }

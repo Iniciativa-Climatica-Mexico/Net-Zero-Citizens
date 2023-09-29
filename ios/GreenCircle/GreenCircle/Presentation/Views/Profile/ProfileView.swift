@@ -38,7 +38,7 @@ struct ProfileView: View {
                 VStack {
                     
                     //Imagen provicional
-                    Image("Sun")
+                    Image("🐼")
                         .resizable() // Hacer que la imagen sea redimensionable
                         .frame(width: 100, height: 100)
                     
@@ -107,7 +107,8 @@ struct ProfileView: View {
                         .foregroundColor(.black)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     ScrollView{
-                        CompanyFileInput(title: "Example Title", description: "Example Description", viewModel: CompanyViewModel())
+                        CompanyFileInput(title: "Curriculum", description: "Example Description", fileDescription: "Curriculum", viewModel: CompanyViewModel())
+                        CompanyFileInput(title: "INE", description: "Example Description", fileDescription: "INE representante legal", viewModel: CompanyViewModel())
                     }
                 }
                 .padding(.top, 70)

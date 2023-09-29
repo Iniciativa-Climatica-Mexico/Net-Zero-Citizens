@@ -69,7 +69,17 @@ class CompanyViewModel: ObservableObject {
     }
     
     @MainActor
-    func uploadFile(file: Data) async {
-        await repository.uploadCompanyFile(file: file)
+    func uploadFile(file: Data, fileDescription: String, mimeType: String) async {
+        let mimeType = "application/pdf"
+        let fileFormat = ".pdf"
+        
+        if let response = await repository.uploadCompanyFile(file: file, fileDescription: fileDescription, fileFormat: fileFormat, mimeType: mimeType) {
+            // Maneja el valor 'response' según sea necesario
+            // Por ejemplo: mostrar una notificación de éxito, actualizar la interfaz, etc.
+        } else {
+            // El resultado fue nil, manejar según sea necesario
+            print("No se recibió respuesta o hubo un error al cargar el archivo.")
+            // Por ejemplo: mostrar una notificación de error
+        }
     }
 }

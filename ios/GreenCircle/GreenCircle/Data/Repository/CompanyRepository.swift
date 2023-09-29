@@ -27,7 +27,7 @@ protocol CompanyRepositoryProtocol {
   func postCompany(company: PostCompanyData) async
   func fetchCompanyById(companyId: UUID) async -> Company?
   //func fetchAllCompanies() async -> Company?
-    func uploadCompanyFile(file: Data) async -> APIResponse?
+    func uploadCompanyFile(file: Data, fileDescription: String, fileFormat: String, mimeType: String) async -> APIResponse?
 }
 
 
@@ -71,10 +71,6 @@ class CompanyRepository: CompanyRepositoryProtocol {
         "state": company.state,
         "zipCode": company.zipCode,
         "userId": company.userId!,
-        "pdfCurriculumUrl": company.pdfCurriculumUrl,
-        "pdfGuaranteeSecurityUrl": company.pdfGuaranteeSecurityUrl,
-        "pdfActaConstitutivaUrl": company.pdfActaConstitutivaUrl,
-        "pdfIneUrl": company.pdfIneUrl
       ] as [String : Any]
     ]
     let _: NoResponse? = await service
@@ -83,23 +79,30 @@ class CompanyRepository: CompanyRepositoryProtocol {
                    body: params)
   }
   
-  func fetchAllCompanies() async -> PaginatedQuery<Company>? {
+    func fetchAllCompanies() async -> PaginatedQuery<Company>? {
     return await service
       .getRequest(URL(string: "\(CompanyAPI.base)")!)
   }
   
-    func uploadCompanyFile(file: Data) async -> APIResponse? {
+    /// Funcion para llamar al servicio de subir archivos
+    /// - Parameters:
+    ///     - file: el archivo seleccionado
+    ///     - fileDescription: La descripcion del archivo es un enun
+    ///     - fileFormat: procurar que sea un pdf
+    ///     - mimeType: el tipo de archivo para que lo entienda AF
+
+    func uploadCompanyFile(file: Data, fileDescription: String, fileFormat: String, mimeType: String) async -> APIResponse? {
         let uploadURL = URL(string: "\(CompanyAPI.base)\(CompanyAPI.Routes.uploadFile)")!
         let companyId = local.getCompanyId()
         let additionalParameters: [String: Any] = [
             // "companyId": companyId!,
             "companyId": "c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e",
-//            "fileDescription": "Curriculum",
-//            "fileFormat": ".pdf",
-//            "inputId": "input1"
+            "fileDescription": fileDescription,
+            "fileFormat": fileFormat,
         ]
-        print("Additional params: \(additionalParameters)")
-        return await service.uploadFileRequest(uploadURL, file: file, additionalParameters: additionalParameters)
+        let fileName = "archivo.pdf"
+        let mimeType = mimeType
+        return await service.uploadFileRequest(uploadURL, file: file, fileName: fileName, mimeType: mimeType, additionalParameters: additionalParameters)
     }
 
 }

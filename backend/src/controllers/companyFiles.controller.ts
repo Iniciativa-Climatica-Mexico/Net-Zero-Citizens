@@ -5,16 +5,9 @@ import upload from '../utils/fileUploadUtil'
 import { RequestHandler } from 'express'
 
 export const uploadCompanyFile: RequestHandler = async (req, res) => {
-  console.log(req)
-  console.log('Body ---------', req.body)
   try {
     upload.single('file')(req, res, async (err) => {
-      const companyId = req.body.companyId
-      const fileDescription = 'Curriculum'
-      const fileFormat = '.pdf'
-      console.log('Company ID: ', companyId)
-      console.log('File ---------', req.file)
-      console.log(typeof req.file)
+      const {fileFormat, fileDescription, companyId} = req.body
       CompanyFileService.uploadCompanyFile(
         req.file,
         companyId,

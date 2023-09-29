@@ -12,6 +12,7 @@ import MobileCoreServices
 struct CompanyFileInput: View {
     var title: String
     var description: String
+    var fileDescription: String
     
     @ObservedObject var viewModel: CompanyViewModel
     
@@ -21,15 +22,7 @@ struct CompanyFileInput: View {
     var body: some View {
         VStack{
             Divider()
-            Button(action: {
-//                if let fileURL = Bundle.main.url(forResource: "migration-digital-assets-survey", withExtension: "pdf") {
-//                                    selectedFile = fileURL
-//                                    Task {
-//                                        await viewModel.uploadFile(fileURL: fileURL)
-//                                    }
-//                                }
-                isPickerPresented = true
-            }) {
+            Button(action: {isPickerPresented = true}) {
                 HStack{
                     VStack(alignment: .leading, spacing: 5) {
                         Text(title)
@@ -58,7 +51,8 @@ struct CompanyFileInput: View {
         .sheet(isPresented: $isPickerPresented, onDismiss:{
             if let selectedFileURL = selectedFile {
                 Task {
-                    await viewModel.uploadFile(file: selectedFileURL)
+                    let mimeType = "application/pdf"
+                    await viewModel.uploadFile(file: selectedFileURL, fileDescription: fileDescription, mimeType: mimeType)
                 }
             }
         }) {
@@ -113,6 +107,6 @@ struct DocumentPicker: UIViewControllerRepresentable {
 
 struct CompanyFileInput_Previews: PreviewProvider {
     static var previews: some View {
-        CompanyFileInput(title: "Example Title", description: "Example Description", viewModel: CompanyViewModel())
+        CompanyFileInput(title: "Example Title", description: "Example Description", fileDescription: "Curriculum", viewModel: CompanyViewModel())
     }
 }
