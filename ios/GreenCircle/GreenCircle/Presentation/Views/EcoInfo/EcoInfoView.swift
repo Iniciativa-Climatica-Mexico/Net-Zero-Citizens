@@ -66,7 +66,7 @@ struct EcoInfoCard: View {
               }
             }) {
               Text("Ver más...")
-                .font(.system(size: 12))
+                .font(.system(size: 15))
                 .foregroundColor(Color("BlueCustom"))
                 .padding(8)
             }.frame(maxWidth: .infinity, alignment: .trailing)
