@@ -16,6 +16,7 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
     const question = surveyReport.questions[page]
     const labels = question.answers?.map((answer) => answer.label)
     const data = question.answers?.map((answer) => answer.count)
+
     return (
       <div>
         <div className="flex flex-row items-center justify-between my-8 mx-8">
@@ -84,8 +85,8 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
                         <div className="bg-zinc-900 text-white rounded-full text-xl font-semibold p-2 px-4 inline-block">
                           {question.answers.length > 0
                             ? question.answers
-                              .map((ans) => ans.count)
-                              .reduce((prev, curr) => prev + curr)
+                                .map((ans) => ans.count)
+                                .reduce((prev, curr) => prev + curr)
                             : 0}
                         </div>
                       </td>
