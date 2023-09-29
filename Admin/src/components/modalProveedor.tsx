@@ -44,13 +44,14 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { tabs } from '@/app/page'
 
 interface ModalProveedorProps {
   setIsModalOpen: (value: boolean) => void
   selectedCompany: Company
   fetchPendingCompanies: () => void
   fetchApprovedCompanies: () => void
-  activeTab: 'pending_approval' | 'approved' | 'rejected'
+  activeTab: tabs | 'rejected'
 }
 
 export default function ModalProveedor({
@@ -305,6 +306,11 @@ export default function ModalProveedor({
               </aside>
             </article>
             <section className="text-[13px] px-[35px] pt-[25px] w-full">
+              {activeTab === 'no_user' ? (
+                <>
+                  <h3 className="font-bold">Token de registro</h3>
+                  <p className="text-sm py-[15px]">{selectedCompany.companyId}</p>
+                </>) : null}
               <h3 className="font-bold">Descripción</h3>
               <p className="text-sm py-[15px]">{selectedCompany.description}</p>
               {activeTab === 'pending_approval' ? (
