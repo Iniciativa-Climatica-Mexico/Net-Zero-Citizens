@@ -8,6 +8,6 @@ import retrofit2.http.GET
  * compañias ya aceptadas del backend
  */
 interface GoogleMapsAPIService {
-    @GET("company/geocoding")
+    @GET("company/geocoding/android")
     suspend fun getCompanyList(): List<Company>
 }
