@@ -66,4 +66,3 @@ struct PrivacyUserView_Previews: PreviewProvider {
     PrivacyUserView()
   }
 }
-
