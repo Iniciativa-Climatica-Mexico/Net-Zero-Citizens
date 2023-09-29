@@ -4,6 +4,7 @@ import { QuestionReport, SurveyReport, jsonToCsv } from '@/api/v1/report'
 
 import ScaleChart from './ScaleChart'
 import { useState } from 'react'
+import { CSVLink } from "react-csv";
 
 export function QuestionChartContainer(surveyReport: SurveyReport) {
   try {
@@ -23,10 +24,11 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
             {surveyReport.title}
           </h1>
           <button
-            onClick={() => jsonToCsv}
             className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end mt-4 ml-auto left-500"
           >
-            Descargar reporte
+            <CSVLink data={question.answers} >
+              Descargar respuestas
+            </CSVLink>
           </button>
         </div>
         <div className="flex pl-10 pb-2">
@@ -214,7 +216,4 @@ function QuestionComponent(props: QuestionReport) {
       </div>
     </div>
   )
-
-  const csv = jsonToCsv(answers.QuestionReport);
-
 }
