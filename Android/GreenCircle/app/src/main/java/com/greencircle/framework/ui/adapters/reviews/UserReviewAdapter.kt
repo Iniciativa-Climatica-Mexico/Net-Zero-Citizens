@@ -25,7 +25,7 @@ class UserReviewAdapter : RecyclerView.Adapter<UserReviewViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserReviewViewHolder {
         val binding =
             ItemUserReviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return UserReviewViewHolder(binding)
+        return UserReviewViewHolder(binding, context)
     }
 
     override fun getItemCount(): Int {

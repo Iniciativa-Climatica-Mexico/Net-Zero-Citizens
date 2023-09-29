@@ -1,6 +1,5 @@
 package com.greencircle.data.remote.auth
 
-import android.util.Log
 import com.greencircle.domain.model.auth.AuthResponse
 
 /**
@@ -9,19 +8,38 @@ import com.greencircle.domain.model.auth.AuthResponse
 class AuthAPIClient {
     private lateinit var api: AuthAPIService
 
-    class AuthAPIClient()
-
     suspend fun googleLogin(token: String): AuthResponse? {
         api = AuthNetworkModel()
         return try {
-            Log.d("AuthAPIClient", "Token: $token")
             val body = AuthAPIService.GoogleLoginRequest(token)
             val response = api.googleLogin(body)
-            Log.d("AuthAPIClient", "Response: $response")
             response
         } catch (e: Exception) {
             e.printStackTrace()
-            Log.e("AuthAPIClient", "Error: $e")
+            null
+        }
+    }
+
+    suspend fun refreshTokens(refreshToken: String): AuthResponse? {
+        api = AuthNetworkModel()
+        return try {
+            val body = AuthAPIService.UpdateTokensRequest(refreshToken)
+            val response = api.refreshTokens(body)
+            response
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    suspend fun updateTokensData(authToken: String): AuthResponse? {
+        api = AuthNetworkModel()
+        return try {
+            val body = AuthAPIService.UpdateTokensDataRequest(authToken)
+            val response = api.updateTokensData(body)
+            response
+        } catch (e: Exception) {
+            e.printStackTrace()
             null
         }
     }

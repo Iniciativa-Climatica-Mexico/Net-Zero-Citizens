@@ -10,70 +10,11 @@ import Foundation
 /// Implementación de view model de modelo de Compañía
 class UserViewModel: ObservableObject {
     /// Caso de uso para hacer fetch de los datos de compañía
-    private let fetchUserInfoUseCase: UserRegisterUseCase
-    private let updateUserDataUseCase: UserRegisterUseCase
+    private let useCase = ProfileUseCase.shared
     /// La compañía puede cambiar en la vista (se construye .onAppear())
-    @Published var contentUser: User = User(
-        userId: UUID(),
-        roleId: "",
-        companyId: "",
-        googleId: "",
-        facebookId: "",
-        appleId: "",
-        firstName: "",
-        lastName: "",
-        secondLastName: "",
-        email: "",
-        password: "",
-        phoneNumber: "",
-        age: 0,
-        state: "",
-        gender: "",
-        profilePicture: "",
-        createdAt: Date(),
-        updatedAt: Date()
-        )
+    @Published var contentUser: UserAuth
     /// Para implementar el caso de uso en la vista que llame al ViewModel Compañía
-    init(
-        userInfoUseCase: UserRegisterUseCase = UserRegisterUseCase.shared,
-        updateRegisterUseCase: UserRegisterUseCase = UserRegisterUseCase()
-      ) {
-          self.fetchUserInfoUseCase = userInfoUseCase
-          self.updateUserDataUseCase = updateRegisterUseCase
-      }
-
-    @MainActor
-    /// Obtener información de la compañía mediante el caso de uso
-    /// Actualización de la compañía si existe el UUID en base de datos
-    func fetchUserById(idUser: String) async {
-        let resultUser = await fetchUserInfoUseCase.fetchUserById(id: idUser)
-        if let resultUser = resultUser {
-            print("Usuario recibido: \(resultUser)")
-            contentUser = resultUser
-        } else {
-            print("No se pudo obtener el usuario")
-        }
-        
-        
+    init() {
+        contentUser = useCase.getUserData()
     }
-    func updateUserData(updatedUserData: User, userId: String) async {
-            let resultUser = await updateUserDataUseCase.execute(updatedUserData: updatedUserData, userId: userId)
-            if let resultUser = resultUser {
-                print("Usuario actualizado: \(resultUser)")
-                contentUser = resultUser
-            } else {
-                print("No se pudo actualizar el usuario")
-            }
-        }
-
-    func updateUserCredentials(userId: String, newUserCredentials: Credentials) async {
-           let resultUser = await updateUserDataUseCase.updateCredentials(
-            userId: userId, newUserCredentials: newUserCredentials)
-           if let resultUser = resultUser {
-               print("Credenciales del usuario actualizadas: \(resultUser)")
-               contentUser = resultUser
-           } else {
-               print("No se pudo actualizar las credenciales del usuario")
-           }
-       }
 }

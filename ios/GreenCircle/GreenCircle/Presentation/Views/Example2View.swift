@@ -10,17 +10,16 @@ import SwiftUI
 struct Example2View: View {
     var body: some View {
         VStack {
-            TitleBarView(title: "Example 2",
-                         leftIcon: "chevron.left",
-                         rightIcon: nil,
-                         leftDestination: { CatalogView() },
-                         rightDestination: { })
-                .navigationBarBackButtonHidden(true)
-                .navigationBarBackButtonHidden(true)
-                .offset(y: -60)   
+//            TitleBarView(title: "Example 2",
+//                         leftIcon: nil,
+//                         rightIcon: nil,
+//                         leftDestination: { },
+//                         rightDestination: { })
+//                .offset(y: -140)
             ScrollView {
                 VStack {
                     Text("Provisional de cerrar sesión")
+                        .padding(.top, 250)
                 }
             }
         }

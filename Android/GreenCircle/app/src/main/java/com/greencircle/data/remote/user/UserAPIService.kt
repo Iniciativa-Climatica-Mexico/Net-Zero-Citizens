@@ -2,6 +2,7 @@ package com.greencircle.data.remote.user
 
 import java.util.UUID
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.PUT
 import retrofit2.http.Path
 
@@ -18,7 +19,6 @@ interface UserAPIService {
      * @property message Un mensaje informativo relacionado con la actualización.
      */
     data class UpdateUserResponse(
-        val userId: String?,
         val message: String?
     )
 
@@ -36,7 +36,6 @@ interface UserAPIService {
         val state: String,
         val gender: String,
         val roleId: String?
-
     )
 
     /**
@@ -51,4 +50,20 @@ interface UserAPIService {
         @Path("userId") userId: UUID,
         @Body request: UpdateUserRequest
     ): UpdateUserResponse
+
+    data class DeleteUserResponse(
+        val message: String,
+        val error: String?,
+        val status: String
+    )
+    /**
+     * Elimina el usuario de la base de datos.
+     *
+     * @param userId El ID del usuario que se va a eliminar.
+     * @return Un objeto [DeleteUserResponse] que puede contener un mensaje, error y status.
+     */
+    @DELETE("users/delete/{userId}")
+    suspend fun deleteUser(
+        @Path("userId") userId: UUID
+    ): DeleteUserResponse
 }
