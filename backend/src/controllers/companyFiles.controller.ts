@@ -1,23 +1,19 @@
 import CompanyFiles from '../models/companyFiles.model'
 import * as CompanyFileService from '../services/companyFiles.service'
 import { NoRecord } from '../utils/RequestResponse'
-import upload from '../utils/fileUploadUtil'
 import { RequestHandler } from 'express'
+import { FileFormat } from '../models/companyFiles.model'
 
 export const uploadCompanyFile: RequestHandler = async (req, res) => {
   try {
-    console.log(req)
-    // if (!companyId) return res.status(400).send('No company provided')
-    // // inputId es el id del input del formulario
-    // upload.array(inputId)(req, res, async (err) => {
-    //   CompanyFileService.uploadCompanyFile(
-    //     req.file,
-    //     companyId,
-    //     fileDescription,
-    //     fileFormat
-    //   )
-    //   return res.status(200).send('File uploaded!')
-    // })
+    console.log(req.body)
+    console.log(req.file)
+    // CompanyFileService.uploadCompanyFile(
+    //   req.file,
+    //   companyId,
+    //   'INE representante legal', // TODO: Cambiar este valor
+    //   fileFormat as FileFormat
+    // )
     return res.status(200).send('File uploaded!')
   } catch (error) {
     return res.status(500).send('Error uploading file')

@@ -6,7 +6,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
-import android.util.Log
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.DialogFragment
 import com.greencircle.R
@@ -18,6 +20,7 @@ class UploadDocumentDialogFragment(title: String) : DialogFragment() {
     private val title = title
     private var arguments = Bundle()
     private lateinit var authToken: String
+    private lateinit var fileToUpload: File
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +42,7 @@ class UploadDocumentDialogFragment(title: String) : DialogFragment() {
         builder.setView(view)
             .setTitle(title)
             .setPositiveButton("Upload") { dialog: DialogInterface, which: Int ->
-//                uploadFile(uploadFile!!)
+                uploadFile(fileToUpload)
             }
             .setNegativeButton("Cancel") { dialog: DialogInterface, which: Int ->
                 dialog.dismiss()
@@ -58,9 +61,9 @@ class UploadDocumentDialogFragment(title: String) : DialogFragment() {
             val fileUri: Uri? = data.data
             fileUri?.let {
                 val filePath = getFilePath(it)
-                Log.w("FILEPATH", filePath!!)
-                val file = File(filePath)
-                viewModel.uploadFile("companyId", file, authToken)
+                fileToUpload = File(filePath)
+                val fileName = fileToUpload.name
+                changeDialogAfterSelection(fileName)
             }
         }
     }
@@ -75,5 +78,22 @@ class UploadDocumentDialogFragment(title: String) : DialogFragment() {
             }
         }
         return null
+    }
+
+    private fun changeDialogAfterSelection(fileName: String) {
+        dialog?.findViewById<TextView>(R.id.selectedFileName)?.text = fileName
+        dialog?.findViewById<ImageView>(R.id.uploadFileImage)?.visibility = View.GONE
+        dialog?.findViewById<ImageView>(R.id.checkmarkImageView)?.visibility = View.VISIBLE
+    }
+
+    private fun uploadFile(file: File) {
+        // TODO: Change to real companyId, fileDescription and fileFormat
+        viewModel.uploadFile(
+            authToken,
+            file,
+            "c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e",
+            "Test",
+            "pdf"
+        )
     }
 }

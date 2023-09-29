@@ -11,9 +11,15 @@ import kotlinx.coroutines.launch
 class UploadFilesViewModel(private val context: Context) : ViewModel() {
     private val uploadCompanyFileRequirement = UploadCompanyFileRequirement()
 
-    fun uploadFile(companyId: String, file: File, authToken: String) {
+    fun uploadFile(
+        authToken: String,
+        file: File,
+        companyId: String,
+        fileDescription: String,
+        fileFormat: String
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
-            uploadCompanyFileRequirement(companyId, file, authToken)
+            uploadCompanyFileRequirement(authToken, file, companyId, fileDescription, fileFormat)
         }
     }
 }

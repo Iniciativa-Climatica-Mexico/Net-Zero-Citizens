@@ -23,7 +23,7 @@ type FileDescription =
   | 'Imagen'
   | 'Otro' // EVITAR USAR ESTE VALOR
 
-type FileFormat =
+export type FileFormat =
   | '.jpg'
   | '.jpeg'
   | '.png'

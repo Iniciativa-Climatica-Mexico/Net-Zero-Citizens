@@ -13,8 +13,10 @@ class CompanyFilesAPIClient {
 
     suspend fun uploadFile(
         authToken: String,
+        file: File,
         companyId: String,
-        file: File
+        fileDescription: String,
+        fileFormat: String
     ): ResponseBody {
         val reqFile = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
         val filePart = MultipartBody.Part.createFormData("file", file.name, reqFile)
@@ -22,7 +24,7 @@ class CompanyFilesAPIClient {
 
         return try {
             Log.d("FILEPART", filePart.toString())
-            val response = api.uploadFile(companyId, filePart)
+            val response = api.uploadFile(filePart, companyId, fileDescription, fileFormat)
             Log.w("CompanyFilesAPIClient", "uploadFile: ${response.string()}")
             return response
         } catch (e: Exception) {

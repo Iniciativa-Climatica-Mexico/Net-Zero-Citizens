@@ -9,11 +9,13 @@ class CompanyFilesRepository {
 
     suspend fun uploadFile(
         authToken: String,
+        file: File,
         companyId: String,
-        file: File
+        fileDescription: String,
+        fileFormat: String
     ): ResponseBody {
         try {
-            return api.uploadFile(authToken, companyId, file)
+            return api.uploadFile(authToken, file, companyId, fileDescription, fileFormat)
         } catch (e: Exception) {
             throw e
         }

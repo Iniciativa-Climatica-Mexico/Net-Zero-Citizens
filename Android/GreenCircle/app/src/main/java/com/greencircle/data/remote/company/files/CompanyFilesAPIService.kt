@@ -5,7 +5,6 @@ import okhttp3.ResponseBody
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
-import retrofit2.http.Path
 
 /**
  * Interfaz que define los métodos para realizar operaciones relacionadas con Documentos de empresas a través de una API.
@@ -13,9 +12,13 @@ import retrofit2.http.Path
 
 interface CompanyFilesAPIService {
     @Multipart
-    @POST("company/{companyId}/upload/file")
+    @POST("company/upload/file")
     suspend fun uploadFile(
-        @Path("companyId") companyId: String,
-        @Part file: MultipartBody.Part
+        @Part file: MultipartBody.Part,
+        @Part("companyId") companyId: String,
+        @Part("fileDescription") fileDescription: String,
+        @Part("fileFormat") fileFormat: String
     ): ResponseBody
+
+    // FILE, COMPANYID, FILEDES CRIPTION, FILE FORMAT
 }

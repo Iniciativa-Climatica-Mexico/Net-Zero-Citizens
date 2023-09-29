@@ -8,12 +8,14 @@ class UploadCompanyFileRequirement {
     private val repository = CompanyFilesRepository()
 
     suspend operator fun invoke(
-        companyId: String,
+        authToken: String,
         file: File,
-        authToken: String
+        companyId: String,
+        fileDescription: String,
+        fileFormat: String
     ): ResponseBody {
         try {
-            return repository.uploadFile(authToken, companyId, file)
+            return repository.uploadFile(authToken, file, companyId, fileDescription, fileFormat)
         } catch (e: Exception) {
             throw e
         }
