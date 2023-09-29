@@ -53,6 +53,7 @@ struct LoginView: View {
           }.padding(.bottom)
           
           ButtonDividerView(text: "O continúa con")
+          AppleSignIn()
         GoogleSignInButton(style: .wide) {
             viewModel.loadingGoogle = true
             Task {

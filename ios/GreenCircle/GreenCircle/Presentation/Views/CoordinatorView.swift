@@ -101,7 +101,8 @@ struct CoordinatorView: View {
         
       }
     }
-    .onAppear() {
+    .onAppear {
+      /*
       Task {
         let res = await viewModel.handleSignIn()
         
@@ -114,6 +115,8 @@ struct CoordinatorView: View {
           goLogin()
         }
       }
+      */
+      goLogin()
     }
   }
   

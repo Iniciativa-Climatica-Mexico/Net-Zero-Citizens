@@ -31,7 +31,8 @@ struct CompanyRegisterView: View {
                 Spacer()
 
                 VStack {
-                  GoogleSignInButton(style: .wide) {
+                  AppleSignIn()
+          GoogleSignInButton(style: .wide) {
                       loadingGoogle = true
                     Task {
                       let state = await viewModel
