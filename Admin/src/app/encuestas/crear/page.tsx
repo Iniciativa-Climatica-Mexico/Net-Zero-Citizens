@@ -2,6 +2,7 @@
 import { QuestionWrapper } from '../../../components/surveyQuestions/questionWrapper'
 import AddIcon from '@mui/icons-material/Add'
 import { MouseEventHandler, useState } from 'react'
+import { createSurvey } from '@/api/v1/survey'
 
 export type CreateSurveyBody = {
   title: string
@@ -70,6 +71,32 @@ export default function CreateSurvey() {
     })
   }
 
+  const createSurveyHandeler: MouseEventHandler<HTMLAnchorElement> = (e) => {
+    e.preventDefault()
+
+    let error: boolean = false
+    if (survey.questions.length < 1) {
+      error = true
+    }
+
+    survey.questions.map((question) => {
+      if (
+        question.questionType === 'multiple_choice' &&
+        (!question.options || question.options.length < 2)
+      ) {x``
+        error = true
+      }
+    })
+
+    if (error) {
+      console.log('error')
+    } else {
+      createSurvey(survey)
+    }
+
+
+  }
+
   return (
     <div>
       <form>
@@ -77,7 +104,10 @@ export default function CreateSurvey() {
           <h1 className="self-start font-extrabold my-8 mx-8 text-4xl text-txt">
             Crear Encuesta
           </h1>
-          <a className="flex items-center justify-center px-4 py-2 my-8 mx-8 text-white bg-primary-base rounded hover:bg-primary-dark">
+          <a
+            className="flex items-center justify-center px-4 py-2 my-8 mx-8 text-white bg-primary-base rounded hover:bg-primary-dark cursor-pointer"
+            onClick={(e) => createSurveyHandeler(e)}
+          >
             Crear
           </a>
         </div>

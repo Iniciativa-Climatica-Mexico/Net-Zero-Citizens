@@ -19,7 +19,7 @@ export const QuestionWrapper = ({
   survey,
   setSurvey,
 }: QuestionWrapperProps) => {
-  const [isRequired, setisRequired] = useState(false)
+  const [isRequired, setisRequired] = useState(true)
   const [questionType, setQuestionType] = useState('open')
 
   const handleQuestionTypeChange = (
