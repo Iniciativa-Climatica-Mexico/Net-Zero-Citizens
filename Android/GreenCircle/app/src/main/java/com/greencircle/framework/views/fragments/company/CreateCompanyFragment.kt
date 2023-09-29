@@ -7,15 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.textfield.TextInputLayout
 import com.greencircle.R
 import com.greencircle.data.remote.company.CompanyAPIService
 import com.greencircle.domain.model.company.Company
 import com.greencircle.framework.viewmodel.company.CreateCompanyViewModel
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
-import com.greencircle.framework.views.activities.RegisterUserActivity
 import com.greencircle.framework.views.fragments.TermsAndConditionsCompany.TermsAndConditionsCompany
 import com.greencircle.framework.views.fragments.services.ServicesFragment
 import java.util.UUID
@@ -65,7 +66,7 @@ class CreateCompanyFragment : Fragment() {
         val button = view.findViewById<Button>(R.id.login_register)
         button.setOnClickListener {
             val termsAndConditionsCompanyFragment = TermsAndConditionsCompany()
-            val activity = requireActivity() as RegisterUserActivity
+            val activity = requireActivity() as RegisterCompanyActivity
 
             activity.replaceFragment(termsAndConditionsCompanyFragment)
         }
@@ -96,6 +97,7 @@ class CreateCompanyFragment : Fragment() {
                 Log.d("CreateCompanyFragment", "Google login failed")
             }
         }
+        setSwitch(view.findViewById(R.id.avisoPrivacidad))
     }
 
     /**
@@ -189,6 +191,7 @@ class CreateCompanyFragment : Fragment() {
         val cityInputLayout: TextInputLayout = view.findViewById(R.id.companyCityTextField)
         val stateInputLayout: TextInputLayout = view.findViewById(R.id.companyStateTextField)
         val zipCodeInputLayout: TextInputLayout = view.findViewById(R.id.companyZipCodeTextField)
+        val switchError: TextView = view.findViewById(R.id.switchError)
 
         val name = nameInputLayout.editText?.text.toString()
         val description = descriptionInputLayout.editText?.text.toString()
@@ -200,6 +203,7 @@ class CreateCompanyFragment : Fragment() {
         val city = cityInputLayout.editText?.text.toString()
         val state = stateInputLayout.editText?.text.toString()
         val zipCode = zipCodeInputLayout.editText?.text.toString()
+        val terms = view.findViewById<MaterialSwitch>(R.id.avisoPrivacidad).isChecked
 
         var isValid = true
 
@@ -290,6 +294,12 @@ class CreateCompanyFragment : Fragment() {
             zipCodeInputLayout.error = null
         }
 
+        // Validar terminos y condiciones
+        if (!terms) {
+            isValid = false
+            switchError.visibility = View.VISIBLE
+        }
+
         return isValid
     }
 
@@ -339,5 +349,38 @@ class CreateCompanyFragment : Fragment() {
         val activity = requireActivity() as RegisterCompanyActivity
 
         activity.replaceFragment(companyServices, arguments)
+    }
+
+    private fun setSwitch(mSwitch: MaterialSwitch) {
+        mSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                mSwitch.thumbTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.white
+                )
+                mSwitch.trackTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.green
+                )
+                mSwitch.thumbIconTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.green
+                )
+            } else {
+                // Colors when the switch is OFF
+                mSwitch.thumbTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.white
+                )
+                mSwitch.trackTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.gray_500
+                )
+                mSwitch.thumbIconTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.white
+                )
+            }
+        }
     }
 }
