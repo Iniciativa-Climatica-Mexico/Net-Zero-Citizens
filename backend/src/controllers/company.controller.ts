@@ -3,7 +3,6 @@ import CompanyProduct from '../models/companyProducts.model'
 import * as CompanyService from '../services/company.service'
 import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
-import NodeGeocoder from 'node-geocoder'
 
 /**
  * @brief
@@ -224,18 +223,9 @@ export const addProduct: RequestHandler<
  * @param req
  * @param res
  */
-
-interface FilteredCompany {
-  companyId: string
-  name: string
-  latitude: number
-  longitude: number
-  profilePicture: string
-}
-
 export const getCoordinates: RequestHandler<
   NoRecord,
-  FilteredCompany[] | { error: string },
+  CompanyService.FilteredCompany[] | { error: string },
   NoRecord,
   PaginationParams<{ status: string }>
 > = async (req, res) => {
@@ -244,55 +234,15 @@ export const getCoordinates: RequestHandler<
     pageSize: req.query.pageSize || 1000,
   }
 
-  const companies = await CompanyService.getCompaniesByStatus(
-    'approved',
-    params
-  )
-
-  const geocoder = NodeGeocoder({
-    provider: 'google',
-    apiKey: process.env.GOOGLE_MAPS_API_KEY,
-  })
-
-  const companiesWithCoordinates = await Promise.all(
-    companies.rows.map(async (company) => {
-      const {
-        companyId,
-        name,
-        profilePicture,
-        street,
-        streetNumber,
-        city,
-        state,
-        zipCode,
-      } = company.dataValues
-      const address = `${street} ${streetNumber}, ${city}, ${state}, ${zipCode}`
-
-      try {
-        const geocodeResult = await geocoder.geocode(address)
-        if (geocodeResult.length > 0) {
-          const { latitude, longitude } = geocodeResult[0]
-          return {
-            companyId,
-            name,
-            latitude,
-            longitude,
-            profilePicture,
-          } as FilteredCompany
-        }
-      } catch (error) {
-        return res.json({ error: 'Error getting coordinates' })
-      }
-      return null
-    })
-  )
-
-  // Filter out null values
-  const filteredCompanies = companiesWithCoordinates.filter(
-    Boolean
-  ) as FilteredCompany[]
-
-  return res.json(filteredCompanies)
+  try {
+    const companies = await CompanyService.getCompaniesWithCoordinates(
+      'approved',
+      params
+    )
+    return res.json(companies)
+  } catch (error) {
+    return res.status(500).json({ error: 'Internal server error' })
+  }
 }
 
 /**

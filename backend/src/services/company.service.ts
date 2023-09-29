@@ -7,6 +7,7 @@ import Company from '../models/company.model'
 import CompanyProduct from '../models/companyProducts.model'
 import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
 import { sendNotification } from './notification.service'
+import NodeGeocoder from 'node-geocoder'
 import User from '../models/users.model'
 
 // TYPES
@@ -111,7 +112,72 @@ export type UpdateCompanyInfoBody = {
   webPage: string
 }
 
+export interface FilteredCompany {
+  companyId: string
+  name: string
+  latitude: number
+  longitude: number
+  profilePicture: string
+}
 
+/**
+ * Obtiene la ubicacion de una compañia en coordenadas geograficas
+ * @param status El estatus de la compañia (solo approved)
+ * @param params Los parametros de paginación
+ * @returns Promise<FilteredCompany[]> Una promesa con los proveedores
+ *          y su ubicacion en coordenadas geograficas
+ */
+export const getCompaniesWithCoordinates = async (
+  status: StatusEnum,
+  params: {
+    start: number
+    pageSize: number
+  }
+): Promise<FilteredCompany[]> => {
+  const companies = await getCompaniesByStatus(status, params)
+  const geocoder = NodeGeocoder({
+    provider: 'google',
+    apiKey: process.env.GOOGLE_MAPS_API_KEY,
+  })
+
+  const companiesWithCoordinates = await Promise.all(
+    companies.rows.map(async (company) => {
+      const {
+        companyId,
+        name,
+        profilePicture,
+        street,
+        streetNumber,
+        city,
+        state,
+        zipCode,
+      } = company.dataValues
+
+      const address = `${street} ${streetNumber}, ${city}, ${state}, ${zipCode}`
+
+      try {
+        const geocodeResult = await geocoder.geocode(address)
+
+        if (geocodeResult.length > 0) {
+          const { latitude, longitude } = geocodeResult[0]
+          return {
+            companyId,
+            name,
+            latitude,
+            longitude,
+            profilePicture,
+          } as FilteredCompany
+        }
+      } catch (error) {
+        throw new Error('Error getting coordinates')
+      }
+
+      return null
+    })
+  )
+
+  return companiesWithCoordinates.filter(Boolean) as FilteredCompany[]
+}
 
 /**
  * @brief
