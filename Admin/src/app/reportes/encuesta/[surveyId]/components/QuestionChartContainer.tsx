@@ -17,6 +17,7 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
     const question = surveyReport.questions[page]
     const labels = question.answers?.map((answer) => answer.label)
     const data = question.answers?.map((answer) => answer.count)
+    const filename = question.questionText
     return (
       <div>
         <div className="flex flex-row items-center justify-between my-8 mx-8">
@@ -26,7 +27,9 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
           <button
             className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end mt-4 ml-auto left-500"
           >
-            <CSVLink data={question.answers} >
+            <CSVLink data={question.answers} 
+            filename={filename}
+            >
               Descargar respuestas
             </CSVLink>
           </button>
