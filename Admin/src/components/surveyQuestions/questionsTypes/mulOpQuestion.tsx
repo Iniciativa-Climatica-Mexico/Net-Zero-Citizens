@@ -26,8 +26,13 @@ export const MulOPQuestion = ({ setSurvey }: MulOPQuestionProps) => {
       textOption: '',
     }
     setCounter(counter + 1)
-
     setOptions((prevOptions) => [...prevOptions, newOption])
+    if (options.length >= 2) {
+      const errorText = document.getElementById('noOpErrorText')
+      if (errorText) {
+        errorText.style.display = 'none'
+      }
+    }
   }
 
   useEffect(() => {
@@ -42,7 +47,7 @@ export const MulOPQuestion = ({ setSurvey }: MulOPQuestionProps) => {
           question.options.length &&
           question.options.length >= 2
         ) {
-          const errorText = document.getElementById('errorText')
+          const errorText = document.getElementById('noOpErrorText')
           if (errorText) {
             errorText.style.display = 'none'
           }
@@ -61,7 +66,7 @@ export const MulOPQuestion = ({ setSurvey }: MulOPQuestionProps) => {
     setOptions((prevOptions) => {
       const newOptions = prevOptions.filter((option) => option.id !== id)
       if (newOptions.length < 2) {
-        const errorText = document.getElementById('errorText')
+        const errorText = document.getElementById('noOpErrorText')
         if (errorText) {
           errorText.style.display = 'block'
         }
@@ -83,7 +88,7 @@ export const MulOPQuestion = ({ setSurvey }: MulOPQuestionProps) => {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full text-left">
       <h2 className="text-sm mb-3">Opciones</h2>
       {options.map((option) => (
         <div
@@ -106,7 +111,7 @@ export const MulOPQuestion = ({ setSurvey }: MulOPQuestionProps) => {
           </a>
         </div>
       ))}
-      <p id="errorText" className="text-red-600">
+      <p id="noOpErrorText" className="text-red-600">
         Se necesitan al menos 2 opciones
       </p>
       <div className="x-2 py-2 mt-3">

@@ -3,6 +3,7 @@ import { QuestionWrapper } from '../../../components/surveyQuestions/questionWra
 import AddIcon from '@mui/icons-material/Add'
 import { MouseEventHandler, useState } from 'react'
 import { createSurvey } from '@/api/v1/survey'
+import { useEffect } from 'react'
 
 export type CreateSurveyBody = {
   title: string
@@ -48,7 +49,6 @@ export default function CreateSurvey() {
     setSurvey((prevSurvey) => {
       const newSurvey = { ...prevSurvey }
       newSurvey.questions = [...prevSurvey.questions, newQuestion]
-      console.log(newSurvey)
       return newSurvey
     })
   }
@@ -71,6 +71,20 @@ export default function CreateSurvey() {
     })
   }
 
+  // //hook to show error message when there are less than 2 options
+  useEffect(() => {
+    const errorText = document.getElementById('noQErrorText')
+    if (questions.length < 1) {
+      if (errorText) {
+        errorText.style.display = 'block'
+      }
+    } else {
+      if (errorText) {
+        errorText.style.display = 'none'
+      }
+    }
+  }, [questions])
+
   const createSurveyHandeler: MouseEventHandler<HTMLAnchorElement> = (e) => {
     e.preventDefault()
 
@@ -83,7 +97,7 @@ export default function CreateSurvey() {
       if (
         question.questionType === 'multiple_choice' &&
         (!question.options || question.options.length < 2)
-      ) {x``
+      ) {
         error = true
       }
     })
@@ -93,8 +107,6 @@ export default function CreateSurvey() {
     } else {
       createSurvey(survey)
     }
-
-
   }
 
   return (
@@ -105,7 +117,7 @@ export default function CreateSurvey() {
             Crear Encuesta
           </h1>
           <a
-            className="flex items-center justify-center px-4 py-2 my-8 mx-8 text-white bg-primary-base rounded hover:bg-primary-dark cursor-pointer"
+            className="flex items-center justify-center px-4 py-2 my-8 mx-8 text-white bg-primary-base rounded hover:bg-primary-600 cursor-pointer"
             onClick={(e) => createSurveyHandeler(e)}
           >
             Crear
@@ -138,7 +150,10 @@ export default function CreateSurvey() {
               required
             />
           </div>
-          <div className="flex flex-col w-1/2">
+          <div className="flex flex-col w-1/2 text-center">
+            <h1 id="noQErrorText" className="text-red-600">
+              Agrega una nueva pregunta
+            </h1>
             <div className="w-full">
               {questions.map((question) => (
                 <QuestionWrapper
