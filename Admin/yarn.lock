@@ -1961,7 +1961,7 @@ dom-helpers@^5.0.1:
     "@babel/runtime" "^7.8.7"
     csstype "^3.0.2"
 
-dottie@^2.0.4:
+dottie@^2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/dottie/-/dottie-2.0.6.tgz#34564ebfc6ec5e5772272d466424ad5b696484d4"
   integrity sha512-iGCHkfUc5kFekGiqhe8B/mdaurD+lakO9txNnTvKtA6PISrw86LgqHvRzWYPyoE2Ph5aMIrCw9/uko6XHTKCwA==
@@ -3782,7 +3782,7 @@ pathval@^1.1.1:
   resolved "https://registry.yarnpkg.com/pathval/-/pathval-1.1.1.tgz#8534e77a77ce7ac5a2512ea21e0fdb8fcf6c3d8d"
   integrity sha512-Dp6zGqpTdETdR63lehJYPeIOqpiNBNtc7BpWSLrOje7UaIsE5aY92r/AunQA7rsXvet3lrJ3JnZX29UPTKXyKQ==
 
-pg-connection-string@^2.6.0:
+pg-connection-string@^2.6.1:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/pg-connection-string/-/pg-connection-string-2.6.2.tgz#713d82053de4e2bd166fab70cd4f26ad36aab475"
   integrity sha512-ch6OwaeaPYcova4kKZ15sbJ2hKb/VP48ZD2gE7i1J+L4MspCtBMAx8nMgz7bksc7IojCIIWuEhHibSMFH8m8oA==
@@ -4162,7 +4162,7 @@ semver@^6.3.0, semver@^6.3.1:
   resolved "https://registry.yarnpkg.com/semver/-/semver-6.3.1.tgz#556d2ef8689146e46dcea4bfdd095f3434dffcb4"
   integrity sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==
 
-semver@^7.0.0, semver@^7.5.1, semver@^7.5.3, semver@^7.5.4:
+semver@^7.0.0, semver@^7.5.3, semver@^7.5.4:
   version "7.5.4"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.5.4.tgz#483986ec4ed38e1c6c48c34894a9182dbff68a6e"
   integrity sha512-1bCSESV6Pv+i21Hvpxp3Dx+pSD8lIPt8uVjRrxAUt/nbswYc+tK6Y2btiULjd4+fnq15PX+nqQDC7Oft7WkwcA==
@@ -4187,22 +4187,22 @@ sequelize-pool@^7.1.0:
   resolved "https://registry.yarnpkg.com/sequelize-pool/-/sequelize-pool-7.1.0.tgz#210b391af4002762f823188fd6ecfc7413020768"
   integrity sha512-G9c0qlIWQSK29pR/5U2JF5dDQeqqHRragoyahj/Nx4KOOQ3CPPfzxnfqFPCSB7x5UgjOgnZ61nSxz+fjDpRlJg==
 
-sequelize@^6.32.1:
-  version "6.32.1"
-  resolved "https://registry.yarnpkg.com/sequelize/-/sequelize-6.32.1.tgz#8e8669a8d6cf711d2d94b33cc721928fad7487f6"
-  integrity sha512-3Iv0jruv57Y0YvcxQW7BE56O7DC1BojcfIrqh6my+IQwde+9u/YnuYHzK+8kmZLhLvaziRT1eWu38nh9yVwn/g==
+sequelize@^6.33.0:
+  version "6.33.0"
+  resolved "https://registry.yarnpkg.com/sequelize/-/sequelize-6.33.0.tgz#45c70d52687f1c7eae3a0496f21f7055d99b46da"
+  integrity sha512-GkeCbqgaIcpyZ1EyXrDNIwktbfMldHAGOVXHGM4x8bxGSRAOql5htDWofPvwpfL/FoZ59CaFmfO3Mosv1lDbQw==
   dependencies:
     "@types/debug" "^4.1.8"
     "@types/validator" "^13.7.17"
     debug "^4.3.4"
-    dottie "^2.0.4"
+    dottie "^2.0.6"
     inflection "^1.13.4"
     lodash "^4.17.21"
     moment "^2.29.4"
     moment-timezone "^0.5.43"
-    pg-connection-string "^2.6.0"
+    pg-connection-string "^2.6.1"
     retry-as-promised "^7.0.4"
-    semver "^7.5.1"
+    semver "^7.5.4"
     sequelize-pool "^7.1.0"
     toposort-class "^1.0.1"
     uuid "^8.3.2"
