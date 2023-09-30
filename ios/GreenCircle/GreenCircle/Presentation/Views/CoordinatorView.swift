@@ -48,7 +48,7 @@ struct CoordinatorView: View {
                          goMainMenu: goMainMenu)
         
       case .userRegisterForm:
-        UserRegisterFormView(goSurvey: goSurvey)
+        UserRegisterFormView(goMainMenu: goMainMenu)
         
       case .companyRegister:
         CompanyRegisterView(goLogin: goBack,
@@ -69,13 +69,13 @@ struct CoordinatorView: View {
                                  solarToggle: $solarToggle)
           
       case .mainMenuView:
-        TabBarView()
+        TabBarView(goSurvey: goSurvey)
         
       case .pendingCompany:
         PendingCompanyView()
         
       case .survey:
-        SurveyView(goMainMenu: goMainMenu)
+        SurveyView(goBack: goBack)
           .applyNavBarTheme()
       }
     }

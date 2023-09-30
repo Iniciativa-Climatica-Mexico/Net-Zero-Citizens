@@ -43,7 +43,7 @@ class UserRegisterUseCase {
   }
   
   @MainActor
-  func fetchUserById(id: String) async -> User? {
+  func getUserData(id: String) async -> User? {
     return await repository.fetchUserById(userId: id)
   }
   

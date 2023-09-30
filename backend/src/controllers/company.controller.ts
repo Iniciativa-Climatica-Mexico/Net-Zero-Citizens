@@ -224,6 +224,34 @@ export const addProduct: RequestHandler<
  * @param req
  * @param res
  */
+export const getCoordinatesAndroid: RequestHandler<
+  NoRecord,
+  CompanyService.FilteredCompany[] | { error: string },
+  NoRecord,
+  PaginationParams<{ status: string }>
+> = async (req, res) => {
+  const params = {
+    start: req.query.start || 0,
+    pageSize: req.query.pageSize || 1000,
+  }
+
+  try {
+    const companies = await CompanyService.getCompaniesWithCoordinates(
+      'approved',
+      params
+    )
+    return res.json(companies)
+  } catch (error) {
+    return res.status(500).json({ error: 'Internal server error' })
+  }
+}
+/**
+ * @brief
+ * Función del controlador que convierte las ubicaciones
+ * de los proveedores aprovados a longitudes y latitudes
+ * @param req
+ * @param res
+ */
 
 interface FilteredCompany {
   companyId: string
@@ -233,7 +261,7 @@ interface FilteredCompany {
   profilePicture: string
 }
 
-export const getCoordinates: RequestHandler<
+export const getCoordinatesIos: RequestHandler<
   NoRecord,
   Paginator<FilteredCompany>,
   NoRecord,
@@ -252,7 +280,7 @@ export const getCoordinates: RequestHandler<
   // Configura el geocoder con tu clave de API
   const geocoder = NodeGeocoder({
     provider: 'google',
-    apiKey: process.env.GOOGLE_MAPS_API,
+    apiKey: process.env.GOOGLE_MAPS_API_KEY,
   })
 
   const companiesWithCoordinates = await Promise.all(
@@ -309,7 +337,6 @@ export const getCoordinates: RequestHandler<
   }
   res.json(paginator)
 }
-
 /**
  * @brief
  * Función del controller para asignarle un usuario a una compañia
