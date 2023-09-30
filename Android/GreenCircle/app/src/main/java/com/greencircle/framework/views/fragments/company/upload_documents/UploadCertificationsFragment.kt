@@ -1,5 +1,6 @@
 package com.greencircle.framework.views.fragments.company.upload_documents
 
+import UploadDocumentDialogFragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +33,26 @@ class UploadCertificationsFragment : Fragment() {
         // Inflar el diseño de este fragmento
         _binding = FragmentUploadCertificationsBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        binding.dirInstaladoresCdmxUpload.setOnClickListener{
+            val dialogFragment = UploadDocumentDialogFragment(
+                "Directorio de instaladores certificados de CDMX",
+                "Directorio de instaladores certificados de CDMX",
+                "pdf"
+            )
+            dialogFragment.arguments = arguments
+            dialogFragment.show(childFragmentManager, "UploadImageDialog")
+        }
+
+        binding.fideUpload.setOnClickListener{
+            val dialogFragment = UploadDocumentDialogFragment(
+                "Padron de empresas especializadas FIDE",
+                "Padron de empresas especializadas FIDE",
+                "pdf"
+            )
+            dialogFragment.arguments = arguments
+            dialogFragment.show(childFragmentManager, "UploadImageDialog")
+        }
 
         initializeButton()
 

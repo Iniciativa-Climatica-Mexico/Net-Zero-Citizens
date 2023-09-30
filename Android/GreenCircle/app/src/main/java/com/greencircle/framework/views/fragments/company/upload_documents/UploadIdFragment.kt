@@ -42,7 +42,21 @@ class UploadIdFragment : Fragment() {
         val root: View = binding.root
 
         binding.ineUpload.setOnClickListener {
-            val dialogFragment = UploadDocumentDialogFragment("INE")
+            val dialogFragment = UploadDocumentDialogFragment(
+                "INE",
+                "INE Representante Legal",
+                "pdf"
+            )
+            dialogFragment.arguments = arguments
+            dialogFragment.show(childFragmentManager, "UploadImageDialog")
+        }
+
+        binding.constitutiveUpload.setOnClickListener {
+            val dialogFragment = UploadDocumentDialogFragment(
+                "Acta Constitutiva",
+                "Acta Constitutiva",
+                "pdf"
+            )
             dialogFragment.arguments = arguments
             dialogFragment.show(childFragmentManager, "UploadImageDialog")
         }

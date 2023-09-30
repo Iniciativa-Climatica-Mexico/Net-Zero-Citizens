@@ -1,5 +1,6 @@
 package com.greencircle.framework.views.fragments.company.upload_documents
 
+import UploadDocumentDialogFragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -33,6 +34,16 @@ class UploadCurriculumFragment : Fragment() {
         // Inflar el diseño de este fragmento
         _binding = FragmentUploadCurriculumBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        binding.curriculumUpload.setOnClickListener {
+            val dialogFragment = UploadDocumentDialogFragment(
+                "Curriculum",
+                "Curriculum",
+                "pdf"
+            )
+            dialogFragment.arguments = arguments
+            dialogFragment.show(childFragmentManager, "UploadImageDialog")
+        }
 
         initializeButton()
 

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -15,19 +16,28 @@ import com.greencircle.R
 import com.greencircle.framework.viewmodel.company.files.UploadFilesViewModel
 import java.io.File
 
-class UploadDocumentDialogFragment(title: String) : DialogFragment() {
+class UploadDocumentDialogFragment(
+    title: String,
+    fileDescription: String,
+    fileFormat: String
+) : DialogFragment() {
     private lateinit var view: View
     private lateinit var viewModel: UploadFilesViewModel
     private val title = title
+    private val fileDescription = fileDescription
+    private val fileFormat = fileFormat
     private var arguments = Bundle()
     private lateinit var authToken: String
     private lateinit var fileToUpload: File
     private var isFileSelected = false
 
+    private var companyId: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments = requireArguments()
         authToken = arguments.getString("authToken").toString()
+        companyId = arguments.getString("companyId")
+        Log.d("CUstomSucc2", companyId.toString())
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -53,7 +63,7 @@ class UploadDocumentDialogFragment(title: String) : DialogFragment() {
 
     private fun launchPicker() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "*/*"
+        intent.type = "application/pdf"
         startActivityForResult(intent, 1)
     }
 
@@ -98,13 +108,13 @@ class UploadDocumentDialogFragment(title: String) : DialogFragment() {
     }
 
     private fun uploadFile(file: File) {
-        // TODO: Change to real companyId, fileDescription and fileFormat
+        // TODO: Change to real companyId
         viewModel.uploadFile(
             authToken,
             file,
-            "c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e",
-            "Test",
-            "pdf"
+            companyId!!,
+            fileDescription,
+            fileFormat
         )
     }
 }

@@ -29,6 +29,8 @@ class CreateCompanyFragment : Fragment() {
     private lateinit var authToken: String
     private lateinit var uuid: UUID
 
+    private var companyId: String? = null
+
     /**
      * Inicializa el "CreateCompanyFragment"
      *
@@ -86,6 +88,17 @@ class CreateCompanyFragment : Fragment() {
                 uuid = result.user.uuid
             } else {
                 Log.d("CreateCompanyFragment", "Google login failed")
+            }
+        }
+        viewModel.createCompanyResult.observe(viewLifecycleOwner) { result ->
+            // Handle the result here
+            if (result != null) {
+                Log.d("CustomSucc", result.toString())
+                companyId = result.companyId
+                arguments.putString("companyId", companyId)
+                navigateToUploadDocumentFragment(arguments)
+            } else {
+                Log.d("CreateCompanyFragment", "Create company failed")
             }
         }
     }
@@ -158,7 +171,6 @@ class CreateCompanyFragment : Fragment() {
         val validation: Boolean = validateForm(view)
         if (validation) {
             viewModel.createCompany(createCompanyRequest, authToken)
-            nextFragment()
         }
     }
 

@@ -258,7 +258,7 @@ export const getCompanyById = async (id: string): Promise<Company | null> => {
   company?.setDataValue('products', products)
   company?.setDataValue('score', rating)
   company?.setDataValue('oneComment', comment)
-  company?.setDataValue('images', images)
+  company?.setDataValue('images', files)
 
   return company
 }
