@@ -79,6 +79,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:autoLink="email"
             android:text="testemail@icm.org"
             android:textColor="@color/green"
             android:textSize="16sp"
@@ -129,12 +130,12 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="15dp"
-            android:text="Ya tengo mi Token de Registro"
+            android:text="Aun no estoy registrado"
             android:textColor="@color/blue"
             android:textSize="15sp"
             app:rippleColor="@color/primary_900"
-            app:strokeColor="@color/blue"
-            app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+            app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small"
+            app:strokeColor="@color/blue" />
 
     </LinearLayout>
 
