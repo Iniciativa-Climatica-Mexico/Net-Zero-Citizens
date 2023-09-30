@@ -9,40 +9,38 @@ import SwiftUI
 import GoogleSignInSwift
 
 struct CompanyRegisterView: View {
-    @State private var isPrivacyPolicyVisible = false
+  var goLogin: () -> Void
+  var goForm: () -> Void
+  var goMainMenu: () -> Void
 
-    var goLogin: () -> Void
-    var goForm: () -> Void
-    var goMainMenu: () -> Void
+  @StateObject var viewModel = LoginViewModel()
+  @EnvironmentObject var user: UserData
+  @State private var isPrivacyPolicyVisible = false
+  var body: some View {
+    ZStack {
 
-    @StateObject var viewModel = LoginViewModel()
-    @EnvironmentObject var user: UserData
-    @Environment(\.dismiss) var dismiss
+      BackgroundView()
 
-    var body: some View {
-        ZStack {
-            BackgroundView()
+      VStack(spacing: 40) {
+        HeaderView(
+          title: "Crear cuenta de empresa",
+          subTitle: "Registrate con tu cuenta preferida")
 
-            VStack(spacing: 40) {
-                HeaderView(
-                    title: "Crear cuenta de empresa",
-                    subTitle: "Regístrate con tu cuenta preferida"
-                )
+        Spacer()
 
-                Spacer()
-
-                VStack {
-                    GoogleSignInButton(style: .wide) {
-                        Task {
-                            let state = await viewModel.handleGoogleSignIn(userData: user)
-                            switch state {
-                            case .newUser:
-                                goForm()
-                            case .success:
-                                goMainMenu()
-                            case .fail:
-                                break
-                            }
+        VStack {
+          GoogleSignInButton(style: .wide) {
+            Task {
+              let state = await viewModel
+                .handleGoogleSignIn(userData: user)
+              switch state {
+              case .newUser:
+                goForm()
+              case .success:
+                goMainMenu()
+              case .fail:
+                break
+              }
                         }
                     }
                     .alert("Algo salió mal", isPresented: $viewModel.showAlert) {
