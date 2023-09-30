@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Page,
   Text,
@@ -41,17 +41,27 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'center',
     color: 'white',
-    backgroundColor: '#589A74',
+    flexDirection: 'row',
+    borderBottomWidth: 0.5,
+    backgroundColor: 'rgba(88, 154, 116, 1)',
   },
   tableColumn: {
-    margin: 5,
-    width: '50%',
+    flex: 1,
+    padding: 5,
     textAlign: 'center',
+    borderBottomWidth: 0,
+    borderBottomColor: 'grey',
   },
   tableRow: {
-    margin: 5,
-    width: '50%',
+    flexDirection: 'row',
+    marginVertical: 5,
+  },
+  tableCell: {
+    flex: 1,
+    padding: 5,
     textAlign: 'center',
+    borderBottomWidth: 0.5,
+    borderBottomColor: 'grey',
   },
   image: {
     marginVertical: 15,
@@ -85,37 +95,54 @@ type surveyPDFProps = {
  * @param survey Respuestas de la encuesta
  * @returns {JSX.Element} Documento PDF con las respuestas de la encuesta
  */
-const surveyPDF: React.FC<surveyPDFProps> = ({ survey }) => {
-  const labels = survey.questions.flatMap((question) => {
-    return question.answers.map((answer) => answer.label)
-  })
+const SurveyPDFReport: React.FC<surveyPDFProps> = ({ survey }) => {
+  const [chartImage, setChartImage] = useState(String)
+  const surveyId = survey?.surveyId
 
-  const data = survey.questions.flatMap((question) => {
-    return question.answers.map((answer) => answer.count)
-  })
+  const fetchChartImage = async () => {
+    const repsonse = await fetch(`/api/captureChart?surveyId=${surveyId}`)
+    const blob = await repsonse.blob()
+    const objectURL = URL.createObjectURL(blob)
+
+    setChartImage(objectURL)
+  }
+
+  useEffect(() => {
+    fetchChartImage()
+  }, [surveyId])
 
   return (
     <Document>
       <Page style={styles.body}>
-        <Text style={styles.header} fixed>
+        <Text style={styles.title} fixed>
           {survey?.title}
+        </Text>
+
+        <Text style={styles.header} fixed>
+          {survey?.description}
         </Text>
 
         {survey.questions.map((question, index) => (
           <View key={index}>
             <Text style={styles.questionTitle}>{question.questionText}</Text>
 
-            <View style={styles.tableHeader}>
-              <Text style={styles.tableColumn}>Opción</Text>
-              <Text style={styles.tableColumn}>Total de respuestas</Text>
-            </View>
-
-            {question.answers.map((answer, index) => (
-              <View key={index} style={styles.tableRow}>
-                <Text style={styles.tableColumn}>{answer.label}</Text>
-                <Text style={styles.tableColumn}>{answer.count}</Text>
-              </View>
-            ))}
+            {question.answers && question.answers.length > 0 ? (
+              <>
+                <Image style={styles.graph} src={chartImage} />
+                <View style={styles.tableHeader}>
+                  <Text style={styles.tableColumn}>Opción</Text>
+                  <Text style={styles.tableColumn}>Total de respuestas</Text>
+                </View>
+                {question.answers.map((answer, index) => (
+                  <View key={index} style={styles.tableRow}>
+                    <Text style={styles.tableCell}>{answer.label}</Text>
+                    <Text style={styles.tableCell}>{answer.count}</Text>
+                  </View>
+                ))}
+              </>
+            ) : (
+              <Text style={styles.text}>No hay respuestas disponibles</Text>
+            )}
           </View>
         ))}
 
@@ -131,4 +158,4 @@ const surveyPDF: React.FC<surveyPDFProps> = ({ survey }) => {
   )
 }
 
-export default surveyPDF
+export default SurveyPDFReport
