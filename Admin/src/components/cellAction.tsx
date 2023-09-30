@@ -34,6 +34,7 @@ import {
 import { updateCompany, UpdateCompanyInfoBody } from '@/api/v1/company'
 import { toast } from './ui/use-toast'
 import { Toaster } from './ui/toaster'
+import { tabs } from '@/app/page'
 
 interface cellActionProps {
   setIsModalOpen: (value: boolean) => void
@@ -41,7 +42,7 @@ interface cellActionProps {
   fetchPendingCompanies: () => void
   fetchApprovedCompanies: () => void
   company: Company
-  activeTab: 'pending_approval' | 'approved'
+  activeTab: tabs
 }
 
 export const CellAction = ({
