@@ -197,7 +197,7 @@ export default function CreateSurvey() {
           isOpen={modalIsOpen}
           onClose={closeModal}
           onAccept={createSurveyHandeler}
-          modalText="Se cerraran todas las encuestas que esten en progreso"
+          modalText="Se cerrarán todas las encuestas que estén en progreso"
         />
         <div className="flex-row flex items-center justify-between my-8 mx-8">
           <h1 className="self-start font-extrabold my-8 mx-8 text-4xl text-txt">
@@ -258,7 +258,7 @@ export default function CreateSurvey() {
             </div>
             <div className="flex flex-row">
               <a
-                className=" w-full flex items-center justify-center px-4 py-2 my-8 text-white bg-primary-base rounded cursor-pointer hover:bg-primary-dark"
+                className=" w-full flex items-center justify-center px-4 py-2 my-8 text-white bg-primary-base rounded cursor-pointer hover:bg-primary-900"
                 onClick={(e) => createQuestion(e)}
               >
                 Anadir Pregunta

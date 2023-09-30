@@ -27,7 +27,7 @@ const SurveyModal: React.FC<ModalProps> = ({
       overlayClassName="fixed inset-0"
     >
       <div className="bg-white p-6 rounded-lg shadow-md max-w-lg mx-auto text-center border border-gray-500">
-        <h2 className="text-2xl font-bold mb-4">Precaucion</h2>
+        <h2 className="text-2xl font-bold mb-4">Precaución</h2>
         <div className="text-yellow-500 mb-4">
           <WarningIcon sx={{ fontSize: 90 }} />
         </div>
@@ -37,13 +37,13 @@ const SurveyModal: React.FC<ModalProps> = ({
             className="px-4 py-2 mr-2 bg-red-500 hover:bg-red-600 rounded text-white"
             onClick={onClose}
           >
-            Cancel
+            Cancelar
           </button>
           <button
-            className="px-4 py-2 bg-primary-base hover:bg-primary-dark rounded text-white"
+            className="px-4 py-2 bg-primary-base hover:bg-primary-dark rounded text-white hover:bg-primary-900"
             onClick={onAccept}
           >
-            Accept
+            Aceptar
           </button>
         </div>
       </div>
