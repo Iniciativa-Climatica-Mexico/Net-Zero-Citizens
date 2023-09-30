@@ -47,12 +47,4 @@ export default class Favourites extends Model {
 
   @BelongsTo(() => User)
   user: User
-
-  @Column({
-    type: DataType.UUID,
-    allowNull: false,
-    defaultValue: DataType.NOW,
-    field: 'SAVED_AT',
-  })
-  savedAt: string
 }

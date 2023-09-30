@@ -12,8 +12,8 @@ import { RequestHandler } from 'express'
 
 export const addFavourite: RequestHandler = async (req, res) => {
   try {
-    const { companyId, userId, savedAt } = req.body
-    if (!userId || !companyId || !savedAt) {
+    const { companyId, userId } = req.body
+    if (!userId || !companyId) {
       return res
         .status(400)
         .json({ favouriteId: '', error: 'Missing required data!' })
@@ -22,7 +22,6 @@ export const addFavourite: RequestHandler = async (req, res) => {
     const newFavourite = await FavouriteService.addFavourite({
       userId,
       companyId,
-      savedAt,
     })
 
     if (!newFavourite) {
@@ -57,7 +56,7 @@ export const getFavouriteById: RequestHandler<
   { favouriteId: string }
 > = async (req, res) => {
   try {
-    const favourite = await FavouriteService.existsFavourite(
+    const favourite = await FavouriteService.getFavouriteById(
       req.params.favouriteId
     )
     if (!favourite) {

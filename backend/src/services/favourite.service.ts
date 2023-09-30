@@ -6,7 +6,6 @@ import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
 export type FavouriteType = {
   companyId: string
   userId: string
-  savedAt: Date
 }
 
 /**
@@ -29,15 +28,11 @@ export const addFavourite = async (
  * @returns Una promesa con el favourite buscado
  */
 
-export const existsFavourite = async (
+export const getFavouriteById = async (
   favouriteId: string
 ): Promise<Favourite> => {
   const favourite = await Favourite.findByPk(favouriteId, {
     include: [
-      {
-        model: User,
-        attributes: ['userId'],
-      },
       {
         model: Company,
         attributes: ['companyId'],
@@ -61,7 +56,7 @@ export const existsFavourite = async (
 export const deleteFavouriteById = async (
   favouriteId: string
 ): Promise<Number> => {
-  const favourite = await existsFavourite(favouriteId)
+  const favourite = await getFavouriteById(favouriteId)
   if (favourite) {
     return await Favourite.destroy({
       where: { favouriteId: favourite.favouriteId },
