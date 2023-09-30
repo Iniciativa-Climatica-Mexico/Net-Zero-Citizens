@@ -1,6 +1,5 @@
 package com.greencircle.domain.usecase.company
 
-import com.greencircle.data.remote.company.CompanyAPIService
 import com.greencircle.data.repository.CompanyRepository
 import java.util.UUID
 

@@ -9,10 +9,10 @@ import com.greencircle.domain.model.auth.AuthResponse
 import com.greencircle.domain.usecase.auth.GoogleAuthRequirement
 import com.greencircle.domain.usecase.company.AssignCompanyRequirement
 import com.greencircle.domain.usecase.company.CreateCompanyRequirement
+import java.util.UUID
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.UUID
 
 /**
  * ViewModel para la creación de empresas.
