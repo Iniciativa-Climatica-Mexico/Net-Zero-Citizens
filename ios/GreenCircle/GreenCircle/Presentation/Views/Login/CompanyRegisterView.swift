@@ -70,6 +70,7 @@ struct CompanyRegisterView: View {
                     isPrivacyPolicyVisible.toggle()
                 }
                 .padding(.bottom)
+                
             }
             .foregroundColor(Color("MainText"))
         }
