@@ -15,7 +15,9 @@ router.get('/approved', CompanyController.getApprovedCompanies)
 router.get('/pending', CompanyController.getPendingCompanies)
 
 router.get('/geocoding', CompanyController.getCoordinatesIos)
-router.get('/geocoding/android', CompanyController.getCoordinates)
+
+router.get('/geocoding/android', CompanyController.getCoordinatesAndroid)
+
 
 
 router.post('/pending/:companyId', CompanyController.updateCompanyInfo)
