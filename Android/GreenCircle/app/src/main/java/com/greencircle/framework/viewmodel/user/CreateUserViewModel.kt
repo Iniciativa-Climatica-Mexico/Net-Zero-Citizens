@@ -43,6 +43,14 @@ class CreateUserViewModel(private val context: Context) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             val result: AuthResponse? = googleAuthRequirement(token)
             _googleLoginResult.postValue(result)
+
+            // Guardar tokens
+            val authToken = result?.tokens?.authToken
+            val refreshToken = result?.tokens?.refreshToken
+            saveTokens(authToken!!, refreshToken!!)
+
+            // Guardar usuario global
+            saveUserSession(result.user)
         }
     }
 
