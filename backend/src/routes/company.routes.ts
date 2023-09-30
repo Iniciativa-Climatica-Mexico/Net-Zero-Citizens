@@ -17,7 +17,7 @@ router.get('/geocoding/android', CompanyController.getCoordinates)
 
 router.post('/pending/:companyId', CompanyController.updateCompanyInfo)
 
+router.put('/:companyId/assign', CompanyController.assignCompanyUser) 
 router.get('/:id', CompanyController.getCompanyById)
-router.put('/:id/assign', CompanyController.assignCompanyUser)
 
 export default router

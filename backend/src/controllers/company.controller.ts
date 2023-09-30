@@ -259,7 +259,9 @@ export const assignCompanyUser: RequestHandler<
 > = async (req, res) => {
   const companyId = req.params.companyId
   const userId = req.body.userId
+  console.log(companyId, userId)
   const assign = await CompanyService.assignCompanyUser(companyId, userId)
+  console.log(assign)
   if (assign === 'success') {
     res.status(200).json({ message: assign })
   } else {
