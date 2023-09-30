@@ -34,7 +34,7 @@ class UploadCertificationsFragment : Fragment() {
         _binding = FragmentUploadCertificationsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        binding.dirInstaladoresCdmxUpload.setOnClickListener{
+        binding.dirInstaladoresCdmxUpload.setOnClickListener {
             val dialogFragment = UploadDocumentDialogFragment(
                 "Directorio de instaladores certificados de CDMX",
                 "Directorio de instaladores certificados de CDMX",
@@ -44,7 +44,7 @@ class UploadCertificationsFragment : Fragment() {
             dialogFragment.show(childFragmentManager, "UploadImageDialog")
         }
 
-        binding.fideUpload.setOnClickListener{
+        binding.fideUpload.setOnClickListener {
             val dialogFragment = UploadDocumentDialogFragment(
                 "Padron de empresas especializadas FIDE",
                 "Padron de empresas especializadas FIDE",

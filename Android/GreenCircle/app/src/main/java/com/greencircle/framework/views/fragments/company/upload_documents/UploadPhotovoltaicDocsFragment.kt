@@ -34,7 +34,7 @@ class UploadPhotovoltaicDocsFragment : Fragment() {
         _binding = FragmentUploadPhotovoltaicDocsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        binding.certSistemasFotovoltaicosUpload.setOnClickListener{
+        binding.certSistemasFotovoltaicosUpload.setOnClickListener {
             val dialogFragment = UploadDocumentDialogFragment(
                 "Certificado de sistemas fotovoltaicos",
                 "Certificado de sistemas fotovoltaicos",

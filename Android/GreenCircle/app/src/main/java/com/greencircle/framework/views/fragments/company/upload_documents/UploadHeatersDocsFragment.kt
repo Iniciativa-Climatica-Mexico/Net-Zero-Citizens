@@ -54,10 +54,7 @@ class UploadHeatersDocsFragment : Fragment() {
             dialogFragment.arguments = arguments
             dialogFragment.show(childFragmentManager, "UploadImageDialog")
         }
-
-
         initializeButton()
-
         return root
     }
 
