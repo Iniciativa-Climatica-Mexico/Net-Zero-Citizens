@@ -122,9 +122,7 @@ export default function CreateSurvey() {
     )
   }, [survey])
 
-  const createSurveyHandeler: MouseEventHandler<HTMLAnchorElement> = (e) => {
-    e.preventDefault()
-
+  const createSurveyHandeler = () => {
     console.log('clicked:', survey)
 
     createSurvey(survey)
@@ -135,6 +133,7 @@ export default function CreateSurvey() {
 
   const openModal: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault()
+    console.log('clicked openmodal:', survey)
     setModalIsOpen(true)
   }
 
@@ -149,9 +148,7 @@ export default function CreateSurvey() {
         <SurveyModal
           isOpen={modalIsOpen}
           onClose={closeModal}
-          onAccept={() => {
-            createSurveyHandeler
-          }}
+          onAccept={createSurveyHandeler}
           modalText="Se cerraran todas las encuestas que esten en progreso"
         />
         <div className="flex-row flex items-center justify-between my-8 mx-8">
