@@ -7,124 +7,94 @@
 import Alamofire
 import Foundation
 
+struct NoResponse: Codable {}
+
 /// Clase con el serivicio de la API
 class NetworkAPIService {
   static let shared = NetworkAPIService()
-  static let decoder = JSONDecoder()
+  private let decoder = JSONDecoder()
+  private var session = Session()
   
+  /// Asigna el tipo de decoding al decoder de la instancia
   init() {
-    NetworkAPIService.decoder.dateDecodingStrategy = .iso8601WithFractionalSeconds
+    self.decoder.dateDecodingStrategy = .iso8601WithFractionalSeconds
   }
   
-  /// Función encargada de postear al backend la información de un nuevo usuario registrado con Google
-  /// - Parameters:
-  ///   - url: url para hacer el POST
-  ///   - googleToken: token de identidad de Google
-  /// - Returns: respuesta de autenticación con tokens e información del usuario
-  func postGoogleSignIn(url: URL, googleToken: String) async -> AuthResponse? {
-    let params: Parameters = ["googleToken": googleToken]
+  /// Actualiza el interceptor de la instancia para que utilice los tokens de auth
+  func setAuthTokens(_ authToken: String) {
+    self.session = Session(interceptor:
+                            AuthRequestAdapter(authToken))
+  }
+  
+  /// Ejecuta la get request a la url proporcionada
+  /// - Parameter url: el url a la cuál hacer el request
+  /// - Returns: el tipo de dato inferido o nil si falla
+  func getRequest<T: Codable>(_ url: URL) async -> T? {
+    let requestTask = session
+      .request(url).validate()
     
-    let requestTask = AF.request(url, method: .post,
-                                 parameters: params,
-                                 encoding: JSONEncoding.default)
-      .validate()
     let response = await requestTask.serializingData().response
     
     switch response.result {
     case let .success(data):
       do {
-        return try NetworkAPIService.decoder
-          .decode(AuthResponse.self, from: data)
+        return try decoder.decode(T.self, from: data)
       } catch {
+        debugPrint(error)
         return nil
       }
     case let .failure(error):
       debugPrint(error)
       return nil
     }
-    
   }
   
-  /// Actualiza un usuario con la información proporcionada
+  /// Ejecuta la post request a la url dada
   /// - Parameters:
-  ///   - url: el url para realizar el PUT
-  ///   - authToken: token de autenticación
-  ///   - user: la información del usuario a actualizar
-  func putUser(url: URL, authToken: String, user: UserAuth) async {
-    let params: Parameters = [
-      "phoneNumber": user.phone!,
-      "age": user.age!,
-      "gender": user.gender!,
-      "state": user.state!,
-      "roleId": "CUSTOMER_ROLE_ID"
-    ]
-    let headers: HTTPHeaders = [.authorization(bearerToken: authToken)]
-    let requestTask = AF.request(url, method: .put,
-                                 parameters: params,
-                                 headers: headers).validate()
+  ///   - url: el url a la cual hacer la request
+  ///   - body: el body que va en la request
+  /// - Returns: la response inferida o nil si falla
+  func postRequest<T: Codable>(_ url: URL, body: [String: Any]) async -> T? {
+    let requestTask = session
+      .request(url, method: .post,
+               parameters: body as Parameters,
+               encoding: JSONEncoding.default)
+      .validate()
+    
     let response = await requestTask.serializingData().response
     
     switch response.result {
-    case .success(_):
-      return
+    case let .success(data):
+      do {
+        return try decoder.decode(T.self, from: data)
+      } catch {
+        debugPrint(error)
+        return nil
+      }
     case let .failure(error):
       debugPrint(error)
+      return nil
     }
   }
   
-  /// Crea una compañía nueva
+  /// Realiza un put request a la url dada
   /// - Parameters:
-  ///   - url: url para hacer el post
-  ///   - authToken: token de autenticación
-  ///   - company: datos de la compañía a postear
-  func postCompany(url: URL, authToken: String, company: PostCompanyData) async {
-    let params: Parameters = [
-      "company": [
-        "name": company.name,
-        "description": company.description,
-        "email": company.email,
-        "phone": company.phone,
-        "webPage": company.webPage,
-        "street": company.street,
-        "streetNumber": company.streetNumber!,
-        "city": company.city,
-        "state": company.state,
-        "zipCode": company.zipCode!,
-        "userId": company.userId!,
-        "pdfCurriculumUrl": company.pdfCurriculumUrl,
-        "pdfGuaranteeSecurityUrl": company.pdfGuaranteeSecurityUrl,
-        "pdfActaConstitutivaUrl": company.pdfActaConstitutivaUrl,
-        "pdfIneUrl": company.pdfIneUrl
-      ] as [String : Any]
-    ]
+  ///   - url: la url a la cual hacer el put request
+  ///   - body: el body de la request
+  /// - Returns: la respuesta inferida o nil si falla
+  func putRequest<T: Codable>(_ url: URL, body: [String: Any]) async -> T? {
+    let requestTask = session
+      .request(url, method: .put,
+               parameters: body as Parameters,
+               encoding: JSONEncoding.default)
+      .validate()
     
-    let headers: HTTPHeaders = [.authorization(bearerToken: authToken)]
-    let requestTask = AF.request(url, method: .post,
-                                 parameters: params,
-                                 headers: headers).validate()
-    
-    let response = await requestTask.serializingData().response
-    switch response.result {
-    case .success(_):
-      return
-    case let .failure(error):
-      debugPrint(error)
-    }
-  }
-  
-  /// - Description: Obtener encuesta pendiente
-  /// - Parameter url: URL
-  /// - Returns: Modelo de encuesta o nil (SurveyModel?)
-  func getPendingSurvey(url: URL) async -> SurveyModel? {
-    let requestTask = AF.request(url, method: .get).validate()
     let response = await requestTask.serializingData().response
     
     switch response.result {
-    case .success(let data):
+    case let .success(data):
       do {
-        return try NetworkAPIService
-          .decoder
-          .decode(SurveyModel.self, from: data)
+        return try decoder.decode(T.self, from: data)
       } catch {
         debugPrint(error)
         return nil
@@ -134,104 +104,4 @@ class NetworkAPIService {
       return nil
     }
   }
-  
-  /// - Description: Enviar respuestas de la encuesta
-  /// - Parameters:
-  ///   - url: URL
-  ///   - answers: Las respuestas de la encuesta
-  /// - Returns: Bool
-  func submitAnswers(url: URL, answers: [Answer]) async -> Bool {
-    
-    var processAns = [[String: Any]]()
-    
-    answers.forEach{
-      answer in
-      if let answerText = answer.answerText {
-        processAns.append(["questionId": answer.questionId, "answerText": answerText])
-      }
-      if let scaleValue = answer.scaleValue {
-        processAns.append(["questionId": answer.questionId, "scaleValue": scaleValue])
-      }
-    }
-    
-    let body: Parameters = ["answers":  processAns]
-    let requestTask = AF.request(url, method: .post, parameters: body, encoding: JSONEncoding()).validate()
-    let response = await requestTask.serializingData().response
-    
-    switch response.result {
-    case .success:
-      return true
-    case let .failure(error):
-      debugPrint(error)
-      return false
-    }
-  }
-  
-  ///  Fetch toda la ecoInfo del  backend
-  ///  - Parameter url: ruta al endpoint
-  ///  - Returns EcoInfo decoded o error
-  func fetchAllEcoInfo(url: URL) async -> [EcoInfo]? {
-    let requestTask = AF.request(url, method: .get).validate()
-    let response = await requestTask.serializingData().response
-    switch response.result {
-    case .success(let data):
-      do {
-        return
-          try NetworkAPIService
-          .decoder
-          .decode([EcoInfo].self, from: data)
-      } catch {
-        debugPrint(error)
-        return nil
-      }
-    case let .failure(error):
-      debugPrint(error)
-      return nil
-    }
-  }
-  
-  /// Obtener compañía por id
-  ///  - Parameters:
-  ///     - url: Backend url para obtener datos
-  ///  - Returns: Modelo de compañía o error en cualquier otro caso no válido
-  func fetchCompanyById(url: URL) async -> Company? {
-    let taskRequest = AF.request(url, method: .get).validate()
-    let response = await taskRequest.serializingData().response
-    switch response.result {
-    case .success(let data):
-      do {
-        return
-          try NetworkAPIService
-          .decoder
-          .decode(Company.self, from: data)
-      } catch {
-        debugPrint(error)
-        return nil
-      }
-    case let .failure(error):
-      debugPrint(error.localizedDescription)
-      return nil
-    }
-  }
-  
-  func fetchAllCompanies(url: URL) async -> PaginatedQuery<Company>?{
-    let taskRequest = AF.request(url, method: .get).validate()
-    let response = await taskRequest.serializingData().response
-    switch response.result {
-    case .success(let data):
-      do {
-        return
-          try NetworkAPIService
-          .decoder
-          .decode(PaginatedQuery<Company>.self, from: data)
-      } catch {
-        debugPrint(error)
-        return nil
-      }
-    case let .failure(error):
-      debugPrint(error.localizedDescription)
-      return nil
-    }
-  }
-  
 }

@@ -20,7 +20,7 @@ export const getAllCompanies: RequestHandler<
 > = async (req, res) => {
   const params = {
     start: req.query.start || 0,
-    pageSize: req.query.pageSize || 10,
+    pageSize: req.query.pageSize || 1000,
     filters: {
       name: req.query.name || '',
     },
@@ -66,6 +66,34 @@ export const getCompanyById: RequestHandler<
 
 /**
  * @brief
+ * Función del controlador que devuelve todos los proveedores aprobados de la base de datos
+ * @param req La request HTTP al servidor
+ * @param res Un objeto paginador con los proveedores y la información de paginación
+ */
+export const getApprovedCompanies: RequestHandler<
+  NoRecord,
+  Paginator<Company>,
+  NoRecord,
+  PaginationParams<{ status: string }>
+> = async (req, res) => {
+  const params = {
+    start: req.query.start || 0,
+    pageSize: req.query.pageSize || 1000,
+  }
+  const companies = await CompanyService.getCompaniesByStatus(
+    'approved',
+    params
+  )
+  res.json({
+    rows: companies.rows,
+    start: params.start,
+    pageSize: params.pageSize,
+    total: companies.count,
+  })
+}
+
+/**
+ * @brief
  * Función del controlador que devuelve todos los proveedores pendientes por aprobar de la base de datos
  * @param req La request HTTP al servidor
  * @param res Un objeto paginador con los proveedores y la información de paginación
@@ -78,9 +106,12 @@ export const getPendingCompanies: RequestHandler<
 > = async (req, res) => {
   const params = {
     start: req.query.start || 0,
-    pageSize: req.query.pageSize || 10,
+    pageSize: req.query.pageSize || 1000,
   }
-  const companies = await CompanyService.getPendingCompanies(params)
+  const companies = await CompanyService.getCompaniesByStatus(
+    'pending_approval',
+    params
+  )
   res.json({
     rows: companies.rows,
     start: params.start,
@@ -182,5 +213,56 @@ export const addProduct: RequestHandler<
     res
       .status(400)
       .json({ companyProductId: '', error: 'Error adding product to company' })
+  }
+}
+
+/**
+ * @brief
+ * Función del controlador que convierte las ubicaciones
+ * de los proveedores aprovados a longitudes y latitudes
+ * @param req
+ * @param res
+ */
+export const getCoordinates: RequestHandler<
+  NoRecord,
+  CompanyService.FilteredCompany[] | { error: string },
+  NoRecord,
+  PaginationParams<{ status: string }>
+> = async (req, res) => {
+  const params = {
+    start: req.query.start || 0,
+    pageSize: req.query.pageSize || 1000,
+  }
+
+  try {
+    const companies = await CompanyService.getCompaniesWithCoordinates(
+      'approved',
+      params
+    )
+    return res.json(companies)
+  } catch (error) {
+    return res.status(500).json({ error: 'Internal server error' })
+  }
+}
+
+/**
+ * @brief
+ * Función del controller para asignarle un usuario a una compañia
+ * @param req La request HTTP al servidor
+ * @param res Un resultado de la operación
+ */
+export const assignCompanyUser: RequestHandler<
+  { companyId: string },
+  { message: string },
+  { userId: string },
+  NoRecord
+> = async (req, res) => {
+  const companyId = req.params.companyId
+  const userId = req.body.userId
+  const assign = await CompanyService.assignCompanyUser(companyId, userId)
+  if (assign === 'success') {
+    res.status(200).json({ message: assign })
+  } else {
+    res.status(400).json({ message: assign })
   }
 }

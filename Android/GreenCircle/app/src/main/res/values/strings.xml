@@ -37,4 +37,16 @@
     <string name="review_placeholder_date">Date</string>
     <string name="review_placeholder_title">Title</string>
     <string name="review_placeholder_review">Review</string>
+    <string name="reviews_written_user">Reseñas Escritas (</string>
+    <string name="user_review_empty_view">No haz escrito ninguna reseña</string>
+    <string name="select_problem_prompt">Selecciona el problema</string>
+
+    <string-array name="options_array">
+        <item>Productos Defectuosos</item>
+        <item>Inconformidad con el producto / servicio</item>
+        <item>Comportamiento Inapropiado</item>
+        <item>Mal Servicio</item>
+        <item>Fraudes o estafas</item>
+        <item>Violación legal o ética</item>
+    </string-array>
 </resources>
