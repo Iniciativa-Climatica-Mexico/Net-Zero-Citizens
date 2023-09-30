@@ -4,6 +4,7 @@ import AddIcon from '@mui/icons-material/Add'
 import { MouseEventHandler, useState } from 'react'
 import { createSurvey } from '@/api/v1/survey'
 import { useEffect } from 'react'
+import SurveyModal from '@/components/surveyModal'
 
 export type CreateSurveyBody = {
   title: string
@@ -71,7 +72,6 @@ export default function CreateSurvey() {
     })
   }
 
-  // //hook to show error message when there are less than 2 options
   useEffect(() => {
     const errorText = document.getElementById('noQErrorText')
     if (questions.length < 1) {
@@ -85,43 +85,88 @@ export default function CreateSurvey() {
     }
   }, [questions])
 
+  const [buttonEnabled, setButtonEnabled] = useState(true)
+  useEffect(() => {
+    const hasTitle = survey.title !== ''
+    const hasDescription = survey.description !== ''
+    const hasQuestions = questions.length > 0
+
+    const hasMultipleChoiceQuestions = questions.every(
+      (question) =>
+        question.questionType === 'open' ||
+        question.questionType === 'scale' ||
+        (question.questionType === 'multiple_choice' &&
+          question.options &&
+          question.options.length >= 2)
+    )
+
+    const emptyQuestions = questions.some(
+      (question) =>
+        question.questionText === '' || question.questionText === ' '
+    )
+
+    const emptyOptions = questions.some(
+      (question) =>
+        question.questionType === 'multiple_choice' &&
+        question.options &&
+        question.options.some((option) => option === '' || option === ' ')
+    )
+
+    setButtonEnabled(
+      hasTitle &&
+        hasDescription &&
+        hasQuestions &&
+        hasMultipleChoiceQuestions &&
+        !emptyQuestions &&
+        !emptyOptions
+    )
+  }, [survey])
+
   const createSurveyHandeler: MouseEventHandler<HTMLAnchorElement> = (e) => {
     e.preventDefault()
 
-    let error: boolean = false
-    if (survey.questions.length < 1) {
-      error = true
-    }
+    console.log('clicked:', survey)
 
-    survey.questions.map((question) => {
-      if (
-        question.questionType === 'multiple_choice' &&
-        (!question.options || question.options.length < 2)
-      ) {
-        error = true
-      }
-    })
+    createSurvey(survey)
+    window.location.href = '/encuestas'
+  }
 
-    if (error) {
-      console.log('error')
-    } else {
-      createSurvey(survey)
-    }
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+
+  const openModal: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault()
+    setModalIsOpen(true)
+  }
+
+  // Function to close the modal
+  const closeModal = () => {
+    setModalIsOpen(false)
   }
 
   return (
     <div>
       <form>
+        <SurveyModal
+          isOpen={modalIsOpen}
+          onClose={closeModal}
+          onAccept={() => {
+            createSurveyHandeler
+          }}
+          modalText="Se cerraran todas las encuestas que esten en progreso"
+        />
         <div className="flex-row flex items-center justify-between my-8 mx-8">
           <h1 className="self-start font-extrabold my-8 mx-8 text-4xl text-txt">
             Crear Encuesta
           </h1>
-          <a
-            className="flex items-center justify-center px-4 py-2 my-8 mx-8 text-white bg-primary-base rounded hover:bg-primary-600 cursor-pointer"
-            onClick={(e) => createSurveyHandeler(e)}
+          <button
+            className={`flex items-center justify-center px-4 py-2 my-8 mx-8 text-white bg-primary-base rounded hover:bg-primary-900 cursor-pointer ${
+              !buttonEnabled ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+            onClick={(e) => openModal(e)}
+            disabled={!buttonEnabled}
           >
             Crear
-          </a>
+          </button>
         </div>
         <div className="flex-row flex justify-evenly my-8 mx-8">
           <div className="flex flex-col mx-8">
