@@ -5,6 +5,9 @@ import { MulOPQuestion } from './questionsTypes/mulOpQuestion'
 import { Question, CreateSurveyBody } from '../../app/encuestas/crear/page'
 import { useEffect } from 'react'
 
+/**
+ * El tipo de las props
+ */
 type QuestionWrapperProps = {
   questions: Question[]
   id: number
@@ -19,9 +22,17 @@ export const QuestionWrapper = ({
   survey,
   setSurvey,
 }: QuestionWrapperProps) => {
+  //Estado para saber si la pregunta es obligatoria
   const [isRequired, setisRequired] = useState(true)
+
+  //Estado para saber el tipo de pregunta
   const [questionType, setQuestionType] = useState('open')
 
+  /**
+   * Funcion para cambiar el tipo de pregunta
+   * Actualiza el estado de la encuesta
+   * @param event
+   */
   const handleQuestionTypeChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
@@ -38,6 +49,10 @@ export const QuestionWrapper = ({
     })
   }
 
+  /**
+   * Funcion para eliminar una pregunta
+   * Actualiza el estado de la encuesta
+   */
   const deleteQuestion = () => {
     const newQuestions = questions.filter((question) => question.id !== id)
     setQuestions((prevQuestions) => newQuestions)
@@ -48,6 +63,11 @@ export const QuestionWrapper = ({
     })
   }
 
+  /**
+   * Funcion para cambiar el titulo de la pregunta
+   * Actualiza el estado de la encuesta
+   * @param event
+   */
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSurvey((prevSurvey) => {
       const newSurvey = { ...prevSurvey }
@@ -61,10 +81,17 @@ export const QuestionWrapper = ({
     })
   }
 
+  /**
+   * Funcion para cambiar el estado de la pregunta
+   */
   const handleSwitchChange = () => {
     setisRequired((previsRequired) => !previsRequired)
   }
 
+  /**
+   * Hook para actualizar el estado de la encuesta
+   * Cuando se cambia el obligatorio de la pregunta
+   */
   useEffect(() => {
     setSurvey((prevSurvey) => {
       const newSurvey = { ...prevSurvey }
@@ -78,6 +105,9 @@ export const QuestionWrapper = ({
     })
   }, [isRequired])
 
+  /**
+   * Funcion para renderizar el tipo de pregunta
+   */
   const questionSwitch = () => {
     if (questionType === 'multiple_choice') {
       return <MulOPQuestion survey={survey} setSurvey={setSurvey} />

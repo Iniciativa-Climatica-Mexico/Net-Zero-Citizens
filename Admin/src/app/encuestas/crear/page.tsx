@@ -6,12 +6,18 @@ import { createSurvey } from '@/api/v1/survey'
 import { useEffect } from 'react'
 import SurveyModal from '@/components/surveyModal'
 
+/**
+ * El tipo de encuesta
+ */
 export type CreateSurveyBody = {
   title: string
   description: string
   questions: Question[]
 }
 
+/**
+ * El tipo de pregunta
+ */
 export type Question = {
   id: number
   questionText: string
@@ -21,7 +27,10 @@ export type Question = {
 }
 
 export default function CreateSurvey() {
+  // Estado para el contador de preguntas
   const [counter, setCounter] = useState(1)
+
+  // Estado para las preguntas
   const [questions, setQuestions] = useState<Question[]>([
     {
       id: 0,
@@ -31,12 +40,18 @@ export default function CreateSurvey() {
     },
   ])
 
+  // Estado para la encuesta
   const [survey, setSurvey] = useState<CreateSurveyBody>({
     description: '',
     title: '',
     questions: questions,
   })
 
+  /**
+   * Funcion para crear una nueva pregunta
+   * @param e(evento)
+   *
+   */
   const createQuestion: MouseEventHandler<HTMLAnchorElement> = (e) => {
     e.preventDefault()
     const newQuestion = {
@@ -45,6 +60,7 @@ export default function CreateSurvey() {
       questionType: 'open',
       isRequired: false,
     }
+    //Actualiza estados
     setCounter(counter + 1)
     setQuestions((prevQuestions) => [...prevQuestions, newQuestion])
     setSurvey((prevSurvey) => {
@@ -54,6 +70,10 @@ export default function CreateSurvey() {
     })
   }
 
+  /**
+   * Funcion que actualiza el titulo de la encuesta
+   * @param event
+   */
   const handleSurveyTitleChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -63,6 +83,10 @@ export default function CreateSurvey() {
     })
   }
 
+  /**
+   * Funcion que actualiza la descripcion de la encuesta
+   * @param event
+   */
   const handleSurveyDescriptionChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -72,6 +96,10 @@ export default function CreateSurvey() {
     })
   }
 
+  /**
+   * Hook que revisa si hay preguntas en la encuesta
+   * Si no hay preguntas muestra un mensaje de error
+   */
   useEffect(() => {
     const errorText = document.getElementById('noQErrorText')
     if (questions.length < 1) {
@@ -85,12 +113,19 @@ export default function CreateSurvey() {
     }
   }, [questions])
 
+  //Estado para habilitar el boton de crear encuesta
   const [buttonEnabled, setButtonEnabled] = useState(true)
+
+  /**
+   * Hook que revisa si la encuesta esta lista para ser creada
+   * Si no esta lista deshabilita el boton de crear encuesta
+   */
   useEffect(() => {
     const hasTitle = survey.title !== ''
     const hasDescription = survey.description !== ''
     const hasQuestions = questions.length > 0
 
+    //Se revisa que las preguntas de opcion multiple tengan al menos 2 opciones
     const hasMultipleChoiceQuestions = questions.every(
       (question) =>
         question.questionType === 'open' ||
@@ -100,11 +135,7 @@ export default function CreateSurvey() {
           question.options.length >= 2)
     )
 
-    const emptyQuestions = questions.some(
-      (question) =>
-        question.questionText === '' || question.questionText === ' '
-    )
-
+    //Se revisa que las opciones de las preguntas de opcion multiple no esten vacias
     const emptyOptions = questions.some(
       (question) =>
         question.questionType === 'multiple_choice' &&
@@ -112,6 +143,13 @@ export default function CreateSurvey() {
         question.options.some((option) => option === '' || option === ' ')
     )
 
+    //Se revisa que las preguntas no esten vacias
+    const emptyQuestions = questions.some(
+      (question) =>
+        question.questionText === '' || question.questionText === ' '
+    )
+
+    //Se habilita el boton de crear encuesta si se cumplen las condiciones
     setButtonEnabled(
       hasTitle &&
         hasDescription &&
@@ -122,6 +160,9 @@ export default function CreateSurvey() {
     )
   }, [survey])
 
+  /**
+   * Funcion que crea la encuesta
+   */
   const createSurveyHandeler = () => {
     console.log('clicked:', survey)
 
@@ -129,15 +170,22 @@ export default function CreateSurvey() {
     window.location.href = '/encuestas'
   }
 
+  //Estado para el modal
   const [modalIsOpen, setModalIsOpen] = useState(false)
 
+  /**
+   * Funcion que abre el modal
+   * @param e(evento)
+   */
   const openModal: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault()
     console.log('clicked openmodal:', survey)
     setModalIsOpen(true)
   }
 
-  // Function to close the modal
+  /**
+   * Funcion que cierra el modal
+   */
   const closeModal = () => {
     setModalIsOpen(false)
   }

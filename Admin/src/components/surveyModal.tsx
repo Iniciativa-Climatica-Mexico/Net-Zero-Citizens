@@ -2,6 +2,9 @@ import React from 'react'
 import Modal from 'react-modal'
 import WarningIcon from '@mui/icons-material/Warning'
 
+/**
+ * El tipo de las props
+ */
 interface ModalProps {
   isOpen: boolean
   onClose: () => void

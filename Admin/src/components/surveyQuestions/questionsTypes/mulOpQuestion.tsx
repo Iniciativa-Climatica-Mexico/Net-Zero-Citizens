@@ -3,6 +3,9 @@ import { useEffect } from 'react'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import { CreateSurveyBody } from '../../../app/encuestas/crear/page'
 
+/**
+ * El tipo de las props
+ */
 export type MulOPQuestionProps = {
   survey: React.Dispatch<React.SetStateAction<CreateSurveyBody>>
   setSurvey: React.Dispatch<React.SetStateAction<CreateSurveyBody>>
@@ -13,12 +16,20 @@ export const MulOPQuestion = ({ setSurvey }: MulOPQuestionProps) => {
     id: number
     textOption: string
   }
+
+  //Estado para las opciones
   const [options, setOptions] = useState<Option[]>([
     { id: 0, textOption: '' },
     { id: 1, textOption: '' },
   ])
+
+  //Estado para contar las opciones
   const [counter, setCounter] = useState(2)
 
+  /**
+   * Funcion para crear una nueva opcion
+   * @param event 
+   */
   const createOption: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault()
     const newOption = {
@@ -35,6 +46,10 @@ export const MulOPQuestion = ({ setSurvey }: MulOPQuestionProps) => {
     }
   }
 
+  /**
+   * Hook para actualizar el estado de la encuesta
+   * Cuando se actualiza el estado de las opciones
+   */
   useEffect(() => {
     setSurvey((prevSurvey) => {
       const newSurvey = { ...prevSurvey }
@@ -58,6 +73,11 @@ export const MulOPQuestion = ({ setSurvey }: MulOPQuestionProps) => {
     })
   }, [options])
 
+  /**
+   * Funcion para eliminar una opcion
+   * @param event 
+   * @param id 
+   */
   const deleteQuestion = (
     event: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>,
     id: number
@@ -75,6 +95,11 @@ export const MulOPQuestion = ({ setSurvey }: MulOPQuestionProps) => {
     })
   }
 
+  /**
+   * Funcion para cambiar el estado de la opcion
+   * @param id 
+   * @param newValue 
+   */
   const handleOptionChange = (id: number, newValue: string) => {
     setOptions((prevOptions) => {
       const newOptions = prevOptions.map((option) => {
