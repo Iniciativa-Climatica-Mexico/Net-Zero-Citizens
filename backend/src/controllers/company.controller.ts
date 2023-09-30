@@ -223,7 +223,7 @@ export const addProduct: RequestHandler<
  * @param req
  * @param res
  */
-export const getCoordinates: RequestHandler<
+export const getCoordinatesAndroid: RequestHandler<
   NoRecord,
   CompanyService.FilteredCompany[] | { error: string },
   NoRecord,
