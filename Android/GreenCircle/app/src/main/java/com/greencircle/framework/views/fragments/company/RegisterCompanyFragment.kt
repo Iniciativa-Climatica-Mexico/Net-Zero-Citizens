@@ -107,7 +107,7 @@ class RegisterCompanyFragment : Fragment() {
                 if (result.user.roles != "new_user") {
                     navigateToHome()
                 } else {
-                    navigateToForm(_arguments)
+                    navigateToTokenRegistro(_arguments)
                 }
             } else {
                 Log.d("CreateCompanyFragment", "Google login failed")
@@ -115,24 +115,17 @@ class RegisterCompanyFragment : Fragment() {
         }
     }
 
-    /**
-     * Navega hacia el fragmento "CreateCompanyFragment" dentro de la "RegisterCompanyActivity".
-     *
-     * Esta función se encarga de hacer la transición al fragmento "CreateCompanyFragment" desde el fragmento
-     * actual dentro de la "RegisterCompanyActivity". Opcionalmente, puede recibir un Bundle de argumentos
-     * que se pueden pasar al fragmento de destino.
-     *
-     * @param arguments Un Bundle opcional de argumentos que contiene la información de la cuenta de Google.
-     */
-    private fun navigateToForm(arguments: Bundle? = null) {
-        val createCompanyFragment = CreateCompanyFragment()
-        val activity = requireActivity() as RegisterCompanyActivity
-        activity.replaceFragment(createCompanyFragment, arguments)
-    }
+
 
     private fun navigateToHome() {
         var intent: Intent = Intent(requireContext(), MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
+    }
+
+    private fun navigateToTokenRegistro(arguments: Bundle? = null) {
+        val createCompanyFragment = TokenRegistroFragment()
+        val activity = requireActivity() as RegisterCompanyActivity
+        activity.replaceFragment(createCompanyFragment, arguments)
     }
 }
