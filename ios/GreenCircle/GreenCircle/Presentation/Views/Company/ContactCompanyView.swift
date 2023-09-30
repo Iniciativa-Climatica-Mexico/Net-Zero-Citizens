@@ -13,7 +13,7 @@ struct TabViewImagesProducts: View {
   @Binding var bindImageToDescription: Bool
   @State private var descriptionBind: [Int: String] = [:]
   @State private var nameBind: [Int: String] = [:]
-  
+
   var body: some View {
       VStack {
         TabView(selection: $index) {
@@ -108,7 +108,7 @@ struct ContactCompanyRatingView: View {
         }
           .padding(.bottom, 5)
           .foregroundColor(Color("GreenCustom"))
-        
+
         Divider()
         Text("Reviews")
           .font(.system(size: 24))
@@ -175,7 +175,7 @@ struct ContactCompanyComponentView: View {
           Text("\(modelCompany.contentCompany.street ?? ""), ")
             .font(.system(size: 15))
             .foregroundColor(Color("MainText"))
-          
+
           Text(String(modelCompany.contentCompany.streetNumber ?? ""))
             .font(.system(size: 15))
             .foregroundColor(Color("MainText"))
@@ -204,17 +204,17 @@ struct CustomButtonOption: View {
   var body: some View {
     Button(action: {
       isPressed[content] = true
-          
+
       for (key, _) in (isPressed.filter { $0.key != content }) {
           isPressed[key] = false
       }
-      
+
       }, label: {
         if content == "Report"{
           Image(systemName: "exclamationmark.bubble")
           .shadow(color: isPressed[content] ?? false ? Color("GreenCustom") : Color.clear, radius: 10, y: 9)
           .foregroundColor(isPressed[content] ?? false ? Color("GreenCustom") : Color("MainText"))
-          
+
         } else {
           Text(content)
           .font(.system(size: 18))
@@ -239,7 +239,7 @@ struct ReportReasonView: View {
                 Text(reason)
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
-                
+
                 Spacer()
                 if reason == selectedReason {
                     Image(systemName: "checkmark")
@@ -282,7 +282,7 @@ struct CompanyReportView: View {
                 .font(.system(size: 12))
                 .foregroundColor(Color("BlackCustom")).contrast(12.6)
                 .padding(.bottom, 20).bold()
-            
+
             if hasTriedToSubmit && (selectedReportReason == nil || selectedReportReason!.isEmpty) {
                 Text("Por favor, selecciona una razón para reportar.")
                     .font(.system(size: 14))
@@ -336,9 +336,10 @@ struct CompanyReportView: View {
                     }
                     Spacer()
                 }
-                .padding(.top, 30)
+
             }
             .frame(height: 300)
+            .padding(.top, 30)
         }
         .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
         .foregroundColor(Color("BlackCustom"))
@@ -447,7 +448,7 @@ struct ContactCompanyView: View {
                   message: Text("No contamos con products aún"),
                   dismissButton: .default(Text("Ok")) {
               presentationMode.wrappedValue.dismiss()
-              
+
             }
         )
           }
@@ -460,3 +461,5 @@ struct ContactCompanyView: View {
       }
     }
 }
+
+
