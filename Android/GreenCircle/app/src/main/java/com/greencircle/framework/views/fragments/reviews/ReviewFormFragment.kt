@@ -114,7 +114,6 @@ class ReviewFormFragment : Fragment() {
             review = null
             return true
         }
-
         clearTextFieldsErrors()
         reviewTitle = reviewTitleString
         review = reviewString

@@ -52,7 +52,6 @@ class EditProfileFragment : Fragment() {
     ): View {
         _binding = FragmentEditProfileBinding.inflate(inflater, container, false)
         var root: View = binding.root
-
         initializeObservers()
         initializeAceptarCambiosButton()
         initializeCancelarCambiosButton()
@@ -78,11 +77,10 @@ class EditProfileFragment : Fragment() {
         binding.username.text = name
         binding.inputNombre.setText(user.firstName)
         binding.inputPrimerApellido.setText(user.lastName)
-        binding.inputSegundoApellido.setText(user.secondLastName)
         binding.inputEdad.setText(user.age.toString())
         binding.inputSexo.setText(user.gender)
         binding.inputTelefono.setText(user.phoneNumber)
-        binding.inputEstado.setText(user.state)
+        binding.inputEstado.setText(user.state, false)
         // binding.profileImage.setImageResource(user.profilePicture)
     }
 
@@ -92,7 +90,7 @@ class EditProfileFragment : Fragment() {
             user.userId,
             binding.inputNombre.text.toString(),
             binding.inputPrimerApellido.text.toString(),
-            binding.inputSegundoApellido.text.toString(),
+            user.secondLastName,
             user.email,
             user.password ?: "EstoNoDeberiaEstarAqui",
             binding.inputTelefono.text.toString(),
