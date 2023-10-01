@@ -1,6 +1,6 @@
 import React from 'react'
 import { Page, Text, View, Image, Document } from '@react-pdf/renderer'
-import { SurveyReport } from '@/api/v1/report'
+import { QuestionReport, SurveyReport } from '@/api/v1/report'
 import styles from './styles'
 
 type surveyPDFProps = {
@@ -17,23 +17,51 @@ type surveyPDFProps = {
  * @returns {JSX.Element} Documento PDF con las respuestas de la encuesta
  */
 const SurveyPDFReport: React.FC<surveyPDFProps> = ({ survey, graphImages }) => {
+  const currentDate = new Date().toLocaleDateString('es-MX', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+
+  const renderAnswers = (question: QuestionReport) => {
+    if (!question.answers || question.answers.length === 0) {
+      return <Text style={styles.text}>No hay respuestas disponibles</Text>
+    }
+
+    const headerLabel =
+      question.questionType === 'open' ? 'Respuesta' : 'Opción'
+
+    const countLabel =
+      question.questionType === 'open' ? 'Frecuencia' : 'Total de respuestas'
+
+    return (
+      <>
+        <View style={styles.tableHeader}>
+          <Text style={styles.tableColumn}>{headerLabel}</Text>
+          <Text style={styles.tableColumn}>{countLabel}</Text>
+        </View>
+
+        {question.answers.map((answer, index) => (
+          <View key={index} style={styles.tableRow}>
+            <Text style={styles.tableCell}>{answer.label}</Text>
+            <Text style={styles.tableCell}>{answer.count}</Text>
+          </View>
+        ))}
+      </>
+    )
+  }
+
   return (
     <Document>
       <Page style={styles.body}>
         <View style={styles.headerContainer} fixed>
-          <Image src={'/logo.png'} style={styles.logo} />
+          <Image src="/logo.png" style={styles.logo} />
 
           <View style={styles.textContainer}>
             <Text style={styles.organizationName}>
-              Iniciativa Climatica de Mexico
+              Iniciativa Climática de México
             </Text>
-            <Text style={styles.dateText}>
-              {new Date().toLocaleDateString('es-MX', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}
-            </Text>
+            <Text style={styles.dateText}>{currentDate}</Text>
           </View>
         </View>
 
@@ -45,7 +73,7 @@ const SurveyPDFReport: React.FC<surveyPDFProps> = ({ survey, graphImages }) => {
           {survey?.description}
         </Text>
 
-        {survey.questions.map((question, index) => (
+        {survey.questions.flatMap((question, index) => (
           <View key={index}>
             <Text style={styles.questionTitle}>{question.questionText}</Text>
 
@@ -53,28 +81,7 @@ const SurveyPDFReport: React.FC<surveyPDFProps> = ({ survey, graphImages }) => {
               <Image src={graphImages[index]} style={styles.graph} />
             )}
 
-            {question.answers && question.answers.length > 0 ? (
-              <>
-                <View style={styles.tableHeader}>
-                  <Text style={styles.tableColumn}>
-                    {question.questionType === 'open' ? 'Respuesta' : 'Opción'}
-                  </Text>
-                  <Text style={styles.tableColumn}>
-                    {question.questionType === 'open'
-                      ? 'Frecuencia'
-                      : 'Total de respuestas'}
-                  </Text>
-                </View>
-                {question.answers.map((answer, index) => (
-                  <View key={index} style={styles.tableRow}>
-                    <Text style={styles.tableCell}>{answer.label}</Text>
-                    <Text style={styles.tableCell}>{answer.count}</Text>
-                  </View>
-                ))}
-              </>
-            ) : (
-              <Text style={styles.text}>No hay respuestas disponibles</Text>
-            )}
+            {renderAnswers(question)}
           </View>
         ))}
 

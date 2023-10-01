@@ -1,13 +1,53 @@
 'use client'
 
 import { QuestionReport, SurveyReport } from '@/api/v1/report'
-
-import ScaleChart from './ScaleChart'
 import { useState, useEffect } from 'react'
 import { CSVLink } from 'react-csv'
 import { PDFDownloadLink } from '@react-pdf/renderer'
 import htm2canvas from 'html2canvas'
 import SurveyPDFReport from '@/components/reporte/SurveyPDF/SurveyPDF'
+import ScaleChart from './ScaleChart'
+
+/**
+ * `generateGraphImages` genera las imágenes de las gráficas de las
+ * preguntas cerradas de la encuesta
+ *
+ * @function
+ * @name generateGraphImages
+ * @async
+ *
+ * @param {Array} questions - The questions from the survey report.
+ * @param {Function} setImageState - Function to set the graph images state.
+ * @param {Function} setLoadedState - Function to set the graphs loaded state.
+ */
+const generateGraphImages = async (
+  questions: QuestionReport[],
+  setImageState: (_images: string[]) => void,
+  setLoadedState: (_loaded: boolean) => void
+) => {
+  const images: string[] = []
+
+  await new Promise((resolve) => setTimeout(resolve, 2000))
+
+  for (let i = 0; i < questions.length; i++) {
+    const question = questions[i]
+
+    if (question.questionType !== 'open') {
+      const canvas = await htm2canvas(
+        document.getElementById(`graph-${i}`) as HTMLElement,
+        {
+          scale: 8,
+          backgroundColor: 'transparent',
+        }
+      )
+
+      images.push(canvas.toDataURL())
+    } else images.push('')
+  }
+
+  setLoadedState(true)
+  setImageState(images)
+}
 
 export function QuestionChartContainer(surveyReport: SurveyReport) {
   try {
@@ -24,35 +64,32 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
 
     const [showDropdown, setShowDropdown] = useState(false)
     const [graphImages, setGraphImages] = useState<string[]>([])
+    const [graphsLoaded, setGraphsLoaded] = useState<boolean>(false)
+    const setShowDownloadLink = useState<boolean>(false)[1]
 
     useEffect(() => {
-      const generateGraphImages = async () => {
-        const images: string[] = []
-
-        await new Promise((resolve) => setTimeout(resolve, 2000))
-
-        for (let i = 0; i < surveyReport.questions.length; i++) {
-          const question = surveyReport.questions[i]
-
-          if (question.questionType !== 'open') {
-            const canvas = await htm2canvas(
-              document.getElementById(`graph-${i}`) as HTMLElement,
-              {
-                scale: 4,
-                backgroundColor: 'transparent',
-              }
-            )
-
-            images.push(canvas.toDataURL())
-          } else images.push('')
-        }
-
-        setGraphImages(images)
-      }
-
-      console.log(graphImages)
-      generateGraphImages()
+      generateGraphImages(
+        surveyReport.questions,
+        setGraphImages,
+        setGraphsLoaded
+      )
     }, [surveyReport])
+
+    useEffect(() => {
+      if (graphsLoaded) {
+        const timer = setTimeout(() => {
+          setShowDownloadLink(true)
+        }, 500)
+
+        return () => clearTimeout(timer)
+      }
+    }, [graphsLoaded])
+
+    const hasQuestionWithoutAnswers = () => {
+      return surveyReport.questions.some(
+        (question) => !question.answers || question.answers.length === 0
+      )
+    }
 
     return (
       <div>
@@ -92,24 +129,29 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
                     </CSVLink>
                   </div>
 
-                  {/* PDF Download Option */}
                   <div
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                     role="menuitem"
                   >
-                    <PDFDownloadLink
-                      document={
-                        <SurveyPDFReport
-                          survey={surveyReport}
-                          graphImages={graphImages}
-                        />
-                      }
-                      fileName={`${surveyReport.title}.pdf`}
-                    >
-                      {({ loading }) =>
-                        loading ? 'Cargando documento...' : 'Descargar resumen '
-                      }
-                    </PDFDownloadLink>
+                    {graphsLoaded || hasQuestionWithoutAnswers() ? (
+                      <PDFDownloadLink
+                        document={
+                          <SurveyPDFReport
+                            survey={surveyReport}
+                            graphImages={graphImages}
+                          />
+                        }
+                        fileName={`${surveyReport.title}.pdf`}
+                      >
+                        {({ loading }) =>
+                          loading
+                            ? 'Cargando documento...'
+                            : 'Descargar resumen'
+                        }
+                      </PDFDownloadLink>
+                    ) : (
+                      'Cargando documento...'
+                    )}
                   </div>
                 </div>
               </div>
@@ -240,7 +282,7 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
                             key={index}
                             style={{
                               position: 'absolute',
-                              left: '-9999px',
+                              left: '-99999px',
                             }}
                             id={`graph-${index}`}
                           >
