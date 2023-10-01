@@ -5,6 +5,7 @@ import styles from './styles'
 
 type surveyPDFProps = {
   survey: SurveyReport
+  graphImages: string[]
 }
 
 /**
@@ -15,7 +16,7 @@ type surveyPDFProps = {
  * @param survey Respuestas de la encue sta
  * @returns {JSX.Element} Documento PDF con las respuestas de la encuesta
  */
-const SurveyPDFReport: React.FC<surveyPDFProps> = ({ survey }) => {
+const SurveyPDFReport: React.FC<surveyPDFProps> = ({ survey, graphImages }) => {
   return (
     <Document>
       <Page style={styles.body}>
@@ -47,6 +48,10 @@ const SurveyPDFReport: React.FC<surveyPDFProps> = ({ survey }) => {
         {survey.questions.map((question, index) => (
           <View key={index}>
             <Text style={styles.questionTitle}>{question.questionText}</Text>
+
+            {question.questionType !== 'open' && graphImages[index] && (
+              <Image src={graphImages[index]} style={styles.graph} />
+            )}
 
             {question.answers && question.answers.length > 0 ? (
               <>

@@ -3,10 +3,11 @@
 import { QuestionReport, SurveyReport } from '@/api/v1/report'
 
 import ScaleChart from './ScaleChart'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { CSVLink } from 'react-csv'
 import { PDFDownloadLink } from '@react-pdf/renderer'
-import SurveyPDFReport from '@/components/SurveyPDF/SurveyPDF'
+import htm2canvas from 'html2canvas'
+import SurveyPDFReport from '@/components/reporte/SurveyPDF/SurveyPDF'
 
 export function QuestionChartContainer(surveyReport: SurveyReport) {
   try {
@@ -22,6 +23,36 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
     const filename = question.questionText
 
     const [showDropdown, setShowDropdown] = useState(false)
+    const [graphImages, setGraphImages] = useState<string[]>([])
+
+    useEffect(() => {
+      const generateGraphImages = async () => {
+        const images: string[] = []
+
+        await new Promise((resolve) => setTimeout(resolve, 2000))
+
+        for (let i = 0; i < surveyReport.questions.length; i++) {
+          const question = surveyReport.questions[i]
+
+          if (question.questionType !== 'open') {
+            const canvas = await htm2canvas(
+              document.getElementById(`graph-${i}`) as HTMLElement,
+              {
+                scale: 4,
+                backgroundColor: 'transparent',
+              }
+            )
+
+            images.push(canvas.toDataURL())
+          } else images.push('')
+        }
+
+        setGraphImages(images)
+      }
+
+      console.log(graphImages)
+      generateGraphImages()
+    }, [surveyReport])
 
     return (
       <div>
@@ -67,11 +98,16 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
                     role="menuitem"
                   >
                     <PDFDownloadLink
-                      document={<SurveyPDFReport survey={surveyReport} />}
+                      document={
+                        <SurveyPDFReport
+                          survey={surveyReport}
+                          graphImages={graphImages}
+                        />
+                      }
                       fileName={`${surveyReport.title}.pdf`}
                     >
                       {({ loading }) =>
-                        loading ? 'Cargando documento...' : 'Descargar PDF'
+                        loading ? 'Cargando documento...' : 'Descargar resumen '
                       }
                     </PDFDownloadLink>
                   </div>
@@ -184,10 +220,7 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
                         </div>
 
                         {/* Gráfica */}
-                        <div
-                          className="pl-4 w-1/2"
-                          id="scaleChartContainer-${question.questionId}"
-                        >
+                        <div className="pl-4 w-1/2">
                           <ScaleChart
                             {...{
                               title: question.questionText,
@@ -197,6 +230,33 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
                           />
                         </div>
                       </div>
+                    )}
+
+                    {/* Rendering hidden graphs for PDF */}
+                    {surveyReport.questions.map(
+                      (question, index) =>
+                        question.questionType !== 'open' && (
+                          <div
+                            key={index}
+                            style={{
+                              position: 'absolute',
+                              left: '-9999px',
+                            }}
+                            id={`graph-${index}`}
+                          >
+                            <ScaleChart
+                              {...{
+                                title: question.questionText,
+                                labels: question.answers?.map(
+                                  (answer) => answer.label
+                                ),
+                                data: question.answers?.map(
+                                  (answer) => answer.count
+                                ),
+                              }}
+                            />
+                          </div>
+                        )
                     )}
 
                     {/* Preguntas abiertas */}
