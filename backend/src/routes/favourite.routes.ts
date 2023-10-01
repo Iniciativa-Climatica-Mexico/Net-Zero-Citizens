@@ -8,6 +8,6 @@ router.get('/:favouriteId', controller.getFavouriteById)
 
 router.delete('/delete/:favouriteId', controller.deleteFavouriteById)
 
-router.get('/:userId', controller.getAllFavouritesByUser)
+router.get('/user/:userId', controller.getAllFavouritesByUser)
 
 export default router
