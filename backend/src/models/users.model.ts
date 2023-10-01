@@ -82,6 +82,7 @@ export default class User extends Model {
     type: DataType.STRING,
     allowNull: false,
     field: 'LAST_NAME',
+    defaultValue: '',
   })
   lastName: string
 
