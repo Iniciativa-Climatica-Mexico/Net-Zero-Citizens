@@ -22,6 +22,12 @@ struct APIResponse: Codable {
     let message: String
 }
 
+struct CreateCompanyResponse: Codable{
+    let companyId: String?
+    var message: String
+}
+
+
 /// Protocolo con las funciones del repositorio de Compañías
 protocol CompanyRepositoryProtocol {
   func postCompany(company: PostCompanyData) async
@@ -35,12 +41,12 @@ protocol CompanyRepositoryProtocol {
 class CompanyRepository: CompanyRepositoryProtocol {
   /// Inicialización de servicio backEnd
   let service: NetworkAPIService
-    let local: LocalService
+  let local: LocalService
   /// Inicialización de singleton de repositorio de compañía
   static let shared = CompanyRepository()
   /// Constructor que toma el valor del servicio del backEnd
     init(service: NetworkAPIService = NetworkAPIService.shared, local: LocalService = LocalService.shared) {
-    self.service = service
+        self.service = service
         self.local = local
   }
   
@@ -57,27 +63,36 @@ class CompanyRepository: CompanyRepositoryProtocol {
   /// - Parameters:
   ///   - authToken: token de autenticación
   ///   - company: el objeto con la información de la compañía
-  func postCompany(company: PostCompanyData) async {
-    let params: [String: Any] = [
-      "company": [
-        "name": company.name,
-        "description": company.description,
-        "email": company.email,
-        "phone": company.phone,
-        "webPage": company.webPage,
-        "street": company.street,
-        "streetNumber": company.streetNumber,
-        "city": company.city,
-        "state": company.state,
-        "zipCode": company.zipCode,
-        "userId": company.userId!,
-      ] as [String : Any]
-    ]
-    let _: NoResponse? = await service
-      .postRequest(URL(
-        string: "\(CompanyAPI.base)\(CompanyAPI.Routes.create)")!,
-                   body: params)
-  }
+    func postCompany(company: PostCompanyData) async {
+        let params: [String: Any] = [
+            "company": [
+                "name": company.name,
+                "description": company.description,
+                "email": company.email,
+                "phone": company.phone,
+                "webPage": company.webPage,
+                "street": company.street,
+                "streetNumber": company.streetNumber,
+                "city": company.city,
+                "state": company.state,
+                "zipCode": company.zipCode,
+                "userId": company.userId!,
+            ] as [String : Any]
+        ]
+        
+        do {
+            if let response: CreateCompanyResponse = await service.postRequest(URL(string: "\(CompanyAPI.base)\(CompanyAPI.Routes.create)")!, body: params) {
+                if let companyId = response.companyId {
+                    print("Company id del response: ------- \(companyId)")
+                    LocalService.shared.setCompanyId(companyId: companyId)
+                }
+            }
+        } catch {
+            print("Error posting company: \(error)")
+        }
+    }
+
+
   
     func fetchAllCompanies() async -> PaginatedQuery<Company>? {
     return await service
@@ -93,10 +108,16 @@ class CompanyRepository: CompanyRepositoryProtocol {
 
     func uploadCompanyFile(file: Data, fileDescription: String, fileFormat: String, mimeType: String) async -> APIResponse? {
         let uploadURL = URL(string: "\(CompanyAPI.base)\(CompanyAPI.Routes.uploadFile)")!
-        let companyId = local.getCompanyId()
+        
+        guard let companyId = local.getCompanyId() else {
+            // Si no puedes obtener el companyId, decides si quieres devolver un error o continuar
+            // Por ahora, simplemente imprimiré un mensaje y retornaré nil. Puedes adaptar esto a tu caso de uso.
+            print("Error: No se pudo obtener el companyId")
+            return nil
+        }
+        
         let additionalParameters: [String: Any] = [
-            // "companyId": companyId!,
-            "companyId": "c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e",
+            "companyId": companyId,
             "fileDescription": fileDescription,
             "fileFormat": fileFormat,
         ]
@@ -104,5 +125,4 @@ class CompanyRepository: CompanyRepositoryProtocol {
         let mimeType = mimeType
         return await service.uploadFileRequest(uploadURL, file: file, fileName: fileName, mimeType: mimeType, additionalParameters: additionalParameters)
     }
-
 }

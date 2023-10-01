@@ -1,7 +1,6 @@
 import express from 'express'
 import * as CompanyController from '../controllers/company.controller'
 import * as CompanyFilesController from '../controllers/companyFiles.controller'
-import upload from '../utils/fileUploadUtil'
 
 const router = express.Router()
 

@@ -7,7 +7,9 @@ import { RequestHandler } from 'express'
 export const uploadCompanyFile: RequestHandler = async (req, res) => {
   try {
     upload.single('file')(req, res, async (err) => {
+      console.log("First Company id: ------", req.body.companyId)
       const {fileFormat, fileDescription, companyId} = req.body
+      console.log("Second logs: ------", fileDescription, fileFormat, companyId)
       CompanyFileService.uploadCompanyFile(
         req.file,
         companyId,

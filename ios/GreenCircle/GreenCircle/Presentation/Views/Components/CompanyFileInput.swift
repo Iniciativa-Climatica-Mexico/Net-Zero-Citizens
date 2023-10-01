@@ -8,6 +8,8 @@
 import SwiftUI
 import UIKit
 import MobileCoreServices
+import UniformTypeIdentifiers
+
 
 struct CompanyFileInput: View {
     var title: String
@@ -95,7 +97,7 @@ struct DocumentPicker: UIViewControllerRepresentable {
     }
     
     func makeUIViewController(context: Context) -> some UIViewController {
-        let documentPicker = UIDocumentPickerViewController(documentTypes: [kUTTypePDF as String], in: .import)
+        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.pdf], asCopy: true)
         documentPicker.delegate = context.coordinator
         return documentPicker
     }

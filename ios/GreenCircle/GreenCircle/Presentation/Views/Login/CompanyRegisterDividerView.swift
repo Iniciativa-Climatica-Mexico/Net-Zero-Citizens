@@ -10,7 +10,7 @@ import SwiftUI
 
 struct CompanyRegisterDividerView: View {
   var goUploadCompanyFiles: (Binding<Bool>, Binding<Bool>) -> Void
-  
+    
   @Binding var photovoltaicToggle: Bool
   @Binding var solarToggle: Bool
   @State private var showAlert: Bool = false
@@ -25,6 +25,8 @@ struct CompanyRegisterDividerView: View {
       }.padding(.bottom, 55)
       
       VStack(spacing: 40) {
+          CompanyFileInput(title: "INE", description: "example", fileDescription: "INE representante legal",viewModel: CompanyViewModel())
+          CompanyFileInput(title: "Curriculum", description: "example", fileDescription: "Curriculum",viewModel: CompanyViewModel())
         ZStack {
           RoundedRectangle(cornerRadius: 10)
             .fill(.gray).opacity(0.1)
@@ -59,9 +61,9 @@ struct CompanyRegisterDividerView: View {
         MainButton("Continuar", action: {
             if photovoltaicToggle || solarToggle
             || (photovoltaicToggle && solarToggle) {
-              goUploadCompanyFiles(
-                $photovoltaicToggle,
-                $solarToggle)
+                
+              goUploadCompanyFiles($photovoltaicToggle,$solarToggle)
+                
             } else {
               showAlert = true
             }

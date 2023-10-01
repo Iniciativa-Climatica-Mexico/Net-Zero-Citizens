@@ -13,6 +13,7 @@ class LocalService {
   private var encoder = JSONEncoder()
   private let USER_DATA = "USER_DATA"
     private let COMPANY_ID = "COMPANY_ID"
+    private let USER_ID = "USER_ID"
   
   func getToken() -> AuthResponse? {
     guard let userData = UserDefaults.standard.data(forKey: USER_DATA)
@@ -37,11 +38,16 @@ class LocalService {
     }
   }
     
-    func setCompanyId(userData: String){
-        UserDefaults.standard.set(userData, forKey: COMPANY_ID)
+    /// Set company id when login
+    /// - Parameter companyId: companyId
+    func setCompanyId(companyId: String) {
+        UserDefaults.standard.set(companyId, forKey: "companyId")
     }
+
     
-    func getCompanyId() -> String?{
-        return UserDefaults.standard.string(forKey: COMPANY_ID)
+    /// Function to get company id from local storage
+    /// - Returns: Compnay id
+    func getCompanyId() -> String? {
+        return UserDefaults.standard.string(forKey: "companyId")
     }
 }

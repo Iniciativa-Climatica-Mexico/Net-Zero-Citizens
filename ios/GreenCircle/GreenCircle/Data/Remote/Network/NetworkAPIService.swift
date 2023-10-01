@@ -14,6 +14,7 @@ class NetworkAPIService {
   static let shared = NetworkAPIService()
   private let decoder = JSONDecoder()
   private var session = Session()
+  static let local = LocalService()
   
   /// Asigna el tipo de decoding al decoder de la instancia
   init() {
@@ -126,23 +127,37 @@ class NetworkAPIService {
         additionalParameters: [String: Any] = [:]
     ) async -> T? {
         var responseResult: T?
-        
+
+        // 1. Obtener el token de LocalService
+        guard let authToken = LocalService.shared.getToken()?.tokens.authToken else {
+            print("Error: Unable to fetch token")
+            return nil
+        }
+
+        // Crear encabezados con el token de autenticación
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(authToken)",
+            "Accept": "application/json"
+        ]
+
         do {
             let response = try await AF.upload(multipartFormData: { multipartFormData in
                 multipartFormData.append(file, withName: fileParameterName, fileName: fileName, mimeType: mimeType)
                 
-                for (key, value) in additionalParameters{
-                    if let stringValue = value as? String{
+                for (key, value) in additionalParameters {
+                    if let stringValue = value as? String {
                         multipartFormData.append(stringValue.data(using: .utf8)!, withName: key)
-                    } else if let dataValue = value as? Data{
+                    } else if let dataValue = value as? Data {
                         multipartFormData.append(dataValue, withName: key)
                     }
                 }
-            }, to: url, headers: nil).serializingData().value
+            }, to: url, headers: headers).serializingData().value
+
             return responseResult
-        } catch{
+        } catch {
             print(error)
             return nil
         }
     }
+
 }

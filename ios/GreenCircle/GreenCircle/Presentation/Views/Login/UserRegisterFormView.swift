@@ -98,17 +98,17 @@ struct UserRegisterFormView: View {
   }
 }
 
-struct UserRegisterFormView_Previews: PreviewProvider {
-  
-  static var previews: some View {
-    UserRegisterFormView(goSurvey: {})
-      .environmentObject(UserData(
-        UserAuth(first_name: "Ricardo",
-                 last_name: "Fernandez",
-                 uuid: "1",
-                 email: "ricardo@mail.com",
-                 login_type: "google",
-                 picture: "picture",
-                 roles: "new_user")))
-  }
-}
+//struct UserRegisterFormView_Previews: PreviewProvider {
+//
+//  static var previews: some View {
+//    UserRegisterFormView(goSurvey: {})
+//      .environmentObject(UserData(
+//        UserAuth(first_name: "Ricardo",
+//                 last_name: "Fernandez",
+//                 uuid: "1",
+//                 email: "ricardo@mail.com",
+//                 login_type: "google",
+//                 picture: "picture",
+//                 roles: "new_user")))
+//  }
+//}
