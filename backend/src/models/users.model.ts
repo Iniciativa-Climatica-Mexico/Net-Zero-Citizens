@@ -111,6 +111,13 @@ export default class User extends Model {
   @Column({
     type: DataType.STRING,
     allowNull: true,
+    field: 'SALT',
+  })
+  salt: string | null
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
     field: 'PHONE_NUMBER',
   })
   phoneNumber: string | null
