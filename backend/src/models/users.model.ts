@@ -81,6 +81,7 @@ export default class User extends Model {
     type: DataType.STRING,
     allowNull: false,
     field: 'LAST_NAME',
+    defaultValue: '',
   })
   lastName: string
 
@@ -105,6 +106,13 @@ export default class User extends Model {
     field: 'PASSWORD',
   })
   password: string | null
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+    field: 'SALT',
+  })
+  salt: string | null
 
   @Column({
     type: DataType.STRING,

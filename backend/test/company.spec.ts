@@ -171,5 +171,6 @@ describe('Company Service', () => {
     const updatedUser = await User.findByPk(user.userId)
     expect(updatedCompany?.userId).to.equal(user.userId)
     expect(updatedUser?.companyId).to.equal(company.companyId)
+    expect(updatedUser?.roleId).to.equal('COMAPNY_ROLE_ID')
   })
 })
