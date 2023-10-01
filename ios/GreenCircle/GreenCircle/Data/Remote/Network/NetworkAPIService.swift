@@ -104,4 +104,33 @@ class NetworkAPIService {
       return nil
     }
   }
+  
+  /// Realiza un delete request a la url dada
+  /// - Parameters:
+  ///   - url: la url a la cual hacer el delete request
+  ///   - body: el body de la request
+  /// - Returns: la respuesta inferida o nil si falla
+  func deleteRequest<T: Codable>(_ url: URL, body: [String: Any]) async -> T? {
+    let requestTask = session
+      .request(url, method: .delete,
+               parameters: body as Parameters,
+               encoding: JSONEncoding.default)
+      .validate()
+    
+    let response = await requestTask.serializingData().response
+
+    switch response.result {
+    case let .success(data):
+      do {
+        return try decoder.decode(T.self, from: data)
+      } catch {
+        debugPrint(error)
+        return nil
+      }
+    case let .failure(error):
+      debugPrint(error)
+      return nil
+    }
+  }
+  
 }
