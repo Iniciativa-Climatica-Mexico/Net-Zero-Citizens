@@ -186,7 +186,7 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
                         {/* Gráfica */}
                         <div
                           className="pl-4 w-1/2"
-                          id="scaleChartContainer-${page}"
+                          id="scaleChartContainer-${question.questionId}"
                         >
                           <ScaleChart
                             {...{
