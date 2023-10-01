@@ -5,6 +5,8 @@ import { QuestionReport, SurveyReport } from '@/api/v1/report'
 import ScaleChart from './ScaleChart'
 import { useState } from 'react'
 import { CSVLink } from 'react-csv'
+import { PDFDownloadLink } from '@react-pdf/renderer'
+import SurveyPDFReport from '@/components/SurveyPDF/SurveyPDF'
 
 export function QuestionChartContainer(surveyReport: SurveyReport) {
   try {
@@ -19,24 +21,64 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
     const data = question.answers?.map((answer) => answer.count)
     const filename = question.questionText
 
+    const [showDropdown, setShowDropdown] = useState(false)
+
     return (
       <div>
         <div className="flex flex-row items-center justify-between my-8 mx-8">
           <h1 className="self-start font-extrabold mt-8 mx-8 text-4xl text-txt">
             {surveyReport.title}
           </h1>
-          <button className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end mt-4 ml-auto left-500">
-            <CSVLink
-              headers={[
-                { label: 'Opción', key: 'label' },
-                { label: 'Total de respuestas', key: 'count' },
-              ]}
-              data={question.answers}
-              filename={filename}
+          <div className="relative inline-block text-left">
+            <button
+              onClick={() => setShowDropdown(!showDropdown)}
+              className="bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end mt-4 ml-auto left-500"
             >
-              Descargar respuestas
-            </CSVLink>
-          </button>
+              Descargar Respuestas
+            </button>
+            {showDropdown && (
+              <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                <div
+                  className="py-1"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="options-menu"
+                >
+                  {/* CSV Download Option */}
+                  <div
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                    role="menuitem"
+                  >
+                    <CSVLink
+                      headers={[
+                        { label: 'Opción', key: 'label' },
+                        { label: 'Total de respuestas', key: 'count' },
+                      ]}
+                      data={question.answers}
+                      filename={filename}
+                    >
+                      CSV
+                    </CSVLink>
+                  </div>
+
+                  {/* PDF Download Option */}
+                  <div
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                    role="menuitem"
+                  >
+                    <PDFDownloadLink
+                      document={<SurveyPDFReport survey={surveyReport} />}
+                      fileName={`${surveyReport.title}.pdf`}
+                    >
+                      {({ loading }) =>
+                        loading ? 'Cargando documento...' : 'Descargar PDF'
+                      }
+                    </PDFDownloadLink>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
         <div className="flex pl-10 pb-2">
           <button className="pr-5" onClick={onPrevPage}>
@@ -142,7 +184,10 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
                         </div>
 
                         {/* Gráfica */}
-                        <div className="pl-4 w-1/2" id="scaleChartContainer">
+                        <div
+                          className="pl-4 w-1/2"
+                          id="scaleChartContainer-${page}"
+                        >
                           <ScaleChart
                             {...{
                               title: question.questionText,
