@@ -1,15 +1,12 @@
 package com.greencircle.framework.viewmodel.auth
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.greencircle.domain.model.auth.AuthResponse
 import com.greencircle.domain.usecase.auth.GoogleAuthRequirement
-import com.greencircle.domain.usecase.auth.RecoverTokensRequirement
-import com.greencircle.domain.usecase.auth.RecoverUserSessionRequirement
 import com.greencircle.domain.usecase.auth.SaveTokensRequirement
 import com.greencircle.domain.usecase.auth.SaveUserSessionRequirement
 import kotlinx.coroutines.Dispatchers
@@ -27,8 +24,6 @@ class LoginViewModel(private val context: Context) : ViewModel() {
     private val googleAuthRequirement = GoogleAuthRequirement()
     private val saveTokensRequirement = SaveTokensRequirement(context)
     private val saveUserSession = SaveUserSessionRequirement(context)
-    private val recoverTokens = RecoverTokensRequirement(context)
-    private val recoverUserSession = RecoverUserSessionRequirement(context)
     private val _googleLoginResult = MutableLiveData<AuthResponse?>()
     val googleLoginResult: LiveData<AuthResponse?> = _googleLoginResult
 
@@ -47,16 +42,8 @@ class LoginViewModel(private val context: Context) : ViewModel() {
             val refreshToken = result?.tokens?.refreshToken
             saveTokensRequirement(authToken!!, refreshToken!!)
 
-            // Recuperar tokens
-            val tokens = recoverTokens()
-            Log.d("LoginViewModel", "Tokens: $tokens")
-
             // Guardar usuario global
             saveUserSession(result.user)
-
-            // Recuperar usuario global
-            val user = recoverUserSession()
-            Log.d("LoginViewModel", "User: $user")
         }
     }
 }

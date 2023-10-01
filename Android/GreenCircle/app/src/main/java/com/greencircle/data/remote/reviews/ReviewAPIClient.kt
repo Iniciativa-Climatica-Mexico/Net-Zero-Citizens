@@ -1,6 +1,6 @@
 package com.greencircle.data.remote.reviews
 
-import android.util.Log
+import com.greencircle.data.remote.NetworkModel
 import com.greencircle.domain.model.reviews.CompanyReviewObject
 import com.greencircle.domain.model.reviews.ReviewBase
 import com.greencircle.domain.model.reviews.UserReviewObject
@@ -10,20 +10,18 @@ import retrofit2.Response
 
 class ReviewAPIClient {
     private lateinit var api: ReviewAPIService
-    suspend fun getCompanyReviews(companyId: UUID): CompanyReviewObject? {
-        api = ReviewNetworkModuleDI()
+    suspend fun getCompanyReviews(authToken: String, companyId: UUID): CompanyReviewObject? {
+        api = NetworkModel(authToken, ReviewAPIService::class.java)
         return try {
-            val response = api.getCompanyReviews(companyId)
-            Log.d("response", response.toString())
-            return response
+            return api.getCompanyReviews(companyId)
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
             null
         }
     }
 
-    suspend fun getUserReviews(userId: UUID): UserReviewObject? {
-        api = ReviewNetworkModuleDI()
+    suspend fun getUserReviews(authToken: String, userId: UUID): UserReviewObject? {
+        api = NetworkModel(authToken, ReviewAPIService::class.java)
         return try {
             return api.getUserReviews(userId)
         } catch (e: java.lang.Exception) {
@@ -33,44 +31,43 @@ class ReviewAPIClient {
     }
 
     suspend fun addReview(
+        authToken: String,
         userId: UUID,
         companyId: UUID,
         review: ReviewBase
     ): Response<ResponseBody>? {
-        api = ReviewNetworkModuleDI()
+        api = NetworkModel(authToken, ReviewAPIService::class.java)
         return try {
             val response = api.addReview(userId, companyId, review)
-            Log.d("response2", response.toString())
             return response
         } catch (e: java.lang.Exception) {
-            Log.d("customErr", e.toString())
             e.printStackTrace()
             null
         }
     }
 
     suspend fun updateReview(
+        authToken: String,
         reviewId: UUID,
         review: ReviewBase
     ): Response<ResponseBody>? {
-        api = ReviewNetworkModuleDI()
+        api = NetworkModel(authToken, ReviewAPIService::class.java)
         return try {
             api.updateReview(reviewId, review)
         } catch (e: java.lang.Exception) {
-            Log.d("customErr", e.toString())
             e.printStackTrace()
             null
         }
     }
 
     suspend fun deleteReview(
+        authToken: String,
         reviewId: UUID
     ): Response<ResponseBody>? {
-        api = ReviewNetworkModuleDI()
+        api = NetworkModel(authToken, ReviewAPIService::class.java)
         return try {
             api.deleteReview(reviewId)
         } catch (e: java.lang.Exception) {
-            Log.d("customErr", e.toString())
             e.printStackTrace()
             null
         }
