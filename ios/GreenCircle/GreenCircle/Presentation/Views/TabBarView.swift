@@ -9,6 +9,9 @@ import SwiftUI
 
 struct TabBarView: View {
   @State private var dispScrollView = false
+  @StateObject var vm = SurveyViewModel()
+  
+  var goSurvey: () -> Void
 
   var body: some View {
     TabView (selection: $dispScrollView) {
@@ -39,6 +42,12 @@ struct TabBarView: View {
           Image(systemName: "person.fill")
           Text("Perfil")
         }
+    } .onAppear {
+      Task {
+        if await vm.getPendingSurvey() == () {
+          goSurvey()
+        }
+      }
     }
     .accentColor(Color("GreenCustom"))
   }
