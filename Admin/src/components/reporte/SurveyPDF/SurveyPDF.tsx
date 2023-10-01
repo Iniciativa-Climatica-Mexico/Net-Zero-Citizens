@@ -23,6 +23,18 @@ const SurveyPDFReport: React.FC<surveyPDFProps> = ({ survey, graphImages }) => {
     day: 'numeric',
   })
 
+  const renderHeader = () => (
+    <View style={styles.headerContainer} fixed>
+      <Image src="/logo.png" style={styles.logo} />
+      <View style={styles.textContainer}>
+        <Text style={styles.organizationName}>
+          Iniciativa Climática de México
+        </Text>
+        <Text style={styles.dateText}>{currentDate}</Text>
+      </View>
+    </View>
+  )
+
   const renderAnswers = (question: QuestionReport) => {
     if (!question.answers || question.answers.length === 0) {
       return <Text style={styles.text}>No hay respuestas disponibles</Text>
@@ -53,46 +65,35 @@ const SurveyPDFReport: React.FC<surveyPDFProps> = ({ survey, graphImages }) => {
 
   return (
     <Document>
-      <Page style={styles.body}>
-        <View style={styles.headerContainer} fixed>
-          <Image src="/logo.png" style={styles.logo} />
+      {survey.questions.map((question, index) => (
+        <Page key={index} style={styles.body}>
+          {renderHeader()}
 
-          <View style={styles.textContainer}>
-            <Text style={styles.organizationName}>
-              Iniciativa Climática de México
-            </Text>
-            <Text style={styles.dateText}>{currentDate}</Text>
-          </View>
-        </View>
+          <Text style={styles.title} fixed>
+            {survey?.title}
+          </Text>
 
-        <Text style={styles.title} fixed>
-          {survey?.title}
-        </Text>
+          <Text style={styles.subtitle} fixed>
+            {survey?.description}
+          </Text>
 
-        <Text style={styles.subtitle} fixed>
-          {survey?.description}
-        </Text>
+          <Text style={styles.questionTitle}>{question.questionText}</Text>
 
-        {survey.questions.flatMap((question, index) => (
-          <View key={index}>
-            <Text style={styles.questionTitle}>{question.questionText}</Text>
+          {question.questionType !== 'open' && graphImages[index] && (
+            <Image src={graphImages[index]} style={styles.graph} />
+          )}
 
-            {question.questionType !== 'open' && graphImages[index] && (
-              <Image src={graphImages[index]} style={styles.graph} />
-            )}
+          {renderAnswers(question)}
 
-            {renderAnswers(question)}
-          </View>
-        ))}
-
-        <Text
-          style={styles.pageNumber}
-          render={({ pageNumber, totalPages }) =>
-            `${pageNumber} / ${totalPages}`
-          }
-          fixed
-        />
-      </Page>
+          <Text
+            style={styles.pageNumber}
+            render={({ pageNumber, totalPages }) =>
+              `${pageNumber} / ${totalPages}`
+            }
+            fixed
+          />
+        </Page>
+      ))}
     </Document>
   )
 }

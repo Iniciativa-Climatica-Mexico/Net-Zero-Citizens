@@ -36,7 +36,7 @@ const generateGraphImages = async (
       const canvas = await htm2canvas(
         document.getElementById(`graph-${i}`) as HTMLElement,
         {
-          scale: 8,
+          scale: 6,
           backgroundColor: 'transparent',
         }
       )
@@ -213,8 +213,8 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
                         <div className="bg-zinc-900 text-white rounded-full text-xl font-semibold p-2 px-4 inline-block">
                           {question.answers.length > 0
                             ? question.answers
-                                .map((ans) => ans.count)
-                                .reduce((prev, curr) => prev + curr)
+                              .map((ans) => ans.count)
+                              .reduce((prev, curr) => prev + curr)
                             : 0}
                         </div>
                       </td>

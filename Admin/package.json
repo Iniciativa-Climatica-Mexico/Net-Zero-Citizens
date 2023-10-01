@@ -37,6 +37,7 @@
     "chart.js": "^4.4.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "dom-to-image": "^2.6.0",
     "html-to-image": "^1.11.11",
     "html2canvas": "^1.4.1",
     "lucide-react": "^0.276.0",
@@ -58,6 +59,7 @@
   },
   "devDependencies": {
     "@types/chai": "^4.3.5",
+    "@types/dom-to-image": "^2.6.5",
     "@types/mocha": "^10.0.1",
     "@types/react-csv": "^1.1.6",
     "@types/react-modal": "^3.16.0",
