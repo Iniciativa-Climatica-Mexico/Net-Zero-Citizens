@@ -310,6 +310,7 @@ struct CompanyReportView: View {
                 TextField("Comentario adicional al reporte...", text: $description)
                     .disableAutocorrection(true)
                     .padding(.top, 3)
+                    .padding(.bottom, 10)
                     .font(.system(size: 16))
                     .textFieldStyle(RoundedBorderTextFieldStyle())
 
@@ -336,12 +337,11 @@ struct CompanyReportView: View {
                     }
                     Spacer()
                 }
-
             }
-            .frame(height: 300)
+            .frame(height: 350)
             .padding(.top, 30)
         }
-        .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
+        .padding(EdgeInsets(top: 250, leading: 20, bottom: 0, trailing: 20))
         .foregroundColor(Color("BlackCustom"))
         .alert(isPresented: $showAlert) {
             Alert(title: Text("Confirmación"), message: Text("El reporte ha sido enviado con éxito."), dismissButton: .default(Text("Ok")))

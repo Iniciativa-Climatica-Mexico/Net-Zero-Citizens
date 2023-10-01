@@ -76,7 +76,7 @@ struct ProfileView: View {
             }
             .padding(.trailing, 10)
             
-            NavigationLink(destination:  EditProfileView(modelUser: UserViewModel())) {
+            NavigationLink(destination:  EditProfileView2(modelUser: UserViewModel())) {
               Text("Editar perfil")
                 .foregroundColor(.white)
                 .padding(.vertical, 12)
@@ -93,7 +93,7 @@ struct ProfileView: View {
           
           Spacer()
           
-          //--------------------Seccón de Reseñas-----------------------------------------
+          //--------------------Sección de Reseñas-----------------------------------------
           Text("Reseñas Escritas (0)")
             .font(.system(size: 20))
             .fontWeight(.bold)

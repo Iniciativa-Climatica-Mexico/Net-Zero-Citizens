@@ -121,6 +121,41 @@ struct PickerFormView: View {
   }
 }
 
+struct PickerFormView2: View {
+  @Binding var selectedOption: String
+  var label: String
+  var options: [String]
+  
+  var body: some View {
+    VStack(alignment: .leading) {
+      HStack {
+        Menu {
+          Picker(selection: $selectedOption) {
+            ForEach(options, id: \.self) { option in
+              Text(option).tag(option)
+            }
+          } label: {}
+        } label: {
+          if selectedOption.isEmpty {
+            Text("Selecciona una opción...")
+              .opacity(0.3)
+          } else {
+            Text(selectedOption)
+          }
+          Spacer()
+          Image(systemName: "chevron.down")
+        }
+        .padding(10)
+        Spacer()
+      }.overlay {
+        RoundedRectangle(cornerRadius: 4)
+          .stroke(Color("GrayColor"), lineWidth: 0.5)
+          .frame(height: 34)
+      }
+    }
+    .font(.system(size: 13))
+  }
+}
 
 struct CompanyRegisterHeaderView: View {
   

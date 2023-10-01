@@ -2,7 +2,7 @@
 //  EditProfileView.swift
 //  GreenCircle
 //
-//  Created by ITESM on 14/09/23.
+//  Created by Frida Bailleres on 14/09/23.
 //
 
 import SwiftUI
@@ -68,12 +68,11 @@ struct ProfileSection: View{
 // FORM SECTION 1 ------------------------------------
 struct FormSection1: View {
   @ObservedObject var modelUser = UserViewModel()
-  @State private var newPassword: String = ""
-  @State private var confirmPassword: String = ""
-  @State private var passwordErrorMessage: String? = nil
+//  @State private var newPassword: String = ""
+//  @State private var confirmPassword: String = ""
+//  @State private var passwordErrorMessage: String? = nil
   
   var body: some View{
-  //  ScrollView {
       VStack(alignment: .leading) {
         
         //------------------------Field Nombre----------------------------------------------------------
@@ -100,76 +99,92 @@ struct FormSection1: View {
           .font(.system(size: 13))
           .textFieldStyle(RoundedBorderTextFieldStyle())
         
-        
         //------------------------Picker Edad----------------------------------------------------------
-        HStack {
-          VStack(alignment: .leading) {
-            Text("Edad")
-              .padding(.top, 16)
-              .foregroundColor(Color("GreenColor"))
-              .font(.system(size: 13))
-              .fontWeight(.semibold)
-            
-            ZStack {
-              RoundedRectangle(cornerRadius: 5)
-                .stroke(Color.gray, lineWidth: 0.1)
-                .frame(height: 30)
-              
-              Picker("Edad", selection: $modelUser.contentUser.age) {
-                ForEach(1..<100) { i in
-                  Text("\(i)").tag(i)
+//          VStack(alignment: .leading) {
+//            Text("Edad")
+//              .padding(.top, 16)
+//              .foregroundColor(Color("GreenColor"))
+//              .font(.system(size: 13))
+//              .fontWeight(.semibold)
+//
+//            ZStack {
+//              RoundedRectangle(cornerRadius: 5)
+//                .stroke(Color.gray, lineWidth: 0.1)
+//                .frame(height: 30)
+//
+//              Picker("Edad", selection: $modelUser.contentUser.age) {
+//                ForEach(1..<100) { i in
+//                  Text("\(i)").tag(i)
+//                }
+//              }
+//              .pickerStyle(MenuPickerStyle())
+//              .padding(.top, 3)
+//              .padding(.leading, -15)
+//              .font(.system(size: 11))
+//              .frame(maxWidth: .infinity, alignment: .leading)
+//              .padding(.horizontal, 10)
+//            }
+//          }
+        
+        Text("Edad")
+            .padding(.top, 16)
+            .foregroundColor(Color("GreenColor"))
+            .font(.system(size: 13))
+            .fontWeight(.semibold)
+
+        TextField("Edad", text: Binding(
+            get: {
+                String(modelUser.contentUser.age ?? 0)
+            },
+            set: {
+                if let age = Int($0) {
+                    modelUser.contentUser.age = age
+                } else {
+                    modelUser.contentUser.age = nil
                 }
-              }
-              .pickerStyle(MenuPickerStyle())
-              .padding(.top, 3)
-              .padding(.leading, -15)
-              .font(.system(size: 11))
-              .frame(maxWidth: .infinity, alignment: .leading)
-              .padding(.horizontal, 10)
             }
-          }
-          .padding(.trailing, 16) // Añade un padding para separar los dos VStack
+        ))
+        .keyboardType(.numberPad)
+        .padding(.top, 3)
+        .font(.system(size: 13))
+        .textFieldStyle(RoundedBorderTextFieldStyle())
+        .padding(.trailing, 16)
           
           //------------------------Picker Género----------------------------------------------------------
-          VStack(alignment: .leading) {
-            Text("Género")
-              .padding(.top, 16)
-              .foregroundColor(Color("GreenColor"))
-              .font(.system(size: 13))
-              .fontWeight(.semibold)
-            ZStack {
-              RoundedRectangle(cornerRadius: 5)
-                .stroke(Color.gray, lineWidth: 0.1)
-                .frame(height: 30)
-              Picker("Género", selection: $modelUser.contentUser.gender) {
-                Text("Femenino").tag("femenine")
-                Text("Masculino").tag("masculine")
-                Text("Otro").tag("other")
-                Text("---").tag("no_answer")
-              }
-              .pickerStyle(MenuPickerStyle())
-              .padding(.top, 3)
-              .padding(.leading, -15)
-              .font(.system(size: 11))
-              .frame(maxWidth: .infinity, alignment: .leading)
-              .padding(.horizontal, 10)
-            }
-          }
-        }
-        
+//          VStack(alignment: .leading) {
+//            Text("Género")
+//              .padding(.top, 16)
+//              .foregroundColor(Color("GreenColor"))
+//              .font(.system(size: 13))
+//              .fontWeight(.semibold)
+//            ZStack {
+//              RoundedRectangle(cornerRadius: 5)
+//                .stroke(Color.gray, lineWidth: 0.1)
+//                .frame(height: 30)
+//              Picker("Género", selection: $modelUser.contentUser.gender) {
+//                Text("Femenino").tag("femenine")
+//                Text("Masculino").tag("masculine")
+//                Text("Otro").tag("other")
+//                Text("---").tag("no_answer")
+//              }
+//              .pickerStyle(MenuPickerStyle())
+//              .padding(.top, 3)
+//              .padding(.leading, -15)
+//              .font(.system(size: 11))
+//              .frame(maxWidth: .infinity, alignment: .leading)
+//              .padding(.horizontal, 10)
+//            }
+//          }
       }
-  //  }
   }
-  
-
 }
 
 // FORM SECTION 1 ------------------------------------
 struct FormSection2: View{
   @ObservedObject var modelUser = UserViewModel()
-  @State private var newPassword: String = ""
-  @State private var confirmPassword: String = ""
-  @State private var passwordErrorMessage: String? = nil
+//  @State private var newPassword: String = ""
+//  @State private var confirmPassword: String = ""
+//  @State private var passwordErrorMessage: String? = nil
   @State private var showAlert = false
   @Environment(\.presentationMode) var presentationMode
   @State private var estados = [
@@ -222,34 +237,34 @@ struct FormSection2: View{
                                .textFieldStyle(RoundedBorderTextFieldStyle())
 
     //------------------------Field Nueva contraseña----------------------------------------------------------
-                             Text("Contraseña")
-                               .padding(.top, 16)
-                               .foregroundColor(Color("GreenColor"))
-                               .font(.system(size: 13))
-                               .fontWeight(.semibold)
-                             SecureField("Escribe una nueva contraseña", text: $newPassword)
-                               .disableAutocorrection(true)
-                               .padding(.top, 3)
-                               .font(.system(size: 13))
-                               .textFieldStyle(RoundedBorderTextFieldStyle())
-
-    //------------------------Field Confirmar contraseña----------------------------------------------------------
-                             Text("Confirmar Contraseña")
-                               .padding(.top, 16)
-                               .foregroundColor(Color("GreenColor"))
-                               .font(.system(size: 13))
-                               .fontWeight(.semibold)
-                             SecureField("Confirmar Contraseña", text: $confirmPassword)
-                               .disableAutocorrection(true)
-                               .padding(.top, 3)
-                               .font(.system(size: 13))
-                               .textFieldStyle(RoundedBorderTextFieldStyle())
-
-                           if let errorMessage = passwordErrorMessage { //Mensaje de error si no coinciden
-                             Text(errorMessage)
-                               .foregroundColor(.red)
-                               .font(.system(size: 12))
-                           }
+//                             Text("Contraseña")
+//                               .padding(.top, 16)
+//                               .foregroundColor(Color("GreenColor"))
+//                               .font(.system(size: 13))
+//                               .fontWeight(.semibold)
+//                             SecureField("Escribe una nueva contraseña", text: $newPassword)
+//                               .disableAutocorrection(true)
+//                               .padding(.top, 3)
+//                               .font(.system(size: 13))
+//                               .textFieldStyle(RoundedBorderTextFieldStyle())
+//
+//    //------------------------Field Confirmar contraseña----------------------------------------------------------
+//                             Text("Confirmar Contraseña")
+//                               .padding(.top, 16)
+//                               .foregroundColor(Color("GreenColor"))
+//                               .font(.system(size: 13))
+//                               .fontWeight(.semibold)
+//                             SecureField("Confirmar Contraseña", text: $confirmPassword)
+//                               .disableAutocorrection(true)
+//                               .padding(.top, 3)
+//                               .font(.system(size: 13))
+//                               .textFieldStyle(RoundedBorderTextFieldStyle())
+//
+//                           if let errorMessage = passwordErrorMessage { //Mensaje de error si no coinciden
+//                             Text(errorMessage)
+//                               .foregroundColor(.red)
+//                               .font(.system(size: 12))
+//                           }
 
     //------------------------Field Celular----------------------------------------------------------
                              Text("Celular")
@@ -278,117 +293,118 @@ struct FormSection2: View{
                                  RoundedRectangle(cornerRadius: 5)
                                    .stroke(Color.gray, lineWidth: 0.1)
 
-
-                                 Picker("Estado", selection: $modelUser.contentUser.state) {
-                                   ForEach(estados, id: \.self) { estado in
-                                     Text(estado).tag(estado)
-                                   }
+                                 if modelUser.contentUser.state == nil {
+                                     Text("Seleccione un estado").foregroundColor(.gray)
+                                 } else {
+                                     Picker("Estado", selection: $modelUser.contentUser.state) {
+                                         ForEach(estados, id: \.self) { estado in
+                                             Text(estado).tag(estado)
+                                         }
+                                     }
+                                     .pickerStyle(MenuPickerStyle())
+                                     .padding(.top, 3)
+                                     .font(.system(size: 11))
+                                     .padding(.leading, -15)
+                                     .frame(maxWidth: .infinity, alignment: .leading)
+                                     .padding(.horizontal, 10)
                                  }
-                                 .pickerStyle(MenuPickerStyle())
-                                 .padding(.top, 3)
-                                 .font(.system(size: 11))
-                                 .padding(.leading, -15)
-                                 .frame(maxWidth: .infinity, alignment: .leading)
-                                 .padding(.horizontal, 10)
+ 
                                }
                              }
     
-    
                              .padding()
       //------------------------Sección de botones----------------------------------------------------------
-                              HStack {
-                                //Botón cancelar
-                                Button(action: {
-                                  showAlert = true
-                                }) {
-                                  Text("Cancelar")
-                                    .foregroundColor(TitleBarColor.TitleBarColor)
-                                    .padding(.vertical, 12)
-                                    .padding(.horizontal)
-                                    .frame(maxWidth: .infinity)
-                                    .background(Color.white)
-                                    .cornerRadius(8)
-                                    .overlay(
-                                      RoundedRectangle(cornerRadius: 8)
-                                        .stroke(TitleBarColor.TitleBarColor, lineWidth: 1)
-                                    )
-                                }
-                                .frame(maxWidth: 100) // Hace que el botón Cancelar ocupe todo el ancho disponible
-                                .padding(.trailing, 10) // Añade un espacio después del botón Cancelar
-                    
-                                .alert(isPresented: $showAlert) {
-                                  Alert(
-                                    title: Text("Salir sin guardar"),
-                                    message: Text("Si sales, los datos actualizados no se guardarán. ¿Estás seguro de que quieres salir?"),
-                                    primaryButton: .default(Text("Seguir editando"), action: {
-                                      //Pendiente porque de igual manera se sale
-                                    }),
-                                    secondaryButton: .destructive(Text("Salir"), action: {
-                                      presentationMode.wrappedValue.dismiss()
-                                    })
-                                  )
-                                }
-                    
-                                //Botón guardar
-                                Button(action: {
-                    
-                                  //Verificar si passwords coinciden para ver si se puede guardar o manda error
-                                  if newPassword == confirmPassword {
-                                    modelUser.contentUser.password = newPassword
-                                    passwordErrorMessage = nil
-                                  } else {
-                                    passwordErrorMessage = "Las contraseñas no coinciden"
-                                  }
-                                  //Al guardar actualiza los datos
-                                  Task {
-                                    let updatedUser = User(
-                                      userId: modelUser.contentUser.userId,
-                                      roleId: modelUser.contentUser.roleId,
-                                      companyId: modelUser.contentUser.companyId,
-                                      googleId: modelUser.contentUser.googleId,
-                                      facebookId: modelUser.contentUser.facebookId,
-                                      appleId: modelUser.contentUser.appleId,
-                                      firstName: modelUser.contentUser.firstName,
-                                      lastName: modelUser.contentUser.lastName,
-                                      secondLastName: modelUser.contentUser.secondLastName,
-                                      email: modelUser.contentUser.email,
-                                      password: modelUser.contentUser.password,
-                                      phoneNumber: modelUser.contentUser.phoneNumber,
-                                      age: modelUser.contentUser.age,
-                                      state: modelUser.contentUser.state,
-                                      gender: modelUser.contentUser.gender,
-                                      profilePicture: modelUser.contentUser.profilePicture,
-                                      createdAt: modelUser.contentUser.createdAt,
-                                      updatedAt: Date()
-                    
-                    
-                                    )
-                                    //Updatear Usuarios
-                                    await modelUser.updateUserData(updatedUserData: updatedUser, userId: "8de45630-2e76-4d97-98c2-9ec0d1f3a5b8")
-                                    //Regresar a vista anterior
-                                    self.presentationMode.wrappedValue.dismiss()
-                                  }
-                                }) {
-                                  Text("Guardar")
-                                    .foregroundColor(.white)
-                                    .padding(.vertical, 12)
-                                    .padding(.horizontal)
-                                    .frame(maxWidth: .infinity)
-                                    .background(TitleBarColor.TitleBarColor)
-                                    .cornerRadius(8)
-                                }
-                    
-                                .padding(.leading, 8) // padding para crear espacio entre los botones
-                              }
-                              .padding(.horizontal, 20) // padding horizontal para que los botones no lleguen hasta el borde de la vista
-                    
-                              //Spacer()
-                    
-                            }
-                            //.padding(.top, 10)  //cambiar el espacio entre "Cerrar sesión" y tu formulario
-                    
-                            //Spacer()
+    
+    //Spacer()
+
+  }
+  //.padding(.top, 10)  //cambiar el espacio entre "Cerrar sesión" y tu formulario
+
+  //Spacer()
+}
+
+    struct ButtonSection: View {
+      @ObservedObject var modelUser = UserViewModel()
+//      @State private var newPassword: String = ""
+//      @State private var confirmPassword: String = ""
+//      @State private var passwordErrorMessage: String? = nil
+      @State private var showAlert = false
+      @Environment(\.presentationMode) var presentationMode
+      
+      var body: some View{
+        HStack {
+          //Botón cancelar
+          Button(action: {
+            showAlert = true
+          }) {
+            Text("Cancelar")
+              .foregroundColor(TitleBarColor.TitleBarColor)
+              .padding(.vertical, 12)
+              .padding(.horizontal)
+              .frame(maxWidth: .infinity)
+              .background(Color.white)
+              .cornerRadius(8)
+              .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                  .stroke(TitleBarColor.TitleBarColor, lineWidth: 1)
+              )
+          }
+          .frame(maxWidth: 100) // Hace que el botón Cancelar ocupe todo el ancho disponible
+          .padding(.trailing, 10) // Añade un espacio después del botón Cancelar
+
+          .alert(isPresented: $showAlert) {
+            Alert(
+              title: Text("Salir sin guardar"),
+              message: Text("Si sales, los datos actualizados no se guardarán. ¿Estás seguro de que quieres salir?"),
+              primaryButton: .default(Text("Seguir editando"), action: {
+                //Pendiente porque de igual manera se sale
+              }),
+              secondaryButton: .destructive(Text("Salir"), action: {
+                presentationMode.wrappedValue.dismiss()
+              })
+            )
+          }
+
+          //Botón guardar
+          Button(action: {
+//            Task {
+//              let updatedUser = UserAuth(
+//                first_name: modelUser.contentUser.first_name,
+//                last_name: modelUser.contentUser.last_name,
+//                uuid: modelUser.contentUser.uuid,
+//                email: modelUser.contentUser.email,
+//                login_type: modelUser.contentUser.login_type,
+//                picture: modelUser.contentUser.picture,
+//                //password: modelUser.contentUser.password,
+//                roles: modelUser.contentUser.roles,
+//                phone: modelUser.contentUser.phone,
+//                gender: modelUser.contentUser.gender,
+//                state: modelUser.contentUser.state,
+//                age: modelUser.contentUser.age,
+//              )
+//              //Updatear Usuarios
+////              await modelUser.updateUserData(updatedUserData: updatedUser, userId: "8de45630-2e76-4d97-98c2-9ec0d1f3a5b8")
+//              //Regresar a vista anterior
+//              self.presentationMode.wrappedValue.dismiss()
+//            }
+          }) {
+            Text("Guardar")
+              .foregroundColor(.white)
+              .padding(.vertical, 12)
+              .padding(.horizontal)
+              .frame(maxWidth: .infinity)
+              .background(TitleBarColor.TitleBarColor)
+              .cornerRadius(8)
+          }
+
+          .padding(.leading, 8) // padding para crear espacio entre los botones
+        }
+        .padding(.horizontal, 20) // padding horizontal para que los botones no lleguen hasta el borde de la vista
+        
+      }
     }
+
+                    
 
 
 // PRINCIPAL ------------------------------------
@@ -453,6 +469,7 @@ struct EditProfileView: View {
                 ScrollView {
                   FormSection1(modelUser: modelUser)
                   FormSection2(modelUser: modelUser)
+                  ButtonSection(modelUser: modelUser)
                 }
                 .padding(.top, 10)
                 Spacer()
