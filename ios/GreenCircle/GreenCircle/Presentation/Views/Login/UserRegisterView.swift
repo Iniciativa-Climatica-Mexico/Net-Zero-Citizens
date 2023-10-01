@@ -13,7 +13,7 @@ struct UserRegisterView: View {
   @ObservedObject var viewModel = UserRegisterViewModel()
   var goLogin: () -> Void
   var goForm: () -> Void
-  var goMainMenu: () -> Void
+  var goTutorial: () -> Void
   
   var body: some View {
     ZStack{
@@ -36,7 +36,7 @@ struct UserRegisterView: View {
               case .newUser:
                 goForm()
               case .success:
-                goMainMenu()
+                goTutorial()
               case .fail:
                 break
               }
@@ -73,6 +73,6 @@ struct UserRegisterView: View {
 
 struct RegisterView_Previews: PreviewProvider {
   static var previews: some View {
-    UserRegisterView(goLogin: {}, goForm: {}, goMainMenu: {})
+    UserRegisterView(goLogin: {}, goForm: {}, goTutorial: {})
   }
 }

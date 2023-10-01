@@ -26,6 +26,7 @@ struct CoordinatorView: View {
     case mainMenuView
     case pendingCompany
     case survey
+    case tutorial
   }
   
   @State var routes: Routes<Screens> = [.root(.splashScreen)]
@@ -45,15 +46,15 @@ struct CoordinatorView: View {
       case .userRegister:
         UserRegisterView(goLogin: goBack,
                          goForm: goUserForm,
-                         goMainMenu: goMainMenu)
+                         goTutorial: goTutorial)
         
       case .userRegisterForm:
-        UserRegisterFormView(goMainMenu: goMainMenu)
+        UserRegisterFormView(goTutorial: goTutorial)
         
       case .companyRegister:
         CompanyRegisterView(goLogin: goBack,
                             goForm: goCompanyForm,
-                            goMainMenu: goMainMenu)
+                            goTutorial: goTutorial)
         
       case .companyRegisterForm:
           CompanyRegisterFormView(goCompanyRegisterDivider: goCompanyRegisterDivider, goPending: goPending)
@@ -76,6 +77,10 @@ struct CoordinatorView: View {
         
       case .survey:
         SurveyView(goBack: goBack)
+          .applyNavBarTheme()
+        
+      case .tutorial:
+        AppTutorial(goMainMenu: goMainMenu)
           .applyNavBarTheme()
       }
     }
@@ -133,6 +138,10 @@ struct CoordinatorView: View {
   
   private func goPending() {
     routes.presentCover(.pendingCompany)
+  }
+  
+  private func goTutorial() {
+    routes.presentCover(.tutorial)
   }
   
   private func goBack() {

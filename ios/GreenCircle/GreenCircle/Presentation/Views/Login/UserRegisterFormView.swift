@@ -12,7 +12,7 @@ struct UserRegisterFormView: View {
   UserRegisterFormViewModel()
   @State private var showingPrivacy = false
   
-  var goMainMenu: () -> Void
+  var goTutorial: () -> Void
   
   var body: some View {
     VStack(spacing: 10) {
@@ -79,7 +79,7 @@ struct UserRegisterFormView: View {
           let success = await viewModel
             .handleSubmit()
           if(success) {
-            goMainMenu()
+            goTutorial()
           }
         }
       }).alert("Oops! Algo salió mal",
@@ -101,7 +101,7 @@ struct UserRegisterFormView: View {
 struct UserRegisterFormView_Previews: PreviewProvider {
   
   static var previews: some View {
-    UserRegisterFormView(goMainMenu: {})
+    UserRegisterFormView(goTutorial: {})
       .environmentObject(UserData(
         UserAuth(first_name: "Ricardo",
                  last_name: "Fernandez",
