@@ -15,6 +15,7 @@ struct CompanyFileInput: View {
     var title: String
     var description: String
     var fileDescription: String
+    var bulletPoint : String?
     
     @ObservedObject var viewModel: CompanyViewModel
     
@@ -26,29 +27,38 @@ struct CompanyFileInput: View {
             Divider()
             Button(action: {isPickerPresented = true}) {
                 HStack{
-                    VStack(alignment: .leading, spacing: 5) {
-                        Text(title)
-                            .foregroundColor(Color("GreenColor"))
-                            .bold()
-                            .font(.system(size: 14))
-                            .padding(.leading, 30)
-                            .truncationMode(.tail)
-                        
-                        Text(description)
-                            .foregroundColor(Color("GrayColor"))
-                            .font(.system(size: 10))
-                            .padding(.leading, 30)
-                            .truncationMode(.tail)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    Image(systemName: "chevron.right")
-                        .foregroundColor(Color("GreenColor"))
-                        .padding(.trailing, 30)
-                }
-                .padding()
-            }
-            Divider()
+                     VStack(alignment: .leading, spacing: 5) {
+                         Text(title)
+                             .foregroundColor(Color("GreenColor"))
+                             .bold()
+                             .font(.system(size: 14))
+                             .padding(.leading, 30)
+                             .multilineTextAlignment(.leading)
+
+                         
+                         Text(description)
+                             .foregroundColor(Color("GrayColor"))
+                             .font(.system(size: 10))
+                             .padding(.leading, 30)
+                             .multilineTextAlignment(.leading)
+
+                         
+                         Text(bulletPoint ?? "")
+                             .foregroundColor(Color("GrayColor"))
+                             .font(.system(size: 10))
+                             .padding(.leading, 30)
+                             .multilineTextAlignment(.leading)
+
+                     }
+                     .frame(maxWidth: .infinity, alignment: .leading)
+                     
+                     Image(systemName: "chevron.right")
+                         .foregroundColor(Color("GreenColor"))
+                         .padding(.trailing, 30)
+                 }
+                 .padding()
+             }
+             Divider()
         }
         .sheet(isPresented: $isPickerPresented, onDismiss:{
             if let selectedFileURL = selectedFile {

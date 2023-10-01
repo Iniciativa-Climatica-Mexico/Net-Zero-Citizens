@@ -34,7 +34,7 @@ struct TabBarView: View {
           Text("Mapa")
         }
       
-      ProfileView(modelUser: UserViewModel(), companyModel: CompanyViewModel()) // quitar company Model
+      ProfileView(modelUser: UserViewModel()) // quitar company Model
         .tabItem {
           Image(systemName: "person.fill")
           Text("Perfil")

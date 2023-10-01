@@ -12,7 +12,6 @@ import SwiftUI
 
 struct ProfileView: View {
     @ObservedObject var modelUser: UserViewModel
-    @ObservedObject var companyModel: CompanyViewModel // borrar PORFAVORRR
     
     var body: some View {
         
@@ -107,8 +106,6 @@ struct ProfileView: View {
                         .foregroundColor(.black)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     ScrollView{
-                        CompanyFileInput(title: "Curriculum", description: "Example Description", fileDescription: "Curriculum", viewModel: CompanyViewModel())
-                        CompanyFileInput(title: "INE", description: "Example Description", fileDescription: "INE representante legal", viewModel: CompanyViewModel())
                     }
                 }
                 .padding(.top, 70)
@@ -130,11 +127,11 @@ struct ProfileView: View {
     }
 }
 
-//struct ProfileView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ProfileView(modelUser: UserViewModel())
-//
-//    }
-//}
+struct ProfileView_Previews: PreviewProvider {
+    static var previews: some View {
+        ProfileView(modelUser: UserViewModel())
+
+    }
+}
 
 
