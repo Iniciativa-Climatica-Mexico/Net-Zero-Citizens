@@ -338,7 +338,7 @@ struct CompanyReportView: View {
             }
             .frame(height: 300)
         }
-        .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
+        .padding(EdgeInsets(top: 230, leading: 20, bottom: 0, trailing: 20))
         .foregroundColor(Color("BlackCustom"))
         .alert(isPresented: $showAlert) {
             Alert(title: Text("Confirmación"), message: Text("El reporte ha sido enviado con éxito."), dismissButton: .default(Text("Ok")))
