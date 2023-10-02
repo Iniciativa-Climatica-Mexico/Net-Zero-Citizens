@@ -1,5 +1,5 @@
 import CompanyProducts from '../models/companyProducts.model'
-import CompanyImages from '../models/companyImages.model'
+import CompanyFiles from '../models/companyFiles.model'
 import Product from '../models/products.model'
 import Review from '../models/review.model'
 import { col, fn } from 'sequelize'
@@ -29,12 +29,6 @@ export type CompanyType = {
   zipCode: string
   userId: string | null
   profilePicture?: string | null
-  pdfCurriculumUrl: string
-  pdfDicCdmxUrl?: string | null
-  pdfPeeFideUrl?: string | null
-  pdfGuaranteeSecurityUrl: string
-  pdfActaConstitutivaUrl: string
-  pdfIneUrl: string
   status?: string
 }
 
@@ -67,13 +61,10 @@ export const getAllCompanies = async <T>(
     limit: params.pageSize,
     offset: params.start,
     include: [
-      // Include the relationships you want to fetch
-      //{
-      // model: Review, // Replace with the actual name of your second relationship model
-      //as: '', // Specify the alias if you have one
-      // You can also add attributes and additional options for this relationship here
-      // },
-      // Add more relationships if needed
+      {
+        model: CompanyFiles,
+        as: 'companyFiles',
+      },
     ],
   })
 }
@@ -151,7 +142,7 @@ export const getCompaniesWithCoordinates = async (
         city,
         state,
         zipCode,
-      } = company
+      } = company.dataValues
 
       const address = `${street} ${streetNumber}, ${city}, ${state}, ${zipCode}`
 
@@ -250,24 +241,24 @@ export const getCompanyById = async (id: string): Promise<Company | null> => {
   const company = await Company.findByPk(id)
   const companyScore = await getCompanyScore(id)
   const companyProducts = await getCompanyProducts(id)
-  const companyImages = await getCompanyImages(id)
+  const companyFiles = await getCompanyFiles(id)
   const rating = Math.round(companyScore?.[0].getDataValue('score') * 10) / 10
   const comment = companyScore?.[0].getDataValue('review')
   const products: Product[] = []
-  const images: CompanyImages[] = []
+  const files: CompanyFiles[] = []
 
   companyProducts?.forEach(function (product) {
     products.push(product.getDataValue('product').dataValues)
   })
 
-  companyImages?.forEach(function (image) {
-    images.push(image.dataValues)
+  companyFiles?.forEach(function (file) {
+    files.push(file.dataValues)
   })
 
   company?.setDataValue('products', products)
   company?.setDataValue('score', rating)
   company?.setDataValue('oneComment', comment)
-  company?.setDataValue('images', images)
+  company?.setDataValue('images', files)
 
   return company
 }
@@ -313,14 +304,13 @@ export const unbindUserFromCompany = async (
   return company
 }
 
-const getCompanyImages = async (
-  id: string
-): Promise<CompanyImages[] | null> => {
-  return await CompanyImages.findAll({
+const getCompanyFiles = async (id: string): Promise<CompanyFiles[] | null> => {
+  return await CompanyFiles.findAll({
     where: {
       companyId: id,
     },
     attributes: {
+      include: ['companyFileId', 'fileUrl'],
       exclude: ['createdAt', 'updatedAt'],
     },
   })
@@ -391,8 +381,6 @@ export const assignCompanyUser = async (
 
     company.userId = userId
     user.companyId = companyId
-    user.roleId = 'COMAPNY_ROLE_ID'
-
     await company.save()
     try {
       await user.save()

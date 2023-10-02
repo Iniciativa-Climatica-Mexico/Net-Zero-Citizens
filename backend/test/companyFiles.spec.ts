@@ -2,27 +2,28 @@ import chai from 'chai'
 import chaiExclude from 'chai-exclude'
 import { db, initDB } from '../src/configs/database.config'
 import { unwrap } from './utils'
-import * as CompanyImageService from '../src/services/companyImage.service'
+import * as CompanyFileService from '../src/services/companyFiles.service'
+
 chai.use(chaiExclude)
 
 const { expect } = chai
 
-const data: CompanyImageService.CompanyImageType = {
+const data: CompanyFileService.CompanyImageType = {
   companyId: 'c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
-  imageUrl: 'https://image.url/454656',
-  altText: 'Image Alt Text',
+  fileUrl: 'https://image.url/454656',
+  fileDescription: 'Imagen',
 }
 
-const attributesToExclude = ['companyImageId', 'createdAt', 'updatedAt']
+const attributesToExclude = ['companyFileId', 'createdAt', 'updatedAt']
 
 beforeEach(async () => {
   await db.drop()
   await initDB()
 })
 
-describe('Company Image Service', () => {
+describe('Company File Service', () => {
   it('should create a new company image', async () => {
-    const companyImage = await CompanyImageService.uploadCompanyImage(data)
+    const companyImage = await CompanyFileService.uploadCompanyImage(data)
     expect(unwrap(companyImage))
       .excluding(attributesToExclude)
       .to.deep.equal(data)
