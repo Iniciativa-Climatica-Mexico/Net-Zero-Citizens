@@ -22,19 +22,27 @@ struct AppTutorial: View {
               let tutorial = tutoImgs[index]
               VStack {
                 Text(tutorial).font(.headline)
-                Image(tutorial)
-                  .resizable()
-                  .scaledToFit()
-                  .frame(height: 450)
-                  .clipShape(RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/))
-                  .padding(.horizontal, 20)
-                //.containerRelativeFrame(.horizontal)
-                /*
-                 .scrollTransition(.animated, axis: .horizontal) { content, phase in
-                 content
-                 .opacity(phase.isIdentity ? 1.0 : 0.8)
-                 .scaleEffect(phase.isIdentity ? 1.0 : 0.8)
-                 } */
+                if #available(iOS 17.0, *) {
+                  Image(tutorial)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 450)
+                    .clipShape(RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/))
+                    //.padding(.horizontal, 20)
+                    .containerRelativeFrame(.horizontal)
+                    .scrollTransition(.animated, axis: .horizontal) { content, phase in
+                      content
+                        .opacity(phase.isIdentity ? 1.0 : 0.8)
+                        .scaleEffect(phase.isIdentity ? 1.0 : 0.8)
+                    }
+                } else {
+                  Image(tutorial)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 450)
+                    .clipShape(RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/))
+                    .padding(.horizontal, 20)
+                }
               }
             }
           } //.scrollTargetLayout()
@@ -45,18 +53,19 @@ struct AppTutorial: View {
         HStack {
           Spacer()
           Button("Salir", action: goMainMenu)
-          .foregroundColor(.white)
-          .frame(width: 178, height: 40)
-          .background(Color(red: 0.33, green: 0.49, blue: 0.55))
-          .cornerRadius(9)
+            .foregroundColor(.white)
+            .frame(width: 178, height: 40)
+            .background(Color(red: 0.33, green: 0.49, blue: 0.55))
+            .cornerRadius(9)
+            .padding(.bottom, 40)
           Spacer()
         }
         
-      } .padding()
+      }
     }
   }
 }
 
 #Preview {
-  AppTutorial(goMainMenu: {})
+    AppTutorial(goMainMenu: {})
 }
