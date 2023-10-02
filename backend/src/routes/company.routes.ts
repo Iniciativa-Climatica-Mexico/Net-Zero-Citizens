@@ -15,14 +15,11 @@ router.get('/approved', CompanyController.getApprovedCompanies)
 router.get('/pending', CompanyController.getPendingCompanies)
 
 router.get('/geocoding', CompanyController.getCoordinatesIos)
-
 router.get('/geocoding/android', CompanyController.getCoordinatesAndroid)
-
-
 
 router.post('/pending/:companyId', CompanyController.updateCompanyInfo)
 
-router.put('/:companyId/assign', CompanyController.assignCompanyUser) 
+router.put('/:companyId/assign', CompanyController.assignCompanyUser)
 router.get('/:id', CompanyController.getCompanyById)
 
 export default router

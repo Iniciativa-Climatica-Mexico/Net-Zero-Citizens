@@ -55,6 +55,7 @@
     "google-auth-library": "^9.0.0",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^3.1.2",
+    "mariadb": "^3.2.1",
     "morgan": "^1.10.0",
     "nock": "^13.3.3",
     "node-geocoder": "^4.2.0",

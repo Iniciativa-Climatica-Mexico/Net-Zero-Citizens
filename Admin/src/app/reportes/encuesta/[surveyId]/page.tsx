@@ -24,7 +24,12 @@ export default function SurveyReportComponent(props: SurveyReportProps) {
     if (surveyReport === null) {
       return <div>Loading...</div>
     }
-    return <QuestionChartContainer {...surveyReport} />
+
+    return (
+      <div>
+        <QuestionChartContainer {...surveyReport} />
+      </div>
+    )
   } catch (e: unknown) {
     if (e instanceof Error) {
       return <div>{e.message}</div>
