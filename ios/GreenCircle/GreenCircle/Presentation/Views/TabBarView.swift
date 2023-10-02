@@ -31,7 +31,7 @@ struct TabBarView: View {
         }
         .tag(true)
       
-      EmptyView()
+      CoordinatesView()
         .tabItem {
           Image(systemName: "map.fill")
           Text("Mapa")
@@ -44,7 +44,7 @@ struct TabBarView: View {
         }
     } .onAppear {
       Task {
-        if await vm.getPendingSurvey() == () {
+        if await vm.getPendingSurvey() {
           goSurvey()
         }
       }
