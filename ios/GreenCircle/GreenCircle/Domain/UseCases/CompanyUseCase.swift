@@ -46,7 +46,6 @@ class CompanyUseCase {
       if let profilePicture = company.profilePicture, profilePicture.isEmpty {
         company.profilePicture = "person.crop.circle.badge.xmark"
       }
-      print(company.email)
       return company
     }
     return nil
