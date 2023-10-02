@@ -31,7 +31,7 @@ struct TabBarView: View {
         }
         .tag(true)
       
-      EmptyView()
+      CoordinatesView()
         .tabItem {
           Image(systemName: "map.fill")
           Text("Mapa")
