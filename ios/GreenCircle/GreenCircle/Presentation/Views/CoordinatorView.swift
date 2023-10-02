@@ -127,9 +127,12 @@ struct CoordinatorView: View {
     routes.presentCover(.companyRegisterDivider)
   }
   
-  private func goUploadCompanyFiles(photovoltaicToggle: Binding<Bool>, solarToggle: Binding<Bool>) {
-    routes.presentCover(.uploadCompanyFiles)
-  }
+    private func goUploadCompanyFiles(photovoltaicToggle: Binding<Bool>, solarToggle: Binding<Bool>) {
+        self.photovoltaicToggle = photovoltaicToggle.wrappedValue
+        self.solarToggle = solarToggle.wrappedValue
+        routes.presentCover(.uploadCompanyFiles)
+    }
+
   
   private func goPending() {
     routes.presentCover(.pendingCompany)

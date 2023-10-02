@@ -82,4 +82,5 @@ class CompanyViewModel: ObservableObject {
             // Por ejemplo: mostrar una notificación de error
         }
     }
+    
 }

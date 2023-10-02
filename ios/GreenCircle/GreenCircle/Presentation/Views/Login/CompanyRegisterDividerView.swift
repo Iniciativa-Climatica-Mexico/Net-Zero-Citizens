@@ -25,8 +25,6 @@ struct CompanyRegisterDividerView: View {
       }.padding(.bottom, 55)
       
       VStack(spacing: 40) {
-          CompanyFileInput(title: "INE", description: "example", fileDescription: "INE representante legal",viewModel: CompanyViewModel())
-          CompanyFileInput(title: "Curriculum", description: "example", fileDescription: "Curriculum",viewModel: CompanyViewModel())
         ZStack {
           RoundedRectangle(cornerRadius: 10)
             .fill(.gray).opacity(0.1)
@@ -59,11 +57,8 @@ struct CompanyRegisterDividerView: View {
       HStack {
         Spacer()
         MainButton("Continuar", action: {
-            if photovoltaicToggle || solarToggle
-            || (photovoltaicToggle && solarToggle) {
-                
+            if photovoltaicToggle || solarToggle {
               goUploadCompanyFiles($photovoltaicToggle,$solarToggle)
-                
             } else {
               showAlert = true
             }
