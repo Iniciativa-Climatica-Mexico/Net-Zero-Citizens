@@ -240,6 +240,7 @@ export const getCoordinatesAndroid: RequestHandler<
       'approved',
       params
     )
+
     return res.json(companies)
   } catch (error) {
     return res.status(500).json({ error: 'Internal server error' })
