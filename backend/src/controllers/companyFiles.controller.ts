@@ -17,12 +17,12 @@ export const uploadCompanyFile: RequestHandler = async (req, res) => {
     CompanyFileService.uploadCompanyFile(
       req.file,
       companyId,
-      fileDescription as FileDescription | 'INE representante legal', // TODO: Cambiar este valor
+      fileDescription as FileDescription,
       fileFormat as FileFormat
     )
-    return res.status(200).send('File uploaded!')
+    return res.status(200).json({ message: 'File uploaded' })
   } catch (error) {
-    return res.status(500).send('Error uploading file')
+    return res.status(500).json({ message: 'Error Uploading File' })
   }
 }
 

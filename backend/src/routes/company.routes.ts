@@ -17,11 +17,14 @@ router.post('/upload/file', upload, CompanyFilesController.uploadCompanyFile)
 router.get('/approved', CompanyController.getApprovedCompanies)
 
 router.get('/pending', CompanyController.getPendingCompanies)
-router.get('/geocoding/android', CompanyController.getCoordinates)
+
+router.get('/geocoding', CompanyController.getCoordinatesIos)
+
+router.get('/geocoding/android', CompanyController.getCoordinatesAndroid)
 
 router.post('/pending/:companyId', CompanyController.updateCompanyInfo)
 
+router.put('/:companyId/assign', CompanyController.assignCompanyUser)
 router.get('/:id', CompanyController.getCompanyById)
-router.put('/:id/assign', CompanyController.assignCompanyUser)
 
 export default router

@@ -12,6 +12,7 @@ class CompanyViewModel: ObservableObject {
   /// Caso de uso para hacer fetch de los datos de compañía
   private let useCase: CompanyUseCase
   
+  
   @Published var companies = [Company]()
     
     enum CompanyViewModelError: Error {
@@ -57,12 +58,10 @@ class CompanyViewModel: ObservableObject {
         contentCompany = resultCompany
     }
   }
-  
-    @MainActor
-    func fetchAllCompanies() async throws {
-        guard let fetchedCompanies = await useCase.fetchAllCompanies() else {
-            throw CompanyViewModelError.failedToFetchCompanies
-        }
-        self.companies = fetchedCompanies.rows
-    }
+
+  @MainActor
+  func fetchAllCompanies() async {
+    self.companies = await useCase.fetchAllCompanies()!.rows
+  }
+   
 }

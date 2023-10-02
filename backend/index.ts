@@ -9,7 +9,8 @@ import morgan from 'morgan'
 import { loadFromJson } from './scripts/loadCompanies'
 
 initDB().then(() => {
-  loadFromJson('scripts/parsedCompanies.json')
+  if (process.env.NODE_ENV === 'development')
+    loadFromJson('scripts/parsedCompanies.json')
 })
 
 const app = express()
@@ -20,10 +21,6 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 initRouterV1(app)
-
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/form.html')
-})
 
 const PORT = process.env.PORT || 4000
 app.listen(PORT, () => {

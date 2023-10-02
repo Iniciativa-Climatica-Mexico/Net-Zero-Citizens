@@ -71,4 +71,37 @@ describe('AuthService', () => {
     const savedToken = await AuthService.updateTokens(token.refreshToken)
     expect(savedToken).to.be.null
   })
+
+  it('should register and login a user', async () => {
+    const testUser: AuthService.RegisterUser = {
+      email: 'test@email.com',
+      password: 'test',
+      firstName: 'John',
+      lastName: 'Smith',
+      age: 20,
+      state: 'Queretaro',
+      phoneNumber: '4421234567',
+      gender: 'other',
+    }
+    const authRes = await AuthService.register(testUser)
+    expect(authRes?.user).to.containSubset({
+      first_name: testUser.firstName,
+      last_name: testUser.lastName,
+      email: testUser.email,
+      roles: 'new_user',
+    })
+    expect(authRes?.tokens).to.be.not.null
+    expect(authRes?.error).to.be.undefined
+
+    const loginRes = await AuthService.login(testUser.email, testUser.password)
+
+    expect(loginRes?.user).to.containSubset({
+      first_name: testUser.firstName,
+      last_name: testUser.lastName,
+      email: testUser.email,
+      roles: 'new_user',
+    })
+    expect(loginRes?.tokens).to.be.not.null
+    expect(loginRes?.error).to.be.undefined
+  })
 })

@@ -7,7 +7,10 @@ import androidx.lifecycle.viewModelScope
 import com.greencircle.data.remote.company.CompanyAPIService
 import com.greencircle.domain.model.auth.AuthResponse
 import com.greencircle.domain.usecase.auth.GoogleAuthRequirement
+import com.greencircle.domain.usecase.company.AssignCompanyRequirement
 import com.greencircle.domain.usecase.company.CreateCompanyRequirement
+import java.util.UUID
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -20,9 +23,11 @@ import kotlinx.coroutines.launch
 class CreateCompanyViewModel : ViewModel() {
     private val googleAuthRequirement = GoogleAuthRequirement()
     private val createCompanyRequirement = CreateCompanyRequirement()
+    private val assignCompanyRequirement = AssignCompanyRequirement()
 
     private val _googleLoginResult = MutableLiveData<AuthResponse?>()
     val googleLoginResult: LiveData<AuthResponse?> = _googleLoginResult
+    val assignCompanyResult = MutableLiveData<String?>()
 
     private val _createCompanyResult = MutableLiveData<CompanyAPIService.CreateCompanyResponse?>()
     val createCompanyResult: LiveData<CompanyAPIService.CreateCompanyResponse?> =
@@ -54,6 +59,24 @@ class CreateCompanyViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             result = createCompanyRequirement(company, authToken)
             _createCompanyResult.postValue(result)
+        }
+    }
+
+    /**
+     * Asigna una empresa a un usuario en la API.
+     *
+     * @param authToken El token del autentificación.
+     * @param userId El id del usuario a asignar.
+     * @param companyID El id de la empresa a asignar.
+     * @return Un mensaje de respuesta de la API.
+     */
+    fun assignCompany(authToken: String, userId: UUID, companyId: UUID) {
+        viewModelScope.launch(Dispatchers.IO) {
+            // Invoca el modelo de dominio para asignar la empresa.
+            val result: String? = assignCompanyRequirement(authToken, userId, companyId)
+            CoroutineScope(Dispatchers.Main).launch {
+                assignCompanyResult.postValue(result)
+            }
         }
     }
 }
