@@ -7,12 +7,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.greencircle.data.remote.user.UserAPIService
 import com.greencircle.domain.model.auth.AuthResponse
-import com.greencircle.domain.model.user.UpdateUserRequirement
 import com.greencircle.domain.usecase.auth.GoogleAuthRequirement
 import com.greencircle.domain.usecase.auth.RecoverTokensRequirement
 import com.greencircle.domain.usecase.auth.SaveTokensRequirement
 import com.greencircle.domain.usecase.auth.SaveUserSessionRequirement
 import com.greencircle.domain.usecase.auth.UpdateTokensDataRequirement
+import com.greencircle.domain.usecase.user.UpdateUserRequirement
 import java.util.UUID
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -43,6 +43,14 @@ class CreateUserViewModel(private val context: Context) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             val result: AuthResponse? = googleAuthRequirement(token)
             _googleLoginResult.postValue(result)
+
+            // Guardar tokens
+            val authToken = result?.tokens?.authToken
+            val refreshToken = result?.tokens?.refreshToken
+            saveTokens(authToken!!, refreshToken!!)
+
+            // Guardar usuario global
+            saveUserSession(result.user)
         }
     }
 
