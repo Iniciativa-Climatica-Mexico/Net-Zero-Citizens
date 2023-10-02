@@ -2,6 +2,9 @@ import Token from '../models/token.model'
 import * as UserService from '../services/users.service'
 import jwt from 'jsonwebtoken'
 import { OAuth2Client } from 'google-auth-library'
+import bcrypt from 'bcrypt'
+import User from '../models/users.model'
+import { z } from 'zod'
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
 // TYPES
@@ -146,8 +149,8 @@ export const updateUserTokensData = async (
     if (!data) return null
 
     const user = await UserService.getUserByEmailWithRole(data.email)
-    
-    if(!user) return null
+
+    if (!user) return null
 
     // Si ya está registrado, crear un Payload con la información del usuario
     const userPayload: Payload = {
@@ -305,5 +308,84 @@ export const verifyGoogleToken = async (
   } catch (error) {
     console.log(error)
     return null
+  }
+}
+
+export const login = async (
+  email: string,
+  password: string
+): Promise<AuthResponse | null> => {
+  const user = await UserService.getUserByEmailWithRole(email)
+  if (!user || !user.salt || !user.password) return null
+
+  const isAllowed = bcrypt.compareSync(password, user.password)
+  if (!isAllowed) return null
+
+  // Si ya está registrado, crear un Payload con la información del usuario
+  const userPayload: Payload = {
+    first_name: user.firstName,
+    last_name: user.lastName,
+    uuid: user.userId,
+    email: user.email,
+    picture: user.profilePicture != null ? user.profilePicture : undefined,
+    roles: user.role.dataValues.NAME,
+  }
+
+  const tokens = await createTokens(userPayload)
+  if (!tokens) return null
+
+  return {
+    tokens: tokens,
+    user: userPayload,
+  }
+}
+
+export const registerUserSchema = z.object({
+  email: z.string().email(),
+  password: z.string(),
+  firstName: z.string(),
+  lastName: z.string().optional(),
+  secondLastName: z.string().optional(),
+  phoneNumber: z.string().optional(),
+  age: z.number().int(),
+  state: z.string(),
+  gender: z.enum(['masculine', 'femenine', 'other', 'no_answer']),
+  profilePicture: z.string().optional(),
+})
+
+export type RegisterUser = z.infer<typeof registerUserSchema>
+export const register = async (
+  user: RegisterUser
+): Promise<AuthResponse | null> => {
+  const salt = bcrypt.genSaltSync(10)
+  const hash = bcrypt.hashSync(user.password, salt)
+
+  const userCreate = {
+    ... user,
+    salt,
+    password: hash,
+    roleId: 'NEW_USER_ROLE_ID',
+  }
+  const userDb = await User.create(userCreate)
+  if (!userDb) return null
+  const newUser = await UserService.getUserByEmailWithRole(userDb.email)
+  if (!newUser) return null
+  // Si ya está registrado, crear un Payload con la información del usuario
+  const userPayload: Payload = {
+    first_name: newUser.firstName,
+    last_name: newUser.lastName,
+    uuid: newUser.userId,
+    email: newUser.email,
+    picture:
+      newUser.profilePicture != null ? newUser.profilePicture : undefined,
+    roles: newUser.role.dataValues.NAME,
+  }
+
+  const tokens = await createTokens(userPayload)
+  if (!tokens) return null
+
+  return {
+    tokens: tokens,
+    user: userPayload,
   }
 }

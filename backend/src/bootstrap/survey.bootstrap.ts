@@ -103,6 +103,13 @@ export default class SurveysBootstrapper extends Bootstrapper {
             questionText: 'What features would you like to see in our product?',
             questionType: 'open',
             isRequired: false,
+            answers: [
+              {
+                answerId: 'e71bb662-b5cd-46d0-8e81-0c493e9fcbab',
+                userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
+                answerText: 'More colors',
+              },
+            ],
           },
           {
             questionId: '894a255f-d68d-4e64-8053-84327aa5c22c',
@@ -159,7 +166,8 @@ export default class SurveysBootstrapper extends Bootstrapper {
       {
         surveyId: '48aca777-4baa-4365-8ca8-ed7ba4d33681',
         title: 'Hábitos de consumo',
-        description: 'Encuesta para aprender mas sobre los habitos de consumo y uso energético de los usuarios',
+        description:
+          'Encuesta para aprender mas sobre los habitos de consumo y uso energético de los usuarios',
         questions: [
           {
             questionId: 'c96f70e0-c966-4f87-bdd5-184ec7cf0ffa',
@@ -194,12 +202,20 @@ export default class SurveysBootstrapper extends Bootstrapper {
                 answerText: '4+',
               },
             ],
-          },          
+          },
           {
             questionId: 'b84348e0-c7bf-4c09-82ce-5366c81d764e',
-            questionText: '¿Qué acciones tomas para reducir tu huella de carbono?',
+            questionText:
+              '¿Qué acciones tomas para reducir tu huella de carbono?',
             questionType: 'open',
             isRequired: false,
+            answers: [
+              {
+                answerId: 'b84348e0-c7bf-4c09-82ce-5366c81d764e',
+                userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
+                answerText: 'Reciclo',
+              },
+            ],
           },
           {
             questionId: '3c9dccbb-1b19-49c0-b8e0-170e047a336a',
@@ -216,7 +232,8 @@ export default class SurveysBootstrapper extends Bootstrapper {
           },
           {
             questionId: 'ea067a23-3a46-41a6-b6e4-152aa199535a',
-            questionText: '¿Cuantas personas forman parte de tu nucleo familiar?',
+            questionText:
+              '¿Cuantas personas forman parte de tu nucleo familiar?',
             questionType: 'multiple_choice',
             questionOptions: [
               {
@@ -253,7 +270,7 @@ export default class SurveysBootstrapper extends Bootstrapper {
               },
             ],
           },
-        ], 
+        ],
       },
     ]
     for (const survey of surveys) {

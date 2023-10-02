@@ -33,7 +33,7 @@ class CompaniesTest {
             phone = "+52 442 123 4567",
             webPage = null,
             street = "Test Street",
-            streetNumber = 123,
+            streetNumber = "123",
             city = "Test City",
             state = "Test State",
             zipCode = 12345,
@@ -59,7 +59,7 @@ class CompaniesTest {
         assertEquals("+52 442 123 4567", company.phone)
         assertNull(company.webPage)
         assertEquals("Test Street", company.street)
-        assertEquals(123, company.streetNumber)
+        assertEquals("123", company.streetNumber)
         assertEquals("Test City", company.city)
         assertEquals("Test State", company.state)
         assertEquals(12345, company.zipCode)
@@ -94,7 +94,7 @@ class CompaniesTest {
             phone = "+52 442 123 4567",
             webPage = null,
             street = "Test Street",
-            streetNumber = 123,
+            streetNumber = "123",
             city = "Test City",
             state = "Test State",
             zipCode = 12345,
@@ -121,7 +121,7 @@ class CompaniesTest {
             phone = "+52 442 123 4567",
             webPage = null,
             street = "Test Street",
-            streetNumber = 123,
+            streetNumber = "123",
             city = "Test City",
             state = "Test State",
             zipCode = 12345,
@@ -159,7 +159,7 @@ class CompaniesTest {
             phone = "+52 442 123 4567",
             webPage = null,
             street = "Test Street",
-            streetNumber = 123,
+            streetNumber = "123",
             city = "Test City",
             state = "Test State",
             zipCode = 12345,
@@ -186,7 +186,7 @@ class CompaniesTest {
             phone = "+52 442 123 4567",
             webPage = null,
             street = "Test Street",
-            streetNumber = 123,
+            streetNumber = "123",
             city = "Test City",
             state = "Test State",
             zipCode = 12345,
@@ -224,7 +224,7 @@ class CompaniesTest {
             phone = "+52 442 123 4567",
             webPage = null,
             street = "Test Street",
-            streetNumber = 123,
+            streetNumber = "123",
             city = "Test City",
             state = "Test State",
             zipCode = 12345,
@@ -251,7 +251,7 @@ class CompaniesTest {
             phone = "+52 442 123 4567",
             webPage = null,
             street = "Test Street",
-            streetNumber = 123,
+            streetNumber = "123",
             city = "Test City",
             state = "Test State",
             zipCode = 12345,

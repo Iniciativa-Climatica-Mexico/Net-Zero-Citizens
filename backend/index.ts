@@ -9,7 +9,8 @@ import morgan from 'morgan'
 import { loadFromJson } from './scripts/loadCompanies'
 
 initDB().then(() => {
-  loadFromJson('scripts/parsedCompanies.json')
+  if (process.env.NODE_ENV === 'development')
+    loadFromJson('scripts/parsedCompanies.json')
 })
 
 const app = express()
