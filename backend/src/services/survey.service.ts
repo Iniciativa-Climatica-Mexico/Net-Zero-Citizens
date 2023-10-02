@@ -129,6 +129,7 @@ export const createSurveyBodyScheme = z.object({
           z.object({ textOption: z.string(), order: z.number().optional() })
         )
         .optional(),
+      isRequired: z.boolean().optional(),
     })
   ),
 })
