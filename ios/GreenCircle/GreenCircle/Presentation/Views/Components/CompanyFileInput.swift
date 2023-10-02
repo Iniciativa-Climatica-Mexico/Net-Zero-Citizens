@@ -57,14 +57,8 @@ struct CompanyFileInput: View {
             Divider()
         }
         .sheet(isPresented: $isPickerPresented, onDismiss:{
-            if let selectedFileURL = selectedFile {
-                Task {
-                    let mimeType = "application/pdf"
-                    await viewModel.uploadFile(file: selectedFileURL, fileDescription: fileDescription, mimeType: mimeType)
-                }
-            }
         }) {
-            DocumentPicker(selectedFile: $selectedFile)
+            DocumentPicker(selectedFile: $selectedFile, viewModel: viewModel, fileDescription: fileDescription)
         }
     }
 }
@@ -72,6 +66,10 @@ struct CompanyFileInput: View {
 struct DocumentPicker: UIViewControllerRepresentable {
     @Environment(\.presentationMode) var presentationMode
     @Binding var selectedFile: Data?
+    
+    // Add these lines
+    var viewModel: CompanyViewModel
+    var fileDescription: String
     
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -90,6 +88,12 @@ struct DocumentPicker: UIViewControllerRepresentable {
                     let (data, _) = try await URLSession.shared.data(from: urls.first!)
                     parent.selectedFile = data
                     parent.presentationMode.wrappedValue.dismiss()
+                    
+                    // Move the file upload operation here
+                    if let selectedFile = parent.selectedFile {
+                        let mimeType = "application/pdf"
+                        await parent.viewModel.uploadFile(file: selectedFile, fileDescription: parent.fileDescription, mimeType: mimeType) 
+                    }
                 }
             }
             catch{
@@ -112,6 +116,7 @@ struct DocumentPicker: UIViewControllerRepresentable {
         // Not needed for this use case
     }
 }
+
 
 struct CompanyFileInput_Previews: PreviewProvider {
     static var previews: some View {

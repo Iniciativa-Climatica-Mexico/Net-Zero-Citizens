@@ -156,7 +156,7 @@ class NetworkAPIService {
             return responseResult
         } catch {
             print(error)
-            return nil
+            return responseResult
         }
     }
 
