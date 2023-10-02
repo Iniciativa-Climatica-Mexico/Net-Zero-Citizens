@@ -11,6 +11,7 @@ import Company from './company.model'
 import Review from './review.model'
 import Complaint from './complaint.model'
 import Role from './role.model'
+import Favourites from './favourite.model'
 
 /**
  * @brief
@@ -110,6 +111,13 @@ export default class User extends Model {
   @Column({
     type: DataType.STRING,
     allowNull: true,
+    field: 'SALT',
+  })
+  salt: string | null
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
     field: 'PHONE_NUMBER',
   })
   phoneNumber: string | null
@@ -141,7 +149,7 @@ export default class User extends Model {
     field: 'DEVICE_TOKEN',
   })
   deviceToken: string | null
-  
+
   @Column({
     type: DataType.STRING,
     allowNull: true,
@@ -154,4 +162,7 @@ export default class User extends Model {
 
   @HasMany(() => Complaint)
   complaints: Complaint[]
+
+  @HasMany(() => Favourites)
+  favourites: Favourites[]
 }

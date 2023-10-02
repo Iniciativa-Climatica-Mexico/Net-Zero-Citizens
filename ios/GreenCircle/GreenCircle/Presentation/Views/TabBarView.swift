@@ -44,7 +44,7 @@ struct TabBarView: View {
         }
     } .onAppear {
       Task {
-        if await vm.getPendingSurvey() == () {
+        if await vm.getPendingSurvey() {
           goSurvey()
         }
       }
