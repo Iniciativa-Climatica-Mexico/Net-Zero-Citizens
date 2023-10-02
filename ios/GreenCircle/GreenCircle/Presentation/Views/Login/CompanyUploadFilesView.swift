@@ -44,7 +44,7 @@ import SwiftUI
 struct FirstSection: View {
   @State var ineUploaded: Bool = false
   @State var actaUploaded: Bool = false
-  @State private var tempFiles: [String: Data] = [:]
+  // @State private var tempFiles: [String: Data] = [:]
 
   var body: some View{
     VStack{
@@ -66,21 +66,14 @@ struct FirstSection: View {
                 title: "INE representate legal",
                 description: "Hasta 50 MB por archivo y en .pdf",
                 fileDescription: "INE representante legal",
-                viewModel: CompanyViewModel(),
-                onFileSelected: { file in
-                    self.tempFiles["INE_representate_legal"] = file
-                }
-            )
+                viewModel: CompanyViewModel())
             .padding(.bottom, -9)
 
             CompanyFileInput(
                 title: "Acta Constitutiva",
                 description: "Hasta 50 MB por archivo y en .pdf",
                 fileDescription: "Acta constitutiva",
-                viewModel: CompanyViewModel(),
-                onFileSelected: { file in
-                    self.tempFiles["INE_representate_legal"] = file
-                })
+                viewModel: CompanyViewModel())
         }
     }
 
@@ -89,7 +82,7 @@ struct FirstSection: View {
 
 ///__------------SECCIÓN 2---------
 struct SecondSection: View{
-  @State private var tempFiles: [String: Data] = [:]
+  // @State private var tempFiles: [String: Data] = [:]
   @State var curriculumUploaded: Bool = false
 
   var body: some View{
@@ -124,10 +117,7 @@ struct SecondSection: View{
                 title: "Curriculum",
                 description: "Hasta 50 MB por archivo y en .pdf",
                 fileDescription: "Curriculum",
-                viewModel: CompanyViewModel(),
-                onFileSelected: { file in
-                    self.tempFiles["Curriculum"] = file
-                })
+                viewModel: CompanyViewModel())
             .padding(.bottom, -9)
         }
     }
@@ -137,7 +127,7 @@ struct SecondSection: View{
 
 ///__------------SECCIÓN 3---------
 struct ThirdSection: View{
-  @State private var tempFiles: [String: Data] = [:]
+  // @State private var tempFiles: [String: Data] = [:]
   @State var CDMXUploaded: Bool = false
   @State var PadronUploaded: Bool = false
 
@@ -159,10 +149,7 @@ struct ThirdSection: View{
                 title: "Comprobante Directorio de Instaladores Certificados de la CDMX",
                 description: "Hasta 50 MB por archivo y en .pdf",
                 fileDescription: "Directorio de instaladores certificados de CDMX",
-                viewModel: CompanyViewModel(),
-                onFileSelected: { file in
-                    self.tempFiles["Directorio_de_instaladores certificados_de_CDMX"] = file
-                })
+                viewModel: CompanyViewModel())
             .multilineTextAlignment(.leading)
             .padding(.bottom, -9)
 
@@ -171,10 +158,7 @@ struct ThirdSection: View{
                 title: "Comprobante Padrón de Empresas Especializadas FIDE",
                 description: "Hasta 50 MB por archivo y en .pdf",
                 fileDescription: "Padron de empresas especializadas FIDE",
-                viewModel: CompanyViewModel(),
-                onFileSelected: { file in
-                    self.tempFiles["Padron_de_empresas_especializadas_FIDE"] = file
-                })
+                viewModel: CompanyViewModel())
          }
       }
 
@@ -183,7 +167,7 @@ struct ThirdSection: View{
 
 ///__------------SECCIÓN 4---------
 struct FourthSection: View{
-  @State private var tempFiles: [String: Data] = [:]
+  // @State private var tempFiles: [String: Data] = [:]
   @State var panelesUploaded: Bool = false
 
 
@@ -228,10 +212,7 @@ struct FourthSection: View{
                 title: "Certificaciones Sistemas Fotovoltaicos",
                 description: "Hasta 50 MB por archivo y en .pdf",
                 fileDescription:"Certificaciones sistemas fotovoltaicos",
-                viewModel: CompanyViewModel(),
-                onFileSelected: { file in
-                    self.tempFiles["Certificaciones_sistemas_fotovoltaicos"] = file
-                })
+                viewModel: CompanyViewModel())
         }
     }
 
@@ -240,7 +221,7 @@ struct FourthSection: View{
 
 ///__------------SECCIÓN 5---------
 struct FifthSection: View {
-  @State private var tempFiles: [String: Data] = [:]
+  // @State private var tempFiles: [String: Data] = [:]
   @State var calentadoresUploaded: Bool = false
 
 
@@ -282,10 +263,7 @@ struct FifthSection: View {
                 description: "Hasta 50 MB por archivo y en .pdf",
                 fileDescription: "Archivos presion mayor a 294k Pa",
                 bulletPoint: "• NOM-027-ENER/SCH-2018\n• NMX-ES-004-NORMEX-2015\n• DTESTV + Informe de pruebas de laboratorio" ,
-                viewModel: CompanyViewModel(),
-                onFileSelected: { file in
-                    self.tempFiles["Archivos_presion_mayor_a_294k_Pa"] = file
-                })
+                viewModel: CompanyViewModel())
             .padding(.bottom, -9)
 
             CompanyFileInput(
@@ -293,10 +271,7 @@ struct FifthSection: View {
                 description: "Hasta 50 MB por archivo y en .pdf",
                 fileDescription: "Archivos presion menor a 294k Pa",
                 bulletPoint: "• 5 proyectos verificables con antigüedad mayor a 5 años (descripción, contratos, fotografías).\n• Proporcionar datos para facilitar la comprobación de dichas instalaciones." ,
-                viewModel: CompanyViewModel(),
-                onFileSelected: { file in
-                    self.tempFiles["Archivos_presion_menor_a_294k_Pa"] = file
-                })
+                viewModel: CompanyViewModel())
 
         }
     }
@@ -305,7 +280,7 @@ struct FifthSection: View {
 
 ///__------------SECCIÓN 6---------
 struct SixthSection: View{
-  @State private var tempFiles: [String: Data] = [:]
+  // @State private var tempFiles: [String: Data] = [:]
   @State var cartaUploaded: Bool = false
 
   var body: some View{
@@ -344,10 +319,7 @@ struct SixthSection: View{
                 title: "Carta de Compromiso",
                 description: "Hasta 50 MB por archivo y en .pdf",
                 fileDescription: "Carta de compromiso",
-                viewModel: CompanyViewModel(),
-                onFileSelected: { file in
-                    self.tempFiles["Carta_Compromiso"] = file
-                })
+                viewModel: CompanyViewModel())
             .padding(.bottom, -9)
         }
     }
@@ -366,7 +338,7 @@ struct SeventhSection: View{
   @State var calentadoresUploaded: Bool = false
   @State var cartaUploaded: Bool = false
   @State private var showAlert = false
-  @State private var tempFiles: [String: Data] = [:]
+  // @State private var tempFiles: [String: Data] = [:]
 
 
   private var isFormComplete: Bool {
@@ -375,22 +347,22 @@ struct SeventhSection: View{
       (panelesUploaded || cartaUploaded)
   }
 
-  private func saveFiles() async -> Bool {
-      let viewModel = CompanyViewModel() // Idealmente, este debería ser un ObservedObject compartido
-
-      var success = true
-      for (description, file) in tempFiles {
-          do {
-              let mimeType = "application/pdf"
-              try await viewModel.uploadFile(file: file, fileDescription: description, mimeType: mimeType)
-          } catch {
-              success = false
-              break
-          }
-      }
-
-      return success
-  }
+//  private func saveFiles() async -> Bool {
+//      let viewModel = CompanyViewModel() // Idealmente, este debería ser un ObservedObject compartido
+//
+//      var success = true
+//      for (description, file) in tempFiles {
+//          do {
+//              let mimeType = "application/pdf"
+//              try await viewModel.uploadFile(file: file, fileDescription: description, mimeType: mimeType)
+//          } catch {
+//              success = false
+//              break
+//          }
+//      }
+//
+//      return success
+//  }
 
 
   @State var privacidad = false
@@ -411,12 +383,7 @@ struct SeventhSection: View{
     Button(action: {
         Task {
             if isFormComplete && privacidad && terminos {
-                let filesSaved = await self.saveFiles()
-                if filesSaved {
-                    // Move user to next screen
-                } else {
-                    showAlert = true
-                }
+
             } else {
                 showAlert = true
             }
