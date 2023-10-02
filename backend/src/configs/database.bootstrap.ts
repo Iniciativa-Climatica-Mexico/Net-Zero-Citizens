@@ -1,5 +1,5 @@
 import CompanyBootstrap from '../bootstrap/company.bootstrap'
-import CompanyImagesBootstrap from '../bootstrap/companyImages.bootstrap'
+import CompanyFilesBootstrap from '../bootstrap/companyFiles.bootstrap'
 import CompanyProductsBootstrap from '../bootstrap/companyProducts.bootstrap'
 import DummyBootstrap from '../bootstrap/dummy.bootstrap'
 import ProductBootstrap from '../bootstrap/product.bootstrap'
@@ -20,10 +20,10 @@ export const bootstrapDB = async () => {
       SurveysBootstrapper,
       ReviewBootstrap,
       ProductBootstrap,
-      CompanyImagesBootstrap,
       CompanyProductsBootstrap,
       DummyBootstrap,
       EcoinfoBootstrap,
+      CompanyFilesBootstrap,
       ComplaintsBootstrapper,
       FavouritesBootsrapper,
     ]
