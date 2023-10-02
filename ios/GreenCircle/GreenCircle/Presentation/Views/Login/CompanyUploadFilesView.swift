@@ -382,7 +382,7 @@ struct SeventhSection: View{
 
     Button(action: {
         Task {
-            if isFormComplete && privacidad && terminos {
+            if privacidad && terminos {
 
             } else {
                 showAlert = true
@@ -394,7 +394,7 @@ struct SeventhSection: View{
             .padding(.vertical, 12)
             .padding(.horizontal)
             .frame(maxWidth: 200)
-            .background(isFormComplete && privacidad && terminos ? Color("GreenCustom") : Color.gray)
+            .background(privacidad && terminos ? Color("GreenCustom") : Color.gray)
             .cornerRadius(8)
     }
     .alert(isPresented: $showAlert) {
