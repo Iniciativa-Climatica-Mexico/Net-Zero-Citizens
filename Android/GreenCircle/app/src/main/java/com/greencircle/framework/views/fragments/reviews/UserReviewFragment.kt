@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.greencircle.R
 import com.greencircle.databinding.FragmentUserReviewBinding
 import com.greencircle.domain.model.reviews.UserReview
+import com.greencircle.domain.usecase.auth.DeleteTokensRequirement
+import com.greencircle.domain.usecase.auth.DeleteUserSessionRequirement
+import com.greencircle.domain.usecase.auth.RecoverUserSessionRequirement
 import com.greencircle.framework.ui.adapters.reviews.UserReviewAdapter
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.reviews.UserReviewViewModel
@@ -26,6 +29,9 @@ class UserReviewFragment : Fragment() {
 
     private lateinit var data: ArrayList<UserReview>
     private lateinit var userId: UUID
+    private lateinit var recoverUserSession: RecoverUserSessionRequirement
+    private lateinit var deleteTokens: DeleteTokensRequirement
+    private lateinit var deleteUserSession: DeleteUserSessionRequirement
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,11 +46,13 @@ class UserReviewFragment : Fragment() {
         val root: View = binding.root
         data = ArrayList()
 
-        if (arguments?.getString("userId") == null) {
-            userId = UUID.fromString("8de45630-2e76-4d97-98c2-9ec0d1f3a5b8")
-        } else {
-            userId = UUID.fromString(arguments?.getString("userId"))
-        }
+        recoverUserSession = RecoverUserSessionRequirement(requireContext())
+        deleteTokens = DeleteTokensRequirement(requireContext())
+        deleteUserSession = DeleteUserSessionRequirement(requireContext())
+
+        val userSession = recoverUserSession()
+        userId = userSession.uuid
+
         viewModel.setUserId(userId)
         viewModel.getUserReviewsList()
 
