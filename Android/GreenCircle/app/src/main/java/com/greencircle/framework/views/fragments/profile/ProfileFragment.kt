@@ -18,6 +18,7 @@ import com.greencircle.domain.usecase.auth.RecoverUserSessionRequirement
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.profile.ProfileViewModel
 import com.greencircle.framework.views.activities.LoginActivity
+import com.greencircle.framework.views.fragments.favourites.FavouriteFragment
 import com.greencircle.framework.views.fragments.reviews.UserReviewFragment
 
 class ProfileFragment : Fragment() {
@@ -58,6 +59,7 @@ class ProfileFragment : Fragment() {
         // Inicializar Observers
         initializeObservers()
         initializeEditarPerfilButton()
+        initializeFavouritesButton()
         logoutOnClickListener()
         displayUserReviewFragment()
 
@@ -93,6 +95,15 @@ class ProfileFragment : Fragment() {
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.frame_layout, EditProfileFragment())
             transaction.addToBackStack("editProfileFragment")
+            transaction.commit()
+        }
+    }
+
+    private fun initializeFavouritesButton() {
+        binding.misFavoritos.setOnClickListener {
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.frame_layout, FavouriteFragment())
+            transaction.addToBackStack("favouriteFragment")
             transaction.commit()
         }
     }
