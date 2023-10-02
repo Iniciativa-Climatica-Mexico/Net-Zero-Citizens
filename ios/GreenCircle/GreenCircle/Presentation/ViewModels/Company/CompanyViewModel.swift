@@ -14,11 +14,6 @@ class CompanyViewModel: ObservableObject {
   
   
   @Published var companies = [Company]()
-    
-    enum CompanyViewModelError: Error {
-        case failedToFetchCompanies
-    }
-
   
   /// La compañía puede cambiar en la vista (se construye .onAppear())
   @Published var contentCompany: Company = Company(
@@ -35,6 +30,12 @@ class CompanyViewModel: ObservableObject {
     state: "",
     zipCode: "",
     profilePicture: "",
+    pdfCurriculumUrl: "",
+    pdfDicCdmxUrl: "",
+    pdfPeeFideUrl: "",
+    pdfGuaranteeSecurityUrl: "",
+    pdfActaConstitutivaUrl: "",
+    pdfIneUrl: "",
     status: .approved,
     createdAt: "",
     updatedAt: "",

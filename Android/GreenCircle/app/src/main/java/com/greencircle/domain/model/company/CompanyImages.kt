@@ -15,8 +15,8 @@ import java.util.UUID
  * @property company Associated company
  */
 data class CompanyImages(
-    @SerializedName("companyFileId") val companyImageId: UUID,
+    @SerializedName("companyImageId") val companyImageId: UUID,
     @SerializedName("companyId") val companyId: UUID,
-    @SerializedName("fileUrl") val imageUrl: String? = null,
+    @SerializedName("imageUrl") val imageUrl: String? = null,
     @SerializedName("altText") val altText: String? = null,
 ) : Serializable

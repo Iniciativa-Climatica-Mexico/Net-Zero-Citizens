@@ -30,8 +30,8 @@ struct Company: Codable, Identifiable {
   var city: String
   var state: String
   var zipCode: String
-//  var latitude: Double
-//  var longitude: Double
+  // var latitude: Double
+  // var longitude: Double
   var profilePicture: String?
   var pdfCurriculumUrl: String?
   var pdfDicCdmxUrl: String?
