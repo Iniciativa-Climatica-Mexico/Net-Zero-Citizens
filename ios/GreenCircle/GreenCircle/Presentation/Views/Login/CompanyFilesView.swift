@@ -8,8 +8,42 @@
 import SwiftUI
 
 struct CompanyFilesView: View {
-    var body: some View {
+    @State var ineUploaded: Bool = false
+    @State var actaUploaded: Bool = false
+    @State var curriculumUploaded: Bool = false
+    @State var CDMXUploaded: Bool = false
+    @State var PadronUploaded: Bool = false
+    @State var panelesUploaded: Bool = false
+    @State var calentadoresUploaded: Bool = false
+    @State var cartaUploaded: Bool = false
+    @State private var showAlert = false
+    @State private var tempFiles: [String: Data] = [:]
+    
+    
+    private var isFormComplete: Bool {
+        return ineUploaded && actaUploaded && curriculumUploaded &&
+        (CDMXUploaded || PadronUploaded) &&
+        (panelesUploaded || cartaUploaded)
+    }
+    
+    private func saveFiles() async -> Bool {
+        let viewModel = CompanyViewModel() // Idealmente, este debería ser un ObservedObject compartido
         
+        var success = true
+        for (description, file) in tempFiles {
+            do {
+                let mimeType = "application/pdf"
+                try await viewModel.uploadFile(file: file, fileDescription: description, mimeType: mimeType)
+            } catch {
+                success = false
+                break
+            }
+        }
+        
+        return success
+    }
+    
+    var body: some View {
         ScrollView{
             Group{
                 VStack{
@@ -18,7 +52,7 @@ struct CompanyFilesView: View {
                             .bold()
                             .font(.system(size: 32))
                             .padding(.horizontal, 30)
-                            .padding(. top, 40)
+                            .padding(.top, 40)
                             .padding(.bottom, 22)
                         Text("Para poder validar  tu empresa, te pedimos puedas compartir con nosotros los siguientes documentos.")
                             .font(.system(size: 16))
@@ -27,10 +61,25 @@ struct CompanyFilesView: View {
                             .padding(.bottom, 30)
                     }
                     VStack(){
-                        CompanyFileInput(title: "INE representate legal", description: "Hasta 50 MB por archivo y en .pdf")
-                            .padding(.bottom, -9)
+                        CompanyFileInput(
+                            title: "INE representate legal",
+                            description: "Hasta 50 MB por archivo y en .pdf",
+                            fileDescription: "INE representante legal",
+                            viewModel: CompanyViewModel(),
+                            onFileSelected: { file in
+                                self.tempFiles["INE_representate_legal"] = file
+                            }
+                        )
+                        .padding(.bottom, -9)
                         
-                        CompanyFileInput(title: "Acta Constitutiva", description: "Hasta 50 MB por archivo y en .pdf")
+                        CompanyFileInput(
+                            title: "Acta Constitutiva",
+                            description: "Hasta 50 MB por archivo y en .pdf",
+                            fileDescription: "Acta constitutiva",
+                            viewModel: CompanyViewModel(),
+                            onFileSelected: { file in
+                                self.tempFiles["INE_representate_legal"] = file
+                            })
                     }
                 }
             }
@@ -40,7 +89,7 @@ struct CompanyFilesView: View {
                         Text("Curriculum")
                             .bold()
                             .font(.system(size: 25))
-                            .padding(. top, 40)
+                            .padding(.top, 40)
                             .padding(.bottom, 14)
                         Text("Este archivo deberá incluir:")
                             .font(.system(size: 14))
@@ -60,10 +109,17 @@ struct CompanyFilesView: View {
                             .padding(.bottom, 3)
                     }.padding(.leading, 29.6)
                         .padding(.bottom, 30)
-                        .padding(. trailing, 30)
+                        .padding(.trailing, 30)
                     VStack(){
-                        CompanyFileInput(title: "Curriculum", description: "Hasta 50 MB por archivo y en .pdf")
-                            .padding(.bottom, -9)
+                        CompanyFileInput(
+                            title: "Curriculum",
+                            description: "Hasta 50 MB por archivo y en .pdf",
+                            fileDescription: "Curriculum",
+                            viewModel: CompanyViewModel(),
+                            onFileSelected: { file in
+                                self.tempFiles["Curriculum"] = file
+                            })
+                        .padding(.bottom, -9)
                     }
                 }
                 
@@ -74,7 +130,7 @@ struct CompanyFilesView: View {
                         Text("Certificaciones (Opcional)")
                             .bold()
                             .font(.system(size: 25))
-                            .padding(. top, 40)
+                            .padding(.top, 40)
                             .padding(.bottom, 14)
                         Text("En caso de contar con alguno de los siguientes documentos, por favor compártelo con nosotros")
                             .font(.system(size: 14))
@@ -82,12 +138,26 @@ struct CompanyFilesView: View {
                             .padding(.bottom, 3)
                     } .padding(.bottom, 30)
                     VStack(){
-                        CompanyFileInput(title: "Comprobante Directorio de Instaladores Certificados de la CDMX", description: "Hasta 50 MB por archivo y en .pdf")
-                            .multilineTextAlignment(.leading)
-                            .padding(.bottom, -9)
+                        CompanyFileInput(
+                            title: "Comprobante Directorio de Instaladores Certificados de la CDMX",
+                            description: "Hasta 50 MB por archivo y en .pdf",
+                            fileDescription: "Directorio de instaladores certificados de CDMX",
+                            viewModel: CompanyViewModel(),
+                            onFileSelected: { file in
+                                self.tempFiles["Directorio_de_instaladores certificados_de_CDMX"] = file
+                            })
+                        .multilineTextAlignment(.leading)
+                        .padding(.bottom, -9)
                         
                         
-                        CompanyFileInput(title: "Comprobante Padrón de Empresas Especializadas FIDE", description: "Hasta 50 MB por archivo y en .pdf")
+                        CompanyFileInput(
+                            title: "Comprobante Padrón de Empresas Especializadas FIDE",
+                            description: "Hasta 50 MB por archivo y en .pdf",
+                            fileDescription: "Padron de empresas especializadas FIDE",
+                            viewModel: CompanyViewModel(),
+                            onFileSelected: { file in
+                                self.tempFiles["Padron_de_empresas_especializadas_FIDE"] = file
+                            })
                     }
                 }
                 
@@ -98,7 +168,7 @@ struct CompanyFilesView: View {
                         Text("Servicios")
                             .bold()
                             .font(.system(size: 25))
-                            .padding(. top, 40)
+                            .padding(.top, 40)
                             .padding(.bottom, 14)
                         Text("Sube únicamente los documentos de los servicios que ofrece tu empresa.")
                             .font(.system(size: 14))
@@ -127,11 +197,16 @@ struct CompanyFilesView: View {
                             .padding(.bottom, 5)
                     } .padding(.bottom, 30)
                         .padding(.leading, 30)
-                        .padding(. trailing, 30)
+                        .padding(.trailing, 30)
                     VStack(){
-                        CompanyFileInput(title: "Certificaciones Sistemas Fotovoltaicos", description: "Hasta 50 MB por archivo y en .pdf")
-                        
-                        
+                        CompanyFileInput(
+                            title: "Certificaciones Sistemas Fotovoltaicos",
+                            description: "Hasta 50 MB por archivo y en .pdf",
+                            fileDescription:"Certificaciones sistemas fotovoltaicos",
+                            viewModel: CompanyViewModel(),
+                            onFileSelected: { file in
+                                self.tempFiles["Certificaciones_sistemas_fotovoltaicos"] = file
+                            })
                     }
                 }
                 
@@ -168,20 +243,28 @@ struct CompanyFilesView: View {
                             .padding(.bottom, 10)
                     } .padding(.bottom, 30)
                         .padding(.leading, 30)
-                        .padding(. trailing, 30)
+                        .padding(.trailing, 30)
                     VStack(){
                         CompanyFileInput(
                             title: "Presión Mayor a 294k Pa",
                             description: "Hasta 50 MB por archivo y en .pdf",
-                            bulletPoint: "• NOM-027-ENER/SCH-2018\n• NMX-ES-004-NORMEX-2015\n• DTESTV + Informe de pruebas de laboratorio"
-                        )
+                            fileDescription: "Archivos presion mayor a 294k Pa",
+                            bulletPoint: "• NOM-027-ENER/SCH-2018\n• NMX-ES-004-NORMEX-2015\n• DTESTV + Informe de pruebas de laboratorio" ,
+                            viewModel: CompanyViewModel(),
+                            onFileSelected: { file in
+                                self.tempFiles["Archivos_presion_mayor_a_294k_Pa"] = file
+                            })
                         .padding(.bottom, -9)
                         
                         CompanyFileInput(
                             title: "Presión Menor a 294k Pa",
                             description: "Hasta 50 MB por archivo y en .pdf",
-                            bulletPoint: "• 5 proyectos verificables con antigüedad mayor a 5 años (descripción, contratos, fotografías).\n• Proporcionar datos para facilitar la comprobación de dichas instalaciones."
-                        )
+                            fileDescription: "Archivos presion menor a 294k Pa",
+                            bulletPoint: "• 5 proyectos verificables con antigüedad mayor a 5 años (descripción, contratos, fotografías).\n• Proporcionar datos para facilitar la comprobación de dichas instalaciones." ,
+                            viewModel: CompanyViewModel(),
+                            onFileSelected: { file in
+                                self.tempFiles["Archivos_presion_menor_a_294k_Pa"] = file
+                            })
                         
                     }
                 }
@@ -193,7 +276,7 @@ struct CompanyFilesView: View {
                         Text("Firmar Carta Compromiso")
                             .bold()
                             .font(.system(size: 25))
-                            .padding(. top, 40)
+                            .padding(.top, 40)
                             .padding(.bottom, 14)
                         Text("Para terminar tu registro, te pedimos puedas firmar una carta compromiso de seguridad y garantía, la cual debe contener:")
                             .font(.system(size: 14))
@@ -217,18 +300,25 @@ struct CompanyFilesView: View {
                             .padding(.bottom, 3)
                     }.padding(.leading, 34)
                         .padding(.bottom, 30)
-                        .padding(. trailing, 30)
+                        .padding(.trailing, 30)
                     VStack(){
-                        CompanyFileInput(title: "Carta Compromiso", description: "Hasta 50 MB por archivo y en .pdf")
-                            .padding(.bottom, -9)
+                        CompanyFileInput(
+                            title: "Carta de Compromiso",
+                            description: "Hasta 50 MB por archivo y en .pdf",
+                            fileDescription: "Carta de compromiso",
+                            viewModel: CompanyViewModel(),
+                            onFileSelected: { file in
+                                self.tempFiles["Carta_Compromiso"] = file
+                            })
+                        .padding(.bottom, -9)
                     }
                 }
                 
             }
             
             Group{
-                @State  var privacidad = false
-                @State  var terminos = false
+                @State var privacidad = false
+                @State var terminos = false
                 
                 VStack {
                     Toggle("Acepto las políticas de privacidad", isOn: $privacidad)
@@ -240,24 +330,38 @@ struct CompanyFilesView: View {
                     .padding(.top, 30)
                 
                 
-                Button(action: {}) {
+                Button(action: {
+                    if isFormComplete && privacidad && terminos {
+                        let filesSaved = await self.saveFiles()
+                        if filesSaved{
+                            // Move user to next screen
+                        }
+                        else{
+                            Alert(title: Text("Ocurrio un error"), message: Text("Intentalo de nuevo"), dismissButton: .default(Text("Aceptar")))
+                        }
+                    } else {
+                        showAlert = true
+                    }
+                }) {
                     Text("Finalizar Registro")
                         .foregroundColor(.white)
                         .padding(.vertical, 12)
                         .padding(.horizontal)
                         .frame(maxWidth: 200)
-                        .background(Color("GreenCustom"))
+                        .background(isFormComplete && privacidad && terminos ? Color("GreenCustom") : Color.gray)
                         .cornerRadius(8)
-                }.padding(.top, 30)
-                
+                }
+                .alert(isPresented: $showAlert) {
+                    Alert(title: Text("Error"), message: Text("Necesitas subir todos los archivos y aceptar los términos y condiciones."), dismissButton: .default(Text("Aceptar")))
+                }
+                .padding(.top, 30)
                 
             }
         }
     }
-    
-    struct CompanyFilesView_Previews: PreviewProvider {
-        static var previews: some View {
-            CompanyFilesView()
-        }
+}
+struct CompanyFilesView_Previews: PreviewProvider {
+    static var previews: some View {
+        CompanyFilesView()
     }
 }

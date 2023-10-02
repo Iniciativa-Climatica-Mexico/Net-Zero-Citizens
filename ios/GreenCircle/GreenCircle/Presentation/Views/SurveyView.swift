@@ -26,8 +26,10 @@ struct SurveyView: View {
           ForEach(Array(vm.survey.questions.enumerated()), id: \.offset) { index, question in
             QuestionView(question: question, answer: $vm.answers[index])
           }
+          
         }
         .padding([.leading, .trailing], 22)
+        
         Button("Enviar", action: {
           Task {
             submissionResult = await vm.submitAnswers()
@@ -52,8 +54,10 @@ struct SurveyView: View {
       if (submissionResult == true) {
         return Alert(title: Text("Éxito"), message: Text("Tu encuesta fue enviada con éxito"), dismissButton: .default(Text("OK"), action: {goMainMenu()}))
       } else {
-        return Alert(title: Text("Error"), message: Text("Error enviando tu encuesta, intenta de nuevo más tarde"), dismissButton: .default(Text("OK"), action: {goMainMenu()}))
+        return Alert(title: Text("Error"), message: Text("Hay preguntas requeridas que no se han respondido"), dismissButton: .default(Text("OK")))
       }
+    }.onTapGesture {
+      hideKeyboard()
     }
   }
 }

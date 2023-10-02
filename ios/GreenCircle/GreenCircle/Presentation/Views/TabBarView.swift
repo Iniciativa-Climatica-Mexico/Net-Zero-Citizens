@@ -9,7 +9,6 @@ import SwiftUI
 
 struct TabBarView: View {
   @State private var dispScrollView = false
-  @StateObject var vm = SurveyViewModel()
 
   var body: some View {
     TabView (selection: $dispScrollView) {
@@ -35,17 +34,11 @@ struct TabBarView: View {
           Text("Mapa")
         }
       
-      ProfileView(modelUser: UserViewModel())
+      ProfileView(modelUser: UserViewModel()) // quitar company Model
         .tabItem {
           Image(systemName: "person.fill")
           Text("Perfil")
         }
-    }
-    .onAppear {
-      Task {
-        var pendingSurvey = await vm.getPendingSurvey()
-        print(pendingSurvey)
-      }
     }
     .accentColor(Color("GreenCustom"))
   }

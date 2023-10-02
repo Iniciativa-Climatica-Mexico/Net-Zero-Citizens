@@ -81,6 +81,10 @@ export const uploadCompanyFile = async (
   try {
     // Obtener la información de la empresa
     const company = await CompanyService.getCompanyById(companyId)
+    console.log("Company data: -----", company)
+    if (!company) {
+      throw new Error('Company not found')
+    }
 
     // Convertir el archivo a base64
     var base64data = Buffer.from(file.buffer, 'binary')
@@ -105,7 +109,6 @@ export const uploadCompanyFile = async (
       fileDescription: fileDescription,
       fileFormat: fileFormat,
     })
-
     return newFile
   } catch (error) {
     console.log(error)
