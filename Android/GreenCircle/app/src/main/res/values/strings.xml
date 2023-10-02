@@ -39,65 +39,6 @@
     <string name="review_placeholder_review">Review</string>
     <string name="reviews_written_user">Reseñas Escritas (</string>
     <string name="user_review_empty_view">No haz escrito ninguna reseña</string>
-    <string name="title_upload_docs">Subir documentos</string>
-    <string name="desc_upload_docs">Para poder validar tu empresa, te pedimos puedas compartir con nosotros los siguientes documentos</string>
-    <string name="app_logo">App logo</string>
-    <string name="arrow_back">arrow_back</string>
-    <string name="id_legal_title">INE representante legal</string>
-    <string name="file_size_desc">Hasta 50 MB por archivo y en .pdf</string>
-    <string name="constitutive_title">Acta constitutiva</string>
-    <string name="title_curriculum">Subir tu curriculum</string>
-    <string name="curriculum_desc">Este archivo deberá de incluir:</string>
-    <string name="curriculum_desc_list"><li>Presentación curricular (documento)</li>
-        \n<li>Listado de productos y servicios a ofrecer</li>
-        \n<li>Constancia de 5 proyectos verificables realizados con la tecnología ofertada</li>
-    </string>
-    <string name="curriculum_upload_title">Curriculum</string>
-    <string name="certifications_title">Sube tus certificaciones (Opcional)</string>
-    <string name="certifications_desc">En caso de contar con alguno de los siguientes documentos, por favor compártelo con nosotros</string>
-    <string name="comprobante_certificados_de_la_cdmx">Comprobante Directorio de Instaladores Certificados de la CDMX</string>
-    <string name="fide_title">Comprobante Padrón de Empresas Especializadas FIDE</string>
-    <string name="services">Servicios</string>
-    <string name="services_desc">Sube únicamente los documentos de los servicios que ofrece tu empresa</string>
-    <string name="sistemas_fotovoltaicos">Sistemas fotovoltaicos</string>
-    <string name="services_docs_desc">Por favor, comparte con nosotros un documento que incluya las siguientes certificaciones</string>
-    <string name="fotovolaticos_desc_list"><li>EC0586.01 Instalación de sistemas fotovoltaicos en residencias, comercios e industrias</li>
-        \n<li>EC1180 Asesoría técnica- comercial en proyectos de generación distribuida fotovoltaica</li>
-        \n<li>EC1181 Supervisión de sistemas fotovoltaicos en residencia, comercio e industria</li>
-    </string>
-    <string name="fotovoltaicos_upload_title">Certificaciones Sistemas Fotovoltaicos</string>
-    <string name="calentadores_solares">Calentadores solares</string>
-    <string name="calentadores_desc_list"><li>NMX-ES-001-2005</li>
-        \n<li>ISO 9806 + Informe de pruebas de laboratorio</li>
-        \n<li>EC-0325 “Instalación de sistema de calentamiento solar de agua termosifónico en vivienda sustentable</li>
-        \n<li>EC-0473 “Instalación del sistema de calentamiento solar de agua de circulación forzada con termotanque</li>
-    </string>
-    <string name="calentadores_side_text">Además, selecciona la presión de tu sistema e incluye en el <b>mismo documento</b>, la siguiente información correspondiente.</string>
-    <string name="calentadores_upload_title_more_than_294">Presión Mayor a 294 kPa</string>
-    <string name="calentadores_upload_desc_more_than_294"><li>NOM-027-ENER/SCH-2018</li>
-        \n<li>NMX-ES-004-NORMEX-2015</li>
-        \n<li>DTESTV + Informe de pruebas de laboratorio</li>
-    </string>
-    <string name="calentadores_upload_title_less_than_294">Presión Menor a 294 kPa</string>
-    <string name="calentadores_upload_desc_less_than_294"><li>5 proyectos verificables con antigüedad mayor a 5 años (descripción, contratos, fotografías)</li>
-        \n<li>Proporcionar datos para facilitar la comprobación de dichas instalaciones</li>
-    </string>
-    <string name="commitment_letter_title">Firmar carta compromiso</string>
-    <string name="commitment_letter_desc">Para terminar tu registro, te pedimos puedas firmar una carta compromiso de seguridad y garantía, la cual debe contener:</string>
-    <string name="commitment_letter_desc_bullet"><li>Garantía por escrito de 5 años contra defectos de fabricación y 1 año contra defectos en la instalación</li>
-        \n<li>Programa de mantenimiento por los siguientes 5 años</li>
-        \n<li>Manual de operación para usuario final</li>
-        \n<li>Elementos de operación y seguridad: jarro de aire, válvula anti-retorno, by-pass</li>
-    </string>
-    <string name="arrow_right">Arrow right</string>
-    <string name="commitment_upload_title">Carta compromiso</string>
-    <string name="privacy_agreement_accept">Acepto las <u>políticas de privacidad</u></string>
-    <string name="conditions_agreement_accept">Acepto los <u>términos y condiciones</u></string>
-    <string name="enroll_company_button_txt">Finalizar registro</string>
-    <string name="next">Siguiente</string>
-    <string name="continue_no_documents">Continuar sin subir documentos</string>
-    <string name="upload">Subir</string>
-    <string name="cancel">Cancelar</string>
     <string name="select_problem_prompt">Selecciona el problema</string>
 
     <string-array name="options_array">

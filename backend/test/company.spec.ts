@@ -55,6 +55,14 @@ const testData = [
     zipCode: '76152',
     profilePicture:
       'https://latam.apsystems.com/wp-content/uploads/2018/08/apsystems-exelsolar.png',
+    pdfCurriculumUrl: 'https://www.company2.com/pdfCurriculum.pdf',
+    pdfDicCdmxUrl: 'https://www.company2.com/pdfDicCdmx.pdf',
+    pdfPeeFideUrl: 'https://www.company2.com/pdfPeeFide.pdf',
+    pdfGuaranteeSecurityUrl:
+      'https://www.company2.com/pdfGuaranteeSecurity.pdf',
+    pdfActaConstitutivaUrl:
+      'https://example.com/company2-acta-constitutiva.pdf',
+    pdfIneUrl: 'https://example.com/company2-ine.pdf',
     status: 'rejected',
   },
   {

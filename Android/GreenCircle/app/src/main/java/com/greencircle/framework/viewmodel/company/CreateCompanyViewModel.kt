@@ -29,10 +29,6 @@ class CreateCompanyViewModel : ViewModel() {
     val googleLoginResult: LiveData<AuthResponse?> = _googleLoginResult
     val assignCompanyResult = MutableLiveData<String?>()
 
-    private val _createCompanyResult = MutableLiveData<CompanyAPIService.CreateCompanyResponse?>()
-    val createCompanyResult: LiveData<CompanyAPIService.CreateCompanyResponse?> =
-        _createCompanyResult
-
     /**
      * Realiza el inicio de sesión con Google utilizando el token proporcionado.
      *
@@ -51,14 +47,11 @@ class CreateCompanyViewModel : ViewModel() {
      * @param company La información de la empresa que se va a crear.
      * @param authToken El token de autenticación necesario para realizar la creación de la empresa.
      */
-    fun createCompany(
-        company: CompanyAPIService.CreateCompanyRequest,
-        authToken: String
-    ) {
-        var result: CompanyAPIService.CreateCompanyResponse? = null
+    fun createCompany(company: CompanyAPIService.CreateCompanyRequest, authToken: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            result = createCompanyRequirement(company, authToken)
-            _createCompanyResult.postValue(result)
+            // Invoca el modelo de dominio para crear la empresa.
+            val result: CompanyAPIService.CreateCompanyResponse? =
+                createCompanyRequirement(company, authToken)
         }
     }
 
