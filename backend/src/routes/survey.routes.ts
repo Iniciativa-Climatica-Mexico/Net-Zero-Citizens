@@ -8,5 +8,6 @@ router.get('/:surveyId', controller.getSurveyById)
 router.get('/pending/:userId', controller.getSurveyPending)
 router.post('/:surveyId/answer/:userId', controller.answerSurvey)
 router.post('/:surveyId/close', controller.closeSurvey)
+router.post('/', controller.createSurvey)
 
 export default router

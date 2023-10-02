@@ -6,8 +6,12 @@ import cors from 'cors'
 import { initRouterV1 } from './src/routes/index.routes'
 import { initDB } from './src/configs/database.config'
 import morgan from 'morgan'
+import { loadFromJson } from './scripts/loadCompanies'
 
-initDB()
+initDB().then(() => {
+  if (process.env.NODE_ENV === 'development')
+    loadFromJson('scripts/parsedCompanies.json')
+})
 
 const app = express()
 

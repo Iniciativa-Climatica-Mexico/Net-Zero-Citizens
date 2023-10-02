@@ -1,6 +1,5 @@
 package com.greencircle.framework.views.activities
 
-import ViewModelFactory
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -14,8 +13,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.greencircle.R
 import com.greencircle.databinding.ActivityLoginBinding
+import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.auth.LoginViewModel
 import com.greencircle.utils.AuthUtils
+import com.greencircle.utils.RequestPermissions
 
 /**
  * Actividad principal para la autenticación y registro de usuarios.
@@ -27,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private val authUtils = AuthUtils()
     private val viewModel: LoginViewModel by viewModels {
-        ViewModelFactory(applicationContext)
+        ViewModelFactory(applicationContext, LoginViewModel::class.java)
     }
 
     private val registerCompanyActivityResult =
@@ -46,6 +47,7 @@ class LoginActivity : AppCompatActivity() {
                 // Handle the case where the user canceled the registration
             }
         }
+
     private val googleSignInActivityResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -60,9 +62,7 @@ class LoginActivity : AppCompatActivity() {
                         viewModel.googleLogin(account.idToken!!)
                     } catch (e: ApiException) {
                         Toast.makeText(
-                            applicationContext,
-                            "Something went wrong",
-                            Toast.LENGTH_SHORT
+                            applicationContext, "Something went wrong", Toast.LENGTH_SHORT
                         ).show()
                     }
                 }
@@ -82,6 +82,8 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        validatePermissions()
+
         // Configuración de los listeners para los botones de registro de empresa y usuario
         registerCompanyOnClickListener()
         registerUserOnClickListener()
@@ -92,17 +94,20 @@ class LoginActivity : AppCompatActivity() {
         // Observador para el estado de autenticación
         viewModel.googleLoginResult.observe(this) { authResponse ->
             if (authResponse != null) {
-                if (authResponse.user.roles != "new_user") {
+                if (authResponse.user?.roles != "new_user") {
                     Log.d("Test", "User: ${authResponse.user}")
                     navigateToSurvey()
                 } else {
-                    Toast.makeText(applicationContext, "Por favor, regístrate", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(
+                        applicationContext, "Por favor, regístrate", Toast.LENGTH_SHORT
+                    ).show()
                     navigateToRegisterUser()
                 }
             } else {
                 // Handle the case where the Google login failed
-                Toast.makeText(applicationContext, "Google login failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    applicationContext, "Google login failed", Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -137,5 +142,11 @@ class LoginActivity : AppCompatActivity() {
     private fun navigateToRegisterUser() {
         var intent: Intent = Intent(this, RegisterUserActivity::class.java)
         registerUserActivityResult.launch(intent)
+    }
+
+    private fun validatePermissions() {
+        val requested: RequestPermissions = RequestPermissions()
+
+        requested.requestPermissions(this)
     }
 }

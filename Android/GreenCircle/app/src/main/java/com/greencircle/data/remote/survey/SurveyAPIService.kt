@@ -10,10 +10,10 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 interface SurveyAPIService {
-    @GET("pending/{userId}")
+    @GET("survey/pending/{userId}")
     suspend fun getSurveyPending(@Path("userId") userId: UUID): Survey?
 
-    @POST("{surveyId}/answer/{userId}")
+    @POST("survey/{surveyId}/answer/{userId}")
     suspend fun postSurveyAnswers(
         @Path("surveyId") surveyId: UUID,
         @Path("userId") userId: UUID,

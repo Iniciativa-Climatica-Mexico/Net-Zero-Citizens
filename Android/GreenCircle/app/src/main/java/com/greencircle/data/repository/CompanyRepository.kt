@@ -2,6 +2,7 @@ package com.greencircle.data.repository
 
 import com.greencircle.data.remote.company.CompanyAPIClient
 import com.greencircle.data.remote.company.CompanyAPIService
+import java.util.UUID
 
 /**
  * Repositorio para gestionar operaciones relacionadas con empresas.
@@ -24,4 +25,21 @@ class CompanyRepository {
         authToken: String
     ): CompanyAPIService.CreateCompanyResponse? =
         apiCompany.createCompany(company, authToken)
+
+    /**
+     * Asigna una empresa a un usuario en la API.
+     *
+     * @param authToken El token del autentificación.
+     * @param userId El id del usuario a asignar.
+     * @param companyID El id de la empresa a asignar.
+     * @return Un mensaje de respuesta de la API.
+     */
+    suspend fun assignCompany(authToken: String, userId: UUID, companyId: UUID): String? {
+        val res = apiCompany.assignCompany(authToken, userId, companyId)
+        if (res != null && res.isSuccessful) {
+            return res.body()?.message
+        } else {
+            return null
+        }
+    }
 }
