@@ -79,7 +79,7 @@ export const getFavouriteById: RequestHandler<
 
 export const deleteFavouriteById: RequestHandler<
   NoRecord,
-  Number | { message: string },
+  number | { message: string },
   NoRecord,
   { favouriteId: string }
 > = async (req, res) => {
