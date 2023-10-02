@@ -239,7 +239,7 @@ struct ReportReasonView: View {
                 Text(reason)
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
-
+                
                 Spacer()
                 if reason == selectedReason {
                     Image(systemName: "checkmark")
@@ -252,10 +252,8 @@ struct ReportReasonView: View {
 }
 
 struct CompanyReportView: View {
-
-    //@ObservedObject var modelCompanyRating: CompanyViewModel
-    @ObservedObject var modelComplaint: CompanyViewModel
-    @ObservedObject var viewModel: ComplaintViewModel
+    @ObservedObject var companyViewModel: CompanyViewModel
+    @ObservedObject var complaintViewModel: ComplaintViewModel
     @Binding var dispScrollView: Bool
     @State var hasTriedToSubmit: Bool = false
     @State var selectedReportReason: String? = nil
@@ -282,7 +280,7 @@ struct CompanyReportView: View {
                 .font(.system(size: 12))
                 .foregroundColor(Color("BlackCustom")).contrast(12.6)
                 .padding(.bottom, 20).bold()
-
+            
             if hasTriedToSubmit && (selectedReportReason == nil || selectedReportReason!.isEmpty) {
                 Text("Por favor, selecciona una razón para reportar.")
                     .font(.system(size: 14))
@@ -310,7 +308,6 @@ struct CompanyReportView: View {
                 TextField("Comentario adicional al reporte...", text: $description)
                     .disableAutocorrection(true)
                     .padding(.top, 3)
-                    .padding(.bottom, 10)
                     .font(.system(size: 16))
                     .textFieldStyle(RoundedBorderTextFieldStyle())
 
@@ -323,7 +320,7 @@ struct CompanyReportView: View {
                         } else {
                             Task {
                                 print("print.......")
-                                print(await viewModel.handleSubmit(complaintSubject: selectedReportReason ?? "", complaintDescription: description.isEmpty ? nil : description))
+                                print(await complaintViewModel.handleSubmit(complaintSubject: selectedReportReason ?? "", complaintDescription: description.isEmpty ? nil : description, companyId: companyViewModel.contentCompany.companyId.uuidString))
                                 showAlert = true
                             }
                         }
@@ -337,11 +334,11 @@ struct CompanyReportView: View {
                     }
                     Spacer()
                 }
+                .padding(.top, 30)
             }
-            .frame(height: 350)
-            .padding(.top, 30)
+            .frame(height: 300)
         }
-        .padding(EdgeInsets(top: 250, leading: 20, bottom: 0, trailing: 20))
+        .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
         .foregroundColor(Color("BlackCustom"))
         .alert(isPresented: $showAlert) {
             Alert(title: Text("Confirmación"), message: Text("El reporte ha sido enviado con éxito."), dismissButton: .default(Text("Ok")))
@@ -357,13 +354,14 @@ struct CompanyReportView: View {
 struct ContactCompanyView: View {
   var idCompany: UUID
   @StateObject var contactCompanyViewModel = CompanyViewModel()
-  @StateObject var viewModel = ComplaintViewModel()
+  @StateObject var complaintViewModel = ComplaintViewModel()
   @State private var showAlert = false
   @State var isPressed: [String: Bool] = ["Producto": true]
   @State var selectedPage: Int = 0
   @State var dispScrollView: Bool = false
   @State var bindImageToDescription: Bool = false
   @State var stringDescription: String = ""
+  @State var showingAlert: Bool = false
 
   @Environment(\.presentationMode) var presentationMode
 
@@ -379,11 +377,26 @@ struct ContactCompanyView: View {
                     case .empty:
                       ProgressView()
                     case .success(let image):
-                      image
-                        .resizable()
-                        .scaledToFill()
-                        .frame(maxWidth: .infinity, maxHeight: 155)
-                        .cornerRadius(10, corners: [.bottomLeft, .bottomRight])
+                      ZStack {
+                        image
+                          .resizable()
+                          .scaledToFill()
+                          .frame(maxWidth: .infinity, maxHeight: 155)
+                          .cornerRadius(10, corners: [.bottomLeft, .bottomRight])
+                        VStack {
+                          Spacer()
+                          HStack {
+                            Spacer()
+                            .alert(isPresented: $showingAlert) {
+                              Alert(title: Text("Nuevo favorito!"),
+                                    message: Text("Se agregó: " + contactCompanyViewModel.contentCompany.name +
+                                                  " a tu lista de favoritos"),
+                                    dismissButton: .default(Text("Ok")))
+                            }
+                          }
+                        }
+                      }
+                     
                     case .failure:
                       Text("Failed to load Image!!")
                     @unknown default:
@@ -424,7 +437,7 @@ struct ContactCompanyView: View {
                 }
               }
               if key == "Report" {
-                CompanyReportView(modelComplaint: contactCompanyViewModel, viewModel: viewModel, dispScrollView: $dispScrollView).onAppear {
+                CompanyReportView(companyViewModel: contactCompanyViewModel, complaintViewModel: complaintViewModel, dispScrollView: $dispScrollView).onAppear {
                     bindImageToDescription = false
                   }
 
@@ -448,7 +461,7 @@ struct ContactCompanyView: View {
                   message: Text("No contamos con products aún"),
                   dismissButton: .default(Text("Ok")) {
               presentationMode.wrappedValue.dismiss()
-
+              
             }
         )
           }
@@ -461,5 +474,4 @@ struct ContactCompanyView: View {
       }
     }
 }
-
 
