@@ -3,7 +3,7 @@
 //  GreenCircle
 //
 //  Created by Ricardo Adolfo Fernández Alvarado on 12/09/23.
-//  Modified by Daniel Gutiérrez Gómez 26/09/23 
+//  Modified by Daniel Gutiérrez Gómez 26/09/23
 
 import FlowStacks
 import SwiftUI
@@ -127,12 +127,9 @@ struct CoordinatorView: View {
     routes.presentCover(.companyRegisterDivider)
   }
   
-    private func goUploadCompanyFiles(photovoltaicToggle: Binding<Bool>, solarToggle: Binding<Bool>) {
-        self.photovoltaicToggle = photovoltaicToggle.wrappedValue
-        self.solarToggle = solarToggle.wrappedValue
-        routes.presentCover(.uploadCompanyFiles)
-    }
-
+  private func goUploadCompanyFiles(photovoltaicToggle: Binding<Bool>, solarToggle: Binding<Bool>) {
+    routes.presentCover(.uploadCompanyFiles)
+  }
   
   private func goPending() {
     routes.presentCover(.pendingCompany)
