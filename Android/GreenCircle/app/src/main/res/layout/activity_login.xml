@@ -1,125 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?><!--tools:context=".framework.views.fragments.RegisterCompanyFragment" -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical">
-
-    <!-- First LinearLayout, occupies half of the height -->
-    <LinearLayout
-        android:id="@+id/firstLinearLayout"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.75"
+        android:layout_height="match_parent"
         android:background="@android:color/white"
-        android:orientation="vertical"
-        android:padding="30dp">
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="20dp"
-            android:src="@drawable/icon_leaf" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="Inicia sesión con tu cuenta"
-            android:textColor="@color/black"
-            android:textSize="30sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nos da gusto verte de regreso"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
-    </LinearLayout>
-
-    <!-- Second LinearLayout, occupies half of the height -->
-    <RelativeLayout
-        android:id="@+id/secondLinearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@drawable/rounded_edge_background"
-        android:gravity="center"
         android:orientation="vertical">
 
+        <!-- First LinearLayout, occupies half of the height -->
         <LinearLayout
+            android:id="@+id/firstLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="top"
+            android:background="@android:color/white"
             android:orientation="vertical"
             android:padding="30dp">
 
-            <com.google.android.gms.common.SignInButton
-                android:id="@+id/sign_in_button"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginBottom="10dp" />
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/icon_leaf" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="Inicia sesión con tu cuenta"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Accede a tu cuenta para continuar"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
         </LinearLayout>
 
-
+        <!-- Second LinearLayout, occupies half of the height -->
         <LinearLayout
+            android:id="@+id/secondLinearLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_height="match_parent"
+            android:background="@drawable/rounded_edge_background"
             android:gravity="center"
             android:orientation="vertical">
 
-            <View
-                android:layout_width="300dp"
-                android:layout_height="1dp"
-                android:background="#B7B7B8" />
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:gravity="start"
-                android:orientation="horizontal"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp">
+                android:layout_height="match_parent"
+                android:gravity="top"
+                android:orientation="vertical"
+                android:layout_marginBottom="10dp"
+                android:padding="30dp">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/user_email"
+                    style="?attr/textInputOutlinedDenseStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:hint="Email *"
+                    android:textColorHint="@color/gray_500"
+                    app:boxStrokeColor="@color/blue"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/gray_500"
+                    app:hintTextColor="@color/blue"
+                    app:boxBackgroundColor="@color/white">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/gray_900" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/user_password"
+                    style="?attr/textInputOutlinedDenseStyle"
+                    android:inputType="textPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:hint="Contraseña *"
+                    android:textColorHint="@color/gray_500"
+                    app:boxStrokeColor="@color/blue"
+                    app:endIconTint="@color/gray_500"
+                    app:hintTextColor="@color/blue"
+                    app:boxBackgroundColor="@color/white"
+                    app:endIconMode="password_toggle">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/gray_900" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <Button
+                    android:id="@+id/submit_create_company"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="30dp"
+                    android:text="Iniciar Sesión"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    app:backgroundTint="@color/blue"
+                    app:rippleColor="@color/primary_700"
+                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
 
                 <TextView
                     style="@style/Widget.Material3.Button.TextButton"
-                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="¿No tienes una cuenta?"
+                    android:layout_width="match_parent"
+                    android:text="O ingresa con"
                     android:textColor="@color/black"
                     android:textSize="14sp"
-                    android:gravity="start"/>
+                    android:gravity="center"
+                    android:layout_marginBottom="20dp"/>
 
-                <Button
-                    android:id="@+id/login_register_user"
-                    style="@style/Widget.Material3.Button.TextButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Regístrate"
-                    android:textColorLink="@color/blue"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:gravity="end"/>
+                <com.google.android.gms.common.SignInButton
+                    android:id="@+id/sign_in_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"/>
+
             </LinearLayout>
 
-            <Button
-                android:id="@+id/login_register_company"
-                style="@style/Widget.Material3.Button.TextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:text="Soy Proveedor"
-                android:textSize="14sp"
-                android:textFontWeight="800"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp">
+
+                <View
+                    android:layout_width="300dp"
+                    android:layout_height="1dp"
+                    android:background="#B7B7B8" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="start"
+                    android:orientation="horizontal"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp">
+
+                    <TextView
+                        style="@style/Widget.Material3.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="¿No tienes una cuenta?"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:gravity="start"/>
+
+                    <Button
+                        android:id="@+id/login_register_user"
+                        style="@style/Widget.Material3.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Regístrate"
+                        android:textColorLink="@color/blue"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:gravity="end"/>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/login_register_company"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:text="Soy Proveedor"
+                    android:textSize="14sp"
+                    android:textFontWeight="800"/>
+            </LinearLayout>
         </LinearLayout>
-
-
-    </RelativeLayout>
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>
