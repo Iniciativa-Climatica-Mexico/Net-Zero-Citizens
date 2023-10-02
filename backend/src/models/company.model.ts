@@ -13,6 +13,7 @@ import CompanyProducts from './companyProducts.model'
 import Product from './products.model'
 import User from './users.model'
 import Complaint from './complaint.model'
+import Favourites from './favourite.model'
 
 type StatusEnum = 'approved' | 'pending_approval' | 'rejected'
 
@@ -177,4 +178,7 @@ export default class Company extends Model {
 
   @HasMany(() => Complaint)
   complaints: Complaint[]
+
+  @HasMany(() => Favourites)
+  favourites: Favourites[]
 }
