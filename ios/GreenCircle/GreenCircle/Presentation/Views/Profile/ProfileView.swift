@@ -20,9 +20,9 @@ struct ProfileView: View {
           TitleBarView(
             title: "Mi Perfil",
             leftIcon: nil,
-            rightIcon: "person.fill",
+            rightIcon: nil,
             leftDestination: {  },
-            rightDestination: { EditProfileView(modelUser: UserViewModel()) }
+            rightDestination: { }
           )
           .frame(height: 10)
           .offset(y: -60)

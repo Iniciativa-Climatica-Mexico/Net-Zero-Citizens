@@ -22,7 +22,7 @@ struct SectionTitleBar: View{
           title: "Editar Datos",
           leftIcon: nil,//"chevron.left",
           rightIcon: nil,
-          leftDestination: {  },
+          leftDestination: { },
           rightDestination: { }
           )
           .frame(height: 10)
@@ -82,7 +82,7 @@ struct Section1: View{
         .textFieldStyle(RoundedBorderTextFieldStyle())
       
       //---Field Apellido----------------------------------------------------------
-      Text("Primer Apellido")
+      Text("Apellido")
         .padding(.top, 16)
         .foregroundColor(Color("GreenColor"))
         .font(.system(size: 13))
