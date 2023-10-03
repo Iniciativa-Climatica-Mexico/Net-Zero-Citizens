@@ -8,8 +8,8 @@
 import Foundation
 
 protocol ReviewUseCaseProtocol {
-    func fetchReviewByCompanyId(cmpyId: String) async -> Review?
-    func fetchReviewByUserId(usId: String) async -> Review?
+    func fetchReviewByCompanyId(cmpyId: String) async -> PaginatedQuery<Review>?
+    func fetchReviewByUserId(usId: String) async -> PaginatedQuery<Review>?
 }
 
 class ReviewUseCase {
@@ -17,12 +17,12 @@ class ReviewUseCase {
     static var shared = ReviewUseCase()
     
     @MainActor
-    func fetchReviewByCompanyId(cmpyId: String) async -> Review? {
+    func fetchReviewByCompanyId(cmpyId: String) async -> PaginatedQuery<Review>? {
         return await repository.fetchReviewByCompanyId(companyId: cmpyId)
     }
     
     @MainActor
-    func fetchReviewByUserId(usId: String) async -> Review? {
+    func fetchReviewByUserId(usId: String) async -> PaginatedQuery<Review>? {
         return await repository.fetchReviewByUserId(userId: usId)
     }
 }

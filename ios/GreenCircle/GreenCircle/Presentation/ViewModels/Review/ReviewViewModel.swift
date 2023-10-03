@@ -10,16 +10,7 @@ import Foundation
 class ReviewViewModel: ObservableObject {
     private let fetchReviewUseCase: ReviewUseCase
     
-    @Published var contentReview: Review = Review(
-        reviewId: UUID(),
-        userID: UUID(),
-        companyId: UUID(),
-        reviewTitle: "",
-        score: 0,
-        review: "",
-        createdAt: Date(),
-        updatedAt: Date()
-    )
+    @Published var contentReview =  [Review]()
     
     init (
         reviewUseCase: ReviewUseCase = ReviewUseCase.shared
@@ -33,7 +24,7 @@ class ReviewViewModel: ObservableObject {
         let resultReview = await fetchReviewUseCase.fetchReviewByCompanyId(cmpyId: companyId)
         if let resultReview = resultReview {
             print("Review recibida: \(resultReview)")
-            contentReview = resultReview
+            contentReview = resultReview.rows
         } else {
             print("No se pudo obtener la review por Company")
         }
@@ -43,7 +34,7 @@ class ReviewViewModel: ObservableObject {
         let resultReview = await fetchReviewUseCase.fetchReviewByUserId(usId: userId)
         if let resultReview = resultReview {
             print("Review recibida: \(resultReview)")
-            contentReview = resultReview
+            contentReview = resultReview.rows
         } else {
             print("No se pudo obtener la review por User")
         }

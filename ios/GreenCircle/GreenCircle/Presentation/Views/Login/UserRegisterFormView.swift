@@ -68,23 +68,28 @@ struct UserRegisterFormView: View {
         Button("Ok", role: .cancel){}
       }
       Spacer()
-      
+            
+    }.onTapGesture {
+        hideKeyboard()
     }
     .foregroundColor(Color("MainText"))
   }
+    private func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
 }
 
-struct UserRegisterFormView_Previews: PreviewProvider {
-  
-  static var previews: some View {
-    UserRegisterFormView(goMainMenu: {})
-      .environmentObject(UserData(
-        UserAuth(first_name: "Ricardo",
-                 last_name: "Fernandez",
-                 uuid: "1",
-                 email: "ricardo@mail.com",
-                 login_type: "google",
-                 picture: "picture",
-                 roles: "new_user")))
-  }
-}
+//struct UserRegisterFormView_Previews: PreviewProvider {
+//  
+//  static var previews: some View {
+//    UserRegisterFormView(goMainMenu: {})
+//      .environmentObject(UserData(
+//        UserAuth(first_name: "Ricardo",
+//                 last_name: "Fernandez",
+//                 uuid: "1",
+//                 email: "ricardo@mail.com",
+//                 login_type: "google",
+//                 picture: "picture",
+//                 roles: "new_user")))
+//  }
+//}

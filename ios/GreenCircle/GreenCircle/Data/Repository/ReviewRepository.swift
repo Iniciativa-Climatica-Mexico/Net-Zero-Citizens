@@ -9,17 +9,17 @@ import Foundation
 
 /// Clase con la estructura de la API de autenticación
 class ReviewAPI {
-  static let base = "http://localhost:4000/api/v1/review"
+  static let base = "http://mayras-macbook-air.local:4000/api/v1/review"
   struct Routes {
     static let companyReview = "/company/" //:companyId
     static let userReview = "/user/" //:userId
   }
 }
 
-/// Protocolo con la declaración del repositorio del usuario
+/// Protocolo con la declaración del repositorio del usuario2
 protocol ReviewRepositoryProtocol {
-  func fetchReviewByCompanyId(companyId: String) async -> Review?
-    func fetchReviewByUserId(userId: String) async -> Review?
+  func fetchReviewByCompanyId(companyId: String) async -> PaginatedQuery<Review>?
+    func fetchReviewByUserId(userId: String) async -> PaginatedQuery<Review>?
 }
 
 
@@ -36,11 +36,11 @@ class ReviewRepository: ReviewRepositoryProtocol {
       
   }
 
-    func fetchReviewByCompanyId(companyId: String) async -> Review? {
-      return await backEndService.fetchReviewByCompanyId(url: URL(string: "\(ReviewAPI.base)/\(companyId)")!)
+    func fetchReviewByCompanyId(companyId: String) async -> PaginatedQuery<Review>? {
+        return await backEndService.fetchReviewByCompanyId(url: URL(string: "\(ReviewAPI.base)\(ReviewAPI.Routes.companyReview)/\(companyId)")!)
     }
     
-  func fetchReviewByUserId(userId: String) async -> Review? {
-    return await backEndService.fetchReviewByUserId(url: URL(string: "\(ReviewAPI.base)/\(userId)")!)
+  func fetchReviewByUserId(userId: String) async -> PaginatedQuery<Review>? {
+      return await backEndService.fetchReviewByUserId(url: URL(string: "\(ReviewAPI.base)\(ReviewAPI.Routes.userReview)/\(userId)")!)
   }
 }

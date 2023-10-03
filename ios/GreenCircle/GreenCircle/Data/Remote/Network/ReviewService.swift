@@ -27,7 +27,7 @@ class ReviewService {
             ]
         }
     
-    func fetchReviewByCompanyId(url: URL) async -> Review? {
+    func fetchReviewByCompanyId(url: URL) async -> PaginatedQuery<Review>? {
         // Usando el nuevo authToken hardcodeado
 
         let taskRequest = AF.request(url, method: .get, headers: headers).validate()
@@ -42,7 +42,7 @@ class ReviewService {
               }
             do {
                         decoder.dateDecodingStrategy = .iso8601WithFractionalSeconds
-                        return try decoder.decode(Review.self, from: data)
+                        return try decoder.decode(PaginatedQuery<Review>.self, from: data)
                     } catch {
                         // Log the error to help with debugging
                         print("Failed to decode JSON: \(error)")
@@ -56,7 +56,7 @@ class ReviewService {
         }
     }
     
-    func fetchReviewByUserId(url: URL) async -> Review? {
+    func fetchReviewByUserId(url: URL) async -> PaginatedQuery<Review>? {
         // Usando el nuevo authToken hardcodeado
 
         let taskRequest = AF.request(url, method: .get, headers: headers).validate()
@@ -71,7 +71,7 @@ class ReviewService {
               }
             do {
                         decoder.dateDecodingStrategy = .iso8601WithFractionalSeconds
-                        return try decoder.decode(Review.self, from: data)
+                        return try decoder.decode(PaginatedQuery<Review>.self, from: data)
                     } catch {
                         // Log the error to help with debugging
                         print("Failed to decode JSON: \(error)")

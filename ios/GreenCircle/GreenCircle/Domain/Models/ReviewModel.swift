@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct Review: Codable {
+struct Review: Codable, Identifiable {
+    var id: String { reviewId.uuidString }
     var reviewId: UUID
     var userID: UUID
     var companyId: UUID
@@ -16,4 +17,5 @@ struct Review: Codable {
     var review: String
     var createdAt: Date
     var updatedAt: Date
+//    var user: User
 }
