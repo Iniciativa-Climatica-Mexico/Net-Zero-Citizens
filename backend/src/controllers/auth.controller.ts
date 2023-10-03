@@ -12,7 +12,7 @@ import { RequestHandler } from 'express'
 export const googleLogin: RequestHandler<
   NoRecord,
   AuthService.AuthResponse,
-  { googleToken: string },
+  { googleToken: string; ios?: boolean },
   NoRecord
 > = async (req, res) => {
   let authResponse: AuthService.AuthResponse = {
@@ -25,9 +25,9 @@ export const googleLogin: RequestHandler<
     authResponse.error = 'No google token provided'
     return res.json(authResponse)
   }
-  const { googleToken } = req.body
+  const { googleToken, ios } = req.body
 
-  const data = await AuthService.googleLogin(googleToken)
+  const data = await AuthService.googleLogin(googleToken, ios)
 
   if (!data?.user || !data.tokens) {
     authResponse.error = 'Invalid user'
