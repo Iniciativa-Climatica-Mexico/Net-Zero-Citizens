@@ -1,6 +1,7 @@
 package com.greencircle.framework.views.fragments.map
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -78,9 +79,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun getCompanyList() {
+        val sharedPreferences =
+            context?.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+
+        val authToken = sharedPreferences?.getString("auth_token", null)!!
+
         CoroutineScope(Dispatchers.IO).launch {
             val companyRepository = GoogleMapsRepository()
-            val result: List<Company>? = companyRepository.getCompanyList()
+            val result: List<Company>? = companyRepository.getCompanyList(authToken)
 
             Log.d("MapFragment", "result: $result")
 
