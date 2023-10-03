@@ -315,7 +315,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="false"
-                    android:text=""
                     android:thumbTint="@color/white"
                     android:trackTint="@color/green"
                     app:thumbIcon="@drawable/baseline_check_24"
@@ -330,7 +329,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Acepto las"
-                    android:paddingLeft="10dp"
+                    android:paddingLeft="3dp"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
