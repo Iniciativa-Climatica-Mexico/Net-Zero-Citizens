@@ -82,4 +82,11 @@ class CreateUserViewModel(private val context: Context) : ViewModel() {
             }
         }
     }
+
+    companion object {
+        var phone: String = ""
+        var age: String = ""
+        var state: String = ""
+        var gender: String = ""
+    }
 }
