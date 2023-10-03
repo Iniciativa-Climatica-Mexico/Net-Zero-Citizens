@@ -21,7 +21,7 @@ class SurveyViewModel : ViewModel() {
     val surveyLiveData = MutableLiveData<Survey?>()
     val submitStatusLiveData = MutableLiveData<SubmitStatus>()
     val surveyPendingRequirement = SurveyRequirement()
-    fun getSurveyPending() {
+    fun getSurveyPending(userId: UUID) {
         viewModelScope.launch(Dispatchers.IO) {
             val data = surveyPendingRequirement.getSurveyPending()
             Log.d("Salida", data?.toString() ?: "null")

@@ -12,6 +12,7 @@ import com.greencircle.domain.model.survey.Question
 import com.greencircle.framework.viewmodel.survey.SurveyViewModel
 import com.greencircle.framework.views.fragments.survey.QuestionFragment
 import java.util.UUID
+import org.json.JSONObject
 
 class SurveyActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySurveyBinding
@@ -20,6 +21,7 @@ class SurveyActivity : AppCompatActivity() {
     private var currentProgress = 0
     private var totalQuestions = 0
     lateinit var userId: UUID
+    private val answeredQuestions = mutableSetOf<UUID>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,9 +103,12 @@ class SurveyActivity : AppCompatActivity() {
     }
 
     fun onQuestionAnswered(questionId: UUID, answer: String) {
-        viewModel.onQuestionAnswered(questionId, answer)
-        currentProgress++
-        updateProgressBar()
+        if (!answeredQuestions.contains(questionId)) {
+            viewModel.onQuestionAnswered(questionId, answer)
+            answeredQuestions.add(questionId)
+            currentProgress++
+            updateProgressBar()
+        }
     }
 
     private fun goToMain() {
