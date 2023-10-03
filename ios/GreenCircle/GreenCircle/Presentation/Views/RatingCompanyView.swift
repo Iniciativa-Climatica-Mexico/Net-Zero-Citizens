@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ScrollViewRating: View {
   var idCompany: UUID
+  @State var emptyHeartFill: Bool
   @Binding var dispScrollView: Bool
   @Binding var isPressed: [String: Bool]
   
@@ -30,7 +31,7 @@ struct ScrollViewRating: View {
         .navigationTitle("Reviews!")
           .navigationBarTitleDisplayMode(.inline)
       } else {
-        ContactCompanyView(idCompany: idCompany).onAppear { dispScrollView = false }
+        ContactCompanyView(idCompany: idCompany, emptyHeartFill: $emptyHeartFill).onAppear { dispScrollView = false }
       }
         
     }

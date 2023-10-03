@@ -3,108 +3,159 @@
 //  catalogo
 //
 //  Created by Diego Iturbe on 18/09/23.
-//
+//  Modified by Daniel Gutiérrez Gómez 26/09/23
 
 import SwiftUI
 
-
-struct CatalogView: View {
-  @StateObject var viewModel = CompanyViewModel()
-  @State var availableProducts = false
+struct CardCatalogView: View {
+  @StateObject var viewModel: CompanyViewModel
+  @StateObject var favouriteViewModel: FavouriteViewModel
+  @State var emptyHeartFill: Bool = false
+  @State var showingAlert: Bool = false
+  var companyId: UUID
+  var companyName: String
+  var city: String
+  var state: String
+  
+  init(companyId: UUID, companyName: String, city: String, state: String) {
+    _viewModel = StateObject(wrappedValue: CompanyViewModel())
+    _favouriteViewModel = StateObject(wrappedValue: FavouriteViewModel())
+    self.companyId = companyId
+    self.companyName = companyName
+    self.city = city
+    self.state = state
+  }
+  
   var body: some View {
-    
-    NavigationStack {
-      List(viewModel.companies) { company in
-          ZStack {
-            NavigationLink(destination: ContactCompanyView(idCompany: company.companyId)) {
-              EmptyView()
-            }.buttonStyle(PlainButtonStyle())
-            RoundedRectangle(cornerRadius: 25, style: .continuous)
-              .fill(.white)
-              .shadow(color: .gray, radius: 2)
-              .frame(width: 350, height: 160) // Adjusted card size
-
+    NavigationLink(destination: ContactCompanyView(idCompany: companyId, emptyHeartFill: $emptyHeartFill)){
+      ZStack {
+        RoundedRectangle(cornerRadius: 10, style:.continuous)
+          .fill(.white)
+          .frame(width: 335, height: 150)
+          .shadow(color: Color("BlueCustom"), radius: 1)
+        HStack {
+          VStack (alignment: .leading) {
+            if let imageURL = URL(string: viewModel.contentCompany.images?.first?.imageUrl ?? "") {
+              AsyncImage(url: imageURL) { phase in
+                switch phase {
+                  case .empty:
+                    Image(systemName: "square.fill")
+                      .resizable()
+                      .frame(width: 100, height: 100)
+                      .foregroundColor(.gray)
+                      .opacity(0.3)
+                  case .success(let image):
+                    image
+                      .resizable()
+                      .scaledToFit()
+                      .cornerRadius(10, corners: [.bottomLeft, .bottomRight, .topLeft, .topRight])
+                      .frame(width: 100, height: 100)
+                  case .failure:
+                    Text("Failed to load Image!!")
+                  @unknown default:
+                    fatalError()
+                }
+              }
+            } else {
+              Image(systemName: "square.fill")
+                .resizable()
+                .frame(width: 100, height: 100)
+                .foregroundColor(.gray)
+                .opacity(0.3)
+            }
+          }
+          Spacer()
+          VStack(alignment: .leading, spacing: 7) {
+            HStack(alignment: .top) {
+              Text(companyName)
+                .font(.system(size: 17))
+                .lineLimit(2)
+                .foregroundColor(Color("MainText"))
+                .fontWeight(.bold)
+            }
             HStack {
-              if let imageURL = URL(string: company.images?.first?.imageUrl ?? "") {
-                AsyncImage(url: imageURL) { phase in
-                  switch phase {
-                    case .empty:
-                      Image(systemName: "square.fill")
-                        .resizable()
-                        .frame(width: 90, height: 100)
-                        .foregroundColor(.gray)
-                    case .success(let image):
-                      image
-                        .resizable()
-                        .scaledToFit()
-                        .cornerRadius(10, corners: [.bottomLeft, .bottomRight, .topLeft, .topRight])
-                        .frame(width: 100, height: 100)
-                    case .failure:
-                      Text("Failed to load Image!!")
-                    @unknown default:
-                      fatalError()
+              Image(systemName: "location.fill")
+                .foregroundColor(Color("BlueCustom"))
+              Text("\(city), \(state)")
+                .font(.system(size: 13))
+                .lineSpacing(2)
+            }.foregroundColor(Color("MainText"))
+              .padding(.bottom, 3)
+            
+            HStack {
+              ForEach(0..<5, id: \.self) { index in
+                Image(systemName: index < Int(viewModel.contentCompany.score!) ? "star.fill" : "star")
+              }.foregroundColor(Color("GreenCustom"))
+              Text("\(Int(viewModel.contentCompany.score!))")
+            }.font(.system(size: 13))
+              .foregroundColor(Color("GreenCustom"))
+          }
+          .frame(maxWidth: 180, maxHeight: 120)
+          .multilineTextAlignment(.leading)
+          Spacer()
+          VStack {
+            Button(action: {
+              if !emptyHeartFill {
+                Task {
+                  await favouriteViewModel.postFavouriteById(companyId: companyId)
+                  if favouriteViewModel.contentFavourite.message ==
+                      "Favourite created" {
+                    emptyHeartFill = true
+                    showingAlert = true
                   }
                 }
               } else {
-                Image(systemName: "square.fill")
-                  .resizable()
-                  .frame(width: 90, height: 90)
-                  .foregroundColor(.gray)
+                /// TODO : Delete favourite
+                /// emptyFill = false
               }
-
-              VStack(spacing: 10) {
-                Text(company.name)
-                  .font(.title)
-                
-                  .fontWeight(.bold)
-                  .foregroundColor(.black)
-                HStack {
-                    Image(systemName: "location.fill")
-                      .foregroundColor(.green)
-                    Text("\(company.streetNumber) \(company.street)")
-                      .foregroundColor(.green)
-                }
-                HStack {
-                  Image(systemName: "star.fill")
-                    .foregroundColor(.green)
-                  Image(systemName: "star.fill")
-                    .foregroundColor(.green)
-                  Image(systemName: "star")
-                    .foregroundColor(.green)
-                  Image(systemName: "star")
-                    .foregroundColor(.green)
-                  Image(systemName: "star")
-                    .foregroundColor(.green)
-                  Text(String(0))
-                    .foregroundColor(.green)
-                }
-              }
-              .multilineTextAlignment(.center)
-              Image(systemName: "heart")
-                .foregroundColor(.gray)
               
+            }, label: {
+              Image(systemName: emptyHeartFill ? "heart.fill" : "heart")
+                .foregroundColor(Color("BlueCustom"))
+                .font(.system(size: 24))
+                .padding(.top, 20)
+            }).alert(isPresented: $showingAlert) {
+              Alert(title: Text("Nuevo favorito!"),
+                    message: Text("Se agregó: " + companyName +
+                                  " a tu lista de favoritos"),
+                    dismissButton: .default(Text("Ok")))
             }
-            .frame(width: 330, height: 180)
+              Spacer()
+            }.frame(maxWidth: 25)
           }
-
-          .listRowSeparator(.hidden)
-          .listRowInsets(.init(top: 10, leading:10, bottom:0, trailing:10))
-          .padding(.vertical, 5)
+          .frame(maxWidth: 300, maxHeight: 140)
         }
-      .padding(EdgeInsets(top: 0, leading: 2, bottom: 0, trailing: 2))
-
-        .listRowInsets(.init(top: 10, leading:10, bottom:0, trailing:10))
-        
-        .listStyle(.plain)
-        .navigationTitle("Proveedores")
-        .navigationBarTitleDisplayMode(.inline)
-
-    }.accentColor(.white)
-      .onAppear {
-      Task {
-        await viewModel.fetchAllCompanies()
+      }.onAppear {
+        Task {
+          await viewModel.fetchCompanyById(idCompany: companyId)
+        }
       }
+      .navigationTitle("Proveedores")
+      .navigationBarTitleDisplayMode(.inline)
     }
   }
+
+struct CatalogView: View {
+  @StateObject var viewModel = CompanyViewModel()
+  var body: some View {
+    NavigationStack {
+      ScrollView {
+        LazyVStack{
+          ForEach(viewModel.companies, id: \.id) { company in
+            CardCatalogView(companyId: company.companyId,
+                            companyName: company.name, city: company.city, state: company.state)
+          }.padding(.top, 5)
+        }.padding(.top, 10)
+      }
+      .onAppear {
+        Task {
+          await viewModel.fetchAllCompanies()
+        }
+      }
+    }
+    .accentColor(.white)
+  }
 }
+    
+
 

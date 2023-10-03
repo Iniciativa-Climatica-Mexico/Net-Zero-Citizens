@@ -37,7 +37,7 @@
     <color name="gray_700">#B2333333</color>
     <color name="gray_800">#CC333333</color>
     <color name="gray_900">#E6333333</color>
+    <color name="gray_1000">#E6E6E6</color>
 
     <color name="red">#B85C5C</color>
-
 </resources>

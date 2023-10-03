@@ -45,7 +45,7 @@ data class Companies(
     @SerializedName("phone") val phone: String,
     @SerializedName("webPage") val webPage: String? = null,
     @SerializedName("street") val street: String,
-    @SerializedName("streetNumber") val streetNumber: Int,
+    @SerializedName("streetNumber") val streetNumber: String,
     @SerializedName("city") val city: String,
     @SerializedName("state") val state: String,
     @SerializedName("zipCode") val zipCode: Int,

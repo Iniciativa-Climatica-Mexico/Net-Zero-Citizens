@@ -16,6 +16,20 @@ export type QuestionDetail = {
   isRequired: boolean
 }
 
+type CreateSurveyBody = {
+  title: string
+  description: string
+  questions: Question[]
+}
+
+type Question = {
+  id: number
+  questionText: string
+  questionType: string
+  isRequired: boolean
+  options?: string[]
+}
+
 export async function fetchAllSurveys() {
   const res = await authAxios().get('/survey')
 
@@ -32,6 +46,17 @@ export async function fetchSurveyById(surveyId: string) {
 
   if (!statusOk(res.status)) {
     console.error('Failed to fetch survey')
+    return null
+  }
+
+  return res.data as Survey
+}
+
+export async function createSurvey(survey: CreateSurveyBody) {
+  const res = await authAxios().post('/survey', survey)
+
+  if (!statusOk(res.status)) {
+    console.error('Failed to create survey')
     return null
   }
 

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import GoogleSignIn
+import MapKit
 
 @main
 struct GreenCircleApp: App {
@@ -14,7 +15,6 @@ struct GreenCircleApp: App {
   var body: some Scene {
     WindowGroup {
       CoordinatorView()
-        .environmentObject(UserData())
         .onOpenURL { url in
           GIDSignIn.sharedInstance.handle(url)
         }

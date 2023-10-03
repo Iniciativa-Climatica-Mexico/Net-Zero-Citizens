@@ -7,21 +7,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="49dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/backButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="9dp"
-            android:src="@drawable/arrow_back_icon"
-            app:tint="@color/green"
-            app:backgroundTint="@color/white"
-            android:contentDescription="Back arrow" />
-
+mn
         <View
             android:layout_width="0dp"
             android:layout_height="1dp"
@@ -32,8 +22,8 @@
             android:layout_height="35dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="9dp"
-            android:src="@drawable/icon_leaf"
-            android:contentDescription="Logo of the app" />
+            android:contentDescription="Logo of the app"
+            android:src="@drawable/icon_leaf" />
 
     </LinearLayout>
 
@@ -141,6 +131,19 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/errorMsg"
+            android:text="Debes seleccionar al menos un servicio"
+            android:layout_gravity="center"
+            android:textColor="@color/red"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            />
+
     </LinearLayout>
 
     <FrameLayout
@@ -154,7 +157,7 @@
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"
-        android:background="@drawable/rounded_btn"
+        android:background="@drawable/rounded_btn_blue"
         android:layout_marginBottom="15dp"
         android:text="Siguiente"
         android:textColor="@color/white"

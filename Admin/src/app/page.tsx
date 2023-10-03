@@ -1,7 +1,11 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Company, getCompaniesByStatus } from '@/api/v1/company'
+import {
+  Company,
+  getPendingCompanies,
+  getApprovedCompanies,
+} from '@/api/v1/company'
 
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
@@ -17,13 +21,18 @@ import {
 } from '@/components/ui/table'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import LogoSm from './../../public/LogoSm.svg'
 
 import { CellAction } from '@/components/cellAction'
 import ModalProveedor from '@/components/modalProveedor'
+import Image from 'next/image'
+
+export type tabs = 'pending_approval' | 'approved' | 'no_user'
 
 export default function Home() {
   const [selectedCompany, setSelectedCompany] = useState<Company>({
     companyId: '',
+    userId: null,
     name: '',
     profilePicture: '',
     state: '',
@@ -50,48 +59,54 @@ export default function Home() {
   const [pendingCompanies, setPendingCompanies] = useState<Company[]>([])
   const [approvedCompanies, setApprovedCompanies] = useState<Company[]>([])
   const [searchTerm, setSearchTerm] = useState('')
-  const [activeTab, setActiveTab] = useState<'pending' | 'approved'>('pending')
+  const [activeTab, setActiveTab] = useState<tabs>(
+    'pending_approval'
+  )
 
   const handleTableRowClick = (company: Company) => {
     setSelectedCompany(company)
     setIsModalOpen(true)
   }
 
-  const fetchCompaniesByStatus = async (
-    status: 'pending_approval' | 'approved' | 'rejected'
-  ) => {
+  const fetchPendingCompanies = async () => {
     try {
-      const companies = await getCompaniesByStatus(status)
-      if (status === 'pending_approval') {
-        setPendingCompanies(companies)
-      } else if (status === 'approved') {
-        setApprovedCompanies(companies)
-      } else {
-        console.log('Status is not valid')
-      }
+      const companies = await getPendingCompanies()
+      setPendingCompanies(companies)
     } catch (error) {
-      console.error(`Fetch of ${status} companies was not successful`, error)
+      console.error('Fetch of pending companies was not successful', error)
+    }
+  }
+
+  const fetchApprovedCompanies = async () => {
+    try {
+      const companies = await getApprovedCompanies()
+      setApprovedCompanies(companies)
+    } catch (error) {
+      console.error('Fetch of approved companies was not successful', error)
     }
   }
 
   const filteredCompanies =
-    activeTab === 'pending'
-      ? pendingCompanies.filter((company) =>
+    activeTab === 'pending_approval'
+      ? pendingCompanies?.filter((company) =>
         company.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
-      : approvedCompanies.filter((company) =>
+      : activeTab === 'approved' ? approvedCompanies?.filter((company) =>
+        company.name.toLowerCase().includes(searchTerm.toLowerCase())
+      ) : approvedCompanies?.filter((company) =>
+        company.userId === null && 
         company.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
 
   const startIndex = (currentPage - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
-  const paginatedCompanies = filteredCompanies.slice(startIndex, endIndex)
+  const paginatedCompanies = filteredCompanies?.slice(startIndex, endIndex)
 
   const handlePageChange = (newPage: number) => setCurrentPage(newPage)
 
   useEffect(() => {
-    fetchCompaniesByStatus('pending_approval')
-    fetchCompaniesByStatus('approved')
+    fetchPendingCompanies()
+    fetchApprovedCompanies()
   }, [])
 
   const renderTable = (companies: Company[]) => (
@@ -100,6 +115,7 @@ export default function Home() {
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">Imagen</TableHead>
+          { activeTab === 'no_user' ? <TableHead>Token de registro</TableHead> : null}
           <TableHead>Nombre</TableHead>
           <TableHead>Correo</TableHead>
           <TableHead>Ubicación</TableHead>
@@ -108,16 +124,32 @@ export default function Home() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {companies.map((company) => (
+        {companies?.map((company) => (
           <TableRow key={company.companyId}>
             <TableCell
               className="cursor-pointer"
               onClick={() => handleTableRowClick(company)}
             >
-              <Avatar>
-                <AvatarImage src={company.profilePicture} />
-              </Avatar>
+              {company.profilePicture != null ?
+                <Avatar>
+                  <AvatarImage src={company.profilePicture} />
+                </Avatar>
+                :
+                <Image
+                  src={LogoSm}
+                  alt="Placeholder"
+                  width={350}
+                  height={350}
+                  className="basis-6/12 mr-[10px] rounded-l-xl object-cover"
+                />
+              }
             </TableCell>
+            { activeTab === 'no_user' ? <TableCell
+              className="cursor-pointer"
+              onClick={() => handleTableRowClick(company)}
+            >
+              {company.companyId}
+            </TableCell> : null}
             <TableCell
               className="cursor-pointer"
               onClick={() => handleTableRowClick(company)}
@@ -146,7 +178,7 @@ export default function Home() {
                     ? 'bg-[#547C8B] text-white'
                     : 'bg-[#FFE6C2] text-jet'
                 }
-                text-center rounded-xl py-2`}
+                text-center rounded-xl p-2.5`}
               >
                 {company.status === 'approved' ? 'Aprobado' : 'Pendiente'}
               </div>
@@ -155,8 +187,10 @@ export default function Home() {
               <CellAction
                 setIsModalOpen={setIsModalOpen}
                 companyId={company.companyId}
-                fetchPending={() => fetchCompaniesByStatus('pending_approval')}
+                fetchPendingCompanies={() => fetchPendingCompanies()}
+                fetchApprovedCompanies={() => fetchApprovedCompanies()}
                 company={company}
+                activeTab={activeTab}
               />
             </TableCell>
           </TableRow>
@@ -175,7 +209,9 @@ export default function Home() {
           <ModalProveedor
             selectedCompany={selectedCompany}
             setIsModalOpen={setIsModalOpen}
-            fetchPending={() => fetchCompaniesByStatus('pending_approval')}
+            fetchPendingCompanies={() => fetchPendingCompanies()}
+            fetchApprovedCompanies={() => fetchApprovedCompanies()}
+            activeTab={activeTab}
           />
         </div>
       )}
@@ -189,11 +225,11 @@ export default function Home() {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <Tabs defaultValue="pending">
+        <Tabs defaultValue="pending_approval">
           <TabsList>
             <TabsTrigger
-              value="pending"
-              onClick={() => setActiveTab('pending')}
+              value="pending_approval"
+              onClick={() => setActiveTab('pending_approval')}
             >
               Pendientes
             </TabsTrigger>
@@ -202,6 +238,12 @@ export default function Home() {
               onClick={() => setActiveTab('approved')}
             >
               Aprobados
+            </TabsTrigger>
+            <TabsTrigger
+              value="no_user"
+              onClick={() => setActiveTab('no_user')}
+            >
+              Sin Responsable
             </TabsTrigger>
           </TabsList>
           <TabsContent value={activeTab}>
@@ -220,7 +262,7 @@ export default function Home() {
           <Button
             variant="outline"
             onClick={() => handlePageChange(currentPage + 1)}
-            disabled={endIndex >= filteredCompanies.length}
+            disabled={endIndex >= filteredCompanies?.length}
           >
             Siguiente
           </Button>

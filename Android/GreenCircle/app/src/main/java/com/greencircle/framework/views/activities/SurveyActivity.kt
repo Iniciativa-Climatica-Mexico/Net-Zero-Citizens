@@ -21,7 +21,11 @@ class SurveyActivity : AppCompatActivity() {
         ViewModelFactory(applicationContext, SurveyViewModel::class.java)
     }
     private val fragmentManager = supportFragmentManager
+
+    private var currentProgress = 0
+    private var totalQuestions = 0
     lateinit var userId: UUID
+    private val answeredQuestions = mutableSetOf<UUID>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initializeBinding()
@@ -31,8 +35,8 @@ class SurveyActivity : AppCompatActivity() {
         val userJson = sharedPreferences?.getString("user_session", null)
         val userJSON = JSONObject(userJson!!)
         userId = UUID.fromString(userJSON.getString("uuid"))
-
         viewModel.getSurveyPending(userId)
+        updateProgressBar()
     }
 
     private fun initializeObservers() {
@@ -88,6 +92,7 @@ class SurveyActivity : AppCompatActivity() {
     }
 
     private fun loadQuestions(questions: ArrayList<Question>) {
+        totalQuestions = questions.size
         val fragmentTransaction = fragmentManager.beginTransaction()
         questions.forEach { question ->
             val questionFragment = QuestionFragment()
@@ -100,7 +105,12 @@ class SurveyActivity : AppCompatActivity() {
     }
 
     fun onQuestionAnswered(questionId: UUID, answer: String) {
-        viewModel.onQuestionAnswered(questionId, answer)
+        if (!answeredQuestions.contains(questionId)) {
+            viewModel.onQuestionAnswered(questionId, answer)
+            answeredQuestions.add(questionId)
+            currentProgress++
+            updateProgressBar()
+        }
     }
 
     private fun goToMain() {
@@ -108,5 +118,10 @@ class SurveyActivity : AppCompatActivity() {
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         startActivity(intent)
         finish()
+    }
+
+    private fun updateProgressBar() {
+        val progress = (currentProgress.toFloat() / totalQuestions.toFloat() * 100).toInt()
+        binding.progressBar.progress = progress
     }
 }
