@@ -291,7 +291,7 @@ struct ContactCompanyView: View {
                 }
               }
               if key == "Report" {
-                CompanyReportView(companyViewModel: contactCompanyViewModel, complaintViewModel: complaintViewModel, dispScrollView: $dispScrollView).onAppear {
+                CompanyReportView(companyViewModel: contactCompanyViewModel, complaintViewModel: viewModel, dispScrollView: $dispScrollView).onAppear {
                     bindImageToDescription = false
                   }
 
