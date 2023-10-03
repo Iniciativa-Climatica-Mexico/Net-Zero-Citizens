@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.greencircle.databinding.FragmentTokenRegistroBinding
+import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.company.CreateCompanyViewModel
 import com.greencircle.framework.views.activities.MainActivity
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
@@ -28,8 +29,12 @@ class TokenRegistroFragment : Fragment() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[CreateCompanyViewModel::class.java]
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(requireContext(), CreateCompanyViewModel::class.java)
+        )[CreateCompanyViewModel::class.java]
         arguments = requireArguments()
+        Log.d("TokenRegistroFragment", "onCreate: $arguments")
     }
 
     /**
@@ -52,17 +57,21 @@ class TokenRegistroFragment : Fragment() {
         binding.btnContinueNoToken.setOnClickListener {
             navigateToForm(arguments)
         }
+        val authToken = arguments.getString("idToken")
+        if (authToken != null) {
+            viewModel.googleLogin(authToken)
+        }
 
-        viewModel.googleLogin(arguments.getString("idToken")!!)
+        if (arguments.getString("uuid") != null) {
+            uuid = arguments.getString("uuid")?.let { UUID.fromString(it) }!!
+        }
 
         binding.btnRegisterToken.setOnClickListener {
             val token = binding.registerTokenTextField.editText?.text.toString()
             try {
                 val companyId = UUID.fromString(token)
-                viewModel.assignCompany(authToken, uuid, companyId)
+                viewModel.assignCompany(uuid, companyId)
             } catch (e: java.lang.Exception) {
-                Log.d("TokenRegistroFragment", e.toString())
-//                set the field to error
                 binding.registerTokenTextField.error = "Token inválido"
             }
         }
@@ -91,7 +100,7 @@ class TokenRegistroFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.googleLoginResult.observe(viewLifecycleOwner) { result ->
             // Handle the result here
-            if (result != null) {
+            if (result != null && result.tokens != null) {
                 authToken = result.tokens.authToken
                 uuid = result.user.uuid
             } else {
