@@ -13,6 +13,7 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
  * Tipo de dato para el payload de los tokens que contiene la información del usuario
  */
 export type Payload = {
+  id: string
   first_name: string
   last_name: string
   uuid: string
@@ -75,11 +76,12 @@ const blackListToken = async (tokenId: string): Promise<void> => {
  * @returns {authToken, refreshToken, user} objeto con los tokens generados
  */
 export const googleLogin = async (
-  googleToken: string
+  googleToken: string,
+  ios: boolean = false
 ): Promise<AuthResponse | null> => {
   // Verificar el token de Google
   try {
-    const data = await verifyGoogleToken(googleToken)
+    const data = await verifyGoogleToken(googleToken, ios)
     if (!data) return null
 
     let user = await UserService.getUserByEmailWithRole(data.email)
@@ -104,6 +106,7 @@ export const googleLogin = async (
 
     // Si ya está registrado, crear un Payload con la información del usuario
     const userPayload: Payload = {
+      id: '',
       first_name: '',
       last_name: '',
       uuid: '',
@@ -154,6 +157,7 @@ export const updateUserTokensData = async (
 
     // Si ya está registrado, crear un Payload con la información del usuario
     const userPayload: Payload = {
+      id: user.userId,
       first_name: user.firstName,
       last_name: user.lastName,
       uuid: user.userId,
@@ -210,6 +214,7 @@ export const updateTokens = async (
   if (res) return null
 
   const payload: Payload = {
+    id: userData.id,
     first_name: userData.first_name,
     last_name: userData.last_name,
     uuid: userData.uuid,
@@ -217,7 +222,6 @@ export const updateTokens = async (
     roles: userData.roles,
     login_type: userData.login_type,
   }
-
   const tokens = await createTokens(payload)
 
   await blackListToken(token)
@@ -283,12 +287,16 @@ export const verifyToken = (token: string, type: TokenType): Payload | null => {
  * @returns Payload con la información del token
  */
 export const verifyGoogleToken = async (
-  token: string
+  token: string,
+  ios: boolean = false
 ): Promise<Payload | null> => {
+  const clientId = ios
+    ? process.env.GOOGLE_CLIENT_ID_IOS
+    : process.env.GOOGLE_CLIENT_ID
   try {
     const ticket = await client.verifyIdToken({
       idToken: token,
-      audience: process.env.GOOGLE_CLIENT_ID,
+      audience: clientId,
     })
 
     const payload = ticket.getPayload()
@@ -296,6 +304,7 @@ export const verifyGoogleToken = async (
     if (!payload) throw new Error('Invalid Google token')
 
     return {
+      id: payload.sub!,
       first_name: payload.given_name!,
       last_name: payload.family_name!,
       uuid: payload.sub!,
@@ -312,9 +321,11 @@ export const verifyGoogleToken = async (
 }
 
 export const login = async (
-  email: string,
-  password: string
+  emailIn: string,
+  passwordIn: string
 ): Promise<AuthResponse | null> => {
+  const email = emailIn.trim()
+  const password = passwordIn.trim()
   const user = await UserService.getUserByEmailWithRole(email)
   if (!user || !user.salt || !user.password) return null
 
@@ -323,12 +334,14 @@ export const login = async (
 
   // Si ya está registrado, crear un Payload con la información del usuario
   const userPayload: Payload = {
+    id: user.userId,
     first_name: user.firstName,
     last_name: user.lastName,
     uuid: user.userId,
     email: user.email,
     picture: user.profilePicture != null ? user.profilePicture : undefined,
     roles: user.role.dataValues.NAME,
+    login_type: 'credentials',
   }
 
   const tokens = await createTokens(userPayload)
@@ -341,15 +354,15 @@ export const login = async (
 }
 
 export const registerUserSchema = z.object({
-  email: z.string().email(),
-  password: z.string(),
-  firstName: z.string(),
+  email: z.string().email().trim(),
+  password: z.string().trim(),
+  firstName: z.string().trim(),
   lastName: z.string().optional(),
   secondLastName: z.string().optional(),
   phoneNumber: z.string().optional(),
-  age: z.number().int(),
-  state: z.string(),
-  gender: z.enum(['masculine', 'femenine', 'other', 'no_answer']),
+  age: z.number().int().optional(),
+  state: z.string().optional(),
+  gender: z.enum(['masculine', 'femenine', 'other', 'no_answer']).optional(),
   profilePicture: z.string().optional(),
 })
 
@@ -357,11 +370,14 @@ export type RegisterUser = z.infer<typeof registerUserSchema>
 export const register = async (
   user: RegisterUser
 ): Promise<AuthResponse | null> => {
+  const oldUser = await UserService.getUserByEmailWithRole(user.email)
+  if (oldUser) return null
+
   const salt = bcrypt.genSaltSync(10)
   const hash = bcrypt.hashSync(user.password, salt)
 
   const userCreate = {
-    ... user,
+    ...user,
     salt,
     password: hash,
     roleId: 'NEW_USER_ROLE_ID',
@@ -372,6 +388,7 @@ export const register = async (
   if (!newUser) return null
   // Si ya está registrado, crear un Payload con la información del usuario
   const userPayload: Payload = {
+    id: newUser.userId,
     first_name: newUser.firstName,
     last_name: newUser.lastName,
     uuid: newUser.userId,
@@ -379,6 +396,7 @@ export const register = async (
     picture:
       newUser.profilePicture != null ? newUser.profilePicture : undefined,
     roles: newUser.role.dataValues.NAME,
+    login_type: 'credentials',
   }
 
   const tokens = await createTokens(userPayload)
