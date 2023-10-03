@@ -1,8 +1,5 @@
 package com.greencircle.domain.model.user
 
-import com.google.gson.annotations.SerializedName
-import java.util.UUID
-
 data class NewUser(
     val firstName: String,
     val lastName: String,
