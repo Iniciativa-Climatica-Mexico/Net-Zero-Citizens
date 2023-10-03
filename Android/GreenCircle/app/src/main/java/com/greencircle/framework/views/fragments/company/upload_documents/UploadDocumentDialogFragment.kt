@@ -110,7 +110,6 @@ class UploadDocumentDialogFragment(
     }
 
     private fun uploadFile(file: File) {
-        // TODO: Change to real companyId
         viewModel.uploadFile(
             authToken,
             file,

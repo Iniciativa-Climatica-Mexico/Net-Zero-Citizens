@@ -93,8 +93,6 @@ class CreateCompanyFragment : Fragment() {
                 companyId = result.companyId
                 arguments.putString("companyId", companyId)
                 nextFragment(arguments)
-            } else {
-                Log.d("CreateCompanyFragment", "Company creation failed")
             }
         }
     }

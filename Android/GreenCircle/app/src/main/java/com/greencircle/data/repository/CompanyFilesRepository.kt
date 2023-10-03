@@ -1,5 +1,6 @@
 package com.greencircle.data.repository
 
+import android.util.Log
 import com.greencircle.data.remote.company.files.CompanyFilesAPIClient
 import java.io.File
 import okhttp3.ResponseBody
@@ -17,6 +18,7 @@ class CompanyFilesRepository {
         try {
             return api.uploadFile(authToken, file, companyId, fileDescription, fileFormat)
         } catch (e: Exception) {
+            Log.e("CompanyFilesRepository", "uploadFile: ${e.message}")
             throw e
         }
     }
