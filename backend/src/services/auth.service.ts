@@ -353,9 +353,9 @@ export const registerUserSchema = z.object({
   lastName: z.string().optional(),
   secondLastName: z.string().optional(),
   phoneNumber: z.string().optional(),
-  age: z.number().int(),
-  state: z.string(),
-  gender: z.enum(['masculine', 'femenine', 'other', 'no_answer']),
+  age: z.number().int().optional(),
+  state: z.string().optional(),
+  gender: z.enum(['masculine', 'femenine', 'other', 'no_answer']).optional(),
   profilePicture: z.string().optional(),
 })
 

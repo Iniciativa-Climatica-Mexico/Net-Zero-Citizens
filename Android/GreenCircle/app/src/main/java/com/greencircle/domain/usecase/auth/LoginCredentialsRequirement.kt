@@ -4,9 +4,9 @@ import com.greencircle.data.repository.AuthRepository
 import com.greencircle.domain.model.auth.AuthResponse
 
 /**
- * Caso de uso para la autenticación con Google.
+ * Caso de uso para iniciar sesión con credenciales.
  *
- * Esta clase se utiliza para realizar la autenticación de un usuario utilizando un token de Google.
+ * Esta clase se utiliza para realizar la autenticación de un usuario utilizando sus credenciales (email y contraseña).
  *
  * @param repository El repositorio que proporciona métodos para interactuar con la autenticación.
  */

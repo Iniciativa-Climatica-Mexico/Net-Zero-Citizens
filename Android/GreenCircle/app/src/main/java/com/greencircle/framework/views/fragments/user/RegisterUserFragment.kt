@@ -13,11 +13,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
+import com.google.android.material.textfield.TextInputLayout
 import com.greencircle.databinding.FragmentRegisterUserBinding
+import com.greencircle.domain.model.user.NewUser
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.auth.LoginViewModel
-import com.greencircle.framework.views.activities.MainActivity
+import com.greencircle.framework.viewmodel.auth.RegisterViewModel
 import com.greencircle.framework.views.activities.RegisterUserActivity
+import com.greencircle.framework.views.activities.SurveyActivity
 import com.greencircle.utils.AuthUtils
 
 /**Constructor de "RegisterUserFragment"
@@ -27,6 +30,7 @@ import com.greencircle.utils.AuthUtils
 class RegisterUserFragment : Fragment() {
     private var _binding: FragmentRegisterUserBinding? = null
     private lateinit var loginViewModel: LoginViewModel
+    private lateinit var registerViewModel: RegisterViewModel
     private lateinit var _arguments: Bundle
     private val binding get() = _binding!!
     private val authUtils = AuthUtils()
@@ -50,7 +54,9 @@ class RegisterUserFragment : Fragment() {
                         _arguments = authUtils.getDataFromGoogleAccount(account)
                         // Google Login
                         val token: String = _arguments.getString("idToken").toString()
-                        loginViewModel.googleLogin(token)
+                        if (token != null) {
+                            loginViewModel.googleLogin(token)
+                        }
                     } catch (e: ApiException) {
                         Toast.makeText(
                             requireContext(), "Something went wrong", Toast.LENGTH_SHORT
@@ -73,6 +79,10 @@ class RegisterUserFragment : Fragment() {
             this,
             ViewModelFactory(requireContext(), LoginViewModel::class.java)
         )[LoginViewModel::class.java]
+        registerViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(requireContext(), RegisterViewModel::class.java)
+        )[RegisterViewModel::class.java]
     }
 
     /**
@@ -93,6 +103,8 @@ class RegisterUserFragment : Fragment() {
         // Google Login
         authUtils.googleLoginListener(binding, requireActivity(), googleSignInActivityResult)
 
+        registerOnClickListener()
+
         return binding.root
     }
 
@@ -109,7 +121,7 @@ class RegisterUserFragment : Fragment() {
             // Handle the result here
             if (result != null) {
                 if (result.user.roles != "new_user") {
-                    navigateToHome()
+                    navigateToSurvey()
                 } else {
                     navigateToForm(_arguments)
                 }
@@ -117,6 +129,158 @@ class RegisterUserFragment : Fragment() {
                 Log.d("CreateCompanyFragment", "Google login failed")
             }
         }
+        registerViewModel.registerCredentialsResult.observe(viewLifecycleOwner) { result ->
+            // Handle the result here
+            if (result != null) {
+                if (result.user.roles != "new_user") {
+                    navigateToSurvey()
+                } else {
+                    _arguments = authUtils.getDataFromRegisterResponse(result.user)
+                    navigateToForm(_arguments)
+                }
+            } else {
+                Log.d("CreateCompanyFragment", "Ocurrió un error al registrar el usuario")
+            }
+        }
+
+        registerViewModel.registerError.observe(viewLifecycleOwner) { error ->
+            if (error) {
+                Toast.makeText(
+                    requireContext(), "Ocurrió un error al registrar el usuario", Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+    private fun registerOnClickListener() {
+        binding.registerCredentials.setOnClickListener {
+            onRegisterCredentials()
+        }
+    }
+
+    private fun onRegisterCredentials() {
+        val firstNameTextInputLayout: TextInputLayout = binding.userFirstName
+        val lastNameTextInputLayout: TextInputLayout = binding.userLastName
+        val secondLastNameTextInputLayout: TextInputLayout = binding.userSecondLastName
+        val emailTextInputLayout: TextInputLayout = binding.userEmail
+        val passwordTextInputLayout: TextInputLayout = binding.userPassword
+        val confirmPasswordTextInputLayout: TextInputLayout = binding.userConfirmPassword
+
+        val firstName: String = firstNameTextInputLayout.editText?.text.toString()
+        val lastName: String = lastNameTextInputLayout.editText?.text.toString()
+        val secondLastName: String = secondLastNameTextInputLayout.editText?.text.toString()
+        val email: String = emailTextInputLayout.editText?.text.toString()
+        val password: String = passwordTextInputLayout.editText?.text.toString()
+        val confirmPassword: String = confirmPasswordTextInputLayout.editText?.text.toString()
+
+        // Verify if the fields are empty
+        if (firstName.isEmpty()) {
+            firstNameTextInputLayout.error = "Campo requerido"
+            firstNameTextInputLayout.requestFocus()
+            return
+        } else {
+            if (firstName.length < 3) {
+                firstNameTextInputLayout.error = "El nombre debe tener al menos 3 caracteres"
+                firstNameTextInputLayout.requestFocus()
+                return
+            } else {
+                firstNameTextInputLayout.error = null
+            }
+        }
+
+        if (lastName.isEmpty()) {
+            lastNameTextInputLayout.error = "Campo requerido"
+            lastNameTextInputLayout.requestFocus()
+            return
+        } else {
+            if (lastName.length < 3) {
+                lastNameTextInputLayout.error = "El apellido debe tener al menos 3 caracteres"
+                lastNameTextInputLayout.requestFocus()
+                return
+            } else {
+                lastNameTextInputLayout.error = null
+            }
+        }
+
+        if (secondLastName.isEmpty()) {
+            secondLastNameTextInputLayout.error = "Campo requerido"
+            secondLastNameTextInputLayout.requestFocus()
+            return
+        } else {
+            if (secondLastName.length < 3) {
+                secondLastNameTextInputLayout.error = "El apellido debe tener al menos 3 caracteres"
+                secondLastNameTextInputLayout.requestFocus()
+                return
+            } else {
+                secondLastNameTextInputLayout.error = null
+            }
+        }
+
+        if (email.isEmpty()) {
+            emailTextInputLayout.error = "Campo requerido"
+            emailTextInputLayout.requestFocus()
+            return
+        } else {
+            if (!isValidEmail(email)) {
+                emailTextInputLayout.error = "Correo electrónico inválido"
+                emailTextInputLayout.requestFocus()
+                return
+            } else {
+                emailTextInputLayout.error = null
+            }
+        }
+
+        if (password.isEmpty()) {
+            passwordTextInputLayout.error = "Campo requerido"
+            passwordTextInputLayout.requestFocus()
+            return
+        } else {
+            if (password.length < 8) {
+                passwordTextInputLayout.error = "La contraseña debe tener al menos 8 caracteres"
+                passwordTextInputLayout.requestFocus()
+                return
+            } else {
+                passwordTextInputLayout.error = null
+            }
+        }
+
+        if (confirmPassword.isEmpty()) {
+            confirmPasswordTextInputLayout.error = "Campo requerido"
+            confirmPasswordTextInputLayout.requestFocus()
+            return
+        } else {
+            confirmPasswordTextInputLayout.error = null
+        }
+
+        // Verify if the passwords match
+        if (password != confirmPassword) {
+            confirmPasswordTextInputLayout.error = "Las contraseñas no coinciden"
+            confirmPasswordTextInputLayout.requestFocus()
+            return
+        } else {
+            confirmPasswordTextInputLayout.error = null
+        }
+        val user = NewUser(
+            email = email,
+            password = password,
+            firstName = firstName,
+            lastName = lastName,
+            secondLastName = secondLastName,
+            roleId = "NEW_USER_ROLE_ID",
+            phoneNumber = "",
+            age = 0,
+            gender = "no_answer",
+            state = "",
+            profilePicture = ""
+        )
+        registerViewModel.registerCredentials(user)
+    }
+
+    /**
+     * Verifica si un correo electrónico es válido.
+     */
+    private fun isValidEmail(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
     /**
@@ -134,8 +298,8 @@ class RegisterUserFragment : Fragment() {
         activity.replaceFragment(createUserFragment, arguments)
     }
 
-    private fun navigateToHome() {
-        var intent: Intent = Intent(requireContext(), MainActivity::class.java)
+    private fun navigateToSurvey() {
+        var intent: Intent = Intent(requireContext(), SurveyActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
