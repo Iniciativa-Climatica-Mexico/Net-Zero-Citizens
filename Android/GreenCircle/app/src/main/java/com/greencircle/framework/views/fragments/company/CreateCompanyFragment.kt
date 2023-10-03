@@ -16,7 +16,6 @@ import com.greencircle.R
 import com.greencircle.data.remote.company.CompanyAPIService
 import com.greencircle.domain.model.company.Company
 import com.greencircle.framework.viewmodel.company.CreateCompanyViewModel
-import com.greencircle.framework.viewmodel.user.CreateUserViewModel
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
 import com.greencircle.framework.views.fragments.TermsAndConditionsCompany.TermsAndConditionsCompany
 import com.greencircle.framework.views.fragments.services.ServicesFragment
