@@ -25,10 +25,8 @@ export default function Login() {
           </h1>
           <p className="text-sm font-normal">Nos da gusto verte de regreso</p>
         </header>
-        <div className="mt-5">{!isLogged && <GoogleButton />}</div>
-        <input type="text" id='username' />
-        <input type="password" id='password' />
         <div className="mt-5">{!isLogged && <CredentialsButton />}</div>
+        <div className="mt-5">{!isLogged && <GoogleButton />}</div>
       </figure>
       <a href="#" className="text-gray-500">
         Aviso de Privacidad
