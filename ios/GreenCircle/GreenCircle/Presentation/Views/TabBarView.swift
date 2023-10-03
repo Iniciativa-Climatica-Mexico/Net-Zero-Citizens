@@ -7,48 +7,58 @@
 
 import SwiftUI
 
-struct TabBarView: View {
-  @State private var dispScrollView = false
-  @StateObject var vm = SurveyViewModel()
-  
-  var goSurvey: () -> Void
+enum TabSelection {
+    case ecoInfo
+    case catalog
+    case map
+    case profile
+}
 
-  var body: some View {
-    TabView (selection: $dispScrollView) {
-      EcoInfoView()
-        .applyNavBarTheme()
-        .tabItem {
-          Image(systemName: "leaf.fill")
-          Text("Eco-Info")
+struct TabBarView: View {
+    @State private var selectedTab: TabSelection = .ecoInfo
+    @StateObject var vm = SurveyViewModel()
+
+    var goSurvey: () -> Void
+
+    var body: some View {
+        TabView(selection: $selectedTab) {
+            EcoInfoView()
+                .applyNavBarTheme()
+                .tabItem {
+                    Image(systemName: "leaf.fill")
+                    Text("Eco-Info")
+                }
+                .tag(TabSelection.ecoInfo)
+
+            CatalogView()
+                .applyNavBarTheme()
+                .tabItem {
+                    Image(systemName: "book.fill")
+                    Text("Catálogo")
+                }
+                .tag(TabSelection.catalog)
+
+            EmptyView()
+                .tabItem {
+                    Image(systemName: "map.fill")
+                    Text("Mapa")
+                }
+                .tag(TabSelection.map)
+
+            ProfileView(modelUser: UserViewModel())
+                .tabItem {
+                    Image(systemName: "person.fill")
+                    Text("Perfil")
+                }
+                .tag(TabSelection.profile)
         }
-        .tag(false)
-      
-      CatalogView()
-        .applyNavBarTheme()
-        .tabItem {
-          Image(systemName: "book.fill")
-          Text("Catálogo")
+        .onAppear {
+            Task {
+                if await vm.getPendingSurvey() == () {
+                    goSurvey()
+                }
+            }
         }
-        .tag(true)
-      
-      EmptyView()
-        .tabItem {
-          Image(systemName: "map.fill")
-          Text("Mapa")
-        }
-      
-      ProfileView(modelUser: UserViewModel())
-        .tabItem {
-          Image(systemName: "person.fill")
-          Text("Perfil")
-        }
-    } .onAppear {
-      Task {
-        if await vm.getPendingSurvey() == () {
-          goSurvey()
-        }
-      }
+        .accentColor(Color("GreenCustom"))
     }
-    .accentColor(Color("GreenCustom"))
-  }
 }

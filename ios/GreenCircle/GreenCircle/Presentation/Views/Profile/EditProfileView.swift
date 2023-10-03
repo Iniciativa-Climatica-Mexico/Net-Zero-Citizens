@@ -286,6 +286,7 @@ struct Section3: View {
     @State private var showAlert2 = false
     @Environment(\.presentationMode) var presentationMode
     @State private var navigateToProfile = false
+    @Binding var selectedTab: TabSelection
     
     var body: some View{
       HStack {
@@ -315,6 +316,7 @@ struct Section3: View {
             }),
             secondaryButton: .destructive(Text("Salir"), action: {
               presentationMode.wrappedValue.dismiss()
+              selectedTab = .profile
             })
           )
         }
@@ -337,6 +339,7 @@ struct Section3: View {
               message: Text("Los datos se actualizaron correctamente."),
               dismissButton: .default(Text("OK"), action: {
                 presentationMode.wrappedValue.dismiss()
+                selectedTab = .profile
               })
             )
           }
@@ -379,6 +382,8 @@ struct Section3: View {
   struct EditProfileView: View {
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var modelUser = UserViewModel()
+    @State private var currentTab: TabSelection = .profile
+
     //@State private var selectedState: String = Constants.states.first ?? ""
     
     var body: some View {
@@ -404,7 +409,7 @@ struct Section3: View {
             Section1(modelUser: UserViewModel())
             Section2(modelUser:  UserViewModel())
             Section3(modelUser:  UserViewModel())
-            SectionButton(modelUser:  UserViewModel())
+            SectionButton(modelUser: UserViewModel(), selectedTab: $currentTab)
             SectionDelete()
           }
           .padding(.top, 10)
