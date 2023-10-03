@@ -16,6 +16,7 @@ import com.greencircle.R
 import com.greencircle.data.remote.company.CompanyAPIService
 import com.greencircle.domain.model.company.Company
 import com.greencircle.framework.viewmodel.company.CreateCompanyViewModel
+import com.greencircle.framework.viewmodel.user.CreateUserViewModel
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
 import com.greencircle.framework.views.fragments.TermsAndConditionsCompany.TermsAndConditionsCompany
 import com.greencircle.framework.views.fragments.services.ServicesFragment
@@ -30,6 +31,16 @@ class CreateCompanyFragment : Fragment() {
     private var arguments = Bundle()
     private lateinit var authToken: String
     private lateinit var uuid: UUID
+    private lateinit var nameInputLayout: TextInputLayout
+    private lateinit var descriptionInputLayout: TextInputLayout
+    private lateinit var emailInputLayout: TextInputLayout
+    private lateinit var phoneInputLayout: TextInputLayout
+    private lateinit var websiteInputLayout: TextInputLayout
+    private lateinit var streetInputLayout: TextInputLayout
+    private lateinit var streetNumberInputLayout: TextInputLayout
+    private lateinit var cityInputLayout: TextInputLayout
+    private lateinit var stateInputLayout: TextInputLayout
+    private lateinit var zipCodeInputLayout: TextInputLayout
 
     /**
      * Inicializa el "CreateCompanyFragment"
@@ -63,8 +74,53 @@ class CreateCompanyFragment : Fragment() {
             R.layout.fragment_create_company, container, false
         )
 
+        nameInputLayout = view.findViewById(R.id.companyNameTextField)
+        descriptionInputLayout = view.findViewById(R.id.companyDescriptionTextField)
+        emailInputLayout = view.findViewById(R.id.companyEmailTextField)
+        phoneInputLayout = view.findViewById(R.id.companyPhoneTextField)
+        websiteInputLayout = view.findViewById(R.id.companyWebsiteTextField)
+        streetInputLayout = view.findViewById(R.id.companyStreetTextField)
+        streetNumberInputLayout = view.findViewById(R.id.companyStreetNumberTextField)
+        cityInputLayout = view.findViewById(R.id.companyCityTextField)
+        stateInputLayout = view.findViewById(R.id.companyStateTextField)
+        zipCodeInputLayout = view.findViewById(R.id.companyZipCodeTextField)
+
+        val name = CreateCompanyViewModel.name
+        val description = CreateCompanyViewModel.description
+        val email = CreateCompanyViewModel.email
+        val phone = CreateCompanyViewModel.phone
+        val website = CreateCompanyViewModel.website
+        val street = CreateCompanyViewModel.street
+        val streetNumber = CreateCompanyViewModel.streetNumber
+        val city = CreateCompanyViewModel.city
+        val state = CreateCompanyViewModel.state
+        val zipCode = CreateCompanyViewModel.zipCode
+
+        nameInputLayout.editText?.setText(name)
+        descriptionInputLayout.editText?.setText(description)
+        emailInputLayout.editText?.setText(email)
+        phoneInputLayout.editText?.setText(phone)
+        websiteInputLayout.editText?.setText(website)
+        streetInputLayout.editText?.setText(street)
+        streetNumberInputLayout.editText?.setText(streetNumber)
+        cityInputLayout.editText?.setText(city)
+        stateInputLayout.editText?.setText(state)
+        zipCodeInputLayout.editText?.setText(zipCode)
+
         val button = view.findViewById<Button>(R.id.login_register)
         button.setOnClickListener {
+
+            CreateCompanyViewModel.name = nameInputLayout.editText?.text.toString()
+            CreateCompanyViewModel.description = descriptionInputLayout.editText?.text.toString()
+            CreateCompanyViewModel.email = emailInputLayout.editText?.text.toString()
+            CreateCompanyViewModel.phone = phoneInputLayout.editText?.text.toString()
+            CreateCompanyViewModel.website = websiteInputLayout.editText?.text.toString()
+            CreateCompanyViewModel.street = streetInputLayout.editText?.text.toString()
+            CreateCompanyViewModel.streetNumber = streetNumberInputLayout.editText?.text.toString()
+            CreateCompanyViewModel.city = cityInputLayout.editText?.text.toString()
+            CreateCompanyViewModel.state = stateInputLayout.editText?.text.toString()
+            CreateCompanyViewModel.zipCode = zipCodeInputLayout.editText?.text.toString()
+
             val termsAndConditionsCompanyFragment = TermsAndConditionsCompany()
             val activity = requireActivity() as RegisterCompanyActivity
 
