@@ -135,7 +135,6 @@ class CreateUserFragment : Fragment() {
         loginViewModel.googleLoginResult.observe(viewLifecycleOwner) { result ->
             // Handle the result here
             if (result != null && result.tokens != null) {
-                Log.d("CreateUserFragment", "$result")
                 authToken = result.tokens.authToken
                 uuid = result.user.uuid
             } else {

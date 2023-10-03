@@ -148,6 +148,7 @@ export const register: RequestHandler<
   }
   // Verificar que el email y la contraseña se hayan mandado
   try {
+    console.log(req.body)
     const user = AuthService.registerUserSchema.parse(req.body.user)
 
     const data = await AuthService.register(user)
@@ -161,6 +162,7 @@ export const register: RequestHandler<
     // Devolver los tokens
     res.status(200).json(authResponse)
   } catch (error) {
+    console.log(error)
     if (error instanceof ZodError)
       res.status(400).json({ error: error.issues.toString() })
     else res.status(500).json({ error: 'Internal server error' })
