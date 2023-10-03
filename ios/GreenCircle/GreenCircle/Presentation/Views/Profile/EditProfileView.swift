@@ -161,24 +161,26 @@ struct Section2: View {
                     .fontWeight(.semibold)
 
               let ageStringBinding = Binding<String>(
-                                 get: {
-                                     if let age = modelUser.contentUser.age {
-                                         return String(age)
-                                     } else {
-                                         return ""
-                                     }
-                                 },
-                                 set: {
-                                     // Filtramos la entrada para que solo acepte números
-                                     let filtered = $0.filter { "0123456789".contains($0) }
-                                     if let age = Int(filtered) {
-                                         modelUser.contentUser.age = age
-                                     } else {
-                                         modelUser.contentUser.age = nil
-                                     }
-                                 }
-                             )
-
+                  get: {
+                      if let age = modelUser.contentUser.age {
+                          return String(age)
+                      } else {
+                          return ""
+                      }
+                  },
+                  set: {
+                      let filtered = $0.filter { "0123456789".contains($0) }
+                      
+                      // Limitamos la entrada a un máximo de 2 dígitos
+                      if filtered.count <= 2 {
+                          if let age = Int(filtered) {
+                              modelUser.contentUser.age = age
+                          } else {
+                              modelUser.contentUser.age = nil
+                          }
+                      }
+                  }
+              )
                              TextField("Edad", text: ageStringBinding)
                                  .keyboardType(.numberPad)
                                  .padding(.top, 3)
@@ -239,16 +241,18 @@ struct Section3: View {
                 .fontWeight(.semibold)
 
           TextField("Teléfono", text: Binding(
-                         get: { self.modelUser.contentUser.phone ?? "" },
-                         set: {
-                             let filtered = $0.filter { "0123456789".contains($0) }
-                             self.modelUser.contentUser.phone = filtered.isEmpty ? nil : filtered
-                         }
-                     ))
-                     .keyboardType(.numberPad)
-                     .padding(.top, 3)
-                     .font(.system(size: 13))
-                     .textFieldStyle(RoundedBorderTextFieldStyle())
+              get: { self.modelUser.contentUser.phone ?? "" },
+              set: {
+                  let filtered = $0.filter { "0123456789".contains($0) }
+                  if filtered.count <= 10 {
+                      self.modelUser.contentUser.phone = filtered.isEmpty ? nil : filtered
+                  }
+              }
+          ))
+          .keyboardType(.numberPad)
+          .padding(.top, 3)
+          .font(.system(size: 13))
+          .textFieldStyle(RoundedBorderTextFieldStyle())
 
                      // Mostrar mensaje solo si el campo está vacío.
                      if isBlank(input: modelUser.contentUser.phone) {
