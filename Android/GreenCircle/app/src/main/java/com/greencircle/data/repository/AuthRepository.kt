@@ -40,4 +40,15 @@ class AuthRepository {
      */
     suspend fun updateTokensData(authToken: String): AuthResponse? =
         api.updateTokensData(authToken)
+
+    /**
+     * Realiza el inicio de sesión con credenciales del usuario (email y contraseña).
+     *
+     * @param email El email del usuario.
+     * @param password La contraseña del usuario.
+     * @return Un objeto [AuthResponse] que contiene la respuesta de la autenticación, o null
+     * si hay un error.
+     */
+    suspend fun loginCredentials(email: String, password: String): AuthResponse? =
+        api.loginCredentials(email, password)
 }
