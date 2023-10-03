@@ -363,6 +363,10 @@ export type RegisterUser = z.infer<typeof registerUserSchema>
 export const register = async (
   user: RegisterUser
 ): Promise<AuthResponse | null> => {
+
+  const oldUser = await UserService.getUserByEmailWithRole(user.email)
+  if (oldUser) return null
+
   const salt = bcrypt.genSaltSync(10)
   const hash = bcrypt.hashSync(user.password, salt)
 
