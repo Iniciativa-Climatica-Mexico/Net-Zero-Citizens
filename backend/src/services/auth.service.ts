@@ -319,7 +319,6 @@ export const login = async (
   email: string,
   password: string
 ): Promise<AuthResponse | null> => {
-  console.log(login)
   const user = await UserService.getUserByEmailWithRole(email)
   if (!user || !user.salt || !user.password) return null
 
@@ -339,8 +338,6 @@ export const login = async (
   }
 
   const tokens = await createTokens(userPayload)
-  console.log(tokens)
-  console.log(userPayload)
   if (!tokens) return null
 
   return {
@@ -378,7 +375,6 @@ export const register = async (
   const userDb = await User.create(userCreate)
   if (!userDb) return null
   const newUser = await UserService.getUserByEmailWithRole(userDb.email)
-  console.log(newUser)
   if (!newUser) return null
   // Si ya está registrado, crear un Payload con la información del usuario
   const userPayload: Payload = {

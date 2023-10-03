@@ -97,7 +97,6 @@ export const updateTokens: RequestHandler<
     // Actualizar tokens
     const tokens = await AuthService.updateTokens(token)
     if (!tokens) return res.json({ error: 'Invalid token' })
-    console.log(tokens)
     // Devolver los tokens
     res.status(200).json(tokens)
   } catch (error) {
@@ -141,7 +140,6 @@ export const register: RequestHandler<
   { user: unknown },
   NoRecord
 > = async (req, res) => {
-  console.log('register')
   let authResponse: AuthService.AuthResponse = {
     tokens: null,
     user: null,
