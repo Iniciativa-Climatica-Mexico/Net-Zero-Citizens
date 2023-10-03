@@ -374,7 +374,7 @@ struct Section3: View {
             .padding(.vertical, 12)
             .padding(.horizontal, 40)
             .frame(maxWidth: .infinity)
-            .background(.red)
+            .background(Color("RedCustom"))
             .cornerRadius(8)
         } .padding(.top, 12)
           .padding(.horizontal, 70)
