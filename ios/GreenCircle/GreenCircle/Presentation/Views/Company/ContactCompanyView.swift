@@ -58,175 +58,6 @@ struct TabViewImagesProducts: View {
     }
 }
 
-
-struct ContactCompanyProductView: View {
-  var productDescription: String
-  var productName: String
-  var body: some View {
-    VStack(alignment: .leading, spacing: 10) {
-      Text(productName)
-        .foregroundColor(Color("MainText"))
-        .font(.system(size: 24)).bold()
-      VStack {
-        Text(productDescription)
-          .foregroundColor(Color("MainText"))
-          .font(.system(size: 17))
-          .padding(EdgeInsets(top: 5, leading: 0, bottom: 6, trailing: 0))
-          .lineSpacing(8)
-      }
-      Spacer()
-    }.padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
-  }
-}
-
-struct ContactCompanyRatingView: View {
-  @ObservedObject var modelCompanyRating: CompanyViewModel
-  @Binding var dispScrollView: Bool
-  var body: some View {
-    if !dispScrollView {
-      VStack(alignment: .leading, spacing: 5) {
-        Text("Rating")
-          .font(.system(size: 24))
-          .padding(.bottom, 10).bold()
-        HStack {
-          ForEach(0..<5) { index in
-            if index < Int(modelCompanyRating.contentCompany.score ?? 0.0) {
-              Image(systemName: "star.fill")
-                .resizable()
-                .frame(width: 18, height: 18)
-            } else if index == Int(modelCompanyRating.contentCompany.score ?? 0.0) {
-              Image(systemName: "star.leadinghalf.fill")
-                .resizable()
-                .frame(width: 18, height: 18)
-            } else {
-              Image(systemName: "star")
-                .resizable()
-                .frame(width: 18, height: 18)
-            }
-          }
-          Text(String(modelCompanyRating.contentCompany.score ?? 0.0))
-        }
-          .padding(.bottom, 5)
-          .foregroundColor(Color("GreenCustom"))
-        
-        Divider()
-        Text("Reviews")
-          .font(.system(size: 24))
-          .foregroundColor(Color("MainText"))
-          .padding(.bottom, 10).bold()
-        VStack(spacing: 6) {
-          Text(modelCompanyRating.contentCompany.oneComment ?? "No hay comentarios")
-            .font(.system(size: 17))
-            .foregroundColor(Color("MainText"))
-        }.padding(.bottom, 10)
-        HStack {
-          Spacer()
-          Text("Ver mas...").onTapGesture {
-            dispScrollView = true
-          }
-          .font(.system(size: 17))
-          .foregroundColor(Color("Primary"))
-          Spacer()
-        }
-        Spacer()
-      }
-      .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
-      .foregroundColor(Color("MainText"))
-    }
-  }
-}
-
-struct ContactCompanyComponentView: View {
-  @ObservedObject var modelCompany: CompanyViewModel
-  var body: some View {
-    VStack(alignment: .leading, spacing: 7) {
-      Text("Conecta")
-        .font(.system(size: 24))
-        .foregroundColor(Color("MainText"))
-        .padding(.bottom, 5).bold()
-      VStack(alignment: .leading, spacing: 6) {
-        Text("Página web").font(.system(size: 17))
-          .foregroundColor(Color("BlackCustom"))
-        Text(modelCompany.contentCompany.webPage ?? "")
-          .font(.system(size: 15))
-          .foregroundColor(Color("MainText"))
-      }
-
-      Divider()
-
-      VStack(alignment: .leading, spacing: 6) {
-        Text("Correo electrónico").font(.system(size: 17))
-          .foregroundColor(Color("BlackCustom"))
-        Text(modelCompany.contentCompany.email).font(.system(size: 15))
-          .foregroundColor(Color("MainText"))
-      }
-
-      Divider()
-
-      VStack(alignment: .leading, spacing: 6) {
-        Text("Dirección")
-          .font(.system(size: 17))
-          .foregroundColor(Color("BlackCustom"))
-        HStack(spacing: 5) {
-          Text("\(modelCompany.contentCompany.state ?? ""), ")
-            .font(.system(size: 15))
-            .foregroundColor(Color("MainText"))
-
-          Text("\(modelCompany.contentCompany.street ?? ""), ")
-            .font(.system(size: 15))
-            .foregroundColor(Color("MainText"))
-          
-          Text(String(modelCompany.contentCompany.streetNumber ?? ""))
-            .font(.system(size: 15))
-            .foregroundColor(Color("MainText"))
-        }
-      }
-      Divider()
-
-      VStack(alignment: .leading, spacing: 6) {
-        Text("Número telefónico").font(.system(size: 17))
-          .foregroundColor(Color("BlackCustom"))
-        Text(modelCompany.contentCompany.phone)
-          .font(.system(size: 15))
-          .foregroundColor(Color("MainText"))
-      }
-
-      Spacer()
-    }
-    .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
-    .foregroundColor(Color("BlackCustom"))
-  }
-}
-
-struct CustomButtonOption: View {
-  @Binding var isPressed: [String: Bool]
-  var content: String
-  var body: some View {
-    Button(action: {
-      isPressed[content] = true
-          
-      for (key, _) in (isPressed.filter { $0.key != content }) {
-          isPressed[key] = false
-      }
-      
-      }, label: {
-        if content == "Report"{
-          Image(systemName: "exclamationmark.bubble")
-          .shadow(color: isPressed[content] ?? false ? Color("GreenCustom") : Color.clear, radius: 10, y: 9)
-          .foregroundColor(isPressed[content] ?? false ? Color("GreenCustom") : Color("MainText"))
-          
-        } else {
-          Text(content)
-          .font(.system(size: 18))
-          .scaleEffect(isPressed[content] ?? false ? 1.1 : 1.0)
-          .shadow(color: isPressed[content] ?? false ? Color("GreenCustom") : Color.clear, radius: 10, y: 9)
-          .foregroundColor(isPressed[content] ?? false ? Color("GreenCustom") : Color("MainText"))
-        }
-      })
-    .frame(maxWidth: .infinity, maxHeight: 15)
-  }
-}
-
 struct ReportReasonView: View {
     var reason: String
     @Binding var selectedReason: String?
@@ -357,12 +188,15 @@ struct ContactCompanyView: View {
   var idCompany: UUID
   @StateObject var contactCompanyViewModel = CompanyViewModel()
   @StateObject var viewModel = ComplaintViewModel()
+  @StateObject var favouriteViewModel = FavouriteViewModel()
   @State private var showAlert = false
   @State var isPressed: [String: Bool] = ["Producto": true]
   @State var selectedPage: Int = 0
   @State var dispScrollView: Bool = false
   @State var bindImageToDescription: Bool = false
   @State var stringDescription: String = ""
+  @State var showingAlert: Bool = false
+  @Binding var emptyHeartFill: Bool
 
   @Environment(\.presentationMode) var presentationMode
 
@@ -378,11 +212,47 @@ struct ContactCompanyView: View {
                     case .empty:
                       ProgressView()
                     case .success(let image):
-                      image
-                        .resizable()
-                        .scaledToFill()
-                        .frame(maxWidth: .infinity, maxHeight: 155)
-                        .cornerRadius(10, corners: [.bottomLeft, .bottomRight])
+                      ZStack {
+                        image
+                          .resizable()
+                          .scaledToFill()
+                          .frame(maxWidth: .infinity, maxHeight: 155)
+                          .cornerRadius(10, corners: [.bottomLeft, .bottomRight])
+                        VStack {
+                          Spacer()
+                          HStack {
+                            Spacer()
+                            Button(action: {
+                              if !emptyHeartFill {
+                                Task {
+                                  await favouriteViewModel.postFavouriteById(companyId: contactCompanyViewModel.contentCompany.companyId)
+                                  if favouriteViewModel.contentFavourite.message ==
+                                    "Favourite created" {
+                                      emptyHeartFill = true
+                                      showingAlert = true
+                                  }
+                                }
+                                /// TODO show alert
+                              } else {
+                                /// TODO : Delete favourite
+                                /// emptyFill = false
+                              }
+                            }, label: {
+                              Image(systemName: emptyHeartFill ? "heart.fill" : "heart")
+                                .foregroundColor(.white)
+                                .font(.system(size: 24))
+                                .padding(EdgeInsets(top: 40, leading: 40, bottom: 0, trailing: 0))
+                                .padding()
+                            }).alert(isPresented: $showingAlert) {
+                              Alert(title: Text("Nuevo favorito!"),
+                                    message: Text("Se agregó: " + contactCompanyViewModel.contentCompany.name +
+                                                  " a tu lista de favoritos"),
+                                    dismissButton: .default(Text("Ok")))
+                            }
+                          }
+                        }
+                      }
+                     
                     case .failure:
                       Text("Failed to load Image!!")
                     @unknown default:
@@ -453,7 +323,7 @@ struct ContactCompanyView: View {
           }
     }
       } else {
-        ScrollViewRating(idCompany: idCompany, dispScrollView: $dispScrollView, isPressed: $isPressed)
+        ScrollViewRating(idCompany: idCompany, emptyHeartFill: emptyHeartFill, dispScrollView: $dispScrollView, isPressed: $isPressed)
           .onAppear {
             isPressed = ["Producto": false, "Contacto": false, "Reviews": true]
           }

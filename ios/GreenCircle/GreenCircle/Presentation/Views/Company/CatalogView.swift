@@ -9,13 +9,17 @@ import SwiftUI
 
 struct CardCatalogView: View {
   @StateObject var viewModel: CompanyViewModel
+  @StateObject var favouriteViewModel: FavouriteViewModel
+  @State var emptyHeartFill: Bool = false
+  @State var showingAlert: Bool = false
   var companyId: UUID
   var companyName: String
   var city: String
   var state: String
-
+  
   init(companyId: UUID, companyName: String, city: String, state: String) {
     _viewModel = StateObject(wrappedValue: CompanyViewModel())
+    _favouriteViewModel = StateObject(wrappedValue: FavouriteViewModel())
     self.companyId = companyId
     self.companyName = companyName
     self.city = city
@@ -23,12 +27,12 @@ struct CardCatalogView: View {
   }
   
   var body: some View {
-    NavigationLink(destination: ContactCompanyView(idCompany: companyId)){
-    ZStack {
-      RoundedRectangle(cornerRadius: 10, style:.continuous)
-        .fill(.white)
-        .frame(width: 335, height: 150)
-        .shadow(color: Color("BlueCustom"), radius: 1)
+    NavigationLink(destination: ContactCompanyView(idCompany: companyId, emptyHeartFill: $emptyHeartFill)){
+      ZStack {
+        RoundedRectangle(cornerRadius: 10, style:.continuous)
+          .fill(.white)
+          .frame(width: 335, height: 150)
+          .shadow(color: Color("BlueCustom"), radius: 1)
         HStack {
           VStack (alignment: .leading) {
             if let imageURL = URL(string: viewModel.contentCompany.images?.first?.imageUrl ?? "") {
@@ -90,24 +94,46 @@ struct CardCatalogView: View {
           .multilineTextAlignment(.leading)
           Spacer()
           VStack {
-            Image(systemName: "heart")
-              .foregroundColor(Color("BlueCustom"))
-              .font(.system(size: 24))
-              .padding(.top, 20)
-            Spacer()
-          }.frame(maxWidth: 25)
+            Button(action: {
+              if !emptyHeartFill {
+                Task {
+                  await favouriteViewModel.postFavouriteById(companyId: companyId)
+                  if favouriteViewModel.contentFavourite.message ==
+                      "Favourite created" {
+                    emptyHeartFill = true
+                    showingAlert = true
+                  }
+                }
+              } else {
+                /// TODO : Delete favourite
+                /// emptyFill = false
+              }
+              
+            }, label: {
+              Image(systemName: emptyHeartFill ? "heart.fill" : "heart")
+                .foregroundColor(Color("BlueCustom"))
+                .font(.system(size: 24))
+                .padding(.top, 20)
+            }).alert(isPresented: $showingAlert) {
+              Alert(title: Text("Nuevo favorito!"),
+                    message: Text("Se agregó: " + companyName +
+                                  " a tu lista de favoritos"),
+                    dismissButton: .default(Text("Ok")))
+            }
+              Spacer()
+            }.frame(maxWidth: 25)
+          }
+          .frame(maxWidth: 300, maxHeight: 140)
         }
-        .frame(maxWidth: 300, maxHeight: 140)
+      }.onAppear {
+        Task {
+          await viewModel.fetchCompanyById(idCompany: companyId)
+        }
       }
-    }.onAppear {
-      Task {
-        await viewModel.fetchCompanyById(idCompany: companyId)
-      }
+      .navigationTitle("Proveedores")
+      .navigationBarTitleDisplayMode(.inline)
     }
-    .navigationTitle("Proveedores")
-    .navigationBarTitleDisplayMode(.inline)
   }
-}
 
 struct CatalogView: View {
   @StateObject var viewModel = CompanyViewModel()
