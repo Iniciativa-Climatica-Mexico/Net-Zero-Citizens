@@ -3,7 +3,7 @@
 //  GreenCircle
 //
 //  Created by Ricardo Adolfo Fernández Alvarado on 19/09/23.
-//
+//  Modified by Daniel Gutiérrez Gómez on 25/09/23
 
 import SwiftUI
 
@@ -84,25 +84,6 @@ struct InputFormView: View {
   }
 }
 
-struct NumberInputFormView: View {
-  var bindingValue: Binding<Int?>
-  var label: String
-  var prompt: String
-  
-  var body: some View {
-    VStack(alignment: .leading) {
-      Text(label)
-        .foregroundColor(Color("SecondaryText"))
-      TextField(prompt, value: bindingValue, format: .number)
-        .padding(10)
-        .overlay {
-          RoundedRectangle(cornerRadius: 10)
-            .stroke(.gray, lineWidth: 1)
-        }
-    }.font(.system(size: 20, weight: .medium))
-  }
-}
-
 struct PickerFormView: View {
   @Binding var selectedOption: String
   var label: String
@@ -137,5 +118,33 @@ struct PickerFormView: View {
       }
     }
     .font(.system(size: 20, weight: .medium))
+  }
+}
+
+
+struct CompanyRegisterHeaderView: View {
+  
+  var body: some View {
+    VStack(alignment: .leading, spacing: 10) {
+      Image(systemName: "leaf")
+        .font(.largeTitle)
+        .foregroundColor(Color("GreenCustom"))
+      Text("Servicios que ofreces")
+        .font(.system(size: 40, weight: .bold))
+        .frame(maxWidth: 230)
+        .foregroundColor(Color("MainText")).bold()
+        .padding(.top, 10)
+      VStack(alignment: .leading) {
+        Text("Por favor selecciona los productos correspondientes a los servicios que ofrece tu empresa")
+          .multilineTextAlignment(.leading)
+          .padding(.leading, 8)
+          .lineSpacing(4)
+      }
+      .foregroundColor(Color("MainText"))
+      .font(.system(size: 14))
+    }
+    .padding(.horizontal)
+    .frame(maxWidth: .infinity,
+           alignment: .leading)
   }
 }

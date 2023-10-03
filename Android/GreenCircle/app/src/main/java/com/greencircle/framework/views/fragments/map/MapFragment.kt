@@ -1,35 +1,31 @@
 package com.greencircle.framework.views.fragments.map
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.greencircle.R
 import com.greencircle.data.repository.GoogleMapsRepository
-import com.greencircle.domain.model.CompanyObject
+import com.greencircle.domain.model.googlemaps.Company
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MapFragment : Fragment(), OnMapReadyCallback {
     private var mGoogleMap: GoogleMap? = null
 
-    private fun getCompanyList() {
-        CoroutineScope(Dispatchers.IO).launch {
-            val companyRepository = GoogleMapsRepository()
-            val result: CompanyObject? = companyRepository.getCompanyList()
-            Log.d("Salida", result.toString())
-        }
-    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -49,25 +45,57 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mGoogleMap = googleMap
 
-        getCompanyList()
+        mGoogleMap?.uiSettings?.isZoomControlsEnabled = true
+        mGoogleMap?.uiSettings?.isZoomGesturesEnabled = true
 
-        // Coordenadas de la ubicacion deseada
-        val latitude = 20.613276
-        val longitude = -100.404219
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            mGoogleMap?.isMyLocationEnabled = true
 
-        // Crear un objeto LatLng con las coordenadas
-        val location = LatLng(latitude, longitude)
+            val locationManager = requireActivity().getSystemService(
+                android.content.Context.LOCATION_SERVICE
+            ) as android.location.LocationManager
 
-        // Crear un marcador en la ubicacion
-        val marker = MarkerOptions()
-            .position(location)
-            .title("Empresa paneles solares ejemplo")
-            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+            val location = locationManager.getLastKnownLocation(
+                android.location.LocationManager.GPS_PROVIDER
+            )
 
-        // Agregar el marcador al mapa
-        mGoogleMap?.addMarker(marker)
+            location?.let {
+                val currentLatLng = LatLng(it.latitude, it.longitude)
+                mGoogleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
+            }
+        } else {
+            Toast.makeText(
+                requireContext(),
+                "No se ha otorgado permiso para acceder a la ubicación",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
 
-        // Mover la camara al marcador (opcional)
-        mGoogleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
+    private fun getCompanyList() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val companyRepository = GoogleMapsRepository()
+            val result: List<Company>? = companyRepository.getCompanyList()
+
+            withContext(Dispatchers.Main) {
+                result?.forEach { company ->
+                    addMarkerForCompany(company)
+                }
+            }
+        }
+    }
+
+    private fun addMarkerForCompany(company: Company) {
+        val companyLatLng = LatLng(company.latitude, company.longitude)
+        mGoogleMap?.addMarker(
+            MarkerOptions()
+                .position(companyLatLng)
+                .title(company.name)
+                .snippet(company.profilePicture)
+        )
     }
 }

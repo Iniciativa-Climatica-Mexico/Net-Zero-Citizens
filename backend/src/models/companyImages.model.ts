@@ -16,7 +16,6 @@ export default class CompanyImages extends Model {
     allowNull: false,
     defaultValue: DataType.UUIDV4,
     field: 'COMPANY_IMAGE_ID',
-    unique: true,
   })
   companyImageId: string
 

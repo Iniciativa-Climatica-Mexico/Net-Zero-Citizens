@@ -9,6 +9,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.greencircle.R
 import com.greencircle.databinding.ActivitySurveyBinding
 import com.greencircle.domain.model.survey.Question
+import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.survey.SurveyViewModel
 import com.greencircle.framework.views.fragments.survey.QuestionFragment
 import java.util.UUID
@@ -16,17 +17,20 @@ import org.json.JSONObject
 
 class SurveyActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySurveyBinding
-    private val viewModel: SurveyViewModel by viewModels()
+    private val viewModel: SurveyViewModel by viewModels {
+        ViewModelFactory(applicationContext, SurveyViewModel::class.java)
+    }
     private val fragmentManager = supportFragmentManager
+
     private var currentProgress = 0
     private var totalQuestions = 0
     lateinit var userId: UUID
     private val answeredQuestions = mutableSetOf<UUID>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initializeBinding()
         initializeObservers()
+
         val sharedPreferences = getSharedPreferences("my_preferences", MODE_PRIVATE)
         val userJson = sharedPreferences?.getString("user_session", null)
         val userJSON = JSONObject(userJson!!)
@@ -54,8 +58,7 @@ class SurveyActivity : AppCompatActivity() {
                 }
 
                 SurveyViewModel.SubmitStatus.validationError -> {
-                    MaterialAlertDialogBuilder(this)
-                        .setTitle("Faltan preguntas")
+                    MaterialAlertDialogBuilder(this).setTitle("Faltan preguntas")
                         .setMessage(
                             "No puedes enviar sin antes haber " +
                                 "termiandode llenar todas las preguntas obligatorias.",
@@ -65,8 +68,7 @@ class SurveyActivity : AppCompatActivity() {
                 SurveyViewModel.SubmitStatus.error -> {
                     MaterialAlertDialogBuilder(this).setTitle("Error")
                         .setMessage("No se pudieron enviar tus respuestas. Inténtalo más tarde.")
-                        .setCancelable(false)
-                        .setPositiveButton("Aceptar") { _, _ -> goToMain() }
+                        .setCancelable(false).setPositiveButton("Aceptar") { _, _ -> goToMain() }
                         .show()
                 }
             }
@@ -77,7 +79,7 @@ class SurveyActivity : AppCompatActivity() {
         binding = ActivitySurveyBinding.inflate(layoutInflater)
         binding.BtnSubmit.setOnClickListener {
             Log.i("Salida", viewModel.surveyLiveData.value.toString())
-            viewModel.submitAnswers()
+            viewModel.submitAnswers(userId)
         }
         binding.topAppBar.setOnClickListener {
             MaterialAlertDialogBuilder(this).setTitle("¿Quieres dejar de responder?")

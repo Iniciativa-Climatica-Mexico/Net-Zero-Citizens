@@ -19,7 +19,7 @@ class CompanyAPI {
 
 /// Protocolo con las funciones del repositorio de Compañías
 protocol CompanyRepositoryProtocol {
-  func postCompany(authToken: String, company: PostCompanyData) async
+  func postCompany(company: PostCompanyData) async
   func fetchCompanyById(companyId: UUID) async -> Company?
   //func fetchAllCompanies() async -> Company?
 }
@@ -40,24 +40,43 @@ class CompanyRepository: CompanyRepositoryProtocol {
   ///   - Returns: Modelo de compañía
   func fetchCompanyById(companyId: UUID) async -> Company? {
     return await service
-      .fetchCompanyById(url: URL(string: "\(CompanyAPI.base)/\(companyId.uuidString.lowercased())")!)
+      .getRequest(URL(string:
+                        "\(CompanyAPI.base)/\(companyId.uuidString.lowercased())")!)
   }
   
   /// Función que llama al servicio de conexión con la API para postear una  nueva compañía
   /// - Parameters:
   ///   - authToken: token de autenticación
   ///   - company: el objeto con la información de la compañía
-  func postCompany(authToken: String, company: PostCompanyData) async {
-    await service
-      .postCompany(url:
-                    URL(
-                      string: "\(CompanyAPI.base)\(CompanyAPI.Routes.create)")!,
-                   authToken: authToken, company: company)
+  func postCompany(company: PostCompanyData) async {
+    let params: [String: Any] = [
+      "company": [
+        "name": company.name,
+        "description": company.description,
+        "email": company.email,
+        "phone": company.phone,
+        "webPage": company.webPage,
+        "street": company.street,
+        "streetNumber": company.streetNumber,
+        "city": company.city,
+        "state": company.state,
+        "zipCode": company.zipCode,
+        "userId": company.userId!,
+        "pdfCurriculumUrl": company.pdfCurriculumUrl,
+        "pdfGuaranteeSecurityUrl": company.pdfGuaranteeSecurityUrl,
+        "pdfActaConstitutivaUrl": company.pdfActaConstitutivaUrl,
+        "pdfIneUrl": company.pdfIneUrl
+      ] as [String : Any]
+    ]
+    let _: NoResponse? = await service
+      .postRequest(URL(
+        string: "\(CompanyAPI.base)\(CompanyAPI.Routes.create)")!,
+                   body: params)
   }
   
   func fetchAllCompanies() async -> PaginatedQuery<Company>? {
     return await service
-      .fetchAllCompanies(url: URL(string: "\(CompanyAPI.base)")!)
+      .getRequest(URL(string: "\(CompanyAPI.base)")!)
   }
   
 }

@@ -16,7 +16,6 @@ export default class Role extends Model {
     type: DataType.STRING,
     field: 'NAME',
     allowNull: false,
-    unique: true,
   })
   name: string
 

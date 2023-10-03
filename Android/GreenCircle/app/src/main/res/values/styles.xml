@@ -20,6 +20,4 @@
         <item name="backgroundTint">@animator/custom_selector</item>
         <item name="rippleColor">@null</item>
     </style>
-
-
 </resources>
