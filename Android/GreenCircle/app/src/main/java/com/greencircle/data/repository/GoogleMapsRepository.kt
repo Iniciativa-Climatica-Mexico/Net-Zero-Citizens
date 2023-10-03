@@ -6,8 +6,8 @@ import com.greencircle.domain.model.googlemaps.Company
 
 class GoogleMapsRepository() {
     private lateinit var api: GoogleMapsAPIService
-    suspend fun getCompanyList(): List<Company>? {
-        api = NetworkModuleGoogleMaps()
+    suspend fun getCompanyList(authToken: String): List<Company>? {
+        api = NetworkModuleGoogleMaps(authToken)
         return try {
             api.getCompanyList()
         } catch (e: java.lang.Exception) {

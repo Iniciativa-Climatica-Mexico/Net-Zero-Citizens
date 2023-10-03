@@ -9,6 +9,8 @@ public interface AuthAPIService {
     data class UpdateTokensRequest(val refreshToken: String)
     data class UpdateTokensDataRequest(val authToken: String)
 
+    data class LoginCredentialsRequest(val email: String, val password: String)
+
     @POST("auth/login/google")
     suspend fun googleLogin(@Body request: GoogleLoginRequest): AuthResponse
 
@@ -17,4 +19,7 @@ public interface AuthAPIService {
 
     @POST("auth/update/tokens/data")
     suspend fun updateTokensData(@Body request: UpdateTokensDataRequest): AuthResponse
+
+    @POST("auth/login/credentials")
+    suspend fun loginCredentials(@Body request: LoginCredentialsRequest): AuthResponse
 }
