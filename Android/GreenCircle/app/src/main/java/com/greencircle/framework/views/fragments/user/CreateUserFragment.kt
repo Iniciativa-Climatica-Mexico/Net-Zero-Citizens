@@ -60,7 +60,10 @@ class CreateUserFragment : Fragment() {
         arguments = requireArguments()
         // Google Login
         val token: String = arguments.getString("idToken").toString()
-        loginViewModel.googleLogin(token)
+        Log.d("token", token)
+        if (token != null) {
+            loginViewModel.googleLogin(token)
+        }
     }
 
     /**
@@ -104,13 +107,14 @@ class CreateUserFragment : Fragment() {
             CreateUserViewModel.state = stateInputLayout.editText?.text.toString()
             CreateUserViewModel.gender = genderInputLayout.editText?.text.toString()
 
-            Log.d("viewModel", CreateUserViewModel.phone)
-            Log.d("viewModel", CreateUserViewModel.age)
-
             val termsAndConditionsFragment = TermsAndConditions()
 
             val activity = requireActivity() as RegisterUserActivity
             activity.replaceFragment(termsAndConditionsFragment)
+        }
+
+        if (arguments.getString("uuid") != null) {
+            uuid = arguments.getString("uuid")?.let { UUID.fromString(it) }!!
         }
 
         setTexts(arguments, view)
@@ -130,7 +134,8 @@ class CreateUserFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         loginViewModel.googleLoginResult.observe(viewLifecycleOwner) { result ->
             // Handle the result here
-            if (result != null) {
+            if (result != null && result.tokens != null) {
+                Log.d("CreateUserFragment", "$result")
                 authToken = result.tokens.authToken
                 uuid = result.user.uuid
             } else {
@@ -181,7 +186,7 @@ class CreateUserFragment : Fragment() {
                 roleId,
             )
 
-            createUserViewModel.updateUser(uuid, userInfo, authToken)
+            createUserViewModel.updateUser(uuid, userInfo)
             navigateToHome()
         } else {
             hideKeyboard()
