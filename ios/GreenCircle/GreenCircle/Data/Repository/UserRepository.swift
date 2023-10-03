@@ -122,10 +122,11 @@ class UserRepository: UserRepositoryProtocol {
     return await backEndService.UpdateUserCredentials(url: url, newUserCredentials: newUserCredentials)
   }
   
-  func saveAuthData(authData: AuthResponse) {
-    lService.setToken(userData: authData)
-  }
-  
+    func saveAuthData(authData: AuthResponse) {
+        lService.setToken(userData: authData)
+        print("User: \(authData.user)")
+    }
+
   func getAuthData() -> AuthResponse? {
     return lService.getToken()
   }

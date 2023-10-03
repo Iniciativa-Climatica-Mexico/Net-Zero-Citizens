@@ -14,10 +14,15 @@ initDB().then(() => {
 })
 
 const app = express()
+const bodyParser = require('body-parser')
 
 app.use(morgan('dev'))
 app.use(cors())
 app.use(express.json())
+//app.use(bodyParser.json(setupForStripeWebhooks))
+app.use(bodyParser.json({ type: 'application/*+json' }))
+app.use(bodyParser.urlencoded({ limit: "200mb", extended: true, parameterLimit: 1000000 }))
+app.use(bodyParser.raw({ type: 'application/vnd.custom-type' }))
 app.use(express.urlencoded({ extended: true }))
 
 initRouterV1(app)

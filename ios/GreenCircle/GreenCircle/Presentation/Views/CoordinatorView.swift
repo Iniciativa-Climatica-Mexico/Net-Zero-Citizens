@@ -3,7 +3,7 @@
 //  GreenCircle
 //
 //  Created by Ricardo Adolfo Fernández Alvarado on 12/09/23.
-//  Modified by Daniel Gutiérrez Gómez 26/09/23 
+//  Modified by Daniel Gutiérrez Gómez 26/09/23
 
 import FlowStacks
 import SwiftUI

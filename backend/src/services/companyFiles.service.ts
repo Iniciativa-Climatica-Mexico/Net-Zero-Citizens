@@ -83,7 +83,7 @@ export const uploadCompanyFile = async (
     const company = await CompanyService.getCompanyById(companyId)
 
     // Convertir el archivo a base64
-    var base64data = Buffer.from(file.buffer, 'binary')
+    let base64data = Buffer.from(file.buffer, 'binary')
 
     // Definir los parámetros para subir el archivo
     const params = {
