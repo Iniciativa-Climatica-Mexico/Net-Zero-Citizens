@@ -48,8 +48,9 @@ const testSurveyList = [
   },
   {
     surveyId: '48aca777-4baa-4365-8ca8-ed7ba4d33681',
-    title: 'Website Usability Survey',
-    description: 'Survey to assess the usability of our website',
+    title: 'Hábitos de consumo',
+    description:
+      'Encuesta para aprender mas sobre los habitos de consumo y uso energético de los usuarios',
     endDate: null,
   },
 ]
@@ -100,29 +101,38 @@ const testSurveyById = {
 
 const testSurveyPending = {
   surveyId: '48aca777-4baa-4365-8ca8-ed7ba4d33681',
-  title: 'Website Usability Survey',
-  description: 'Survey to assess the usability of our website',
+  title: 'Hábitos de consumo',
+  description:
+    'Encuesta para aprender mas sobre los habitos de consumo y uso energético de los usuarios',
   endDate: null,
   questions: [
     {
       questionId: 'c96f70e0-c966-4f87-bdd5-184ec7cf0ffa',
-      questionText: 'Did you find the website easy to navigate?',
+      questionText: '¿Cuantos vehiculos tienes?',
       questionType: 'multiple_choice',
       isRequired: true,
       questionOptions: [
         {
           questionOptionId: '12234887-aac5-437b-b700-40e99161dccd',
-          textOption: 'Yes',
+          textOption: '1',
         },
         {
           questionOptionId: '54863a53-56e3-479e-8ffd-7943de650a23',
-          textOption: 'No',
+          textOption: '2',
+        },
+        {
+          questionOptionId: '54863a53-56e3-479e-8ffd-7943de650a43',
+          textOption: '3',
+        },
+        {
+          questionOptionId: '54863a53-56e3-479e-8ffd-7943de650a24',
+          textOption: '4+',
         },
       ],
     },
     {
       questionId: 'b84348e0-c7bf-4c09-82ce-5366c81d764e',
-      questionText: 'What features would you like to see in our product?',
+      questionText: '¿Qué acciones tomas para reducir tu huella de carbono?',
       questionType: 'open',
       isRequired: false,
       questionOptions: [],
@@ -130,36 +140,36 @@ const testSurveyPending = {
     {
       questionId: '3c9dccbb-1b19-49c0-b8e0-170e047a336a',
       questionText:
-        'On a scale of 1 to 10, how likely are you to recommend our product?',
+        '¿Qué tan amigable con el medio ambiente te consideras? (1, muy poco; 5, mucho)',
       questionType: 'scale',
-      questionOptions: [],
       isRequired: true,
+      questionOptions: [],
     },
     {
       questionId: 'ea067a23-3a46-41a6-b6e4-152aa199535a',
-      questionText: '¿Cómo describiría nuestro servicio?',
+      questionText: '¿Cuantas personas forman parte de tu nucleo familiar?',
       questionType: 'multiple_choice',
       isRequired: true,
       questionOptions: [
         {
           questionOptionId: '86d7613d-7633-4156-b596-65f218415c40',
-          textOption: 'Excelente',
+          textOption: '1',
         },
         {
           questionOptionId: '0c11fa72-2e8c-4310-acdb-fc5e2856793c',
-          textOption: 'Bueno',
+          textOption: '2',
         },
         {
           questionOptionId: 'd467a0a1-14da-4c5e-a7d8-45b13de95715',
-          textOption: 'Regular',
+          textOption: '3',
         },
         {
           questionOptionId: 'effa5c3d-2e54-434e-b0f7-300429c07c31',
-          textOption: 'Malo',
+          textOption: '4',
         },
         {
           questionOptionId: '06329a73-b188-4b77-8ab9-5f783a510807',
-          textOption: 'Pésimo',
+          textOption: '5+',
         },
       ],
     },
@@ -204,7 +214,7 @@ const testAnswer = {
   answers: [
     {
       questionId: 'c96f70e0-c966-4f87-bdd5-184ec7cf0ffa',
-      answerText: 'No',
+      answerText: '1',
     },
     {
       questionId: 'b84348e0-c7bf-4c09-82ce-5366c81d764e',
@@ -216,7 +226,7 @@ const testAnswer = {
     },
     {
       questionId: 'ea067a23-3a46-41a6-b6e4-152aa199535a',
-      answerText: 'Bueno',
+      answerText: '3',
     },
   ],
 }

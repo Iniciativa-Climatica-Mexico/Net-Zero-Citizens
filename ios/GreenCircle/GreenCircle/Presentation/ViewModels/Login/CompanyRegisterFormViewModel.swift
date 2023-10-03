@@ -15,10 +15,10 @@ struct PostCompanyData {
   var phone: String = ""
   var webPage: String = ""
   var street: String = ""
-  var streetNumber: Int?
+  var streetNumber: String = ""
   var city: String = ""
   var state: String = ""
-  var zipCode: Int?
+  var zipCode: String = ""
   var userId: String?
   let pdfCurriculumUrl = "a"
   let pdfGuaranteeSecurityUrl = "a"
@@ -29,31 +29,73 @@ struct PostCompanyData {
 /// ViewModel de la vista del formulario para registrar compañía
 class CompanyRegisterFormViewModel: ObservableObject {
   @Published var formState = PostCompanyData()
+  @Published var userData: UserAuth
+  @Published var showAlert = false
+  @Published var errorMessage = ""
   var useCase = CompanyUseCase.shared
+  
+  init() {
+    userData = useCase.getLocalUserData()!.user
+  }
   
   /// Función para manejar el submit de la información de la compañía
   /// - Parameter userData: objeto en el entorno con la información del usuario
   @MainActor
-  func handleSubmit(userData: UserData) async {
-    formState.userId = userData.user!.id
-    await useCase.registerCompany(authToken: userData.tokens!.authToken,
-                                  company: formState)
+  func handleSubmit() async -> Bool{
+    do {
+      try validate()
+      formState.userId = userData.id
+      await useCase.registerCompany(company: formState)
+      return true
+    } catch GCError.validationError(let message) {
+      showAlert = true
+      errorMessage = message
+      return false
+    } catch {
+      showAlert = true
+      errorMessage = "Algo salió mal :(."
+      return false
+    }
+    
   }
   
   /// Función para validar los datos del formulario
   private func validate() throws {
-    if formState.name.isEmpty
-        || formState.description.isEmpty
-        || formState.email.isEmpty
-        || formState.phone.isEmpty
-        || formState.phone.count != 10
-        || formState.street.isEmpty
-        || formState.streetNumber == nil
-        || formState.city.isEmpty
-        || formState.zipCode == nil
-        || formState.zipCode! > 99999
-        || formState.zipCode! < 10000 {
-      throw CustomError.mainError
+    if formState.name.isEmpty {
+      throw GCError.validationError("Por favor ingresa el nombre de tu compañía.")
+    }
+    
+    if formState.description.isEmpty
+        || formState.description.count < 5 {
+      throw GCError.validationError("Por favor ingresa una descripción.")
+    }
+    
+    if formState.email.isEmpty
+        || !Utils.isValidEmail(formState.email) {
+      throw GCError.validationError("Por favor ingresa un email válido.")
+    }
+
+    
+    if formState.phone.isEmpty
+        || formState.phone.count != 12 {
+      throw GCError.validationError("Por favor ingresa un teléfono válido.")
+    }
+    
+    if formState.street.isEmpty
+        || formState.street.count < 3 {
+      throw GCError.validationError("Por favor ingresa una calle.")
+    }
+    
+    if formState.streetNumber.isEmpty {
+      throw GCError.validationError("Por favor ingresa un número de la calle")
+    }
+
+    if formState.city.isEmpty {
+      throw GCError.validationError("Por favor ingresa una ciudad válida.")
+    }
+    
+    if formState.zipCode.count < 5 {
+      throw GCError.validationError("Por favor ingresa un código postal válido")
     }
   }
 }

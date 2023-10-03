@@ -12,6 +12,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.greencircle.R
+import com.greencircle.domain.model.user.User
 import com.greencircle.framework.views.activities.SurveyActivity
 
 class AuthUtils {
@@ -67,6 +68,19 @@ class AuthUtils {
         arguments.putString("email", account?.email)
         arguments.putString("photoUrl", account?.photoUrl.toString())
         arguments.putString("idToken", account?.idToken)
+
+        return arguments
+    }
+
+    fun getDataFromRegisterResponse(user: User): Bundle {
+        val arguments = Bundle()
+        arguments.putString("givenName", user.firstName)
+        arguments.putString("familyName", user.lastName)
+        arguments.putString("displayName", user.firstName + " " + user.lastName)
+        arguments.putString("email", user.email)
+        arguments.putString("photoUrl", user.picture)
+        arguments.putString("idToken", null)
+        arguments.putString("uuid", user.uuid.toString())
 
         return arguments
     }
