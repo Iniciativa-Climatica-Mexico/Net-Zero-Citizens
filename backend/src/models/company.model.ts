@@ -8,7 +8,7 @@ import {
   Table,
 } from 'sequelize-typescript'
 import Review from './review.model'
-import CompanyImages from './companyImages.model'
+import CompanyFiles from './companyFiles.model'
 import CompanyProducts from './companyProducts.model'
 import Product from './products.model'
 import User from './users.model'
@@ -111,55 +111,6 @@ export default class Company extends Model {
   zipCode: string
 
   @Column({
-    type: DataType.STRING(255),
-    allowNull: true,
-    field: 'PROFILE_PICTURE',
-  })
-  profilePicture: string | null
-
-  @Column({
-    type: DataType.STRING(500),
-    allowNull: true,
-    field: 'PDF_CURRICULUM_URL',
-  })
-  pdfCurriculumUrl: string
-
-  @Column({
-    type: DataType.STRING(500),
-    allowNull: true,
-    field: 'PDF_DIC_CDMX_URL',
-  })
-  pdfDicCdmxUrl: string | null
-
-  @Column({
-    type: DataType.STRING(500),
-    allowNull: true,
-    field: 'PDF_PEE_FIDE_URL',
-  })
-  pdfPeeFideUrl: string | null
-
-  @Column({
-    type: DataType.STRING(500),
-    allowNull: true,
-    field: 'PDF_GUARANTEE_SECURITY_URL',
-  })
-  pdfGuaranteeSecurityUrl: string
-
-  @Column({
-    type: DataType.STRING(500),
-    allowNull: true,
-    field: 'PDF_ACTA_CONSTITUTIVA_URL',
-  })
-  pdfActaConstitutivaUrl: string
-
-  @Column({
-    type: DataType.STRING(500),
-    allowNull: true,
-    field: 'PDF_INE_URL',
-  })
-  pdfIneUrl: string
-
-  @Column({
     type: DataType.ENUM('approved', 'pending_approval', 'rejected'),
     allowNull: false,
     field: 'STATUS',
@@ -167,14 +118,21 @@ export default class Company extends Model {
   })
   status: StatusEnum
 
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: true,
+    field: 'SCORE',
+  })
+  score: number | null
+
   @HasMany(() => Review)
   reviews!: Review[]
 
   @BelongsToMany(() => Product, { through: () => CompanyProducts })
   products!: Product[]
 
-  @HasMany(() => CompanyImages)
-  images!: CompanyImages[]
+  @HasMany(() => CompanyFiles)
+  companyFiles: CompanyFiles[]
 
   @HasMany(() => Complaint)
   complaints: Complaint[]
