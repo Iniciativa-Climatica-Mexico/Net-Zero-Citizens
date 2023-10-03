@@ -15,6 +15,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.greencircle.R
 import com.greencircle.data.remote.company.CompanyAPIService
 import com.greencircle.domain.model.company.Company
+import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.company.CreateCompanyViewModel
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
 import com.greencircle.framework.views.fragments.TermsAndConditionsCompany.TermsAndConditionsCompany
@@ -48,11 +49,17 @@ class CreateCompanyFragment : Fragment() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[CreateCompanyViewModel::class.java]
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(requireContext(), CreateCompanyViewModel::class.java)
+        )[CreateCompanyViewModel::class.java]
         arguments = requireArguments()
         // Google Login
         val token: String = arguments.getString("idToken").toString()
-        viewModel.googleLogin(token)
+        Log.d("token", token)
+        if (token != null) {
+            viewModel.googleLogin(token)
+        }
     }
 
     /**
@@ -124,6 +131,8 @@ class CreateCompanyFragment : Fragment() {
             val activity = requireActivity() as RegisterCompanyActivity
 
             activity.replaceFragment(termsAndConditionsCompanyFragment)
+        if (arguments.getString("uuid") != null) {
+            uuid = arguments.getString("uuid")?.let { UUID.fromString(it) }!!
         }
         // Set texts
         setTexts(arguments, view)
@@ -145,7 +154,7 @@ class CreateCompanyFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.googleLoginResult.observe(viewLifecycleOwner) { result ->
             // Handle the result here
-            if (result != null) {
+            if (result != null && result.tokens != null) {
                 authToken = result.tokens.authToken
                 uuid = result.user.uuid
             } else {
@@ -222,7 +231,7 @@ class CreateCompanyFragment : Fragment() {
 
         val validation: Boolean = validateForm(view)
         if (validation) {
-            viewModel.createCompany(createCompanyRequest, authToken)
+            viewModel.createCompany(createCompanyRequest)
             nextFragment()
         }
     }
@@ -402,7 +411,6 @@ class CreateCompanyFragment : Fragment() {
     private fun nextFragment(arguments: Bundle? = null) {
         val companyServices = ServicesFragment()
         val activity = requireActivity() as RegisterCompanyActivity
-
         activity.replaceFragment(companyServices, arguments)
     }
 
