@@ -187,7 +187,7 @@ const attributesToExclude = [
   'updatedAt',
   'deletedAt',
   'products',
-  'images',
+  'files',
 ]
 
 beforeEach(async () => {
@@ -239,6 +239,6 @@ describe('Company Service', () => {
     const updatedUser = await User.findByPk(user.userId)
     expect(updatedCompany?.userId).to.equal(user.userId)
     expect(updatedUser?.companyId).to.equal(company.companyId)
-    expect(updatedUser?.roleId).to.equal('COMAPNY_ROLE_ID')
+    expect(updatedUser?.roleId).to.equal('ADMIN_ROLE_ID')
   })
 })
