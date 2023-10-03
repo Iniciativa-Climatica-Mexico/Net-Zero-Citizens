@@ -100,7 +100,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nombre"
+                android:hint="Nombre *"
                 android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="40dp"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -116,7 +116,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Primer Apellido"
+                    android:hint="Primer Apellido *"
                     android:layout_marginHorizontal="30dp"
                     android:layout_marginTop="20dp"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -132,7 +132,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Segundo Apellido"
+                    android:hint="Segundo Apellido *"
                     android:layout_marginHorizontal="30dp"
                     android:layout_marginTop="20dp"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -148,16 +148,21 @@
 
 
                 <com.google.android.material.textfield.TextInputLayout
+                    style="?attr/textInputOutlinedDenseStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Edad"
+                    android:hint="Edad *"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/gray_500"
+                    app:hintTextColor="@color/blue"
+                    android:textColorHint="@color/gray_500"
+                    app:boxStrokeColor="@color/blue"
                     android:layout_marginHorizontal="30dp"
-                    android:layout_marginTop="20dp"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    android:layout_marginTop="20dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
                         android:id="@+id/inputEdad"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number"
                         />
@@ -165,56 +170,103 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    style="?attr/textInputOutlinedDenseStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Sexo"
                     android:layout_marginHorizontal="30dp"
                     android:layout_marginTop="20dp"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    android:layout_marginBottom="20dp"
+                    android:hint="Número Telefónico *"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/gray_500"
+                    app:hintTextColor="@color/blue"
+                    android:textColorHint="@color/gray_500"
+                    app:boxStrokeColor="@color/blue"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:id="@+id/inputSexo"
-                        android:layout_height="wrap_content"
-                        android:inputType="text"
-                        />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Telefono"
-                    android:layout_marginHorizontal="30dp"
-                    android:layout_marginTop="20dp"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
                         android:id="@+id/inputTelefono"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
                         android:inputType="number"
-                        />
+                        android:layout_height="wrap_content"
+                        android:maxLength="10"
+                        android:textColor="@color/gray_900"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-
-                <com.google.android.material.textfield.TextInputLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Estado"
                     android:layout_marginHorizontal="30dp"
-                    android:layout_marginTop="20dp"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <com.google.android.material.textfield.TextInputEditText
+                    android:orientation="vertical"
+                    android:background="@drawable/bordered_linear_layout">
+                    <TextView
                         android:layout_width="match_parent"
-                        android:id="@+id/inputEstado"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
+                        android:layout_marginHorizontal="2dp"
+                        android:text="Género *"
+                        android:padding="4dp"
+                        android:textColor="@color/gray_500"
+                        android:textSize="12sp" />
+
+                    <Spinner
+                        android:id="@+id/inputSexo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="30dp"
+                        android:layout_marginBottom="5dp"
+                        android:hint="Género *"
+                        android:importantForAccessibility="yes"
+                        android:clickable="true"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/blue"
+                        app:hintTextColor="@color/blue"
+                        android:textColorHint="@color/gray_500"
+                        app:boxStrokeColor="@color/blue"
+                        android:popupBackground="@color/white"
+                        android:entries="@array/gender_options"
                         />
 
-                </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"></LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="30dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/bordered_linear_layout">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="2dp"
+                        android:text="Estado *"
+                        android:padding="4dp"
+                        android:textColor="@color/gray_500"
+                        android:textSize="12sp" />
+
+                    <Spinner
+                        android:id="@+id/inputEstado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="30dp"
+                        android:layout_marginBottom="5dp"
+                        android:hint="Género *"
+                        android:importantForAccessibility="yes"
+                        android:clickable="true"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/blue"
+                        app:hintTextColor="@color/blue"
+                        android:textColorHint="@color/gray_500"
+                        app:boxStrokeColor="@color/blue"
+                        android:popupBackground="@color/white"
+                        android:entries="@array/state_options"
+                        />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"

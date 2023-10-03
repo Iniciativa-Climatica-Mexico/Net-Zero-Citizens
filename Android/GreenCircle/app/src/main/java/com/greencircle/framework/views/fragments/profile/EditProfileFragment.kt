@@ -80,9 +80,21 @@ class EditProfileFragment : Fragment() {
         binding.inputPrimerApellido.setText(user.lastName)
         binding.inputSegundoApellido.setText(user.secondLastName)
         binding.inputEdad.setText(user.age.toString())
-        binding.inputSexo.setText(user.gender)
+        val genderOptions = resources.getStringArray(R.array.gender_options)
+        val genderPosition = genderOptions.indexOf(user.gender)
+
+        if (genderPosition != -1) {
+            // Si se encuentra la posición, selecciona el elemento correspondiente en el Spinner
+            binding.inputSexo.setSelection(genderPosition)
+        }
         binding.inputTelefono.setText(user.phoneNumber)
-        binding.inputEstado.setText(user.state)
+        val stateOptions = resources.getStringArray(R.array.state_options)
+        val statePosition = stateOptions.indexOf(user.state)
+
+        if (statePosition != -1) {
+            // Si se encuentra la posición, selecciona el elemento correspondiente en el Spinner
+            binding.inputEstado.setSelection(statePosition)
+        }
         // binding.profileImage.setImageResource(user.profilePicture)
     }
 
@@ -97,8 +109,8 @@ class EditProfileFragment : Fragment() {
             user.password ?: "EstoNoDeberiaEstarAqui",
             binding.inputTelefono.text.toString(),
             binding.inputEdad.text.toString().toInt(),
-            binding.inputEstado.text.toString(),
-            binding.inputSexo.text.toString(),
+            binding.inputEstado.selectedItem.toString(),
+            binding.inputSexo.selectedItem.toString(),
             user.profilePicture,
             user.createdAt,
             user.updatedAt
@@ -108,9 +120,36 @@ class EditProfileFragment : Fragment() {
 
     private fun initializeAceptarCambiosButton() {
         binding.aceptarCambiosButton.setOnClickListener {
+            val edadText = binding.inputEdad.text.toString()
+
+            // Validar que la edad esté entre 18 y 90
+            val edad = try {
+                edadText.toInt()
+            } catch (e: NumberFormatException) {
+                // Si la entrada no es un número válido, muestra un mensaje de error en el TextInputLayout
+                binding.inputEdad.error = "La edad debe ser un número válido"
+                return@setOnClickListener
+            }
+
+            if (edad < 18) {
+                // Si la edad es menor de 18, muestra un mensaje de error en el TextInputLayout
+                binding.inputEdad.error = "Debes ser mayor de edad"
+                return@setOnClickListener
+            } else if (edad > 90) {
+                // Si la edad es mayor de 90, muestra un mensaje de error en el TextInputLayout
+                binding.inputEdad.error = "Ingrese una edad válida"
+                return@setOnClickListener
+            }
+
+            // Si la edad es válida, elimina cualquier mensaje de error anterior
+            binding.inputEdad.error = null
+
+            // Procede con la actualización del usuario
             updateUser()
             Toast.makeText(
-                requireContext(), "Los cambios fueron realizados con éxito", Toast.LENGTH_SHORT
+                requireContext(),
+                "Los cambios fueron realizados con éxito",
+                Toast.LENGTH_SHORT
             ).show()
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.frame_layout, ProfileFragment())
