@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.greencircle.R
 import com.greencircle.databinding.FragmentCompanyContactBinding
 import com.greencircle.domain.model.company.CompanyImages
+import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.company.CompanyContactViewModel
 import com.greencircle.framework.views.fragments.reviews.CompanyReviewFragment
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
@@ -25,7 +26,9 @@ class CompanyContactFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[CompanyContactViewModel::class.java]
+        viewModel = ViewModelProvider(
+            this, ViewModelFactory(requireContext(), CompanyContactViewModel::class.java)
+        )[CompanyContactViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -36,33 +39,40 @@ class CompanyContactFragment : Fragment() {
         _binding = FragmentCompanyContactBinding.inflate(inflater, container, false)
 
         viewModel.companyData.observe(viewLifecycleOwner) { companyData ->
-            initCarousel(companyData?.companyImages)
-            binding.TVCompanyName.text = companyData?.name
+
+            if (companyData == null) return@observe
+
+            initCarousel(companyData.companyImages)
+            binding.TVCompanyName.text = companyData.name
 
             // bundle para pasar los datos de contacto a CompanyContactInfoFragment
             val bundle = Bundle()
-            bundle.putString("CompanyId", companyData?.companyId.toString())
-            bundle.putFloat("AverageRating", companyData?.rating ?: 0.0f)
+            bundle.putString("CompanyId", companyData.companyId.toString())
+            bundle.putFloat("AverageRating", companyData.rating ?: 0.0f)
 
             companyReviewsFragment.arguments = bundle
 
-            bundle.putString("WebPage", companyData?.webPage)
-            bundle.putString("Email", companyData?.email)
-            bundle.putString("Phone", companyData?.phone)
+            bundle.putString("WebPage", companyData.webPage)
+            bundle.putString("Email", companyData.email)
+            bundle.putString("Phone", companyData.phone)
 
-            val direction: String =
-                (
-                    companyData?.street + " " + companyData?.streetNumber + ", " +
-                        companyData?.zipCode + ", " + companyData?.state + ", " +
-                        companyData?.city
-                    ).toString()
+            var direction: String = ""
+            var fullStreet: String = "${companyData.street} ${companyData.streetNumber}"
+            fullStreet = fullStreet.trim()
+            if (fullStreet.isNotEmpty()) {
+                direction += "$fullStreet, "
+            }
+
+            direction += companyData.zipCode.toString() +
+                ", " + companyData.state +
+                ", " + companyData.city
 
             bundle.putString("Direction", direction)
             contactInfoFragment.arguments = bundle
 
             // bundle para pasar los servicios a CompanyServicesFragment
             val bundleServices = Bundle()
-            bundleServices.putSerializable("Services", companyData?.products)
+            bundleServices.putSerializable("Services", companyData.products)
             servicesFragment.arguments = bundleServices
 
             childFragmentManager.beginTransaction().add(R.id.fragmentContainer, servicesFragment)

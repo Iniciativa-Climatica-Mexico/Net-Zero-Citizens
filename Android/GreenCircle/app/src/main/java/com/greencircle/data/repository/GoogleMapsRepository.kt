@@ -1,13 +1,13 @@
 package com.greencircle.data.repository
 
-import com.greencircle.data.remote.GoogleMapsAPIService
-import com.greencircle.data.remote.NetworkModuleGoogleMaps
-import com.greencircle.domain.model.CompanyObject
+import com.greencircle.data.remote.googlemaps.GoogleMapsAPIService
+import com.greencircle.data.remote.googlemaps.NetworkModuleGoogleMaps
+import com.greencircle.domain.model.googlemaps.Company
 
 class GoogleMapsRepository() {
     private lateinit var api: GoogleMapsAPIService
-    suspend fun getCompanyList(): CompanyObject? {
-        api = NetworkModuleGoogleMaps()
+    suspend fun getCompanyList(authToken: String): List<Company>? {
+        api = NetworkModuleGoogleMaps(authToken)
         return try {
             api.getCompanyList()
         } catch (e: java.lang.Exception) {

@@ -14,6 +14,10 @@ import com.google.android.material.textfield.TextInputLayout
 import com.greencircle.R
 import com.greencircle.databinding.FragmentReviewFormBinding
 import com.greencircle.domain.model.reviews.ReviewBase
+import com.greencircle.domain.usecase.auth.DeleteTokensRequirement
+import com.greencircle.domain.usecase.auth.DeleteUserSessionRequirement
+import com.greencircle.domain.usecase.auth.RecoverUserSessionRequirement
+import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.reviews.ReviewFormViewModel
 import com.greencircle.framework.views.fragments.catalogue.CatalogueFragment
 import java.util.UUID
@@ -29,27 +33,37 @@ class ReviewFormFragment : Fragment() {
     private var review: String? = null
     private lateinit var companyId: UUID
     private lateinit var userId: UUID
+    private lateinit var recoverUserSession: RecoverUserSessionRequirement
+    private lateinit var deleteTokens: DeleteTokensRequirement
+    private lateinit var deleteUserSession: DeleteUserSessionRequirement
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProvider(this)[ReviewFormViewModel::class.java]
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(
+                requireContext(),
+                ReviewFormViewModel::class.java
+            )
+        )[ReviewFormViewModel::class.java]
 
         _binding = FragmentReviewFormBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        recoverUserSession = RecoverUserSessionRequirement(requireContext())
+        deleteTokens = DeleteTokensRequirement(requireContext())
+        deleteUserSession = DeleteUserSessionRequirement(requireContext())
+
+        val userSession = recoverUserSession()
+        userId = userSession.uuid
 
         if (arguments?.getString("CompanyId") == null) {
             companyId = UUID.fromString("c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e")
         } else {
             companyId = UUID.fromString(arguments?.getString("CompanyId"))
-        }
-
-        if (arguments?.getString("userId") == null) {
-            userId = UUID.fromString("8de45630-2e76-4d97-98c2-9ec0d1f3a5b8")
-        } else {
-            userId = UUID.fromString(arguments?.getString("userId"))
         }
 
         initializeRatingBar()

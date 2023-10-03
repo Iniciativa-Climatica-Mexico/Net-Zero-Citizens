@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.greencircle.databinding.ActivitySplashscreenBinding
+import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.splashscreen.SplashscreenViewModel
 
 /**
@@ -16,7 +17,9 @@ import com.greencircle.framework.viewmodel.splashscreen.SplashscreenViewModel
  */
 class SplashscreenActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashscreenBinding
-    private val viewModel: SplashscreenViewModel by viewModels()
+    private val viewModel: SplashscreenViewModel by viewModels {
+        ViewModelFactory(applicationContext, SplashscreenViewModel::class.java)
+    }
 
     /**
      * Método llamado cuando se crea la actividad.
@@ -38,7 +41,19 @@ class SplashscreenActivity : AppCompatActivity() {
             this,
             Observer { finishedLoading ->
                 if (finishedLoading) {
-                    passViewGoToMain()
+                    viewModel.isUserLoggedIn.observe(
+                        this,
+                        Observer { isUserLoggedIn ->
+                            if (isUserLoggedIn) passViewGoToSurvey()
+                            else passViewGoToLogin()
+                        }
+                    )
+                    viewModel.userUncompletedRegister.observe(
+                        this,
+                        Observer { userUncompletedRegister ->
+                            if (userUncompletedRegister) passViewGoToLogin()
+                        }
+                    )
                 }
             }
         )
@@ -55,8 +70,18 @@ class SplashscreenActivity : AppCompatActivity() {
     /**
      * Redirige al usuario a la pantalla de inicio de sesión (LoginActivity).
      */
-    private fun passViewGoToMain() {
+    private fun passViewGoToLogin() {
         var intent: Intent = Intent(this, LoginActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        startActivity(intent)
+        finish()
+    }
+
+    /**
+     * Redirige al usuario a la pantalla de encuesta (SurveyActivity).
+     */
+    private fun passViewGoToSurvey() {
+        var intent: Intent = Intent(this, SurveyActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         startActivity(intent)
         finish()

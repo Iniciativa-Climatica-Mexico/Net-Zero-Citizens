@@ -29,7 +29,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         pdfActaConstitutivaUrl:
           'https://example.com/company1-acta-constitutiva.pdf',
         pdfIneUrl: 'https://example.com/company1-ine.pdf',
-        status: 'approved',
+        status: 'pending_approval',
       },
       {
         companyId: 'a2b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
@@ -39,7 +39,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         email: 'company2@outlook.com',
         phone: '0123456799',
         webPage: 'https://www.company2.com',
-        street: 'Company 2 street',
+        street: 'Nezahualcóyotl, Estado de México, 57430',
         streetNumber: '123',
         city: 'Queretaro',
         state: 'QRO',
@@ -54,17 +54,17 @@ export default class CompanyBootstrap extends Bootstrapper {
         pdfActaConstitutivaUrl:
           'https://example.com/company2-acta-constitutiva.pdf',
         pdfIneUrl: 'https://example.com/company2-ine.pdf',
-        status: 'rejected',
+        status: 'pending_approval',
       },
       {
         companyId: 'a2c0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
-        userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
+        userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b7',
         name: 'TESLA ENERGY',
         description: 'Company 3 description',
         email: 'company3@outlook.com',
         phone: '0126756789',
         webPage: 'https://www.company3.com',
-        street: 'Company 3 street',
+        street: 'Nezahualcóyotl, Estado de México, 57430',
         streetNumber: '123',
         city: 'Ciudad de México',
         state: 'CDMX',
@@ -79,7 +79,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         pdfActaConstitutivaUrl:
           'https://example.com/company10-acta-constitutiva.pdf',
         pdfIneUrl: 'https://example.com/company10-ine.pdf',
-        status: 'pending_approval',
+        status: 'approved',
       },
     ])
   }
