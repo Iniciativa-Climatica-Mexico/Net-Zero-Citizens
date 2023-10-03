@@ -59,6 +59,27 @@ export default class UserBootstrap extends Bootstrapper {
         state: 'QRO',
         gender: 'masculine',
       },
+      {
+        userId: '191aa15f-7c2d-411c-8bc9-0114bbc3b0ed',
+        roleId: 'ADMIN_ROLE_ID',
+        companyId: null,
+        googleId: null,
+        facebookId: null,
+        appleId: null,
+        firstName: 'Yolanda',
+        lastName: 'Chavez',
+        secondLastName: null,
+        email: 'test@test.com',
+        password:
+          '$2b$10$dfHFSk6jF0yEs6SUo1LCEuJGLTn0DofEo7ZwmNYzajUPyL/Cwxjtu',
+        salt: '$2b$10$dfHFSk6jF0yEs6SUo1LCEu',
+        phoneNumber: '0123456789',
+        age: 21,
+        state: 'Veracruz',
+        gender: 'other',
+        deviceToken: null,
+        profilePicture: null,
+      },
     ])
   }
 }

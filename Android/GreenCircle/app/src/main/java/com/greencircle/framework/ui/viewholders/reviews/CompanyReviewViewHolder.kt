@@ -17,7 +17,7 @@ class CompanyReviewViewHolder(private var binding: ItemCompanyReviewBinding) :
             return
         }
 
-        val name = item.user.firstName + " " + item.user.lastName
+        val name = item.user.firstName
         val rating = "${item.score} de 5"
         val date = item.updatedAt
         val ratingFloat = item.score.toFloat()

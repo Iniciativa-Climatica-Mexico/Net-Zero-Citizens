@@ -1,5 +1,6 @@
 package com.greencircle.data.remote.googlemaps
 
+import com.greencircle.data.remote.auth.AuthInterceptor
 import com.greencircle.utils.Constants
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -13,9 +14,13 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 object NetworkModuleGoogleMaps {
     private val gsonFactory: GsonConverterFactory = GsonConverterFactory.create()
-    private val okHttpClient: OkHttpClient = OkHttpClient()
 
-    operator fun invoke(): GoogleMapsAPIService {
+    operator fun invoke(authToken: String): GoogleMapsAPIService {
+        val okHttpClient: OkHttpClient = OkHttpClient()
+            .newBuilder()
+            .addInterceptor(AuthInterceptor(authToken))
+            .build()
+
         return Retrofit.Builder()
             .baseUrl(Constants.SERVER_BASE_URL)
             .client(okHttpClient)
