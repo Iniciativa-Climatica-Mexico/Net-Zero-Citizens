@@ -42,13 +42,19 @@ class SurveyViewModel: ObservableObject {
   
   @MainActor
   /// - Description: Obtener encuesta pendiente
-  func getPendingSurvey() async {
-    self.survey = await surveyUseCase.getPendingSurvey()!
-
-    survey.questions.forEach({ question in
-      answers.append(Answer(scaleValue: nil, answerText: nil, questionId: question.questionId))
-    })
+  func getPendingSurvey() async -> Bool {
     
+    if let pending = await surveyUseCase.getPendingSurvey() {
+      self.survey = pending
+      
+      survey.questions.forEach({ question in
+        answers.append(Answer(scaleValue: nil, answerText: nil, questionId: question.questionId))
+      })
+      
+      return true
+    }
+    
+    return false
   }
   
   @MainActor
@@ -66,10 +72,11 @@ class SurveyViewModel: ObservableObject {
   /// - Returns: Bool
   func validateResponses() throws {
     for (index, question) in survey.questions.enumerated() {
-      if question.isRequired
-          && (answers[index].answerText == "" || answers[index].answerText == nil)
-          && (answers[index].scaleValue == 0 || answers[index].scaleValue == nil) {
-        throw GCError.validationError("No has respondido una pregunta requerida")
+      if question.isRequired {
+        if (answers[index].answerText == "" || answers[index].answerText == nil)
+            && (answers[index].scaleValue == 0 || answers[index].scaleValue == nil) {
+          throw GCError.validationError("No has respondido una pregunta requerida")
+        }
       }
     }
   }

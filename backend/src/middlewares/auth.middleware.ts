@@ -19,9 +19,7 @@ export const validateToken = async (
     if (!auth) return res.json({ message: 'No token provided' })
     const token = auth.split(' ')[1]
     if (!token) throw new Error('No token provided')
-    console.log('token: ', token)
     const decoded = await AuthService.verifyToken(token, 'auth')
-    console.log('decoded: ', decoded)
     if (!decoded) throw new Error('Invalid token')
 
     next()

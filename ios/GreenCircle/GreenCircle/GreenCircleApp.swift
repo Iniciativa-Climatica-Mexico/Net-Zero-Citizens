@@ -7,6 +7,7 @@
 
 import GoogleSignIn
 import SwiftUI
+import MapKit
 
 @main
 struct GreenCircleApp: App {

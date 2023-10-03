@@ -1,10 +1,3 @@
-//
-//  TabBarView.swift
-//  GreenCircle
-//
-//  Created by Diego Vega Camacho on 13/09/23.
-//
-
 import SwiftUI
 
 enum TabSelection {
@@ -17,7 +10,7 @@ enum TabSelection {
 struct TabBarView: View {
     @State private var selectedTab: TabSelection = .ecoInfo
     @StateObject var vm = SurveyViewModel()
-
+    
     var goSurvey: () -> Void
 
     var body: some View {
@@ -38,7 +31,7 @@ struct TabBarView: View {
                 }
                 .tag(TabSelection.catalog)
 
-            EmptyView()
+            CoordinatesView()
                 .tabItem {
                     Image(systemName: "map.fill")
                     Text("Mapa")
@@ -54,7 +47,7 @@ struct TabBarView: View {
         }
         .onAppear {
             Task {
-                if await vm.getPendingSurvey() == () {
+                if await vm.getPendingSurvey() {
                     goSurvey()
                 }
             }

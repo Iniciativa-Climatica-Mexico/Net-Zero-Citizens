@@ -13,6 +13,7 @@ class CompanyViewModel: ObservableObject {
   private let useCase: CompanyUseCase
     @Published var currentCompany: Company?
   
+  
   @Published var companies = [Company]()
   
   /// La compañía puede cambiar en la vista (se construye .onAppear())
@@ -59,7 +60,7 @@ class CompanyViewModel: ObservableObject {
         contentCompany = resultCompany
     }
   }
-  
+
   @MainActor
   func fetchAllCompanies() async {
     self.companies = await useCase.fetchAllCompanies()!.rows

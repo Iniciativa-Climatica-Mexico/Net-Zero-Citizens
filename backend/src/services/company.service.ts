@@ -151,7 +151,7 @@ export const getCompaniesWithCoordinates = async (
         city,
         state,
         zipCode,
-      } = company.dataValues
+      } = company
 
       const address = `${street} ${streetNumber}, ${city}, ${state}, ${zipCode}`
 
@@ -391,6 +391,8 @@ export const assignCompanyUser = async (
 
     company.userId = userId
     user.companyId = companyId
+    user.roleId = 'COMAPNY_ROLE_ID'
+
     await company.save()
     try {
       await user.save()
