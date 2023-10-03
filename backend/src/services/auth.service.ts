@@ -76,11 +76,12 @@ const blackListToken = async (tokenId: string): Promise<void> => {
  * @returns {authToken, refreshToken, user} objeto con los tokens generados
  */
 export const googleLogin = async (
-  googleToken: string
+  googleToken: string,
+  ios: boolean = false
 ): Promise<AuthResponse | null> => {
   // Verificar el token de Google
   try {
-    const data = await verifyGoogleToken(googleToken)
+    const data = await verifyGoogleToken(googleToken, ios)
     if (!data) return null
 
     let user = await UserService.getUserByEmailWithRole(data.email)
@@ -286,12 +287,16 @@ export const verifyToken = (token: string, type: TokenType): Payload | null => {
  * @returns Payload con la información del token
  */
 export const verifyGoogleToken = async (
-  token: string
+  token: string,
+  ios: boolean = false
 ): Promise<Payload | null> => {
+  const clientId = ios
+    ? process.env.GOOGLE_CLIENT_ID_IOS
+    : process.env.GOOGLE_CLIENT_ID
   try {
     const ticket = await client.verifyIdToken({
       idToken: token,
-      audience: process.env.GOOGLE_CLIENT_ID,
+      audience: clientId,
     })
 
     const payload = ticket.getPayload()
