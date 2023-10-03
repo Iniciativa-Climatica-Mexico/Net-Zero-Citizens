@@ -43,4 +43,16 @@ class AuthAPIClient {
             null
         }
     }
+
+    suspend fun loginCredentials(email: String, password: String): AuthResponse? {
+        api = AuthNetworkModel()
+        return try {
+            val body = AuthAPIService.LoginCredentialsRequest(email, password)
+            val response = api.loginCredentials(body)
+            response
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
 }
