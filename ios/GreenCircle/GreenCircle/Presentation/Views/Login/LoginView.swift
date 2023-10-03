@@ -13,70 +13,103 @@ struct LoginView: View {
   var goForm: () -> Void
   var goMainMenu: () -> Void
   var goCompanyRegister: () -> Void
-
+  
   @StateObject var viewModel = LoginViewModel()
-  @EnvironmentObject var user: UserData
-
+  
   var body: some View {
-    ZStack {
-
-      BackgroundView()
+    
+    VStack {
+      HeaderView(
+        title: "Inicia sesión con tu cuenta",
+        subTitle: "Nos da gusto verte")
+      .padding(.bottom)
+      Spacer()
       
-      VStack(spacing: 40) {
-        HeaderView(
-          title: "Inicia sesión con tu cuenta",
-          subTitle: "Nos da gusto verte")
+      VStack {
         
-        Spacer()
-        
-        VStack {
-          GoogleSignInButton(style: .wide) {
+        VStack(spacing: 20) {
+          InputFormView(bindingValue: $viewModel.user,
+                        label: "Usuario",
+                        prompt: "Usuario")
+          VStack(alignment: .leading) {
+            Text("Contraseña")
+              .foregroundColor(Color("SecondaryText"))
+            SecureField("Contraseña", text: $viewModel.password)
+              .padding(10)
+              .overlay {
+                RoundedRectangle(cornerRadius: 10)
+                  .stroke(.gray, lineWidth: 1)
+              }
+          }
+          .font(.system(size: 20, weight: .medium))
+          .padding(.bottom)
+          MainButton("Iniciar Sesión", width: 400) {
             Task {
-              let state = await viewModel
-                .handleGoogleSignIn()
-              switch state {
-              case .fail:
-                break
-              case .newUser:
-                goForm()
+              let res = await viewModel.handleSignIn()
+              
+              switch res {
               case .success:
                 goMainMenu()
+              default:
+                break
               }
             }
-          }.alert("Algo salió mal",
-                  isPresented: $viewModel.showAlert) {
-            Button("Entendido", role: .cancel) {}
-          } message: {
-            Text("Intenta de nuevo por favor")
+          }
+        }.padding(.bottom)
+        
+        ZStack {
+          Divider()
+          Rectangle()
+            .foregroundColor(.white)
+            .frame(width: 150)
+          Text("O continua con")
+            .foregroundColor(Color("MainText"))
+        }
+        
+        GoogleSignInButton(style: .wide) {
+          Task {
+            let state = await viewModel
+              .handleGoogleSignIn()
+            switch state {
+            case .fail:
+              break
+            case .newUser:
+              goForm()
+            case .success:
+              goMainMenu()
+            }
           }
         }
-        .padding(.horizontal)
-        
+        .alert("Algo salió mal",
+               isPresented: $viewModel.showAlert) {
+          Button("Entendido", role: .cancel) {}
+        } message: {
+          Text(viewModel.alertMessage)
+        }
+      }
+      .padding(.horizontal)
+      
+      Divider().padding()
+      
+      HStack {
+        Text("¿No tienes una cuenta?")
         Spacer()
-        
-        Divider().padding(.horizontal)
-        
-        HStack {
-          Text("¿No tienes una cuenta?")
-          Spacer()
-          LinkButton("Regístrate", buttonColor: .blue){
-            goUserRegister()
-          }
-        }.padding(.horizontal)
-        
-        LinkButton("Soy Proveedor", buttonColor: .blue, action: goCompanyRegister)
-          .padding(.bottom)
-      }.foregroundColor(Color("MainText"))
+        LinkButton("Regístrate", buttonColor: .blue){
+          goUserRegister()
+        }
+      }
+      .padding()
+      
+      LinkButton("Soy Proveedor", buttonColor: .blue, action: goCompanyRegister)
+        .padding(.bottom, 8)
+    }
+    .foregroundColor(Color("MainText"))
+    .onTapGesture {
+      hideKeyboard()
     }
   }
 }
 
-
-struct LoginView_Previews: PreviewProvider {
-  static var previews: some View {
-    LoginView(goUserRegister: {},
-              goForm: {},
-              goMainMenu: {},
-              goCompanyRegister: {})
-  }
+#Preview {
+  LoginView(goUserRegister: {}, goForm: {}, goMainMenu: {}, goCompanyRegister: {})
 }

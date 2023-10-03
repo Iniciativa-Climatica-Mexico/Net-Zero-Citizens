@@ -37,7 +37,7 @@ struct BackgroundView: View {
       .opacity(0.1)
       .cornerRadius(40, corners: [.topLeft, .topRight])
       .edgesIgnoringSafeArea(.bottom)
-      .padding(.top, 300)
+      .padding(.top, 290)
   }
 }
 

@@ -8,9 +8,18 @@
 import Foundation
 
 class CoordinatorViewModel: ObservableObject {
-  var useCase = GoogleSignInUseCase.shared
+  var googleUseCase = GoogleSignInUseCase.shared
+  var signInUseCase = UserSignInUseCase.shared
   
   func handleSignIn() async -> SignInState {
-    return await useCase.handleBackgroundSignIn()
+    if await googleUseCase.handleBackgroundSignIn() == .success {
+      return .success
+    }
+    
+    if signInUseCase.backgroundSignIn() == .success {
+      return .success
+    }
+    
+    return .fail
   }
 }

@@ -12,6 +12,7 @@ class AuthAPI {
   static let base = "http://localhost:4000/api/v1/auth"
   struct Routes {
     static let googleLogin = "/login/google"
+    static let login = "/login/credentials"
   }
 }
 
@@ -128,5 +129,20 @@ class UserRepository: UserRepositoryProtocol {
   
   func getAuthData() -> AuthResponse? {
     return lService.getToken()
+  }
+  
+  func postLogin(user: String, password: String) async throws -> AuthResponse {
+    let url = URL(string: "\(AuthAPI.base)\(AuthAPI.Routes.login)")!
+    
+    let body = ["email": user.trimmingCharacters(in: .whitespaces),
+                "password": password]
+    
+    let res: AuthResponse? = await nService.postRequest(url, body: body)
+    
+    if let authResponse = res {
+      return authResponse
+    } else {
+      throw GCError.requestFailed
+    }
   }
 }
