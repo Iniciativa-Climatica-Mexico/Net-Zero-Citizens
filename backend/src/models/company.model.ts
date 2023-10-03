@@ -110,19 +110,19 @@ export default class Company extends Model {
   zipCode: string
 
   @Column({
-    type: DataType.STRING(255),
-    allowNull: true,
-    field: 'PROFILE_PICTURE',
-  })
-  profilePicture: string | null
-
-  @Column({
     type: DataType.ENUM('approved', 'pending_approval', 'rejected'),
     allowNull: false,
     field: 'STATUS',
     defaultValue: 'pending_approval',
   })
   status: StatusEnum
+
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: true,
+    field: 'SCORE',
+  })
+  score: number | null
 
   @HasMany(() => Review)
   reviews!: Review[]
@@ -132,4 +132,7 @@ export default class Company extends Model {
 
   @HasMany(() => CompanyFiles)
   companyFiles: CompanyFiles[]
+
+  @HasMany(() => Complaint)
+  complaints: Complaint[]
 }

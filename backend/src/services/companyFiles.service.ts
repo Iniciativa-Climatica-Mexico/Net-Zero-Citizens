@@ -1,5 +1,5 @@
 import CompanyFile from '../models/companyFiles.model'
-import * as CompanyService from '../services/company.service'
+import * as CompanyService from './company.service'
 import { s3 } from '../configs/aws.config'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -81,18 +81,14 @@ export const uploadCompanyFile = async (
   try {
     // Obtener la información de la empresa
     const company = await CompanyService.getCompanyById(companyId)
-    console.log("Company data: -----", company)
-    if (!company) {
-      throw new Error('Company not found')
-    }
 
     // Convertir el archivo a base64
-    var base64data = Buffer.from(file.buffer, 'binary')
+    let base64data = Buffer.from(file.buffer, 'binary')
 
     // Definir los parámetros para subir el archivo
     const params = {
       Bucket: bucketName,
-      Key: `${company?.name}/${fileDescription}`,
+      Key: `${company?.name}/${fileDescription + '.' + fileFormat}`,
       Body: base64data,
     }
 
@@ -109,6 +105,7 @@ export const uploadCompanyFile = async (
       fileDescription: fileDescription,
       fileFormat: fileFormat,
     })
+
     return newFile
   } catch (error) {
     console.log(error)

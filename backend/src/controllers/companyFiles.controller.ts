@@ -1,23 +1,26 @@
 import CompanyFiles from '../models/companyFiles.model'
 import * as CompanyFileService from '../services/companyFiles.service'
 import { NoRecord } from '../utils/RequestResponse'
-import upload from '../utils/fileUploadUtil'
 import { RequestHandler } from 'express'
+import { FileFormat, FileDescription } from '../models/companyFiles.model'
 
 export const uploadCompanyFile: RequestHandler = async (req, res) => {
   try {
-    upload.single('file')(req, res, async (err) => {
-      console.log("First Company id: ------", req.body.companyId)
-      const {fileFormat, fileDescription, companyId} = req.body
-      console.log("Second logs: ------", fileDescription, fileFormat, companyId)
-      CompanyFileService.uploadCompanyFile(
-        req.file,
-        companyId,
-        fileDescription,
-        fileFormat
-      )
-      return res.status(200).json({ message: 'File uploaded' })
-    })
+    let { companyId, fileFormat, fileDescription } = req.body
+
+    // Format the string from android petitions
+    companyId = companyId.replace(/"/g, '')
+    fileFormat = fileFormat.replace(/"/g, '')
+    fileDescription = fileDescription.replace(/"/g, '')
+
+    // Service to upload the file
+    CompanyFileService.uploadCompanyFile(
+      req.file,
+      companyId,
+      fileDescription as FileDescription,
+      fileFormat as FileFormat
+    )
+    return res.status(200).send('File uploaded!')
   } catch (error) {
     return res.status(500).send('Error uploading file')
   }

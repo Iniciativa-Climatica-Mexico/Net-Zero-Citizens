@@ -10,7 +10,6 @@ import EcoinfoBootstrap from '../bootstrap/ecoinfo.bootstrap'
 import SurveysBootstrapper from '../bootstrap/survey.bootstrap'
 import ComplaintsBootstrapper from '../bootstrap/complaint.bootstrap'
 
-
 export const bootstrapDB = async () => {
   try {
     const bootstrappers = [
@@ -20,6 +19,7 @@ export const bootstrapDB = async () => {
       SurveysBootstrapper,
       ReviewBootstrap,
       ProductBootstrap,
+      CompanyFilesBootstrap,
       CompanyProductsBootstrap,
       DummyBootstrap,
       EcoinfoBootstrap,

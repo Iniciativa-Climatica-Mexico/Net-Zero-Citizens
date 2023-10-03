@@ -8,7 +8,7 @@ import {
 } from 'sequelize-typescript'
 import Company from './company.model'
 
-type FileDescription =
+export type FileDescription =
   | 'INE representante legal'
   | 'Acta constitutiva'
   | 'Curriculum'
@@ -23,7 +23,7 @@ type FileDescription =
   | 'Imagen'
   | 'Otro' // EVITAR USAR ESTE VALOR
 
-type FileFormat =
+export type FileFormat =
   | '.jpg'
   | '.jpeg'
   | '.png'
