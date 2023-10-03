@@ -6,7 +6,7 @@ import java.util.UUID
 
 class FavouritesRepository {
     private val api = FavouritesAPIClient()
-    suspend fun getAllFavouritesByUser(authToken: String, userId: UUID): Favourites? {
+    suspend fun getAllFavouritesByUser(authToken: String, userId: UUID): List<Favourites> ? {
         return api.getAllFavouritesByUser(authToken, userId)
     }
 }

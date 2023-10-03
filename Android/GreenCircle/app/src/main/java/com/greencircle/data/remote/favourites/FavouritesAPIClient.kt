@@ -6,7 +6,7 @@ import java.util.UUID
 
 class FavouritesAPIClient {
     private lateinit var api: FavouritesAPIService
-    suspend fun getAllFavouritesByUser(authToken: String, userId: UUID): Favourites? {
+    suspend fun getAllFavouritesByUser(authToken: String, userId: UUID): List<Favourites> ? {
         api = NetworkModel(authToken, FavouritesAPIService::class.java)
         return try {
             api.getAllFavouritesByUser(userId)

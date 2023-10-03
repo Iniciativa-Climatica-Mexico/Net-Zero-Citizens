@@ -8,5 +8,5 @@ interface FavouritesAPIService {
     @GET("favourites/user/{userId}")
     suspend fun getAllFavouritesByUser(
         @Path("userId") userId: UUID
-    ): Favourites
+    ): List<Favourites>
 }

@@ -7,12 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.greencircle.R
 import com.greencircle.databinding.FragmentFavouriteProfileBinding
-import com.greencircle.domain.model.favourites.Favourites
+import com.greencircle.domain.model.company.CompanySummary
 import com.greencircle.domain.usecase.auth.DeleteTokensRequirement
 import com.greencircle.domain.usecase.auth.DeleteUserSessionRequirement
 import com.greencircle.domain.usecase.auth.RecoverUserSessionRequirement
+import com.greencircle.framework.ui.adapters.catalogue.CatalogueAdapter
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.favourites.FavouritesViewModel
 import com.greencircle.framework.views.activities.LoginActivity
@@ -24,7 +27,6 @@ class FavouriteFragment : Fragment() {
     private lateinit var recoverUserSession: RecoverUserSessionRequirement
     private lateinit var deleteTokens: DeleteTokensRequirement
     private lateinit var deleteUserSession: DeleteUserSessionRequirement
-    private lateinit var favourites: Favourites
     private var favouritesCount: Int = 0
 
     override fun onCreateView(
@@ -38,6 +40,19 @@ class FavouriteFragment : Fragment() {
         )[FavouritesViewModel::class.java]
         _binding = FragmentFavouriteProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        val recyclerView: RecyclerView = binding.newRecyclerView
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        // Observe changes in favouritesLiveData
+        viewModel.favouritesLiveData.observe(viewLifecycleOwner) { companies ->
+            if (companies != null) {
+                // Initialize and set the adapter for RecyclerView
+                val adapter = CatalogueAdapter()
+                adapter.initCustomAdapter(companies as ArrayList<CompanySummary>, requireContext())
+                recyclerView.adapter = adapter
+            }
+        }
 
         // Inicializar variables
         recoverUserSession = RecoverUserSessionRequirement(requireContext())
@@ -63,11 +78,6 @@ class FavouriteFragment : Fragment() {
         viewModel.userLiveData.observe(viewLifecycleOwner) { user ->
             val userName = "${user.firstName} ${user.lastName}"
             binding.username.text = userName
-        }
-
-        viewModel.favouritesLiveData.observe(viewLifecycleOwner) {
-            favourites = it
-            // Actualizar la interfaz de usuario con la lista de favoritos si es necesario
         }
     }
 

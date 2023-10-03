@@ -5,20 +5,22 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.greencircle.domain.model.company.CompanySummary
 import com.greencircle.domain.model.favourites.Favourites
 import com.greencircle.domain.model.profile.Profile
 import com.greencircle.domain.usecase.auth.RecoverTokensRequirement
+import com.greencircle.domain.usecase.catalogue.CatalogueRequirement
 import com.greencircle.domain.usecase.favourites.FavouritesByUserRequirement
-import com.greencircle.domain.usecase.profile.ProfileListRequirement
+import java.util.UUID
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.UUID
 
 class FavouritesViewModel(private val context: Context) : ViewModel() {
-    val favouritesLiveData = MutableLiveData<Favourites>()
+    val favouritesLiveData = MutableLiveData<List<CompanySummary>>()
     val userLiveData = MutableLiveData<Profile>()
     private val favouritesByUserListRequirement = FavouritesByUserRequirement()
+    private val catalogueListRequirement = CatalogueRequirement()
     private val recoverTokens = RecoverTokensRequirement(context)
     private lateinit var userId: UUID
 
@@ -30,24 +32,50 @@ class FavouritesViewModel(private val context: Context) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             val tokens = recoverTokens() ?: return@launch
             val authToken = tokens.authToken
-            val result: Favourites? = favouritesByUserListRequirement(authToken, userId)
+            val result: List<Favourites> ? = favouritesByUserListRequirement(authToken, userId)
 
             if (result == null) {
                 Log.d("SalidaGetFavouritesByUser", "result is null")
             } else {
-                // Obtener el perfil del usuario
-                val user: Profile? = ProfileListRequirement()(authToken, userId)
+                // Obtain the list of favorite companies
+                val companies: List<CompanySummary>? = fetchFavouriteCompanies(result)
 
-                if (user != null) {
+                if (companies != null) {
                     CoroutineScope(Dispatchers.Main).launch {
-                        // Actualizar MutableLiveData con el perfil del usuario
-                        userLiveData.postValue(user!!)
-                        favouritesLiveData.postValue(result!!)
+                        // Update MutableLiveData with the list of favorite companies
+                        favouritesLiveData.postValue(companies!!)
                     }
                 } else {
-                    Log.d("SalidaGetFavouritesByUser", "user is null")
+                    Log.d("SalidaGetFavouritesByUser", "companies list is null")
                 }
             }
+        }
+    }
+
+    private suspend fun fetchFavouriteCompanies
+    (favourites: List<Favourites>): List<CompanySummary>? {
+        val companies = mutableListOf<CompanySummary>()
+
+        favourites.forEach { favourite ->
+            val company = fetchCompanyData(favourite.companyId.toString())
+            company?.let {
+                companies.add(it)
+            }
+        }
+
+        return companies
+    }
+
+    private suspend fun fetchCompanyData(companyId: String): CompanySummary? {
+        val tokens = recoverTokens() ?: return null
+        val authToken = tokens.authToken
+
+        return try {
+            // Use the function from CatalogueViewModel to fetch CompanySummary by id
+            catalogueListRequirement.getCompanyData(authToken, companyId)
+        } catch (e: Exception) {
+            Log.e("FavouritesViewModel", "Error fetching company data: ${e.message}")
+            null
         }
     }
 }

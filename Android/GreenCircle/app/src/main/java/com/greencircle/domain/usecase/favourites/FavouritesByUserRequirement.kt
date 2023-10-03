@@ -6,6 +6,6 @@ import java.util.UUID
 
 class FavouritesByUserRequirement {
     private val repository = FavouritesRepository()
-    suspend operator fun invoke(authToken: String, userId: UUID): Favourites? =
+    suspend operator fun invoke(authToken: String, userId: UUID): List<Favourites> ? =
         repository.getAllFavouritesByUser(authToken, userId)
 }

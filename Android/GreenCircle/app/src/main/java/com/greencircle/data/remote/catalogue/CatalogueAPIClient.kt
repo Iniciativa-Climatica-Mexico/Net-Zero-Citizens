@@ -15,4 +15,13 @@ class CatalogueAPIClient {
             null
         }
     }
+    suspend fun getCompanyById(authToken: String, companyID: String): CompanySummary? {
+        api = NetworkModel(authToken, CatalogueAPIService::class.java)
+        return try {
+            api.getCompany(companyID)
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
 }
