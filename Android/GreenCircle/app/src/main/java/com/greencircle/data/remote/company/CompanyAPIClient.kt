@@ -1,7 +1,11 @@
 package com.greencircle.data.remote.company
 
 import com.greencircle.data.remote.NetworkModel
+import com.greencircle.data.remote.company.CompanyAPIService.AssignCompanyRequestBody
+import com.greencircle.data.remote.company.CompanyAPIService.AssignCompanyResponse
 import com.greencircle.domain.model.company.Companies
+import java.util.UUID
+import retrofit2.Response
 
 /**
  * Cliente para realizar operaciones relacionadas con empresas a través de la API.
@@ -37,6 +41,34 @@ class CompanyAPIClient {
         } catch (e: Exception) {
             e.printStackTrace()
             null
+        }
+    }
+
+    /**
+     * Asigna una empresa a un usuario en la API.
+     *
+     * @param authToken El token del autentificación.
+     * @param userId El id del usuario a asignar.
+     * @param companyID El id de la empresa a asignar.
+     * @return Un objeto [AssignCompanyResponse] que puede contener el id de la nueva empresa.
+     */
+    suspend fun assignCompany(
+        authToken: String,
+        userId: UUID,
+        companyID: UUID
+    ): Response<AssignCompanyResponse>? {
+        api = NetworkModel(authToken, CompanyAPIService::class.java)
+        return try {
+            val response = api.assignCompany(
+                companyID,
+                AssignCompanyRequestBody(
+                    userId
+                )
+            )
+            return response
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return null
         }
     }
 }

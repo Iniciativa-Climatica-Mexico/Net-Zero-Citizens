@@ -157,7 +157,7 @@ export const updateReview = async (
  * @param params UUID
  * @returns number
  */
-export const deleteAllReviewsByUser = async (userId: string): Promise<number> => {
+export const deleteAllReviewsFromUser = async (userId: string): Promise<number> => {
   return await Review.destroy({
     where: {
       userId: userId,

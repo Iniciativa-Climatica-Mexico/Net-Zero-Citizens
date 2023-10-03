@@ -38,7 +38,7 @@ export default class Ecoinfo extends Model {
   coverImage: string | null
 
   @Column({
-    type: DataType.STRING(100),
+    type: DataType.STRING(500),
     allowNull: true,
     field: 'DESCRIPTION',
   })
