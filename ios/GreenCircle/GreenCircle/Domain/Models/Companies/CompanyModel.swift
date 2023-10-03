@@ -40,7 +40,7 @@ struct Company: Codable, Identifiable {
   var products: [Product]?
   var score: Double?
   var oneComment: String?
-  var images: [CompanyImages]?
+  var files: [CompanyFiles]?
 }
 
 struct BasicCompany: Codable, Identifiable {

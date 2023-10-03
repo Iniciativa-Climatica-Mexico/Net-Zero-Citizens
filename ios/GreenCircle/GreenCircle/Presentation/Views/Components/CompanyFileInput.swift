@@ -40,6 +40,7 @@ struct CompanyFileInput: View {
                             .font(.system(size: 10))
                             .padding(.leading, 30)
                             .truncationMode(.tail)
+                            .multilineTextAlignment(.leading)
                         Text(bulletPoint ?? "")
                             .foregroundColor(Color("GrayColor"))
                             .font(.system(size: 10))

@@ -13,8 +13,12 @@ class CompanyViewModel: ObservableObject {
   private let useCase: CompanyUseCase
   private let repository: CompanyRepository
   
-  
   @Published var companies = [Company]()
+    
+    enum CompanyViewModelError: Error {
+        case failedToFetchCompanies
+    }
+
   
   /// La compañía puede cambiar en la vista (se construye .onAppear())
   @Published var contentCompany: Company = Company(
@@ -31,19 +35,13 @@ class CompanyViewModel: ObservableObject {
     state: "",
     zipCode: "",
     profilePicture: "",
-    pdfCurriculumUrl: "",
-    pdfDicCdmxUrl: "",
-    pdfPeeFideUrl: "",
-    pdfGuaranteeSecurityUrl: "",
-    pdfActaConstitutivaUrl: "",
-    pdfIneUrl: "",
     status: .approved,
     createdAt: "",
     updatedAt: "",
     products: [],
     score: 0.0,
     oneComment: "",
-    images: []
+    files: []
     )
   
   /// Para implementar el caso de uso en la vista que llame al ViewModel Compañía
@@ -73,10 +71,11 @@ class CompanyViewModel: ObservableObject {
     @MainActor
     func uploadFile(file: Data, fileDescription: String, mimeType: String) async {
         let mimeType = "application/pdf"
-        let fileFormat = ".pdf"
+        let fileFormat = "pdf"
         
         if let response = await repository.uploadCompanyFile(file: file, fileDescription: fileDescription, fileFormat: fileFormat, mimeType: mimeType) {
-            
+            // Maneja el valor 'response' según sea necesario
+            // Por ejemplo: mostrar una notificación de éxito, actualizar la interfaz, etc.
         } else {
             // El resultado fue nil, manejar según sea necesario
             print("No se recibió respuesta o hubo un error al cargar el archivo.")

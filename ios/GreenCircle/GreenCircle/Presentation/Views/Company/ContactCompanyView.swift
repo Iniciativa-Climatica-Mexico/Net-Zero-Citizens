@@ -205,8 +205,8 @@ struct ContactCompanyView: View {
       NavigationStack {
         VStack(alignment: .leading) {
           TabView {
-            ForEach(contactCompanyViewModel.contentCompany.images ?? [], id: \.self) { image in
-              if let imageUrl = image.imageUrl {
+              ForEach(contactCompanyViewModel.contentCompany.files ?? [], id: \.self) { image in
+              if let imageUrl = image.fileUrl {
                 AsyncImage(url: URL(string: imageUrl)) { phase in
                   switch phase {
                     case .empty:

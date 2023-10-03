@@ -35,8 +35,8 @@ struct CardCatalogView: View {
           .shadow(color: Color("BlueCustom"), radius: 1)
         HStack {
           VStack (alignment: .leading) {
-            if let imageURL = URL(string: viewModel.contentCompany.images?.first?.fileUrl ?? "") {
-              AsyncImage(url: imageURL) { phase in
+              if let imageUrl = URL(string: viewModel.contentCompany.files?.first?.fileUrl ?? "") {
+              AsyncImage(url: imageUrl) { phase in
                 switch phase {
                   case .empty:
                     Image(systemName: "square.fill")

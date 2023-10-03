@@ -11,6 +11,7 @@ router.post('/create', CompanyController.createCompany)
 router.get('/files', CompanyFilesController.getCompanyFiles)
 router.post('/add/product', CompanyController.addProduct)
 router.post('/upload/image', upload, CompanyFilesController.uploadCompanyImage)
+router.post('/upload/file', upload,CompanyFilesController.uploadCompanyFile)
 
 router.get('/approved', CompanyController.getApprovedCompanies)
 
