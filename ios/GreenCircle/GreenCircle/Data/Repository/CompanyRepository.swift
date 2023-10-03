@@ -14,6 +14,7 @@ class CompanyAPI {
   struct Routes {
     static let create = "/create"
     static let company = "/company/"
+    static let assing = "/:companyId/assign"
   }
 }
 
@@ -72,6 +73,19 @@ class CompanyRepository: CompanyRepositoryProtocol {
       .postRequest(URL(
         string: "\(CompanyAPI.base)\(CompanyAPI.Routes.create)")!,
                    body: params)
+  }
+  
+  func assignCompany(companyId: String, userId: String) async throws{
+    let url = URL(string: "\(CompanyAPI.base)\(CompanyAPI.Routes.assing)"
+      .replacingOccurrences(of: ":companyId", with: companyId))!
+    
+    let body = ["userId": userId]
+    
+    let res: NoResponse? = await service.putRequest(url, body: body)
+    
+    if res == nil {
+      throw GCError.requestFailed
+    }
   }
   
   func fetchAllCompanies() async -> PaginatedQuery<Company>? {
