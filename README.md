@@ -2,9 +2,20 @@
 
 ![Banner](README/assets/IMG_5716.PNG)
 
-![View Counter](https://views.whatilearened.today/views/github/salgue441/Net-Zero-Citizens.svg)
-![Languages Counter](https://img.shields.io/github/languages/count/salgue441/Net-Zero-Citizens)
-![License](https://img.shields.io/github/license/salgue441/Net-Zero-Citizens)
+![GitHub CI](https://github.com/dwyl/auth_plug/actions/workflows/ci.yml/badge.svg?color=56BEB8)
+![Languages Counter](https://img.shields.io/github/languages/count/salgue441/Net-Zero-Citizens?color=56BEB8)
+![Repository Size](https://img.shields.io/github/repo-size/SJBauer0/Fiori_Zebrands?color=56BEB8)
+![License](https://img.shields.io/github/license/salgue441/Net-Zero-Citizens?color=56BEB8)
+
+<hr>
+
+<p align="center">
+  <a href="#dart-about">About</a> &#xa0; | &#xa0; 
+  <a href="#rocket-technologies">Features</a> &#xa0; | &#xa0;
+  <a href="#white_check_mark-requirements">Systems & Platforms</a> &#xa0; | &#xa0;
+  <a href="#checkered_flag-starting">Technologies Used</a>  &#xa0; | &#xa0;
+  <a href="#checkered_flag-starting">Contributors</a>
+</p>
 
 ## About 📌
 
@@ -18,34 +29,44 @@ Net Zero Citizens is an initiative for the Iniciativa Climática México. Our mi
 - **User Reviews**: Share your experience by leaving reviews for companies and report any inappropriate behavior.
 - **Easy Sign In**: Choose from Google Sign In, Apple Sign In (iOS only), or traditional email & password registration
 
-## Systems & Platforms 💻 📱
+<details>
+  <summary>💻 📱 Systems & Platforms</summary>
+  
+### Mobile
 
-### Mobile Applications
+- **Android**: On Google Play Store (Android 13+).
+- **iOS**: On App Store (iOS 14+).
 
-- **Android**: Developed natively using Kotlin and Android Studio. Available on Google Play Store and compatible with Android 13 and onwards.
-- **iOS**: Developed natively using Swift and Xcode. Available on the App Store and compatible with iOS 14 and onwards.
+### Web
 
-### Web Application
-
-- **Admin Dashboard**: Crafter with ReactJS, Next.js, TypeScript, and Node.js. Handles administrative tasks
-- **Landing Page**: The first point of contact for users to learn more about the iniciative
+- **Dashboard**: Admin tasks and tools.
+- **Landing Page**: Introduction to the initiative.
 
 ### Backend
 
-- **API**: Developed with Node.js, TypeScript, and mariaDB. Handles all requests from the mobile and web applications.
-- **Database**: Developed with mariaDB. Stores all user and company information.
+- **API**: Connects mobile and web apps.
+- **Database**: User and company data storage.
 
-## Technologies Used 🛠
+</details>
 
-- Kotlin
-- Swift
-- TypeScript
-- Node.js
-- ReactJS
-- Next.js
-- Sequelize
-- MariaDB
+## 🛠️ Technologies & Tools
+
+<p align="center">
+  <!-- Mobile Development -->
+  <img src="https://skillicons.dev/icons?i=kotlin" alt="Kotlin" width="60" height="60">
+  <img src="https://skillicons.dev/icons?i=androidstudio" alt="Android Studio" width="60" height="60">
+  <img src="https://skillicons.dev/icons?i=swift" alt="Swift" width="60" height="60">
+  <img src="https://skillicons.dev/icons?i=nodejs" alt="Node.js" width="60" height="60">
+  <img src="https://skillicons.dev/icons?i=mysql" alt="MariaDB" width="60" height="60">
+  <img src="https://skillicons.dev/icons?i=sequelize" alt="Sequelize" width="60" height="60">
+  <img src="https://skillicons.dev/icons?i=ts" alt="TypeScript" width="60" height="60">
+  <img src="https://skillicons.dev/icons?i=react" alt="ReactJS" width="60" height="60">
+  <img src="https://skillicons.dev/icons?i=nextjs" alt="Next.js" width="60" height="60">
+  <img src="https://skillicons.dev/icons?i=postman" alt="Postman" width="60" height="60">
+</p>
 
 ## Contributors ✨
 
-Thanks goes to these wonderful people:
+<a href="https://github.com/salgue441/Net-Zero-Citizens/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=salgue441/Net-Zero-Citizens" />
+</a>
