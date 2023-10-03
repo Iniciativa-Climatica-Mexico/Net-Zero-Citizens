@@ -9,6 +9,7 @@ import SwiftUI
 
 
 struct ProfileView: View {
+  
   @ObservedObject var modelUser = UserViewModel()
   
   var body: some View {

@@ -15,12 +15,13 @@ class ProfileUseCase {
     return repository.getAuthData()!.user
   }
   
-//  @MainActor
-//  func updateUserData() async {
-//    let user = repository.getAuthData()
-//
-//
-//    repository.saveAuthData(authData: user)
-//  }
-  
+  //@MainActor
+  //  func updateUserData() async {
+  //    let user = repository.getAuthData()
+  //
+  //
+  //    repository.saveAuthData(authData: user)
+  //  }
+  //
+  //}
 }
