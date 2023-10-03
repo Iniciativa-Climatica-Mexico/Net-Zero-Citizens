@@ -14,12 +14,14 @@ class FavouriteAPI {
     //static let create = "/create"
     //body to send companyId, userId
     static let post = "/create"
+    static let delete = "/delete/:favouriteId"
   }
 }
 
 /// Protocolo con las funciones del repositorio de Favourites
 protocol FavouriteRepositoryProtocol {
   func postFavouriteById(favouriteBody: PostFavouriteData) async -> FavouriteCreationResponse?
+  func deleteFavouriteById(favouriteId: UUID) async -> FavouriteDeleteResponse?
 }
 
 /// Clase que representa el protocolo de Favourites
@@ -47,4 +49,16 @@ class FavouriteRepository: FavouriteRepositoryProtocol {
     let endpoint = FavouriteAPI.base + FavouriteAPI.Routes.post
     return await NetworkAPIService.shared.postRequest(URL(string: endpoint)!, body: jsonObjetct)
   }
+  
+  /// - Description: Función asíncrona que llama al servicio de conexión con la API para hacer un delete del favorito
+  /// - Parameters:
+  ///   - favouriteId: El ID del favorito
+  /// - Returns: `FavouriteDeleteResponse?`
+  func deleteFavouriteById(favouriteId: UUID) async -> FavouriteDeleteResponse? {
+    
+    let endpoint = FavouriteAPI.base + FavouriteAPI.Routes.delete
+      .replacingOccurrences(of: ":favouriteId", with: favouriteId.uuidString.lowercased())
+    return await NetworkAPIService.shared.deleteRequest(URL(string: endpoint)!)
+  }
+
 }

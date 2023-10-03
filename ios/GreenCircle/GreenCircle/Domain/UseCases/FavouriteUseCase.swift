@@ -31,4 +31,13 @@ class FavouriteUseCase {
     return await fRepository.postFavouriteById(favouriteBody: favouriteBody)
   }
   
+  /// - Description: Delete asíncrono de un favorito
+  /// - Parameters:
+  ///    - favouriteId: El id`favouriteId` para eliminar favorito
+  /// - Returns:
+  ///    - `FavouriteDeleteResponse?` objeto representando la respuesta desde backend.
+  func deleteFavouriteById(favouriteId: UUID) async -> FavouriteDeleteResponse? {
+    return await fRepository.deleteFavouriteById(favouriteId: favouriteId)
+  }
+  
 }
