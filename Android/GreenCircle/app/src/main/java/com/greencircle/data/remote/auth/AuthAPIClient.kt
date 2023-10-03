@@ -1,6 +1,7 @@
 package com.greencircle.data.remote.auth
 
 import com.greencircle.domain.model.auth.AuthResponse
+import com.greencircle.domain.model.user.NewUser
 
 /**
  * Cliente para realizar operaciones relacionadas con el AuthService de Google.
@@ -49,6 +50,20 @@ class AuthAPIClient {
         return try {
             val body = AuthAPIService.LoginCredentialsRequest(email, password)
             val response = api.loginCredentials(body)
+            response
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    suspend fun registerCredentials(
+        user: NewUser
+    ): AuthResponse? {
+        api = AuthNetworkModel()
+        return try {
+            val body = AuthAPIService.RegisterCredentialsRequest(user)
+            val response = api.registerCredentials(body)
             response
         } catch (e: Exception) {
             e.printStackTrace()
