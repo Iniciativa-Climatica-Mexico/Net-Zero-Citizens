@@ -3,7 +3,7 @@
 //  GreenCircle
 //
 //  Created by Ricardo Adolfo Fernández Alvarado on 12/09/23.
-//  Modified by Daniel Gutiérrez Gómez 26/09/23 
+//  Modified by Daniel Gutiérrez Gómez 26/09/23
 
 import FlowStacks
 import SwiftUI
@@ -13,12 +13,13 @@ struct CoordinatorView: View {
   @State var hasPendingSurvey: Bool = false
   @State var photovoltaicToggle: Bool = false
   @State var solarToggle: Bool = false
-
+  
   enum Screens {
     case splashScreen
     case login
     case userRegister
     case userRegisterForm
+    case companyAssign
     case companyRegister
     case companyRegisterForm
     case companyRegisterDivider
@@ -50,26 +51,30 @@ struct CoordinatorView: View {
       case .userRegisterForm:
         UserRegisterFormView(goMainMenu: goMainMenu)
         
+      case .companyAssign:
+        AssignCompanyView(goForm: goCompanyForm,
+                          goMainMenu: goMainMenu)
+        
       case .companyRegister:
         CompanyRegisterView(goLogin: goBack,
-                            goForm: goCompanyForm,
+                            goForm: goAssignCompany,
                             goMainMenu: goMainMenu)
         
       case .companyRegisterForm:
-          CompanyRegisterFormView(goCompanyRegisterDivider: goCompanyRegisterDivider, goPending: goPending)
-      
+        CompanyRegisterFormView(goCompanyRegisterDivider: goCompanyRegisterDivider, goPending: goPending)
+        
       case .companyRegisterDivider:
-          CompanyRegisterDividerView(goUploadCompanyFiles: goUploadCompanyFiles,
-                                     photovoltaicToggle: $photovoltaicToggle,
-                                     solarToggle: $solarToggle)
-          
+        CompanyRegisterDividerView(goUploadCompanyFiles: goUploadCompanyFiles,
+                                   photovoltaicToggle: $photovoltaicToggle,
+                                   solarToggle: $solarToggle)
+        
       case .uploadCompanyFiles:
-          CompanyUploadFilesView(goPending: goPending,
-                                 photovoltaicToggle: $photovoltaicToggle,
-                                 solarToggle: $solarToggle)
-          
+        CompanyUploadFilesView(goPending: goPending,
+                               photovoltaicToggle: $photovoltaicToggle,
+                               solarToggle: $solarToggle)
+        
       case .mainMenuView:
-        TabBarView(goSurvey: goSurvey)
+        TabBarView(goSurvey: goSurvey, goLogin: goLogin)
         
       case .pendingCompany:
         PendingCompanyView()
@@ -80,18 +85,18 @@ struct CoordinatorView: View {
       }
     }
     .onAppear {
-      Task {
-        let res = await viewModel.handleSignIn()
-        
-        switch res {
-        case .newUser:
-          goUserForm()
-        case .success:
-          goMainMenu()
-        case .fail:
-          goLogin()
-        }
-      }
+     Task {
+       let res = await viewModel.handleSignIn()
+       
+       switch res {
+       case .newUser:
+         goUserForm()
+       case .success:
+         goMainMenu()
+       case .fail:
+         goLogin()
+       }
+     }
     }
   }
   
@@ -127,12 +132,17 @@ struct CoordinatorView: View {
     routes.presentCover(.companyRegisterDivider)
   }
   
+  
   private func goUploadCompanyFiles(photovoltaicToggle: Binding<Bool>, solarToggle: Binding<Bool>) {
     routes.presentCover(.uploadCompanyFiles)
   }
   
   private func goPending() {
     routes.presentCover(.pendingCompany)
+  }
+  
+  private func goAssignCompany() {
+    routes.presentCover(.companyAssign)
   }
   
   private func goBack() {

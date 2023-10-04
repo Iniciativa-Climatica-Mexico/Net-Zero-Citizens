@@ -120,4 +120,17 @@ class CreateCompanyViewModel(private val context: Context) : ViewModel() {
             }
         }
     }
+
+    companion object {
+        var name: String = ""
+        var description: String = ""
+        var email: String = ""
+        var phone: String = ""
+        var website: String = ""
+        var street: String = ""
+        var streetNumber: String = ""
+        var city: String = ""
+        var state: String = ""
+        var zipCode: String = ""
+    }
 }

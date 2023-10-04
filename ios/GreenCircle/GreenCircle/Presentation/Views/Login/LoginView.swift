@@ -13,23 +13,47 @@ struct LoginView: View {
   var goForm: () -> Void
   var goMainMenu: () -> Void
   var goCompanyRegister: () -> Void
-
+  
   @StateObject var viewModel = LoginViewModel()
-  @EnvironmentObject var user: UserData
-
+  
   var body: some View {
-    ZStack {
-
-      BackgroundView()
-      
-      VStack(spacing: 40) {
+    ScrollView {
+      VStack {
         HeaderView(
           title: "Inicia sesión con tu cuenta",
           subTitle: "Nos da gusto verte")
-        
+        .padding(.bottom)
         Spacer()
         
         VStack {
+          
+          VStack(spacing: 20) {
+            InputFormView(bindingValue: $viewModel.user,
+                          label: "Usuario",
+                          prompt: "Usuario")
+            .keyboardType(.emailAddress)
+            .autocorrectionDisabled()
+            .textInputAutocapitalization(.never)
+            SecureInputFormView(bindingValue: $viewModel.password,
+                                label: "Contraseña",
+                                prompt: "Contraseña")
+            .padding(.bottom)
+            MainButton("Iniciar Sesión") {
+              Task {
+                let res = await viewModel.handleSignIn()
+                
+                switch res {
+                case .success:
+                  goMainMenu()
+                default:
+                  break
+                }
+              }
+            }
+          }.padding(.bottom)
+          
+          ButtonDividerView(text: "O continúa con")
+          
           GoogleSignInButton(style: .wide) {
             Task {
               let state = await viewModel
@@ -43,18 +67,17 @@ struct LoginView: View {
                 goMainMenu()
               }
             }
-          }.alert("Algo salió mal",
-                  isPresented: $viewModel.showAlert) {
+          }
+          .alert("Algo salió mal",
+                 isPresented: $viewModel.showAlert) {
             Button("Entendido", role: .cancel) {}
           } message: {
-            Text("Intenta de nuevo por favor")
+            Text(viewModel.alertMessage)
           }
         }
         .padding(.horizontal)
         
-        Spacer()
-        
-        Divider().padding(.horizontal)
+        Divider().padding()
         
         HStack {
           Text("¿No tienes una cuenta?")
@@ -62,21 +85,20 @@ struct LoginView: View {
           LinkButton("Regístrate", buttonColor: .blue){
             goUserRegister()
           }
-        }.padding(.horizontal)
+        }
+        .padding()
         
         LinkButton("Soy Proveedor", buttonColor: .blue, action: goCompanyRegister)
-          .padding(.bottom)
-      }.foregroundColor(Color("MainText"))
+          .padding(.bottom, 8)
+      }
+      .foregroundColor(Color("MainText"))
+      .onTapGesture {
+        hideKeyboard()
+      }
     }
   }
 }
 
-
-struct LoginView_Previews: PreviewProvider {
-  static var previews: some View {
-    LoginView(goUserRegister: {},
-              goForm: {},
-              goMainMenu: {},
-              goCompanyRegister: {})
-  }
+#Preview {
+  LoginView(goUserRegister: {}, goForm: {}, goMainMenu: {}, goCompanyRegister: {})
 }
