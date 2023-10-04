@@ -3,7 +3,7 @@
 //  GreenCircle
 //
 //  Created by Ricardo Adolfo Fernández Alvarado on 17/09/23.
-//
+//  Modified by Daniel Gutiérrez Gómez on 03/10/23
 
 import Foundation
 
@@ -33,6 +33,7 @@ protocol UserRepositoryProtocol {
   func updateUserCredentials(userId: String, newUserCredentials: Credentials) async -> User?;
   func postGoogleLogin(googleToken: String) async -> AuthResponse?
   func putUser(_ user: UserAuth) async -> Bool
+  func deleteUserById(userId: String)  async -> UserDeleteResponse?
 }
 
 
@@ -124,12 +125,18 @@ class UserRepository: UserRepositoryProtocol {
     return await backEndService.UpdateUserCredentials(url: url, newUserCredentials: newUserCredentials)
   }
   
-    func saveAuthData(authData: AuthResponse) {
-        lService.setToken(userData: authData)
-    }
-
+  func saveAuthData(authData: AuthResponse) {
+    lService.setUserInformation(userData: authData)
+  }
+  
   func getAuthData() -> AuthResponse? {
-    return lService.getToken()
+    return lService.getUserInformation()
+  }
+  
+  func deleteUserById(userId: String)  async -> UserDeleteResponse? {
+    let endpoint = UserAPI.base + "/delete" + UserAPI.Routes.userId
+          .replacingOccurrences(of: ":userId", with: userId)
+        return await NetworkAPIService.shared.deleteRequest(URL(string: endpoint)!)
   }
   
   func postLogin(user: String, password: String) async throws -> AuthResponse {

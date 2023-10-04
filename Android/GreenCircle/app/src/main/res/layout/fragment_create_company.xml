@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/scrollViewCreateCompany">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -301,6 +302,65 @@
                     android:inputType="number"
                     android:textColor="@color/gray_900" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="10dp">
+
+
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/avisoPrivacidad"
+                    style="@style/Widget.Material3.CompoundButton.MaterialSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:thumbTint="@color/white"
+                    android:trackTint="@color/green"
+                    app:thumbIcon="@drawable/baseline_check_24"
+                    app:thumbIconTint="@color/white"
+                    app:thumbTint="@color/white"
+                    app:trackTint="@color/gray_500"
+                    android:padding="4dp"
+                    />
+
+                <TextView
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Acepto las"
+                    android:paddingLeft="3dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/login_register"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="192dp"
+                    android:layout_height="wrap_content"
+                    android:text="políticas de privacidad"
+                    android:textAlignment="textStart"
+                    android:textColorLink="@color/blue"
+                    android:textSize="14sp"
+                    android:paddingLeft="0dp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+            <TextView
+                android:id="@+id/switchError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Debes aceptar las políticas de privacidad"
+                android:textColor="@color/red"
+                android:textSize="14sp"
+                android:visibility="gone"
+                />
 
             <Button
                 android:id="@+id/submit_create_company"
