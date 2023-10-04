@@ -62,6 +62,12 @@ const id = path.split('/')[2]
   const endIndex = startIndex + itemsPerPage
 
   const handlePageChange = (newPage: number) => setCurrentPage(newPage)
+const changeToInactive = () => {
+  setSelectedComplaint({...SelectedComplaint, complaintStatus: 'invalid'})
+}
+const changeToInvalid = () => {
+  setSelectedComplaint({...SelectedComplaint, complaintStatus: 'invalid'})
+}
 
 
 
@@ -111,13 +117,13 @@ const id = path.split('/')[2]
                 </TableCell>
                 <TableCell
                   className="cursor-pointer"
-                  onClick={() => company.complaintStatus === 'invalid' } 
+                  onClick={() => changeToInvalid()} 
                 >
                   <Button className="bg-[#F2F5FA] rounded-lg p-2">Descartar</Button>
                 </TableCell>
                 <TableCell
                   className="cursor-pointer"
-                  onClick={() => company.complaintStatus === 'inactive'}
+                  onClick={() => changeToInactive()}
                 >
                   <Button className="bg-[#F2F5FA] rounded-lg p-2">Rechazar</Button>
                 </TableCell>
