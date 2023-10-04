@@ -12,7 +12,7 @@ import { RequestHandler } from 'express'
 export const googleLogin: RequestHandler<
   NoRecord,
   AuthService.AuthResponse,
-  { googleToken: string },
+  { googleToken: string; ios?: boolean },
   NoRecord
 > = async (req, res) => {
   let authResponse: AuthService.AuthResponse = {
@@ -25,9 +25,9 @@ export const googleLogin: RequestHandler<
     authResponse.error = 'No google token provided'
     return res.json(authResponse)
   }
-  const { googleToken } = req.body
+  const { googleToken, ios } = req.body
 
-  const data = await AuthService.googleLogin(googleToken)
+  const data = await AuthService.googleLogin(googleToken, ios)
 
   if (!data?.user || !data.tokens) {
     authResponse.error = 'Invalid user'
@@ -97,7 +97,6 @@ export const updateTokens: RequestHandler<
     // Actualizar tokens
     const tokens = await AuthService.updateTokens(token)
     if (!tokens) return res.json({ error: 'Invalid token' })
-
     // Devolver los tokens
     res.status(200).json(tokens)
   } catch (error) {
@@ -127,7 +126,7 @@ export const login: RequestHandler<
 
   if (!data?.user || !data.tokens) {
     authResponse.error = 'Invalid user'
-    return res.json(authResponse)
+    return res.status(404).json(authResponse)
   }
 
   authResponse = data
@@ -154,7 +153,7 @@ export const register: RequestHandler<
 
     if (!data?.user || !data.tokens) {
       authResponse.error = 'Invalid user'
-      return res.json(authResponse)
+      return res.status(400).json(authResponse)
     }
 
     authResponse = data
@@ -162,7 +161,13 @@ export const register: RequestHandler<
     res.status(200).json(authResponse)
   } catch (error) {
     if (error instanceof ZodError)
-      res.status(400).json({ error: error.issues.toString() })
+      res
+        .status(400)
+        .json({
+          error: error.issues
+            .map((issue) => `${issue.path}, ${issue.message}`)
+            .toString(),
+        })
     else res.status(500).json({ error: 'Internal server error' })
   }
 }

@@ -13,7 +13,7 @@ struct TabViewImagesProducts: View {
   @Binding var bindImageToDescription: Bool
   @State private var descriptionBind: [Int: String] = [:]
   @State private var nameBind: [Int: String] = [:]
-  
+
   var body: some View {
       VStack {
         TabView(selection: $index) {
@@ -83,10 +83,8 @@ struct ReportReasonView: View {
 }
 
 struct CompanyReportView: View {
-
-    //@ObservedObject var modelCompanyRating: CompanyViewModel
-    @ObservedObject var modelComplaint: CompanyViewModel
-    @ObservedObject var viewModel: ComplaintViewModel
+    @ObservedObject var companyViewModel: CompanyViewModel
+    @ObservedObject var complaintViewModel: ComplaintViewModel
     @Binding var dispScrollView: Bool
     @State var hasTriedToSubmit: Bool = false
     @State var selectedReportReason: String? = nil
@@ -153,7 +151,7 @@ struct CompanyReportView: View {
                         } else {
                             Task {
                                 print("print.......")
-                                print(await viewModel.handleSubmit(complaintSubject: selectedReportReason ?? "", complaintDescription: description.isEmpty ? nil : description))
+                                print(await complaintViewModel.handleSubmit(complaintSubject: selectedReportReason ?? "", complaintDescription: description.isEmpty ? nil : description, companyId: companyViewModel.contentCompany.companyId.uuidString))
                                 showAlert = true
                             }
                         }
@@ -171,7 +169,7 @@ struct CompanyReportView: View {
             }
             .frame(height: 300)
         }
-        .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
+        .padding(EdgeInsets(top: 230, leading: 20, bottom: 0, trailing: 20))
         .foregroundColor(Color("BlackCustom"))
         .alert(isPresented: $showAlert) {
             Alert(title: Text("Confirmación"), message: Text("El reporte ha sido enviado con éxito."), dismissButton: .default(Text("Ok")))
@@ -293,7 +291,7 @@ struct ContactCompanyView: View {
                 }
               }
               if key == "Report" {
-                CompanyReportView(modelComplaint: contactCompanyViewModel, viewModel: viewModel, dispScrollView: $dispScrollView).onAppear {
+                CompanyReportView(companyViewModel: contactCompanyViewModel, complaintViewModel: viewModel, dispScrollView: $dispScrollView).onAppear {
                     bindImageToDescription = false
                   }
 
@@ -330,3 +328,4 @@ struct ContactCompanyView: View {
       }
     }
 }
+
