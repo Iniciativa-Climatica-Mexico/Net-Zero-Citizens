@@ -44,7 +44,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "@types/node-geocoder": "^4.2.1",
+    "@types/node-geocoder": "^4.2.2",
     "aws-sdk": "^2.1463.0",
     "bcrypt": "^5.1.1",
     "chai-exclude": "^2.1.0",

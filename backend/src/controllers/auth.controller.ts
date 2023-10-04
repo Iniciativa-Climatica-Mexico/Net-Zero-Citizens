@@ -12,7 +12,7 @@ import { RequestHandler } from 'express'
 export const googleLogin: RequestHandler<
   NoRecord,
   AuthService.AuthResponse,
-  { googleToken: string },
+  { googleToken: string; ios?: boolean },
   NoRecord
 > = async (req, res) => {
   let authResponse: AuthService.AuthResponse = {
@@ -25,9 +25,9 @@ export const googleLogin: RequestHandler<
     authResponse.error = 'No google token provided'
     return res.json(authResponse)
   }
-  const { googleToken } = req.body
+  const { googleToken, ios } = req.body
 
-  const data = await AuthService.googleLogin(googleToken)
+  const data = await AuthService.googleLogin(googleToken, ios)
 
   if (!data?.user || !data.tokens) {
     authResponse.error = 'Invalid user'
@@ -147,14 +147,13 @@ export const register: RequestHandler<
   }
   // Verificar que el email y la contraseña se hayan mandado
   try {
-    
     const user = AuthService.registerUserSchema.parse(req.body.user)
 
     const data = await AuthService.register(user)
 
     if (!data?.user || !data.tokens) {
       authResponse.error = 'Invalid user'
-      return res.json(authResponse)
+      return res.status(400).json(authResponse)
     }
 
     authResponse = data
@@ -162,7 +161,13 @@ export const register: RequestHandler<
     res.status(200).json(authResponse)
   } catch (error) {
     if (error instanceof ZodError)
-      res.status(400).json({ error: error.issues.map((issue) => `${issue.path}, ${issue.message}`).toString() })
+      res
+        .status(400)
+        .json({
+          error: error.issues
+            .map((issue) => `${issue.path}, ${issue.message}`)
+            .toString(),
+        })
     else res.status(500).json({ error: 'Internal server error' })
   }
 }
