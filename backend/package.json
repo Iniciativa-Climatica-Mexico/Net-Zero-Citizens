@@ -66,6 +66,6 @@
     "sequelize-typescript": "^2.1.5",
     "sinon": "^16.0.0",
     "sqlite3": "^5.1.6",
-    "zod": "^3.22.2"
+    "zod": "^3.22.3"
   }
 }
