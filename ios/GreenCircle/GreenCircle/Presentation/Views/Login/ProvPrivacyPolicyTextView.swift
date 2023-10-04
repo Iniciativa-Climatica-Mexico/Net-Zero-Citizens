@@ -10,6 +10,7 @@ import SwiftUI
 
 struct PrivacyPolicyTextView: View {
     @Binding var dismiss: Bool
+    @State private var isPrivacyPolicyVisible = false
     var body: some View {
         ScrollView {
             VStack {

@@ -74,8 +74,8 @@ struct CompanyRegisterView: View {
             }
             .foregroundColor(Color("MainText"))
         }
-        .sheet(isPresented: $isPrivacyPolicyVisible) {
-            privacyPolicyTextView
+    .sheet(isPresented: $isPrivacyPolicyVisible) {
+            PrivacyPolicyTextView(dismiss: $isPrivacyPolicyVisible) // Pass the boolean as a binding
         }
     }
 }
