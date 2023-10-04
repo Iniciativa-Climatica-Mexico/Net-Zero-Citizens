@@ -11,6 +11,17 @@ class ReviewViewModel: ObservableObject {
     private let fetchReviewUseCase: ReviewUseCase
     
     @Published var contentReview =  [Review]()
+    @Published var reviewFields : Review = Review(
+        reviewId: UUID(uuidString: "") ?? UUID(),
+        userId: UUID(),
+        companyId: UUID(),
+        reviewTitle: "",
+        score: 0.0,
+        review: "",
+        createdAt: Date(),
+        updatedAt: Date()
+//        user: User()
+    )
     @Published var totalReviews = Int ()
     
     init (
@@ -26,6 +37,8 @@ class ReviewViewModel: ObservableObject {
         if let resultReview = resultReview {
             print("Review recibida: \(resultReview)")
             contentReview = resultReview.rows
+            let totalReviews = resultReview.total
+            print("Total de reseñas: \(totalReviews)")
         } else {
             print("No se pudo obtener la review por Company")
         }

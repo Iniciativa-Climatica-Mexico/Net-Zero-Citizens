@@ -8,14 +8,16 @@
 import Foundation
 import SwiftUI
 
+//
 struct ReviewCardProvider: View {
     @StateObject var reviewViewModel: ReviewViewModel
+    
     var profilePicture: Image
     
     var body: some View {
         VStack {
             ForEach(reviewViewModel.contentReview) { review in
-                    ReviewCompanyCard(review: review, profilePicture: profilePicture)
+                ReviewCompanyCard(review: review, profilePicture: profilePicture )
             }
         }
         .background(Color.white)
@@ -33,6 +35,7 @@ struct ReviewCardProvider: View {
     }
 }
 
+//
 struct ReviewCompanyCard: View {
     var review: Review
     var profilePicture: Image
@@ -56,8 +59,8 @@ struct ReviewCompanyCard: View {
                     .frame(width: 50, height: 50)
                 
                 VStack(alignment: .leading) {
-                    //                    Text(reviewViewModel.contentReview.user.firstName + " " + reviewViewModel.contentReview.user.lastName)
-                    //                        .font(.headline)
+//                    Text(review.user.firstName + " " + review.user.lastName)
+//                        .font(.headline)
                     Text(formattedDate)
                         .font(.subheadline)
                         .foregroundColor(.gray)
@@ -97,24 +100,47 @@ struct ReviewCompanyCard: View {
     }
 }
 
-/*
+//
 struct ReviewCardClient: View {
-    @State private var isExpanded: Bool = false
     @StateObject var reviewViewModel: ReviewViewModel
     
-    // Crear un DateFormatter
+    var body: some View {
+        VStack {
+            ForEach(reviewViewModel.contentReview) { review in
+                    ReviewClientCard(review: review)
+            }
+        }
+        .background(Color.white)
+        .cornerRadius(10)
+        .padding()
+        
+        Divider()
+        
+        .onAppear {
+            Task {
+                await reviewViewModel.fetchReviewByUserId(userId: "8de45630-2e76-4d97-98c2-9ec0d1f3a5b9")
+            }
+        }
+    }
+}
+
+//
+struct ReviewClientCard: View {
+    @State private var isExpanded: Bool = false
+    var review: Review
+    
+    var formattedDate: String {
+        return dateFormatter.string(from: review.createdAt)
+    }
+    
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy"
         return formatter
     }()
     
-    var formattedDate: String {
-        return dateFormatter.string(from: reviewViewModel.contentReview.createdAt)
-    }
-    
     var showSeeMore: Bool {
-        return reviewViewModel.contentReview.review.count > 30
+        return review.review.count > 30
     }
     
     var body: some View {
@@ -123,22 +149,22 @@ struct ReviewCardClient: View {
                 
                 VStack(alignment: .leading) {
                     
-                    Text(reviewViewModel.contentReview.reviewTitle)
+                    Text(review.reviewTitle)
                         .font(.headline)
                     
                     HStack {
                         ForEach(0..<5) { index in
-                            Image(systemName: index < reviewViewModel.contentReview.score ? "star.fill" : "star")
+                            Image(systemName: index < Int(review.score) ? "star.fill" : "star")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 10, height: 10)
                                 .foregroundColor(Color("GreenCustom"))
                         }
                         
-                        Text(String(format: "%.1f de 5", Double(reviewViewModel.contentReview.score)))
+                        Text(String(format: "%.1f de 5", Double(review.score)))
                             .font(.subheadline)
                             .foregroundColor(.gray)
-                            
+                        
                     }
                     .font(.headline)
                     
@@ -154,12 +180,12 @@ struct ReviewCardClient: View {
                     
                     Menu {
                         Button(action: {
-//                            editReview()
+                            //                            editReview()
                         }) {
                             Label("Editar", systemImage: "pencil")
                         }
                         Button(action: {
-//                            deleteReview()
+                            //                            deleteReview()
                         }) {
                             Label("Eliminar", systemImage: "trash")
                         }
@@ -174,10 +200,10 @@ struct ReviewCardClient: View {
                 }
             }
             .padding()
-        
+            
             VStack(alignment: .leading, spacing: 10) {
                 
-                Text(reviewViewModel.contentReview.review)
+                Text(review.review)
                     .font(.body)
                     .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
                     .lineLimit(isExpanded ? nil : 3)
@@ -206,7 +232,6 @@ struct ReviewCardClient: View {
                     }
                 }
             }
-            
         }
         .background(Color.white)
         .cornerRadius(10)
@@ -214,4 +239,4 @@ struct ReviewCardClient: View {
         .padding()
     }
 }
-*/
+

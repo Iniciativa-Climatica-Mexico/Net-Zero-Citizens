@@ -26,7 +26,8 @@ struct ScrollViewRating: View {
             }
           }
           .padding(.top, 10)
-//            ReviewsView(userRating: 3, reviewViewModel: ReviewViewModel())
+            ReviewsView()
+            ReviewCardProvider(reviewViewModel: ReviewViewModel(), profilePicture: Image(systemName: "person.circle.fill"))
         }
         .navigationTitle("Reviews!")
           .navigationBarTitleDisplayMode(.inline)
@@ -37,9 +38,3 @@ struct ScrollViewRating: View {
     }
   }
 }
-
-//struct ScrollViewRating_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ScrollViewRating(idCompany: UUID(), dispScrollView: .constant(true), isPressed: .constant(["Producto": false, "Contacto": false]))
-//    }
-//}

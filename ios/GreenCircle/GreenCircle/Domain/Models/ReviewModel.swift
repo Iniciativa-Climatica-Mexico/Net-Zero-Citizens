@@ -13,7 +13,7 @@ struct Review: Codable, Identifiable {
     var userId: UUID
     var companyId: UUID
     var reviewTitle: String
-    var score: Int
+    var score: Double
     var review: String
     var createdAt: Date
     var updatedAt: Date
