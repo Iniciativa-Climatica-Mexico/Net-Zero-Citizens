@@ -106,14 +106,40 @@ class EditProfileFragment : Fragment() {
 
     private fun initializeAceptarCambiosButton() {
         binding.aceptarCambiosButton.setOnClickListener {
-            updateUser()
-            Toast.makeText(
-                requireContext(), "Los cambios fueron realizados con éxito", Toast.LENGTH_SHORT
-            ).show()
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.frame_layout, ProfileFragment())
-            transaction.addToBackStack("profileFragment")
-            transaction.commit()
+            if (binding.inputNombre.text.toString().isNotEmpty() &&
+                binding.inputPrimerApellido.text.toString().isNotEmpty() &&
+                binding.inputEdad.text.toString().isNotEmpty() &&
+                binding.inputSexo.text.toString().isNotEmpty() &&
+                binding.inputTelefono.text.toString().isNotEmpty() &&
+                binding.inputEstado.text.toString().isNotEmpty()
+            ) {
+
+                if (binding.inputNombre.text.toString().any { it.isDigit() } ||
+                    binding.inputPrimerApellido.text.toString().any { it.isDigit() } ||
+                    binding.inputSexo.text.toString().any { it.isDigit() }
+                ) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Los campos de nombre, apellido y género no pueden contener números",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    updateUser()
+                    Toast.makeText(
+                        requireContext(),
+                        "Los cambios fueron realizados con éxito",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.frame_layout, ProfileFragment())
+                    transaction.addToBackStack("profileFragment")
+                    transaction.commit()
+                }
+            } else {
+                Toast.makeText(
+                    requireContext(), "Debes llenar todos los campos", Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
