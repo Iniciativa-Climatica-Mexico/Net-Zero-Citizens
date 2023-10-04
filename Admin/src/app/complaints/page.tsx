@@ -23,8 +23,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { CellAction } from '@/components/cellAction'
 import ModalProveedor from '@/components/modalProveedor'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 export default function Home() {
+const router = useRouter()
+
   const [SelectedComplaint, setSelectedComplaint] = useState<CompanyComplaints>(
     {
       companyId: '',
@@ -48,6 +51,7 @@ export default function Home() {
   const handleTableRowClick = (company: CompanyComplaints) => {
     setSelectedComplaint(company)
     setIsModalOpen(true)
+    router.push(`/complaints/${company.companyId}`)
   }
 
   const fetchCompaniesWithComplaints = async () => {
