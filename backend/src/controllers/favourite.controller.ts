@@ -80,7 +80,7 @@ export const getFavouriteById: RequestHandler<
 
 export const deleteFavouriteById: RequestHandler<
   NoRecord,
-  { rows: number, message: string} | { message: string },
+  { rows: number; message: string } | { message: string },
   NoRecord,
   { favouriteId: string }
 > = async (req, res) => {
@@ -93,8 +93,8 @@ export const deleteFavouriteById: RequestHandler<
     } else {
       res.status(201).json({
         rows: rows,
-        message: 'Favourite deleted'
-    })
+        message: 'Favourite deleted',
+      })
     }
   } catch (error) {
     console.log(error)
