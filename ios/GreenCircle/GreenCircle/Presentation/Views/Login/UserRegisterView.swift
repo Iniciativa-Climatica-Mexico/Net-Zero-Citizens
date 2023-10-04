@@ -14,12 +14,6 @@ struct UserRegisterView: View {
   var goForm: () -> Void
   var goMainMenu: () -> Void
   
-  @State var name = ""
-  @State var lastName = ""
-  @State var email = ""
-  @State var password = ""
-  @State var confirmPassword = ""
-  
   var body: some View {
     ScrollView {
       VStack(spacing: 40) {
@@ -47,7 +41,12 @@ struct UserRegisterView: View {
                         label: "Confimar contraseña", prompt: "Contraseña")
           .padding(.bottom)
           MainButton("Crear Cuenta", width: 400){
-            
+            Task {
+              let res = await viewModel.registerUser()
+              if res == .newUser {
+                goForm()
+              }
+            }
           }
         }
         .padding(.horizontal)

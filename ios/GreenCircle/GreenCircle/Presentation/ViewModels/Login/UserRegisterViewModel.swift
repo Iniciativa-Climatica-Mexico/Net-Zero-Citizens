@@ -20,6 +20,7 @@ class UserRegisterViewModel: ObservableObject {
   var googleUseCase = GoogleSignInUseCase.shared
   var signInUseCase = UserSignInUseCase.shared
   @Published var showAlert = false
+  @Published var alertMessage = ""
   @Published var formState = CreateUserInfo()
   
   /// Función encargada de actualizar el objeto de entorno y realizar el login de Google
@@ -36,7 +37,14 @@ class UserRegisterViewModel: ObservableObject {
   }
   
   @MainActor
-  func registerUser() async {
-    await signInUseCase.registerUser(userInfo: formState)
+  func registerUser() async -> SignInState {
+    let res = await signInUseCase.registerUser(userInfo: formState)
+    
+    if res == .fail {
+      showAlert = true
+      alertMessage = "Intenta de nuevo más tarde."
+    }
+    
+    return res
   }
 }

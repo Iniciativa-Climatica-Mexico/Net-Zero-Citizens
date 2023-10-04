@@ -22,8 +22,17 @@ class UserSignInUseCase {
     } catch { return .fail }
   }
   
-  func registerUser(userInfo: CreateUserInfo) async {
-    await repository.postRegisterUser(userInfo: userInfo)
+  func registerUser(userInfo: CreateUserInfo) async -> SignInState {
+    do {
+      let authResponse = try await repository.postRegisterUser(userInfo: userInfo)
+      
+      NetworkAPIService.shared
+        .setAuthTokens(authResponse.tokens.authToken)
+      repository.saveAuthData(authData: authResponse)
+      return .newUser
+    } catch {
+      return .fail
+    }
   }
   
   func backgroundSignIn() async -> SignInState {

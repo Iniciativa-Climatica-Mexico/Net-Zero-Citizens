@@ -147,16 +147,24 @@ class UserRepository: UserRepositoryProtocol {
     }
   }
   
-  func postRegisterUser(userInfo: CreateUserInfo) async {
+  func postRegisterUser(userInfo: CreateUserInfo) async throws -> AuthResponse {
     let url = URL(string: "\(AuthAPI.base)\(AuthAPI.Routes.register)")!
     
-    let body = [
-      "email": userInfo.email,
-      "password": userInfo.password,
-      "firstName": userInfo.name,
-      "lastName": userInfo.lastName
+    let body = ["user":
+      [
+        "email": userInfo.email,
+        "password": userInfo.password,
+        "firstName": userInfo.name,
+        "lastName": userInfo.lastName
+      ]
     ]
     
-    let _: NoResponse? = await nService.postRequest(url, body: body)
+    let res: AuthResponse? = await nService.postRequest(url, body: body)
+    
+    if let authResponse = res {
+      return authResponse
+    } else {
+      throw GCError.requestFailed
+    }
   }
 }
