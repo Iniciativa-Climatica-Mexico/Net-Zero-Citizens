@@ -99,6 +99,7 @@
                     android:layout_width="match_parent"
                     android:inputType="number"
                     android:layout_height="wrap_content"
+                    android:maxLength="10"
                     android:textColor="@color/gray_900"/>
 
             </com.google.android.material.textfield.TextInputLayout>

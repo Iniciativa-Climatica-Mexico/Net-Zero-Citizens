@@ -62,7 +62,7 @@ export default class Company extends Model {
   email: string
 
   @Column({
-    type: DataType.STRING(10),
+    type: DataType.STRING(13),
     allowNull: false,
     field: 'PHONE_NUMBER',
   })

@@ -69,9 +69,9 @@ describe('UserService', () => {
     it('should get a user by email with role', async () => {
       const res = await UserService.getUserByEmailWithRole(user.email)
       expect(res?.userId).to.equal('8de45630-2e76-4d97-98c2-9ec0d1f3a5b8')
-      expect(res?.roleId).to.equal('ADMIN_ROLE_ID')
-      expect(res?.role.dataValues.ROLE_ID).to.equal('ADMIN_ROLE_ID')
-      expect(res?.role.dataValues.NAME).to.equal('admin')
+      expect(res?.roleId).to.equal('COMAPNY_ROLE_ID')
+      expect(res?.role.dataValues.ROLE_ID).to.equal('COMAPNY_ROLE_ID')
+      expect(res?.role.dataValues.NAME).to.equal('company')
     })
   })
 
