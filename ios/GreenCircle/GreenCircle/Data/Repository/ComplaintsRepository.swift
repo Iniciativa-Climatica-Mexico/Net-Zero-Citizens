@@ -49,13 +49,13 @@ class ComplaintRepository: ComplaintRepositoryProtocol {
     ///   - authToken: authentication token
     ///   - complaint: the object with the information of the complaint
     func postComplaint(complaint: PostComplaintData) async {
-        let userId = uRepositoty.getAuthData()?.user.uuid
+        let userId = uRepositoty.getAuthData()!.user.uuid
         //Hacerla no hardcodeada
         
         let body: [String: Any] = [
             "complaint": [
                 "userId": userId,
-                "companyId": complaint.companyId,
+                "companyId": complaint.companyId.lowercased(),
                 "complaintSubject": complaint.complaintSubject,
                 "complaintDescription": complaint.complaintDescription ?? "",
                 "complaintStatus": "active"
