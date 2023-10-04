@@ -27,7 +27,12 @@ class UserRegisterFormViewModel: ObservableObject {
   @Published var userData: UserAuth
   
   init() {
-    userData = useCase.getLocalUserData()!.user
+    /// Se evita el force unwrapping cuando hay un delete del `USER_DATA`
+    if let localUserData = useCase.getLocalUserData()?.user {
+      userData = localUserData
+    } else {
+      userData = UserAuth(first_name: "", last_name: "", uuid: "", email: "", login_type: "", picture: "", roles: "")
+    }
   }
   
   /// Función encargada de enviar el post al backend y actualizar el objeto de entorno

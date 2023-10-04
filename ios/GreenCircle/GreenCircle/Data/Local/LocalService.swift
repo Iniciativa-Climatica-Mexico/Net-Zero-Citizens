@@ -3,7 +3,7 @@
 //  GreenCircle
 //
 //  Created by Daniel Hurtado on 16/09/23.
-//
+//  Modified by Daniel Gutiérrez Gómez on 03/10/23
 
 import Foundation
 
@@ -15,7 +15,7 @@ class LocalService {
     private let COMPANY_ID = "COMPANY_ID"
     private let USER_ID = "USER_ID"
   
-  func getToken() -> AuthResponse? {
+  func getUserInformation() -> AuthResponse? {
     guard let userData = UserDefaults.standard.data(forKey: USER_DATA)
     else {
       return nil
@@ -28,7 +28,7 @@ class LocalService {
     }
   }
   
-  func setToken(userData: AuthResponse) {
+  func setUserInformation(userData: AuthResponse) {
     do {
       let encodedData = try encoder.encode(userData)
       UserDefaults.standard.set(encodedData, forKey: USER_DATA)
@@ -62,5 +62,11 @@ class LocalService {
         /// - Returns: Compnay id
         func getUserId() -> String? {
             return UserDefaults.standard.string(forKey: USER_ID)
+        }
+        
+        /// - Description:
+        ///   Función que borra la información del usuario cuando este ya no quiere su cuenta
+        func deleteUserInformation() {
+          UserDefaults.standard.removeObject(forKey: USER_DATA)
         }
 }

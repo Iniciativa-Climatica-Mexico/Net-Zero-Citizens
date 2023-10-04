@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.textfield.TextInputLayout
 import com.greencircle.R
 import com.greencircle.data.remote.company.CompanyAPIService
@@ -16,6 +18,7 @@ import com.greencircle.domain.model.company.Company
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.company.CreateCompanyViewModel
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
+import com.greencircle.framework.views.fragments.TermsAndConditionsCompany.TermsAndConditionsCompany
 import com.greencircle.framework.views.fragments.services.ServicesFragment
 import java.util.UUID
 
@@ -28,7 +31,16 @@ class CreateCompanyFragment : Fragment() {
     private var arguments = Bundle()
     private lateinit var authToken: String
     private lateinit var uuid: UUID
-    private var companyId: String? = null
+    private lateinit var nameInputLayout: TextInputLayout
+    private lateinit var descriptionInputLayout: TextInputLayout
+    private lateinit var emailInputLayout: TextInputLayout
+    private lateinit var phoneInputLayout: TextInputLayout
+    private lateinit var websiteInputLayout: TextInputLayout
+    private lateinit var streetInputLayout: TextInputLayout
+    private lateinit var streetNumberInputLayout: TextInputLayout
+    private lateinit var cityInputLayout: TextInputLayout
+    private lateinit var stateInputLayout: TextInputLayout
+    private lateinit var zipCodeInputLayout: TextInputLayout
 
     /**
      * Inicializa el "CreateCompanyFragment"
@@ -68,9 +80,63 @@ class CreateCompanyFragment : Fragment() {
             R.layout.fragment_create_company, container, false
         )
 
+        nameInputLayout = view.findViewById(R.id.companyNameTextField)
+        descriptionInputLayout = view.findViewById(R.id.companyDescriptionTextField)
+        emailInputLayout = view.findViewById(R.id.companyEmailTextField)
+        phoneInputLayout = view.findViewById(R.id.companyPhoneTextField)
+        websiteInputLayout = view.findViewById(R.id.companyWebsiteTextField)
+        streetInputLayout = view.findViewById(R.id.companyStreetTextField)
+        streetNumberInputLayout = view.findViewById(R.id.companyStreetNumberTextField)
+        cityInputLayout = view.findViewById(R.id.companyCityTextField)
+        stateInputLayout = view.findViewById(R.id.companyStateTextField)
+        zipCodeInputLayout = view.findViewById(R.id.companyZipCodeTextField)
+
+        val name = CreateCompanyViewModel.name
+        val description = CreateCompanyViewModel.description
+        val email = CreateCompanyViewModel.email
+        val phone = CreateCompanyViewModel.phone
+        val website = CreateCompanyViewModel.website
+        val street = CreateCompanyViewModel.street
+        val streetNumber = CreateCompanyViewModel.streetNumber
+        val city = CreateCompanyViewModel.city
+        val state = CreateCompanyViewModel.state
+        val zipCode = CreateCompanyViewModel.zipCode
+
+        nameInputLayout.editText?.setText(name)
+        descriptionInputLayout.editText?.setText(description)
+        emailInputLayout.editText?.setText(email)
+        phoneInputLayout.editText?.setText(phone)
+        websiteInputLayout.editText?.setText(website)
+        streetInputLayout.editText?.setText(street)
+        streetNumberInputLayout.editText?.setText(streetNumber)
+        cityInputLayout.editText?.setText(city)
+        stateInputLayout.editText?.setText(state)
+        zipCodeInputLayout.editText?.setText(zipCode)
+
+        val button = view.findViewById<Button>(R.id.login_register)
+        button.setOnClickListener {
+
+            CreateCompanyViewModel.name = nameInputLayout.editText?.text.toString()
+            CreateCompanyViewModel.description = descriptionInputLayout.editText?.text.toString()
+            CreateCompanyViewModel.email = emailInputLayout.editText?.text.toString()
+            CreateCompanyViewModel.phone = phoneInputLayout.editText?.text.toString()
+            CreateCompanyViewModel.website = websiteInputLayout.editText?.text.toString()
+            CreateCompanyViewModel.street = streetInputLayout.editText?.text.toString()
+            CreateCompanyViewModel.streetNumber = streetNumberInputLayout.editText?.text.toString()
+            CreateCompanyViewModel.city = cityInputLayout.editText?.text.toString()
+            CreateCompanyViewModel.state = stateInputLayout.editText?.text.toString()
+            CreateCompanyViewModel.zipCode = zipCodeInputLayout.editText?.text.toString()
+
+            val termsAndConditionsCompanyFragment = TermsAndConditionsCompany()
+            val activity = requireActivity() as RegisterCompanyActivity
+
+            activity.replaceFragment(termsAndConditionsCompanyFragment)
+        }
+
         if (arguments.getString("uuid") != null) {
             uuid = arguments.getString("uuid")?.let { UUID.fromString(it) }!!
         }
+
         // Set texts
         setTexts(arguments, view)
 
@@ -99,14 +165,7 @@ class CreateCompanyFragment : Fragment() {
                 Log.d("CreateCompanyFragment", "Google login failed")
             }
         }
-        viewModel.createCompanyResult.observe(viewLifecycleOwner) { result ->
-            // Handle the result here
-            if (result != null) {
-                companyId = result.companyId
-                arguments.putString("companyId", companyId)
-                nextFragment(arguments)
-            }
-        }
+        setSwitch(view.findViewById(R.id.avisoPrivacidad))
     }
 
     /**
@@ -200,6 +259,7 @@ class CreateCompanyFragment : Fragment() {
         val cityInputLayout: TextInputLayout = view.findViewById(R.id.companyCityTextField)
         val stateInputLayout: TextInputLayout = view.findViewById(R.id.companyStateTextField)
         val zipCodeInputLayout: TextInputLayout = view.findViewById(R.id.companyZipCodeTextField)
+        val switchError: TextView = view.findViewById(R.id.switchError)
 
         val name = nameInputLayout.editText?.text.toString()
         val description = descriptionInputLayout.editText?.text.toString()
@@ -211,6 +271,7 @@ class CreateCompanyFragment : Fragment() {
         val city = cityInputLayout.editText?.text.toString()
         val state = stateInputLayout.editText?.text.toString()
         val zipCode = zipCodeInputLayout.editText?.text.toString()
+        val terms = view.findViewById<MaterialSwitch>(R.id.avisoPrivacidad).isChecked
 
         var isValid = true
 
@@ -301,6 +362,12 @@ class CreateCompanyFragment : Fragment() {
             zipCodeInputLayout.error = null
         }
 
+        // Validar terminos y condiciones
+        if (!terms) {
+            isValid = false
+            switchError.visibility = View.VISIBLE
+        }
+
         return isValid
     }
 
@@ -349,5 +416,38 @@ class CreateCompanyFragment : Fragment() {
         val companyServices = ServicesFragment()
         val activity = requireActivity() as RegisterCompanyActivity
         activity.replaceFragment(companyServices, arguments)
+    }
+
+    private fun setSwitch(mSwitch: MaterialSwitch) {
+        mSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                mSwitch.thumbTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.white
+                )
+                mSwitch.trackTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.green
+                )
+                mSwitch.thumbIconTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.green
+                )
+            } else {
+                // Colors when the switch is OFF
+                mSwitch.thumbTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.white
+                )
+                mSwitch.trackTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.gray_500
+                )
+                mSwitch.thumbIconTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.white
+                )
+            }
+        }
     }
 }
