@@ -8,7 +8,7 @@
 import Foundation
 
 class SurveyApi {
-  static let base = "http://mayras-macbook-air.local:4000/api/v1"
+  static let base = "http://localhost:4000/api/v1"
   struct Routes {
     static let survey = "/survey/pending/:userId"
     static let submitSurvey = "/survey/:surveyId/answer/:userId"

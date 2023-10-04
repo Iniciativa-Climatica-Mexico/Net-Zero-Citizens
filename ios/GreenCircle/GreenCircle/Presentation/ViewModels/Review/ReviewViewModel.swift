@@ -11,6 +11,7 @@ class ReviewViewModel: ObservableObject {
     private let fetchReviewUseCase: ReviewUseCase
     
     @Published var contentReview =  [Review]()
+    @Published var totalReviews = Int ()
     
     init (
         reviewUseCase: ReviewUseCase = ReviewUseCase.shared
@@ -35,6 +36,8 @@ class ReviewViewModel: ObservableObject {
         if let resultReview = resultReview {
             print("Review recibida: \(resultReview)")
             contentReview = resultReview.rows
+            let totalReviews = resultReview.total
+            print("Total de reseñas: \(totalReviews)")
         } else {
             print("No se pudo obtener la review por User")
         }

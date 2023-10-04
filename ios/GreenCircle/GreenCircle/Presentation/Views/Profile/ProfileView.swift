@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ProfileView: View {
   @ObservedObject var modelUser = UserViewModel()
+    @ObservedObject var modelReview = ReviewViewModel()
   
   var body: some View {
     NavigationView {
@@ -94,7 +95,7 @@ struct ProfileView: View {
           Spacer()
           
           //--------------------Seccón de Reseñas-----------------------------------------
-          Text("Reseñas Escritas (0)")
+            Text("Reseñas Escritas (\(modelReview.totalReviews))") //
             .font(.system(size: 20))
             .fontWeight(.bold)
             .padding(.top, 32)
@@ -103,6 +104,7 @@ struct ProfileView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
           ScrollView{
             //Aquí irán las tarjetas de reseñas
+              ReviewCardClient(reviewViewModel: ReviewViewModel())
           }
         }
         .padding(.top, 70)
@@ -110,11 +112,11 @@ struct ProfileView: View {
     }
   }
   
-  struct ProfileView_Previews: PreviewProvider {
-    static var previews: some View {
-      ProfileView(modelUser: UserViewModel())
-      
-    }
-  }
-  
+//  struct ProfileView_Previews: PreviewProvider {
+//    static var previews: some View {
+//      ProfileView(modelUser: UserViewModel())
+//      
+//    }
+//  }
+//  
 }

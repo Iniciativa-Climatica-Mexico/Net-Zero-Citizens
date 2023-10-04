@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 struct ApiCompany {
-    static let baseCompany = "http://mayras-macbook-air.local:4000/api/v1/company"
+    static let baseCompany = "http://localhost:4000/api/v1/company"
     struct Routes {
         static let company = "/geocoding"
     }
