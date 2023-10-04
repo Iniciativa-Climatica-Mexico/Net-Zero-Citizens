@@ -143,7 +143,40 @@ class EditProfileFragment : Fragment() {
 
             // Si la edad es válida, elimina cualquier mensaje de error anterior
             binding.inputEdad.error = null
-
+            if (binding.inputNombre.text.toString().isEmpty()) {
+                binding.inputNombre.error = "El nombre no puede estar vacío"
+                return@setOnClickListener
+            }
+            if (binding.inputNombre.text.toString().any { it.isDigit() }) {
+                binding.inputNombre.error = "El nombre no puede contener números"
+                return@setOnClickListener
+            }
+            binding.inputNombre.error = null
+            if (binding.inputPrimerApellido.text.toString().isEmpty()) {
+                binding.inputPrimerApellido.error = "El primer apellido no puede estar vacío"
+                return@setOnClickListener
+            }
+            if (binding.inputPrimerApellido.text.toString().any { it.isDigit() }) {
+                binding.inputPrimerApellido.error =
+                    "El primer apellido no puede contener números"
+                return@setOnClickListener
+            }
+            binding.inputPrimerApellido.error = null
+            if (binding.inputEdad.text.toString().isEmpty()) {
+                binding.inputEdad.error = "La edad no puede estar vacía"
+                return@setOnClickListener
+            }
+            if (binding.inputSegundoApellido.text.toString().any { it.isDigit() }) {
+                binding.inputSegundoApellido.error =
+                    "El segundo apellido no puede contener números"
+                return@setOnClickListener
+            }
+            binding.inputEdad.error = null
+            if (binding.inputTelefono.text.toString().isEmpty()) {
+                binding.inputTelefono.error = "El teléfono no puede estar vacío"
+                return@setOnClickListener
+            }
+            binding.inputTelefono.error = null
             // Procede con la actualización del usuario
             updateUser()
             Toast.makeText(
