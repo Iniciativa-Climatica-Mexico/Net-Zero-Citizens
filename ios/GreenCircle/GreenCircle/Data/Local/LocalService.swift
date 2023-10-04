@@ -39,15 +39,28 @@ class LocalService {
   }
     
     /// Set company id when login
-    /// - Parameter companyId: companyId
-    func setCompanyId(companyId: String) {
-        UserDefaults.standard.set(companyId, forKey: "companyId")
-    }
+        /// - Parameter companyId: companyId
+        func setCompanyId(companyId: String) {
+            UserDefaults.standard.set(companyId, forKey: "companyId")
+        }
 
+        
+        /// Function to get company id from local storage
+        /// - Returns: Compnay id
+        func getCompanyId() -> String? {
+            return UserDefaults.standard.string(forKey: "companyId")
+        }
     
-    /// Function to get company id from local storage
-    /// - Returns: Compnay id
-    func getCompanyId() -> String? {
-        return UserDefaults.standard.string(forKey: "companyId")
-    }
+    /// Set company id when login
+        /// - Parameter companyId: companyId
+        func setUserId(userId: String) {
+            UserDefaults.standard.set(userId, forKey: USER_ID)
+        }
+
+        
+        /// Function to get company id from local storage
+        /// - Returns: Compnay id
+        func getUserId() -> String? {
+            return UserDefaults.standard.string(forKey: USER_ID)
+        }
 }

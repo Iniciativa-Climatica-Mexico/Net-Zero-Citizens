@@ -13,7 +13,6 @@ struct MainButton: View {
   var buttonColor: Color
   var width: CGFloat
   
-  
   init(_ content: String,
        buttonColor: Color = Color("Primary"),
        width: CGFloat = 200,
@@ -27,7 +26,7 @@ struct MainButton: View {
   var body: some View {
     ZStack{
       Rectangle()
-        .frame(width: width, height: 50)
+        .frame(width: width, height: 45)
         .cornerRadius(10)
         .foregroundColor(buttonColor)
       Button{action()} label: {

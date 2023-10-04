@@ -11,7 +11,8 @@ import Foundation
 class CompanyViewModel: ObservableObject {
   /// Caso de uso para hacer fetch de los datos de compañía
   private let useCase: CompanyUseCase
-  private let repository: CompanyRepository
+    @Published var currentCompany: Company?
+  
   
   @Published var companies = [Company]()
     
