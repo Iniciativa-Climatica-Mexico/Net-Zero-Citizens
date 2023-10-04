@@ -66,6 +66,7 @@ struct CompanyRegisterDividerView: View {
               showAlert = true
             }
           })
+        .padding(.horizontal)
         .alert(isPresented: $showAlert) {
           Alert(title: Text("Error"),
                 message: Text("Selecciona al menos uno"),
