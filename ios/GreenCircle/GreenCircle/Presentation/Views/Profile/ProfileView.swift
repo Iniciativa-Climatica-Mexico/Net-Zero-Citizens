@@ -9,8 +9,10 @@ import SwiftUI
 
 
 struct ProfileView: View {
-  @ObservedObject var modelUser = UserViewModel()
   
+  @ObservedObject var modelUser = UserViewModel()
+  var goLogin: () -> Void
+
   var body: some View {
     NavigationView {
       ZStack {
@@ -20,9 +22,9 @@ struct ProfileView: View {
           TitleBarView(
             title: "Mi Perfil",
             leftIcon: nil,
-            rightIcon: "person.fill",
+            rightIcon: nil,
             leftDestination: {  },
-            rightDestination: { EditProfileView(modelUser: UserViewModel()) }
+            rightDestination: { }
           )
           .frame(height: 10)
           .offset(y: -60)
@@ -76,7 +78,7 @@ struct ProfileView: View {
             }
             .padding(.trailing, 10)
             
-            NavigationLink(destination:  EditProfileView(modelUser: UserViewModel())) {
+            NavigationLink(destination: EditProfileView(modelUser: UserViewModel(), goLogin: goLogin)) {
               Text("Editar perfil")
                 .foregroundColor(.white)
                 .padding(.vertical, 12)
@@ -93,7 +95,7 @@ struct ProfileView: View {
           
           Spacer()
           
-          //--------------------Seccón de Reseñas-----------------------------------------
+          //--------------------Sección de Reseñas-----------------------------------------
           Text("Reseñas Escritas (0)")
             .font(.system(size: 20))
             .fontWeight(.bold)
@@ -111,9 +113,11 @@ struct ProfileView: View {
   }
   
   struct ProfileView_Previews: PreviewProvider {
+
     static var previews: some View {
-      ProfileView(modelUser: UserViewModel())
-      
+
+      ProfileView(modelUser: UserViewModel(), goLogin: {})
+
     }
   }
   

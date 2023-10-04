@@ -74,7 +74,7 @@ struct CoordinatorView: View {
                                solarToggle: $solarToggle)
         
       case .mainMenuView:
-        TabBarView(goSurvey: goSurvey)
+        TabBarView(goSurvey: goSurvey, goLogin: goLogin)
         
       case .pendingCompany:
         PendingCompanyView()
@@ -131,6 +131,7 @@ struct CoordinatorView: View {
   private func goCompanyRegisterDivider() {
     routes.presentCover(.companyRegisterDivider)
   }
+  
   
   private func goUploadCompanyFiles(photovoltaicToggle: Binding<Bool>, solarToggle: Binding<Bool>) {
     routes.presentCover(.uploadCompanyFiles)

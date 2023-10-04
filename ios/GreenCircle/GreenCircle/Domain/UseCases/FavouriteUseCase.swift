@@ -14,7 +14,7 @@ class FavouriteUseCase {
   let uRepository = UserRepository.shared
   
   // Obtener los tokens del usuario (userId)
-  let lService = LocalService.shared.getToken()
+  let lService = LocalService.shared.getUserInformation()
   
   /// - Description: Obtener el ID del user para poder crear favorito
   func getLocalUserData() -> AuthResponse? {
