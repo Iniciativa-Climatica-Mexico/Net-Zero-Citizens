@@ -97,21 +97,21 @@
                 android:orientation="vertical"
                 android:layout_marginTop="20dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nombre *"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginTop="40dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:id="@+id/inputNombre"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:hint="Nombre *"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="40dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:id="@+id/inputNombre"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -279,24 +279,25 @@
                     >
 
                     <Button
-                        android:layout_width="wrap_content"
+                        android:layout_width="120sp"
                         android:id="@+id/cancelarCambiosButton"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/rounded_corner"
                         android:text="Cancelar "
-                        android:textColor="@color/white"
+                        app:backgroundTint="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="15sp"
-                        android:textAllCaps="false"/>
+                        android:textAllCaps="false"
+                        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.ExtraLarge" />/>
                     <Button
                         android:id="@+id/aceptarCambiosButton"
-                        android:layout_width="wrap_content"
+                        android:layout_width="120sp"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/rounded_corner"
                         android:text="Guardar"
                         android:textColor="@color/white"
                         android:textSize="15sp"
                         android:layout_marginLeft="20dp"
-                        android:textAllCaps="false"/>
+                        android:textAllCaps="false"
+                        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.ExtraLarge" />/>
                 </LinearLayout>
 
                 <LinearLayout
