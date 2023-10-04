@@ -19,6 +19,7 @@ struct TabBarView: View {
     @StateObject var vm = SurveyViewModel()
     
     var goSurvey: () -> Void
+    var goLogin: () -> Void
 
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -45,7 +46,7 @@ struct TabBarView: View {
                 }
                 .tag(TabSelection.map)
 
-            ProfileView(modelUser: UserViewModel())
+            ProfileView(modelUser: UserViewModel(), goLogin: goLogin)
                 .tabItem {
                     Image(systemName: "person.fill")
                     Text("Perfil")

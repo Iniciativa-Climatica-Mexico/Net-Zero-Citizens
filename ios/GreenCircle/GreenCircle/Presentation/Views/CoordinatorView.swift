@@ -74,7 +74,7 @@ struct CoordinatorView: View {
                                solarToggle: $solarToggle)
         
       case .mainMenuView:
-        TabBarView(goSurvey: goSurvey)
+        TabBarView(goSurvey: goSurvey, goLogin: goLogin)
         
       case .pendingCompany:
         PendingCompanyView()
