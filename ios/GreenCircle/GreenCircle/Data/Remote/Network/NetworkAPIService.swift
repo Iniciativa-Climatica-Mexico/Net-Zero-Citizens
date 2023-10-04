@@ -129,7 +129,7 @@ class NetworkAPIService {
         var responseResult: T?
 
         // 1. Obtener el token de LocalService
-        guard let authToken = LocalService.shared.getToken()?.tokens.authToken else {
+        guard let authToken = LocalService.shared.getUserInformation()?.tokens.authToken else {
             print("Error: Unable to fetch token")
             return nil
         }

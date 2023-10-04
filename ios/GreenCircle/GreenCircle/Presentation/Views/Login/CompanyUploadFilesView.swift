@@ -137,10 +137,12 @@ struct ThirdSection: View{
             Text("Certificaciones (Opcional)")
                 .bold()
                 .font(.system(size: 25))
+                .padding(.horizontal, 30)
                 .padding(.top, 40)
                 .padding(.bottom, 14)
             Text("En caso de contar con alguno de los siguientes documentos, por favor compártelo con nosotros")
                 .font(.system(size: 14))
+                .padding(.horizontal, 30)
                 .lineSpacing(10)
                 .padding(.bottom, 3)
         } .padding(.bottom, 30)
@@ -429,3 +431,9 @@ struct CompanyUploadFilesView: View {
     }
 }
 
+
+struct CompanyUploadFilesView_Previews: PreviewProvider {
+    static var previews: some View {
+        CompanyUploadFilesView(goPending: {}, photovoltaicToggle: .constant(true), solarToggle: .constant(true))
+    }
+}
