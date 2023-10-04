@@ -11,7 +11,8 @@ import SwiftUI
 struct ProfileView: View {
   
   @ObservedObject var modelUser = UserViewModel()
-  
+  var goLogin: () -> Void
+
   var body: some View {
     NavigationView {
       ZStack {
@@ -77,7 +78,7 @@ struct ProfileView: View {
             }
             .padding(.trailing, 10)
             
-            NavigationLink(destination: EditProfileView(modelUser: UserViewModel())) {
+            NavigationLink(destination: EditProfileView(modelUser: UserViewModel(), goLogin: goLogin)) {
               Text("Editar perfil")
                 .foregroundColor(.white)
                 .padding(.vertical, 12)
@@ -111,11 +112,14 @@ struct ProfileView: View {
     }
   }
   
-  struct ProfileView_Previews: PreviewProvider {
-    static var previews: some View {
-      ProfileView(modelUser: UserViewModel())
-      
-    }
-  }
+//  struct ProfileView_Previews: PreviewProvider {
+//    let deleteUserViewModel = DeleteUserViewModel(useCase: )
+//
+//    static var previews: some View {
+//
+//      ProfileView(modelUser: UserViewModel(), deleteUserViewModel: deleteUserViewModel)
+//
+//    }
+//  }
   
 }

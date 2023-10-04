@@ -359,7 +359,10 @@ struct Section3: View {
   }
   
   ///__----------------- DELETE SECTION__
-  struct SectionDelete: View{
+struct SectionDelete: View{
+    @StateObject var deleteUserViewModel = DeleteUserViewModel()
+    @State var showAlert: Bool = false
+    var goLogin: () -> Void
     var body: some View{
       VStack{
         Divider()
@@ -368,7 +371,9 @@ struct Section3: View {
           .padding(.top, 30)
           .bold()
           .font(.system(size: 20))
-        Button(action: {}) {
+        Button(action: {
+          showAlert = true
+        }, label: {
           Text("Eliminar cuenta")
             .foregroundColor(.white)
             .padding(.vertical, 12)
@@ -376,17 +381,31 @@ struct Section3: View {
             .frame(maxWidth: .infinity)
             .background(Color("RedCustom"))
             .cornerRadius(8)
+        }).alert(isPresented: $showAlert, content: {
+          Alert(title: Text("¿Deseas borrar tu cuenta?"), message: Text("Si aceptas, no guardaremos ningún dato tuyo."),
+             primaryButton: .default(Text("Cancelar")) {
+             },
+                secondaryButton: .destructive(Text("Borrar")) {
+            Task {
+              try await deleteUserViewModel.deleteUserById()
+              if deleteUserViewModel.contentResponse.status == 200 {
+                goLogin()
+              }
+            }
+          })
+        })
+        
         } .padding(.top, 12)
           .padding(.horizontal, 70)
       }
     }
-    
-  }
+
   ///__----------------- MAIN SECTION__
   struct EditProfileView: View {
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var modelUser = UserViewModel()
     @State private var currentTab: TabSelection = .profile
+    var goLogin: () -> Void
 
     //@State private var selectedState: String = Constants.states.first ?? ""
     
@@ -414,7 +433,7 @@ struct Section3: View {
             Section2(modelUser:  UserViewModel())
             Section3(modelUser:  UserViewModel())
             SectionButton(modelUser: UserViewModel(), selectedTab: $currentTab)
-            SectionDelete()
+            SectionDelete(goLogin: goLogin)
           }
           .padding(.top, 10)
           .padding(.horizontal, 20)
