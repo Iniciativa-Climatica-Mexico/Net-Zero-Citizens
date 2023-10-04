@@ -38,7 +38,7 @@ struct LoginView: View {
                               label: "Contraseña",
                               prompt: "Contraseña")
           .padding(.bottom)
-          MainButton("Iniciar Sesión", width: 400) {
+          MainButton("Iniciar Sesión") {
             Task {
               let res = await viewModel.handleSignIn()
               
