@@ -71,7 +71,7 @@ struct UserRegisterView: View {
                   isPresented: $viewModel.showAlert) {
             Button("Entendido", role: .cancel) {}
           } message: {
-            Text("Intenta de nuevo por favor")
+            Text(viewModel.alertMessage)
           }
         }
         .padding(.horizontal)

@@ -38,13 +38,44 @@ class UserRegisterViewModel: ObservableObject {
   
   @MainActor
   func registerUser() async -> SignInState {
-    let res = await signInUseCase.registerUser(userInfo: formState)
-    
-    if res == .fail {
+    do {
+      try validate()
+      let res = await signInUseCase.registerUser(userInfo: formState)
+      
+      if res == .fail {
+        showAlert = true
+        alertMessage = "Intenta de nuevo más tarde."
+      }
+      
+      return res
+    } catch GCError.validationError(let message) {
       showAlert = true
-      alertMessage = "Intenta de nuevo más tarde."
+      alertMessage = message
+      return .fail
+    } catch {
+      showAlert = true
+      alertMessage = "Algo salió mal"
+      return .fail
+    }
+  }
+  
+  private func validate() throws {
+    if formState.name.isEmpty {
+      throw GCError.validationError("Por favor introduce un nombre.")
     }
     
-    return res
+    if formState.lastName.isEmpty {
+      throw GCError.validationError("Por favor introduce un apellido.")
+    }
+    
+    if formState.email.isEmpty
+        || !Utils.isValidEmail(formState.email) {
+      throw GCError.validationError("Por favor introduce un email valido.")
+    }
+    
+    if formState.password.isEmpty
+        || formState.password != formState.confirmPassword {
+      throw GCError.validationError("Por favor revisa la contraseña introducida")
+    }
   }
 }
