@@ -37,7 +37,7 @@ struct BackgroundView: View {
       .opacity(0.1)
       .cornerRadius(40, corners: [.topLeft, .topRight])
       .edgesIgnoringSafeArea(.bottom)
-      .padding(.top, 300)
+      .padding(.top, 290)
   }
 }
 
@@ -84,6 +84,25 @@ struct InputFormView: View {
   }
 }
 
+struct SecureInputFormView: View {
+  var bindingValue: Binding<String>
+  var label: String
+  var prompt: String
+  
+  var body: some View {
+    VStack(alignment: .leading) {
+      Text(label)
+        .foregroundColor(Color("SecondaryText"))
+      SecureField(prompt, text: bindingValue)
+        .padding(10)
+        .overlay {
+          RoundedRectangle(cornerRadius: 10)
+            .stroke(.gray, lineWidth: 1)
+        }
+    }.font(.system(size: 20, weight: .medium))
+  }
+}
+
 struct PickerFormView: View {
   @Binding var selectedOption: String
   var label: String
@@ -121,6 +140,41 @@ struct PickerFormView: View {
   }
 }
 
+struct PickerFormView2: View {
+  @Binding var selectedOption: String
+  var label: String
+  var options: [String]
+  
+  var body: some View {
+    VStack(alignment: .leading) {
+      HStack {
+        Menu {
+          Picker(selection: $selectedOption) {
+            ForEach(options, id: \.self) { option in
+              Text(option).tag(option)
+            }
+          } label: {}
+        } label: {
+          if selectedOption.isEmpty {
+            Text("Selecciona una opción...")
+              .opacity(0.3)
+          } else {
+            Text(selectedOption)
+          }
+          Spacer()
+          Image(systemName: "chevron.down")
+        }
+        .padding(10)
+        Spacer()
+      }.overlay {
+        RoundedRectangle(cornerRadius: 4)
+          .stroke(Color("GrayColor"), lineWidth: 0.5)
+          .frame(height: 34)
+      }
+    }
+    .font(.system(size: 13))
+  }
+}
 
 struct CompanyRegisterHeaderView: View {
   
@@ -146,5 +200,19 @@ struct CompanyRegisterHeaderView: View {
     .padding(.horizontal)
     .frame(maxWidth: .infinity,
            alignment: .leading)
+  }
+}
+
+struct ButtonDividerView: View {
+  var text: String
+  var body: some View {
+    ZStack {
+      Divider()
+      Rectangle()
+        .foregroundColor(.white)
+        .frame(width: 150)
+      Text(text)
+        .foregroundColor(Color("MainText"))
+    }
   }
 }

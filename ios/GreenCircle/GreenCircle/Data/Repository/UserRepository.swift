@@ -12,6 +12,8 @@ class AuthAPI {
   static let base = "http://localhost:4000/api/v1/auth"
   struct Routes {
     static let googleLogin = "/login/google"
+    static let login = "/login/credentials"
+    static let register = "/register/credentials"
   }
 }
 
@@ -110,7 +112,7 @@ class UserRepository: UserRepositoryProtocol {
   //func updateUserData()
   
   func fetchUserById(userId: String) async -> User? {
-    return await backEndService.fetchUserById(url: URL(string: "\(UserAPI.base)/\(userId)")!)
+    return await nService.getRequest(URL(string: "\(UserAPI.base)/\(userId)")!)
   }
   
   func updateUserData(updatedUserData: User, userId: String) async -> User? {
@@ -129,5 +131,41 @@ class UserRepository: UserRepositoryProtocol {
 
   func getAuthData() -> AuthResponse? {
     return lService.getToken()
+  }
+  
+  func postLogin(user: String, password: String) async throws -> AuthResponse {
+    let url = URL(string: "\(AuthAPI.base)\(AuthAPI.Routes.login)")!
+    
+    let body = ["email": user.trimmingCharacters(in: .whitespaces),
+                "password": password]
+    
+    let res: AuthResponse? = await nService.postRequest(url, body: body)
+    
+    if let authResponse = res {
+      return authResponse
+    } else {
+      throw GCError.requestFailed
+    }
+  }
+  
+  func postRegisterUser(userInfo: CreateUserInfo) async throws -> AuthResponse {
+    let url = URL(string: "\(AuthAPI.base)\(AuthAPI.Routes.register)")!
+    
+    let body = ["user":
+      [
+        "email": userInfo.email,
+        "password": userInfo.password,
+        "firstName": userInfo.name,
+        "lastName": userInfo.lastName
+      ]
+    ]
+    
+    let res: AuthResponse? = await nService.postRequest(url, body: body)
+    
+    if let authResponse = res {
+      return authResponse
+    } else {
+      throw GCError.requestFailed
+    }
   }
 }
