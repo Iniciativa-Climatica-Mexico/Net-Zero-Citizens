@@ -1,7 +1,7 @@
-'use client' 
+'use client'
 import { useState, useEffect } from 'react'
 import { ComplaintsWithUser } from '@/@types/complaint/complaint'
-import { getComplaintsWithUsers } from '@/api/v1/complaints'
+import { getComplaintsWithUsers, postUpdateStatus } from '@/api/v1/complaints'
 import { formatDate } from '@/utils/dateUtils'
 import { Button } from '@/components/ui/button'
 import {
@@ -13,40 +13,22 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-
 import { usePathname, useRouter } from 'next/navigation'
 
-
-
-
 export default function Home() {
-  const [SelectedComplaint, setSelectedComplaint] = useState<ComplaintsWithUser>(
-    {
-      userId: '',
-      companyId: '',
-      complaintId: '',
-      createdAt: '',
-      firstName: '',
-      lastName: '',
-      complaintStatus: '',
-      complaintSubject: '',
-      complaintDescription: '',
-      name: '',
-      profilePicture: '',
-    }
-  )
+  const [SelectedComplaint, setSelectedComplaint] =
+    useState<ComplaintsWithUser>()
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 8
   const [complaintsWithUsers, setComplaintsWithUsers] = useState<
     ComplaintsWithUser[]
   >([])
 
-const path = usePathname()
-const id = path.split('/')[2]
+  const path = usePathname()
+  const id = path.split('/')[2]
 
   const handleTableRowClick = (complaint: ComplaintsWithUser) => {
     setSelectedComplaint(complaint)
-  
   }
 
   const fetchComplaintsWithUsers = async (id: string) => {
@@ -62,26 +44,49 @@ const id = path.split('/')[2]
   const endIndex = startIndex + itemsPerPage
 
   const handlePageChange = (newPage: number) => setCurrentPage(newPage)
-const changeToInactive = () => {
-  setSelectedComplaint({...SelectedComplaint, complaintStatus: 'invalid'})
-}
-const changeToInvalid = () => {
-  setSelectedComplaint({...SelectedComplaint, complaintStatus: 'invalid'})
-}
 
+  const changeToInactive = (id: string, status: string = 'inactive') => {
+    setComplaintsWithUsers((prevComplaints) => {
+      return prevComplaints.filter((complaint) => {
+        if (complaint.complaintId === id) {
+          descartar(id, status)
+          return false
+        }
+        return true
+      })
+    })
+  }
 
+  const changeToInvalid = (id: string, status: string = 'invalid') => {
+    setComplaintsWithUsers((prevComplaints) => {
+      return prevComplaints.filter((complaint) => {
+        if (complaint.complaintId === id) {
+          descartar(id, status)
+          return false
+        }
+        return true
+      })
+    })
+  }
+
+  const descartar = async (id: string, status: string) => {
+    try {
+      // post to db
+      await postUpdateStatus(id, status)
+    } catch (error) {
+      console.error('Fetch of complaints by user was not successful', error)
+    }
+  }
 
   useEffect(() => {
     fetchComplaintsWithUsers(id)
   }, [])
 
-
   return (
     <>
       <main className="border border-[#C1C9D2] m-[30px] mt-[15px] p-[20px] pb-5 rounded-lg">
-        <h1 className="text-[20px] font-bold"> Reportes del proveedor:  </h1>
-        <div className="flex items-center py-2 gap-x-2">
-        </div>
+        <h1 className="text-[20px] font-bold"> Reportes del proveedor: </h1>
+        <div className="flex items-center py-2 gap-x-2"></div>
         <Table className="border border-[#C1C9D2] rounded">
           <TableHeader>
             <TableRow>
@@ -92,40 +97,43 @@ const changeToInvalid = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-        {complaintsWithUsers?.map((company) => (
-
+            {complaintsWithUsers?.map((company) => (
               <TableRow key={company.complaintId}>
-                <TableCell
-                  className="cursor-pointer"
-                >
+                <TableCell className="cursor-pointer">
                   {company.firstName} {company.lastName}
                 </TableCell>
-                <TableCell
-                  className="cursor-pointer"
-                >
+                <TableCell className="cursor-pointer">
                   {company.complaintSubject}
                 </TableCell>
                 <TableCell
-                  className="cursor-pointer" style={{maxWidth: '150px', maxLines: '3' , overflow: 'hidden', textOverflow: 'ellipsis'}}
+                  className="cursor-pointer"
+                  style={{
+                    maxWidth: '150px',
+                    maxLines: '3',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  }}
                 >
                   {company.complaintDescription}
                 </TableCell>
-                <TableCell
-                  className="cursor-pointer"
-                >
+                <TableCell className="cursor-pointer">
                   {formatDate(company.createdAt) ?? 'N/A'}
                 </TableCell>
                 <TableCell
                   className="cursor-pointer"
-                  onClick={() => changeToInvalid()} 
+                  onClick={() => changeToInvalid(company.complaintId)}
                 >
-                  <Button className="bg-[#F2F5FA] rounded-lg p-2">Descartar</Button>
+                  <Button className="bg-[#F2F5FA] rounded-lg p-2">
+                    Descartar
+                  </Button>
                 </TableCell>
                 <TableCell
                   className="cursor-pointer"
-                  onClick={() => changeToInactive()}
+                  onClick={() => changeToInactive(company.complaintId)}
                 >
-                  <Button className="bg-[#F2F5FA] rounded-lg p-2">Rechazar</Button>
+                  <Button className="bg-[#F2F5FA] rounded-lg p-2">
+                    Rechazar
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}
