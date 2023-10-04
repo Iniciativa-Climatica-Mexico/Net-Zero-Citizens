@@ -377,7 +377,14 @@ export const register = async (
   const hash = bcrypt.hashSync(user.password, salt)
 
   const userCreate = {
-    ...user,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    secondLastName: user.secondLastName ?? null,
+    email: user.email,
+    phoneNumber: user.phoneNumber ?? null,
+    age: user.age ?? 0,
+    state: user.state ?? '',
+    gender: user.gender ?? 'no_answer',
     salt,
     password: hash,
     roleId: 'NEW_USER_ROLE_ID',

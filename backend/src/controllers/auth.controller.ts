@@ -147,14 +147,13 @@ export const register: RequestHandler<
   }
   // Verificar que el email y la contraseña se hayan mandado
   try {
-    
     const user = AuthService.registerUserSchema.parse(req.body.user)
 
     const data = await AuthService.register(user)
 
     if (!data?.user || !data.tokens) {
       authResponse.error = 'Invalid user'
-      return res.json(authResponse)
+      return res.status(400).json(authResponse)
     }
 
     authResponse = data
@@ -162,7 +161,13 @@ export const register: RequestHandler<
     res.status(200).json(authResponse)
   } catch (error) {
     if (error instanceof ZodError)
-      res.status(400).json({ error: error.issues.map((issue) => `${issue.path}, ${issue.message}`).toString() })
+      res
+        .status(400)
+        .json({
+          error: error.issues
+            .map((issue) => `${issue.path}, ${issue.message}`)
+            .toString(),
+        })
     else res.status(500).json({ error: 'Internal server error' })
   }
 }
