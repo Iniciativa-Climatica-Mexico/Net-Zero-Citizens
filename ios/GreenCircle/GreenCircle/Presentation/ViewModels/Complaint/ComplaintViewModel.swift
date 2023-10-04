@@ -12,15 +12,17 @@ import Foundation
 struct PostComplaintData {
     let complaintSubject: String
     let complaintDescription: String?
+    let companyId: String
 }
 
 /// ViewModel de la vista del formulario para registrar compañía
 class ComplaintViewModel: ObservableObject {
     var repository = ComplaintRepository.shared
+    var companyId: String = ""
     
     @MainActor
-    func handleSubmit(complaintSubject: String, complaintDescription: String?) async {
-        let complaintData = PostComplaintData(complaintSubject: complaintSubject, complaintDescription: complaintDescription)
+    func handleSubmit(complaintSubject: String, complaintDescription: String?, companyId: String) async {
+        let complaintData = PostComplaintData(complaintSubject: complaintSubject, complaintDescription: complaintDescription, companyId: companyId)
         do {
             try validate(complaintData)
             await repository.postComplaint(complaint: complaintData)
@@ -28,7 +30,7 @@ class ComplaintViewModel: ObservableObject {
             print("Error submitting complaint: \(error)")
         }
     }
-    
+
     private func validate(_ data: PostComplaintData) throws {
         if data.complaintSubject.isEmpty {
             print("Error submitting complaint subject")

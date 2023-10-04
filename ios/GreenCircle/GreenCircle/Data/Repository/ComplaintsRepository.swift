@@ -19,7 +19,7 @@ class ComplaintAPI {
 /// Protocol with the functions of the complaints repository
 protocol ComplaintRepositoryProtocol {
   func postComplaint(complaint: PostComplaintData) async
-  func fetchComplaintById(complaintId: UUID) async -> Complaint?
+    func fetchComplaintById(complaintId: UUID) async -> Complaint?
   // You can add more functions here if you like.
 }
 
@@ -29,6 +29,7 @@ class ComplaintRepository: ComplaintRepositoryProtocol {
     let service: NetworkAPIService
     /// Initialization of singleton of complaint repository
     static let shared = ComplaintRepository()
+    let uRepositoty = UserRepository()
     /// Constructor that takes the value of the backend service
     init(service: NetworkAPIService = NetworkAPIService.shared) {
         self.service = service
@@ -48,17 +49,13 @@ class ComplaintRepository: ComplaintRepositoryProtocol {
     ///   - authToken: authentication token
     ///   - complaint: the object with the information of the complaint
     func postComplaint(complaint: PostComplaintData) async {
-        let complaintId = UUID()
-        
+        let userId = uRepositoty.getAuthData()?.user.uuid
         //Hacerla no hardcodeada
-        let userId = "8de45630-2e76-4d97-98c2-9ec0d1f3a5b8"
-        let companyId = "c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e"
         
         let body: [String: Any] = [
             "complaint": [
-                "complaintId": complaintId.uuidString,
                 "userId": userId,
-                "companyId": companyId,
+                "companyId": complaint.companyId,
                 "complaintSubject": complaint.complaintSubject,
                 "complaintDescription": complaint.complaintDescription ?? "",
                 "complaintStatus": "active"
