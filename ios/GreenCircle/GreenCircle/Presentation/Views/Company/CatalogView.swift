@@ -126,8 +126,12 @@ struct CardCatalogView: View {
           .frame(maxWidth: 300, maxHeight: 140)
         }
       }.onAppear {
+        
         Task {
+        
           await viewModel.fetchCompanyById(idCompany: companyId)
+                
+            
         }
       }
       .navigationTitle("Proveedores")
@@ -137,6 +141,7 @@ struct CardCatalogView: View {
 
 struct CatalogView: View {
   @StateObject var viewModel = CompanyViewModel()
+    @State var loading = true
   var body: some View {
     NavigationStack {
       ScrollView {
@@ -148,12 +153,18 @@ struct CatalogView: View {
         }.padding(.top, 10)
       }
       .onAppear {
+          
         Task {
           await viewModel.fetchAllCompanies()
+        loading = false
         }
       }
     }
     .accentColor(.white)
+      
+      if loading{
+          LoadingScreenView()
+      }
   }
 }
     

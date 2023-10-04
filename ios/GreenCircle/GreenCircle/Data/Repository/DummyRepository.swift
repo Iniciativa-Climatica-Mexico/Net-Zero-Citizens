@@ -8,7 +8,7 @@
 import Foundation
 
 class Api {
-  static let base = "http://localhost:3000/api/v1"
+  static let base = "http://localhost:4000/api/v1"
   struct Routes {
     static let dummy = "/dummy"
     static let ecoInfo = "/EcoInfo"

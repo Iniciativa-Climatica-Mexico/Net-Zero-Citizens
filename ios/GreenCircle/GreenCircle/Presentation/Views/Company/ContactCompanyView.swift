@@ -22,7 +22,7 @@ struct TabViewImagesProducts: View {
               AsyncImage(url: URL(string: product.imageUrl)) { phase in
                 switch phase {
                 case .empty:
-                  ProgressView()
+                    LoadingScreenView()
                 case .success(let imageProduct):
                   imageProduct
                     .resizable()
@@ -210,7 +210,7 @@ struct ContactCompanyView: View {
                 AsyncImage(url: URL(string: imageUrl)) { phase in
                   switch phase {
                     case .empty:
-                      ProgressView()
+                      LoadingScreenView()
                     case .success(let image):
                       ZStack {
                         image
