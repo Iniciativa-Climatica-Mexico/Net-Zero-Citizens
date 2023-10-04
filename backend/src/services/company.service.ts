@@ -86,6 +86,12 @@ export const getCompaniesByStatus = async <T>(
     where: {
       status,
     },
+    include: [
+      {
+        model: CompanyFiles,
+        as: 'companyFiles',
+      },
+    ],
   })
 }
 
