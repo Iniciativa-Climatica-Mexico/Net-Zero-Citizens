@@ -22,10 +22,21 @@ class UserSignInUseCase {
     } catch { return .fail }
   }
   
-  func backgroundSignIn() -> SignInState {
+  func registerUser(userInfo: CreateUserInfo) async {
+    await repository.postRegisterUser(userInfo: userInfo)
+  }
+  
+  func backgroundSignIn() async -> SignInState {
     if let authRes = repository.getAuthData() {
       
       NetworkAPIService.shared.setAuthTokens(authRes.tokens.authToken)
+      if let user = await repository.fetchUserById(userId: authRes.user.id) {
+        if user.roleId == "new_user" {
+          return .newUser
+        }
+      } else {
+        return .fail
+      }
       return .success
     }
     

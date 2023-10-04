@@ -16,8 +16,10 @@ class CoordinatorViewModel: ObservableObject {
       return .success
     }
     
-    if signInUseCase.backgroundSignIn() == .success {
-      return .success
+    
+    let signIn = await signInUseCase.backgroundSignIn()
+    if signIn != .fail {
+      return signIn
     }
     
     return .fail

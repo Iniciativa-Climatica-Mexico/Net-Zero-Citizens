@@ -31,17 +31,12 @@ struct LoginView: View {
           InputFormView(bindingValue: $viewModel.user,
                         label: "Usuario",
                         prompt: "Usuario")
-          VStack(alignment: .leading) {
-            Text("Contraseña")
-              .foregroundColor(Color("SecondaryText"))
-            SecureField("Contraseña", text: $viewModel.password)
-              .padding(10)
-              .overlay {
-                RoundedRectangle(cornerRadius: 10)
-                  .stroke(.gray, lineWidth: 1)
-              }
-          }
-          .font(.system(size: 20, weight: .medium))
+          .keyboardType(.emailAddress)
+          .autocorrectionDisabled()
+          .textInputAutocapitalization(.never)
+          SecureInputFormView(bindingValue: $viewModel.password,
+                              label: "Contraseña",
+                              prompt: "Contraseña")
           .padding(.bottom)
           MainButton("Iniciar Sesión", width: 400) {
             Task {
@@ -57,14 +52,7 @@ struct LoginView: View {
           }
         }.padding(.bottom)
         
-        ZStack {
-          Divider()
-          Rectangle()
-            .foregroundColor(.white)
-            .frame(width: 150)
-          Text("O continua con")
-            .foregroundColor(Color("MainText"))
-        }
+        ButtonDividerView(text: "O continúa con")
         
         GoogleSignInButton(style: .wide) {
           Task {

@@ -9,29 +9,56 @@ import SwiftUI
 import GoogleSignInSwift
 
 struct UserRegisterView: View {
-  @EnvironmentObject var userData: UserData
   @ObservedObject var viewModel = UserRegisterViewModel()
   var goLogin: () -> Void
   var goForm: () -> Void
   var goMainMenu: () -> Void
   
+  @State var name = ""
+  @State var lastName = ""
+  @State var email = ""
+  @State var password = ""
+  @State var confirmPassword = ""
+  
   var body: some View {
-    ZStack{
-      
-      BackgroundView()
-      
+    ScrollView {
       VStack(spacing: 40) {
         HeaderView(
           title: "Crear cuenta",
           subTitle: "Regístrate con tu cuenta preferida")
         
-        Spacer()
+        VStack(spacing: 10) {
+          InputFormView(bindingValue: $viewModel.formState.name,
+                        label: "Nombre",
+                        prompt: "Juan")
+          InputFormView(bindingValue: $viewModel.formState.lastName,
+                        label: "Apellidos",
+                        prompt: "Pérez")
+          InputFormView(bindingValue: $viewModel.formState.email,
+                        label: "Correo electrónico",
+                        prompt: "juan@ejemplo.com")
+          .keyboardType(.emailAddress)
+          .autocorrectionDisabled()
+          .textInputAutocapitalization(.never)
+          SecureInputFormView(bindingValue: $viewModel.formState.password,
+                        label: "Contraseña",
+                        prompt: "Contraseña")
+          SecureInputFormView(bindingValue: $viewModel.formState.confirmPassword,
+                        label: "Confimar contraseña", prompt: "Contraseña")
+          .padding(.bottom)
+          MainButton("Crear Cuenta", width: 400){
+            
+          }
+        }
+        .padding(.horizontal)
+        
+        ButtonDividerView(text: "Registrate con")
         
         VStack {
           GoogleSignInButton(style: .wide) {
             Task {
               let state = await viewModel
-                .handleGoogleSignIn(userData: userData)
+                .handleGoogleSignIn()
               switch state {
               case .newUser:
                 goForm()
@@ -42,16 +69,15 @@ struct UserRegisterView: View {
               }
             }
           }.alert("Algo salió mal",
-                   isPresented: $viewModel.showAlert) {
-             Button("Entendido", role: .cancel) {}
-           } message: {
-             Text("Intenta de nuevo por favor")
-           }
+                  isPresented: $viewModel.showAlert) {
+            Button("Entendido", role: .cancel) {}
+          } message: {
+            Text("Intenta de nuevo por favor")
+          }
         }
         .padding(.horizontal)
         
         Spacer()
-        
         Divider().padding(.horizontal)
         
         HStack {
@@ -64,10 +90,9 @@ struct UserRegisterView: View {
         
         LinkButton("Aviso de privacidad",
                    buttonColor: .blue, action: {})
-          .padding(.bottom)
-      }
-      
-    }.foregroundColor(Color("MainText"))
+        .padding(.bottom)
+      }.foregroundColor(Color("MainText"))
+    }
   }
 }
 

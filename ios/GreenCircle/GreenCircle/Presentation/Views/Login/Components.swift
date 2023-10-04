@@ -84,6 +84,25 @@ struct InputFormView: View {
   }
 }
 
+struct SecureInputFormView: View {
+  var bindingValue: Binding<String>
+  var label: String
+  var prompt: String
+  
+  var body: some View {
+    VStack(alignment: .leading) {
+      Text(label)
+        .foregroundColor(Color("SecondaryText"))
+      SecureField(prompt, text: bindingValue)
+        .padding(10)
+        .overlay {
+          RoundedRectangle(cornerRadius: 10)
+            .stroke(.gray, lineWidth: 1)
+        }
+    }.font(.system(size: 20, weight: .medium))
+  }
+}
+
 struct PickerFormView: View {
   @Binding var selectedOption: String
   var label: String
@@ -146,5 +165,19 @@ struct CompanyRegisterHeaderView: View {
     .padding(.horizontal)
     .frame(maxWidth: .infinity,
            alignment: .leading)
+  }
+}
+
+struct ButtonDividerView: View {
+  var text: String
+  var body: some View {
+    ZStack {
+      Divider()
+      Rectangle()
+        .foregroundColor(.white)
+        .frame(width: 150)
+      Text(text)
+        .foregroundColor(Color("MainText"))
+    }
   }
 }
