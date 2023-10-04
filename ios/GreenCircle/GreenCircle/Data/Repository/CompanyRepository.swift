@@ -15,6 +15,7 @@ class CompanyAPI {
     static let create = "/create"
     static let company = "/company/"
     static let uploadFile = "/upload/file"
+    static let assing = "/:companyId/assign"
   }
 }
 
@@ -94,7 +95,20 @@ class CompanyRepository: CompanyRepositoryProtocol {
 
 
   
-    func fetchAllCompanies() async -> PaginatedQuery<Company>? {
+  func assignCompany(companyId: String, userId: String) async throws{
+    let url = URL(string: "\(CompanyAPI.base)\(CompanyAPI.Routes.assing)"
+      .replacingOccurrences(of: ":companyId", with: companyId))!
+    
+    let body = ["userId": userId]
+    
+    let res: NoResponse? = await service.putRequest(url, body: body)
+    
+    if res == nil {
+      throw GCError.requestFailed
+    }
+  }
+  
+  func fetchAllCompanies() async -> PaginatedQuery<Company>? {
     return await service
       .getRequest(URL(string: "\(CompanyAPI.base)")!)
   }

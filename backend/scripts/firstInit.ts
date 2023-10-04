@@ -1,6 +1,7 @@
 import { Sequelize } from 'sequelize-typescript'
 import { bootstrapDB } from '../src/configs/database.bootstrap'
 import DotEnv from 'dotenv'
+import { loadFromJson } from './loadCompanies'
 
 DotEnv.config()
 const db = new Sequelize(
@@ -33,6 +34,8 @@ const init = async () => {
     console.log('Database synchronized')
     console.log('Bootstrapping database')
     await bootstrapDB()
+    console.log(__dirname + '/parsedCompanies.json')
+    await loadFromJson(__dirname + '/parsedCompanies.json')
   } catch (error) {
     console.error('Unable to init connection to DB:', error)
   }
