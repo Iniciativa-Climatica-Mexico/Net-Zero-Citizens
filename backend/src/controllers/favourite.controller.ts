@@ -32,6 +32,7 @@ export const addFavourite: RequestHandler = async (req, res) => {
 
     return res.status(201).json({
       favouriteId: newFavourite?.dataValues.favouriteId,
+      companyId: newFavourite?.dataValues.companyId,
       message: 'Favourite created',
     })
   } catch (error) {
@@ -79,7 +80,7 @@ export const getFavouriteById: RequestHandler<
 
 export const deleteFavouriteById: RequestHandler<
   NoRecord,
-  number | { message: string },
+  { rows: number, message: string} | { message: string },
   NoRecord,
   { favouriteId: string }
 > = async (req, res) => {
@@ -90,7 +91,10 @@ export const deleteFavouriteById: RequestHandler<
     if (!rows) {
       return res.status(400).json({ message: 'Favourite not found!' })
     } else {
-      res.json(rows)
+      res.status(201).json({
+        rows: rows,
+        message: 'Favourite deleted'
+    })
     }
   } catch (error) {
     console.log(error)

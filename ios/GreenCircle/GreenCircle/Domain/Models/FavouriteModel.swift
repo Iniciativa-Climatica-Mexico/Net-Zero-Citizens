@@ -16,6 +16,12 @@ struct Favourite: Codable {
 }
 
 struct FavouriteCreationResponse: Codable {
-    let favouriteId: UUID
-    let message: String
+  let favouriteId: UUID
+  let companyId: UUID
+  let message: String
+}
+
+struct FavouriteDeleteResponse: Codable {
+  var rows: Int
+  var message: String?
 }
