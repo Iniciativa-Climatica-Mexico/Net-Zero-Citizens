@@ -76,11 +76,12 @@ const blackListToken = async (tokenId: string): Promise<void> => {
  * @returns {authToken, refreshToken, user} objeto con los tokens generados
  */
 export const googleLogin = async (
-  googleToken: string
+  googleToken: string,
+  ios: boolean = false
 ): Promise<AuthResponse | null> => {
   // Verificar el token de Google
   try {
-    const data = await verifyGoogleToken(googleToken)
+    const data = await verifyGoogleToken(googleToken, ios)
     if (!data) return null
 
     let user = await UserService.getUserByEmailWithRole(data.email)
@@ -286,12 +287,16 @@ export const verifyToken = (token: string, type: TokenType): Payload | null => {
  * @returns Payload con la información del token
  */
 export const verifyGoogleToken = async (
-  token: string
+  token: string,
+  ios: boolean = false
 ): Promise<Payload | null> => {
+  const clientId = ios
+    ? process.env.GOOGLE_CLIENT_ID_IOS
+    : process.env.GOOGLE_CLIENT_ID
   try {
     const ticket = await client.verifyIdToken({
       idToken: token,
-      audience: process.env.GOOGLE_CLIENT_ID,
+      audience: clientId,
     })
 
     const payload = ticket.getPayload()
@@ -316,9 +321,11 @@ export const verifyGoogleToken = async (
 }
 
 export const login = async (
-  email: string,
-  password: string
+  emailIn: string,
+  passwordIn: string
 ): Promise<AuthResponse | null> => {
+  const email = emailIn.trim()
+  const password = passwordIn.trim()
   const user = await UserService.getUserByEmailWithRole(email)
   if (!user || !user.salt || !user.password) return null
 
@@ -347,9 +354,9 @@ export const login = async (
 }
 
 export const registerUserSchema = z.object({
-  email: z.string().email(),
-  password: z.string(),
-  firstName: z.string(),
+  email: z.string().email().trim(),
+  password: z.string().trim(),
+  firstName: z.string().trim(),
   lastName: z.string().optional(),
   secondLastName: z.string().optional(),
   phoneNumber: z.string().optional(),

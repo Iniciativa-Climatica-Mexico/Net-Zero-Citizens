@@ -53,7 +53,7 @@ class UserRepository: UserRepositoryProtocol {
   /// - Parameter googleToken: token proporcionado por Google
   /// - Returns: Una respuesta de autenticación, con Tokens e información del usuario
   func postGoogleLogin(googleToken: String) async -> AuthResponse? {
-    let params: [String: Any] = ["googleToken": googleToken]
+    let params: [String: Any] = ["googleToken": googleToken, "ios": "true"]
     return await nService
       .postRequest(URL(
         string: "\(AuthAPI.base)\(AuthAPI.Routes.googleLogin)")!,
