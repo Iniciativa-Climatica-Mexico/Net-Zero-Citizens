@@ -18,17 +18,29 @@ import com.greencircle.domain.usecase.auth.RecoverUserSessionRequirement
 import com.greencircle.framework.ui.adapters.catalogue.CatalogueAdapter
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.favourites.FavouritesViewModel
+import com.greencircle.framework.viewmodel.profile.ProfileViewModel
 import com.greencircle.framework.views.activities.LoginActivity
 
 class FavouriteFragment : Fragment() {
     private var _binding: FragmentFavouriteProfileBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: FavouritesViewModel
+    private lateinit var profileViewModel: ProfileViewModel
     private lateinit var recoverUserSession: RecoverUserSessionRequirement
     private lateinit var deleteTokens: DeleteTokensRequirement
     private lateinit var deleteUserSession: DeleteUserSessionRequirement
     private var favouritesCount: Int = 0
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        profileViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(
+                requireContext(),
+                ProfileViewModel::class.java
+            )
+        )[ProfileViewModel::class.java]
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,10 +56,11 @@ class FavouriteFragment : Fragment() {
         val recyclerView: RecyclerView = binding.newRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        // Observe changes in favouritesLiveData
         viewModel.favouritesLiveData.observe(viewLifecycleOwner) { companies ->
             if (companies != null) {
-                // Initialize and set the adapter for RecyclerView
+                favouritesCount = companies.size
+                binding.favouritesCountTextView.text = "$favouritesCount"
+
                 val adapter = CatalogueAdapter()
                 adapter.initCustomAdapter(companies as ArrayList<CompanySummary>, requireContext())
                 recyclerView.adapter = adapter

@@ -6,11 +6,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.greencircle.domain.model.company.CompanySummary
-import com.greencircle.domain.model.favourites.Favourites
+import com.greencircle.domain.model.favourites.FavouriteResponse
 import com.greencircle.domain.model.profile.Profile
 import com.greencircle.domain.usecase.auth.RecoverTokensRequirement
 import com.greencircle.domain.usecase.catalogue.CatalogueRequirement
 import com.greencircle.domain.usecase.favourites.FavouritesByUserRequirement
+import com.greencircle.domain.usecase.profile.ProfileListRequirement
 import java.util.UUID
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -32,17 +33,21 @@ class FavouritesViewModel(private val context: Context) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             val tokens = recoverTokens() ?: return@launch
             val authToken = tokens.authToken
-            val result: List<Favourites> ? = favouritesByUserListRequirement(authToken, userId)
-
+            val id: UUID = UUID.fromString("8de45630-2e76-4d97-98c2-9ec0d1f3a5b9")
+            val result: FavouriteResponse ? = favouritesByUserListRequirement(authToken, id)
+            val user: Profile? = ProfileListRequirement()(authToken, userId)
+            if (user != null) {
+                CoroutineScope(Dispatchers.Main).launch {
+                    userLiveData.postValue(user!!)
+                }
+            }
             if (result == null) {
                 Log.d("SalidaGetFavouritesByUser", "result is null")
             } else {
                 // Obtain the list of favorite companies
                 val companies: List<CompanySummary>? = fetchFavouriteCompanies(result)
-
                 if (companies != null) {
                     CoroutineScope(Dispatchers.Main).launch {
-                        // Update MutableLiveData with the list of favorite companies
                         favouritesLiveData.postValue(companies!!)
                     }
                 } else {
@@ -53,10 +58,11 @@ class FavouritesViewModel(private val context: Context) : ViewModel() {
     }
 
     private suspend fun fetchFavouriteCompanies
-    (favourites: List<Favourites>): List<CompanySummary>? {
+    (favourites: FavouriteResponse): List<CompanySummary>? {
         val companies = mutableListOf<CompanySummary>()
+        val favouritesList = favourites.rows
 
-        favourites.forEach { favourite ->
+        favouritesList.forEach { favourite ->
             val company = fetchCompanyData(favourite.companyId.toString())
             company?.let {
                 companies.add(it)
