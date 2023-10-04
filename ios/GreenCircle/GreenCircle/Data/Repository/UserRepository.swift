@@ -126,7 +126,6 @@ class UserRepository: UserRepositoryProtocol {
   
     func saveAuthData(authData: AuthResponse) {
         lService.setToken(userData: authData)
-        print("User: \(authData.user)")
     }
 
   func getAuthData() -> AuthResponse? {

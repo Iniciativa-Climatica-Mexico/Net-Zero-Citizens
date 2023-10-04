@@ -56,6 +56,6 @@ struct AssignCompanyView: View {
   }
 }
 
-#Preview {
-  AssignCompanyView(goForm: {}, goMainMenu: {})
-}
+//#Preview {
+//  AssignCompanyView(goForm: {}, goMainMenu: {})
+//}

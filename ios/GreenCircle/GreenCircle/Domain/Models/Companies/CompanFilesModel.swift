@@ -36,23 +36,8 @@ enum FileFormat: String, CaseIterable, Codable {
 class CompanyFiles: NSObject, Codable, Identifiable {
     var companyFileId: UUID
     var companyId: UUID
-    var fileUrl: String! // Cambiar a obligatorio
+    var fileUrl: String!
     var fileDescription: FileDescription
     var fileFormat: FileFormat?
-
     var company: Company?
-
-//    init(companyFileId: UUID = UUID(),
-//         companyId: UUID,
-//         fileUrl: String?, // Cambiar a obligatario
-//         fileDescription: FileDescription,
-//         fileFormat: FileFormat?,
-//         company: Company?) {
-//        self.companyFileId = companyFileId
-//        self.companyId = companyId
-//        self.fileUrl = fileUrl
-//        self.fileDescription = fileDescription
-//        self.fileFormat = fileFormat
-//        self.company = company
-    }
-//}
+}
