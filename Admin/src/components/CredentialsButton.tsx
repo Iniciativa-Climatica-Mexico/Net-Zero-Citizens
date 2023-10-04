@@ -3,6 +3,7 @@ import { signIn } from 'next-auth/react'
 import { useState } from 'react'
 import Modal from 'react-modal'
 import CloseIcon from '@mui/icons-material/Close'
+import { Input } from './ui/input'
 
 export const CredentialsButton = () => {
   const [modalIsOpen, setIsOpen] = useState(false)
@@ -49,17 +50,16 @@ export const CredentialsButton = () => {
             />
           </div>
           <div className="flex flex-col items-center justify-center rounded-lg bg-background border-[2px] border-gray-300 py-16 px-10 shadow-md">
-            <input
-              type="text"
-              className="px-2 py-2 mb-3 rounded border border-solid border-gray-300 w-full h-11 min-w-xl focus:border-primary-700"
+            <Input
+              id='email'
+              type='text'
               placeholder="Email"
-              id="email"
+              className='mb-3'
             />
-            <input
-              type="password"
-              className="px-2 py-2 mb-3 rounded border border-gray-300 w-full h-11 focus:border-primary-700"
+            <Input
+              id='passwordIn'
+              type='password'
               placeholder="Password"
-              id="passwordIn"
             />
             <button
               className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded mt-4 shadow-md"
