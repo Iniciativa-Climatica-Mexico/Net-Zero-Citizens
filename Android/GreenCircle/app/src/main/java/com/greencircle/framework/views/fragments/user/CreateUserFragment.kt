@@ -1,20 +1,28 @@
 package com.greencircle.framework.views.fragments.user
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.textfield.TextInputLayout
 import com.greencircle.R
 import com.greencircle.data.remote.user.UserAPIService
+import com.greencircle.framework.viewmodel.ViewModelFactory
+import com.greencircle.framework.viewmodel.auth.LoginViewModel
 import com.greencircle.framework.viewmodel.user.CreateUserViewModel
+import com.greencircle.framework.views.activities.RegisterUserActivity
 import com.greencircle.framework.views.activities.SurveyActivity
+import com.greencircle.framework.views.fragments.TermsAndConditions.TermsAndConditions
 import java.util.UUID
 
 /**Constructor de "CreateUserFragment"
@@ -22,10 +30,15 @@ import java.util.UUID
  * @constructor Incializa y crea la vista del "CreateUserFragment"
  */
 class CreateUserFragment : Fragment() {
-    private lateinit var viewModel: CreateUserViewModel
+    private lateinit var createUserViewModel: CreateUserViewModel
+    private lateinit var loginViewModel: LoginViewModel
     private var arguments = Bundle()
     private lateinit var authToken: String
     private lateinit var uuid: UUID
+    private lateinit var phoneInputLayout: TextInputLayout
+    private lateinit var ageInputLayout: TextInputLayout
+    private lateinit var stateInputLayout: TextInputLayout
+    private lateinit var genderInputLayout: TextInputLayout
 
     /**
      * Inicializa el "CreateUserFragment"
@@ -34,11 +47,23 @@ class CreateUserFragment : Fragment() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[CreateUserViewModel::class.java]
+        // Get ViewModel
+        loginViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(requireContext(), LoginViewModel::class.java)
+        )[LoginViewModel::class.java]
+        createUserViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(requireContext(), CreateUserViewModel::class.java)
+        )[CreateUserViewModel::class.java]
+        // Get arguments
         arguments = requireArguments()
         // Google Login
         val token: String = arguments.getString("idToken").toString()
-        viewModel.googleLogin(token)
+        Log.d("token", token)
+        if (token != null) {
+            loginViewModel.googleLogin(token)
+        }
     }
 
     /**
@@ -59,8 +84,42 @@ class CreateUserFragment : Fragment() {
             R.layout.fragment_create_user, container, false
         )
 
+        phoneInputLayout = view.findViewById(R.id.userPhoneTextField)
+        ageInputLayout = view.findViewById(R.id.userAgeTextFIeld)
+        stateInputLayout = view.findViewById(R.id.userStateTextField)
+        genderInputLayout = view.findViewById(R.id.userGenderTextField)
+
+        val phone = CreateUserViewModel.phone
+        val age = CreateUserViewModel.age
+        val state = CreateUserViewModel.state
+        val gender = CreateUserViewModel.gender
+
+        phoneInputLayout.editText?.setText(phone)
+        ageInputLayout.editText?.setText(age)
+        stateInputLayout.editText?.setText(state)
+        genderInputLayout.editText?.setText(gender)
+
+        val button = view.findViewById<Button>(R.id.login_register)
+        button.setOnClickListener {
+
+            CreateUserViewModel.phone = phoneInputLayout.editText?.text.toString()
+            CreateUserViewModel.age = ageInputLayout.editText?.text.toString()
+            CreateUserViewModel.state = stateInputLayout.editText?.text.toString()
+            CreateUserViewModel.gender = genderInputLayout.editText?.text.toString()
+
+            val termsAndConditionsFragment = TermsAndConditions()
+
+            val activity = requireActivity() as RegisterUserActivity
+            activity.replaceFragment(termsAndConditionsFragment)
+        }
+
+        if (arguments.getString("uuid") != null) {
+            uuid = arguments.getString("uuid")?.let { UUID.fromString(it) }!!
+        }
+
         setTexts(arguments, view)
         onSubmitListener(view)
+
         return view
     }
 
@@ -73,15 +132,17 @@ class CreateUserFragment : Fragment() {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.googleLoginResult.observe(viewLifecycleOwner) { result ->
+        loginViewModel.googleLoginResult.observe(viewLifecycleOwner) { result ->
             // Handle the result here
-            if (result != null) {
+            if (result != null && result.tokens != null) {
                 authToken = result.tokens.authToken
                 uuid = result.user.uuid
             } else {
                 Log.d("CreateUserFragment", "Google login failed")
             }
         }
+
+        setSwitch(view.findViewById(R.id.avisoPrivacidad))
     }
 
     /**
@@ -113,16 +174,107 @@ class CreateUserFragment : Fragment() {
         val gender = genderInputLayout.editText?.text.toString()
         val roleId = "CUSTOMER_ROLE_ID"
 
-        val userInfo: UserAPIService.UpdateUserRequest = UserAPIService.UpdateUserRequest(
-            phone,
-            age,
-            state,
-            gender,
-            roleId,
-        )
+        val validation = validateForm(view)
 
-        viewModel.updateUser(uuid, userInfo, authToken)
-        navigateToHome()
+        if (validation) {
+            val userInfo: UserAPIService.UpdateUserRequest = UserAPIService.UpdateUserRequest(
+                phone,
+                age,
+                state,
+                gender,
+                roleId,
+            )
+
+            createUserViewModel.updateUser(uuid, userInfo)
+            navigateToHome()
+        } else {
+            hideKeyboard()
+        }
+    }
+
+    /**
+     * Valida los campos de un formulario.
+     *
+     * @param view La vista que contiene los campos del formulario.
+     * @return `true` si todos los campos son válidos, `false` en caso contrario.
+     */
+    private fun validateForm(view: View): Boolean {
+        val phoneInputLayout: TextInputLayout = view.findViewById(R.id.userPhoneTextField)
+        val ageInputLayout: TextInputLayout = view.findViewById(R.id.userAgeTextFIeld)
+        val stateInputLayout: TextInputLayout = view.findViewById(R.id.userStateTextField)
+        val genderInputLayout: TextInputLayout = view.findViewById(R.id.userGenderTextField)
+        val switchError: TextView = view.findViewById(R.id.switchError)
+
+        val phone = phoneInputLayout.editText?.text.toString()
+        val age = ageInputLayout.editText?.text.toString()
+        val state = stateInputLayout.editText?.text.toString()
+        val gender = genderInputLayout.editText?.text.toString()
+        val terms = view.findViewById<MaterialSwitch>(R.id.avisoPrivacidad).isChecked
+
+        var isValid = true
+
+        // Validar el teléfono
+        if (!isValidPhoneNumber(phone)) {
+            phoneInputLayout.error = "Teléfono inválido"
+            isValid = false
+        } else {
+            phoneInputLayout.error = null
+        }
+
+        // Validar la edad
+        val ageValue = age.toIntOrNull()
+        if (ageValue == null || ageValue < 18 || ageValue > 90) {
+            if (ageValue == null || ageValue < 0 || ageValue > 90) {
+                ageInputLayout.error = "Ingresa una edad válida"
+            } else if (ageValue >= 0 && ageValue <= 17) {
+                ageInputLayout.error = "Debes ser mayor de edad"
+            }
+            isValid = false
+        } else {
+            ageInputLayout.error = null
+        }
+
+        // Validar los dropdown
+        if (state.isEmpty()) {
+            stateInputLayout.error = "Este campo no puede estar vacío"
+            isValid = false
+        } else {
+            stateInputLayout.error = null
+        }
+
+        if (gender.isEmpty()) {
+            genderInputLayout.error = "Este campo no puede estar vacío"
+            isValid = false
+        } else {
+            genderInputLayout.error = null
+        }
+
+        if (!terms) {
+            isValid = false
+            switchError.visibility = View.VISIBLE
+        }
+
+        return isValid
+    }
+
+    /**
+     * Oculta el teclado del teléfono.
+     */
+    private fun hideKeyboard() {
+        val imm = requireContext()
+            .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val view = requireView()
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    /**
+     * Verifica si un número de teléfono es válido.
+     *
+     * @param phone El número de teléfono a verificar.
+     * @return `true` si el número de teléfono es válido, `false` en caso contrario.
+     */
+    private fun isValidPhoneNumber(phone: String): Boolean {
+        return phone.length == 10 && phone.all { it.isDigit() }
     }
 
     /**
@@ -152,5 +304,40 @@ class CreateUserFragment : Fragment() {
         var intent: Intent = Intent(requireContext(), SurveyActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
+    }
+
+    private fun setSwitch(mSwitch: MaterialSwitch) {
+        mSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                mSwitch.thumbTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.white
+                )
+                mSwitch.trackTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.green
+                )
+
+                mSwitch.thumbIconTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.green
+                )
+            } else {
+                // Colors when the switch is OFF
+                mSwitch.thumbTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.white
+                )
+                mSwitch.trackTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.gray_500
+                )
+
+                mSwitch.thumbIconTintList = ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.white
+                )
+            }
+        }
     }
 }

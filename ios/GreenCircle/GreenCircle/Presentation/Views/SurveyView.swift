@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct SurveyView: View {
-  @Binding var hasPendingPendingSurvey: Bool
   @StateObject var vm = SurveyViewModel()
   @State private var showAlert = false
   @State private var submissionResult: Bool = false
   @State private var requiredQuestion: Bool = false
   
-  var goMainMenu: () -> Void
+  var goBack: () -> Void
   
   var body: some View {
     NavigationView {
@@ -27,14 +26,25 @@ struct SurveyView: View {
           ForEach(Array(vm.survey.questions.enumerated()), id: \.offset) { index, question in
             QuestionView(question: question, answer: $vm.answers[index])
           }
+          
         }
         .padding([.leading, .trailing], 22)
+        
         Button("Enviar", action: {
           Task {
-            submissionResult = await vm.submitAnswers()
-            showAlert = true
+            await vm.handleSubmit()
           }
         })
+        .alert("Mensaje",
+               isPresented: $vm.showAlert) {
+          Button("Ok", role: .cancel){
+            if vm.success {
+              goBack()
+            }
+          }
+        } message: {
+          Text(vm.errMessage)
+        }
         .foregroundColor(.white)
         .frame(width: 178, height: 40)
         .background(Color(red: 0.33, green: 0.49, blue: 0.55))
@@ -46,15 +56,11 @@ struct SurveyView: View {
     }
     .onAppear {
       Task {
-        await vm.getPendingSurvey()
+        print(await vm.getPendingSurvey())
       }
     }
-    .alert(isPresented: $showAlert) {
-      if (submissionResult == true) {
-        return Alert(title: Text("Éxito"), message: Text("Tu encuesta fue enviada con éxito"), dismissButton: .default(Text("OK"), action: {goMainMenu()}))
-      } else {
-        return Alert(title: Text("Error"), message: Text("Error enviando tu encuesta, intenta de nuevo más tarde"), dismissButton: .default(Text("OK"), action: {goMainMenu()}))
-      }
+    .onTapGesture {
+      hideKeyboard()
     }
   }
 }

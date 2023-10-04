@@ -15,26 +15,39 @@ enum SignInState {
 }
 
 class LoginViewModel: ObservableObject {
-  var useCase = GoogleSignInUseCase.shared
+  var googleUseCase = GoogleSignInUseCase.shared
+  var signInUseCase = UserSignInUseCase.shared
+  
+  var lService = LocalService.shared
+  @Published var user = ""
+  @Published var password = ""
   @Published var showAlert = false
+  @Published var alertMessage = ""
   
   /// Función encargada de realizar el SignIn con Google y actualizar la información de entorno
   /// - Parameter userData: objeto de entorno
   /// - Returns: un enum indicando el estado de la operación
   @MainActor
-  func handleGoogleSignIn(userData: UserData) async -> SignInState {
-    guard let res = await useCase.handleSignInButton()
-    else {
-      showAlert = true
-      return .fail
-    }
-
-    userData.user = res.user
-    userData.tokens = res.tokens
+  func handleGoogleSignIn() async -> SignInState {
+    let res = await googleUseCase.handleSignInButton()
     
-    if res.user.roles == "new_user" {
-      return .newUser
+    if res == .fail {
+      showAlert = true
+      alertMessage = "Intenta de nuevo más tarde."
     }
-    return .success
+    
+    return res
+  }
+  
+  @MainActor
+  func handleSignIn() async -> SignInState {
+    let res = await signInUseCase.signIn(user: user, password: password)
+    
+    if res == .fail {
+      showAlert = true
+      alertMessage = "Credenciales inválidas."
+    }
+    
+    return res
   }
 }

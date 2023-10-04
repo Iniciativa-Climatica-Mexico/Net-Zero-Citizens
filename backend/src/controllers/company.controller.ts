@@ -3,6 +3,7 @@ import CompanyProduct from '../models/companyProducts.model'
 import * as CompanyService from '../services/company.service'
 import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
+import NodeGeocoder from 'node-geocoder'
 
 /**
  * @brief
@@ -20,7 +21,7 @@ export const getAllCompanies: RequestHandler<
 > = async (req, res) => {
   const params = {
     start: req.query.start || 0,
-    pageSize: req.query.pageSize || 10,
+    pageSize: req.query.pageSize || 1000,
     filters: {
       name: req.query.name || '',
     },
@@ -66,6 +67,34 @@ export const getCompanyById: RequestHandler<
 
 /**
  * @brief
+ * Función del controlador que devuelve todos los proveedores aprobados de la base de datos
+ * @param req La request HTTP al servidor
+ * @param res Un objeto paginador con los proveedores y la información de paginación
+ */
+export const getApprovedCompanies: RequestHandler<
+  NoRecord,
+  Paginator<Company>,
+  NoRecord,
+  PaginationParams<{ status: string }>
+> = async (req, res) => {
+  const params = {
+    start: req.query.start || 0,
+    pageSize: req.query.pageSize || 1000,
+  }
+  const companies = await CompanyService.getCompaniesByStatus(
+    'approved',
+    params
+  )
+  res.json({
+    rows: companies.rows,
+    start: params.start,
+    pageSize: params.pageSize,
+    total: companies.count,
+  })
+}
+
+/**
+ * @brief
  * Función del controlador que devuelve todos los proveedores pendientes por aprobar de la base de datos
  * @param req La request HTTP al servidor
  * @param res Un objeto paginador con los proveedores y la información de paginación
@@ -78,9 +107,12 @@ export const getPendingCompanies: RequestHandler<
 > = async (req, res) => {
   const params = {
     start: req.query.start || 0,
-    pageSize: req.query.pageSize || 10,
+    pageSize: req.query.pageSize || 1000,
   }
-  const companies = await CompanyService.getPendingCompanies(params)
+  const companies = await CompanyService.getCompaniesByStatus(
+    'pending_approval',
+    params
+  )
   res.json({
     rows: companies.rows,
     start: params.start,
@@ -182,5 +214,150 @@ export const addProduct: RequestHandler<
     res
       .status(400)
       .json({ companyProductId: '', error: 'Error adding product to company' })
+  }
+}
+
+/**
+ * @brief
+ * Función del controlador que convierte las ubicaciones
+ * de los proveedores aprovados a longitudes y latitudes
+ * @param req
+ * @param res
+ */
+export const getCoordinatesAndroid: RequestHandler<
+  NoRecord,
+  CompanyService.FilteredCompany[] | { error: string },
+  NoRecord,
+  PaginationParams<{ status: string }>
+> = async (req, res) => {
+  const params = {
+    start: req.query.start || 0,
+    pageSize: req.query.pageSize || 1000,
+  }
+
+  try {
+    const companies = await CompanyService.getCompaniesWithCoordinates(
+      'approved',
+      params
+    )
+
+    return res.json(companies)
+  } catch (error) {
+    return res.status(500).json({ error: 'Internal server error' })
+  }
+}
+/**
+ * @brief
+ * Función del controlador que convierte las ubicaciones
+ * de los proveedores aprovados a longitudes y latitudes
+ * @param req
+ * @param res
+ */
+
+interface FilteredCompany {
+  companyId: string
+  name: string
+  latitude: number
+  longitude: number
+  profilePicture: string
+}
+
+export const getCoordinatesIos: RequestHandler<
+  NoRecord,
+  Paginator<FilteredCompany>,
+  NoRecord,
+  PaginationParams<{ status: string }>
+> = async (req, res) => {
+  const params = {
+    start: req.query.start || 0,
+    pageSize: req.query.pageSize || 1000,
+  }
+
+  const companies = await CompanyService.getCompaniesByStatus(
+    'approved',
+    params
+  )
+
+  // Configura el geocoder con tu clave de API
+  const geocoder = NodeGeocoder({
+    provider: 'google',
+    apiKey: process.env.GOOGLE_MAPS_API_KEY,
+  })
+
+  const companiesWithCoordinates = await Promise.all(
+    companies.rows.map(async (company) => {
+      const { street, streetNumber, city, state, zipCode } = company.dataValues
+
+      // Crea la dirección a partir de los campos de la empresa
+      const address = `${street} ${streetNumber}, ${city}, ${state}, ${zipCode}`
+
+      try {
+        // Realiza la geocodificación
+        const geocodeResult = await geocoder.geocode(address)
+        if (geocodeResult.length > 0) {
+          const { latitude, longitude } = geocodeResult[0]
+          return {
+            companyId: company.dataValues.companyId,
+            name: company.dataValues.name,
+            latitude,
+            longitude,
+            profilePicture: company.dataValues.profilePicture,
+          }
+        }
+      } catch (error: unknown) {
+        if (typeof error === 'string') {
+          console.error(
+            `Error al geocodificar la empresa ${company.dataValues.companyId}: ${error}`
+          )
+        } else {
+          console.error(
+            `Error al geocodificar la empresa ${company.dataValues.companyId}`
+          )
+        }
+      }
+
+      // Si la geocodificación falla o no se encuentra, regresa null
+      return null
+    })
+  )
+
+  // Filtra las empresas que no pudieron geocodificarse
+  const filteredCompanies = companiesWithCoordinates.filter(
+    (company) => company !== null
+  )
+
+  const filteredCompaniesTyped: FilteredCompany[] = filteredCompanies.filter(
+    (company): company is FilteredCompany => company !== null
+  )
+
+  const paginator: Paginator<FilteredCompany> = {
+    rows: filteredCompaniesTyped,
+    start: 0,
+    pageSize: filteredCompanies.length,
+    total: filteredCompanies.length,
+  }
+  res.json(paginator)
+}
+/**
+ * @brief
+ * Función del controller para asignarle un usuario a una compañia
+ * @param req La request HTTP al servidor
+ * @param res Un resultado de la operación
+ */
+export const assignCompanyUser: RequestHandler<
+  { companyId: string },
+  { message: string },
+  { userId: string },
+  NoRecord
+> = async (req, res) => {
+  const companyId = req.params.companyId
+  const userId = req.body.userId
+  console.log(companyId, userId)
+  const assign = await CompanyService.assignCompanyUser(companyId, userId)
+  console.log(assign)
+  if (assign === 'success') {
+    res.status(200).json({ message: assign })
+  } else {
+    res.status(400).json({ message: assign })
   }
 }

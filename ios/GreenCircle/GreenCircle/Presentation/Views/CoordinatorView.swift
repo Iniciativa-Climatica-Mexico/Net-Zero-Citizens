@@ -3,30 +3,40 @@
 //  GreenCircle
 //
 //  Created by Ricardo Adolfo Fernández Alvarado on 12/09/23.
-//
+//  Modified by Daniel Gutiérrez Gómez 26/09/23
 
 import FlowStacks
 import SwiftUI
 
 struct CoordinatorView: View {
+  @StateObject var viewModel = CoordinatorViewModel()
   @State var hasPendingSurvey: Bool = false
+  @State var photovoltaicToggle: Bool = false
+  @State var solarToggle: Bool = false
   
   enum Screens {
+    case splashScreen
     case login
     case userRegister
     case userRegisterForm
+    case companyAssign
     case companyRegister
     case companyRegisterForm
+    case companyRegisterDivider
+    case uploadCompanyFiles
     case mainMenuView
     case pendingCompany
     case survey
   }
   
-  @State var routes: Routes<Screens> = [.root(.login)]
+  @State var routes: Routes<Screens> = [.root(.splashScreen)]
   
   var body: some View {
     Router($routes) { screen, _ in
       switch screen {
+      case .splashScreen:
+        SplashScreenView(goLogin: goLogin)
+        
       case .login:
         LoginView(goUserRegister: goUserRegister,
                   goForm: goUserForm,
@@ -34,37 +44,64 @@ struct CoordinatorView: View {
                   goCompanyRegister: goCompanyRegister)
         
       case .userRegister:
-        UserRegisterView(goLogin: goLogin,
+        UserRegisterView(goLogin: goBack,
                          goForm: goUserForm,
                          goMainMenu: goMainMenu)
         
       case .userRegisterForm:
         UserRegisterFormView(goMainMenu: goMainMenu)
         
+      case .companyAssign:
+        AssignCompanyView(goForm: goCompanyForm,
+                          goMainMenu: goMainMenu)
+        
       case .companyRegister:
-        CompanyRegisterView(goLogin: goLogin,
-                            goForm: goCompanyForm,
+        CompanyRegisterView(goLogin: goBack,
+                            goForm: goAssignCompany,
                             goMainMenu: goMainMenu)
         
       case .companyRegisterForm:
-        CompanyRegisterFormView(goPending: goPending)
+        CompanyRegisterFormView(goCompanyRegisterDivider: goCompanyRegisterDivider, goPending: goPending)
+        
+      case .companyRegisterDivider:
+        CompanyRegisterDividerView(goUploadCompanyFiles: goUploadCompanyFiles,
+                                   photovoltaicToggle: $photovoltaicToggle,
+                                   solarToggle: $solarToggle)
+        
+      case .uploadCompanyFiles:
+        CompanyUploadFilesView(goPending: goPending,
+                               photovoltaicToggle: $photovoltaicToggle,
+                               solarToggle: $solarToggle)
         
       case .mainMenuView:
-        TabBarView()
+        TabBarView(goSurvey: goSurvey, goLogin: goLogin)
         
       case .pendingCompany:
         PendingCompanyView()
         
       case .survey:
-        SurveyView(hasPendingPendingSurvey: $hasPendingSurvey,
-                   goMainMenu: goMainMenu)
+        SurveyView(goBack: goBack)
           .applyNavBarTheme()
       }
+    }
+    .onAppear {
+     Task {
+       let res = await viewModel.handleSignIn()
+       
+       switch res {
+       case .newUser:
+         goUserForm()
+       case .success:
+         goMainMenu()
+       case .fail:
+         goLogin()
+       }
+     }
     }
   }
   
   private func goLogin() {
-    routes.goBackToRoot()
+    routes.presentCover(.login)
   }
   
   private func goUserRegister() {
@@ -84,19 +121,31 @@ struct CoordinatorView: View {
   }
   
   private func goMainMenu() {
-    hasPendingSurvey = false
     routes.presentCover(.mainMenuView)
-    
-    if hasPendingSurvey {
-      routes.presentCover(.survey)
-    }
   }
   
   private func goSurvey() {
     routes.presentCover(.survey)
   }
   
+  private func goCompanyRegisterDivider() {
+    routes.presentCover(.companyRegisterDivider)
+  }
+  
+  
+  private func goUploadCompanyFiles(photovoltaicToggle: Binding<Bool>, solarToggle: Binding<Bool>) {
+    routes.presentCover(.uploadCompanyFiles)
+  }
+  
   private func goPending() {
     routes.presentCover(.pendingCompany)
+  }
+  
+  private func goAssignCompany() {
+    routes.presentCover(.companyAssign)
+  }
+  
+  private func goBack() {
+    routes.goBack()
   }
 }

@@ -1,6 +1,6 @@
-import { Session } from 'next-auth/react'
-import { AUTH_TOKEN_KEY, REFRESH_TOKEN_KEY, USER_KEY } from './constants'
-import { useEffect, useState } from 'react'
+import { Session, signOut } from 'next-auth/react'
+import { AUTH_TOKEN_KEY, REFRESH_TOKEN_KEY, SERVER_BASE_URL, USER_KEY } from './constants'
+import axios from 'axios'
 
 export const saveSession = (session: Session) => {
   localStorage.setItem(AUTH_TOKEN_KEY, session.authToken || '')
@@ -29,22 +29,35 @@ export const deleteSession = () => {
   localStorage.removeItem(USER_KEY)
 }
 
-export const useRecoverSession = () => {
-  const [session, setSession] = useState<Session | null>(null)
+export type refreshTokenResponse = {
+  authToken: string
+  refreshToken: string
+  error?: string
+}
 
-  useEffect(() => {
-    const authToken = localStorage.getItem(AUTH_TOKEN_KEY) || undefined
+export const refreshTokens = async () => {
+  try {
+    const session = recoverSession()
 
-    const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY) || undefined
+    console.log('UPDATING TOKENS')
+    const refreshToken = session.refreshToken
 
-    const userLS = localStorage.getItem(USER_KEY)
-    const user = userLS ? JSON.parse(userLS) : undefined
+    const tokens: refreshTokenResponse = await axios
+      .post(`${SERVER_BASE_URL}/auth/refresh`, {
+        refreshToken,
+      })
+      .then((res) => res.data)
 
-    setSession({
-      authToken: authToken,
-      refreshToken: refreshToken,
-      user: user,
-    })
-  }, [])
-  return session
+    if (tokens.error) {
+      throw Error(`Error updating tokens, ${tokens.error}`)
+    }
+
+    saveSession(tokens)
+    session.authToken = tokens.authToken
+    session.refreshToken = tokens.refreshToken
+  } catch (e) {
+    console.log('Error updating tokens: ' + e)
+    signOut()
+    deleteSession()
+  }
 }

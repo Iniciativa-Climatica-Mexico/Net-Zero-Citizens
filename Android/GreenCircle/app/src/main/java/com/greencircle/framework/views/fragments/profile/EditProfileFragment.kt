@@ -1,37 +1,47 @@
 package com.greencircle.framework.views.fragments.profile
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.greencircle.R
 import com.greencircle.databinding.FragmentEditProfileBinding
 import com.greencircle.domain.model.profile.Profile
+import com.greencircle.domain.usecase.auth.RecoverUserSessionRequirement
+import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.profile.ProfileViewModel
+import com.greencircle.framework.views.activities.LoginActivity
 import java.util.UUID
 
 class EditProfileFragment : Fragment() {
     private var _binding: FragmentEditProfileBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: ProfileViewModel
+    private lateinit var recoverUserSession: RecoverUserSessionRequirement
     private lateinit var user: Profile
+    private lateinit var uuid: UUID
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(requireContext(), ProfileViewModel::class.java)
+        )[ProfileViewModel::class.java]
 
-        val userId: UUID
+        // Inicializar variables
+        recoverUserSession = RecoverUserSessionRequirement(requireContext())
 
-        if (arguments?.getString("userId") == null) {
-            userId = UUID.fromString("8de45630-2e76-4d97-98c2-9ec0d1f3a5b8")
-        } else {
-            userId = UUID.fromString(arguments?.getString("userId"))
-        }
-        viewModel = ViewModelProvider(this)[ProfileViewModel::class.java]
-        viewModel.setUserId(userId)
+        // Obtener la sesión del usuario
+        val userSession = recoverUserSession()
+        uuid = userSession.uuid
+
+        viewModel.setUserId(uuid)
         viewModel.getUserProfile()
     }
 
@@ -43,9 +53,10 @@ class EditProfileFragment : Fragment() {
         _binding = FragmentEditProfileBinding.inflate(inflater, container, false)
         var root: View = binding.root
 
-        InitializeObservers()
-        InitializeAceptarCambiosButton()
-        InitializeCancelarCambiosButton()
+        initializeObservers()
+        initializeAceptarCambiosButton()
+        initializeCancelarCambiosButton()
+        deleteUserOnClickListener()
 
         return root
     }
@@ -54,11 +65,12 @@ class EditProfileFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-    private fun InitializeObservers() {
-        viewModel.userLiveData.observe(viewLifecycleOwner, {
+
+    private fun initializeObservers() {
+        viewModel.userLiveData.observe(viewLifecycleOwner) {
             user = it
             setUserData()
-        })
+        }
     }
 
     private fun setUserData() {
@@ -68,11 +80,24 @@ class EditProfileFragment : Fragment() {
         binding.inputPrimerApellido.setText(user.lastName)
         binding.inputSegundoApellido.setText(user.secondLastName)
         binding.inputEdad.setText(user.age.toString())
-        binding.inputSexo.setText(user.gender)
+        val genderOptions = resources.getStringArray(R.array.gender_options)
+        val genderPosition = genderOptions.indexOf(user.gender)
+
+        if (genderPosition != -1) {
+            // Si se encuentra la posición, selecciona el elemento correspondiente en el Spinner
+            binding.inputSexo.setSelection(genderPosition)
+        }
         binding.inputTelefono.setText(user.phoneNumber)
-        binding.inputEstado.setText(user.state)
+        val stateOptions = resources.getStringArray(R.array.state_options)
+        val statePosition = stateOptions.indexOf(user.state)
+
+        if (statePosition != -1) {
+            // Si se encuentra la posición, selecciona el elemento correspondiente en el Spinner
+            binding.inputEstado.setSelection(statePosition)
+        }
         // binding.profileImage.setImageResource(user.profilePicture)
     }
+
     // call to update user from viewmodel and repository
     private fun updateUser() {
         val user = Profile(
@@ -84,19 +109,47 @@ class EditProfileFragment : Fragment() {
             user.password ?: "EstoNoDeberiaEstarAqui",
             binding.inputTelefono.text.toString(),
             binding.inputEdad.text.toString().toInt(),
-            binding.inputEstado.text.toString(),
-            binding.inputSexo.text.toString(),
+            binding.inputEstado.selectedItem.toString(),
+            binding.inputSexo.selectedItem.toString(),
             user.profilePicture,
             user.createdAt,
             user.updatedAt
         )
         viewModel.updateUser(user)
     }
-    private fun InitializeAceptarCambiosButton() {
+
+    private fun initializeAceptarCambiosButton() {
         binding.aceptarCambiosButton.setOnClickListener {
+            val edadText = binding.inputEdad.text.toString()
+
+            // Validar que la edad esté entre 18 y 90
+            val edad = try {
+                edadText.toInt()
+            } catch (e: NumberFormatException) {
+                // Si la entrada no es un número válido, muestra un mensaje de error en el TextInputLayout
+                binding.inputEdad.error = "La edad debe ser un número válido"
+                return@setOnClickListener
+            }
+
+            if (edad < 18) {
+                // Si la edad es menor de 18, muestra un mensaje de error en el TextInputLayout
+                binding.inputEdad.error = "Debes ser mayor de edad"
+                return@setOnClickListener
+            } else if (edad > 90) {
+                // Si la edad es mayor de 90, muestra un mensaje de error en el TextInputLayout
+                binding.inputEdad.error = "Ingrese una edad válida"
+                return@setOnClickListener
+            }
+
+            // Si la edad es válida, elimina cualquier mensaje de error anterior
+            binding.inputEdad.error = null
+
+            // Procede con la actualización del usuario
             updateUser()
             Toast.makeText(
-                requireContext(), "Los cambios fueron realizados con éxito", Toast.LENGTH_SHORT
+                requireContext(),
+                "Los cambios fueron realizados con éxito",
+                Toast.LENGTH_SHORT
             ).show()
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.frame_layout, ProfileFragment())
@@ -104,8 +157,9 @@ class EditProfileFragment : Fragment() {
             transaction.commit()
         }
     }
+
     // function to go back to fragment profile if user cancels changes
-    private fun InitializeCancelarCambiosButton() {
+    private fun initializeCancelarCambiosButton() {
         binding.cancelarCambiosButton.setOnClickListener {
             val alertDialogBuilder = AlertDialog.Builder(requireContext())
             alertDialogBuilder.setTitle("¿Quieres dejar de editar?")
@@ -128,5 +182,35 @@ class EditProfileFragment : Fragment() {
             val alertDialog = alertDialogBuilder.create()
             alertDialog.show()
         }
+    }
+
+    private fun deleteUserOnClickListener() {
+        val deleteUserButton = binding.root.findViewById<Button>(R.id.delete_user)
+        deleteUserButton.setOnClickListener {
+            val alertDialogBuilder = AlertDialog.Builder(requireContext())
+            alertDialogBuilder.setTitle("¿Quieres eliminar tu cuenta?")
+            alertDialogBuilder.setMessage(
+                "Esta acción no se puede deshacer."
+            )
+            alertDialogBuilder.setPositiveButton("Eliminar") { dialog, _ ->
+                // Lógica para eliminar
+                dialog.dismiss()
+                viewModel.deleteUser(uuid)
+                navigateToLogin()
+            }
+            alertDialogBuilder.setNegativeButton("Cancelar") { dialog, _ ->
+                // Lógica para cancelar
+                dialog.dismiss()
+            }
+            // alertDialogBuilder.setNeutralButton("Cancelar") { dialog, _ ->
+            val alertDialog = alertDialogBuilder.create()
+            alertDialog.show()
+        }
+    }
+
+    private fun navigateToLogin() {
+        val intent: Intent = Intent(requireContext(), LoginActivity::class.java)
+        startActivity(intent)
+        requireActivity().finish()
     }
 }

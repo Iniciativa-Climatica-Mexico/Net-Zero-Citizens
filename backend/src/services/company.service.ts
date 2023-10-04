@@ -7,6 +7,8 @@ import Company from '../models/company.model'
 import CompanyProduct from '../models/companyProducts.model'
 import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
 import { sendNotification } from './notification.service'
+import NodeGeocoder from 'node-geocoder'
+import User from '../models/users.model'
 
 // TYPES
 /**
@@ -25,7 +27,7 @@ export type CompanyType = {
   city: string
   state: string
   zipCode: string
-  userId: string
+  userId: string | null
   profilePicture?: string | null
   pdfCurriculumUrl: string
   pdfDicCdmxUrl?: string | null
@@ -77,20 +79,21 @@ export const getAllCompanies = async <T>(
 }
 
 /**
-* @brief
-* Función del servicio que devuelve todos los proveedores pendientes por aprobar
-* @params Los parametros de paginación
-* @returns Una promesa con los proveedores y la información de paginación
-*/
+ * @brief
+ * Función del servicio que devuelve todos los proveedores con el status especificado
+ * @params Los parametros de paginación
+ * @returns Una promesa con los proveedores y la información de paginación
+ */
 
-export const getPendingCompanies = async <T>(
+export const getCompaniesByStatus = async <T>(
+  status: 'approved' | 'rejected' | 'pending_approval',
   params: PaginationParams<T>
 ): Promise<PaginatedQuery<Company>> => {
   return await Company.findAndCountAll({
     limit: params.pageSize,
     offset: params.start,
     where: {
-      status: 'pending_approval',
+      status,
     },
   })
 }
@@ -107,6 +110,73 @@ export type UpdateCompanyInfoBody = {
   status: 'approved' | 'pending_approval' | 'rejected'
   phone: string
   webPage: string
+}
+
+export interface FilteredCompany {
+  companyId: string
+  name: string
+  latitude: number
+  longitude: number
+  profilePicture: string
+}
+
+/**
+ * Obtiene la ubicacion de una compañia en coordenadas geograficas
+ * @param status El estatus de la compañia (solo approved)
+ * @param params Los parametros de paginación
+ * @returns Promise<FilteredCompany[]> Una promesa con los proveedores
+ *          y su ubicacion en coordenadas geograficas
+ */
+export const getCompaniesWithCoordinates = async (
+  status: StatusEnum,
+  params: {
+    start: number
+    pageSize: number
+  }
+): Promise<FilteredCompany[]> => {
+  const companies = await getCompaniesByStatus(status, params)
+  const geocoder = NodeGeocoder({
+    provider: 'google',
+    apiKey: process.env.GOOGLE_MAPS_API_KEY,
+  })
+
+  const companiesWithCoordinates = await Promise.all(
+    companies.rows.map(async (company) => {
+      const {
+        companyId,
+        name,
+        profilePicture,
+        street,
+        streetNumber,
+        city,
+        state,
+        zipCode,
+      } = company
+
+      const address = `${street} ${streetNumber}, ${city}, ${state}, ${zipCode}`
+
+      try {
+        const geocodeResult = await geocoder.geocode(address)
+
+        if (geocodeResult.length > 0) {
+          const { latitude, longitude } = geocodeResult[0]
+          return {
+            companyId,
+            name,
+            latitude,
+            longitude,
+            profilePicture,
+          } as FilteredCompany
+        }
+      } catch (error) {
+        throw new Error('Error getting coordinates')
+      }
+
+      return null
+    })
+  )
+
+  return companiesWithCoordinates.filter(Boolean) as FilteredCompany[]
 }
 
 /**
@@ -186,7 +256,6 @@ export const getCompanyById = async (id: string): Promise<Company | null> => {
   const products: Product[] = []
   const images: CompanyImages[] = []
 
-
   companyProducts?.forEach(function (product) {
     products.push(product.getDataValue('product').dataValues)
   })
@@ -199,6 +268,47 @@ export const getCompanyById = async (id: string): Promise<Company | null> => {
   company?.setDataValue('score', rating)
   company?.setDataValue('oneComment', comment)
   company?.setDataValue('images', images)
+
+  return company
+}
+
+/**
+ * @brief
+ * Valida si el usuario tiene una compañia asignada
+ * @param uuid Id del usuario
+ * @returns Promise<Company | Null> Proveedor con el id especificado
+ */
+export const getCompanyByUserId = async (
+  uuid: string
+): Promise<Company | null> => {
+  const company = await Company.findOne({
+    where: {
+      userId: uuid,
+    },
+  })
+
+  return company
+}
+
+/**
+ * @brief
+ * Desasigna un usuario de una compañia
+ * @param uuid Id del usuario
+ * @returns Promise<Company | Null> Proveedor con el id especificado
+ */
+export const unbindUserFromCompany = async (
+  uuid: string
+): Promise<Company | null> => {
+  const company = await Company.findOne({
+    where: {
+      userId: uuid,
+    },
+  })
+
+  if (company) {
+    company.userId = null
+    await company.save()
+  }
 
   return company
 }
@@ -247,4 +357,51 @@ const getCompanyScore = async (id: string): Promise<Review[] | null> => {
       exclude: ['reviewId', 'userId', 'createdAt', 'updatedAt'],
     },
   })
+}
+
+type assignCompanyUserResponse =
+  | 'success'
+  | 'El usuario ya tiene una compañía asignada'
+  | 'La compañía ya tiene un usuario asignado'
+  | 'La companía no existe'
+  | 'El usuario no existe'
+  | 'Error no esperado'
+
+/**
+ * @brief
+ * Función del servicio para asignarle un usuario a una compañia
+ * @param req La request HTTP al servidor
+ * @param res Un resultado de la operación
+ */
+export const assignCompanyUser = async (
+  companyId: string,
+  userId: string
+): Promise<assignCompanyUserResponse> => {
+  try {
+    console.log('assignCompanyUser')
+    const user = await User.findByPk(userId)
+    if (!user) return 'El usuario no existe'
+    if (user.companyId !== null)
+      return 'El usuario ya tiene una compañía asignada'
+
+    const company = await Company.findByPk(companyId)
+    if (!company) return 'La companía no existe'
+    if (company.userId !== null)
+      return 'La compañía ya tiene un usuario asignado'
+
+    company.userId = userId
+    user.companyId = companyId
+    user.roleId = 'COMAPNY_ROLE_ID'
+
+    await company.save()
+    try {
+      await user.save()
+    } catch (error) {
+      console.log(error)
+    }
+    return 'success'
+  } catch (error) {
+    console.log(error)
+    return 'Error no esperado'
+  }
 }

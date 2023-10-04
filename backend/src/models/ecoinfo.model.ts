@@ -12,7 +12,6 @@ export default class Ecoinfo extends Model {
     primaryKey: true,
     allowNull: false,
     defaultValue: DataType.UUIDV4,
-    unique: 'ECOINFO_ID',
     field: 'ECOINFO_ID',
   })
   ecoinfoId: string
@@ -39,7 +38,7 @@ export default class Ecoinfo extends Model {
   coverImage: string | null
 
   @Column({
-    type: DataType.STRING(100),
+    type: DataType.STRING(500),
     allowNull: true,
     field: 'DESCRIPTION',
   })

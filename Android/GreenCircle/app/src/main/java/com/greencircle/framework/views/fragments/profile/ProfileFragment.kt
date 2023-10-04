@@ -1,5 +1,6 @@
 package com.greencircle.framework.views.fragments.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,18 +12,23 @@ import androidx.lifecycle.ViewModelProvider
 import com.greencircle.R
 import com.greencircle.databinding.FragmentProfileBinding
 import com.greencircle.domain.model.profile.Profile
+import com.greencircle.domain.usecase.auth.DeleteTokensRequirement
+import com.greencircle.domain.usecase.auth.DeleteUserSessionRequirement
+import com.greencircle.domain.usecase.auth.RecoverUserSessionRequirement
+import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.profile.ProfileViewModel
+import com.greencircle.framework.views.activities.LoginActivity
 import com.greencircle.framework.views.fragments.reviews.UserReviewFragment
-import java.util.UUID
 
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: ProfileViewModel
-    private lateinit var userId: UUID
-    private lateinit var user: Profile
-
-    private var reviewsCount: Int = 100
+    private lateinit var recoverUserSession: RecoverUserSessionRequirement
+    private lateinit var deleteTokens: DeleteTokensRequirement
+    private lateinit var deleteUserSession: DeleteUserSessionRequirement
+    private lateinit var profile: Profile
+    private var reviewsCount: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,48 +36,59 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        viewModel = ViewModelProvider(this)[ProfileViewModel::class.java]
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(requireContext(), ProfileViewModel::class.java)
+        )[ProfileViewModel::class.java]
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         var root: View = binding.root
 
-        if (arguments?.getString("userId") == null) {
-            userId = UUID.fromString("8de45630-2e76-4d97-98c2-9ec0d1f3a5b8")
-        } else {
-            userId = UUID.fromString(arguments?.getString("userId"))
-        }
+        // Inicializar variables
+        recoverUserSession = RecoverUserSessionRequirement(requireContext())
+        deleteTokens = DeleteTokensRequirement(requireContext())
+        deleteUserSession = DeleteUserSessionRequirement(requireContext())
 
-        viewModel.setUserId(userId)
+        // Obtener la sesión del usuario
+        val userSession = recoverUserSession()
+
+        // Inicializar ViewModel
+        viewModel.setUserId(userSession.uuid)
         viewModel.getUserProfile()
 
-        InitializeObservers()
-        InitializeEditarPerfilButton()
+        // Inicializar Observers
+        initializeObservers()
+        initializeEditarPerfilButton()
+        logoutOnClickListener()
         displayUserReviewFragment()
 
         binding.resenasCountTextView.text = "$reviewsCount"
-
         return root
     }
 
     private fun displayUserReviewFragment() {
-        val bundle = Bundle()
-        bundle.putInt("ReviewsCount", reviewsCount)
-
         val userReviewFragment = UserReviewFragment()
+
         val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
-        userReviewFragment.arguments = bundle
+        fragmentManager.setFragmentResultListener(
+            "reviewsCountKey",
+            viewLifecycleOwner
+        ) { _, bundle ->
+            reviewsCount = bundle.getInt("bundleReviewsCount")
+            binding.resenasCountTextView.text = "$reviewsCount"
+        }
         val transaction: FragmentTransaction = fragmentManager.beginTransaction()
-        transaction.add(R.id.userReviewFragment, userReviewFragment, "child_fragment_tag")
+        transaction.add(R.id.userReviewFragment, userReviewFragment, "User Review")
         transaction.commit()
     }
 
-    private fun InitializeObservers() {
+    private fun initializeObservers() {
         viewModel.userLiveData.observe(viewLifecycleOwner) {
-            user = it
+            profile = it
             setUserData()
         }
     }
 
-    private fun InitializeEditarPerfilButton() {
+    private fun initializeEditarPerfilButton() {
         binding.editarPerfilButton.setOnClickListener {
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.frame_layout, EditProfileFragment())
@@ -80,12 +97,32 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    private fun navigateToLogin() {
+        // Navigate to LoginActivity
+        val intent: Intent = Intent(requireContext(), LoginActivity::class.java)
+        startActivity(intent)
+        requireActivity().finish()
+    }
+
     private fun setUserData() {
-        if (user != null) {
-            val name = user.firstName + " " + user.lastName
+        if (profile != null) {
+            val name = profile.firstName + " " + profile.lastName
             binding.username.text = name
             // binding.profileImage.setImageResource(user.profilePicture)
         }
+    }
+
+    private fun logoutOnClickListener() {
+        val logoutButton = binding.root.findViewById<View>(R.id.logout)
+        logoutButton.setOnClickListener {
+            logout()
+        }
+    }
+
+    private fun logout() {
+        deleteTokens()
+        deleteUserSession()
+        navigateToLogin()
     }
 
     override fun onDestroyView() {

@@ -14,20 +14,28 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import Logo from '../../public/LogoBloque.png'
+import Logo from '../../public/Logo.svg'
 import { usePathname } from 'next/navigation'
-import { deleteSession } from '@/utils/sessionHooks'
+import { deleteSession, refreshTokens } from '@/utils/sessionHooks'
 
 export default function Navbar() {
   const { data: session } = useSession()
   const pathname = usePathname()
 
   const [condition, setCondition] = useState(false)
+  let created = false
+
   useEffect(() => {
     setCondition(true)
+
+    if (!created) {
+      created = true
+      console.log('Creating interval')
+      setInterval(refreshTokens, 1 * 60 * 60 * 1000) // 1 hour
+    }
   }, [])
 
-  if (pathname == '/login') {
+  if (pathname == '/login' || pathname == '/notAllowed') {
     return <></>
   }
 
@@ -55,8 +63,8 @@ export default function Navbar() {
               <ul className="font-medium flex items-center flex-col px-4 py-1 md:p-0 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900">
                 <li>
                   <a
-                    href="#"
-                    className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                    href="/"
+                    className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent no-underline"
                     aria-current="page"
                   >
                     Proovedores
@@ -65,7 +73,7 @@ export default function Navbar() {
                 <li>
                   <a
                     href="/encuestas"
-                    className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                    className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent no-underline"
                   >
                     Encuestas
                   </a>
@@ -73,7 +81,7 @@ export default function Navbar() {
                 <li>
                   <a
                     href="#"
-                    className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                    className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent no-underline"
                   >
                     Usuarios
                   </a>
