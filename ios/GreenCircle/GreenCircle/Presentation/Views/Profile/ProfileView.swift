@@ -112,14 +112,13 @@ struct ProfileView: View {
     }
   }
   
-//  struct ProfileView_Previews: PreviewProvider {
-//    let deleteUserViewModel = DeleteUserViewModel(useCase: )
-//
-//    static var previews: some View {
-//
-//      ProfileView(modelUser: UserViewModel(), deleteUserViewModel: deleteUserViewModel)
-//
-//    }
-//  }
+  struct ProfileView_Previews: PreviewProvider {
+
+    static var previews: some View {
+
+      ProfileView(modelUser: UserViewModel(), goLogin: {})
+
+    }
+  }
   
 }
