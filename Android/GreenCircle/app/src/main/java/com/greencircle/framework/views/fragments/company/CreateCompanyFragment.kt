@@ -131,9 +131,12 @@ class CreateCompanyFragment : Fragment() {
             val activity = requireActivity() as RegisterCompanyActivity
 
             activity.replaceFragment(termsAndConditionsCompanyFragment)
+        }
+
         if (arguments.getString("uuid") != null) {
             uuid = arguments.getString("uuid")?.let { UUID.fromString(it) }!!
         }
+
         // Set texts
         setTexts(arguments, view)
 
