@@ -16,7 +16,7 @@ export default function DeleteUsersButton({setIsModalOpen}: DeleteUsersButtonPro
         onClick={handleOnClick}
       >
         <Trash2 size={16} />
-        <span>Delete</span>
+        <span>Eliminar</span>
       </button>
     </div>
   )
