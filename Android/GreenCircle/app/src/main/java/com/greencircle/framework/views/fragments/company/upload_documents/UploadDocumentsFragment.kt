@@ -1,9 +1,13 @@
 package com.greencircle.framework.views.fragments.company.upload_documents
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.greencircle.R
 import com.greencircle.databinding.FragmentUploadDocumentsBinding
@@ -18,9 +22,24 @@ class UploadDocumentsFragment : Fragment() {
     private val binding get() = _binding!!
     private var arguments = Bundle()
 
+    private val STORAGE_PERMISSION_REQUEST_CODE = 102
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments = requireArguments()
+
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                STORAGE_PERMISSION_REQUEST_CODE
+            )
+        }
     }
 
     /**

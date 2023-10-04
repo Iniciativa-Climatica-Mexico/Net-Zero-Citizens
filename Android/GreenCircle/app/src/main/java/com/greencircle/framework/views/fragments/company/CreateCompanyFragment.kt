@@ -82,6 +82,7 @@ class CreateCompanyFragment : Fragment() {
             // Handle the result here
             if (result != null) {
                 authToken = result.tokens.authToken
+                arguments.putString("authToken", authToken)
                 uuid = result.user.uuid
             } else {
                 Log.d("CreateCompanyFragment", "Google login failed")

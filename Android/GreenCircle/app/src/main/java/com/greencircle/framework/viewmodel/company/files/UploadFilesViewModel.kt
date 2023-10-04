@@ -4,22 +4,28 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.greencircle.domain.usecase.company.UploadCompanyFileRequirement
-import java.io.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 
 class UploadFilesViewModel(private val context: Context) : ViewModel() {
     private val uploadCompanyFileRequirement = UploadCompanyFileRequirement()
 
     fun uploadFile(
         authToken: String,
-        file: File,
+        filePart: MultipartBody.Part,
         companyId: String,
         fileDescription: String,
         fileFormat: String
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            uploadCompanyFileRequirement(authToken, file, companyId, fileDescription, fileFormat)
+            uploadCompanyFileRequirement(
+                authToken,
+                filePart,
+                companyId,
+                fileDescription,
+                fileFormat
+            )
         }
     }
 }

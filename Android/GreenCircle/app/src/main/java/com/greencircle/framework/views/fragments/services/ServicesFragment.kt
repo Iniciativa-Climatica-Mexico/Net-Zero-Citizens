@@ -1,5 +1,6 @@
 package com.greencircle.framework.views.fragments.services
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.materialswitch.MaterialSwitch
 import com.greencircle.R
+import com.greencircle.framework.views.activities.RegisterCompanyActivity
+import com.greencircle.framework.views.fragments.company.upload_documents.UploadDocumentsFragment
 
 class ServicesFragment : Fragment() {
     private lateinit var fotoVoltaicSwitch: MaterialSwitch
@@ -97,10 +100,10 @@ class ServicesFragment : Fragment() {
         bundle.putBoolean("fotovoltaics", fotoVoltaicSwitch.isChecked)
         bundle.putBoolean("solarHeaters", solarHeaterSwitch.isChecked)
 
-//        val uploadDocumentsFragment = UploadDocumentsFragment()
-//        val activity = requireActivity() as RegisterCompanyActivity
-//        val intent = Intent(activity, RegisterCompanyActivity::class.java)
-//        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//        activity.replaceFragment(uploadDocumentsFragment, arguments)
+        val uploadDocumentsFragment = UploadDocumentsFragment()
+        val activity = requireActivity() as RegisterCompanyActivity
+        val intent = Intent(activity, RegisterCompanyActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        activity.replaceFragment(uploadDocumentsFragment, arguments)
     }
 }

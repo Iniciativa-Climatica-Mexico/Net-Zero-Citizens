@@ -1,9 +1,7 @@
 package com.greencircle.framework.views.fragments.company.upload_documents
 
-import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
@@ -12,11 +10,15 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.DialogFragment
 import com.greencircle.R
 import com.greencircle.framework.viewmodel.company.files.UploadFilesViewModel
-import java.io.File
+import java.io.InputStream
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
 
 class UploadDocumentDialogFragment(
     title: String,
@@ -30,16 +32,33 @@ class UploadDocumentDialogFragment(
     private val fileFormat = fileFormat
     private var arguments = Bundle()
     private lateinit var authToken: String
-    private lateinit var fileToUpload: File
+    private lateinit var fileUri: Uri
     private var isFileSelected = false
 
     private var companyId: String? = null
+
+    private val filePickerLauncher = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        if (uri != null) {
+            fileUri = uri
+            val fileName = getFileName(uri)
+            changeDialogAfterSelection(fileName!!)
+            isFileSelected = true
+
+            val uploadFileButton = view.findViewById<Button>(R.id.uploadFileButton)
+            uploadFileButton.isEnabled = true
+            uploadFileButton.setOnClickListener {
+                uploadFile(fileUri)
+                dialog?.dismiss()
+            }
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments = requireArguments()
         authToken = arguments.getString("authToken").toString()
         companyId = arguments.getString("companyId")
-        Log.d("CUstomSucc2", companyId.toString())
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -49,7 +68,7 @@ class UploadDocumentDialogFragment(
 
         val cardView = view.findViewById<CardView>(R.id.uploadFileCard)
         cardView.setOnClickListener {
-            launchPicker()
+            openFilePicker()
         }
         val cancelFileButton = view.findViewById<Button>(R.id.cancelFileButton)
         cancelFileButton.setOnClickListener {
@@ -63,59 +82,54 @@ class UploadDocumentDialogFragment(
         return builder.create()
     }
 
-    private fun launchPicker() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "application/pdf"
-        startActivityForResult(intent, 1)
+    private fun openFilePicker() {
+        filePickerLauncher.launch("*/*")
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == RESULT_OK && data != null) {
-            val fileUri: Uri? = data.data
-            fileUri?.let {
-                val filePath = getFilePath(it)
-                fileToUpload = File(filePath)
-                val fileName = fileToUpload.name
-                changeDialogAfterSelection(fileName)
-
-                isFileSelected = true
-                val uploadFileButton = view.findViewById<Button>(R.id.uploadFileButton)
-                if (isFileSelected) {
-                    uploadFileButton.isEnabled = true
-                    uploadFileButton.setOnClickListener {
-                        uploadFile(fileToUpload)
-                        dialog?.dismiss()
-                    }
-                }
-            }
-        }
-    }
-
-    private fun getFilePath(uri: Uri): String? {
-        val projection = arrayOf(OpenableColumns.DISPLAY_NAME)
-        val cursor = requireContext().contentResolver.query(uri, projection, null, null, null)
+    private fun getFileName(uri: Uri): String? {
+        var fileName: String? = null
+        val cursor = requireContext().contentResolver.query(uri, null, null, null, null)
         cursor?.use {
-            val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-            if (it.moveToFirst()) {
-                return File(requireContext().cacheDir, it.getString(nameIndex)).absolutePath
+            it.moveToFirst()
+            val displayNameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+            if (displayNameIndex != -1) {
+                fileName = it.getString(displayNameIndex)
             }
         }
-        return null
+        return fileName
     }
 
     private fun changeDialogAfterSelection(fileName: String) {
         dialog?.findViewById<TextView>(R.id.selectedFileName)?.text = fileName
         dialog?.findViewById<ImageView>(R.id.uploadFileImage)?.visibility = View.GONE
         dialog?.findViewById<ImageView>(R.id.checkmarkImageView)?.visibility = View.VISIBLE
+        dialog?.findViewById<Button>(R.id.uploadFileButton)?.isEnabled = true
+        isFileSelected = true
     }
 
-    private fun uploadFile(file: File) {
-        viewModel.uploadFile(
-            authToken,
-            file,
-            companyId!!,
-            fileDescription,
-            fileFormat
-        )
+    private fun uploadFile(uri: Uri) {
+        var inputStream: InputStream? = null
+        try {
+            inputStream = requireContext().contentResolver.openInputStream(uri)
+            val requestBody = inputStream
+                ?.readBytes()
+                ?.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+            val filePart = MultipartBody.Part.createFormData(
+                "file",
+                title,
+                requestBody!!
+            )
+            viewModel.uploadFile(
+                authToken,
+                filePart,
+                companyId!!,
+                fileDescription,
+                fileFormat
+            )
+        } catch (e: Exception) {
+            Log.e("UploadDocumentDialogFragment", "uploadFile: ${e.message}")
+        } finally {
+            inputStream?.close()
+        }
     }
 }
