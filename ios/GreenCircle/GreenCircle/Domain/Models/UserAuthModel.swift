@@ -18,7 +18,7 @@ struct UserAuth: Codable, Identifiable, Equatable {
   var uuid: String
   var email: String
   var login_type: String
-  var picture: String
+  var picture: String?
   var roles: String
   var phone: String?
   var gender: String?

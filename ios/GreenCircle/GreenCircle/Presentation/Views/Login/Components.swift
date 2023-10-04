@@ -37,7 +37,7 @@ struct BackgroundView: View {
       .opacity(0.1)
       .cornerRadius(40, corners: [.topLeft, .topRight])
       .edgesIgnoringSafeArea(.bottom)
-      .padding(.top, 300)
+      .padding(.top, 290)
   }
 }
 
@@ -75,6 +75,25 @@ struct InputFormView: View {
       Text(label)
         .foregroundColor(Color("SecondaryText"))
       TextField(prompt, text: bindingValue)
+        .padding(10)
+        .overlay {
+          RoundedRectangle(cornerRadius: 10)
+            .stroke(.gray, lineWidth: 1)
+        }
+    }.font(.system(size: 20, weight: .medium))
+  }
+}
+
+struct SecureInputFormView: View {
+  var bindingValue: Binding<String>
+  var label: String
+  var prompt: String
+  
+  var body: some View {
+    VStack(alignment: .leading) {
+      Text(label)
+        .foregroundColor(Color("SecondaryText"))
+      SecureField(prompt, text: bindingValue)
         .padding(10)
         .overlay {
           RoundedRectangle(cornerRadius: 10)
@@ -181,5 +200,19 @@ struct CompanyRegisterHeaderView: View {
     .padding(.horizontal)
     .frame(maxWidth: .infinity,
            alignment: .leading)
+  }
+}
+
+struct ButtonDividerView: View {
+  var text: String
+  var body: some View {
+    ZStack {
+      Divider()
+      Rectangle()
+        .foregroundColor(.white)
+        .frame(width: 150)
+      Text(text)
+        .foregroundColor(Color("MainText"))
+    }
   }
 }
