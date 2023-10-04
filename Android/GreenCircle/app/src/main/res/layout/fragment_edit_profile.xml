@@ -1,22 +1,69 @@
-<?xml version="1.0" encoding="utf-8"?><!--tools:context=".framework.views.fragments.RegisterUserFragment" -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:orientation="vertical">
+    android:background="@color/white"
+    tools:context=".framework.views.fragments.profile.ProfileFragment">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/my_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@drawable/top_background"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/arrow_back_icon"
+                    android:background="@null"
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:onClick="goBack"/>
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/edit_icon"
+                    android:background="@null"
+                    android:layout_gravity="center_vertical|right"
+                    android:layout_marginRight="20dp"
+                    android:onClick="goToEditProfile"
+                    />
+
+
+                <TextView
+                    android:id="@+id/headerText"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Mis Datos" />
+            </androidx.appcompat.widget.Toolbar>
+
             <ImageView
                 android:id="@+id/profileImage"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/circle_background"
                 android:scaleType="centerCrop"
                 android:src="@drawable/pp_icon" />
@@ -50,26 +97,26 @@
                 android:orientation="vertical"
                 android:layout_marginTop="20dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nombre *"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginTop="40dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:id="@+id/inputNombre"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:hint="Nombre *"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="40dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:id="@+id/inputNombre"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Apellido(s)"
+                    android:hint="Primer Apellido *"
                     android:layout_marginHorizontal="30dp"
                     android:layout_marginTop="20dp"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -81,6 +128,24 @@
                         android:inputType="text"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Segundo Apellido *"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="20dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:id="@+id/inputSegundoApellido"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="?attr/textInputOutlinedDenseStyle"
@@ -170,17 +235,27 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_marginHorizontal="30dp"
-                    android:layout_marginTop="20dp"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/bordered_linear_layout">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="2dp"
+                        android:text="Estado *"
+                        android:padding="4dp"
+                        android:textColor="@color/gray_500"
+                        android:textSize="12sp" />
 
-                    <AutoCompleteTextView
+                    <Spinner
                         android:id="@+id/inputEstado"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="Estado"
-                        android:inputType="none"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:hint="Género *"
                         android:importantForAccessibility="yes"
                         android:clickable="true"
                         android:layout_gravity="center_vertical"
@@ -188,13 +263,11 @@
                         app:hintTextColor="@color/blue"
                         android:textColorHint="@color/gray_500"
                         app:boxStrokeColor="@color/blue"
-                        android:layout_marginBottom="20dp"
-                        android:completionThreshold="1"
                         android:popupBackground="@color/white"
-                        app:simpleItems="@array/state_options"
+                        android:entries="@array/state_options"
                         />
 
-                </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -270,4 +343,4 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-
+</androidx.constraintlayout.widget.ConstraintLayout>

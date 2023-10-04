@@ -52,6 +52,7 @@ class EditProfileFragment : Fragment() {
     ): View {
         _binding = FragmentEditProfileBinding.inflate(inflater, container, false)
         var root: View = binding.root
+
         initializeObservers()
         initializeAceptarCambiosButton()
         initializeCancelarCambiosButton()
@@ -77,6 +78,7 @@ class EditProfileFragment : Fragment() {
         binding.username.text = name
         binding.inputNombre.setText(user.firstName)
         binding.inputPrimerApellido.setText(user.lastName)
+        binding.inputSegundoApellido.setText(user.secondLastName)
         binding.inputEdad.setText(user.age.toString())
         val genderOptions = resources.getStringArray(R.array.gender_options)
         val genderPosition = genderOptions.indexOf(user.gender)
@@ -93,7 +95,6 @@ class EditProfileFragment : Fragment() {
             // Si se encuentra la posición, selecciona el elemento correspondiente en el Spinner
             binding.inputEstado.setSelection(statePosition)
         }
-        binding.inputEstado.setText(user.state, false)
         // binding.profileImage.setImageResource(user.profilePicture)
     }
 
@@ -103,7 +104,7 @@ class EditProfileFragment : Fragment() {
             user.userId,
             binding.inputNombre.text.toString(),
             binding.inputPrimerApellido.text.toString(),
-            user.secondLastName,
+            binding.inputSegundoApellido.text.toString(),
             user.email,
             user.password ?: "EstoNoDeberiaEstarAqui",
             binding.inputTelefono.text.toString(),
@@ -142,7 +143,40 @@ class EditProfileFragment : Fragment() {
 
             // Si la edad es válida, elimina cualquier mensaje de error anterior
             binding.inputEdad.error = null
-
+            if (binding.inputNombre.text.toString().isEmpty()) {
+                binding.inputNombre.error = "El nombre no puede estar vacío"
+                return@setOnClickListener
+            }
+            if (binding.inputNombre.text.toString().any { it.isDigit() }) {
+                binding.inputNombre.error = "El nombre no puede contener números"
+                return@setOnClickListener
+            }
+            binding.inputNombre.error = null
+            if (binding.inputPrimerApellido.text.toString().isEmpty()) {
+                binding.inputPrimerApellido.error = "El primer apellido no puede estar vacío"
+                return@setOnClickListener
+            }
+            if (binding.inputPrimerApellido.text.toString().any { it.isDigit() }) {
+                binding.inputPrimerApellido.error =
+                    "El primer apellido no puede contener números"
+                return@setOnClickListener
+            }
+            binding.inputPrimerApellido.error = null
+            if (binding.inputEdad.text.toString().isEmpty()) {
+                binding.inputEdad.error = "La edad no puede estar vacía"
+                return@setOnClickListener
+            }
+            if (binding.inputSegundoApellido.text.toString().any { it.isDigit() }) {
+                binding.inputSegundoApellido.error =
+                    "El segundo apellido no puede contener números"
+                return@setOnClickListener
+            }
+            binding.inputEdad.error = null
+            if (binding.inputTelefono.text.toString().isEmpty()) {
+                binding.inputTelefono.error = "El teléfono no puede estar vacío"
+                return@setOnClickListener
+            }
+            binding.inputTelefono.error = null
             // Procede con la actualización del usuario
             updateUser()
             Toast.makeText(
@@ -154,40 +188,6 @@ class EditProfileFragment : Fragment() {
             transaction.replace(R.id.frame_layout, ProfileFragment())
             transaction.addToBackStack("profileFragment")
             transaction.commit()
-            if (binding.inputNombre.text.toString().isNotEmpty() &&
-                binding.inputPrimerApellido.text.toString().isNotEmpty() &&
-                binding.inputEdad.text.toString().isNotEmpty() &&
-                binding.inputSexo.text.toString().isNotEmpty() &&
-                binding.inputTelefono.text.toString().isNotEmpty() &&
-                binding.inputEstado.text.toString().isNotEmpty()
-            ) {
-
-                if (binding.inputNombre.text.toString().any { it.isDigit() } ||
-                    binding.inputPrimerApellido.text.toString().any { it.isDigit() } ||
-                    binding.inputSexo.text.toString().any { it.isDigit() }
-                ) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Los campos de nombre, apellido y género no pueden contener números",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    updateUser()
-                    Toast.makeText(
-                        requireContext(),
-                        "Los cambios fueron realizados con éxito",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    val transaction = requireActivity().supportFragmentManager.beginTransaction()
-                    transaction.replace(R.id.frame_layout, ProfileFragment())
-                    transaction.addToBackStack("profileFragment")
-                    transaction.commit()
-                }
-            } else {
-                Toast.makeText(
-                    requireContext(), "Debes llenar todos los campos", Toast.LENGTH_SHORT
-                ).show()
-            }
         }
     }
 
