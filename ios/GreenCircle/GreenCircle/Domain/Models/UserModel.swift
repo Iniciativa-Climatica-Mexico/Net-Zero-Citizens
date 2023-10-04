@@ -19,7 +19,7 @@ struct User: Codable {
     var secondLastName: String?
     var email: String
     var password: String?
-    var phoneNumber: String
+    var phoneNumber: String?
     var age: Int
     var state: String
     var gender: String
