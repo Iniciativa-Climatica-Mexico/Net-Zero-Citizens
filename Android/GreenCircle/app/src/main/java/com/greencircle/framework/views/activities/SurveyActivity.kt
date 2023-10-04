@@ -25,6 +25,7 @@ class SurveyActivity : AppCompatActivity() {
     private var currentProgress = 0
     private var totalQuestions = 0
     lateinit var userId: UUID
+    private val answeredQuestions = mutableSetOf<UUID>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initializeBinding()
@@ -104,9 +105,12 @@ class SurveyActivity : AppCompatActivity() {
     }
 
     fun onQuestionAnswered(questionId: UUID, answer: String) {
-        viewModel.onQuestionAnswered(questionId, answer)
-        currentProgress++
-        updateProgressBar()
+        if (!answeredQuestions.contains(questionId)) {
+            viewModel.onQuestionAnswered(questionId, answer)
+            answeredQuestions.add(questionId)
+            currentProgress++
+            updateProgressBar()
+        }
     }
 
     private fun goToMain() {

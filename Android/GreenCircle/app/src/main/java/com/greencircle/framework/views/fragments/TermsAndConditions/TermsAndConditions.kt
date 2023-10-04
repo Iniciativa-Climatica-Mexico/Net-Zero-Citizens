@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.greencircle.R
 
 class TermsAndConditions : Fragment() {
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -22,7 +23,6 @@ class TermsAndConditions : Fragment() {
 
         val dismissButton = view.findViewById<Button>(R.id.dismiss_button)
         dismissButton.setOnClickListener {
-            // go back one fragment
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
         return view
