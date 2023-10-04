@@ -1,89 +1,15 @@
 //
-//  RegisterCompanyView.swift
+//  ProvPrivacyPolicyTextView.swift
 //  GreenCircle
 //
-//  Created by Ricardo Adolfo Fernández Alvarado on 19/09/23.
+//  Created by Gamaliel Marines on 10/4/23.
 //
 
+import Foundation
 import SwiftUI
-import GoogleSignInSwift
 
-struct CompanyRegisterView: View {
-  var goLogin: () -> Void
-  var goForm: () -> Void
-  var goMainMenu: () -> Void
-
-  @StateObject var viewModel = LoginViewModel()
-  @EnvironmentObject var user: UserData
-  @State private var isPrivacyPolicyVisible = false
-  private let privacyPolicyTextView = PrivacyPolicyTextView(dismiss: .constant(false))
-    
-  var body: some View {
-    ZStack {
-
-      BackgroundView()
-
-      VStack(spacing: 40) {
-        HeaderView(
-          title: "Crear cuenta de empresa",
-          subTitle: "Registrate con tu cuenta preferida")
-
-        Spacer()
-
-        VStack {
-          GoogleSignInButton(style: .wide) {
-            Task {
-              let state = await viewModel
-                .handleGoogleSignIn(userData: user)
-              switch state {
-              case .newUser:
-                goForm()
-              case .success:
-                goMainMenu()
-              case .fail:
-                break
-              }
-                        }
-                    }
-                    .alert("Algo salió mal", isPresented: $viewModel.showAlert) {
-                        Button("Entendido", role: .cancel) {}
-                    } message: {
-                        Text("Intenta de nuevo por favor")
-                    }
-                    .padding(.horizontal)
-                }
-
-                Spacer()
-
-                Divider().padding(.horizontal)
-
-                HStack {
-                    Text("¿No eres un proveedor?")
-                    Spacer()
-                    LinkButton("Inicia Sesión", buttonColor: .blue) {
-                        goLogin()
-                    }
-                }
-                .padding(.horizontal)
-
-                LinkButton("Aviso de privacidad", buttonColor: .blue) {
-                    isPrivacyPolicyVisible.toggle()
-                }
-                .padding(.bottom)
-                
-            }
-            .foregroundColor(Color("MainText"))
-        }
-        .sheet(isPresented: $isPrivacyPolicyVisible) {
-            privacyPolicyTextView
-        }
-    }
-}
-
-/*
-struct PrivacyPolicyView: View {
+struct PrivacyPolicyTextView: View {
     @Binding var dismiss: Bool
-
     var body: some View {
         ScrollView {
             VStack {
@@ -144,12 +70,6 @@ struct PrivacyPolicyView: View {
             }
             .padding()
         }
+        }
     }
-}
 
-struct CompanyRegisterView_Previews: PreviewProvider {
-    static var previews: some View {
-        CompanyRegisterView(goLogin: {}, goForm: {}, goMainMenu: {})
-    }
-}
-*/
