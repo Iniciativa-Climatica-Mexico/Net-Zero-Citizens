@@ -10,7 +10,7 @@ import Foundation
 // swiftlint:disable identifier_name
 
 /// Struct representando el usuario
-struct UserAuth: Codable, Identifiable {
+struct UserAuth: Codable, Identifiable, Equatable {
   var id: String {uuid}
   
   var first_name: String
