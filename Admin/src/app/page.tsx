@@ -27,9 +27,12 @@ import { CellAction } from '@/components/cellAction'
 import ModalProveedor from '@/components/modalProveedor'
 import Image from 'next/image'
 
+export type tabs = 'pending_approval' | 'approved' | 'no_user'
+
 export default function Home() {
   const [selectedCompany, setSelectedCompany] = useState<Company>({
     companyId: '',
+    userId: null,
     name: '',
     profilePicture: '',
     state: '',
@@ -56,7 +59,7 @@ export default function Home() {
   const [pendingCompanies, setPendingCompanies] = useState<Company[]>([])
   const [approvedCompanies, setApprovedCompanies] = useState<Company[]>([])
   const [searchTerm, setSearchTerm] = useState('')
-  const [activeTab, setActiveTab] = useState<'pending_approval' | 'approved'>(
+  const [activeTab, setActiveTab] = useState<tabs>(
     'pending_approval'
   )
 
@@ -88,7 +91,10 @@ export default function Home() {
       ? pendingCompanies?.filter((company) =>
         company.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
-      : approvedCompanies?.filter((company) =>
+      : activeTab === 'approved' ? approvedCompanies?.filter((company) =>
+        company.name.toLowerCase().includes(searchTerm.toLowerCase())
+      ) : approvedCompanies?.filter((company) =>
+        company.userId === null && 
         company.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
 
@@ -109,6 +115,7 @@ export default function Home() {
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">Imagen</TableHead>
+          { activeTab === 'no_user' ? <TableHead>Token de registro</TableHead> : null}
           <TableHead>Nombre</TableHead>
           <TableHead>Correo</TableHead>
           <TableHead>Ubicación</TableHead>
@@ -137,6 +144,12 @@ export default function Home() {
                 />
               }
             </TableCell>
+            { activeTab === 'no_user' ? <TableCell
+              className="cursor-pointer"
+              onClick={() => handleTableRowClick(company)}
+            >
+              {company.companyId}
+            </TableCell> : null}
             <TableCell
               className="cursor-pointer"
               onClick={() => handleTableRowClick(company)}
@@ -225,6 +238,12 @@ export default function Home() {
               onClick={() => setActiveTab('approved')}
             >
               Aprobados
+            </TabsTrigger>
+            <TabsTrigger
+              value="no_user"
+              onClick={() => setActiveTab('no_user')}
+            >
+              Sin Responsable
             </TabsTrigger>
           </TabsList>
           <TabsContent value={activeTab}>

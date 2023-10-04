@@ -27,7 +27,7 @@ import Image from 'next/image'
 export default function Home() {
   const [SelectedComplaint, setSelectedComplaint] = useState<CompanyComplaints>(
     {
-      companyId: "",
+      companyId: '',
       name: '',
       profilePicture: '',
       numberComplaints: 0,

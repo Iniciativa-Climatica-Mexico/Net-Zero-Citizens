@@ -3,8 +3,9 @@ import * as UserService from '../services/users.service'
 import { unbindUserFromCompany } from '../services/company.service'
 import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
-import { deleteAllReviewsByUser } from '../services/review.service'
+import { deleteAllReviewsFromUser } from '../services/review.service'
 import { updateAnswersByUserId } from '../services/survey.service'
+import { deleteAllComplaintsFromUser } from '../services/complaints.service'
 
 /**
  * @brief
@@ -176,8 +177,9 @@ export const deleteUserById: RequestHandler<
 
       // Actualizar las relaciones del usuario
       await unbindUserFromCompany(uuid)
-      await deleteAllReviewsByUser(uuid)
+      await deleteAllReviewsFromUser(uuid)
       await updateAnswersByUserId(uuid)
+      await deleteAllComplaintsFromUser(uuid)
 
       if(!user) {
         res.status(404).json({ message: 'User not found', status: 404 })

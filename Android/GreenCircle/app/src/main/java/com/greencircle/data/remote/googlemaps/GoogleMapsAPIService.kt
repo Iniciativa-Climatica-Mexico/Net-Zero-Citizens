@@ -1,6 +1,6 @@
 package com.greencircle.data.remote.googlemaps
 
-import com.greencircle.domain.model.googlemaps.CompanyObject
+import com.greencircle.domain.model.googlemaps.Company
 import retrofit2.http.GET
 
 /**
@@ -8,6 +8,6 @@ import retrofit2.http.GET
  * compañias ya aceptadas del backend
  */
 interface GoogleMapsAPIService {
-    @GET("company/geocoding")
-    suspend fun getCompanyList(): CompanyObject
+    @GET("company/geocoding/android")
+    suspend fun getCompanyList(): List<Company>
 }

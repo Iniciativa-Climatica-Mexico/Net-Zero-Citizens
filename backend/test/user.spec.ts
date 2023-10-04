@@ -3,8 +3,8 @@ import chaiExclude from 'chai-exclude'
 import { db, initDB } from '../src/configs/database.config'
 import * as UserService from '../src/services/users.service'
 import { getCompanyByUserId, unbindUserFromCompany } from '../src/services/company.service'
-import { deleteAllReviewsByUser, getReviewByUser } from '../src/services/review.service'
-import { ubindUserFromComplaint } from '../src/services/complaints.service'
+import { deleteAllReviewsFromUser, getReviewByUser } from '../src/services/review.service'
+import { deleteAllComplaintsFromUser, getComplaintsByUser } from '../src/services/complaints.service'
 import { updateAnswersByUserId } from '../src/services/survey.service'
 
 chai.use(chaiExclude)
@@ -69,9 +69,9 @@ describe('UserService', () => {
     it('should get a user by email with role', async () => {
       const res = await UserService.getUserByEmailWithRole(user.email)
       expect(res?.userId).to.equal('8de45630-2e76-4d97-98c2-9ec0d1f3a5b8')
-      expect(res?.roleId).to.equal('ADMIN_ROLE_ID')
-      expect(res?.role.dataValues.ROLE_ID).to.equal('ADMIN_ROLE_ID')
-      expect(res?.role.dataValues.NAME).to.equal('admin')
+      expect(res?.roleId).to.equal('COMAPNY_ROLE_ID')
+      expect(res?.role.dataValues.ROLE_ID).to.equal('COMAPNY_ROLE_ID')
+      expect(res?.role.dataValues.NAME).to.equal('company')
     })
   })
 
@@ -169,9 +169,9 @@ describe('UserService', () => {
 
     it('should return 1 while deleting a user', async () => {
       await unbindUserFromCompany(user.userId)
-      await deleteAllReviewsByUser(user.userId)
+      await deleteAllReviewsFromUser(user.userId)
       await updateAnswersByUserId(user.userId)
-      await ubindUserFromComplaint(user.userId)
+      await deleteAllComplaintsFromUser(user.userId)
 
       const res = await UserService.deleteUserById(newUserInfo.userId)
       expect(res).to.be.equal(1)
@@ -179,7 +179,7 @@ describe('UserService', () => {
     
     it('should return null while recovering a deleted user', async () => {
       await unbindUserFromCompany(user.userId)
-      await deleteAllReviewsByUser(user.userId)
+      await deleteAllReviewsFromUser(user.userId)
       await updateAnswersByUserId(user.userId)      
       await UserService.deleteUserById(newUserInfo.userId)
 
@@ -197,12 +197,21 @@ describe('UserService', () => {
       expect(company2?.userId).to.be.undefined
     })
 
-    it('should delete all reviews by user', async () => {
-      const res = await deleteAllReviewsByUser(user.userId)
+    it('should delete all reviews from user', async () => {
+      const res = await deleteAllReviewsFromUser(user.userId)
       expect(res).to.be.equal(1)
 
       const reviews = await getReviewByUser({ pageSize: 10, start: 0, userId: user.userId })
       expect(reviews.count).to.be.equal(0)
     })
+
+    it('should delete all complaints from user', async () => {
+      const res = await deleteAllComplaintsFromUser(user.userId)
+      expect(res).to.be.equal(2)
+
+      const complaints = await getComplaintsByUser({ pageSize: 10, start: 0, userId: user.userId })
+      expect(complaints.count).to.be.equal(0)
+    }
+    )
   })
 })

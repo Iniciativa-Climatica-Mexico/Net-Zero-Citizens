@@ -43,6 +43,14 @@ class CreateUserViewModel(private val context: Context) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             val result: AuthResponse? = googleAuthRequirement(token)
             _googleLoginResult.postValue(result)
+
+            // Guardar tokens
+            val authToken = result?.tokens?.authToken
+            val refreshToken = result?.tokens?.refreshToken
+            saveTokens(authToken!!, refreshToken!!)
+
+            // Guardar usuario global
+            saveUserSession(result.user)
         }
     }
 
@@ -52,7 +60,13 @@ class CreateUserViewModel(private val context: Context) : ViewModel() {
      * @param userId El ID del usuario que se va a actualizar.
      * @param userInfo La información actualizada del usuario.
      */
-    fun updateUser(userId: UUID, userInfo: UserAPIService.UpdateUserRequest, authToken: String) {
+    fun updateUser(userId: UUID, userInfo: UserAPIService.UpdateUserRequest) {
+        val tokens = recoverTokens()
+        var authToken = ""
+        if (tokens != null) {
+            authToken = tokens.authToken
+        }
+
         viewModelScope.launch(Dispatchers.IO) {
             val result: UserAPIService.UpdateUserResponse? =
                 updateUserRequirement(userId, userInfo, authToken)
@@ -73,5 +87,12 @@ class CreateUserViewModel(private val context: Context) : ViewModel() {
                 }
             }
         }
+    }
+
+    companion object {
+        var phone: String = ""
+        var age: String = ""
+        var state: String = ""
+        var gender: String = ""
     }
 }

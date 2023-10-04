@@ -2,9 +2,12 @@ package com.greencircle.data.remote.company
 
 import com.greencircle.domain.model.company.Companies
 import com.greencircle.domain.model.company.Company
+import java.util.UUID
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 /**
@@ -49,4 +52,24 @@ interface CompanyAPIService {
      */
     @POST("company/create")
     suspend fun createCompany(@Body request: CreateCompanyRequest): CreateCompanyResponse
+    data class AssignCompanyRequestBody(
+        val userId: UUID
+    )
+
+    data class AssignCompanyResponse(
+        val message: String?,
+    )
+
+    /**
+     * Asigna una empresa a un usuario en la API.
+     *
+     * @param body La solicitud de asignación de compañía a usuario
+     * @return Un objeto [AssignCompanyResponse] que puede contener el id de la nueva empresa,
+     * un mensaje y un error.
+     */
+    @PUT("company/{companyId}/assign")
+    suspend fun assignCompany(
+        @Path("companyId") companyId: UUID,
+        @Body body: AssignCompanyRequestBody
+    ): Response<AssignCompanyResponse>
 }
