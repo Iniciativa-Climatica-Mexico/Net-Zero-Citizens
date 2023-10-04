@@ -1,30 +1,19 @@
 'use client' 
 import { useState, useEffect } from 'react'
-import { Company, updateCompany } from '@/api/v1/company'
 import { ComplaintsWithUser } from '@/@types/complaint/complaint'
 import { getComplaintsWithUsers } from '@/api/v1/complaints'
-import { Complaint } from '@/@types/complaint/complaint'
-import { getCompaniesWithComplaints } from '@/api/v1/complaints'
 import { formatDate } from '@/utils/dateUtils'
-import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-//import LogoSm from '@/public/images/logo-sm.svg'
 
-import { CellAction } from '@/components/cellAction'
-import Image from 'next/image'
-import { userAgent } from 'next/server'
 import { usePathname, useRouter } from 'next/navigation'
 
 
@@ -51,20 +40,13 @@ export default function Home() {
   const [complaintsWithUsers, setComplaintsWithUsers] = useState<
     ComplaintsWithUser[]
   >([])
-  const [searchTerm, setSearchTerm] = useState('')
-  const [activeTab, setActiveTab] = useState<'pending_approval' | 'approved'>(
-    'pending_approval'
-  )
 
 const path = usePathname()
-console.log(path)
 const id = path.split('/')[2]
-console.log(id)
-
-
 
   const handleTableRowClick = (complaint: ComplaintsWithUser) => {
     setSelectedComplaint(complaint)
+  
   }
 
   const fetchComplaintsWithUsers = async (id: string) => {
@@ -81,10 +63,10 @@ console.log(id)
 
   const handlePageChange = (newPage: number) => setCurrentPage(newPage)
 
+
+
   useEffect(() => {
     fetchComplaintsWithUsers(id)
-    console.log("complaints with users")
-    console.log(complaintsWithUsers)
   }, [])
 
 
@@ -95,7 +77,6 @@ console.log(id)
         <div className="flex items-center py-2 gap-x-2">
         </div>
         <Table className="border border-[#C1C9D2] rounded">
-          <TableCaption></TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead>Usuario que Reporta</TableHead>
@@ -105,7 +86,8 @@ console.log(id)
             </TableRow>
           </TableHeader>
           <TableBody>
-          {complaintsWithUsers?.map((company) => (
+        {complaintsWithUsers?.map((company) => (
+
               <TableRow key={company.complaintId}>
                 <TableCell
                   className="cursor-pointer"
@@ -114,21 +96,30 @@ console.log(id)
                 </TableCell>
                 <TableCell
                   className="cursor-pointer"
-                  onClick={() => handleTableRowClick(company)}
                 >
                   {company.complaintSubject}
                 </TableCell>
                 <TableCell
-                  className="cursor-pointer"
-                  onClick={() => handleTableRowClick(company)}
+                  className="cursor-pointer" style={{maxWidth: '150px', maxLines: '3' , overflow: 'hidden', textOverflow: 'ellipsis'}}
                 >
                   {company.complaintDescription}
                 </TableCell>
                 <TableCell
                   className="cursor-pointer"
-                  onClick={() => handleTableRowClick(company)}
                 >
                   {formatDate(company.createdAt) ?? 'N/A'}
+                </TableCell>
+                <TableCell
+                  className="cursor-pointer"
+                  onClick={() => company.complaintStatus === 'invalid' } 
+                >
+                  <Button className="bg-[#F2F5FA] rounded-lg p-2">Descartar</Button>
+                </TableCell>
+                <TableCell
+                  className="cursor-pointer"
+                  onClick={() => company.complaintStatus === 'inactive'}
+                >
+                  <Button className="bg-[#F2F5FA] rounded-lg p-2">Rechazar</Button>
                 </TableCell>
               </TableRow>
             ))}
