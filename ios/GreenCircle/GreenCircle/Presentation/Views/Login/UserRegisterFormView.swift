@@ -82,7 +82,9 @@ struct UserRegisterFormView: View {
             goMainMenu()
           }
         }
-      }).alert("Oops! Algo salió mal",
+      })
+      .padding(.horizontal)
+      .alert("Oops! Algo salió mal",
                isPresented: $viewModel.showAlert) {
         Button("Ok", role: .cancel){}
       } message: {
@@ -102,13 +104,5 @@ struct UserRegisterFormView_Previews: PreviewProvider {
   
   static var previews: some View {
     UserRegisterFormView(goMainMenu: {})
-      .environmentObject(UserData(
-        UserAuth(first_name: "Ricardo",
-                 last_name: "Fernandez",
-                 uuid: "1",
-                 email: "ricardo@mail.com",
-                 login_type: "google",
-                 picture: "picture",
-                 roles: "new_user")))
   }
 }
