@@ -82,7 +82,9 @@ struct UserRegisterFormView: View {
             goMainMenu()
           }
         }
-      }).alert("Oops! Algo salió mal",
+      })
+      .padding(.horizontal)
+      .alert("Oops! Algo salió mal",
                isPresented: $viewModel.showAlert) {
         Button("Ok", role: .cancel){}
       } message: {

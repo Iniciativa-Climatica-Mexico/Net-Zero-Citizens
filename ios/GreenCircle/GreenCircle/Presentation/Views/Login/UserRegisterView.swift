@@ -40,7 +40,7 @@ struct UserRegisterView: View {
           SecureInputFormView(bindingValue: $viewModel.formState.confirmPassword,
                         label: "Confimar contraseña", prompt: "Contraseña")
           .padding(.bottom)
-          MainButton("Crear Cuenta", width: 400){
+          MainButton("Crear Cuenta") {
             Task {
               let res = await viewModel.registerUser()
               if res == .newUser {
