@@ -20,11 +20,13 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 //import LogoSm from '@/public/images/logo-sm.svg'
 
-import { CellAction } from '@/components/cellAction'
 import ModalProveedor from '@/components/modalProveedor'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 export default function Home() {
+  const router = useRouter()
+
   const [SelectedComplaint, setSelectedComplaint] = useState<CompanyComplaints>(
     {
       companyId: '',
@@ -34,20 +36,16 @@ export default function Home() {
       complaints: [],
     }
   )
-  const [modalOpen, setIsModalOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 8
   const [companiesWithComplaints, setCompaniesWithComplaints] = useState<
     CompanyComplaints[]
   >([])
   const [searchTerm, setSearchTerm] = useState('')
-  const [activeTab, setActiveTab] = useState<'pending_approval' | 'approved'>(
-    'pending_approval'
-  )
 
   const handleTableRowClick = (company: CompanyComplaints) => {
     setSelectedComplaint(company)
-    setIsModalOpen(true)
+    router.push(`/complaints/${company.companyId}`)
   }
 
   const fetchCompaniesWithComplaints = async () => {
@@ -69,75 +67,61 @@ export default function Home() {
   }, [])
 
   return (
-    <>
-      {modalOpen && (
-        <div className="fixed top-0 left-0 right-0 bottom-0 bg-black opacity-60 z-20"></div>
-      )}
-      {modalOpen && (
-        <div className="flex flex-col items-center justify-center h-screen absolute left-1/2 right-1/2 z-30">
-          {/* <ModalProveedor
-            selectedCompany={selectedCompany}
-            setIsModalOpen={setIsModalOpen}
-            activeTab={activeTab}
-          /> */}
-        </div>
-      )}
-      <main className="border border-[#C1C9D2] m-[30px] mt-[15px] p-[20px] pb-5 rounded-lg">
-        <h1 className="text-[20px] font-bold">Descubre Proveedores</h1>
-        <div className="flex items-center py-4 gap-x-2">
-          <Input
-            placeholder="Busca un proveedor"
-            className="max-w-sm"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-        <Table className="border border-[#C1C9D2] rounded">
-          <TableCaption></TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[100px]">Imagen</TableHead>
-              <TableHead>Nombre</TableHead>
-              <TableHead>Última fecha de reporte</TableHead>
-              <TableHead>Número de veces reportado</TableHead>
+    <main className="border border-[#C1C9D2] m-[30px] mt-[15px] p-[20px] pb-5 rounded-lg">
+      <h1 className="text-[20px] font-bold">Proveedores Reportados: </h1>
+      <div className="flex items-center py-4 gap-x-2">
+        <Input
+          placeholder="Busca un proveedor"
+          className="max-w-sm"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+      <Table className="border border-[#C1C9D2] rounded">
+        <TableCaption></TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[100px]">Imagen</TableHead>
+            <TableHead>Nombre</TableHead>
+            <TableHead>Última fecha de reporte</TableHead>
+            <TableHead>Número de veces reportado</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {companiesWithComplaints?.map((company) => (
+            <TableRow key={company.companyId}>
+              <TableCell
+                className="cursor-pointer"
+                onClick={() => handleTableRowClick(company)}
+              >
+                {company.profilePicture != null && (
+                  <Avatar>
+                    <AvatarImage src={company.profilePicture} />
+                  </Avatar>
+                )}
+              </TableCell>
+              <TableCell
+                className="cursor-pointer"
+                onClick={() => handleTableRowClick(company)}
+              >
+                {company.name}
+              </TableCell>
+              <TableCell
+                className="cursor-pointer"
+                onClick={() => handleTableRowClick(company)}
+              >
+                {formatDate(company.complaints[0].createdAt) ?? 'N/A'}
+              </TableCell>
+              <TableCell
+                className="cursor-pointer"
+                onClick={() => handleTableRowClick(company)}
+              >
+                {company.numberComplaints}
+              </TableCell>
             </TableRow>
-          </TableHeader>
-          <TableBody>
-            {companiesWithComplaints?.map((company) => (
-              <TableRow key={company.companyId}>
-                <TableCell
-                  className="cursor-pointer"
-                  onClick={() => handleTableRowClick(company)}
-                >
-                  {company.profilePicture != null && (
-                    <Avatar>
-                      <AvatarImage src={company.profilePicture} />
-                    </Avatar>
-                  )}
-                </TableCell>
-                <TableCell
-                  className="cursor-pointer"
-                  onClick={() => handleTableRowClick(company)}
-                >
-                  {company.name}
-                </TableCell>
-                <TableCell
-                  className="cursor-pointer"
-                  onClick={() => handleTableRowClick(company)}
-                >
-                  {formatDate(company.complaints[0].createdAt) ?? 'N/A'}
-                </TableCell>
-                <TableCell
-                  className="cursor-pointer"
-                  onClick={() => handleTableRowClick(company)}
-                >
-                  {company.numberComplaints}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </main>
-    </>
+          ))}
+        </TableBody>
+      </Table>
+    </main>
   )
 }

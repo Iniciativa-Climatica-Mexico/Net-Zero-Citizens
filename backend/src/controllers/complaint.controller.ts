@@ -98,6 +98,27 @@ export const getComplaintsByCompany: RequestHandler<
   })
 }
 
+export const getDetailsComplaintsByCompany: RequestHandler<
+  { companyId: string },
+  Paginator<Complaint>,
+  NoRecord,
+  NoRecord
+> = async (req, res) => {
+  const { companyId } = req.params
+  const params = {
+    start: req.query.start || 0,
+    pageSize: req.query.pageSize || 10,
+    companyId: companyId,
+  }
+  const complaint = await ComplaintService.getComplaintsByCompany(params)
+  res.json({
+    rows: complaint.rows,
+    start: params.start,
+    pageSize: params.pageSize,
+    total: complaint.count,
+  })
+}
+
 /**
  * @brief
  * Función del controlador que devuelve las complaint por userId
@@ -154,9 +175,15 @@ export const addComplaint: RequestHandler = async (req, res) => {
       complaintSubject,
       complaintDescription,
       complaintStatus,
-    } = req.body.complaint
+    } = req.body
 
-    if (!userId || !companyId || !complaintSubject || !complaintStatus) {
+    if (
+      !userId ||
+      !companyId ||
+      !complaintSubject ||
+      !complaintDescription ||
+      !complaintStatus
+    ) {
       return res
         .status(400)
         .json({ complaintId: '', error: 'Missing required data!' })
@@ -200,27 +227,29 @@ export const addComplaint: RequestHandler = async (req, res) => {
  */
 
 export const updateComplaintStatus: RequestHandler<
-  { complaintId: string },
-  string,
-  { complaintStatus: typeof Complaint.prototype.complaintStatus },
-  NoRecord
+  NoRecord,
+  { message: string },
+  ComplaintService.ComplaintStatusType,
+  undefined
 > = async (req, res) => {
-  const { complaintId } = req.params
-  const { complaintStatus } = req.body
+  const complaintId = req.body.complaintId
+  const complaintStatus = req.body.complaintStatus
 
-  if (!complaintId) {
-    res.status(400).json('Missing complaintId!')
-    return
+  if (
+    !(
+      complaintStatus == 'active' ||
+      complaintStatus == 'inactive' ||
+      complaintStatus == 'invalid'
+    )
+  ) {
+    return res.status(400).json({ message: 'Invalid status' })
   }
-  if (!complaintStatus) {
-    res.status(400).json('Missing status!')
-    return
-  }
+
   try {
     await ComplaintService.updateComplaintStatus(complaintId, complaintStatus)
-    res.status(200).send('Updated complaint status')
+    res.status(200).json({ message: 'Complaint updated' })
   } catch (error) {
     console.log(error)
-    res.status(500).send('Error')
+    res.status(500).json({ message: 'Error' })
   }
 }
