@@ -20,13 +20,12 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 //import LogoSm from '@/public/images/logo-sm.svg'
 
-import { CellAction } from '@/components/cellAction'
 import ModalProveedor from '@/components/modalProveedor'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
 export default function Home() {
-const router = useRouter()
+  const router = useRouter()
 
   const [SelectedComplaint, setSelectedComplaint] = useState<CompanyComplaints>(
     {
