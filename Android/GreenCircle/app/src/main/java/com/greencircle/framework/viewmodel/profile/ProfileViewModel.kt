@@ -7,6 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.greencircle.domain.model.profile.Profile
 import com.greencircle.domain.usecase.auth.RecoverTokensRequirement
+import com.greencircle.domain.usecase.auth.SaveTokensRequirement
+import com.greencircle.domain.usecase.auth.SaveUserSessionRequirement
+import com.greencircle.domain.usecase.auth.UpdateTokensDataRequirement
 import com.greencircle.domain.usecase.profile.EditProfileRequirement
 import com.greencircle.domain.usecase.profile.ProfileListRequirement
 import com.greencircle.domain.usecase.user.DeleteUserRequirement
@@ -21,6 +24,9 @@ class ProfileViewModel(private val context: Context) : ViewModel() {
     private val editUserRequirement = EditProfileRequirement()
     private val deleteUser = DeleteUserRequirement()
     private val recoverTokens = RecoverTokensRequirement(context)
+    private val updateTokensData = UpdateTokensDataRequirement()
+    private val saveTokens = SaveTokensRequirement(context)
+    private val saveUserSession = SaveUserSessionRequirement(context)
     private lateinit var userId: UUID
     fun setUserId(userId: UUID) {
         this.userId = userId
@@ -45,7 +51,23 @@ class ProfileViewModel(private val context: Context) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             val tokens = recoverTokens() ?: return@launch
             val authToken = tokens.authToken
-            val response = editUserRequirement(authToken, userId, user)
+            val result = editUserRequirement(authToken, userId, user)
+            // Actualizar información de los tokens
+            if (result != null) {
+                val tokens = recoverTokens()
+                val cauthToken = tokens?.authToken
+                val res = cauthToken?.let { updateTokensData(it) }
+
+                // Guardar tokens
+                val authToken = res?.tokens?.authToken
+                val refreshToken = res?.tokens?.refreshToken
+                saveTokens(authToken!!, refreshToken!!)
+
+                // Guardar usuario global
+                if (res != null) {
+                    saveUserSession(res.user)
+                }
+            }
         }
     }
 

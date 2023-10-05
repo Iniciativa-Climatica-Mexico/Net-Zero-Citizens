@@ -350,7 +350,7 @@ const getCompanyScore = async (id: string): Promise<Review[] | null> => {
     },
     attributes: {
       include: [[fn('AVG', col('score')), 'score'], 'review'],
-      exclude: ['reviewId', 'userId', 'createdAt', 'updatedAt'],
+      exclude: ['score','review','reviewId', 'userId', 'createdAt', 'updatedAt'],
     },
   })
 }
