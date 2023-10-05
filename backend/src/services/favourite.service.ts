@@ -55,7 +55,7 @@ export const getFavouriteById = async (
 
 export const deleteFavouriteById = async (
   favouriteId: string
-): Promise<Number> => {
+): Promise<number> => {
   const favourite = await getFavouriteById(favouriteId)
   if (favourite) {
     return await Favourite.destroy({

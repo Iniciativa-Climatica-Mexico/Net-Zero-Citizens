@@ -130,7 +130,7 @@ export default function ModalProveedor({
       fetchApprovedCompanies()
     }
   }
-  
+
   return (
     <div>
       {viewModal && (
@@ -196,7 +196,7 @@ export default function ModalProveedor({
                 />
               )}
 
-              <aside className="basis-6/12 pl-[15px] pr-[25px] py-[20px] text-[14px]">
+              <aside className="basis-6/12 pl-[15px] pr-[25px] py-[20px] pb-[0px] text-[14px]">
                 <h2 className="text-[20px] font-bold">{selectedCompany.name}</h2>
                 <section className="flex items-center text-[#589A74] py-[10px] gap-x-2">
                   <PlaceIcon color="primary" />
@@ -236,7 +236,7 @@ export default function ModalProveedor({
                 <section className="flex justify-between items-end mb-3">
                   <a
                     href={selectedCompany.pdfCurriculumUrl}
-                    className="min-w-[31%]"
+                    className="min-w-[31%] no-underline text-[#333333] font-medium"
                     target="_blank"
                   >
                     <div className="border px-[5px] rounded flex flex-col justify-center items-center">
@@ -246,7 +246,7 @@ export default function ModalProveedor({
                   </a>
                   <a
                     href={selectedCompany.pdfDicCdmxUrl}
-                    className="min-w-[31%]"
+                    className="min-w-[31%] no-underline text-[#333333] font-medium"
                     target="_blank"
                   >
                     <div className="border px-[5px] rounded flex flex-col justify-center items-center">
@@ -256,7 +256,7 @@ export default function ModalProveedor({
                   </a>
                   <a
                     href={selectedCompany.pdfPeeFideUrl}
-                    className="min-w-[31%]"
+                    className="min-w-[31%]  no-underline text-[#333333] font-medium"
                     target="_blank"
                   >
                     <div className="border px-[5px] rounded flex flex-col justify-center items-center">
@@ -270,7 +270,7 @@ export default function ModalProveedor({
                 <section className="flex justify-between items-end mb-3">
                   <a
                     href={selectedCompany.pdfGuaranteeSecurityUrl}
-                    className="min-w-[31%]"
+                    className="min-w-[31%] no-underline text-[#333333] font-medium"
                     target="_blank"
                   >
                     <div className="border px-[5px] rounded flex flex-col justify-center items-center">
@@ -280,7 +280,7 @@ export default function ModalProveedor({
                   </a>
                   <a
                     href={selectedCompany.pdfActaConstitutivaUrl}
-                    className="min-w-[31%]"
+                    className="min-w-[31%] no-underline text-[#333333] font-medium"
                     target="_blank"
                   >
                     <div className="border px-[5px] rounded flex flex-col justify-center items-center">
@@ -290,7 +290,7 @@ export default function ModalProveedor({
                   </a>
                   <a
                     href={selectedCompany.pdfIneUrl}
-                    className="min-w-[31%]"
+                    className="min-w-[31%] no-underline text-[#333333] font-medium"
                     target="_blank"
                   >
                     <div className="border px-[5px] rounded flex flex-col justify-center items-center">
@@ -300,9 +300,14 @@ export default function ModalProveedor({
                   </a>
                 </section>
                 }
-                <p className="text-right text-[#858585] text-[14px]">
-                  {formatDate(selectedCompany.createdAt)}
-                </p>
+                <section className='flex justify-end'>
+                  <p className="text-right text-[#858585] text-[14px]">
+                    Fecha que se registro:
+                  </p>
+                  <p className="text-right text-[#858585] text-[14px] ml-2">
+                    {formatDate(selectedCompany.createdAt)}
+                  </p>
+                </section>
               </aside>
             </article>
             <section className="text-[13px] px-[35px] pt-[25px] w-full">

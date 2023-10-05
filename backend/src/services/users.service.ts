@@ -112,7 +112,7 @@ export type UpdateUserInfoBody = {
   phoneNumber?: string
   age?: number
   state?: string
-  gender?: 'masculine' | 'femenine' | 'other' | 'no_answer'
+  gender?: string
   profilePicture?: string | null
   deviceToken?: string | null
 }

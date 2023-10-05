@@ -14,7 +14,7 @@ class FavouriteUseCase {
   let uRepository = UserRepository.shared
   
   // Obtener los tokens del usuario (userId)
-  let lService = LocalService.shared.getToken()
+  let lService = LocalService.shared.getUserInformation()
   
   /// - Description: Obtener el ID del user para poder crear favorito
   func getLocalUserData() -> AuthResponse? {
@@ -29,6 +29,15 @@ class FavouriteUseCase {
   @MainActor
   func postFavouriteById(favouriteBody: PostFavouriteData) async -> FavouriteCreationResponse? {
     return await fRepository.postFavouriteById(favouriteBody: favouriteBody)
+  }
+  
+  /// - Description: Delete asíncrono de un favorito
+  /// - Parameters:
+  ///    - favouriteId: El id`favouriteId` para eliminar favorito
+  /// - Returns:
+  ///    - `FavouriteDeleteResponse?` objeto representando la respuesta desde backend.
+  func deleteFavouriteById(favouriteId: UUID) async -> FavouriteDeleteResponse? {
+    return await fRepository.deleteFavouriteById(favouriteId: favouriteId)
   }
   
 }

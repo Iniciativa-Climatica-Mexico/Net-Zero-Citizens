@@ -22,6 +22,7 @@ class SurveyViewModel(private val context: Context) : ViewModel() {
 
     val surveyLiveData = MutableLiveData<Survey?>()
     val submitStatusLiveData = MutableLiveData<SubmitStatus>()
+
     private val surveyPendingRequirement = SurveyRequirement()
     private val recoverTokens = RecoverTokensRequirement(context)
 

@@ -13,7 +13,7 @@ struct TabViewImagesProducts: View {
   @Binding var bindImageToDescription: Bool
   @State private var descriptionBind: [Int: String] = [:]
   @State private var nameBind: [Int: String] = [:]
-  
+
   var body: some View {
       VStack {
         TabView(selection: $index) {
@@ -83,10 +83,8 @@ struct ReportReasonView: View {
 }
 
 struct CompanyReportView: View {
-
-    //@ObservedObject var modelCompanyRating: CompanyViewModel
-    @ObservedObject var modelComplaint: CompanyViewModel
-    @ObservedObject var viewModel: ComplaintViewModel
+    @ObservedObject var companyViewModel: CompanyViewModel
+    @ObservedObject var complaintViewModel: ComplaintViewModel
     @Binding var dispScrollView: Bool
     @State var hasTriedToSubmit: Bool = false
     @State var selectedReportReason: String? = nil
@@ -153,7 +151,7 @@ struct CompanyReportView: View {
                         } else {
                             Task {
                                 print("print.......")
-                                print(await viewModel.handleSubmit(complaintSubject: selectedReportReason ?? "", complaintDescription: description.isEmpty ? nil : description))
+                                print(await complaintViewModel.handleSubmit(complaintSubject: selectedReportReason ?? "", complaintDescription: description.isEmpty ? nil : description, companyId: companyViewModel.contentCompany.companyId.uuidString))
                                 showAlert = true
                             }
                         }
@@ -171,7 +169,7 @@ struct CompanyReportView: View {
             }
             .frame(height: 300)
         }
-        .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
+        .padding(EdgeInsets(top: 230, leading: 20, bottom: 0, trailing: 20))
         .foregroundColor(Color("BlackCustom"))
         .alert(isPresented: $showAlert) {
             Alert(title: Text("Confirmación"), message: Text("El reporte ha sido enviado con éxito."), dismissButton: .default(Text("Ok")))
@@ -196,6 +194,9 @@ struct ContactCompanyView: View {
   @State var bindImageToDescription: Bool = false
   @State var stringDescription: String = ""
   @State var showingAlert: Bool = false
+  @State var showingAlertHeart: Bool = false
+  @State var deleteOperation: Bool = false
+  @State var messageAlert: String = ""
   @Binding var emptyHeartFill: Bool
 
   @Environment(\.presentationMode) var presentationMode
@@ -223,19 +224,21 @@ struct ContactCompanyView: View {
                           HStack {
                             Spacer()
                             Button(action: {
-                              if !emptyHeartFill {
-                                Task {
+                              Task {
+                                if !emptyHeartFill {
+                                  showingAlertHeart = true
                                   await favouriteViewModel.postFavouriteById(companyId: contactCompanyViewModel.contentCompany.companyId)
                                   if favouriteViewModel.contentFavourite.message ==
-                                    "Favourite created" {
-                                      emptyHeartFill = true
-                                      showingAlert = true
+                                      "Favourite created" {
+                                    messageAlert = "Se ha agregado a: " + contactCompanyViewModel.contentCompany.name + " a tus favoritos!"
+                                    emptyHeartFill = true
+                                    deleteOperation = false
                                   }
+                                } else {
+                                  deleteOperation = true
+                                  showingAlertHeart = true
+                                  messageAlert = "¿Eliminar a: " + contactCompanyViewModel.contentCompany.name + " de tus favoritos?"
                                 }
-                                /// TODO show alert
-                              } else {
-                                /// TODO : Delete favourite
-                                /// emptyFill = false
                               }
                             }, label: {
                               Image(systemName: emptyHeartFill ? "heart.fill" : "heart")
@@ -243,11 +246,21 @@ struct ContactCompanyView: View {
                                 .font(.system(size: 24))
                                 .padding(EdgeInsets(top: 40, leading: 40, bottom: 0, trailing: 0))
                                 .padding()
-                            }).alert(isPresented: $showingAlert) {
-                              Alert(title: Text("Nuevo favorito!"),
-                                    message: Text("Se agregó: " + contactCompanyViewModel.contentCompany.name +
-                                                  " a tu lista de favoritos"),
-                                    dismissButton: .default(Text("Ok")))
+                            })
+                            .alert(isPresented: $showingAlertHeart) {
+                              if !deleteOperation {
+                                return Alert(title: Text("Éxito"), message: Text(messageAlert))
+                              }
+                              else {
+                                return Alert(title: Text("Confirmar borrar favoritos"), message: Text(messageAlert),
+                                   primaryButton: .destructive(Text("Borrar")) {
+                                  Task {
+                                    emptyHeartFill = false
+                                    try await favouriteViewModel.deleteFavouriteById(favouriteId: favouriteViewModel.contentFavourite.favouriteId)
+                                  }
+                                   },
+                                   secondaryButton: .cancel())
+                              }
                             }
                           }
                         }
@@ -293,7 +306,7 @@ struct ContactCompanyView: View {
                 }
               }
               if key == "Report" {
-                CompanyReportView(modelComplaint: contactCompanyViewModel, viewModel: viewModel, dispScrollView: $dispScrollView).onAppear {
+                CompanyReportView(companyViewModel: contactCompanyViewModel, complaintViewModel: viewModel, dispScrollView: $dispScrollView).onAppear {
                     bindImageToDescription = false
                   }
 
@@ -330,3 +343,4 @@ struct ContactCompanyView: View {
       }
     }
 }
+

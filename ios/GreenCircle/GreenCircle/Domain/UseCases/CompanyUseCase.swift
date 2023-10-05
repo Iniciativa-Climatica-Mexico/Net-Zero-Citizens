@@ -18,15 +18,19 @@ class CompanyUseCase {
   }
   
   /// Llama al repositorio para crear una compañía nueva
-  /// - Parameters:
-  ///   - authToken: token de autenticación del usuario
-  ///   - company: datos de la compañía
+  /// - Parameter company: datos de la compañía
   @MainActor
   func registerCompany(company: PostCompanyData) async {
     await cRepository.postCompany(company: company)
     await uRepository
       .updateUserRole(userId: company.userId!,
                       newRole: "COMAPNY_ROLE_ID")
+  }
+  
+  @MainActor
+  func assignCompanyToUser(companyId: String) async throws {
+    let userId = uRepository.getAuthData()!.user.id
+    try await cRepository.assignCompany(companyId: companyId, userId: userId)
   }
   
   @MainActor

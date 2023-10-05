@@ -28,10 +28,13 @@
     ],
     "quotes": ["error", "single"],
     "semi": ["error", "never"],
-    "no-unused-vars": ["warn", { "vars": "all", "args": "all" }],
+    "no-unused-vars": [
+      "warn",
+      { "vars": "all", "args": "all", "argsIgnorePattern": "^_" }
+    ],
     "@typescript-eslint/no-unused-vars": [
       "warn",
-      { "vars": "all", "args": "all" }
+      { "vars": "all", "args": "all", "argsIgnorePattern": "^_" }
     ]
   }
 }

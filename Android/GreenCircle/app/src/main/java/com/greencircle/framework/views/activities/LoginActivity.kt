@@ -11,6 +11,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
+import com.google.android.material.textfield.TextInputLayout
 import com.greencircle.R
 import com.greencircle.databinding.ActivityLoginBinding
 import com.greencircle.framework.viewmodel.ViewModelFactory
@@ -47,7 +48,6 @@ class LoginActivity : AppCompatActivity() {
                 // Handle the case where the user canceled the registration
             }
         }
-
     private val googleSignInActivityResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -88,6 +88,9 @@ class LoginActivity : AppCompatActivity() {
         registerCompanyOnClickListener()
         registerUserOnClickListener()
 
+        // Login credentials
+        loginCredentialsOnClickListener()
+
         // Google Login
         authUtils.googleLoginListener(binding, this, googleSignInActivityResult)
 
@@ -95,7 +98,6 @@ class LoginActivity : AppCompatActivity() {
         viewModel.googleLoginResult.observe(this) { authResponse ->
             if (authResponse != null) {
                 if (authResponse.user?.roles != "new_user") {
-                    Log.d("Test", "User: ${authResponse.user}")
                     navigateToSurvey()
                 } else {
                     Toast.makeText(
@@ -106,13 +108,47 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 // Handle the case where the Google login failed
                 Toast.makeText(
-                    applicationContext, "Google login failed", Toast.LENGTH_SHORT
+                    applicationContext, "Ocurrió un error", Toast.LENGTH_SHORT
                 ).show()
+            }
+        }
+        viewModel.loginError.observe(this) { error ->
+            if (error) {
+                Toast.makeText(
+                    applicationContext, "Credenciales incorrectas", Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Log.d("LoginActivity", "Login successful")
+                navigateToSurvey()
             }
         }
     }
 
+    // Login
+    private fun loginCredentials() {
+        val emailInputLayout: TextInputLayout = binding.userEmail
+        val passwordInputLayout: TextInputLayout = binding.userPassword
+
+        val email: String = emailInputLayout.editText?.text.toString()
+        val password: String = passwordInputLayout.editText?.text.toString()
+
+        if (email.isNotEmpty() && password.isNotEmpty()) {
+            viewModel.loginCredentials(email, password)
+        } else {
+            Toast.makeText(
+                applicationContext, "Por favor, introduce tus credenciales", Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
     // Métodos para los listeners de los botones de registro
+    private fun loginCredentialsOnClickListener() {
+        val loginCredentialsButton = binding.root.findViewById<View>(R.id.login_credentials)
+        loginCredentialsButton.setOnClickListener {
+            loginCredentials()
+        }
+    }
+
     private fun registerCompanyOnClickListener() {
         val registerCompanyButton = binding.root.findViewById<View>(R.id.login_register_company)
         registerCompanyButton.setOnClickListener {

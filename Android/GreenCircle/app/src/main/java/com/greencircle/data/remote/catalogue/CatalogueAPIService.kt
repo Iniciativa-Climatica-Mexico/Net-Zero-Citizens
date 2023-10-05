@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface CatalogueAPIService {
-    @GET("company/")
+    @GET("company/approved")
     suspend fun getCatalogue(): CatalogueResponse
 
     @GET("company/{id}")

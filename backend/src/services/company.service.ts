@@ -151,7 +151,7 @@ export const getCompaniesWithCoordinates = async (
         city,
         state,
         zipCode,
-      } = company.dataValues
+      } = company
 
       const address = `${street} ${streetNumber}, ${city}, ${state}, ${zipCode}`
 
@@ -354,7 +354,7 @@ const getCompanyScore = async (id: string): Promise<Review[] | null> => {
     },
     attributes: {
       include: [[fn('AVG', col('score')), 'score'], 'review'],
-      exclude: ['reviewId', 'userId', 'createdAt', 'updatedAt'],
+      exclude: ['score','review','reviewId', 'userId', 'createdAt', 'updatedAt'],
     },
   })
 }
@@ -392,7 +392,7 @@ export const assignCompanyUser = async (
     company.userId = userId
     user.companyId = companyId
     user.roleId = 'COMAPNY_ROLE_ID'
-    
+
     await company.save()
     try {
       await user.save()
