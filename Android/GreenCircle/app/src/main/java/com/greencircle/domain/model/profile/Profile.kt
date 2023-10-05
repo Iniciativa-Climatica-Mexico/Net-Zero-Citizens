@@ -13,7 +13,7 @@ data class Profile(
     @SerializedName("phoneNumber") val phoneNumber: String,
     @SerializedName("age") val age: Int,
     @SerializedName("state") val state: String,
-    @SerializedName("gender") val gender: String,
+    @SerializedName("gender") var gender: String,
     @SerializedName("profilePicture") val profilePicture: String?,
     @SerializedName("createdAt") val createdAt: String,
     @SerializedName("updatedAt") val updatedAt: String
