@@ -3,6 +3,7 @@ package com.greencircle.framework.views.fragments.profile
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -80,8 +81,14 @@ class EditProfileFragment : Fragment() {
         binding.inputPrimerApellido.setText(user.lastName)
         binding.inputSegundoApellido.setText(user.secondLastName)
         binding.inputEdad.setText(user.age.toString())
+
+        var validGender = ""
+        if (user.gender == "masculine") validGender = "Masculino"
+        if (user.gender == "femenine") validGender = "Femenino"
+        if (user.gender == "other") validGender = "Otro"
+        if (user.gender == "no_answer") validGender = "Prefiero no decirlo"
         val genderOptions = resources.getStringArray(R.array.gender_options)
-        val genderPosition = genderOptions.indexOf(user.gender)
+        val genderPosition = genderOptions.indexOf(validGender)
 
         if (genderPosition != -1) {
             // Si se encuentra la posición, selecciona el elemento correspondiente en el Spinner
@@ -100,6 +107,14 @@ class EditProfileFragment : Fragment() {
 
     // call to update user from viewmodel and repository
     private fun updateUser() {
+        val gender = binding.inputSexo.selectedItem.toString()
+        Log.d("CreateUserFragment", "$gender")
+        var validGender = ""
+        if (gender == "Masculino") validGender = "masculine"
+        if (gender == "Femenino") validGender = "femenine"
+        if (gender == "Otro") validGender = "other"
+        if (gender == "Prefiero no decirlo") validGender = "no_answer"
+
         val user = Profile(
             user.userId,
             binding.inputNombre.text.toString(),
@@ -110,11 +125,12 @@ class EditProfileFragment : Fragment() {
             binding.inputTelefono.text.toString(),
             binding.inputEdad.text.toString().toInt(),
             binding.inputEstado.selectedItem.toString(),
-            binding.inputSexo.selectedItem.toString(),
+            validGender,
             user.profilePicture,
             user.createdAt,
             user.updatedAt
         )
+        Log.d("CreateUserFragment", "$user")
         viewModel.updateUser(user)
     }
 
