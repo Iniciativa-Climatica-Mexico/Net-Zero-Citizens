@@ -159,7 +159,9 @@ class ReviewFormFragment : Fragment() {
             R.animator.slide_out_right
         )
 
+        // Works with back button
         fragmentTransaction.replace(R.id.frame_layout, catalogueFragment)
+        fragmentTransaction.addToBackStack("CompanyReviewFragment" + companyId.toString())
         fragmentTransaction.commit()
     }
 
