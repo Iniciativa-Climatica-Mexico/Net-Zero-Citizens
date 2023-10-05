@@ -131,7 +131,7 @@ struct CompanyRegisterFormView: View {
             goCompanyRegisterDivider()
           }
         }
-      })
+      }).padding(.horizontal)
     }.foregroundColor(Color("MainText"))
   }
 }

@@ -17,7 +17,19 @@ class FavouriteViewModel: ObservableObject {
   private let useCase: FavouriteUseCase
   
   /// Creación de viewModel si se presiona corazón
-  @Published var contentFavourite: FavouriteCreationResponse = FavouriteCreationResponse( favouriteId: UUID(uuidString: "") ?? UUID(),message: "")
+
+  @Published var contentFavourite: FavouriteCreationResponse = FavouriteCreationResponse(
+    favouriteId: UUID(uuidString: "") ?? UUID(),
+    companyId: UUID(uuidString: "") ?? UUID(),
+    message: ""
+  )
+  
+  /// Creación de viewModel con response de delete
+  @Published var deleteContentFavourite: FavouriteDeleteResponse = FavouriteDeleteResponse(
+    rows: 0,
+    message: ""
+  )
+
   /// Para implementar el caso de uso en la vista que llame al ViewModel Favourite
   init(useCase: FavouriteUseCase = FavouriteUseCase.shared) {
     self.useCase = useCase
@@ -36,4 +48,18 @@ class FavouriteViewModel: ObservableObject {
       contentFavourite = resultFavourite
     }
   }
+  
+  @MainActor
+  /// - Description: Hacer delete de Favourite async cuando el usuario aprieta un corazón con relleno cambia VM
+  /// - Parameters:
+  ///   - favouriteId: To make a `favourite` instance in database
+  func deleteFavouriteById(favouriteId: UUID) async throws {
+    
+    if let favouriteDelResponse = await useCase.deleteFavouriteById(favouriteId: favouriteId) {
+      deleteContentFavourite = favouriteDelResponse
+    } else {
+      throw GCError.requestFailed
+    }
+  }
+  
 }

@@ -194,6 +194,9 @@ struct ContactCompanyView: View {
   @State var bindImageToDescription: Bool = false
   @State var stringDescription: String = ""
   @State var showingAlert: Bool = false
+  @State var showingAlertHeart: Bool = false
+  @State var deleteOperation: Bool = false
+  @State var messageAlert: String = ""
   @Binding var emptyHeartFill: Bool
 
   @Environment(\.presentationMode) var presentationMode
@@ -221,19 +224,21 @@ struct ContactCompanyView: View {
                           HStack {
                             Spacer()
                             Button(action: {
-                              if !emptyHeartFill {
-                                Task {
+                              Task {
+                                if !emptyHeartFill {
+                                  showingAlertHeart = true
                                   await favouriteViewModel.postFavouriteById(companyId: contactCompanyViewModel.contentCompany.companyId)
                                   if favouriteViewModel.contentFavourite.message ==
-                                    "Favourite created" {
-                                      emptyHeartFill = true
-                                      showingAlert = true
+                                      "Favourite created" {
+                                    messageAlert = "Se ha agregado a: " + contactCompanyViewModel.contentCompany.name + " a tus favoritos!"
+                                    emptyHeartFill = true
+                                    deleteOperation = false
                                   }
+                                } else {
+                                  deleteOperation = true
+                                  showingAlertHeart = true
+                                  messageAlert = "¿Eliminar a: " + contactCompanyViewModel.contentCompany.name + " de tus favoritos?"
                                 }
-                                /// TODO show alert
-                              } else {
-                                /// TODO : Delete favourite
-                                /// emptyFill = false
                               }
                             }, label: {
                               Image(systemName: emptyHeartFill ? "heart.fill" : "heart")
@@ -241,11 +246,21 @@ struct ContactCompanyView: View {
                                 .font(.system(size: 24))
                                 .padding(EdgeInsets(top: 40, leading: 40, bottom: 0, trailing: 0))
                                 .padding()
-                            }).alert(isPresented: $showingAlert) {
-                              Alert(title: Text("Nuevo favorito!"),
-                                    message: Text("Se agregó: " + contactCompanyViewModel.contentCompany.name +
-                                                  " a tu lista de favoritos"),
-                                    dismissButton: .default(Text("Ok")))
+                            })
+                            .alert(isPresented: $showingAlertHeart) {
+                              if !deleteOperation {
+                                return Alert(title: Text("Éxito"), message: Text(messageAlert))
+                              }
+                              else {
+                                return Alert(title: Text("Confirmar borrar favoritos"), message: Text(messageAlert),
+                                   primaryButton: .destructive(Text("Borrar")) {
+                                  Task {
+                                    emptyHeartFill = false
+                                    try await favouriteViewModel.deleteFavouriteById(favouriteId: favouriteViewModel.contentFavourite.favouriteId)
+                                  }
+                                   },
+                                   secondaryButton: .cancel())
+                              }
                             }
                           }
                         }
