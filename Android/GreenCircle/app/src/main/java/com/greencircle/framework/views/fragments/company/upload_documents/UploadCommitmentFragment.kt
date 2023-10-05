@@ -33,7 +33,18 @@ class UploadCommitmentFragment : Fragment() {
         _binding = FragmentUploadCommitmentBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        initializeNavigationButtons()
+
         return root
+    }
+
+    /**
+     * Método que inicializa los botones de siguiente y regresar.
+     */
+    private fun initializeNavigationButtons() {
+        binding.topbar.documentsBackButton.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStackImmediate()
+        }
     }
 
     /**

@@ -1,22 +1,23 @@
 package com.greencircle.framework.views.fragments.company.upload_documents
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.greencircle.R
 import com.greencircle.databinding.FragmentUploadIdBinding
+import com.greencircle.framework.views.activities.RegisterCompanyActivity
 
 /**Constructor de "UploadIdFragment"
  *
  * @constructor Incializa y crea la vista del "UploadIdFragment"
  */
-class UploadIdFragment : Fragment() {
+class UploadIdFragment : Fragment(), UploadDocumentDialogFragment.UploadDialogListener {
     private var _binding: FragmentUploadIdBinding? = null
     private val binding get() = _binding!!
-    private var arguments = Bundle()
-    private lateinit var authToken: String
+    private var arguments: Bundle? = null
 
     /**
      * Método que se llama cuando se crea la vista del fragmento de subir los documentos de identificación.
@@ -40,37 +41,44 @@ class UploadIdFragment : Fragment() {
         _binding = FragmentUploadIdBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        binding.ineUpload.setOnClickListener {
-            val dialogFragment = UploadDocumentDialogFragment(
-                "INE",
-                "INE Representante Legal",
-                "pdf"
-            )
-            dialogFragment.arguments = arguments
-            dialogFragment.show(childFragmentManager, "UploadImageDialog")
-        }
-
-        binding.constitutiveUpload.setOnClickListener {
-            val dialogFragment = UploadDocumentDialogFragment(
-                "Acta Constitutiva",
-                "Acta Constitutiva",
-                "pdf"
-            )
-            dialogFragment.arguments = arguments
-            dialogFragment.show(childFragmentManager, "UploadImageDialog")
-        }
-
-        initializeButton()
+        initializeSubmitDocumentsButton()
+        initializeNavigationButtons()
 
         return root
     }
 
     /**
-     * Método que inicializa el botón de siguiente.
+     * Método que inicializa los botones de subir documentos.
      */
-    private fun initializeButton() {
+    private fun initializeSubmitDocumentsButton() {
+        binding.ineUpload.setOnClickListener {
+            val dialogFragment = UploadDocumentDialogFragment(
+                "INE", "INE Representante Legal", "pdf"
+            )
+            dialogFragment.arguments = arguments
+            dialogFragment.uploadDialogListener = this
+            dialogFragment.show(childFragmentManager, "UploadImageDialog")
+        }
+
+        binding.constitutiveUpload.setOnClickListener {
+            val dialogFragment = UploadDocumentDialogFragment(
+                "Acta Constitutiva", "Acta Constitutiva", "pdf"
+            )
+            dialogFragment.arguments = arguments
+            dialogFragment.show(childFragmentManager, "UploadImageDialog")
+        }
+    }
+
+    /**
+     * Método que inicializa los botones de siguiente y regresar.
+     */
+    private fun initializeNavigationButtons() {
         binding.nextDocumentButton.setOnClickListener {
             navigateToSubmitCurriculumFragment()
+        }
+
+        binding.topbar.documentsBackButton.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStackImmediate()
         }
     }
 
@@ -79,10 +87,11 @@ class UploadIdFragment : Fragment() {
      */
     private fun navigateToSubmitCurriculumFragment() {
         val uploadCurriculumFragment = UploadCurriculumFragment()
-        val transaction = requireActivity().supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragment_submit_documents_layout, uploadCurriculumFragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
+
+        val activity = requireActivity() as RegisterCompanyActivity
+        val intent = Intent(activity, RegisterCompanyActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        activity.replaceFragment(uploadCurriculumFragment, arguments)
     }
 
     /**
@@ -91,5 +100,9 @@ class UploadIdFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onFileUploaded(fileName: String) {
+        Log.d("UploadIdFragment", "FileName: $fileName")
     }
 }

@@ -12,17 +12,11 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.materialswitch.MaterialSwitch
 import com.greencircle.R
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
-import com.greencircle.framework.views.fragments.company.upload_documents.UploadDocumentsFragment
+import com.greencircle.framework.views.fragments.company.upload_documents.UploadIdFragment
 
 class ServicesFragment : Fragment() {
     private lateinit var fotoVoltaicSwitch: MaterialSwitch
     private lateinit var solarHeaterSwitch: MaterialSwitch
-    private var arguments = Bundle()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments = requireArguments()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -97,13 +91,13 @@ class ServicesFragment : Fragment() {
      */
     private fun nextFragment() {
         val bundle = Bundle()
-        bundle.putBoolean("fotovoltaics", fotoVoltaicSwitch.isChecked)
+        bundle.putBoolean("photovoltaics", fotoVoltaicSwitch.isChecked)
         bundle.putBoolean("solarHeaters", solarHeaterSwitch.isChecked)
 
-        val uploadDocumentsFragment = UploadDocumentsFragment()
+        val uploadIdFragment = UploadIdFragment()
         val activity = requireActivity() as RegisterCompanyActivity
         val intent = Intent(activity, RegisterCompanyActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        activity.replaceFragment(uploadDocumentsFragment, arguments)
+        activity.replaceFragment(uploadIdFragment, bundle)
     }
 }

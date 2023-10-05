@@ -21,19 +21,18 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
 
 class UploadDocumentDialogFragment(
-    title: String,
-    fileDescription: String,
-    fileFormat: String
+    private val title: String,
+    private val fileDescription: String,
+    private val fileFormat: String,
 ) : DialogFragment() {
     private lateinit var view: View
     private lateinit var viewModel: UploadFilesViewModel
-    private val title = title
-    private val fileDescription = fileDescription
-    private val fileFormat = fileFormat
     private var arguments = Bundle()
     private lateinit var authToken: String
     private lateinit var fileUri: Uri
     private var isFileSelected = false
+    var uploadDialogListener: UploadDialogListener? = null
+    private var fileName: String? = null
 
     private var companyId: String? = null
 
@@ -42,7 +41,7 @@ class UploadDocumentDialogFragment(
     ) { uri: Uri? ->
         if (uri != null) {
             fileUri = uri
-            val fileName = getFileName(uri)
+            fileName = getFileName(uri)
             changeDialogAfterSelection(fileName!!)
             isFileSelected = true
 
@@ -54,6 +53,11 @@ class UploadDocumentDialogFragment(
             }
         }
     }
+
+    interface UploadDialogListener {
+        fun onFileUploaded(fileName: String)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments = requireArguments()
@@ -76,9 +80,7 @@ class UploadDocumentDialogFragment(
         }
 
         val builder = AlertDialog.Builder(requireActivity())
-        builder.setView(view)
-            .setTitle(title)
-            .setMessage("Sube tu archivo aqui")
+        builder.setView(view).setTitle(title).setMessage("Sube tu archivo aqui")
         return builder.create()
     }
 
@@ -111,21 +113,15 @@ class UploadDocumentDialogFragment(
         var inputStream: InputStream? = null
         try {
             inputStream = requireContext().contentResolver.openInputStream(uri)
-            val requestBody = inputStream
-                ?.readBytes()
-                ?.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+            val requestBody =
+                inputStream?.readBytes()?.toRequestBody("multipart/form-data".toMediaTypeOrNull())
             val filePart = MultipartBody.Part.createFormData(
-                "file",
-                title,
-                requestBody!!
+                "file", title, requestBody!!
             )
             viewModel.uploadFile(
-                authToken,
-                filePart,
-                companyId!!,
-                fileDescription,
-                fileFormat
+                authToken, filePart, companyId!!, fileDescription, fileFormat
             )
+            uploadDialogListener?.onFileUploaded(fileName ?: "")
         } catch (e: Exception) {
             Log.e("UploadDocumentDialogFragment", "uploadFile: ${e.message}")
         } finally {
