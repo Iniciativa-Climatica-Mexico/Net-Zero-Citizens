@@ -66,7 +66,7 @@ struct UserRegisterFormView: View {
             .sheet(isPresented: $showingPrivacy) {
              PrivacyUserView()
             }
-            
+
           }.frame(width: 270)
           
           Toggle("", isOn: $viewModel.formState.privacy)
