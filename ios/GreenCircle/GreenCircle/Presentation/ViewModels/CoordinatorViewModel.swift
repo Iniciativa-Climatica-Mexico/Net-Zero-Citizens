@@ -12,12 +12,13 @@ class CoordinatorViewModel: ObservableObject {
   var signInUseCase = UserSignInUseCase.shared
   
   func handleSignIn() async -> SignInState {
-    if await googleUseCase.handleBackgroundSignIn() == .success {
-      return .success
+    var signIn = await googleUseCase.handleBackgroundSignIn()
+    if signIn != .fail {
+      return signIn
     }
     
     
-    let signIn = await signInUseCase.backgroundSignIn()
+    signIn = await signInUseCase.backgroundSignIn()
     if signIn != .fail {
       return signIn
     }

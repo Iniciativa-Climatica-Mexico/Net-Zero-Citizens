@@ -174,6 +174,12 @@ class CreateUserFragment : Fragment() {
         val gender = genderInputLayout.editText?.text.toString()
         val roleId = "CUSTOMER_ROLE_ID"
 
+        var validGender = ""
+        if (gender == "Masculino") validGender = "masculine"
+        if (gender == "Femenine") validGender = "femenine"
+        if (gender == "Otro") validGender = "other"
+        if (gender == "Prefiero no decirlo") validGender = "no_answer"
+
         val validation = validateForm(view)
 
         if (validation) {
@@ -181,10 +187,9 @@ class CreateUserFragment : Fragment() {
                 phone,
                 age,
                 state,
-                gender,
+                validGender,
                 roleId,
             )
-
             createUserViewModel.updateUser(uuid, userInfo)
             navigateToHome()
         } else {
