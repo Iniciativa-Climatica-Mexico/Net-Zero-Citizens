@@ -227,27 +227,29 @@ export const addComplaint: RequestHandler = async (req, res) => {
  */
 
 export const updateComplaintStatus: RequestHandler<
-  { complaintId: string },
-  string,
-  { complaintStatus: typeof Complaint.prototype.complaintStatus },
-  NoRecord
+  NoRecord,
+  { message: string },
+  ComplaintService.ComplaintStatusType,
+  undefined
 > = async (req, res) => {
-  const { complaintId } = req.params
-  const { complaintStatus } = req.body
+  const complaintId = req.body.complaintId
+  const complaintStatus = req.body.complaintStatus
 
-  if (!complaintId) {
-    res.status(400).json('Missing complaintId!')
-    return
+  if (
+    !(
+      complaintStatus == 'active' ||
+      complaintStatus == 'inactive' ||
+      complaintStatus == 'invalid'
+    )
+  ) {
+    return res.status(400).json({ message: 'Invalid status' })
   }
-  if (!complaintStatus) {
-    res.status(400).json('Missing status!')
-    return
-  }
+
   try {
     await ComplaintService.updateComplaintStatus(complaintId, complaintStatus)
-    res.status(200).send('Updated complaint status')
+    res.status(200).json({ message: 'Complaint updated' })
   } catch (error) {
     console.log(error)
-    res.status(500).send('Error')
+    res.status(500).json({ message: 'Error' })
   }
 }
