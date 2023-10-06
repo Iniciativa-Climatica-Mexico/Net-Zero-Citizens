@@ -201,7 +201,10 @@ class ReviewFormFragment : Fragment() {
         publishReviewButton.setOnClickListener { publishReview() }
     }
 
-    // on back pressed function
+    /**
+     * Función que se encarga de cambiar el fragmento actual por el fragmento de contacto
+     * cuando se presiona el botón de retroceso
+     */
     private fun onBackPress() {
         // Override the back button behavior
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
@@ -209,15 +212,6 @@ class ReviewFormFragment : Fragment() {
                 val fragmentManager = requireActivity().supportFragmentManager
                 val fragmentTransaction = fragmentManager.beginTransaction()
                 val companyDetail = CompanyContactFragment()
-
-                // log all the back stack entries
-                for (entry in 0 until fragmentManager.backStackEntryCount) {
-                    Log.i(
-                        "ReviewFormFragment",
-                        "Found fragment: " +
-                            fragmentManager.getBackStackEntryAt(entry).name
-                    )
-                }
 
                 val bundle = Bundle()
                 bundle.putString("id", companyId.toString())
