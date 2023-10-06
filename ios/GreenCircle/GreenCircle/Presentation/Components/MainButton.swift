@@ -23,7 +23,7 @@ struct MainButton: View {
   var body: some View {
     ZStack{
       Rectangle()
-        .frame(width: 200, height: 50)
+        .frame(height: 45)
         .cornerRadius(10)
         .foregroundColor(buttonColor)
       Button{action()} label: {

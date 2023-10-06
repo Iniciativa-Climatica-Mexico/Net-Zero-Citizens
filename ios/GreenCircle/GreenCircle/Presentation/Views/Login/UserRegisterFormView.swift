@@ -66,7 +66,7 @@ struct UserRegisterFormView: View {
             .sheet(isPresented: $showingPrivacy) {
              PrivacyUserView()
             }
-            
+
           }.frame(width: 270)
           
           Toggle("", isOn: $viewModel.formState.privacy)
@@ -82,7 +82,9 @@ struct UserRegisterFormView: View {
             goTutorial()
           }
         }
-      }).alert("Oops! Algo salió mal",
+      })
+      .padding(.horizontal)
+      .alert("Oops! Algo salió mal",
                isPresented: $viewModel.showAlert) {
         Button("Ok", role: .cancel){}
       } message: {

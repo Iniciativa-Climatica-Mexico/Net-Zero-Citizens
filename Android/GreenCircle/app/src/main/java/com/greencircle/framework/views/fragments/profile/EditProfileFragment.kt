@@ -3,6 +3,7 @@ package com.greencircle.framework.views.fragments.profile
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -80,14 +81,40 @@ class EditProfileFragment : Fragment() {
         binding.inputPrimerApellido.setText(user.lastName)
         binding.inputSegundoApellido.setText(user.secondLastName)
         binding.inputEdad.setText(user.age.toString())
-        binding.inputSexo.setText(user.gender)
+
+        var validGender = ""
+        if (user.gender == "masculine") validGender = "Masculino"
+        if (user.gender == "femenine") validGender = "Femenino"
+        if (user.gender == "other") validGender = "Otro"
+        if (user.gender == "no_answer") validGender = "Prefiero no decirlo"
+        val genderOptions = resources.getStringArray(R.array.gender_options)
+        val genderPosition = genderOptions.indexOf(validGender)
+
+        if (genderPosition != -1) {
+            // Si se encuentra la posición, selecciona el elemento correspondiente en el Spinner
+            binding.inputSexo.setSelection(genderPosition)
+        }
         binding.inputTelefono.setText(user.phoneNumber)
-        binding.inputEstado.setText(user.state)
+        val stateOptions = resources.getStringArray(R.array.state_options)
+        val statePosition = stateOptions.indexOf(user.state)
+
+        if (statePosition != -1) {
+            // Si se encuentra la posición, selecciona el elemento correspondiente en el Spinner
+            binding.inputEstado.setSelection(statePosition)
+        }
         // binding.profileImage.setImageResource(user.profilePicture)
     }
 
     // call to update user from viewmodel and repository
     private fun updateUser() {
+        val gender = binding.inputSexo.selectedItem.toString()
+        Log.d("CreateUserFragment", "$gender")
+        var validGender = ""
+        if (gender == "Masculino") validGender = "masculine"
+        if (gender == "Femenino") validGender = "femenine"
+        if (gender == "Otro") validGender = "other"
+        if (gender == "Prefiero no decirlo") validGender = "no_answer"
+
         val user = Profile(
             user.userId,
             binding.inputNombre.text.toString(),
@@ -97,20 +124,81 @@ class EditProfileFragment : Fragment() {
             user.password ?: "EstoNoDeberiaEstarAqui",
             binding.inputTelefono.text.toString(),
             binding.inputEdad.text.toString().toInt(),
-            binding.inputEstado.text.toString(),
-            binding.inputSexo.text.toString(),
+            binding.inputEstado.selectedItem.toString(),
+            validGender,
             user.profilePicture,
             user.createdAt,
             user.updatedAt
         )
+        Log.d("CreateUserFragment", "$user")
         viewModel.updateUser(user)
     }
 
     private fun initializeAceptarCambiosButton() {
         binding.aceptarCambiosButton.setOnClickListener {
+            val edadText = binding.inputEdad.text.toString()
+
+            // Validar que la edad esté entre 18 y 90
+            val edad = try {
+                edadText.toInt()
+            } catch (e: NumberFormatException) {
+                // Si la entrada no es un número válido, muestra un mensaje de error en el TextInputLayout
+                binding.inputEdad.error = "La edad debe ser un número válido"
+                return@setOnClickListener
+            }
+
+            if (edad < 18) {
+                // Si la edad es menor de 18, muestra un mensaje de error en el TextInputLayout
+                binding.inputEdad.error = "Debes ser mayor de edad"
+                return@setOnClickListener
+            } else if (edad > 90) {
+                // Si la edad es mayor de 90, muestra un mensaje de error en el TextInputLayout
+                binding.inputEdad.error = "Ingrese una edad válida"
+                return@setOnClickListener
+            }
+
+            // Si la edad es válida, elimina cualquier mensaje de error anterior
+            binding.inputEdad.error = null
+            if (binding.inputNombre.text.toString().isEmpty()) {
+                binding.inputNombre.error = "El nombre no puede estar vacío"
+                return@setOnClickListener
+            }
+            if (binding.inputNombre.text.toString().any { it.isDigit() }) {
+                binding.inputNombre.error = "El nombre no puede contener números"
+                return@setOnClickListener
+            }
+            binding.inputNombre.error = null
+            if (binding.inputPrimerApellido.text.toString().isEmpty()) {
+                binding.inputPrimerApellido.error = "El primer apellido no puede estar vacío"
+                return@setOnClickListener
+            }
+            if (binding.inputPrimerApellido.text.toString().any { it.isDigit() }) {
+                binding.inputPrimerApellido.error =
+                    "El primer apellido no puede contener números"
+                return@setOnClickListener
+            }
+            binding.inputPrimerApellido.error = null
+            if (binding.inputEdad.text.toString().isEmpty()) {
+                binding.inputEdad.error = "La edad no puede estar vacía"
+                return@setOnClickListener
+            }
+            if (binding.inputSegundoApellido.text.toString().any { it.isDigit() }) {
+                binding.inputSegundoApellido.error =
+                    "El segundo apellido no puede contener números"
+                return@setOnClickListener
+            }
+            binding.inputEdad.error = null
+            if (binding.inputTelefono.text.toString().isEmpty()) {
+                binding.inputTelefono.error = "El teléfono no puede estar vacío"
+                return@setOnClickListener
+            }
+            binding.inputTelefono.error = null
+            // Procede con la actualización del usuario
             updateUser()
             Toast.makeText(
-                requireContext(), "Los cambios fueron realizados con éxito", Toast.LENGTH_SHORT
+                requireContext(),
+                "Los cambios fueron realizados con éxito",
+                Toast.LENGTH_SHORT
             ).show()
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.frame_layout, ProfileFragment())

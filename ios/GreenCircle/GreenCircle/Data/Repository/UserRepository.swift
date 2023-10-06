@@ -3,7 +3,7 @@
 //  GreenCircle
 //
 //  Created by Ricardo Adolfo Fernández Alvarado on 17/09/23.
-//
+//  Modified by Daniel Gutiérrez Gómez on 03/10/23
 
 import Foundation
 
@@ -12,6 +12,8 @@ class AuthAPI {
   static let base = "http://localhost:4000/api/v1/auth"
   struct Routes {
     static let googleLogin = "/login/google"
+    static let login = "/login/credentials"
+    static let register = "/register/credentials"
   }
 }
 
@@ -31,6 +33,7 @@ protocol UserRepositoryProtocol {
   func updateUserCredentials(userId: String, newUserCredentials: Credentials) async -> User?;
   func postGoogleLogin(googleToken: String) async -> AuthResponse?
   func putUser(_ user: UserAuth) async -> Bool
+  func deleteUserById(userId: String)  async -> UserDeleteResponse?
 }
 
 
@@ -51,7 +54,7 @@ class UserRepository: UserRepositoryProtocol {
   /// - Parameter googleToken: token proporcionado por Google
   /// - Returns: Una respuesta de autenticación, con Tokens e información del usuario
   func postGoogleLogin(googleToken: String) async -> AuthResponse? {
-    let params: [String: Any] = ["googleToken": googleToken]
+    let params: [String: Any] = ["googleToken": googleToken, "ios": "true"]
     return await nService
       .postRequest(URL(
         string: "\(AuthAPI.base)\(AuthAPI.Routes.googleLogin)")!,
@@ -110,7 +113,7 @@ class UserRepository: UserRepositoryProtocol {
   //func updateUserData()
   
   func fetchUserById(userId: String) async -> User? {
-    return await backEndService.fetchUserById(url: URL(string: "\(UserAPI.base)/\(userId)")!)
+    return await nService.getRequest(URL(string: "\(UserAPI.base)/\(userId)")!)
   }
   
   func updateUserData(updatedUserData: User, userId: String) async -> User? {
@@ -123,10 +126,52 @@ class UserRepository: UserRepositoryProtocol {
   }
   
   func saveAuthData(authData: AuthResponse) {
-    lService.setToken(userData: authData)
+    lService.setUserInformation(userData: authData)
   }
   
   func getAuthData() -> AuthResponse? {
-    return lService.getToken()
+    return lService.getUserInformation()
+  }
+  
+  func deleteUserById(userId: String)  async -> UserDeleteResponse? {
+    let endpoint = UserAPI.base + "/delete" + UserAPI.Routes.userId
+          .replacingOccurrences(of: ":userId", with: userId)
+        return await NetworkAPIService.shared.deleteRequest(URL(string: endpoint)!)
+  }
+  
+  func postLogin(user: String, password: String) async throws -> AuthResponse {
+    let url = URL(string: "\(AuthAPI.base)\(AuthAPI.Routes.login)")!
+    
+    let body = ["email": user.trimmingCharacters(in: .whitespaces),
+                "password": password]
+    
+    let res: AuthResponse? = await nService.postRequest(url, body: body)
+    
+    if let authResponse = res {
+      return authResponse
+    } else {
+      throw GCError.requestFailed
+    }
+  }
+  
+  func postRegisterUser(userInfo: CreateUserInfo) async throws -> AuthResponse {
+    let url = URL(string: "\(AuthAPI.base)\(AuthAPI.Routes.register)")!
+    
+    let body = ["user":
+      [
+        "email": userInfo.email,
+        "password": userInfo.password,
+        "firstName": userInfo.name,
+        "lastName": userInfo.lastName
+      ]
+    ]
+    
+    let res: AuthResponse? = await nService.postRequest(url, body: body)
+    
+    if let authResponse = res {
+      return authResponse
+    } else {
+      throw GCError.requestFailed
+    }
   }
 }

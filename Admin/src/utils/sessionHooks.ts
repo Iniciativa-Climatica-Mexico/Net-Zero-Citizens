@@ -29,7 +29,7 @@ export const deleteSession = () => {
   localStorage.removeItem(USER_KEY)
 }
 
-type refreshTokenResponse = {
+export type refreshTokenResponse = {
   authToken: string
   refreshToken: string
   error?: string
