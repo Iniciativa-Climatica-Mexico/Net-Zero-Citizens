@@ -33,8 +33,7 @@ class FavouritesViewModel(private val context: Context) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             val tokens = recoverTokens() ?: return@launch
             val authToken = tokens.authToken
-            val id: UUID = UUID.fromString("8de45630-2e76-4d97-98c2-9ec0d1f3a5b9")
-            val result: FavouriteResponse ? = favouritesByUserListRequirement(authToken, id)
+            val result: FavouriteResponse ? = favouritesByUserListRequirement(authToken, userId)
             val user: Profile? = ProfileListRequirement()(authToken, userId)
             if (user != null) {
                 CoroutineScope(Dispatchers.Main).launch {
