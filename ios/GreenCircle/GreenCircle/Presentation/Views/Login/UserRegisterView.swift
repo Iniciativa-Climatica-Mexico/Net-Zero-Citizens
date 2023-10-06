@@ -82,7 +82,8 @@ struct UserRegisterView: View {
         }
         .padding(.horizontal)
         
-        Spacer()
+        AppleSignIn()
+      
         Divider().padding(.horizontal)
         
         HStack {

@@ -12,6 +12,7 @@ class AuthAPI {
   static let base = APIRoutes.Auth.base
   struct Routes {
     static let googleLogin = "/login/google"
+    static let appleLogin = "/login/apple"
     static let login = "/login/credentials"
     static let register = "/register/credentials"
   }
@@ -32,6 +33,7 @@ protocol UserRepositoryProtocol {
 //  func updateUserData(updatedUserData: User, userId: String) async -> User?
   func updateUserCredentials(userId: String, newUserCredentials: Credentials) async -> User?;
   func postGoogleLogin(googleToken: String) async -> AuthResponse?
+  func postAppleLogin(userId: String, fullName: String, email: String) async -> AuthResponse?
   func putUser(_ user: UserAuth) async -> Bool
   func deleteUserById(userId: String)  async -> UserDeleteResponse?
 }
@@ -58,6 +60,14 @@ class UserRepository: UserRepositoryProtocol {
     return await nService
       .postRequest(URL(
         string: "\(AuthAPI.base)\(AuthAPI.Routes.googleLogin)")!,
+                   body: params)
+  }
+  
+  func postAppleLogin(userId: String, fullName: String, email: String) async -> AuthResponse? {
+    let params: [String: Any] = ["userId": userId, "fullName": fullName, "email": email]
+    return await nService
+      .postRequest(URL(
+        string: "\(AuthAPI.base)\(AuthAPI.Routes.appleLogin)")!,
                    body: params)
   }
   

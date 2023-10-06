@@ -82,8 +82,8 @@ struct LoginView: View {
           }
         }
         .padding(.horizontal)
-        
-        Divider().padding()
+
+        AppleSignIn()
         
         HStack {
           Text("¿No tienes una cuenta?")
