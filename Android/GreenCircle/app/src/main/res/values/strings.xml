@@ -99,6 +99,9 @@
     <string name="continue_no_documents">Continuar sin subir documentos</string>
     <string name="upload">Subir</string>
     <string name="cancel">Cancelar</string>
+    <string name="change_file">Da clic para cambiar el archivo</string>
+    <string name="check">Check</string>
+    <string name="chevron">Chevron</string>
     <string-array name="options_array">
         <item>Productos Defectuosos</item>
         <item>Inconformidad con el producto / servicio</item>

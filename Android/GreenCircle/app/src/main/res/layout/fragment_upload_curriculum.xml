@@ -101,6 +101,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
+                        android:id="@+id/curriculumFileSizeText"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_marginTop="7dp"
@@ -112,13 +113,27 @@
                         app:layout_constraintTop_toBottomOf="@id/curriculum_upload_title" />
 
                     <ImageView
+                        android:id="@+id/curriculumChevron"
                         android:layout_width="30dp"
                         android:layout_height="0dp"
-                        android:contentDescription="@string/arrow_right"
+                        android:contentDescription="@string/chevron"
                         android:src="@drawable/ic_chevron_right"
+                        android:visibility="visible"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/curriculumCheck"
+                        android:layout_width="30dp"
+                        android:layout_height="0dp"
+                        android:contentDescription="@string/check"
+                        android:src="@drawable/baseline_check_24"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/green" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

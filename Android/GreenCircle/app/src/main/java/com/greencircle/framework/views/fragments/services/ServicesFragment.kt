@@ -17,6 +17,12 @@ import com.greencircle.framework.views.fragments.company.upload_documents.Upload
 class ServicesFragment : Fragment() {
     private lateinit var fotoVoltaicSwitch: MaterialSwitch
     private lateinit var solarHeaterSwitch: MaterialSwitch
+    private var arguments = Bundle()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments = requireArguments()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -90,14 +96,13 @@ class ServicesFragment : Fragment() {
      * Sends the selected services to the next fragment.
      */
     private fun nextFragment() {
-        val bundle = Bundle()
-        bundle.putBoolean("photovoltaics", fotoVoltaicSwitch.isChecked)
-        bundle.putBoolean("solarHeaters", solarHeaterSwitch.isChecked)
+        arguments.putBoolean("photovoltaics", fotoVoltaicSwitch.isChecked)
+        arguments.putBoolean("solarHeaters", solarHeaterSwitch.isChecked)
 
         val uploadIdFragment = UploadIdFragment()
         val activity = requireActivity() as RegisterCompanyActivity
         val intent = Intent(activity, RegisterCompanyActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        activity.replaceFragment(uploadIdFragment, bundle)
+        activity.replaceFragment(uploadIdFragment, arguments)
     }
 }

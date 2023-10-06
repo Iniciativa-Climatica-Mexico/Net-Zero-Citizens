@@ -2,12 +2,15 @@ package com.greencircle.framework.views.fragments.company.upload_documents
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.greencircle.R
 import com.greencircle.databinding.FragmentUploadIdBinding
+import com.greencircle.domain.model.company.files.FileDescription
+import com.greencircle.domain.model.company.files.FileFormat
+import com.greencircle.framework.viewmodel.company.files.FileNamesViewModel
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
 
 /**Constructor de "UploadIdFragment"
@@ -18,6 +21,8 @@ class UploadIdFragment : Fragment(), UploadDocumentDialogFragment.UploadDialogLi
     private var _binding: FragmentUploadIdBinding? = null
     private val binding get() = _binding!!
     private var arguments: Bundle? = null
+    private var submittingFile: FileDescription? = null
+    private val fileNamesViewModel = FileNamesViewModel()
 
     /**
      * Método que se llama cuando se crea la vista del fragmento de subir los documentos de identificación.
@@ -44,6 +49,24 @@ class UploadIdFragment : Fragment(), UploadDocumentDialogFragment.UploadDialogLi
         initializeSubmitDocumentsButton()
         initializeNavigationButtons()
 
+        fileNamesViewModel.idFileName?.let { fileName ->
+            {
+                binding.idTitle.text = fileName
+                binding.idFileSizeText.text = getString(R.string.change_file)
+                binding.idChevron.visibility = View.GONE
+                binding.idCheck.visibility = View.VISIBLE
+            }
+        }
+
+        fileNamesViewModel.constitutiveFileName?.let { fileName ->
+            {
+                binding.constitutiveTitle.text = fileName
+                binding.constitutiveFileSizeText.text = getString(R.string.change_file)
+                binding.constitutiveChevron.visibility = View.GONE
+                binding.constitutiveCheck.visibility = View.VISIBLE
+            }
+        }
+
         return root
     }
 
@@ -53,8 +76,9 @@ class UploadIdFragment : Fragment(), UploadDocumentDialogFragment.UploadDialogLi
     private fun initializeSubmitDocumentsButton() {
         binding.ineUpload.setOnClickListener {
             val dialogFragment = UploadDocumentDialogFragment(
-                "INE", "INE Representante Legal", "pdf"
+                "INE", FileDescription.INE_REPRESENTANTE_LEGAL, FileFormat.PDF
             )
+            submittingFile = FileDescription.INE_REPRESENTANTE_LEGAL
             dialogFragment.arguments = arguments
             dialogFragment.uploadDialogListener = this
             dialogFragment.show(childFragmentManager, "UploadImageDialog")
@@ -62,9 +86,11 @@ class UploadIdFragment : Fragment(), UploadDocumentDialogFragment.UploadDialogLi
 
         binding.constitutiveUpload.setOnClickListener {
             val dialogFragment = UploadDocumentDialogFragment(
-                "Acta Constitutiva", "Acta Constitutiva", "pdf"
+                "Acta Constitutiva", FileDescription.ACTA_CONSTITUTIVA, FileFormat.PDF
             )
+            submittingFile = FileDescription.ACTA_CONSTITUTIVA
             dialogFragment.arguments = arguments
+            dialogFragment.uploadDialogListener = this
             dialogFragment.show(childFragmentManager, "UploadImageDialog")
         }
     }
@@ -102,7 +128,30 @@ class UploadIdFragment : Fragment(), UploadDocumentDialogFragment.UploadDialogLi
         _binding = null
     }
 
+    /**
+     * Método que se llama cuando se sube un archivo.
+     *
+     * @param fileName El nombre del archivo que se subió.
+     */
     override fun onFileUploaded(fileName: String) {
-        Log.d("UploadIdFragment", "FileName: $fileName")
+        when (submittingFile) {
+            FileDescription.INE_REPRESENTANTE_LEGAL -> {
+                fileNamesViewModel.idFileName = fileName
+                binding.idTitle.text = fileName
+                binding.idFileSizeText.text = getString(R.string.change_file)
+                binding.idChevron.visibility = View.GONE
+                binding.idCheck.visibility = View.VISIBLE
+            }
+
+            FileDescription.ACTA_CONSTITUTIVA -> {
+                fileNamesViewModel.constitutiveFileName = fileName
+                binding.constitutiveTitle.text = fileName
+                binding.constitutiveFileSizeText.text = getString(R.string.change_file)
+                binding.constitutiveChevron.visibility = View.GONE
+                binding.constitutiveCheck.visibility = View.VISIBLE
+            }
+
+            else -> {}
+        }
     }
 }

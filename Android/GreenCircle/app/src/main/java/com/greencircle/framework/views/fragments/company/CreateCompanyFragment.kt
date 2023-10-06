@@ -15,6 +15,9 @@ import com.google.android.material.textfield.TextInputLayout
 import com.greencircle.R
 import com.greencircle.data.remote.company.CompanyAPIService
 import com.greencircle.domain.model.company.Company
+import com.greencircle.domain.model.company.files.CompanyFile
+import com.greencircle.domain.model.company.files.FileDescription
+import com.greencircle.domain.model.company.files.FileFormat
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.company.CreateCompanyViewModel
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
@@ -31,6 +34,7 @@ class CreateCompanyFragment : Fragment() {
     private var arguments = Bundle()
     private lateinit var authToken: String
     private lateinit var uuid: UUID
+    private var companyId: String? = null
     private lateinit var nameInputLayout: TextInputLayout
     private lateinit var descriptionInputLayout: TextInputLayout
     private lateinit var emailInputLayout: TextInputLayout
@@ -165,7 +169,17 @@ class CreateCompanyFragment : Fragment() {
                 Log.d("CreateCompanyFragment", "Google login failed")
             }
         }
+
         setSwitch(view.findViewById(R.id.avisoPrivacidad))
+
+        viewModel.createCompanyResult.observe(viewLifecycleOwner) { result ->
+            // Handle the result here
+            if (result != null) {
+                companyId = result.companyId
+                arguments.putString("companyId", companyId)
+                nextFragment(arguments)
+            }
+        }
     }
 
     /**
@@ -225,10 +239,7 @@ class CreateCompanyFragment : Fragment() {
             city,
             state,
             zipCode,
-            "test1",
-            "test2",
-            "test3",
-            "test4"
+            CompanyFile(UUID.randomUUID(), uuid, "", FileDescription.CURRICULUM, FileFormat.PDF)
         )
 
         val createCompanyRequest = CompanyAPIService.CreateCompanyRequest(companyData)
@@ -236,7 +247,6 @@ class CreateCompanyFragment : Fragment() {
         val validation: Boolean = validateForm(view)
         if (validation) {
             viewModel.createCompany(createCompanyRequest)
-            nextFragment()
         }
     }
 

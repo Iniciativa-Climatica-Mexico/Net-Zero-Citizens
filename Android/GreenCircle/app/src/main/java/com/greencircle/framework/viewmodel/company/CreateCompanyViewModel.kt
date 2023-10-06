@@ -83,6 +83,7 @@ class CreateCompanyViewModel(private val context: Context) : ViewModel() {
             // Invoca el modelo de dominio para crear la empresa.
             val result: CompanyAPIService.CreateCompanyResponse? =
                 createCompanyRequirement(company, authToken)
+            _createCompanyResult.postValue(result)
             // Actualizar información de los tokens
             if (result != null) {
                 val tokens = recoverTokens()

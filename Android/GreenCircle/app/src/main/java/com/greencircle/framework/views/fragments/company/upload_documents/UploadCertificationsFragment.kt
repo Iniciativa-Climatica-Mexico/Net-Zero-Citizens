@@ -6,17 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.greencircle.R
 import com.greencircle.databinding.FragmentUploadCertificationsBinding
+import com.greencircle.domain.model.company.files.FileDescription
+import com.greencircle.domain.model.company.files.FileFormat
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
 
 /**Constructor de "UploadCertificationsFragment"
  *
  * @constructor Incializa y crea la vista del "UploadCertificationsFragment"
  */
-class UploadCertificationsFragment : Fragment() {
+class UploadCertificationsFragment : Fragment(), UploadDocumentDialogFragment.UploadDialogListener {
     private var _binding: FragmentUploadCertificationsBinding? = null
     private val binding get() = _binding!!
     private var arguments: Bundle? = null
+    private var submittingFile: FileDescription? = null
 
     /**
      * Método que se llama cuando se crea la vista del fragmento de subir los documentos de identificación.
@@ -61,19 +65,22 @@ class UploadCertificationsFragment : Fragment() {
         binding.dirInstaladoresCdmxUpload.setOnClickListener {
             val dialogFragment = UploadDocumentDialogFragment(
                 "Directorio de instaladores certificados de CDMX",
-                "Directorio de instaladores certificados de CDMX",
-                "pdf",
+                FileDescription.DIRECTORIO_DE_INSTALADORES_CERTIFICADOS_DE_CDMX,
+                FileFormat.PDF,
             )
+            submittingFile = FileDescription.DIRECTORIO_DE_INSTALADORES_CERTIFICADOS_DE_CDMX
             dialogFragment.arguments = arguments
+            dialogFragment.uploadDialogListener = this
             dialogFragment.show(childFragmentManager, "UploadImageDialog")
         }
 
         binding.fideUpload.setOnClickListener {
             val dialogFragment = UploadDocumentDialogFragment(
                 "Padron de empresas especializadas FIDE",
-                "Padron de empresas especializadas FIDE",
-                "pdf",
+                FileDescription.PADRON_DE_EMPRESAS_ESPECIALIZADAS_FIDE,
+                FileFormat.PDF
             )
+            submittingFile = FileDescription.PADRON_DE_EMPRESAS_ESPECIALIZADAS_FIDE
             dialogFragment.arguments = arguments
             dialogFragment.show(childFragmentManager, "UploadImageDialog")
         }
@@ -106,7 +113,10 @@ class UploadCertificationsFragment : Fragment() {
         val uploadPhotovoltaicDocsFragment = UploadPhotovoltaicDocsFragment()
 
         val activity = requireActivity() as RegisterCompanyActivity
-        val intent = Intent(activity, RegisterCompanyActivity::class.java)
+        val intent = Intent(
+            activity,
+            RegisterCompanyActivity::class.java
+        )
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         activity.replaceFragment(uploadPhotovoltaicDocsFragment, arguments)
     }
@@ -126,5 +136,30 @@ class UploadCertificationsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    /**
+     * Método que se llama cuando se sube un archivo.
+     *
+     * @param fileName El nombre del archivo que se subió.
+     */
+    override fun onFileUploaded(fileName: String) {
+        when (submittingFile) {
+            FileDescription.DIRECTORIO_DE_INSTALADORES_CERTIFICADOS_DE_CDMX -> {
+                binding.dirCdmxUploadTitle.text = fileName
+                binding.cdmxFileSizeText.text = getString(R.string.change_file)
+                binding.cdmxChevron.visibility = View.GONE
+                binding.cdmxCheck.visibility = View.VISIBLE
+            }
+
+            FileDescription.PADRON_DE_EMPRESAS_ESPECIALIZADAS_FIDE -> {
+                binding.fideUploadTitle.text = fileName
+                binding.fideFileSizeText.text = getString(R.string.change_file)
+                binding.fideChevron.visibility = View.GONE
+                binding.fideCheck.visibility = View.VISIBLE
+            }
+
+            else -> {}
+        }
     }
 }

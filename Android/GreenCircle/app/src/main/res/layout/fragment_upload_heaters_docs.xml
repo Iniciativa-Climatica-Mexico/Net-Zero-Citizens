@@ -98,7 +98,7 @@
                     android:paddingVertical="20dp">
 
                     <TextView
-                        android:id="@+id/calentadores_more_than_upload_title"
+                        android:id="@+id/more_than_upload_title"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:fontFamily="sans-serif-medium"
@@ -120,7 +120,7 @@
                         android:textColor="@color/gray_500"
                         android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/calentadores_more_than_upload_title" />
+                        app:layout_constraintTop_toBottomOf="@id/more_than_upload_title" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -136,13 +136,27 @@
                         app:layout_constraintTop_toBottomOf="@id/more_than_file_desc" />
 
                     <ImageView
+                        android:id="@+id/lessThanChevron"
                         android:layout_width="30dp"
                         android:layout_height="0dp"
-                        android:contentDescription="@string/app_logo"
+                        android:contentDescription="@string/chevron"
                         android:src="@drawable/ic_chevron_right"
+                        android:visibility="visible"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/lessThanCheck"
+                        android:layout_width="30dp"
+                        android:layout_height="0dp"
+                        android:contentDescription="@string/check"
+                        android:src="@drawable/baseline_check_24"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/green" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -160,7 +174,7 @@
                     android:paddingVertical="20dp">
 
                     <TextView
-                        android:id="@+id/calentadores_less_than_upload_title"
+                        android:id="@+id/less_than_upload_title"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:fontFamily="sans-serif-medium"
@@ -182,7 +196,7 @@
                         android:textColor="@color/gray_500"
                         android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/calentadores_less_than_upload_title" />
+                        app:layout_constraintTop_toBottomOf="@id/less_than_upload_title" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -200,13 +214,27 @@
                         app:layout_constraintTop_toBottomOf="@id/less_than_file_desc" />
 
                     <ImageView
+                        android:id="@+id/moreThanChevron"
                         android:layout_width="30dp"
                         android:layout_height="0dp"
-                        android:contentDescription="@string/arrow_right"
+                        android:contentDescription="@string/chevron"
                         android:src="@drawable/ic_chevron_right"
+                        android:visibility="visible"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/moreThanCheck"
+                        android:layout_width="30dp"
+                        android:layout_height="0dp"
+                        android:contentDescription="@string/check"
+                        android:src="@drawable/baseline_check_24"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/green" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

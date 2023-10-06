@@ -6,14 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.greencircle.R
 import com.greencircle.databinding.FragmentUploadCurriculumBinding
+import com.greencircle.domain.model.company.files.FileDescription
+import com.greencircle.domain.model.company.files.FileFormat
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
 
 /**Constructor de "UploadCurriculumFragment
  *
  * @constructor Incializa y crea la vista del "UploadCurriculumFragment"
  */
-class UploadCurriculumFragment : Fragment() {
+class UploadCurriculumFragment : Fragment(), UploadDocumentDialogFragment.UploadDialogListener {
     private var _binding: FragmentUploadCurriculumBinding? = null
     private val binding get() = _binding!!
     private var arguments: Bundle? = null
@@ -62,8 +65,8 @@ class UploadCurriculumFragment : Fragment() {
         binding.curriculumUpload.setOnClickListener {
             val dialogFragment = UploadDocumentDialogFragment(
                 "Curriculum",
-                "Curriculum",
-                "pdf",
+                FileDescription.CURRICULUM,
+                FileFormat.PDF,
             )
             dialogFragment.arguments = arguments
             dialogFragment.show(childFragmentManager, "UploadImageDialog")
@@ -101,5 +104,17 @@ class UploadCurriculumFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    /**
+     * Método que se llama cuando se sube un archivo.
+     *
+     * @param fileName El nombre del archivo que se subió.
+     */
+    override fun onFileUploaded(fileName: String) {
+        binding.curriculumUploadTitle.text = fileName
+        binding.curriculumFileSizeText.text = getString(R.string.change_file)
+        binding.curriculumChevron.visibility = View.GONE
+        binding.curriculumCheck.visibility = View.VISIBLE
     }
 }

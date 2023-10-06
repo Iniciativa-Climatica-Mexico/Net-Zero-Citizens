@@ -14,6 +14,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.DialogFragment
 import com.greencircle.R
+import com.greencircle.domain.model.company.files.FileDescription
+import com.greencircle.domain.model.company.files.FileFormat
 import com.greencircle.framework.viewmodel.company.files.UploadFilesViewModel
 import java.io.InputStream
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -21,15 +23,17 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
 
 class UploadDocumentDialogFragment(
-    private val title: String,
-    private val fileDescription: String,
-    private val fileFormat: String,
+    title: String,
+    fileDescription: FileDescription,
+    fileFormat: FileFormat
 ) : DialogFragment() {
+    private val title = title
+    private val fileDescription = fileDescription
+    private val fileFormat = fileFormat
     private lateinit var view: View
     private lateinit var viewModel: UploadFilesViewModel
     private var arguments = Bundle()
     private lateinit var authToken: String
-    private lateinit var fileUri: Uri
     private var isFileSelected = false
     var uploadDialogListener: UploadDialogListener? = null
     private var fileName: String? = null
@@ -40,7 +44,6 @@ class UploadDocumentDialogFragment(
         ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         if (uri != null) {
-            fileUri = uri
             fileName = getFileName(uri)
             changeDialogAfterSelection(fileName!!)
             isFileSelected = true
@@ -48,7 +51,7 @@ class UploadDocumentDialogFragment(
             val uploadFileButton = view.findViewById<Button>(R.id.uploadFileButton)
             uploadFileButton.isEnabled = true
             uploadFileButton.setOnClickListener {
-                uploadFile(fileUri)
+                uploadFile(uri)
                 dialog?.dismiss()
             }
         }
@@ -113,19 +116,22 @@ class UploadDocumentDialogFragment(
         var inputStream: InputStream? = null
         try {
             inputStream = requireContext().contentResolver.openInputStream(uri)
-            val requestBody =
-                inputStream?.readBytes()?.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+            val requestBody = inputStream
+                ?.readBytes()
+                ?.toRequestBody("multipart/form-data".toMediaTypeOrNull())
             val filePart = MultipartBody.Part.createFormData(
-                "file", title, requestBody!!
+                "file",
+                fileName,
+                requestBody!!
             )
             viewModel.uploadFile(
                 authToken, filePart, companyId!!, fileDescription, fileFormat
             )
-            uploadDialogListener?.onFileUploaded(fileName ?: "")
         } catch (e: Exception) {
-            Log.e("UploadDocumentDialogFragment", "uploadFile: ${e.message}")
+            Log.e("UploadDocumentDialogFragment", "uploadFile: $e")
         } finally {
             inputStream?.close()
         }
+        uploadDialogListener?.onFileUploaded(fileName ?: "")
     }
 }

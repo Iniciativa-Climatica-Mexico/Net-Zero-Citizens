@@ -6,17 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.greencircle.R
 import com.greencircle.databinding.FragmentUploadHeatersDocsBinding
+import com.greencircle.domain.model.company.files.FileDescription
+import com.greencircle.domain.model.company.files.FileFormat
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
 
 /**Constructor de "UploadHeatersDocsFragment"
  *
  * @constructor Incializa y crea la vista del "UploadHeatersDocsFragment"
  */
-class UploadHeatersDocsFragment : Fragment() {
+class UploadHeatersDocsFragment : Fragment(), UploadDocumentDialogFragment.UploadDialogListener {
     private var _binding: FragmentUploadHeatersDocsBinding? = null
     private val binding get() = _binding!!
     private var arguments: Bundle? = null
+    private var submittingFile: FileDescription? = null
 
     /**
      * Método que se llama cuando se crea la vista del fragmento de subir los documentos de identificación.
@@ -62,9 +66,10 @@ class UploadHeatersDocsFragment : Fragment() {
         binding.calentadoresMoreThanUpload.setOnClickListener {
             val dialogFragment = UploadDocumentDialogFragment(
                 "Archivos presion mayor a 294k Pa",
-                "Archivos presion mayor a 294k Pa",
-                "pdf",
+                FileDescription.ARCHIVOS_PRESION_MAYOR_A_294K_PA,
+                FileFormat.PDF,
             )
+            submittingFile = FileDescription.ARCHIVOS_PRESION_MAYOR_A_294K_PA
             dialogFragment.arguments = arguments
             dialogFragment.show(childFragmentManager, "UploadImageDialog")
         }
@@ -72,9 +77,10 @@ class UploadHeatersDocsFragment : Fragment() {
         binding.calentadoresLessThanUpload.setOnClickListener {
             val dialogFragment = UploadDocumentDialogFragment(
                 "Archivos presion menor a 294k Pa",
-                "Archivos presion menor a 294k Pa",
-                "pdf",
+                FileDescription.ARCHIVOS_PRESION_MENOR_A_294K_PA,
+                FileFormat.PDF
             )
+            submittingFile = FileDescription.ARCHIVOS_PRESION_MENOR_A_294K_PA
             dialogFragment.arguments = arguments
             dialogFragment.show(childFragmentManager, "UploadImageDialog")
         }
@@ -111,5 +117,30 @@ class UploadHeatersDocsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    /**
+     * Método que se llama cuando se sube un archivo.
+     *
+     * @param fileName El nombre del archivo que se subió.
+     */
+    override fun onFileUploaded(fileName: String) {
+        when (submittingFile) {
+            FileDescription.ARCHIVOS_PRESION_MAYOR_A_294K_PA -> {
+                binding.moreThanUploadTitle.text = fileName
+                binding.moreThanFileDesc.text = getString(R.string.change_file)
+                binding.moreThanChevron.visibility = View.GONE
+                binding.moreThanCheck.visibility = View.VISIBLE
+            }
+
+            FileDescription.ARCHIVOS_PRESION_MENOR_A_294K_PA -> {
+                binding.lessThanUploadTitle.text = fileName
+                binding.lessThanFileDesc.text = getString(R.string.change_file)
+                binding.lessThanChevron.visibility = View.GONE
+                binding.lessThanCheck.visibility = View.VISIBLE
+            }
+
+            else -> {}
+        }
     }
 }

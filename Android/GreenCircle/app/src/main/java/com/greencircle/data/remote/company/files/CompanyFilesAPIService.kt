@@ -1,5 +1,7 @@
 package com.greencircle.data.remote.company.files
 
+import com.greencircle.domain.model.company.files.FileDescription
+import com.greencircle.domain.model.company.files.FileFormat
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.http.Multipart
@@ -16,8 +18,8 @@ interface CompanyFilesAPIService {
     suspend fun uploadFile(
         @Part file: MultipartBody.Part,
         @Part("companyId") companyId: String,
-        @Part("fileDescription") fileDescription: String,
-        @Part("fileFormat") fileFormat: String
+        @Part("fileDescription") fileDescription: FileDescription,
+        @Part("fileFormat") fileFormat: FileFormat
     ): ResponseBody
 
     // FILE, COMPANYID, FILEDES CRIPTION, FILE FORMAT

@@ -6,14 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.greencircle.R
 import com.greencircle.databinding.FragmentUploadPhotovoltaicDocsBinding
+import com.greencircle.domain.model.company.files.FileDescription
+import com.greencircle.domain.model.company.files.FileFormat
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
 
 /**Constructor de "SubmitCertificationsFragment"
  *
  * @constructor Incializa y crea la vista del "SubmitCertificationsFragment"
  */
-class UploadPhotovoltaicDocsFragment : Fragment() {
+class UploadPhotovoltaicDocsFragment :
+    Fragment(),
+    UploadDocumentDialogFragment.UploadDialogListener {
     private var _binding: FragmentUploadPhotovoltaicDocsBinding? = null
     private val binding get() = _binding!!
     private var arguments: Bundle? = null
@@ -61,8 +66,8 @@ class UploadPhotovoltaicDocsFragment : Fragment() {
         binding.certSistemasFotovoltaicosUpload.setOnClickListener {
             val dialogFragment = UploadDocumentDialogFragment(
                 "Certificado de sistemas fotovoltaicos",
-                "Certificado de sistemas fotovoltaicos",
-                "pdf",
+                FileDescription.CERTIFICACIONES_SISTEMAS_FOTOVOLTAICOS,
+                FileFormat.PDF,
             )
             dialogFragment.arguments = arguments
             dialogFragment.show(childFragmentManager, "UploadImageDialog")
@@ -118,5 +123,17 @@ class UploadPhotovoltaicDocsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    /**
+     * Método que se llama cuando se sube un archivo.
+     *
+     * @param fileName El nombre del archivo que se subió.
+     */
+    override fun onFileUploaded(fileName: String) {
+        binding.fotovoltaicosUploadTitle.text = fileName
+        binding.fotovoltaicFileSizeText.text = getString(R.string.change_file)
+        binding.photovoltaicChevron.visibility = View.GONE
+        binding.photovoltaicCheck.visibility = View.VISIBLE
     }
 }

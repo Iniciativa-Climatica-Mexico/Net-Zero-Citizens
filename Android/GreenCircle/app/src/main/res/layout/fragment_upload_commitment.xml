@@ -99,6 +99,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
+                        android:id="@+id/commitmentFileSizeText"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_marginTop="7dp"
@@ -110,13 +111,27 @@
                         app:layout_constraintTop_toBottomOf="@+id/commitment_upload_title" />
 
                     <ImageView
+                        android:id="@+id/commitmentChevron"
                         android:layout_width="30dp"
                         android:layout_height="0dp"
-                        android:contentDescription="@string/app_logo"
+                        android:contentDescription="@string/chevron"
                         android:src="@drawable/ic_chevron_right"
+                        android:visibility="visible"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/commitmentCheck"
+                        android:layout_width="30dp"
+                        android:layout_height="0dp"
+                        android:contentDescription="@string/check"
+                        android:src="@drawable/baseline_check_24"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/green" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
