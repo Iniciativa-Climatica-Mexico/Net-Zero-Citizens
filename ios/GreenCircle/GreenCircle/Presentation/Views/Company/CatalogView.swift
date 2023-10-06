@@ -157,20 +157,6 @@ struct CatalogView: View {
   @StateObject var viewModel = CompanyViewModel()
 
   var body: some View {
-<<<<<<< HEAD
-    NavigationStack {
-      ScrollView {
-        LazyVStack{
-          ForEach(viewModel.companies, id: \.id) { company in
-            CardCatalogView(companyId: company.companyId,
-                            companyName: company.name, city: company.city, state: company.state)
-          }.padding(.top, 5)
-        }.padding(.top, 10)
-      }
-      .onAppear {
-        Task {
-          try await viewModel.fetchAllCompanies()
-=======
     ZStack {
       NavigationStack {
         ScrollView {
@@ -184,9 +170,12 @@ struct CatalogView: View {
         }
         .onAppear {
           Task {
-            await viewModel.fetchAllCompanies()
-          }
->>>>>>> develop
+                  do {
+                      try await viewModel.fetchAllCompanies()
+                  } catch {
+                      print("Failed to fetch all companies: \(error)")
+                  }
+              }
         }
       }
       .accentColor(.white)
