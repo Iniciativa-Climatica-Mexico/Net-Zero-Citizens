@@ -28,7 +28,6 @@ class ReviewService {
         }
     
     func fetchReviewByCompanyId(url: URL) async -> PaginatedQuery<Review>? {
-        // Usando el nuevo authToken hardcodeado
 
         let taskRequest = AF.request(url, method: .get, headers: headers).validate()
         let response = await taskRequest.serializingData().response

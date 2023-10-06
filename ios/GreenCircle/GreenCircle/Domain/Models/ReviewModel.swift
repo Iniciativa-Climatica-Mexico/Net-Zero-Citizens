@@ -15,7 +15,7 @@ struct Review: Codable, Identifiable {
     var reviewTitle: String
     var score: Double
     var review: String
-    var createdAt: Date
-    var updatedAt: Date
+    var createdAt: String
+    var updatedAt: String
 //    var user: User
 }

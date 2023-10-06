@@ -9,7 +9,7 @@ import Foundation
 
 /// Clase con la estructura de la API de autenticación
 class ReviewAPI {
-  static let base = "http://localhost:4000/api/v1/review"
+  static let base = "http://Mayras-MacBook-Air.local:4000/api/v1/review"
   struct Routes {
     static let companyReview = "/company" //:companyId
     static let userReview = "/user" //:userId

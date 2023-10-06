@@ -18,15 +18,13 @@ class ReviewViewModel: ObservableObject {
         reviewTitle: "",
         score: 0.0,
         review: "",
-        createdAt: Date(),
-        updatedAt: Date()
+        createdAt: "",
+        updatedAt: ""
 //        user: User()
     )
     @Published var totalReviews = Int ()
     
-    init (
-        reviewUseCase: ReviewUseCase = ReviewUseCase.shared
-    ) {
+    init (reviewUseCase: ReviewUseCase = ReviewUseCase.shared) {
         self.fetchReviewUseCase = reviewUseCase
     }
     
@@ -44,7 +42,9 @@ class ReviewViewModel: ObservableObject {
         }
     }
     
-    func fetchReviewByUserId(userId: String) async {
+    @MainActor
+    func fetchReviewByUserId() async {
+        let userId: String = fetchReviewUseCase.lService?.user.id ?? ""
         let resultReview = await fetchReviewUseCase.fetchReviewByUserId(usId: userId)
         if let resultReview = resultReview {
             print("Review recibida: \(resultReview)")

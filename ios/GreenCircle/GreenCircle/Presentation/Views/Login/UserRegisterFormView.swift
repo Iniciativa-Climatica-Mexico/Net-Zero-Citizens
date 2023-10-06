@@ -95,9 +95,6 @@ struct UserRegisterFormView: View {
     }.onTapGesture {
         hideKeyboard()
     }
-    .onTapGesture {
-      hideKeyboard()
-    }
     .foregroundColor(Color("MainText"))
   }
     private func hideKeyboard() {

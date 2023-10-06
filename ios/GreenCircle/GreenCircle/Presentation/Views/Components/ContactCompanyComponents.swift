@@ -93,6 +93,7 @@ struct ContactCompanyComponentView: View {
 struct ContactCompanyRatingView: View {
   @ObservedObject var modelCompanyRating: CompanyViewModel
   @Binding var dispScrollView: Bool
+    @State private var isSecondViewPresented = false
   var body: some View {
     if !dispScrollView {
       VStack(alignment: .leading, spacing: 5) {
@@ -133,7 +134,10 @@ struct ContactCompanyRatingView: View {
         HStack {
           Spacer()
           Text("Ver mas...").onTapGesture {
-            dispScrollView = true
+              isSecondViewPresented = true
+          }
+          .sheet(isPresented: $isSecondViewPresented) {
+              ScrollViewRating()
           }
           .font(.system(size: 13))
           .foregroundColor(Color("BlueCustom"))

@@ -17,15 +17,11 @@ struct ReviewCardProvider: View {
     var body: some View {
         VStack {
             ForEach(reviewViewModel.contentReview) { review in
+                Divider()
                 ReviewCompanyCard(review: review, profilePicture: profilePicture )
             }
+            .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
         }
-        .background(Color.white)
-        .cornerRadius(10)
-        .shadow(radius: 3)
-        .padding()
-        
-        Divider()
         
         .onAppear {
             Task {
@@ -40,18 +36,22 @@ struct ReviewCompanyCard: View {
     var review: Review
     var profilePicture: Image
     
-    var formattedDate: String {
-        return dateFormatter.string(from: review.createdAt)
+    func formatDate(_ dateString: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        if let date = dateFormatter.date(from: dateString) {
+            dateFormatter.dateFormat = "dd/MM/yyyy"
+            return dateFormatter.string(from: date)
+        }
+        
+        return "Fecha no válida"
     }
-    
-    let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd/MM/yyyy"
-        return formatter
-    }()
+
     
     var body: some View {
-        VStack {
+        VStack (alignment: .leading) {
             HStack {
                 
                 profilePicture
@@ -61,7 +61,7 @@ struct ReviewCompanyCard: View {
                 VStack(alignment: .leading) {
 //                    Text(review.user.firstName + " " + review.user.lastName)
 //                        .font(.headline)
-                    Text(formattedDate)
+                    Text(formatDate(review.createdAt))
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }
@@ -87,15 +87,16 @@ struct ReviewCompanyCard: View {
             }
             .padding(EdgeInsets(top: 15, leading: 15, bottom: 0, trailing: 15))
             
-            VStack(alignment: .leading) {
+            VStack (alignment: .leading) {
                 Text(review.reviewTitle)
-                    .font(.headline).customTextPadding()
+                    .font(.headline)
                 
                 Text(review.review)
                     .font(.body)
                     .foregroundColor(Color("BlackCustom"))
+                    .padding(.top, 10)
             }
-            .padding(EdgeInsets(top: 0, leading: 15, bottom: 15, trailing: 15))
+            .padding()
         }
     }
 }
@@ -118,7 +119,7 @@ struct ReviewCardClient: View {
         
         .onAppear {
             Task {
-                await reviewViewModel.fetchReviewByUserId(userId: "8de45630-2e76-4d97-98c2-9ec0d1f3a5b9")
+                await reviewViewModel.fetchReviewByUserId()
             }
         }
     }
@@ -126,21 +127,25 @@ struct ReviewCardClient: View {
 
 //
 struct ReviewClientCard: View {
+    
     @State private var isExpanded: Bool = false
     var review: Review
     
-    var formattedDate: String {
-        return dateFormatter.string(from: review.createdAt)
-    }
-    
-    let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd/MM/yyyy"
-        return formatter
-    }()
-    
     var showSeeMore: Bool {
         return review.review.count > 30
+    }
+    
+    func formatDate(_ dateString: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        if let date = dateFormatter.date(from: dateString) {
+            dateFormatter.dateFormat = "dd/MM/yyyy"
+            return dateFormatter.string(from: date)
+        }
+        
+        return "Fecha no válida"
     }
     
     var body: some View {
@@ -174,7 +179,7 @@ struct ReviewClientCard: View {
                 
                 VStack(alignment: .leading) {
                     
-                    Text(formattedDate)
+                    Text(formatDate(review.createdAt))
                         .font(.subheadline)
                         .foregroundColor(.gray)
                     
@@ -239,4 +244,3 @@ struct ReviewClientCard: View {
         .padding()
     }
 }
-

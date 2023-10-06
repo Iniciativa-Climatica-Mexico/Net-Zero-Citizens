@@ -15,6 +15,13 @@ protocol ReviewUseCaseProtocol {
 class ReviewUseCase {
     var repository = ReviewRepository.shared
     static var shared = ReviewUseCase()
+    let uRepository = UserRepository.shared
+    
+    let lService = LocalService.shared.getUserInformation()
+    
+    func getLocalUserData() -> AuthResponse? {
+      return uRepository.getAuthData()
+    }
     
     @MainActor
     func fetchReviewByCompanyId(cmpyId: String) async -> PaginatedQuery<Review>? {
@@ -23,6 +30,7 @@ class ReviewUseCase {
     
     @MainActor
     func fetchReviewByUserId(usId: String) async -> PaginatedQuery<Review>? {
+        
         return await repository.fetchReviewByUserId(userId: usId)
     }
 }

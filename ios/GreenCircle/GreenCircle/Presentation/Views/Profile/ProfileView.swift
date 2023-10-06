@@ -12,9 +12,6 @@ struct ProfileView: View {
   @ObservedObject var modelUser = UserViewModel()
   @ObservedObject var modelReview = ReviewViewModel()
 
-
-  
-  @ObservedObject var modelUser = UserViewModel()
   var goLogin: () -> Void
 
   var body: some View {
@@ -102,9 +99,6 @@ struct ProfileView: View {
           //--------------------Seccón de Reseñas-----------------------------------------
             Text("Reseñas Escritas (\(modelReview.totalReviews))") //
 
-          //--------------------Sección de Reseñas-----------------------------------------
-          Text("Reseñas Escritas (0)")
-
             .font(.system(size: 20))
             .fontWeight(.bold)
             .padding(.top, 32)
@@ -117,6 +111,11 @@ struct ProfileView: View {
           }
         }
         .padding(.top, 70)
+      }
+      .onAppear{
+          Task{
+              await modelReview.fetchReviewByUserId()
+          }
       }
     }
   }

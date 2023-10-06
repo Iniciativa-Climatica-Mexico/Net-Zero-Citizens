@@ -12,49 +12,51 @@ struct ReviewsView: View {
     @State private var isSecondViewPresented = false
     
     var body: some View {
-        VStack {
-            VStack(alignment: .leading) {
-                Text("Califica al proveedor").font(.title)
-                Text("Comparte tu opinion sobre este proveedor")
-    
-                HStack(alignment: .top, spacing: 10) {
-                    Spacer()
-    
-                    StarRatingView().customSectionPadding()
-    
-                    Spacer()
-                }
-                .customSectionPadding()
-    
-                VStack {
-                    Text("Escribe una opinión")
-                        .font(.headline)
-                        .foregroundColor(Color("GreenCustom"))
-                        .onTapGesture {
-                            isSecondViewPresented = true
-                        }
-                        .sheet(isPresented: $isSecondViewPresented) {
-                            OpinionsView()
-                        }
-                }
-                .customSectionPadding()
-    
-                Text("Opiniones del proveedor").font(.title)
-    
-                VStack {
-                        RatingView(numberOfReviews: 123)
+        NavigationView{
+            VStack {
+                VStack(alignment: .leading) {
+                    Text("Califica al proveedor").font(.title)
+                    Text("Comparte tu opinion sobre este proveedor")
+        
+                    HStack(alignment: .top, spacing: 10) {
+                        Spacer()
+        
+                        StarRatingView().customSectionPadding()
+        
+                        Spacer()
                     }
-    
-                Divider()
-    
-                VStack {
-    
-                    ReviewCardProvider(reviewViewModel: ReviewViewModel(), profilePicture: Image(systemName: "person.circle.fill"))
-    
+                    .customSectionPadding()
+        
+                    VStack {
+                        Text("Escribe una opinión")
+                            .font(.headline)
+                            .foregroundColor(Color("GreenCustom"))
+                            .onTapGesture {
+                                isSecondViewPresented = true
+                            }
+                            .sheet(isPresented: $isSecondViewPresented) {
+                                OpinionsView()
+                            }
+                    }
+                    .customSectionPadding()
+        
+                    Text("Opiniones del proveedor").font(.title)
+        
+                    VStack {
+                            RatingView(numberOfReviews: 123)
+                        }
+        
+                    Divider()
+//        
+//                    VStack {
+//        
+//                        ReviewCardProvider(reviewViewModel: ReviewViewModel(), profilePicture: Image(systemName: "person.circle.fill"))
+//        
+//                    }
+        
                 }
-    
+                padding()
             }
-            padding()
         }
     }
 }
@@ -65,43 +67,45 @@ struct OpinionsView: View {
     @State private var description: String = ""
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("Comparte tu opinión").font(.title).bold()
-
-            Text("¿Cómo calificarías la atención y servicio del proveedor?")
-
-            StarRatingView().padding().customSectionPadding()
-
-            Text("Escribe una opinión").font(.title2).bold().padding(.top, 20)
-
-            Text("(Opcional)")
-
-            Text("Tus comentarios ayudan a otros usuarios a conocer mejor a un proveedor").customTextPadding()
-
+        NavigationView{
             VStack(alignment: .leading, spacing: 10) {
-                Text("Escribe un título para la opinión").foregroundColor(Color.gray).bold().padding(.top, 20)
+                Text("Comparte tu opinión").font(.title).bold()
 
-                TextField("¿Cuál es la idea general?", text: $title)
-                    .padding()
-                    .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1))
+                Text("¿Cómo calificarías la atención y servicio del proveedor?")
 
-                Text("Danos tu opinión").foregroundColor(Color.gray).bold().padding(.top, 20)
+                StarRatingView().padding().customSectionPadding()
 
-                TextField("Describe tu experiencia", text: $description)
-                    .padding().frame(height: 150)
-                    .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1))
+                Text("Escribe una opinión").font(.title2).bold().padding(.top, 20)
 
-                Button(action: {
-                    // Realiza la acción de envío del formulario
-                    print("Formulario enviado")
-                }) {
-                    Text("Publicar")
-                        .padding().frame(maxWidth: .infinity).background(Color("BlueCustom"))
-                        .foregroundColor(.white).cornerRadius(10).customSectionPadding()
+                Text("(Opcional)")
+
+                Text("Tus comentarios ayudan a otros usuarios a conocer mejor a un proveedor").customTextPadding()
+
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Escribe un título para la opinión").foregroundColor(Color.gray).bold().padding(.top, 20)
+
+                    TextField("¿Cuál es la idea general?", text: $title)
+                        .padding()
+                        .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1))
+
+                    Text("Danos tu opinión").foregroundColor(Color.gray).bold().padding(.top, 20)
+
+                    TextField("Describe tu experiencia", text: $description)
+                        .padding().frame(height: 150)
+                        .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1))
+
+                    Button(action: {
+                        // Realiza la acción de envío del formulario
+                        print("Formulario enviado")
+                    }) {
+                        Text("Publicar")
+                            .padding().frame(maxWidth: .infinity).background(Color("BlueCustom"))
+                            .foregroundColor(.white).cornerRadius(10).customSectionPadding()
+                    }
                 }
             }
+            .padding(EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 20))
         }
-        .padding(EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 20))
     }
 }
 
@@ -142,6 +146,11 @@ struct RatingView: View {
                 }
             }
         }
+        .onAppear{
+            Task {
+                await reviewModel.fetchReviewByUserId()
+            }
+        }
     }
 }
 
@@ -167,13 +176,15 @@ struct StarView: View {
             Text(label)
                 .font(.caption)
                 .offset(x: -10, y: 35)
+        }.onAppear{
+            Task {
+                await reviewModel.fetchReviewByUserId()
+            }
         }
     }
 }
 
-
 struct StarRatingView: View {
-    @StateObject var reviewModel = ReviewViewModel()
 
     var body: some View {
             HStack {
