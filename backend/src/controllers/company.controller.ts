@@ -16,16 +16,11 @@ export const getAllCompanies: RequestHandler<
   NoRecord,
   Paginator<Company> | { error: string },
   NoRecord,
-  PaginationParams<{ name?: string }>
+  PaginationParams<CompanyService.FilterGetCompanies>
 > = async (req, res) => {
-  const params = {
-    start: req.query.start || 0,
-    pageSize: req.query.pageSize || 1000,
-    filters: {
-      name: req.query.name || '',
-    },
-  }
-
+  const params = req.query
+  params.start = params.start || 0
+  params.pageSize = params.pageSize || 1000
   try {
     const companies = await CompanyService.getAllCompanies(params)
     res.json({
@@ -74,16 +69,15 @@ export const getApprovedCompanies: RequestHandler<
   NoRecord,
   Paginator<Company>,
   NoRecord,
-  PaginationParams<{ status: string }>
+  PaginationParams<CompanyService.FilterGetCompanies>
 > = async (req, res) => {
-  const params = {
-    start: req.query.start || 0,
-    pageSize: req.query.pageSize || 1000,
-  }
-  const companies = await CompanyService.getCompaniesByStatus(
-    'approved',
-    params
-  )
+  const params = req.query
+  params.start = params.start || 0
+  params.pageSize = params.pageSize || 1000
+  const companies = await CompanyService.getAllCompanies({
+    ...params,
+    status: 'approved',
+  })
   res.json({
     rows: companies.rows,
     start: params.start,
@@ -102,16 +96,16 @@ export const getPendingCompanies: RequestHandler<
   NoRecord,
   Paginator<Company>,
   NoRecord,
-  PaginationParams<{ status: string }>
+  PaginationParams<CompanyService.FilterGetCompanies>
 > = async (req, res) => {
-  const params = {
-    start: req.query.start || 0,
-    pageSize: req.query.pageSize || 1000,
-  }
-  const companies = await CompanyService.getCompaniesByStatus(
-    'pending_approval',
-    params
-  )
+  const params = req.query
+  params.start = params.start || 0
+  params.pageSize = params.pageSize || 1000
+
+  const companies = await CompanyService.getAllCompanies({
+    ...params,
+    status: 'pending_approval',
+  })
   res.json({
     rows: companies.rows,
     start: params.start,
@@ -228,17 +222,10 @@ export const getCoordinatesAndroid: RequestHandler<
   CompanyService.FilteredCompany[] | { error: string },
   NoRecord,
   PaginationParams<{ status: string }>
-> = async (req, res) => {
-  const params = {
-    start: req.query.start || 0,
-    pageSize: req.query.pageSize || 1000,
-  }
-
+> = async (_req, res) => {
   try {
-    const companies = await CompanyService.getCompaniesWithCoordinates(
-      'approved',
-      params
-    )
+    const companies =
+      await CompanyService.getCompaniesWithCoordinates('approved')
 
     return res.json(companies)
   } catch (error) {
@@ -253,26 +240,14 @@ export const getCoordinatesAndroid: RequestHandler<
  * @param res
  */
 
-interface FilteredCompany {
-  companyId: string
-  name: string
-  latitude: number
-  longitude: number
-  profilePicture: string
-}
 
 export const getCoordinatesIos: RequestHandler<
   NoRecord,
-  Paginator<FilteredCompany>,
+  Paginator<CompanyService.FilteredCompany>,
   NoRecord,
-  PaginationParams<{ status: string }>
-> = async (req, res) => {
-  const params = {
-    start: req.query.start || 0,
-    pageSize: req.query.pageSize || 1000,
-    status: req.query.status
-  }
-  const paginator = await CompanyService.getCoordinatesIos(params)
+  NoRecord
+> = async (_req, res) => {
+  const paginator = await CompanyService.getCoordinatesIos()
   res.json(paginator)
 }
 /**

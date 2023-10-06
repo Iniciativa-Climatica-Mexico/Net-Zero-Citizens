@@ -3,11 +3,12 @@ import chaiExclude from 'chai-exclude'
 import { db, initDB } from '../src/configs/database.config'
 import {
   assignCompanyUser,
-  getCompaniesByStatus,
+  getAllCompanies,
   getCompanyById,
 } from '../src/services/company.service'
 import Company from '../src/models/company.model'
 import User from '../src/models/users.model'
+import { unwrap } from './utils'
 
 chai.use(chaiExclude)
 
@@ -17,18 +18,17 @@ const testData = [
     companyId: 'c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
     userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b8',
     name: 'SUNPOWER',
-    oneComment: 'This is a comment',
     description: 'Más potencia en condiciones del mundo real',
     email: 'contact@sunpower.com',
     phone: '8453728592',
     webPage: 'https://www.sunpower.com',
     street: 'Las Lomas Verdes',
     streetNumber: '123',
-    latitude: null,
-    longitude: null,
     city: 'Ciudad de México',
     state: 'CDMX',
     zipCode: '72000',
+    latitude: 19.5051687,
+    longitude: -99.2565699,
     score: 4.3,
     profilePicture:
       'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Sunpower_logo.svg/2560px-Sunpower_logo.svg.png',
@@ -50,11 +50,13 @@ const testData = [
     email: 'company2@outlook.com',
     phone: '0123456799',
     webPage: 'https://www.company2.com',
-    street: 'Company 2 street',
-    streetNumber: '123',
+    street: 'Pino Suárez',
+    streetNumber: '383',
     city: 'Queretaro',
     state: 'QRO',
-    zipCode: '76152',
+    zipCode: '76178',
+    latitude: 20.5844021,
+    longitude: -100.412604,
     profilePicture:
       'https://latam.apsystems.com/wp-content/uploads/2018/08/apsystems-exelsolar.png',
     pdfCurriculumUrl: 'https://www.company2.com/pdfCurriculum.pdf',
@@ -65,7 +67,7 @@ const testData = [
     pdfActaConstitutivaUrl:
       'https://example.com/company2-acta-constitutiva.pdf',
     pdfIneUrl: 'https://example.com/company2-ine.pdf',
-    status: 'rejected',
+    status: 'pending_approval',
   },
   {
     companyId: 'a2c0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
@@ -80,6 +82,8 @@ const testData = [
     city: 'Ciudad de México',
     state: 'CDMX',
     zipCode: '76152',
+    latitude: 19.4126494,
+    longitude: -99.0553812,
     profilePicture:
       'https://cdn11.bigcommerce.com/s-3nrr5bfo5i/product_images/uploaded_images/tesla-logo.png',
     pdfCurriculumUrl: 'https://www.company3.com/pdfCurriculum.pdf',
@@ -122,6 +126,7 @@ const attributesToExclude = [
   'deletedAt',
   'products',
   'images',
+  'score',
 ]
 
 beforeEach(async () => {
@@ -136,7 +141,7 @@ describe('Company Service', () => {
     )
 
     expect(response?.get())
-      .excludingEvery(attributesToExclude)
+      .excludingEvery(attributesToExclude.concat('oneComment'))
       .to.deep.equal(testData[0])
   })
 
@@ -174,5 +179,37 @@ describe('Company Service', () => {
     expect(updatedCompany?.userId).to.equal(user.userId)
     expect(updatedUser?.companyId).to.equal(company.companyId)
     expect(updatedUser?.roleId).to.equal('COMAPNY_ROLE_ID')
+  })
+
+  it('should filter companies by name', async () => {
+    const companies = await getAllCompanies({ name: 'sunpo' })
+    expect(companies.rows).excludingEvery(attributesToExclude).to.deep.equal([testData[0]])
+  })
+  it('should filter companies by state', async () => {
+    const companies = await getAllCompanies({ state: 'QRO' })
+    expect(companies.rows).excludingEvery(attributesToExclude).to.deep.equal([testData[1]])
+  })
+  it('should order companies by score', async () => {
+    const companies = await getAllCompanies({ ordering: 'score' })
+    const scores = companies.rows.map((company) => company.score || 0)
+    let previous = 1000
+    const isOrdered = !scores.some(function (score) {
+      const isOrdered = score > previous
+      previous = score
+      return isOrdered
+    })
+    expect(isOrdered).to.equal(true)
+  })
+
+  it('should order companies by distance', async () => {
+    const companies = await getAllCompanies({
+      ordering: 'distance',
+      latitude: 20.626908,
+      longitude: -100.402864,
+    })
+    const testDataIn = [testData[1], testData[0], testData[2]].map(
+      (c) => c.companyId
+    )
+    expect(companies.rows.map((c) => c.companyId)).to.deep.equal(testDataIn)
   })
 })
