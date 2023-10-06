@@ -23,8 +23,8 @@ import com.greencircle.framework.views.activities.RegisterCompanyActivity
 import com.greencircle.framework.views.activities.SurveyActivity
 import com.greencircle.utils.AuthUtils
 
-/**Constructor de "RegisterCompanyFragment"
- *
+/**
+ * Constructor de "RegisterCompanyFragment
  * @constructor Incializa y crea la vista del "RegisterCompanyFragment". Navega a "CreateCompanyFragment".
  */
 class RegisterCompanyFragment : Fragment() {
@@ -32,7 +32,7 @@ class RegisterCompanyFragment : Fragment() {
     private lateinit var createCompanyViewModel: CreateCompanyViewModel
     private lateinit var registerViewModel: RegisterViewModel
     private lateinit var _arguments: Bundle
-    private val authUtils = AuthUtils()
+    private val authUtils = AuthUtils(activity as Activity)
     private val binding get() = _binding!!
 
     /**
@@ -100,8 +100,9 @@ class RegisterCompanyFragment : Fragment() {
     ): View {
         // Inflar el diseño de este fragmento
         _binding = FragmentRegisterCompanyBinding.inflate(inflater, container, false)
+
         // Google Login
-        authUtils.googleLoginListener(binding, requireActivity(), googleSignInActivityResult)
+//        authUtils.googleLoginListener(binding, requireActivity(), googleSignInActivityResult)
 
         registerOnClickListener()
 
@@ -135,7 +136,7 @@ class RegisterCompanyFragment : Fragment() {
                 if (result.user.roles != "new_user") {
                     navigateToSurvey()
                 } else {
-                    _arguments = authUtils.getDataFromRegisterResponse(result.user)
+//                    _arguments = authUtils.getDataFromRegisterResponse(result.user)
                     navigateToTokenRegistro(_arguments)
                 }
             } else {
