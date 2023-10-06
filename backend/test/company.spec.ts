@@ -8,7 +8,6 @@ import {
 } from '../src/services/company.service'
 import Company from '../src/models/company.model'
 import User from '../src/models/users.model'
-import { unwrap } from './utils'
 
 chai.use(chaiExclude)
 

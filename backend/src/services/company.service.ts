@@ -2,7 +2,7 @@ import CompanyProducts from '../models/companyProducts.model'
 import CompanyImages from '../models/companyImages.model'
 import Product from '../models/products.model'
 import Review from '../models/review.model'
-import { Op, Order, WhereOptions, col, fn, literal, or } from 'sequelize'
+import { Op, col, fn, literal } from 'sequelize'
 import Company from '../models/company.model'
 import CompanyProduct from '../models/companyProducts.model'
 import {
