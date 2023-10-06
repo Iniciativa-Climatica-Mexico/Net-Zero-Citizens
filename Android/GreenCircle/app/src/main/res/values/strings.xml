@@ -40,6 +40,7 @@
     <string name="review_placeholder_review">Review</string>
     <string name="reviews_written_user">Reseñas Escritas (</string>
     <string name="user_review_empty_view">No haz escrito ninguna reseña</string>
+    <string name="user_favourite_empty_view">No haz agregado proveedores como favoritos</string>
     <string name="select_problem_prompt">Selecciona el problema</string>
 
     <string-array name="options_array">

@@ -30,7 +30,6 @@ class FavouriteFragment : Fragment() {
     private lateinit var deleteTokens: DeleteTokensRequirement
     private lateinit var deleteUserSession: DeleteUserSessionRequirement
     private var favouritesCount: Int = 0
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         profileViewModel = ViewModelProvider(
@@ -57,13 +56,16 @@ class FavouriteFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         viewModel.favouritesLiveData.observe(viewLifecycleOwner) { companies ->
-            if (companies != null) {
+            if (companies.isNotEmpty()) {
+                binding.emptyView.visibility = View.GONE
                 favouritesCount = companies.size
                 binding.favouritesCountTextView.text = "$favouritesCount"
 
                 val adapter = CatalogueAdapter()
                 adapter.initCustomAdapter(companies as ArrayList<CompanySummary>, requireContext())
                 recyclerView.adapter = adapter
+            } else {
+                binding.emptyView.visibility = View.VISIBLE
             }
         }
 

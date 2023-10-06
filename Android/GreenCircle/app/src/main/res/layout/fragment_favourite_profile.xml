@@ -75,6 +75,15 @@
             android:textSize="23dp"
             android:textStyle="bold" />
     </LinearLayout>
+    <TextView
+        android:id="@+id/emptyView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginVertical="20dp"
+        android:text="@string/user_favourite_empty_view"
+        android:textSize="16sp"
+        android:layout_marginHorizontal="20dp"
+        android:visibility="gone" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/newRecyclerView"
         android:layout_width="match_parent"
