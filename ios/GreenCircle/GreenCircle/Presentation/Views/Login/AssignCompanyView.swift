@@ -25,7 +25,7 @@ struct AssignCompanyView: View {
                       prompt:
                         "6CCC2720-2F96-48DB-AB55-14ABB4E2E9AD")
         .padding()
-        MainButton("Continuar", width: 320) {
+        MainButton("Continuar") {
           Task {
             let res = await
               viewModel.handleSubmit()
@@ -34,7 +34,7 @@ struct AssignCompanyView: View {
               goMainMenu()
             }
           }
-        }
+        }.padding(.horizontal)
       }
       Spacer()
       VStack {
