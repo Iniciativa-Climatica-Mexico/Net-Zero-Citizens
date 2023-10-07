@@ -11,6 +11,11 @@ import SwiftUI
 struct ProfileView: View {
   
   @ObservedObject var modelUser = UserViewModel()
+  @StateObject var favourites = FavouriteViewModel()
+  @State var myFavourites: Bool = false
+  @State var totalFavourites: Int = 0
+  @State private var showAlertFavourites = false
+  
   var goLogin: () -> Void
 
   var body: some View {
@@ -67,8 +72,9 @@ struct ProfileView: View {
           HStack {
             Button(action: {
               // Implementación futura
+              myFavourites = myFavourites ? false : true
             }) {
-              Text("Mis Favoritos")
+              Text(myFavourites ? "Mis Reseñas" : "Mis favoritos")
                 .foregroundColor(.white)
                 .padding(.vertical, 12)
                 .padding(.horizontal)
@@ -96,15 +102,40 @@ struct ProfileView: View {
           Spacer()
           
           //--------------------Sección de Reseñas-----------------------------------------
-          Text("Reseñas Escritas (0)")
+          Text(myFavourites ? "Mis Favoritos(" + "\(totalFavourites))" : "Mis Reseñas")
             .font(.system(size: 20))
             .fontWeight(.bold)
-            .padding(.top, 32)
+            .padding(EdgeInsets(top: 32, leading: 15, bottom: 0, trailing: 0))
             .padding(.leading)
             .foregroundColor(.black)
             .frame(maxWidth: .infinity, alignment: .leading)
-          ScrollView{
+          ScrollView {
             //Aquí irán las tarjetas de reseñas
+            if myFavourites {
+              if totalFavourites > 0 {
+                LazyVStack(spacing: 8) {
+                  ForEach(Array(0..<favourites.listFavourites.rows.count), id: \.self) { index in
+                    let favourite = favourites.listFavourites.rows[index]
+                    FavouriteCardView(idCompany: favourite.companyId)
+                  }
+                }.padding(10)
+              } else {
+                Text("No has agregado proveedores como favoritos")
+                  .foregroundColor(Color("MainText"))
+                    .font(.system(size: 18))
+              }
+              
+            } else {
+              /// TODO reviews of user
+            }
+          }.onAppear {
+            Task {
+              try await favourites.getAllFavouritesByUser()
+              totalFavourites = favourites.listFavourites.rows.count
+              if totalFavourites == 0 {
+                showAlertFavourites = true
+              }
+            }
           }
         }
         .padding(.top, 70)
