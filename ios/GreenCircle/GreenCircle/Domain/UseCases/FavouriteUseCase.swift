@@ -38,8 +38,8 @@ class FavouriteUseCase {
   /// - Returns:
   ///    - `FavouriteDeleteResponse?` objeto representando la respuesta desde backend.
   @MainActor
-  func deleteFavouriteById(companyId: UUID) async -> FavouriteDeleteResponse? {
-    return await fRepository.deleteFavouriteById(companyId: companyId)
+  func deleteFavouriteById(companyId: UUID, userId: String) async -> FavouriteDeleteResponse? {
+    return await fRepository.deleteFavouriteById(companyId: companyId, userId: userId)
   }
   
   /// - Description: Get all asíncrono de favoritos

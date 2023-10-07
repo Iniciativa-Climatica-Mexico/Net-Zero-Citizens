@@ -14,7 +14,7 @@ class FavouriteAPI {
     //static let create = "/create"
     //body to send companyId, userId
     static let post = "/create"
-    static let delete = "/delete/:companyId"
+    static let delete = "/delete/:companyId/user/:userId"
     static let getAll = "/user/:userId"
     static let get = "/:favouriteId"
   }
@@ -23,7 +23,7 @@ class FavouriteAPI {
 /// Protocolo con las funciones del repositorio de Favourites
 protocol FavouriteRepositoryProtocol {
   func postFavouriteById(favouriteBody: PostFavouriteData) async -> FavouriteCreationResponse?
-  func deleteFavouriteById(companyId: UUID) async -> FavouriteDeleteResponse?
+  func deleteFavouriteById(companyId: UUID, userId: String) async -> FavouriteDeleteResponse?
   func getAllFavouritesByUser(userId: String) async -> PaginatedQuery<Favourite>?
 }
 
@@ -57,10 +57,11 @@ class FavouriteRepository: FavouriteRepositoryProtocol {
   /// - Parameters:
   ///   - favouriteId: El ID del favorito
   /// - Returns: `FavouriteDeleteResponse?`
-  func deleteFavouriteById(companyId: UUID) async -> FavouriteDeleteResponse? {
+  func deleteFavouriteById(companyId: UUID, userId: String) async -> FavouriteDeleteResponse? {
     
     let endpoint = FavouriteAPI.base + FavouriteAPI.Routes.delete
       .replacingOccurrences(of: ":companyId", with: companyId.uuidString.lowercased())
+      .replacingOccurrences(of: ":userId", with: userId)
     return await NetworkAPIService.shared.deleteRequest(URL(string: endpoint)!)
   }
   

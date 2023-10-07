@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.post('/create', controller.addFavourite)
 
-router.delete('/delete/:companyId', controller.deleteFavouriteById)
+router.delete('/delete/:companyId/user/:userId', controller.deleteFavouriteById)
 
 router.get('/user/:userId', controller.getAllFavouritesByUser)
 

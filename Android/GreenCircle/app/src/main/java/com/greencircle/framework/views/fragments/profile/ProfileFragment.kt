@@ -20,6 +20,7 @@ import com.greencircle.framework.viewmodel.profile.ProfileViewModel
 import com.greencircle.framework.views.activities.LoginActivity
 import com.greencircle.framework.views.fragments.favourites.FavouriteFragment
 import com.greencircle.framework.views.fragments.reviews.UserReviewFragment
+import com.greencircle.utils.GoogleSignInClientProvider
 
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
@@ -133,6 +134,8 @@ class ProfileFragment : Fragment() {
     private fun logout() {
         deleteTokens()
         deleteUserSession()
+
+        GoogleSignInClientProvider.getClient(requireActivity()).signOut()
         navigateToLogin()
     }
 
