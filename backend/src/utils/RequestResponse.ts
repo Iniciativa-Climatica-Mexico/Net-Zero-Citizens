@@ -18,3 +18,11 @@ export type PaginatedQuery<T> = {
 }
 
 export type DeepPartial<T> = Partial<{ [P in keyof T]: DeepPartial<T[P]> }>
+
+/**
+ * @brief generic that makes all the properties of an object visible, 
+ *        no functional use but helps readability of generic types
+ */
+export type Prettify<T> = {
+  [K in keyof T]: T[K]
+}
