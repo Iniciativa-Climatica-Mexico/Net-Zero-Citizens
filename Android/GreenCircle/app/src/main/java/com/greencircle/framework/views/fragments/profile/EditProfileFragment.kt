@@ -18,7 +18,6 @@ import com.greencircle.domain.usecase.auth.RecoverUserSessionRequirement
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.profile.ProfileViewModel
 import com.greencircle.framework.views.activities.LoginActivity
-import com.greencircle.utils.GoogleSignInClientProvider
 import java.util.UUID
 
 class EditProfileFragment : Fragment() {
@@ -246,7 +245,6 @@ class EditProfileFragment : Fragment() {
                 // Lógica para eliminar
                 dialog.dismiss()
                 viewModel.deleteUser(uuid)
-                GoogleSignInClientProvider.getClient(requireActivity()).signOut()
                 navigateToLogin()
             }
             alertDialogBuilder.setNegativeButton("Cancelar") { dialog, _ ->

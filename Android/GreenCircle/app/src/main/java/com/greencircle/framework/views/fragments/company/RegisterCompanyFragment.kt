@@ -19,13 +19,12 @@ import com.greencircle.domain.model.user.NewUser
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.auth.RegisterViewModel
 import com.greencircle.framework.viewmodel.company.CreateCompanyViewModel
-import com.greencircle.framework.views.activities.MainActivity
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
+import com.greencircle.framework.views.activities.SurveyActivity
 import com.greencircle.utils.AuthUtils
-import com.greencircle.utils.GoogleSignInHelper
 
-/**
- * Constructor de "RegisterCompanyFragment
+/**Constructor de "RegisterCompanyFragment"
+ *
  * @constructor Incializa y crea la vista del "RegisterCompanyFragment". Navega a "CreateCompanyFragment".
  */
 class RegisterCompanyFragment : Fragment() {
@@ -33,8 +32,7 @@ class RegisterCompanyFragment : Fragment() {
     private lateinit var createCompanyViewModel: CreateCompanyViewModel
     private lateinit var registerViewModel: RegisterViewModel
     private lateinit var _arguments: Bundle
-    private lateinit var authUtils: AuthUtils
-    private lateinit var googleSignInHelper: GoogleSignInHelper
+    private val authUtils = AuthUtils()
     private val binding get() = _binding!!
 
     /**
@@ -85,8 +83,6 @@ class RegisterCompanyFragment : Fragment() {
             this,
             ViewModelFactory(requireContext(), RegisterViewModel::class.java)
         )[RegisterViewModel::class.java]
-
-        authUtils = AuthUtils(requireActivity())
     }
 
     /**
@@ -104,9 +100,8 @@ class RegisterCompanyFragment : Fragment() {
     ): View {
         // Inflar el diseño de este fragmento
         _binding = FragmentRegisterCompanyBinding.inflate(inflater, container, false)
-
         // Google Login
-        googleSignInHelper = GoogleSignInHelper(requireActivity(), googleSignInActivityResult)
+        authUtils.googleLoginListener(binding, requireActivity(), googleSignInActivityResult)
 
         registerOnClickListener()
 
@@ -122,17 +117,11 @@ class RegisterCompanyFragment : Fragment() {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        googleSignInHelper.setupGoogleLoginListener(binding.root)
-
         createCompanyViewModel.googleLoginResult.observe(viewLifecycleOwner) { result ->
-            val data: Intent = Intent(requireContext(), RegisterCompanyActivity::class.java)
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-
             // Handle the result here
             if (result != null) {
                 if (result.user.roles != "new_user") {
-                    navigateToMain()
+                    navigateToSurvey()
                 } else {
                     navigateToTokenRegistro(_arguments)
                 }
@@ -144,7 +133,7 @@ class RegisterCompanyFragment : Fragment() {
             // Handle the result here
             if (result != null) {
                 if (result.user.roles != "new_user") {
-                    navigateToMain()
+                    navigateToSurvey()
                 } else {
                     _arguments = authUtils.getDataFromRegisterResponse(result.user)
                     navigateToTokenRegistro(_arguments)
@@ -294,8 +283,8 @@ class RegisterCompanyFragment : Fragment() {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
-    private fun navigateToMain() {
-        var intent: Intent = Intent(requireContext(), MainActivity::class.java)
+    private fun navigateToSurvey() {
+        var intent: Intent = Intent(requireContext(), SurveyActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }

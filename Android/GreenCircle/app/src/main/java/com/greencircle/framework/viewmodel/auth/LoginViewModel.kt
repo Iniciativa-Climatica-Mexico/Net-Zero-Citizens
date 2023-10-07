@@ -1,7 +1,6 @@
 package com.greencircle.framework.viewmodel.auth
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -69,20 +68,12 @@ class LoginViewModel(private val context: Context) : ViewModel() {
             val result: AuthResponse? = loginCredentialsRequirement(email, password)
             _loginCredentialsResult.postValue(result)
 
-            if (result == null) {
-                loginError.postValue(true)
-                return@launch
-            }
-
-            Log.d("LoginViewModel", "result: $result")
-
-            if (result.tokens == null) {
+            if (result != null && result.tokens == null) {
                 loginError.postValue(true)
                 return@launch
             } else {
                 loginError.postValue(false)
             }
-
             // Guardar tokens
             val authToken = result?.tokens?.authToken
             val refreshToken = result?.tokens?.refreshToken
