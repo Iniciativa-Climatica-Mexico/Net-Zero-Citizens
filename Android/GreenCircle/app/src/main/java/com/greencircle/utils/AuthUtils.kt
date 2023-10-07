@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.greencircle.framework.views.activities.LoginActivity
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
 import com.greencircle.framework.views.activities.RegisterUserActivity
 import com.greencircle.framework.views.activities.SurveyActivity
@@ -40,5 +41,13 @@ class AuthUtils(private val activity: Activity) {
         val intent = Intent(activity, RegisterCompanyActivity::class.java)
 
         activityResult.launch(intent)
+    }
+
+    fun LogOut(activity: Activity) {
+        val intent = Intent(activity, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+        activity.startActivity(intent)
+        activity.finish()
     }
 }

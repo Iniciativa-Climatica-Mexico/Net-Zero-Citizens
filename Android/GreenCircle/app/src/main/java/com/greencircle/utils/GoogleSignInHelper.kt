@@ -11,7 +11,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.greencircle.R
-import com.greencircle.framework.viewmodel.auth.LoginViewModel
 
 /**
  * Clase de utilidad para la autenticación con Google.
@@ -56,40 +55,12 @@ class GoogleSignInHelper(
     }
 
     /**
-     * Maneja el resultado de la actividad de inicio de sesión con Google.
-     *
-     * @param data El intent de la actividad.
-     * @since 2.0.0
-     */
-    fun handleGoogleSigInResult(
-        activityResult: ActivityResultLauncher<Intent>,
-        viewModel: LoginViewModel
-    ) {
-        try {
-            val authResponse = viewModel.googleLoginResult.value
-
-            if (authResponse != null) {
-                if (authResponse.user.roles != "new_user") {
-                    AuthUtils(activity).navigateToSurvey()
-                } else {
-                    showToast("Por favor, regístrate")
-                    AuthUtils(activity).navigateToRegisterUser(activityResult)
-                }
-            } else {
-                showToast("Lo sentimos, no pudimos iniciar sesión. Por favor, intenta de nuevo")
-            }
-        } catch (e: ApiException) {
-            handleSignInException(e)
-        }
-    }
-
-    /**
      * Maneja los errores de inicio de sesión con Google.
      *
      * @param e La excepción que se va a manejar.
      * @since 2.0.0
      */
-    private fun handleSignInException(e: ApiException) {
+    fun handleSignInException(e: ApiException) {
         when (e.statusCode) {
             CommonStatusCodes.NETWORK_ERROR -> showToast(
                 "Por favor, verifica tu conexión a internet y vuelve a intentarlo."
@@ -106,6 +77,19 @@ class GoogleSignInHelper(
 
             CommonStatusCodes.SIGN_IN_REQUIRED -> showToast(
                 "Por favor, inicia sesión para continuar"
+            )
+
+            CommonStatusCodes.ERROR -> showToast(
+                "¡Vaya! Algo salió mal. Por favor, intenta de nuevo más tarde."
+            )
+
+            CommonStatusCodes.TIMEOUT -> showToast(
+                "No pudimos conectarnos a nuestros servidores." +
+                    "Por favor, verifica tu conexión a internet y vuelve a intentarlo."
+            )
+
+            CommonStatusCodes.CANCELED -> showToast(
+                "Operación cancelada, por favor, intenta de nuevo."
             )
 
             else -> showToast("Lo siento, no pudimos iniciar sesión. Por favor, intenta de nuevo")
@@ -148,10 +132,7 @@ class GoogleSignInHelper(
      *
      * @since 2.0.0
      */
-    private fun googleSignOut() {
+    fun googleSignOut() {
         mGoogleSignInClient.signOut()
-            .addOnCompleteListener(activity) {
-                Log.d("GoogleSignInHelper", "signOut: $it")
-            }
     }
 }

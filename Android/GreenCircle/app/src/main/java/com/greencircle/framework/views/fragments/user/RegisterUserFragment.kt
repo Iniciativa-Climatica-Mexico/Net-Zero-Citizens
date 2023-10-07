@@ -34,7 +34,7 @@ class RegisterUserFragment : Fragment() {
     private lateinit var registerViewModel: RegisterViewModel
     private lateinit var _arguments: Bundle
     private val binding get() = _binding!!
-    private val authUtils by lazy { AuthUtils(requireActivity()) }
+    private lateinit var authUtils: AuthUtils
 
     /**
      * Una propiedad para manejar el resultado de una operación de inicio de sesión de Google
@@ -84,6 +84,8 @@ class RegisterUserFragment : Fragment() {
             this,
             ViewModelFactory(requireContext(), RegisterViewModel::class.java)
         )[RegisterViewModel::class.java]
+
+        authUtils = AuthUtils(requireActivity())
     }
 
     /**

@@ -93,16 +93,42 @@ class LoginActivity : AppCompatActivity() {
         // Google Login
         val googleSignInHelper = GoogleSignInHelper(this, googleSignInActivityResult)
         googleSignInHelper.setupGoogleLoginListener(binding.root)
-        googleSignInHelper.handleGoogleSigInResult(googleSignInActivityResult, viewModel)
+
+        viewModel.googleLoginResult.observe(this) { authResponse ->
+            val task = GoogleSignIn.getSignedInAccountFromIntent(intent)
+
+            try {
+                if (authResponse != null) {
+                    if (authResponse.user.roles != "new_user") {
+                        AuthUtils(this).navigateToSurvey()
+                    } else {
+                        Toast.makeText(
+                            applicationContext, "Por favor, regístrate", Toast.LENGTH_SHORT
+                        ).show()
+                        AuthUtils(this).navigateToRegisterUser(registerUserActivityResult)
+                    }
+                }
+            } catch (e: ApiException) {
+                googleSignInHelper.handleSignInException(e)
+            }
+        }
 
         viewModel.loginError.observe(this) { error ->
-            if (error) {
+            try {
+                if (error) {
+                    Toast.makeText(
+                        applicationContext, "Credenciales incorrectas", Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Log.d("LoginActivity", "Login successful")
+                    AuthUtils(this).navigateToSurvey()
+                }
+            } catch (e: Exception) {
                 Toast.makeText(
                     applicationContext, "Credenciales incorrectas", Toast.LENGTH_SHORT
                 ).show()
-            } else {
-                Log.d("LoginActivity", "Login successful")
-//                navigateToSurvey()
+
+                Log.d("LoginActivity", e.toString())
             }
         }
     }
