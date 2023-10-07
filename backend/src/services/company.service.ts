@@ -2,10 +2,14 @@ import CompanyProducts from '../models/companyProducts.model'
 import CompanyImages from '../models/companyImages.model'
 import Product from '../models/products.model'
 import Review from '../models/review.model'
-import { col, fn } from 'sequelize'
+import { Op, col, fn, literal } from 'sequelize'
 import Company from '../models/company.model'
 import CompanyProduct from '../models/companyProducts.model'
-import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
+import {
+  PaginationParams,
+  PaginatedQuery,
+  Paginator,
+} from '../utils/RequestResponse'
 import { sendNotification } from './notification.service'
 import NodeGeocoder from 'node-geocoder'
 import User from '../models/users.model'
@@ -60,22 +64,18 @@ export type StatusEnum = 'approved' | 'pending_approval' | 'rejected'
  * @param params Los parametros de paginación
  * @returns Una promesa con los proveedores y la información de paginación
  */
-export const getAllCompanies = async <T>(
-  params: PaginationParams<T>
-): Promise<PaginatedQuery<Company>> => {
-  return Company.findAndCountAll({
-    limit: params.pageSize,
-    offset: params.start,
-    include: [
-      // Include the relationships you want to fetch
-      //{
-      // model: Review, // Replace with the actual name of your second relationship model
-      //as: '', // Specify the alias if you have one
-      // You can also add attributes and additional options for this relationship here
-      // },
-      // Add more relationships if needed
-    ],
-  })
+
+export type FilterGetCompanies = {
+  ordering?: 'distance' | 'score'
+  name?: string
+  state?: string
+  productName?: 'Paneles Solares' | 'Calentadores Solares'
+  latitude?: number // Used for distance ordering
+  longitude?: number // Used for distance ordering
+}
+
+export type FiltersGetCompaniesByStatus = FilterGetCompanies & {
+  status?: StatusEnum
 }
 
 /**
@@ -84,18 +84,152 @@ export const getAllCompanies = async <T>(
  * @params Los parametros de paginación
  * @returns Una promesa con los proveedores y la información de paginación
  */
+export const getAllCompanies = async (
+  params?: PaginationParams<FiltersGetCompaniesByStatus>
+): Promise<PaginatedQuery<Company & { score: number }>> => {
+  const { start, pageSize, ordering, name, state, productName, status } =
+    params ?? {}
 
-export const getCompaniesByStatus = async <T>(
-  status: 'approved' | 'rejected' | 'pending_approval',
-  params: PaginationParams<T>
-): Promise<PaginatedQuery<Company>> => {
-  return await Company.findAndCountAll({
-    limit: params.pageSize,
-    offset: params.start,
-    where: {
+  const filters = []
+  if (status)
+    filters.push({
       status,
+    })
+
+  if (name) filters.push(literal(`LOWER(Company.name) LIKE LOWER('%${name}%')`))
+
+  if (state)
+    filters.push(literal(`LOWER(Company.state) LIKE LOWER('%${state}%')`))
+
+  const res = await Company.findAndCountAll({
+    // offset: start || 0,
+    // limit: pageSize || 1000,
+    // Sequelize llora si le pones offset y limit en el join
+    where: {
+      [Op.and]: filters,
     },
+    attributes: {
+      include: [[fn('AVG', col('score')), 'score']],
+    },
+    include: [
+      {
+        model: Review,
+        as: 'reviews',
+        attributes: [],
+      },
+    ],
+    order: ordering === 'score' ? literal('score DESC') : undefined,
+    group: ['companyId'],
   })
+
+
+  if (productName) {
+    // make an array of false the same length as companies
+    const companiesMask = Array(res.rows.length).fill(false)
+
+    await Promise.all(
+      res.rows.map(async (company, index) => {
+        const products = await CompanyProducts.findAll({
+          where: {
+            companyId: company.companyId,
+          },
+          include: [
+            {
+              model: Product,
+              where: {
+                name: productName,
+              },
+            },
+          ],
+        })
+        if (products.length > 0) {
+          companiesMask[index] = true
+        }
+      })
+    )
+
+    res.rows = res.rows.filter((_, index) => companiesMask[index])
+  }
+
+  if (ordering === 'distance') {
+    const { latitude, longitude } = params ?? {}
+
+    if (!latitude || !longitude) {
+      throw new Error(
+        'Latitude and longitude must be provided for distance ordering'
+      )
+    }
+
+    const geocoder = NodeGeocoder({
+      provider: 'google',
+      apiKey: process.env.GOOGLE_MAPS_API_KEY,
+    })
+    await Promise.all(
+      res.rows.map(async (company) => {
+        await fetchAndSaveCoordinates(company, geocoder)
+      })
+    )
+
+    const distances: Record<string, number> = {}
+    res.rows.forEach((company) => {
+      const { latitude: lat, longitude: lon } = company
+      if (!lat || !lon) return Infinity
+      distances[company.companyId] = getDistanceFromLatLonInKm(
+        lat as number,
+        lon as number,
+        latitude,
+        longitude
+      )
+    })
+    res.rows.sort((a, b) => {
+      const distA = distances[a.companyId]
+      const distB = distances[b.companyId]
+      return distA - distB
+    })
+  }
+  return {
+    count: res.count.length,
+    rows: res.rows as (Company & { score: number })[],
+  }
+}
+
+/**
+ * @brief Función para calcular la distancia entre dos puntos
+ * Para mas info: https://www.movable-type.co.uk/scripts/latlong.html
+ * @param lat1 Latitud del punto 1
+ * @param lon1 Longitud del punto 1
+ * @param lat2 Latitud del punto 2
+ * @param lon2 Longitud del punto 2
+ * @returns Distancia entre los dos puntos en km
+ */
+function getDistanceFromLatLonInKm(
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number
+) {
+  const R = 6371 // Radius of the earth in km
+  const dLat = deg2rad(lat2 - lat1) // deg2rad below
+  const dLon = deg2rad(lon2 - lon1)
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(deg2rad(lat1)) *
+      Math.cos(deg2rad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2)
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+  const distance = R * c // Distance in km
+  return distance
+}
+
+/**
+ * Funcion para convertr grados a radianes
+ * @param deg Grados
+ * @returns Radianes
+ */
+
+function deg2rad(deg: number) {
+  return deg * (Math.PI / 180)
 }
 
 export type UpdateCompanyInfoBody = {
@@ -117,7 +251,71 @@ export interface FilteredCompany {
   name: string
   latitude: number
   longitude: number
-  profilePicture: string
+  profilePicture: string | null
+}
+
+/**
+ * Function to fetch and save coordinates of a company if they are not already saved
+ * @param company Company entity object to fetch coordinates
+ * @param geocoder geocoder object to connect to google API
+ * @returns Nothing, modiiies the company object
+ */
+const fetchAndSaveCoordinates = async (
+  company: Company,
+  geocoder: NodeGeocoder.Geocoder
+): Promise<FilteredCompany | null> => {
+  const {
+    companyId,
+    name,
+    profilePicture,
+    street,
+    streetNumber,
+    city,
+    state,
+    zipCode,
+    latitude,
+    longitude,
+  } = company
+
+  if (latitude && longitude) {
+    return {
+      companyId,
+      name,
+      latitude,
+      longitude,
+      profilePicture,
+    }
+  }
+
+  const address = `${street} ${streetNumber}, ${city}, ${state}, ${zipCode}`
+
+  try {
+    const geocodeResult = await geocoder.geocode(address)
+
+    if (geocodeResult.length > 0) {
+      const { latitude, longitude } = geocodeResult[0]
+
+      if (!latitude || !longitude) return null
+
+      company.latitude = latitude
+      company.longitude = longitude
+      await company.save()
+      return {
+        companyId,
+        name,
+        latitude,
+        longitude,
+        profilePicture,
+      }
+    } else {
+      return null
+    }
+  } catch (error) {
+    console.error(
+      `Error al geocodificar la empresa ${company}: ${error}`
+    )
+    return null
+  }
 }
 
 /**
@@ -128,55 +326,55 @@ export interface FilteredCompany {
  *          y su ubicacion en coordenadas geograficas
  */
 export const getCompaniesWithCoordinates = async (
-  status: StatusEnum,
-  params: {
-    start: number
-    pageSize: number
-  }
+  status: StatusEnum
 ): Promise<FilteredCompany[]> => {
-  const companies = await getCompaniesByStatus(status, params)
+  const companies = await getAllCompanies({ status })
   const geocoder = NodeGeocoder({
     provider: 'google',
     apiKey: process.env.GOOGLE_MAPS_API_KEY,
   })
 
   const companiesWithCoordinates = await Promise.all(
-    companies.rows.map(async (company) => {
-      const {
-        companyId,
-        name,
-        profilePicture,
-        street,
-        streetNumber,
-        city,
-        state,
-        zipCode,
-      } = company
+    companies.rows.map(
+      async (company) => await fetchAndSaveCoordinates(company, geocoder)
+    )
+  )
+  return companiesWithCoordinates.filter(Boolean) as FilteredCompany[]
+}
 
-      const address = `${street} ${streetNumber}, ${city}, ${state}, ${zipCode}`
+export const getCoordinatesIos = async (): Promise<
+  Paginator<FilteredCompany>
+> => {
+  const companies = await getAllCompanies({ status: 'approved' })
 
-      try {
-        const geocodeResult = await geocoder.geocode(address)
+  // Configura el geocoder con tu clave de API
+  const geocoder = NodeGeocoder({
+    provider: 'google',
+    apiKey: process.env.GOOGLE_MAPS_API_KEY,
+  })
 
-        if (geocodeResult.length > 0) {
-          const { latitude, longitude } = geocodeResult[0]
-          return {
-            companyId,
-            name,
-            latitude,
-            longitude,
-            profilePicture,
-          } as FilteredCompany
-        }
-      } catch (error) {
-        throw new Error('Error getting coordinates')
-      }
-
-      return null
-    })
+  const companiesWithCoordinates = await Promise.all(
+    companies.rows.map(
+      async (company) => await fetchAndSaveCoordinates(company, geocoder)
+    )
   )
 
-  return companiesWithCoordinates.filter(Boolean) as FilteredCompany[]
+  // Filtra las empresas que no pudieron geocodificarse
+  const filteredCompanies = companiesWithCoordinates.filter(
+    (company) => company !== null
+  )
+
+  const filteredCompaniesTyped: FilteredCompany[] = filteredCompanies.filter(
+    (company): company is FilteredCompany => company !== null
+  )
+
+  const paginator: Paginator<FilteredCompany> = {
+    rows: filteredCompaniesTyped,
+    start: 0,
+    pageSize: filteredCompanies.length,
+    total: filteredCompanies.length,
+  }
+  return paginator
 }
 
 /**
@@ -354,7 +552,14 @@ const getCompanyScore = async (id: string): Promise<Review[] | null> => {
     },
     attributes: {
       include: [[fn('AVG', col('score')), 'score'], 'review'],
-      exclude: ['score','review','reviewId', 'userId', 'createdAt', 'updatedAt'],
+      exclude: [
+        'score',
+        'review',
+        'reviewId',
+        'userId',
+        'createdAt',
+        'updatedAt',
+      ],
     },
   })
 }
