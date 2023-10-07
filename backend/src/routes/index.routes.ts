@@ -16,9 +16,9 @@ export const initRouterV1 = (app: Express) => {
   // Public Routes
   app.use('/api/v1/auth', AuthRouter)
 
-  // // Middleware
-  // app.use(validateToken)
-  // OJOOOOOOO AQUI
+  // Middleware
+  app.use(validateToken)
+
   // Private Routes
   app.use('/api/v1/dummy', DummyRouter)
   app.use('/api/v1/users', UserRouter)

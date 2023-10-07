@@ -9,7 +9,7 @@ import Foundation
 
 /// Class representing the structure of the API for complaints
 class ComplaintAPI {
-  static let base = "http://Mayras-MacBook-Air.local:4000/api/v1/complaints"
+  static let base = "http://localhost:4000/api/v1/complaints"
   struct Routes {
     //static let create = "/:userId/:companyId"
     static let create = "/create"

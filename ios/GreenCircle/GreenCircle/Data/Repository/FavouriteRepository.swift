@@ -9,7 +9,7 @@ import Foundation
 
 /// Class representing the structure of the API for Favourites
 class FavouriteAPI {
-  static let base = "http://Mayras-MacBook-Air.local:4000/api/v1/favourites"
+  static let base = "http://localhost:4000/api/v1/favourites"
   struct Routes {
     //static let create = "/create"
     //body to send companyId, userId

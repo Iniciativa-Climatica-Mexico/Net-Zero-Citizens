@@ -9,7 +9,7 @@ import Foundation
 
 /// Clase con la estructura de la API de autenticación
 class ReviewAPI {
-  static let base = "http://Mayras-MacBook-Air.local:4000/api/v1/review"
+  static let base = "http://localhost:4000/api/v1/review"
   struct Routes {
     static let companyReview = "/company" //:companyId
     static let userReview = "/user" //:userId
@@ -25,22 +25,22 @@ protocol ReviewRepositoryProtocol {
 
 /// Clase con la funcionalidad del repositorio de usuario
 class ReviewRepository: ReviewRepositoryProtocol {
-  
-  let backEndService: ReviewService
-  let nService = NetworkAPIService.shared
+
+    let service : NetworkAPIService
   let lService = LocalService.shared
   static let shared = ReviewRepository()
   
-  init(backEndService: ReviewService = ReviewService.shared){
-      self.backEndService = backEndService
+  init(service: NetworkAPIService = NetworkAPIService.shared){
+      self.service = service
       
   }
 
     func fetchReviewByCompanyId(companyId: String) async -> PaginatedQuery<Review>? {
-        return await backEndService.fetchReviewByCompanyId(url: URL(string: "\(ReviewAPI.base)\(ReviewAPI.Routes.companyReview)/\(companyId)")!)
+        return await NetworkAPIService.shared.getRequest(URL(string: "\(ReviewAPI.base)\(ReviewAPI.Routes.companyReview)/\(companyId)")!)
     }
     
+    
   func fetchReviewByUserId(userId: String) async -> PaginatedQuery<Review>? {
-      return await backEndService.fetchReviewByUserId(url: URL(string: "\(ReviewAPI.base)\(ReviewAPI.Routes.userReview)/\(userId)")!)
+      return await NetworkAPIService.shared.getRequest(URL(string: "\(ReviewAPI.base)\(ReviewAPI.Routes.userReview)/\(userId)")!)
   }
 }

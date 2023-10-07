@@ -9,7 +9,7 @@ import Foundation
 
 /// Clase con la estructura de la API de autenticación
 class AuthAPI {
-  static let base = "http://Mayras-MacBook-Air.local:4000/api/v1/auth"
+  static let base = "http://localhost:4000/api/v1/auth"
   struct Routes {
     static let googleLogin = "/login/google"
     static let login = "/login/credentials"
@@ -19,7 +19,7 @@ class AuthAPI {
 
 /// Clase con la estructura de la API de usuarios
 class UserAPI {
-  static let base = "http:/Mayras-MacBook-Air.local:4000/api/v1/users"
+  static let base = "http://localhost:4000/api/v1/users"
   struct Routes {
     static let userId = "/:userId"
     static let credentials = "users/credentials"
