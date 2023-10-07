@@ -1,7 +1,6 @@
 package com.greencircle.framework.viewmodel.auth
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -42,7 +41,10 @@ class RegisterViewModel(private val context: Context) : ViewModel() {
             val result: AuthResponse? = registerCredentialsRequirement(user)
             _registerCredentialsResult.postValue(result)
 
-            Log.d("RegisterViewModel", "registerCredentials: $result")
+            if (result == null) {
+                registerError.postValue(true)
+                return@launch
+            }
 
             if (result != null && result.tokens == null) {
                 registerError.postValue(true)

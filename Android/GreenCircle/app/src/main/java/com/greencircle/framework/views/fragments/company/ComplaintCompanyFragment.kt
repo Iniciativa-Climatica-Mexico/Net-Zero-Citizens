@@ -17,13 +17,14 @@ import com.greencircle.R
 import com.greencircle.data.remote.complaints.ComplaintClient
 import com.greencircle.domain.model.complaints.Complaint
 import com.greencircle.domain.model.complaints.ComplaintStatus
+import com.greencircle.domain.usecase.auth.RecoverTokensRequirement
+import com.greencircle.domain.usecase.auth.RecoverUserSessionRequirement
 import java.util.UUID
 import kotlin.math.roundToInt
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
 
 /**
  * Modal para reportar una empresa
@@ -33,6 +34,8 @@ import org.json.JSONObject
 class ComplaintCompanyFragment : DialogFragment() {
     private lateinit var companyId: UUID
     private lateinit var authToken: String
+    private val recoverUserSession = RecoverUserSessionRequirement(requireContext())
+    private val recoverTokens = RecoverTokensRequirement(requireContext())
     private val complaintClient = ComplaintClient()
 
     /**
@@ -92,17 +95,14 @@ class ComplaintCompanyFragment : DialogFragment() {
                 val complaintDescription =
                     view.findViewById<EditText>(R.id.TellUsMore).text.toString()
 
-                val sharedPreferences =
-                    context?.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
-
-                val userJson = sharedPreferences?.getString("user_session", null)
-                val userJSON = JSONObject(userJson!!)
-                val userId = UUID.fromString(userJSON.getString("uuid"))
-
-                authToken = sharedPreferences.getString("auth_token", null)!!
+                val userSession = recoverUserSession()
+                val tokens = recoverTokens()
+                var authToken = ""
+                if (tokens != null)
+                    authToken = tokens.authToken
 
                 val complaint = Complaint(
-                    userId = userId,
+                    userId = userSession.uuid,
                     companyId = companyId,
                     complaintSubject = complaintTitle,
                     complaintDescription = complaintDescription,
