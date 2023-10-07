@@ -7,9 +7,9 @@ import androidx.activity.result.ActivityResultLauncher
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.greencircle.domain.model.user.User
 import com.greencircle.framework.views.activities.LoginActivity
+import com.greencircle.framework.views.activities.MainActivity
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
 import com.greencircle.framework.views.activities.RegisterUserActivity
-import com.greencircle.framework.views.activities.SurveyActivity
 
 class AuthUtils(private val activity: Activity) {
     fun getDataFromGoogleAccount(account: GoogleSignInAccount?): Bundle {
@@ -38,8 +38,8 @@ class AuthUtils(private val activity: Activity) {
     }
 
     // Funciones de navegacion
-    fun navigateToSurvey() {
-        val intent = Intent(activity, SurveyActivity::class.java)
+    fun navigateToMain() {
+        val intent = Intent(activity, MainActivity::class.java)
 
         activity.startActivity(intent)
         activity.finish()

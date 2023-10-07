@@ -19,8 +19,8 @@ import com.greencircle.domain.model.user.NewUser
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.auth.LoginViewModel
 import com.greencircle.framework.viewmodel.auth.RegisterViewModel
+import com.greencircle.framework.views.activities.MainActivity
 import com.greencircle.framework.views.activities.RegisterUserActivity
-import com.greencircle.framework.views.activities.SurveyActivity
 import com.greencircle.utils.AuthUtils
 import com.greencircle.utils.GoogleSignInHelper
 
@@ -125,7 +125,7 @@ class RegisterUserFragment : Fragment() {
             // Handle the result here
             if (result != null) {
                 if (result.user.roles != "new_user") {
-                    navigateToSurvey()
+                    navigateToMain()
                 } else {
                     navigateToForm(_arguments)
                 }
@@ -137,7 +137,7 @@ class RegisterUserFragment : Fragment() {
             // Handle the result here
             if (result != null) {
                 if (result.user.roles != "new_user") {
-                    navigateToSurvey()
+                    navigateToMain()
                 } else {
 //                    _arguments = authUtils.getDataFromRegisterResponse(result.user)
                     navigateToForm(_arguments)
@@ -302,8 +302,8 @@ class RegisterUserFragment : Fragment() {
         activity.replaceFragment(createUserFragment, arguments)
     }
 
-    private fun navigateToSurvey() {
-        var intent: Intent = Intent(requireContext(), SurveyActivity::class.java)
+    private fun navigateToMain() {
+        var intent: Intent = Intent(requireContext(), MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }

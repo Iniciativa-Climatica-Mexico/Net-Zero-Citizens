@@ -44,7 +44,7 @@ class SplashscreenActivity : AppCompatActivity() {
                     viewModel.isUserLoggedIn.observe(
                         this,
                         Observer { isUserLoggedIn ->
-                            if (isUserLoggedIn) passViewGoToSurvey()
+                            if (isUserLoggedIn) passViewGoToMain()
                             else passViewGoToLogin()
                         }
                     )
@@ -80,8 +80,8 @@ class SplashscreenActivity : AppCompatActivity() {
     /**
      * Redirige al usuario a la pantalla de encuesta (SurveyActivity).
      */
-    private fun passViewGoToSurvey() {
-        var intent: Intent = Intent(this, SurveyActivity::class.java)
+    private fun passViewGoToMain() {
+        var intent: Intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         startActivity(intent)
         finish()
