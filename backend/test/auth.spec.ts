@@ -10,6 +10,7 @@ chai.use(chaiExclude)
 const { expect } = chai
 
 const testData: AuthService.Payload = {
+  id: '1234567890',
   first_name: 'John',
   last_name: 'Doe',
   uuid: '123456789',
