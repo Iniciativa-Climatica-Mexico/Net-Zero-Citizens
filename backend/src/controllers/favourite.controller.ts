@@ -82,11 +82,11 @@ export const deleteFavouriteById: RequestHandler<
   NoRecord,
   { rows: number; message: string } | { message: string },
   NoRecord,
-  { favouriteId: string }
+  { companyId: string }
 > = async (req, res) => {
   try {
     const rows = await FavouriteService.deleteFavouriteById(
-      req.params.favouriteId
+      req.params.companyId
     )
     if (!rows) {
       return res.status(400).json({ message: 'Favourite not found!' })

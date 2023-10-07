@@ -15,6 +15,7 @@ class FavouriteUseCase {
   
   // Obtener los tokens del usuario (userId)
   let lService = LocalService.shared.getUserInformation()
+  let lServiceFavourite = LocalService.shared
   
   /// - Description: Obtener el ID del user para poder crear favorito
   func getLocalUserData() -> AuthResponse? {
@@ -36,8 +37,29 @@ class FavouriteUseCase {
   ///    - favouriteId: El id`favouriteId` para eliminar favorito
   /// - Returns:
   ///    - `FavouriteDeleteResponse?` objeto representando la respuesta desde backend.
-  func deleteFavouriteById(favouriteId: UUID) async -> FavouriteDeleteResponse? {
-    return await fRepository.deleteFavouriteById(favouriteId: favouriteId)
+  @MainActor
+  func deleteFavouriteById(companyId: UUID) async -> FavouriteDeleteResponse? {
+    return await fRepository.deleteFavouriteById(companyId: companyId)
+  }
+  
+  /// - Description: Get all asíncrono de favoritos
+  /// - Parameters:
+  ///    - userId: El id`userId` para obtener los favoritos que le pertenecen al usuario
+  /// - Returns:
+  ///    - `PaginatedQuery<Favourite>?` objeto representando la respuesta desde backend.
+  @MainActor
+  func getAllFavouritesByUser(userId: String) async -> PaginatedQuery<Favourite>? {
+    return await fRepository.getAllFavouritesByUser(userId: userId)
+  }
+  
+  /// - Description: Get del favorito asíncrono por
+  /// - Parameters:
+  ///    - userId: El id`userId` para obtener los favoritos que le pertenecen al usuario
+  /// - Returns:
+  ///    - `PaginatedQuery<Favourite>?` objeto representando la respuesta desde backend.
+  @MainActor
+  func getFavouriteById(favouriteId: UUID) async -> FavouriteGetResponse? {
+    return await fRepository.getFavouriteById(favouriteId: favouriteId)
   }
   
 }

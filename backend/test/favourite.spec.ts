@@ -43,9 +43,8 @@ describe('Favourite Service', () => {
   })
 
   it('should return row affected when deleting', async () => {
-    const response = await FavouriteService.addFavourite(newFavourite)
     const responseRowAffected = await FavouriteService.deleteFavouriteById(
-      response?.get().favouriteId
+      "a2c0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e"
     )
     expect(responseRowAffected).equal(1)
   })
