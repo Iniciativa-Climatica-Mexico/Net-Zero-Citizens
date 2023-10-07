@@ -256,7 +256,7 @@ struct ContactCompanyView: View {
                                    primaryButton: .destructive(Text("Borrar")) {
                                   Task {
                                     emptyHeartFill = false
-                                    try await favouriteViewModel.deleteFavouriteById(favouriteId: favouriteViewModel.contentFavourite.favouriteId)
+                                    try await favouriteViewModel.deleteFavouriteById(companyId: contactCompanyViewModel.contentCompany.companyId)
                                   }
                                    },
                                    secondaryButton: .cancel())
