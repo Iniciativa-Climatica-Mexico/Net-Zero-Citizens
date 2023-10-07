@@ -54,11 +54,13 @@ export const getFavouriteById = async (
  */
 
 export const deleteFavouriteById = async (
-  companyId: string
+  companyId: string,
+  userId: string
 ): Promise<number> => {
   try {
     return await Favourite.destroy({
-      where: { companyId: companyId },
+      where: { companyId: companyId,
+      userId: userId },
     })
   } catch {
     throw new Error('Favourite not found')

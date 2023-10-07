@@ -64,8 +64,8 @@ class FavouriteViewModel: ObservableObject {
   /// - Parameters:
   ///   - favouriteId: To make a `favourite` instance in database
   func deleteFavouriteById(companyId: UUID) async throws {
-    
-    if let favouriteDelResponse = await useCase.deleteFavouriteById(companyId: companyId) {
+    let userId: String = useCase.lService?.user.id ?? ""
+    if let favouriteDelResponse = await useCase.deleteFavouriteById(companyId: companyId, userId: userId) {
       deleteContentFavourite = favouriteDelResponse
       useCase.lServiceFavourite.deleteFavourite(companyId: companyId)
     } else {
