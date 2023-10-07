@@ -110,7 +110,6 @@ export const updateUserInfo: RequestHandler<
   const userId = req.params.userId
   try {
     const userInfo = await UserService.getUserInfo(userId)
-
     if (userInfo) {
       await UserService.updateUserInfo(userId, req.body)
       res.status(201).json({ message: 'User updated' })
