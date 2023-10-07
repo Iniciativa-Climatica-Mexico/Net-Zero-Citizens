@@ -3,7 +3,9 @@ import CompanyProduct from '../models/companyProducts.model'
 import * as CompanyService from '../services/company.service'
 import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
+import { Prettify } from '../utils/RequestResponse'
 
+type GetCompaniesQueryParams = Prettify<PaginationParams<CompanyService.FiltersGetCompaniesByStatus>>
 /**
  * @brief
  * Función del controlador que devuelve todos los proveedores
@@ -16,7 +18,7 @@ export const getAllCompanies: RequestHandler<
   NoRecord,
   Paginator<Company> | { error: string },
   NoRecord,
-  PaginationParams<CompanyService.FilterGetCompanies>
+  GetCompaniesQueryParams
 > = async (req, res) => {
   const params = req.query
   params.start = params.start || 0
@@ -59,6 +61,9 @@ export const getCompanyById: RequestHandler<
   }
 }
 
+
+type GetCompaniesNoStatusQueryParams = Prettify<PaginationParams<CompanyService.FiltersGetCompaniesByStatus>>
+
 /**
  * @brief
  * Función del controlador que devuelve todos los proveedores aprobados de la base de datos
@@ -69,7 +74,7 @@ export const getApprovedCompanies: RequestHandler<
   NoRecord,
   Paginator<Company>,
   NoRecord,
-  PaginationParams<CompanyService.FilterGetCompanies>
+  GetCompaniesNoStatusQueryParams
 > = async (req, res) => {
   const params = req.query
   params.start = params.start || 0
@@ -96,7 +101,7 @@ export const getPendingCompanies: RequestHandler<
   NoRecord,
   Paginator<Company>,
   NoRecord,
-  PaginationParams<CompanyService.FilterGetCompanies>
+  GetCompaniesNoStatusQueryParams
 > = async (req, res) => {
   const params = req.query
   params.start = params.start || 0
@@ -239,8 +244,6 @@ export const getCoordinatesAndroid: RequestHandler<
  * @param req
  * @param res
  */
-
-
 export const getCoordinatesIos: RequestHandler<
   NoRecord,
   Paginator<CompanyService.FilteredCompany>,
