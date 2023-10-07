@@ -5,7 +5,11 @@ import Review from '../models/review.model'
 import { col, fn } from 'sequelize'
 import Company from '../models/company.model'
 import CompanyProduct from '../models/companyProducts.model'
-import { PaginationParams, PaginatedQuery } from '../utils/RequestResponse'
+import {
+  PaginationParams,
+  PaginatedQuery,
+  Paginator,
+} from '../utils/RequestResponse'
 import { sendNotification } from './notification.service'
 import NodeGeocoder from 'node-geocoder'
 import User from '../models/users.model'
@@ -151,7 +155,19 @@ export const getCompaniesWithCoordinates = async (
         city,
         state,
         zipCode,
+        latitude,
+        longitude,
       } = company
+
+      if (latitude && longitude) {
+        return {
+          companyId,
+          name,
+          latitude,
+          longitude,
+          profilePicture,
+        } as FilteredCompany
+      }
 
       const address = `${street} ${streetNumber}, ${city}, ${state}, ${zipCode}`
 
@@ -160,6 +176,9 @@ export const getCompaniesWithCoordinates = async (
 
         if (geocodeResult.length > 0) {
           const { latitude, longitude } = geocodeResult[0]
+          company.latitude = latitude || null
+          company.longitude = longitude || null
+          await company.save()
           return {
             companyId,
             name,
@@ -177,6 +196,93 @@ export const getCompaniesWithCoordinates = async (
   )
 
   return companiesWithCoordinates.filter(Boolean) as FilteredCompany[]
+}
+
+export const getCoordinatesIos = async (
+  params: PaginationParams<{ status: string }>
+): Promise<Paginator<FilteredCompany>> => {
+  const companies = await getCompaniesByStatus('approved', params)
+
+  // Configura el geocoder con tu clave de API
+  const geocoder = NodeGeocoder({
+    provider: 'google',
+    apiKey: process.env.GOOGLE_MAPS_API_KEY,
+  })
+
+  const companiesWithCoordinates = await Promise.all(
+    companies.rows.map(async (company) => {
+      const {
+        street,
+        streetNumber,
+        city,
+        state,
+        zipCode,
+        latitude,
+        longitude,
+      } = company.dataValues
+
+      if (latitude && longitude) {
+        return {
+          companyId: company.dataValues.companyId,
+          name: company.dataValues.name,
+          latitude,
+          longitude,
+          profilePicture: company.dataValues.profilePicture,
+        }
+      }
+
+      // Crea la dirección a partir de los campos de la empresa
+      const address = `${street} ${streetNumber}, ${city}, ${state}, ${zipCode}`
+
+      try {
+        // Realiza la geocodificación
+        const geocodeResult = await geocoder.geocode(address)
+        if (geocodeResult.length > 0) {
+          const { latitude, longitude } = geocodeResult[0]
+          company.latitude = latitude || null
+          company.longitude = longitude || null
+          await company.save()
+          return {
+            companyId: company.dataValues.companyId,
+            name: company.dataValues.name,
+            latitude,
+            longitude,
+            profilePicture: company.dataValues.profilePicture,
+          }
+        }
+      } catch (error: unknown) {
+        if (typeof error === 'string') {
+          console.error(
+            `Error al geocodificar la empresa ${company.dataValues.companyId}: ${error}`
+          )
+        } else {
+          console.error(
+            `Error al geocodificar la empresa ${company.dataValues.companyId}`
+          )
+        }
+      }
+
+      // Si la geocodificación falla o no se encuentra, regresa null
+      return null
+    })
+  )
+
+  // Filtra las empresas que no pudieron geocodificarse
+  const filteredCompanies = companiesWithCoordinates.filter(
+    (company) => company !== null
+  )
+
+  const filteredCompaniesTyped: FilteredCompany[] = filteredCompanies.filter(
+    (company): company is FilteredCompany => company !== null
+  )
+
+  const paginator: Paginator<FilteredCompany> = {
+    rows: filteredCompaniesTyped,
+    start: 0,
+    pageSize: filteredCompanies.length,
+    total: filteredCompanies.length,
+  }
+  return paginator
 }
 
 /**
@@ -354,7 +460,14 @@ const getCompanyScore = async (id: string): Promise<Review[] | null> => {
     },
     attributes: {
       include: [[fn('AVG', col('score')), 'score'], 'review'],
-      exclude: ['score','review','reviewId', 'userId', 'createdAt', 'updatedAt'],
+      exclude: [
+        'score',
+        'review',
+        'reviewId',
+        'userId',
+        'createdAt',
+        'updatedAt',
+      ],
     },
   })
 }
