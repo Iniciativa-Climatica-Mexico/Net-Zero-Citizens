@@ -107,32 +107,11 @@ class GoogleSignInHelper(
     }
 
     /**
-     * Obtiene la informacion de la cuenta de Google y lo escribe en [SharedPreferences].
-     *
-     * @param account La cuenta de Google.
-     * @since 2.0.0
-     */
-    fun getDataFromGoogleAccount(account: GoogleSignInAccount?) {
-        val sharedPreferences = activity.getSharedPreferences(
-            "com.greencircle", Activity.MODE_PRIVATE
-        )
-
-        sharedPreferences.edit().putString("givenName", account?.givenName).apply()
-        sharedPreferences.edit().putString("familyName", account?.familyName).apply()
-        sharedPreferences.edit().putString("displayName", account?.displayName).apply()
-        sharedPreferences.edit().putString("email", account?.email).apply()
-        sharedPreferences.edit().putString("photoUrl", account?.photoUrl.toString()).apply()
-        sharedPreferences.edit().putString("idToken", account?.idToken).apply()
-
-        Log.d("GoogleSignInHelper", "getDataFromGoogleAccount: $account")
-    }
-
-    /**
      * Cierra la sesión de Google.
      *
      * @since 2.0.0
      */
-    fun googleSignOut() {
+    private fun googleSignOut() {
         mGoogleSignInClient.signOut()
     }
 }
