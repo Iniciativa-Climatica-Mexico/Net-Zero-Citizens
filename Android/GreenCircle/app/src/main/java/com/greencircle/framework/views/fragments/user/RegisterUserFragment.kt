@@ -139,7 +139,7 @@ class RegisterUserFragment : Fragment() {
                 if (result.user.roles != "new_user") {
                     navigateToSurvey()
                 } else {
-//                    _arguments = authUtils.getDataFromRegisterResponse(result.user)
+                    _arguments = authUtils.getDataFromRegisterResponse(result.user)
                     navigateToForm(_arguments)
                 }
             } else {
