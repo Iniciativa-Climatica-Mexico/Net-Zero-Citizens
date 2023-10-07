@@ -8,6 +8,7 @@ import {
 } from '../src/services/company.service'
 import Company from '../src/models/company.model'
 import User from '../src/models/users.model'
+import { unwrap } from './utils'
 
 chai.use(chaiExclude)
 
@@ -182,14 +183,14 @@ describe('Company Service', () => {
 
   it('should filter companies by name', async () => {
     const companies = await getAllCompanies({ name: 'sunpo' })
-    expect(companies.rows)
+    expect(unwrap(companies.rows))
       .excludingEvery(attributesToExclude)
       .to.deep.equal([testData[0]])
   })
 
   it('should filter companies by state', async () => {
     const companies = await getAllCompanies({ state: 'QRO' })
-    expect(companies.rows)
+    expect(unwrap(companies.rows))
       .excludingEvery(attributesToExclude)
       .to.deep.equal([testData[1]])
   })
@@ -197,7 +198,7 @@ describe('Company Service', () => {
   it('should filter companies by product', async () => {
     const companies = await getAllCompanies({ productName: 'Paneles Solares' })
     console.log(companies.rows.map((c)=> c.products))
-    expect(companies.rows)
+    expect(unwrap(companies.rows))
       .excludingEvery(attributesToExclude)
       .to.deep.equal([testData[0]])
   })

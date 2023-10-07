@@ -13,7 +13,6 @@ import {
 import { sendNotification } from './notification.service'
 import NodeGeocoder from 'node-geocoder'
 import User from '../models/users.model'
-import { unwrap } from '../../test/utils'
 
 // TYPES
 /**
@@ -123,7 +122,7 @@ export const getAllCompanies = async (
     group: ['companyId'],
   })
 
-  res.rows = unwrap(res.rows)
+
   if (productName) {
     // make an array of false the same length as companies
     const companiesMask = Array(res.rows.length).fill(false)
@@ -313,7 +312,7 @@ const fetchAndSaveCoordinates = async (
     }
   } catch (error) {
     console.error(
-      `Error al geocodificar la empresa ${error}`
+      `Error al geocodificar la empresa ${company}: ${error}`
     )
     return null
   }
