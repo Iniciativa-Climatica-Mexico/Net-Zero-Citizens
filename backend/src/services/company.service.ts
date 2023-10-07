@@ -313,7 +313,7 @@ const fetchAndSaveCoordinates = async (
     }
   } catch (error) {
     console.error(
-      `Error al geocodificar la empresa ${company.dataValues.companyId}: ${error}`
+      `Error al geocodificar la empresa ${error}`
     )
     return null
   }
