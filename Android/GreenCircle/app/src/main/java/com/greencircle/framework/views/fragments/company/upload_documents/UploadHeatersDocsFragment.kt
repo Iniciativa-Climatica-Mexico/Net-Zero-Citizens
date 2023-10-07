@@ -5,11 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.greencircle.R
 import com.greencircle.databinding.FragmentUploadHeatersDocsBinding
 import com.greencircle.domain.model.company.files.FileDescription
 import com.greencircle.domain.model.company.files.FileFormat
+import com.greencircle.framework.viewmodel.company.files.FileNamesViewModel
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
 
 /**Constructor de "UploadHeatersDocsFragment"
@@ -20,19 +23,21 @@ class UploadHeatersDocsFragment : Fragment(), UploadDocumentDialogFragment.Uploa
     private var _binding: FragmentUploadHeatersDocsBinding? = null
     private val binding get() = _binding!!
     private var arguments: Bundle? = null
-    private var submittingFile: FileDescription? = null
+    private var uploadingFile: FileDescription? = null
+    private var fileNamesViewModel = FileNamesViewModel()
+    private var lessThanUploaded = false
+    private var moreThanUploaded = false
 
     /**
-     * Método que se llama cuando se crea la vista del fragmento de subir los documentos de identificación.
+     * Método que se llama cuando se crea la vista del fragmento de subir los documentos de calentadores solares.
      *
-     * @param inflater El inflador de diseño que se utiliza para inflar la vista.
-     * @param container El contenedor en el que se debe colocar la vista del fragmento.
      * @param savedInstanceState La instancia de Bundle que contiene datos previamente guardados del fragmento.
-     * @return La vista inflada para el fragmento.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments = requireArguments()
+        fileNamesViewModel = ViewModelProvider(requireActivity())
+            .get(FileNamesViewModel::class.java)
     }
 
     /**
@@ -55,8 +60,52 @@ class UploadHeatersDocsFragment : Fragment(), UploadDocumentDialogFragment.Uploa
 
         initializeSubmitDocumentsButton()
         initializeNavigationButtons()
+        initializeObservers()
 
         return root
+    }
+
+    /**
+     * Método que cambia el estado del enlace de menor a 294kPA.
+     *
+     * @param fileName El nombre del archivo que se subió.
+     */
+    private fun changeLessThanBindingState(fileName: String) {
+        binding.lessThanUploadTitle.text = fileName
+        binding.lessThanFileDesc.text = getString(R.string.change_file)
+        binding.lessThanChevron.visibility = View.GONE
+        binding.lessThanCheck.visibility = View.VISIBLE
+    }
+
+    /**
+     * Método que cambia el estado del enlace de mayor a 249kPA.
+     *
+     * @param fileName El nombre del archivo que se subió.
+     */
+    private fun changeMoreThanBindingState(fileName: String) {
+        binding.moreThanUploadTitle.text = fileName
+        binding.moreThanFileDesc.text = getString(R.string.change_file)
+        binding.moreThanChevron.visibility = View.GONE
+        binding.moreThanCheck.visibility = View.VISIBLE
+    }
+
+    /**
+     * Método que inicializa los observadores de los nombres de los archivos.
+     */
+    private fun initializeObservers() {
+        fileNamesViewModel.heatersLessThanFileName.observe(viewLifecycleOwner) {
+            if (it != null) {
+                changeLessThanBindingState(it)
+                lessThanUploaded = true
+            }
+        }
+
+        fileNamesViewModel.heatersMoreThanFileName.observe(viewLifecycleOwner) {
+            if (it != null) {
+                changeMoreThanBindingState(it)
+                moreThanUploaded = true
+            }
+        }
     }
 
     /**
@@ -69,8 +118,9 @@ class UploadHeatersDocsFragment : Fragment(), UploadDocumentDialogFragment.Uploa
                 FileDescription.ARCHIVOS_PRESION_MAYOR_A_294K_PA,
                 FileFormat.PDF,
             )
-            submittingFile = FileDescription.ARCHIVOS_PRESION_MAYOR_A_294K_PA
+            uploadingFile = FileDescription.ARCHIVOS_PRESION_MAYOR_A_294K_PA
             dialogFragment.arguments = arguments
+            dialogFragment.uploadDialogListener = this
             dialogFragment.show(childFragmentManager, "UploadImageDialog")
         }
 
@@ -80,8 +130,9 @@ class UploadHeatersDocsFragment : Fragment(), UploadDocumentDialogFragment.Uploa
                 FileDescription.ARCHIVOS_PRESION_MENOR_A_294K_PA,
                 FileFormat.PDF
             )
-            submittingFile = FileDescription.ARCHIVOS_PRESION_MENOR_A_294K_PA
+            uploadingFile = FileDescription.ARCHIVOS_PRESION_MENOR_A_294K_PA
             dialogFragment.arguments = arguments
+            dialogFragment.uploadDialogListener = this
             dialogFragment.show(childFragmentManager, "UploadImageDialog")
         }
     }
@@ -91,7 +142,15 @@ class UploadHeatersDocsFragment : Fragment(), UploadDocumentDialogFragment.Uploa
      */
     private fun initializeNavigationButtons() {
         binding.nextDocumentButton.setOnClickListener {
-            navigateToUploadCommitmentFragment()
+            if (lessThanUploaded || moreThanUploaded) {
+                navigateToUploadCommitmentFragment()
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.upload_all_documents),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
         binding.topbar.documentsBackButton.setOnClickListener {
@@ -125,19 +184,13 @@ class UploadHeatersDocsFragment : Fragment(), UploadDocumentDialogFragment.Uploa
      * @param fileName El nombre del archivo que se subió.
      */
     override fun onFileUploaded(fileName: String) {
-        when (submittingFile) {
+        when (uploadingFile) {
             FileDescription.ARCHIVOS_PRESION_MAYOR_A_294K_PA -> {
-                binding.moreThanUploadTitle.text = fileName
-                binding.moreThanFileDesc.text = getString(R.string.change_file)
-                binding.moreThanChevron.visibility = View.GONE
-                binding.moreThanCheck.visibility = View.VISIBLE
+                fileNamesViewModel.heatersMoreThanFileName.value = fileName
             }
 
             FileDescription.ARCHIVOS_PRESION_MENOR_A_294K_PA -> {
-                binding.lessThanUploadTitle.text = fileName
-                binding.lessThanFileDesc.text = getString(R.string.change_file)
-                binding.lessThanChevron.visibility = View.GONE
-                binding.lessThanCheck.visibility = View.VISIBLE
+                fileNamesViewModel.heatersLessThanFileName.value = fileName
             }
 
             else -> {}

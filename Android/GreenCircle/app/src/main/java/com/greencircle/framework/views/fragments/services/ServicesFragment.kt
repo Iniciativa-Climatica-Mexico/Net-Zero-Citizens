@@ -34,7 +34,7 @@ class ServicesFragment : Fragment() {
             R.layout.fragment_product_selection_layout, container, false
         )
 
-        fotoVoltaicSwitch = view.findViewById(R.id.fotovoltaics)
+        fotoVoltaicSwitch = view.findViewById(R.id.photovoltaics)
         solarHeaterSwitch = view.findViewById(R.id.solarHeaters)
 
         val nextBtn = view.findViewById<Button>(R.id.nextFragment)

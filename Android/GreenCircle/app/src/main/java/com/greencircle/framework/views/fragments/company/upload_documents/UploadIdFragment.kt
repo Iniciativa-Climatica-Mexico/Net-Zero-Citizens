@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.greencircle.R
 import com.greencircle.databinding.FragmentUploadIdBinding
 import com.greencircle.domain.model.company.files.FileDescription
@@ -21,8 +23,10 @@ class UploadIdFragment : Fragment(), UploadDocumentDialogFragment.UploadDialogLi
     private var _binding: FragmentUploadIdBinding? = null
     private val binding get() = _binding!!
     private var arguments: Bundle? = null
-    private var submittingFile: FileDescription? = null
-    private val fileNamesViewModel = FileNamesViewModel()
+    private var uploadingFile: FileDescription? = null
+    private var idUploaded = false
+    private var constitutiveUploaded = false
+    private var fileNamesViewModel = FileNamesViewModel()
 
     /**
      * Método que se llama cuando se crea la vista del fragmento de subir los documentos de identificación.
@@ -35,6 +39,8 @@ class UploadIdFragment : Fragment(), UploadDocumentDialogFragment.UploadDialogLi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments = requireArguments()
+        fileNamesViewModel = ViewModelProvider(requireActivity())
+            .get(FileNamesViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -47,27 +53,53 @@ class UploadIdFragment : Fragment(), UploadDocumentDialogFragment.UploadDialogLi
         val root: View = binding.root
 
         initializeSubmitDocumentsButton()
+        initializeObservers()
         initializeNavigationButtons()
 
-        fileNamesViewModel.idFileName?.let { fileName ->
-            {
-                binding.idTitle.text = fileName
-                binding.idFileSizeText.text = getString(R.string.change_file)
-                binding.idChevron.visibility = View.GONE
-                binding.idCheck.visibility = View.VISIBLE
-            }
-        }
-
-        fileNamesViewModel.constitutiveFileName?.let { fileName ->
-            {
-                binding.constitutiveTitle.text = fileName
-                binding.constitutiveFileSizeText.text = getString(R.string.change_file)
-                binding.constitutiveChevron.visibility = View.GONE
-                binding.constitutiveCheck.visibility = View.VISIBLE
-            }
-        }
-
         return root
+    }
+
+    /**
+     * Método que cambia el estado del enlace de INE.
+     *
+     * @param fileName El nombre del archivo que se subió.
+     */
+    private fun changeIdBindingState(fileName: String) {
+        binding.idTitle.text = fileName
+        binding.idFileSizeText.text = getString(R.string.change_file)
+        binding.idChevron.visibility = View.GONE
+        binding.idCheck.visibility = View.VISIBLE
+    }
+
+    /**
+     * Método que cambia el estado del enlace de Acta Constitutiva.
+     *
+     * @param fileName El nombre del archivo que se subió.
+     */
+    private fun changeConstitutiveBindingState(fileName: String) {
+        binding.constitutiveTitle.text = fileName
+        binding.constitutiveFileSizeText.text = getString(R.string.change_file)
+        binding.constitutiveChevron.visibility = View.GONE
+        binding.constitutiveCheck.visibility = View.VISIBLE
+    }
+
+    /**
+     * Método que inicializa los observadores de los nombres de los archivos.
+     */
+    private fun initializeObservers() {
+        fileNamesViewModel.idFileName.observe(viewLifecycleOwner) {
+            if (it != null) {
+                changeIdBindingState(it)
+                idUploaded = true
+            }
+        }
+
+        fileNamesViewModel.constitutiveFileName.observe(viewLifecycleOwner) {
+            if (it != null) {
+                changeConstitutiveBindingState(it)
+                constitutiveUploaded = true
+            }
+        }
     }
 
     /**
@@ -78,7 +110,7 @@ class UploadIdFragment : Fragment(), UploadDocumentDialogFragment.UploadDialogLi
             val dialogFragment = UploadDocumentDialogFragment(
                 "INE", FileDescription.INE_REPRESENTANTE_LEGAL, FileFormat.PDF
             )
-            submittingFile = FileDescription.INE_REPRESENTANTE_LEGAL
+            uploadingFile = FileDescription.INE_REPRESENTANTE_LEGAL
             dialogFragment.arguments = arguments
             dialogFragment.uploadDialogListener = this
             dialogFragment.show(childFragmentManager, "UploadImageDialog")
@@ -88,7 +120,7 @@ class UploadIdFragment : Fragment(), UploadDocumentDialogFragment.UploadDialogLi
             val dialogFragment = UploadDocumentDialogFragment(
                 "Acta Constitutiva", FileDescription.ACTA_CONSTITUTIVA, FileFormat.PDF
             )
-            submittingFile = FileDescription.ACTA_CONSTITUTIVA
+            uploadingFile = FileDescription.ACTA_CONSTITUTIVA
             dialogFragment.arguments = arguments
             dialogFragment.uploadDialogListener = this
             dialogFragment.show(childFragmentManager, "UploadImageDialog")
@@ -100,7 +132,15 @@ class UploadIdFragment : Fragment(), UploadDocumentDialogFragment.UploadDialogLi
      */
     private fun initializeNavigationButtons() {
         binding.nextDocumentButton.setOnClickListener {
-            navigateToSubmitCurriculumFragment()
+            if (idUploaded && constitutiveUploaded) {
+                navigateToSubmitCurriculumFragment()
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.upload_all_documents),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
         binding.topbar.documentsBackButton.setOnClickListener {
@@ -134,21 +174,13 @@ class UploadIdFragment : Fragment(), UploadDocumentDialogFragment.UploadDialogLi
      * @param fileName El nombre del archivo que se subió.
      */
     override fun onFileUploaded(fileName: String) {
-        when (submittingFile) {
+        when (uploadingFile) {
             FileDescription.INE_REPRESENTANTE_LEGAL -> {
-                fileNamesViewModel.idFileName = fileName
-                binding.idTitle.text = fileName
-                binding.idFileSizeText.text = getString(R.string.change_file)
-                binding.idChevron.visibility = View.GONE
-                binding.idCheck.visibility = View.VISIBLE
+                fileNamesViewModel.idFileName.value = fileName
             }
 
             FileDescription.ACTA_CONSTITUTIVA -> {
-                fileNamesViewModel.constitutiveFileName = fileName
-                binding.constitutiveTitle.text = fileName
-                binding.constitutiveFileSizeText.text = getString(R.string.change_file)
-                binding.constitutiveChevron.visibility = View.GONE
-                binding.constitutiveCheck.visibility = View.VISIBLE
+                fileNamesViewModel.constitutiveFileName.value = fileName
             }
 
             else -> {}

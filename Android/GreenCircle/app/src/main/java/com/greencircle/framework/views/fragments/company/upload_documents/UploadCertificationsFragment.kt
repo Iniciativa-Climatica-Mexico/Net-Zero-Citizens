@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.greencircle.R
 import com.greencircle.databinding.FragmentUploadCertificationsBinding
 import com.greencircle.domain.model.company.files.FileDescription
 import com.greencircle.domain.model.company.files.FileFormat
+import com.greencircle.framework.viewmodel.company.files.FileNamesViewModel
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
 
 /**Constructor de "UploadCertificationsFragment"
@@ -20,19 +22,19 @@ class UploadCertificationsFragment : Fragment(), UploadDocumentDialogFragment.Up
     private var _binding: FragmentUploadCertificationsBinding? = null
     private val binding get() = _binding!!
     private var arguments: Bundle? = null
-    private var submittingFile: FileDescription? = null
+    private var uploadingFile: FileDescription? = null
+    private var fileNamesViewModel = FileNamesViewModel()
 
     /**
-     * Método que se llama cuando se crea la vista del fragmento de subir los documentos de identificación.
+     * Método que se llama cuando se crea la vista del fragmento de subir los documentos de certificaciones.
      *
-     * @param inflater El inflador de diseño que se utiliza para inflar la vista.
-     * @param container El contenedor en el que se debe colocar la vista del fragmento.
      * @param savedInstanceState La instancia de Bundle que contiene datos previamente guardados del fragmento.
-     * @return La vista inflada para el fragmento.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments = requireArguments()
+        fileNamesViewModel = ViewModelProvider(requireActivity())
+            .get(FileNamesViewModel::class.java)
     }
 
     /**
@@ -54,8 +56,50 @@ class UploadCertificationsFragment : Fragment(), UploadDocumentDialogFragment.Up
 
         initializeSubmitDocumentsButton()
         initializeNavigationButtons()
+        initializeObservers()
 
         return root
+    }
+
+    /**
+     * Método que cambia el estado del enlace de INE.
+     *
+     * @param fileName El nombre del archivo que se subió.
+     */
+    private fun changeDirCdmxBindingState(fileName: String) {
+        binding.dirCdmxUploadTitle.text = fileName
+        binding.cdmxFileSizeText.text = getString(R.string.change_file)
+        binding.cdmxChevron.visibility = View.GONE
+        binding.cdmxCheck.visibility = View.VISIBLE
+    }
+
+    /**
+     * Método que cambia el estado del enlace de Acta Constitutiva.
+     *
+     * @param fileName El nombre del archivo que se subió.
+     */
+    private fun changeFideBindingState(fileName: String) {
+        binding.fideUploadTitle.text = fileName
+        binding.fideFileSizeText.text = getString(R.string.change_file)
+        binding.fideChevron.visibility = View.GONE
+        binding.fideCheck.visibility = View.VISIBLE
+    }
+
+    /**
+     * Método que inicializa los observadores de los nombres de los archivos.
+     */
+    private fun initializeObservers() {
+        fileNamesViewModel.dirCdmxFileName.observe(viewLifecycleOwner) {
+            if (it != null) {
+                changeDirCdmxBindingState(it)
+            }
+        }
+
+        fileNamesViewModel.fideFileName.observe(viewLifecycleOwner) {
+            if (it != null) {
+                changeFideBindingState(it)
+            }
+        }
     }
 
     /**
@@ -68,7 +112,7 @@ class UploadCertificationsFragment : Fragment(), UploadDocumentDialogFragment.Up
                 FileDescription.DIRECTORIO_DE_INSTALADORES_CERTIFICADOS_DE_CDMX,
                 FileFormat.PDF,
             )
-            submittingFile = FileDescription.DIRECTORIO_DE_INSTALADORES_CERTIFICADOS_DE_CDMX
+            uploadingFile = FileDescription.DIRECTORIO_DE_INSTALADORES_CERTIFICADOS_DE_CDMX
             dialogFragment.arguments = arguments
             dialogFragment.uploadDialogListener = this
             dialogFragment.show(childFragmentManager, "UploadImageDialog")
@@ -80,8 +124,9 @@ class UploadCertificationsFragment : Fragment(), UploadDocumentDialogFragment.Up
                 FileDescription.PADRON_DE_EMPRESAS_ESPECIALIZADAS_FIDE,
                 FileFormat.PDF
             )
-            submittingFile = FileDescription.PADRON_DE_EMPRESAS_ESPECIALIZADAS_FIDE
+            uploadingFile = FileDescription.PADRON_DE_EMPRESAS_ESPECIALIZADAS_FIDE
             dialogFragment.arguments = arguments
+            dialogFragment.uploadDialogListener = this
             dialogFragment.show(childFragmentManager, "UploadImageDialog")
         }
     }
@@ -144,19 +189,13 @@ class UploadCertificationsFragment : Fragment(), UploadDocumentDialogFragment.Up
      * @param fileName El nombre del archivo que se subió.
      */
     override fun onFileUploaded(fileName: String) {
-        when (submittingFile) {
+        when (uploadingFile) {
             FileDescription.DIRECTORIO_DE_INSTALADORES_CERTIFICADOS_DE_CDMX -> {
-                binding.dirCdmxUploadTitle.text = fileName
-                binding.cdmxFileSizeText.text = getString(R.string.change_file)
-                binding.cdmxChevron.visibility = View.GONE
-                binding.cdmxCheck.visibility = View.VISIBLE
+                fileNamesViewModel.dirCdmxFileName.value = fileName
             }
 
             FileDescription.PADRON_DE_EMPRESAS_ESPECIALIZADAS_FIDE -> {
-                binding.fideUploadTitle.text = fileName
-                binding.fideFileSizeText.text = getString(R.string.change_file)
-                binding.fideChevron.visibility = View.GONE
-                binding.fideCheck.visibility = View.VISIBLE
+                fileNamesViewModel.fideFileName.value = fileName
             }
 
             else -> {}

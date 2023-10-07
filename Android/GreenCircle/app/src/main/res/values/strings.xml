@@ -60,13 +60,13 @@
     <string name="fide_title">Comprobante Padrón de Empresas Especializadas FIDE</string>
     <string name="services">Servicios</string>
     <string name="services_desc">Sube únicamente los documentos de los servicios que ofrece tu empresa</string>
-    <string name="sistemas_fotovoltaicos">Sistemas fotovoltaicos</string>
+    <string name="sistemas_photovoltaics">Sistemas fotovoltaicos</string>
     <string name="services_docs_desc">Por favor, comparte con nosotros un documento que incluya las siguientes certificaciones</string>
-    <string name="fotovolaticos_desc_list"><li>EC0586.01 Instalación de sistemas fotovoltaicos en residencias, comercios e industrias</li>
+    <string name="fotovolaticos_desc_list"><li>EC0586.01 Instalación de sistemas photovoltaics en residencias, comercios e industrias</li>
         \n<li>EC1180 Asesoría técnica- comercial en proyectos de generación distribuida fotovoltaica</li>
         \n<li>EC1181 Supervisión de sistemas fotovoltaicos en residencia, comercio e industria</li>
     </string>
-    <string name="fotovoltaicos_upload_title">Certificaciones Sistemas Fotovoltaicos</string>
+    <string name="photovoltaics_upload_title">Certificaciones Sistemas Fotovoltaicos</string>
     <string name="calentadores_solares">Calentadores solares</string>
     <string name="calentadores_desc_list"><li>NMX-ES-001-2005</li>
         \n<li>ISO 9806 + Informe de pruebas de laboratorio</li>
@@ -110,4 +110,6 @@
         <item>Fraudes o estafas</item>
         <item>Violación legal o ética</item>
     </string-array>
+    <string name="upload_all_documents">Por favor, sube todos los documentos solicitados antes de continuar</string>
+    <string name="accept_tc_and_privacy">Por favor, acepta las políticas de privacidad y los términos y condiciones para continuar</string>
 </resources>

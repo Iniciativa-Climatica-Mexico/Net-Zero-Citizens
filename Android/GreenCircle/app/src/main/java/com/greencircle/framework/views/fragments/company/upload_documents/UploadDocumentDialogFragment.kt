@@ -127,11 +127,11 @@ class UploadDocumentDialogFragment(
             viewModel.uploadFile(
                 authToken, filePart, companyId!!, fileDescription, fileFormat
             )
+            uploadDialogListener?.onFileUploaded(fileName ?: "")
         } catch (e: Exception) {
             Log.e("UploadDocumentDialogFragment", "uploadFile: $e")
         } finally {
             inputStream?.close()
         }
-        uploadDialogListener?.onFileUploaded(fileName ?: "")
     }
 }

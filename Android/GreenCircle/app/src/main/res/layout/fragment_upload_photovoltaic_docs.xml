@@ -42,7 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="start"
-                    android:text="@string/sistemas_fotovoltaicos"
+                    android:text="@string/sistemas_photovoltaics"
                     android:textColor="@color/gray_900"
                     android:textSize="30sp"
                     android:textStyle="bold" />
@@ -83,27 +83,27 @@
                     android:background="@color/gray_300" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cert_sistemas_fotovoltaicos_upload"
+                    android:id="@+id/cert_sistemas_photovoltaics_upload"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="30dp"
                     android:paddingVertical="20dp">
 
                     <TextView
-                        android:id="@+id/fotovoltaicos_upload_title"
+                        android:id="@+id/photovoltaics_upload_title"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:fontFamily="sans-serif-medium"
                         android:paddingStart="0dp"
                         android:paddingEnd="60dp"
-                        android:text="@string/fotovoltaicos_upload_title"
+                        android:text="@string/photovoltaics_upload_title"
                         android:textColor="@color/green"
                         android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/fotovoltaicFileSizeText"
+                        android:id="@+id/photovoltaicFileSizeText"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_marginTop="7dp"
@@ -112,7 +112,7 @@
                         android:textColor="@color/gray_500"
                         android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/fotovoltaicos_upload_title" />
+                        app:layout_constraintTop_toBottomOf="@+id/photovoltaics_upload_title" />
 
                     <ImageView
                         android:id="@+id/photovoltaicChevron"

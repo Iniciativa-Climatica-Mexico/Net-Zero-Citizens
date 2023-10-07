@@ -204,16 +204,15 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/submit_enroll_company_button"
+                android:id="@+id/next_fragment"
                 style="@style/Widget.Material3.Button.TonalButton"
                 android:layout_width="300dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp"
-                android:text="@string/enroll_company_button_txt"
+                android:layout_marginVertical="30dp"
+                android:text="@string/next"
                 android:textColor="@color/white"
                 android:textSize="15sp"
-                app:backgroundTint="@color/green"
+                app:backgroundTint="@color/blue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/conditions_agreement"

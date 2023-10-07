@@ -198,20 +198,6 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/next_no_documents_button"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="300dp"
-                android:layout_height="50dp"
-                android:layout_marginBottom="10dp"
-                android:text="@string/continue_no_documents"
-                android:textColor="@color/blue"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toTopOf="@id/next_document_button"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:strokeColor="@color/blue" />
-
-            <Button
                 android:id="@+id/next_document_button"
                 style="@style/Widget.Material3.Button.TonalButton"
                 android:layout_width="300dp"
