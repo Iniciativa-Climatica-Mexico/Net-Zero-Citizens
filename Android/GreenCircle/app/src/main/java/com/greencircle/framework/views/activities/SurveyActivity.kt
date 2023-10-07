@@ -9,6 +9,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.greencircle.R
 import com.greencircle.databinding.ActivitySurveyBinding
 import com.greencircle.domain.model.survey.Question
+import com.greencircle.domain.model.survey.Survey
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.survey.SurveyViewModel
 import com.greencircle.framework.views.fragments.survey.QuestionFragment
@@ -31,24 +32,26 @@ class SurveyActivity : AppCompatActivity() {
         initializeBinding()
         initializeObservers()
 
-        val sharedPreferences = getSharedPreferences("my_preferences", MODE_PRIVATE)
-        val userJson = sharedPreferences?.getString("user_session", null)
-        val userJSON = JSONObject(userJson!!)
-        userId = UUID.fromString(userJSON.getString("uuid"))
-        viewModel.getSurveyPending(userId)
-        updateProgressBar()
-    }
+        try {
+            val sharedPreferences = getSharedPreferences("my_preferences", MODE_PRIVATE)
+            val userJson = sharedPreferences?.getString("user_session", null)
+            val userJSON = JSONObject(userJson!!)
+            userId = UUID.fromString(userJSON.getString("uuid"))
 
-    private fun initializeObservers() {
-        viewModel.surveyLiveData.observe(this) { survey ->
-            if (survey == null) {
-                goToMain()
-                return@observe
-            }
+            val survey = intent.getBundleExtra("survey")?.getSerializable("survey") as Survey
+            Log.i("SURVEY", "Survey OBTENIDO: $survey")
             Log.i("Salida", survey.toString())
             binding.SurveyTitle.text = survey.title
             loadQuestions(survey.questions)
+
+            updateProgressBar()
+        } catch (e: Exception) {
+            Log.e("SURVEY", e.toString())
+            goToMain()
         }
+    }
+
+    private fun initializeObservers() {
         viewModel.submitStatusLiveData.observe(this) { status ->
             when (status) {
                 SurveyViewModel.SubmitStatus.success -> {
@@ -116,6 +119,7 @@ class SurveyActivity : AppCompatActivity() {
     private fun goToMain() {
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        intent.putExtra("fromSurvey", true)
         startActivity(intent)
         finish()
     }

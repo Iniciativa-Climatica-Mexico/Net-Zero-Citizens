@@ -19,9 +19,10 @@ import com.greencircle.domain.model.user.NewUser
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.auth.LoginViewModel
 import com.greencircle.framework.viewmodel.auth.RegisterViewModel
+import com.greencircle.framework.views.activities.MainActivity
 import com.greencircle.framework.views.activities.RegisterUserActivity
-import com.greencircle.framework.views.activities.SurveyActivity
 import com.greencircle.utils.AuthUtils
+import com.greencircle.utils.GoogleSignInHelper
 
 /**Constructor de "RegisterUserFragment"
  *
@@ -33,7 +34,7 @@ class RegisterUserFragment : Fragment() {
     private lateinit var registerViewModel: RegisterViewModel
     private lateinit var _arguments: Bundle
     private val binding get() = _binding!!
-    private val authUtils = AuthUtils()
+    private lateinit var authUtils: AuthUtils
 
     /**
      * Una propiedad para manejar el resultado de una operación de inicio de sesión de Google
@@ -83,6 +84,8 @@ class RegisterUserFragment : Fragment() {
             this,
             ViewModelFactory(requireContext(), RegisterViewModel::class.java)
         )[RegisterViewModel::class.java]
+
+        authUtils = AuthUtils(requireActivity())
     }
 
     /**
@@ -97,11 +100,12 @@ class RegisterUserFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflar el diseño de este fragmento
         _binding = FragmentRegisterUserBinding.inflate(inflater, container, false)
-        // Google Login
-        authUtils.googleLoginListener(binding, requireActivity(), googleSignInActivityResult)
+
+        val googleSignInHelper = GoogleSignInHelper(requireActivity(), googleSignInActivityResult)
+        googleSignInHelper.setupGoogleLoginListener(binding.root)
 
         registerOnClickListener()
 
@@ -121,7 +125,7 @@ class RegisterUserFragment : Fragment() {
             // Handle the result here
             if (result != null) {
                 if (result.user.roles != "new_user") {
-                    navigateToSurvey()
+                    navigateToMain()
                 } else {
                     navigateToForm(_arguments)
                 }
@@ -133,9 +137,9 @@ class RegisterUserFragment : Fragment() {
             // Handle the result here
             if (result != null) {
                 if (result.user.roles != "new_user") {
-                    navigateToSurvey()
+                    navigateToMain()
                 } else {
-                    _arguments = authUtils.getDataFromRegisterResponse(result.user)
+//                    _arguments = authUtils.getDataFromRegisterResponse(result.user)
                     navigateToForm(_arguments)
                 }
             } else {
@@ -298,8 +302,8 @@ class RegisterUserFragment : Fragment() {
         activity.replaceFragment(createUserFragment, arguments)
     }
 
-    private fun navigateToSurvey() {
-        var intent: Intent = Intent(requireContext(), SurveyActivity::class.java)
+    private fun navigateToMain() {
+        var intent: Intent = Intent(requireContext(), MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
