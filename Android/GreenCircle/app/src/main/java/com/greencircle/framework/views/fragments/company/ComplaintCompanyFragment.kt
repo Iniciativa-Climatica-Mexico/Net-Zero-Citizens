@@ -34,9 +34,18 @@ import kotlinx.coroutines.withContext
 class ComplaintCompanyFragment : DialogFragment() {
     private lateinit var companyId: UUID
     private lateinit var authToken: String
-    private val recoverUserSession = RecoverUserSessionRequirement(requireContext())
-    private val recoverTokens = RecoverTokensRequirement(requireContext())
+    private lateinit var recoverUserSession: RecoverUserSessionRequirement
+    private lateinit var recoverTokens: RecoverTokensRequirement
     private val complaintClient = ComplaintClient()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        recoverUserSession = RecoverUserSessionRequirement(requireContext())
+        recoverTokens = RecoverTokensRequirement(requireContext())
+        val tokens = recoverTokens()
+        if (tokens != null)
+            authToken = tokens.authToken
+    }
 
     /**
      * Se ejecuta cuando la vista se ha creado
@@ -96,11 +105,6 @@ class ComplaintCompanyFragment : DialogFragment() {
                     view.findViewById<EditText>(R.id.TellUsMore).text.toString()
 
                 val userSession = recoverUserSession()
-                val tokens = recoverTokens()
-                var authToken = ""
-                if (tokens != null)
-                    authToken = tokens.authToken
-
                 val complaint = Complaint(
                     userId = userSession.uuid,
                     companyId = companyId,
