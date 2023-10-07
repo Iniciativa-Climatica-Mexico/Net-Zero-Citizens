@@ -85,23 +85,30 @@ struct CoordinatorView: View {
           .applyNavBarTheme()
         
       case .tutorial:
-        AppTutorial(goMainMenu: goMainMenu)
-          .applyNavBarTheme()
+        if #available(iOS 17.0, *) {
+          AppTutorial_17(goMainMenu: goMainMenu)
+            .applyNavBarTheme()
+          
+        } else {
+          AppTutorial_16(goMainMenu: goMainMenu)
+            .applyNavBarTheme()
+        }
+        
       }
     }
     .onAppear {
-     Task {
-       let res = await viewModel.handleSignIn()
-       
-       switch res {
-       case .newUser:
-         goUserForm()
-       case .success:
-         goMainMenu()
-       case .fail:
-         goLogin()
-       }
-     }
+      Task {
+        let res = await viewModel.handleSignIn()
+        
+        switch res {
+        case .newUser:
+          goUserForm()
+        case .success:
+          goMainMenu()
+        case .fail:
+          goLogin()
+        }
+      }
     }
   }
   

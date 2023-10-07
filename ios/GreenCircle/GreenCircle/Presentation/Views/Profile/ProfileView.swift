@@ -22,9 +22,9 @@ struct ProfileView: View {
           TitleBarView(
             title: "Mi Perfil",
             leftIcon: nil,
-            rightIcon: nil,
+            rightIcon: "text.book.closed.fill",
             leftDestination: {  },
-            rightDestination: { }
+            rightDestination: { Tutorial() }
           )
           .frame(height: 10)
           .offset(y: -60)
@@ -109,7 +109,7 @@ struct ProfileView: View {
         }
         .padding(.top, 70)
       }
-    }
+    } .accentColor(.white)
   }
   
   struct ProfileView_Previews: PreviewProvider {
