@@ -120,6 +120,7 @@ class LoginActivity : AppCompatActivity() {
                         applicationContext, "Credenciales incorrectas", Toast.LENGTH_SHORT
                     ).show()
                 } else {
+                    googleSignInHelper.googleSignOut()
                     Log.d("LoginActivity", "Login successful")
                     AuthUtils(this).navigateToSurvey()
                 }

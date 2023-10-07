@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.greencircle.domain.model.user.User
 import com.greencircle.framework.views.activities.LoginActivity
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
 import com.greencircle.framework.views.activities.RegisterUserActivity
@@ -19,6 +20,19 @@ class AuthUtils(private val activity: Activity) {
         arguments.putString("email", account?.email)
         arguments.putString("photoUrl", account?.photoUrl.toString())
         arguments.putString("idToken", account?.idToken)
+
+        return arguments
+    }
+
+    fun getDataFromRegisterResponse(user: User): Bundle {
+        val arguments = Bundle()
+        arguments.putString("givenName", user.firstName)
+        arguments.putString("familyName", user.lastName)
+        arguments.putString("displayName", user.firstName + " " + user.lastName)
+        arguments.putString("email", user.email)
+        arguments.putString("photoUrl", user.picture)
+        arguments.putString("idToken", null)
+        arguments.putString("uuid", user.uuid.toString())
 
         return arguments
     }

@@ -110,7 +110,7 @@ class GoogleSignInHelper(
      *
      * @since 2.0.0
      */
-    private fun googleSignOut() {
+    fun googleSignOut() {
         mGoogleSignInClient.signOut()
     }
 }
