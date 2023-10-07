@@ -24,6 +24,8 @@ const testData = [
     webPage: 'https://www.sunpower.com',
     street: 'Las Lomas Verdes',
     streetNumber: '123',
+    latitude: null,
+    longitude: null,
     city: 'Ciudad de México',
     state: 'CDMX',
     zipCode: '72000',

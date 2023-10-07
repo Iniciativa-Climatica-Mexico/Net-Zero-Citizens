@@ -377,6 +377,93 @@ export const getCoordinatesIos = async (): Promise<
   return paginator
 }
 
+export const getCoordinatesIos = async (
+  params: PaginationParams<{ status: string }>
+): Promise<Paginator<FilteredCompany>> => {
+  const companies = await getCompaniesByStatus('approved', params)
+
+  // Configura el geocoder con tu clave de API
+  const geocoder = NodeGeocoder({
+    provider: 'google',
+    apiKey: process.env.GOOGLE_MAPS_API_KEY,
+  })
+
+  const companiesWithCoordinates = await Promise.all(
+    companies.rows.map(async (company) => {
+      const {
+        street,
+        streetNumber,
+        city,
+        state,
+        zipCode,
+        latitude,
+        longitude,
+      } = company.dataValues
+
+      if (latitude && longitude) {
+        return {
+          companyId: company.dataValues.companyId,
+          name: company.dataValues.name,
+          latitude,
+          longitude,
+          profilePicture: company.dataValues.profilePicture,
+        }
+      }
+
+      // Crea la dirección a partir de los campos de la empresa
+      const address = `${street} ${streetNumber}, ${city}, ${state}, ${zipCode}`
+
+      try {
+        // Realiza la geocodificación
+        const geocodeResult = await geocoder.geocode(address)
+        if (geocodeResult.length > 0) {
+          const { latitude, longitude } = geocodeResult[0]
+          company.latitude = latitude || null
+          company.longitude = longitude || null
+          await company.save()
+          return {
+            companyId: company.dataValues.companyId,
+            name: company.dataValues.name,
+            latitude,
+            longitude,
+            profilePicture: company.dataValues.profilePicture,
+          }
+        }
+      } catch (error: unknown) {
+        if (typeof error === 'string') {
+          console.error(
+            `Error al geocodificar la empresa ${company.dataValues.companyId}: ${error}`
+          )
+        } else {
+          console.error(
+            `Error al geocodificar la empresa ${company.dataValues.companyId}`
+          )
+        }
+      }
+
+      // Si la geocodificación falla o no se encuentra, regresa null
+      return null
+    })
+  )
+
+  // Filtra las empresas que no pudieron geocodificarse
+  const filteredCompanies = companiesWithCoordinates.filter(
+    (company) => company !== null
+  )
+
+  const filteredCompaniesTyped: FilteredCompany[] = filteredCompanies.filter(
+    (company): company is FilteredCompany => company !== null
+  )
+
+  const paginator: Paginator<FilteredCompany> = {
+    rows: filteredCompaniesTyped,
+    start: 0,
+    pageSize: filteredCompanies.length,
+    total: filteredCompanies.length,
+  }
+  return paginator
+}
+
 /**
  * @brief
  * Actualiza en la base de datos el proveedor con los datos pasados en los parametros
