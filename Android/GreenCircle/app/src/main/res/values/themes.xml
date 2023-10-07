@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.GreenCircle" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.GreenCircle" parent="Theme.MaterialComponents.DayNight">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/blue</item>
         <item name="colorPrimaryVariant">@color/primary_900</item>
@@ -13,18 +13,22 @@
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <!-- Customize your theme here. -->
         <item name="android:textColorLink">@color/primary_900</item>
+
+        <item name="colorOnSurfaceVariant">#FFFFFF</item>
     </style>
 
-    <style name="Theme.GreenCircle.NoActionBar">
+    <style name="Theme.GreenCircle.NoActionBar" parent="Theme.MaterialComponents.DayNight">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="colorOnSurfaceVariant">#FFFFFF</item>
     </style>
 
-    <style name="Theme.GreenCircle.CustomRadioButtonStyle">
+    <style name="Theme.GreenCircle.CustomRadioButtonStyle" parent="Theme.MaterialComponents.DayNight">
         <item name="android:background">@drawable/custom_radio_selector</item>
         <item name="android:textColor">@drawable/custom_radio_text_selector</item>
         <item name="android:button">@android:color/transparent</item>
         <item name="android:textAlignment">center</item>
+        <item name="colorOnSurfaceVariant">#FFFFFF</item>
     </style>
 
 </resources>
