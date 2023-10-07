@@ -182,12 +182,26 @@ describe('Company Service', () => {
 
   it('should filter companies by name', async () => {
     const companies = await getAllCompanies({ name: 'sunpo' })
-    expect(companies.rows).excludingEvery(attributesToExclude).to.deep.equal([testData[0]])
+    expect(companies.rows)
+      .excludingEvery(attributesToExclude)
+      .to.deep.equal([testData[0]])
   })
+
   it('should filter companies by state', async () => {
     const companies = await getAllCompanies({ state: 'QRO' })
-    expect(companies.rows).excludingEvery(attributesToExclude).to.deep.equal([testData[1]])
+    expect(companies.rows)
+      .excludingEvery(attributesToExclude)
+      .to.deep.equal([testData[1]])
   })
+
+  it('should filter companies by product', async () => {
+    const companies = await getAllCompanies({ productName: 'Paneles Solares' })
+    console.log(companies.rows.map((c)=> c.products))
+    expect(companies.rows)
+      .excludingEvery(attributesToExclude)
+      .to.deep.equal([testData[0]])
+  })
+  
   it('should order companies by score', async () => {
     const companies = await getAllCompanies({ ordering: 'score' })
     const scores = companies.rows.map((company) => company.score || 0)

@@ -70,6 +70,7 @@ export type FilterGetCompanies = {
   ordering?: 'distance' | 'score'
   name?: string
   state?: string
+  productName?: 'Paneles Solares' | 'Calentadores Solares'
   latitude?: number // Used for distance ordering
   longitude?: number // Used for distance ordering
 }
@@ -87,7 +88,8 @@ export type FiltersGetCompaniesByStatus = FilterGetCompanies & {
 export const getAllCompanies = async (
   params?: PaginationParams<FiltersGetCompaniesByStatus>
 ): Promise<PaginatedQuery<Company & { score: number }>> => {
-  const { start, pageSize, ordering, name, state, status } = params ?? {}
+  const { start, pageSize, ordering, name, state, productName, status } =
+    params ?? {}
 
   const filters = []
   if (status)
@@ -95,9 +97,10 @@ export const getAllCompanies = async (
       status,
     })
 
-  if (name) filters.push(literal(`LOWER(name) LIKE LOWER('%${name}%')`))
+  if (name) filters.push(literal(`LOWER(Company.name) LIKE LOWER('%${name}%')`))
 
-  if (state) filters.push(literal(`LOWER(state) LIKE LOWER('%${state}%')`))
+  if (state)
+    filters.push(literal(`LOWER(Company.state) LIKE LOWER('%${state}%')`))
 
   const res = await Company.findAndCountAll({
     // offset: start || 0,
@@ -119,6 +122,35 @@ export const getAllCompanies = async (
     order: ordering === 'score' ? literal('score DESC') : undefined,
     group: ['companyId'],
   })
+
+  res.rows = unwrap(res.rows)
+  if (productName) {
+    // make an array of false the same length as companies
+    const companiesMask = Array(res.rows.length).fill(false)
+
+    await Promise.all(
+      res.rows.map(async (company, index) => {
+        const products = await CompanyProducts.findAll({
+          where: {
+            companyId: company.companyId,
+          },
+          include: [
+            {
+              model: Product,
+              where: {
+                name: productName,
+              },
+            },
+          ],
+        })
+        if (products.length > 0) {
+          companiesMask[index] = true
+        }
+      })
+    )
+
+    res.rows = res.rows.filter((_, index) => companiesMask[index])
+  }
 
   if (ordering === 'distance') {
     const { latitude, longitude } = params ?? {}
@@ -156,10 +188,10 @@ export const getAllCompanies = async (
       return distA - distB
     })
   }
-  return unwrap({
+  return {
     count: res.count.length,
     rows: res.rows as (Company & { score: number })[],
-  })
+  }
 }
 
 /**
