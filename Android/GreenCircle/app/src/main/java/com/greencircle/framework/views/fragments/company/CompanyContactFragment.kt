@@ -1,6 +1,7 @@
 package com.greencircle.framework.views.fragments.company
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.greencircle.R
 import com.greencircle.databinding.FragmentCompanyContactBinding
-import com.greencircle.domain.model.company.CompanyImages
+import com.greencircle.domain.model.company.files.CompanyFile
+import com.greencircle.domain.model.company.files.FileDescription
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.company.CompanyContactViewModel
 import com.greencircle.framework.views.fragments.reviews.CompanyReviewFragment
@@ -42,7 +44,9 @@ class CompanyContactFragment : Fragment() {
 
             if (companyData == null) return@observe
 
-            initCarousel(companyData.companyImages)
+            Log.d("CompanyContactFragment", companyData.toString())
+
+            initCarousel(companyData.files)
             binding.TVCompanyName.text = companyData.name
 
             // bundle para pasar los datos de contacto a CompanyContactInfoFragment
@@ -115,11 +119,11 @@ class CompanyContactFragment : Fragment() {
         _binding = null
     }
 
-    fun initCarousel(images: List<CompanyImages>?) {
+    fun initCarousel(files: List<CompanyFile>?) {
         val carousel = binding.carousel
-
+        val images = files?.filter { file -> file.fileDescription == FileDescription.IMAGEN }
         images?.forEach { image ->
-            carousel.addData(CarouselItem(image.imageUrl))
+            carousel.addData(CarouselItem(image.fileURL))
         }
     }
 }
