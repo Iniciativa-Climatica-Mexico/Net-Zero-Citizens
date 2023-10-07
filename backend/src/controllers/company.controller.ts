@@ -3,9 +3,8 @@ import CompanyProduct from '../models/companyProducts.model'
 import * as CompanyService from '../services/company.service'
 import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
 import { RequestHandler } from 'express'
-import { Prettify } from '../utils/RequestResponse'
+import NodeGeocoder from 'node-geocoder'
 
-type GetCompaniesQueryParams = Prettify<PaginationParams<CompanyService.FiltersGetCompaniesByStatus>>
 /**
  * @brief
  * Función del controlador que devuelve todos los proveedores
@@ -18,11 +17,16 @@ export const getAllCompanies: RequestHandler<
   NoRecord,
   Paginator<Company> | { error: string },
   NoRecord,
-  GetCompaniesQueryParams
+  PaginationParams<{ name?: string }>
 > = async (req, res) => {
-  const params = req.query
-  params.start = params.start || 0
-  params.pageSize = params.pageSize || 1000
+  const params = {
+    start: req.query.start || 0,
+    pageSize: req.query.pageSize || 1000,
+    filters: {
+      name: req.query.name || '',
+    },
+  }
+
   try {
     const companies = await CompanyService.getAllCompanies(params)
     res.json({
@@ -61,9 +65,6 @@ export const getCompanyById: RequestHandler<
   }
 }
 
-
-type GetCompaniesNoStatusQueryParams = Prettify<PaginationParams<CompanyService.FiltersGetCompaniesByStatus>>
-
 /**
  * @brief
  * Función del controlador que devuelve todos los proveedores aprobados de la base de datos
@@ -74,15 +75,16 @@ export const getApprovedCompanies: RequestHandler<
   NoRecord,
   Paginator<Company>,
   NoRecord,
-  GetCompaniesNoStatusQueryParams
+  PaginationParams<{ status: string }>
 > = async (req, res) => {
-  const params = req.query
-  params.start = params.start || 0
-  params.pageSize = params.pageSize || 1000
-  const companies = await CompanyService.getAllCompanies({
-    ...params,
-    status: 'approved',
-  })
+  const params = {
+    start: req.query.start || 0,
+    pageSize: req.query.pageSize || 1000,
+  }
+  const companies = await CompanyService.getCompaniesByStatus(
+    'approved',
+    params
+  )
   res.json({
     rows: companies.rows,
     start: params.start,
@@ -101,16 +103,16 @@ export const getPendingCompanies: RequestHandler<
   NoRecord,
   Paginator<Company>,
   NoRecord,
-  GetCompaniesNoStatusQueryParams
+  PaginationParams<{ status: string }>
 > = async (req, res) => {
-  const params = req.query
-  params.start = params.start || 0
-  params.pageSize = params.pageSize || 1000
-
-  const companies = await CompanyService.getAllCompanies({
-    ...params,
-    status: 'pending_approval',
-  })
+  const params = {
+    start: req.query.start || 0,
+    pageSize: req.query.pageSize || 1000,
+  }
+  const companies = await CompanyService.getCompaniesByStatus(
+    'pending_approval',
+    params
+  )
   res.json({
     rows: companies.rows,
     start: params.start,
@@ -227,10 +229,17 @@ export const getCoordinatesAndroid: RequestHandler<
   CompanyService.FilteredCompany[] | { error: string },
   NoRecord,
   PaginationParams<{ status: string }>
-> = async (_req, res) => {
+> = async (req, res) => {
+  const params = {
+    start: req.query.start || 0,
+    pageSize: req.query.pageSize || 1000,
+  }
+
   try {
-    const companies =
-      await CompanyService.getCompaniesWithCoordinates('approved')
+    const companies = await CompanyService.getCompaniesWithCoordinates(
+      'approved',
+      params
+    )
 
     return res.json(companies)
   } catch (error) {
@@ -244,13 +253,89 @@ export const getCoordinatesAndroid: RequestHandler<
  * @param req
  * @param res
  */
+
+interface FilteredCompany {
+  companyId: string
+  name: string
+  latitude: number
+  longitude: number
+  profilePicture: string
+}
+
 export const getCoordinatesIos: RequestHandler<
   NoRecord,
-  Paginator<CompanyService.FilteredCompany>,
+  Paginator<FilteredCompany>,
   NoRecord,
-  NoRecord
-> = async (_req, res) => {
-  const paginator = await CompanyService.getCoordinatesIos()
+  PaginationParams<{ status: string }>
+> = async (req, res) => {
+  const params = {
+    start: req.query.start || 0,
+    pageSize: req.query.pageSize || 1000,
+  }
+
+  const companies = await CompanyService.getCompaniesByStatus(
+    'approved',
+    params
+  )
+
+  // Configura el geocoder con tu clave de API
+  const geocoder = NodeGeocoder({
+    provider: 'google',
+    apiKey: process.env.GOOGLE_MAPS_API_KEY,
+  })
+
+  const companiesWithCoordinates = await Promise.all(
+    companies.rows.map(async (company) => {
+      const { street, streetNumber, city, state, zipCode } = company.dataValues
+
+      // Crea la dirección a partir de los campos de la empresa
+      const address = `${street} ${streetNumber}, ${city}, ${state}, ${zipCode}`
+
+      try {
+        // Realiza la geocodificación
+        const geocodeResult = await geocoder.geocode(address)
+        if (geocodeResult.length > 0) {
+          const { latitude, longitude } = geocodeResult[0]
+          return {
+            companyId: company.dataValues.companyId,
+            name: company.dataValues.name,
+            latitude,
+            longitude,
+            profilePicture: company.dataValues.profilePicture,
+          }
+        }
+      } catch (error: unknown) {
+        if (typeof error === 'string') {
+          console.error(
+            `Error al geocodificar la empresa ${company.dataValues.companyId}: ${error}`
+          )
+        } else {
+          console.error(
+            `Error al geocodificar la empresa ${company.dataValues.companyId}`
+          )
+        }
+      }
+
+      // Si la geocodificación falla o no se encuentra, regresa null
+      return null
+    })
+  )
+
+  // Filtra las empresas que no pudieron geocodificarse
+  const filteredCompanies = companiesWithCoordinates.filter(
+    (company) => company !== null
+  )
+
+  const filteredCompaniesTyped: FilteredCompany[] = filteredCompanies.filter(
+    (company): company is FilteredCompany => company !== null
+  )
+
+  const paginator: Paginator<FilteredCompany> = {
+    rows: filteredCompaniesTyped,
+    start: 0,
+    pageSize: filteredCompanies.length,
+    total: filteredCompanies.length,
+  }
   res.json(paginator)
 }
 /**

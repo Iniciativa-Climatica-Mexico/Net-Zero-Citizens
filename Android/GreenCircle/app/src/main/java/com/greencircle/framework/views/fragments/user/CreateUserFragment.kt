@@ -20,8 +20,8 @@ import com.greencircle.data.remote.user.UserAPIService
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.auth.LoginViewModel
 import com.greencircle.framework.viewmodel.user.CreateUserViewModel
-import com.greencircle.framework.views.activities.MainActivity
 import com.greencircle.framework.views.activities.RegisterUserActivity
+import com.greencircle.framework.views.activities.SurveyActivity
 import com.greencircle.framework.views.fragments.TermsAndConditions.TermsAndConditions
 import java.util.UUID
 
@@ -306,7 +306,7 @@ class CreateUserFragment : Fragment() {
      * (`MainActivity`) y luego inicia la actividad para mostrar la pantalla de inicio.
      */
     private fun navigateToHome() {
-        var intent: Intent = Intent(requireContext(), MainActivity::class.java)
+        var intent: Intent = Intent(requireContext(), SurveyActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
