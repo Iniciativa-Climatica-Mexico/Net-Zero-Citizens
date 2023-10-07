@@ -1,5 +1,6 @@
 import Ecoinfo from '../models/ecoinfo.model'
 import { z } from 'zod'
+import cron  from 'node-cron'
 
 /**
  * @brief
@@ -10,9 +11,18 @@ import { z } from 'zod'
  *            información de paginación
  */
 export const getAllEcoinfo = async (): Promise<Ecoinfo[]> => {
-  // await fetchEcoInfo()
   return await Ecoinfo.findAll()
 }
+
+/**
+ * @brief
+ * Funcion que realiza un fetch a la página de Facebook de ICM
+ * Cada día
+ */
+export const cronEcoInfo = cron.schedule('0 0 */1 * *', () => {
+  fetchEcoInfo()
+  console.log('EcoInfo updated')
+})
 
 /**
  * @brief
