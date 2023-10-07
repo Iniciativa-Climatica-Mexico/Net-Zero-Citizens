@@ -25,26 +25,37 @@ struct CoordinatesView: View {
     @State var region = MKCoordinateRegion()
     @State var annotations: [IdentifiablePointAnnotation] = []
     
+    @State private var userLocation: CLLocationCoordinate2D?
+    @State private var isTrackingUserLocation = true
+
+    
     var body: some View {
 //        Map(coordinateRegion: $region, annotationItems: annotations) { annotation in
 //            MapMarker(coordinate: annotation.coordinate)
 //        }
-//        .onAppear {
-//            Task {
-//                await setRegion()
-//            }
-//        }
-        VStack {
-            Text ("Latitude: \(coordinates.lat)")
-                .font (. largeTitle)
-            Text ("Longitude: \(coordinates.lon)")
-                .font (.largeTitle)
-            }
-        .onAppear {
-            observeCoordinateUpdates()
-            observeLocationAccessDenied ()
-            deviceLocationService.requestLocationUpdates()
+        Map(coordinateRegion: $region, showsUserLocation: true, userTrackingMode: .constant(isTrackingUserLocation ? .follow : .none), annotationItems: annotations) { annotation in
+            MapMarker(coordinate: annotation.coordinate)
         }
+
+        .onAppear {
+            Task {
+                await setRegion()
+                observeCoordinateUpdates()
+                observeLocationAccessDenied()
+                deviceLocationService.requestLocationUpdates()
+            }
+        }
+//        VStack {
+//            Text ("Latitude: \(coordinates.lat)")
+//                .font (. largeTitle)
+//            Text ("Longitude: \(coordinates.lon)")
+//                .font (.largeTitle)
+//            }
+//        .onAppear {
+//            observeCoordinateUpdates()
+//            observeLocationAccessDenied()
+//            deviceLocationService.requestLocationUpdates()
+//        }
     }
     
     func setRegion() async {
@@ -67,19 +78,33 @@ struct CoordinatesView: View {
         region = coordinatesRegion
     }
     
-    func observeCoordinateUpdates () {
+//    func observeCoordinateUpdates () {
+//        deviceLocationService.coordinatesPublisher
+//            .receive (on: DispatchQueue .main)
+//            .sink { completion in
+//                if case .failure(let error) = completion {
+//                    print (error)
+//                }
+//            } receiveValue: { coordinates in
+//                self.coordinates = (coordinates.latitude, coordinates.longitude)
+//            }
+//            .store (in: &tokens)
+//    }
+// Buena
+    
+    func observeCoordinateUpdates() {
         deviceLocationService.coordinatesPublisher
-            .receive (on: DispatchQueue .main)
+            .receive(on: DispatchQueue.main)
             .sink { completion in
                 if case .failure(let error) = completion {
-                    print (error)
+                    print(error)
                 }
             } receiveValue: { coordinates in
                 self.coordinates = (coordinates.latitude, coordinates.longitude)
+                self.userLocation = coordinates 
             }
-            .store (in: &tokens)
+            .store(in: &tokens)
     }
-    
     func observeLocationAccessDenied() {
         deviceLocationService.deniedLocationAccessPublisher
             .receive(on: DispatchQueue.main)
