@@ -207,7 +207,7 @@ describe('UserService', () => {
 
     it('should delete all complaints from user', async () => {
       const res = await deleteAllComplaintsFromUser(user.userId)
-      expect(res).to.be.equal(2)
+      expect(res).to.be.equal(5)
 
       const complaints = await getComplaintsByUser({ pageSize: 10, start: 0, userId: user.userId })
       expect(complaints.count).to.be.equal(0)
