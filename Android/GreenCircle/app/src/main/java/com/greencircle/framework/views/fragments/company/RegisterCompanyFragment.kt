@@ -22,9 +22,10 @@ import com.greencircle.framework.viewmodel.company.CreateCompanyViewModel
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
 import com.greencircle.framework.views.activities.SurveyActivity
 import com.greencircle.utils.AuthUtils
+import com.greencircle.utils.GoogleSignInHelper
 
-/**Constructor de "RegisterCompanyFragment"
- *
+/**
+ * Constructor de "RegisterCompanyFragment
  * @constructor Incializa y crea la vista del "RegisterCompanyFragment". Navega a "CreateCompanyFragment".
  */
 class RegisterCompanyFragment : Fragment() {
@@ -32,7 +33,8 @@ class RegisterCompanyFragment : Fragment() {
     private lateinit var createCompanyViewModel: CreateCompanyViewModel
     private lateinit var registerViewModel: RegisterViewModel
     private lateinit var _arguments: Bundle
-    private val authUtils = AuthUtils()
+    private lateinit var authUtils: AuthUtils
+    private lateinit var googleSignInHelper: GoogleSignInHelper
     private val binding get() = _binding!!
 
     /**
@@ -83,6 +85,8 @@ class RegisterCompanyFragment : Fragment() {
             this,
             ViewModelFactory(requireContext(), RegisterViewModel::class.java)
         )[RegisterViewModel::class.java]
+
+        authUtils = AuthUtils(requireActivity())
     }
 
     /**
@@ -100,8 +104,9 @@ class RegisterCompanyFragment : Fragment() {
     ): View {
         // Inflar el diseño de este fragmento
         _binding = FragmentRegisterCompanyBinding.inflate(inflater, container, false)
+
         // Google Login
-        authUtils.googleLoginListener(binding, requireActivity(), googleSignInActivityResult)
+        googleSignInHelper = GoogleSignInHelper(requireActivity(), googleSignInActivityResult)
 
         registerOnClickListener()
 
@@ -117,7 +122,13 @@ class RegisterCompanyFragment : Fragment() {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        googleSignInHelper.setupGoogleLoginListener(binding.root)
+
         createCompanyViewModel.googleLoginResult.observe(viewLifecycleOwner) { result ->
+            val data: Intent = Intent(requireContext(), RegisterCompanyActivity::class.java)
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+
             // Handle the result here
             if (result != null) {
                 if (result.user.roles != "new_user") {

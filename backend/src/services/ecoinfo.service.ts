@@ -1,5 +1,6 @@
 import Ecoinfo from '../models/ecoinfo.model'
 import { z } from 'zod'
+import cron from 'node-cron'
 
 /**
  * @brief
@@ -10,9 +11,18 @@ import { z } from 'zod'
  *            información de paginación
  */
 export const getAllEcoinfo = async (): Promise<Ecoinfo[]> => {
-  // await fetchEcoInfo()
   return await Ecoinfo.findAll()
 }
+
+/**
+ * @brief
+ * Funcion que realiza un fetch a la página de Facebook de ICM
+ * Cada día
+ */
+export const cronEcoInfo = cron.schedule('0 0 * * * *', () => {
+  fetchEcoInfo()
+  console.log('EcoInfo updated')
+})
 
 /**
  * @brief
@@ -40,7 +50,8 @@ const fetchEcoInfo = async () => {
     } else {
       throw new Error('Error al obtener la información de la página')
     }
-  } catch {
+  } catch (err) {
+    console.log(err)
     throw new Error('Error al obtener la información de la página')
   }
 }
@@ -52,15 +63,17 @@ const fetchEcoInfo = async () => {
 const EcoInfoApiSchema = z.object({
   data: z.array(
     z.object({
-      attachments: z.object({
-        data: z.array(
-          z.object({
-            media: z.object({ image: z.object({ src: z.string() }) }),
-            description: z.string().optional(),
-            url: z.string(),
-          })
-        ),
-      }),
+      attachments: z
+        .object({
+          data: z.array(
+            z.object({
+              media: z.object({ image: z.object({ src: z.string() }) }),
+              description: z.string().optional(),
+              url: z.string(),
+            })
+          ),
+        })
+        .optional(),
       id: z.string(),
     })
   ),
@@ -83,17 +96,20 @@ const updateEcoInfo = async (data: EcoInfoApiModel) => {
       const exists = await Ecoinfo.findOne({ where: { postId } })
 
       if (!exists) {
-        const coverImage = post.attachments.data[0].media.image.src
-        const description = post.attachments.data[0].description
-        const postLink = post.attachments.data[0].url
-
-        const tempEcoInfoTemplate = {
-          postId,
-          coverImage,
-          description,
-          postLink,
+        if (!post.attachments?.data[0].media.image.src) {
+          return
+        } else {
+          const coverImage = post.attachments.data[0].media.image.src
+          const description = post.attachments.data[0].description
+          const postLink = post.attachments.data[0].url
+          const tempEcoInfoTemplate = {
+            postId,
+            coverImage,
+            description,
+            postLink,
+          }
+          return Ecoinfo.create(tempEcoInfoTemplate)
         }
-        return Ecoinfo.create(tempEcoInfoTemplate)
       }
     })
   )
