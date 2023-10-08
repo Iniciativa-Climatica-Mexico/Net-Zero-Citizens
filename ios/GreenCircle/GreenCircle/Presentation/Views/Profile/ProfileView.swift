@@ -14,7 +14,6 @@ struct ProfileView: View {
 
 
   
-  @ObservedObject var modelUser = UserViewModel()
   var goLogin: () -> Void
 
   var body: some View {

@@ -9,32 +9,34 @@
 import SwiftUI
 
 struct ScrollViewRating: View {
-  var idCompany: UUID
-  @State var emptyHeartFill: Bool
-  @Binding var dispScrollView: Bool
-  @Binding var isPressed: [String: Bool]
+  
+  /// Estas dos funciones permiten hacer el flujo de las vistas
+  /// desde el contacto de compañía hasta vista de opiniones
+  var goOpinions: () -> Void
+  
+  /// Esta función, toma el papel de regresar en una vista, o de regresar al ScrollViewRating
+  var goScrollRating: () -> Void
   
   var body: some View {
     NavigationStack {
-      if dispScrollView && !isPressed["Producto", default: false] && !isPressed["Contacto", default: false] {
-        ScrollView {
-          VStack {
-            HStack {
-                CustomButtonOption(isPressed: $isPressed, content: "Producto")
-                CustomButtonOption(isPressed: $isPressed, content: "Contacto")
-                CustomButtonOption(isPressed: $isPressed, content: "Reviews")
+      ScrollView {
+        VStack {
+          ReviewsView(goOpinions: goOpinions, goScrollRating: goScrollRating)
+          ReviewCardProvider(reviewViewModel: ReviewViewModel(), profilePicture: Image(systemName: "person.circle.fill"))
+        }
+        .padding(.top, 10)
+      }.navigationTitle("Reviews")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+          ToolbarItem(placement: .topBarLeading) {
+            Button {
+              goScrollRating()
+            } label: {
+              Image(systemName: "chevron.left")
+                .foregroundColor(.white)
             }
           }
-          .padding(.top, 10)
-            ReviewsView()
-            ReviewCardProvider(reviewViewModel: ReviewViewModel(), profilePicture: Image(systemName: "person.circle.fill"))
         }
-        .navigationTitle("Reviews!")
-          .navigationBarTitleDisplayMode(.inline)
-      } else {
-        ContactCompanyView(idCompany: idCompany, emptyHeartFill: $emptyHeartFill).onAppear { dispScrollView = false }
-      }
-        
     }
   }
 }

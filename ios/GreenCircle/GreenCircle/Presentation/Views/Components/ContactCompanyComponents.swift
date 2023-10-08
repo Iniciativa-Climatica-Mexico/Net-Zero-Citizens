@@ -93,6 +93,11 @@ struct ContactCompanyComponentView: View {
 struct ContactCompanyRatingView: View {
   @ObservedObject var modelCompanyRating: CompanyViewModel
   @Binding var dispScrollView: Bool
+  
+  var goReviews: () -> Void
+  var goOpinions: () -> Void
+  var goScrollRating: () -> Void
+  
   var body: some View {
     if !dispScrollView {
       VStack(alignment: .leading, spacing: 5) {
@@ -132,11 +137,14 @@ struct ContactCompanyRatingView: View {
         }.padding(.bottom, 10)
         HStack {
           Spacer()
-          Text("Ver mas...").onTapGesture {
-            dispScrollView = true
-          }
-          .font(.system(size: 13))
-          .foregroundColor(Color("BlueCustom"))
+          NavigationLink(destination: ScrollViewRating(goOpinions: goOpinions, goScrollRating: goScrollRating), label: {
+            Text("Ver mas...")
+              .font(.system(size: 13))
+              .foregroundColor(Color("BlueCustom"))
+              .onTapGesture {
+                goReviews()
+              }
+          })
           Spacer()
         }
         Spacer()

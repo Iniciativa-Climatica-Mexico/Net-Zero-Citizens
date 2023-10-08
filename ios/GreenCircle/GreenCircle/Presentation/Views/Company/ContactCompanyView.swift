@@ -195,11 +195,14 @@ struct ContactCompanyView: View {
   @State var stringDescription: String = ""
   @State var showingAlert: Bool = false
   @Binding var emptyHeartFill: Bool
+  
+  var goReviews: () -> Void
+  var goOpinions: () -> Void
+  var goScrollRating: () -> Void
 
   @Environment(\.presentationMode) var presentationMode
 
   var body: some View {
-    if !dispScrollView {
       NavigationStack {
         VStack(alignment: .leading) {
           TabView {
@@ -286,7 +289,12 @@ struct ContactCompanyView: View {
                 }
               }
               if key == "Reviews" {
-                ContactCompanyRatingView(modelCompanyRating: contactCompanyViewModel, dispScrollView: $dispScrollView).onAppear {
+                ContactCompanyRatingView(modelCompanyRating: contactCompanyViewModel,
+                                         dispScrollView: $dispScrollView,
+                                         goReviews: goReviews,
+                                         goOpinions: goOpinions,
+                                         goScrollRating: goScrollRating
+                ).onAppear {
                   bindImageToDescription = false
                 }
               }
@@ -318,12 +326,6 @@ struct ContactCompanyView: View {
               
             }
         )
-          }
-    }
-      } else {
-        ScrollViewRating(idCompany: idCompany, emptyHeartFill: emptyHeartFill, dispScrollView: $dispScrollView, isPressed: $isPressed)
-          .onAppear {
-            isPressed = ["Producto": false, "Contacto": false, "Reviews": true]
           }
       }
     }

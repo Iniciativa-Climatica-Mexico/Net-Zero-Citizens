@@ -16,18 +16,28 @@ struct CardCatalogView: View {
   var companyName: String
   var city: String
   var state: String
+  var goReviews: () -> Void
+  var goOpinions: () -> Void
+  var goScrollRating: () -> Void
   
-  init(companyId: UUID, companyName: String, city: String, state: String) {
+  init(companyId: UUID, companyName: String, city: String,
+       state: String,
+       goReviews: @escaping () -> Void, goOpinions: @escaping () -> Void,
+       goScrollRating: @escaping () -> Void) {
     _viewModel = StateObject(wrappedValue: CompanyViewModel())
     _favouriteViewModel = StateObject(wrappedValue: FavouriteViewModel())
     self.companyId = companyId
     self.companyName = companyName
     self.city = city
     self.state = state
+    self.goReviews = goReviews
+    self.goOpinions = goOpinions
+    self.goScrollRating = goScrollRating
   }
   
   var body: some View {
-    NavigationLink(destination: ContactCompanyView(idCompany: companyId, emptyHeartFill: $emptyHeartFill)){
+    NavigationLink(destination: ContactCompanyView(idCompany: companyId, emptyHeartFill: $emptyHeartFill,
+                                                   goReviews: goReviews, goOpinions: goOpinions, goScrollRating: goScrollRating)){
       ZStack {
         RoundedRectangle(cornerRadius: 10, style:.continuous)
           .fill(.white)
@@ -137,13 +147,18 @@ struct CardCatalogView: View {
 
 struct CatalogView: View {
   @StateObject var viewModel = CompanyViewModel()
+  var goReviews: () -> Void
+  var goOpinions: () -> Void
+  var goScrollRating: () -> Void
+
   var body: some View {
     NavigationStack {
       ScrollView {
         LazyVStack{
           ForEach(viewModel.companies, id: \.id) { company in
             CardCatalogView(companyId: company.companyId,
-                            companyName: company.name, city: company.city, state: company.state)
+                            companyName: company.name, city: company.city, state: company.state, goReviews: goReviews,
+                            goOpinions: goOpinions, goScrollRating: goScrollRating)
           }.padding(.top, 5)
         }.padding(.top, 10)
       }
