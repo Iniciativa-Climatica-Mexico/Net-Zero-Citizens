@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -38,34 +39,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginBottom="30dp"/>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/misFavoritos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounded_corner"
-            android:text="Mis favoritos "
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
-
-        <Button
-            android:id="@+id/editarPerfilButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/rounded_corner"
-            android:text="Editar Perfil"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -75,16 +49,16 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/resenasTextView"
+            android:id="@+id/favouritesTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/reviews_written_user"
+            android:text="@string/favourites_user"
             android:textColor="@color/gray_800"
             android:textSize="23dp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/resenasCountTextView"
+            android:id="@+id/favouritesCountTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
@@ -101,12 +75,22 @@
             android:textSize="23dp"
             android:textStyle="bold" />
     </LinearLayout>
-
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/userReviewFragment"
+    <TextView
+        android:id="@+id/emptyView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginVertical="20dp"
+        android:text="@string/user_favourite_empty_view"
+        android:textSize="16sp"
+        android:layout_marginHorizontal="20dp"
+        android:visibility="gone" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/newRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp" />
+        android:layout_marginTop="20dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/catalogue_card_layout"
+        />
 
 </LinearLayout>
