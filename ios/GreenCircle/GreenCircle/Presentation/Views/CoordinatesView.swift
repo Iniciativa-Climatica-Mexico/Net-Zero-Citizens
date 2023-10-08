@@ -30,9 +30,6 @@ struct CoordinatesView: View {
 
     
     var body: some View {
-//        Map(coordinateRegion: $region, annotationItems: annotations) { annotation in
-//            MapMarker(coordinate: annotation.coordinate)
-//        }
         Map(coordinateRegion: $region, showsUserLocation: true, userTrackingMode: .constant(isTrackingUserLocation ? .follow : .none), annotationItems: annotations) { annotation in
             MapMarker(coordinate: annotation.coordinate)
         }
@@ -45,17 +42,6 @@ struct CoordinatesView: View {
                 deviceLocationService.requestLocationUpdates()
             }
         }
-//        VStack {
-//            Text ("Latitude: \(coordinates.lat)")
-//                .font (. largeTitle)
-//            Text ("Longitude: \(coordinates.lon)")
-//                .font (.largeTitle)
-//            }
-//        .onAppear {
-//            observeCoordinateUpdates()
-//            observeLocationAccessDenied()
-//            deviceLocationService.requestLocationUpdates()
-//        }
     }
     
     func setRegion() async {
@@ -77,20 +63,6 @@ struct CoordinatesView: View {
 
         region = coordinatesRegion
     }
-    
-//    func observeCoordinateUpdates () {
-//        deviceLocationService.coordinatesPublisher
-//            .receive (on: DispatchQueue .main)
-//            .sink { completion in
-//                if case .failure(let error) = completion {
-//                    print (error)
-//                }
-//            } receiveValue: { coordinates in
-//                self.coordinates = (coordinates.latitude, coordinates.longitude)
-//            }
-//            .store (in: &tokens)
-//    }
-// Buena
     
     func observeCoordinateUpdates() {
         deviceLocationService.coordinatesPublisher
