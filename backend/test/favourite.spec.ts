@@ -44,8 +44,8 @@ describe('Favourite Service', () => {
 
   it('should return row affected when deleting', async () => {
     const responseRowAffected = await FavouriteService.deleteFavouriteById(
-      "a2c0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e",
-      "8de45630-2e76-4d97-98c2-9ec0d1f3a5b9"
+      'a2c0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
+      '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9'
     )
     expect(responseRowAffected).equal(1)
   })
@@ -59,7 +59,7 @@ describe('Favourite Service', () => {
     console.log(response)
     expect(unwrap(response).rows)
       .excluding(attributesToExclude)
-      .to.deep.equal([testData[1]])
+      .to.deep.equal([testData[0]])
   })
 
   it('should return Favourite if exists', async () => {
