@@ -36,8 +36,6 @@ class SurveyActivity : AppCompatActivity() {
         recoverUserSession = RecoverUserSessionRequirement(this)
         val userSession = recoverUserSession()
         userId = userSession.uuid
-        viewModel.getSurveyPending(userId)
-        updateProgressBar()
 
         try {
             val survey = intent.getBundleExtra("survey")?.getSerializable("survey") as Survey
