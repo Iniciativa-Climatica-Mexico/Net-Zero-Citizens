@@ -5,6 +5,7 @@
     <string name="mapa">Mapa</string>
     <string name="perfil">Perfil</string>
     <string name="Cerrar_sesion">Cerrar sesion</string>
+    <string name="favourites_user">Favoritos (</string>
     <string name="review_nested_scroll_desc">Scrollable content</string>
     <string name="review_opinions_count">%d opiniones</string>
     <string name="review_form_title">Comparte tu opinión</string>
@@ -38,7 +39,8 @@
     <string name="review_placeholder_title">Title</string>
     <string name="review_placeholder_review">Review</string>
     <string name="reviews_written_user">Reseñas Escritas (</string>
-    <string name="user_review_empty_view">No haz escrito ninguna reseña</string>
+    <string name="user_review_empty_view">No has escrito ninguna reseña</string>
+    <string name="user_favourite_empty_view">No has agregado proveedores como favoritos</string>
     <string name="select_problem_prompt">Selecciona el problema</string>
 
     <string-array name="options_array">
