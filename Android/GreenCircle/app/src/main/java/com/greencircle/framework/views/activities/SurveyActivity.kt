@@ -42,6 +42,7 @@ class SurveyActivity : AppCompatActivity() {
             Log.i("SURVEY", "Survey OBTENIDO: $survey")
             Log.i("Salida", survey.toString())
             binding.SurveyTitle.text = survey.title
+            viewModel.surveyLiveData.value = survey
             loadQuestions(survey.questions)
 
             updateProgressBar()
