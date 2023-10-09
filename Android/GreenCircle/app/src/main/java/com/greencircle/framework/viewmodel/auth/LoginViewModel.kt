@@ -1,7 +1,6 @@
 package com.greencircle.framework.viewmodel.auth
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -78,8 +77,6 @@ class LoginViewModel(private val context: Context) : ViewModel() {
                 loginError.postValue(true)
                 return@launch
             }
-
-            Log.d("LoginViewModel", "result: $result")
 
             if (result.tokens == null) {
                 loginError.postValue(true)
