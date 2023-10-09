@@ -48,6 +48,12 @@ class CreateCompanyViewModel(private val context: Context) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             val result: AuthResponse? = googleAuthRequirement(token)
             _googleLoginResult.postValue(result)
+
+            if (result == null) {
+                googleLoginError.postValue(true)
+                return@launch
+            }
+
             if (result != null && result.tokens == null) {
                 googleLoginError.postValue(true)
                 return@launch
@@ -77,8 +83,9 @@ class CreateCompanyViewModel(private val context: Context) : ViewModel() {
         }
         viewModelScope.launch(Dispatchers.IO) {
             // Invoca el modelo de dominio para crear la empresa.
-            val result: CompanyAPIService.CreateCompanyResponse? =
-                createCompanyRequirement(company, authToken)
+            val result: CompanyAPIService.CreateCompanyResponse =
+                createCompanyRequirement(company, authToken) ?: return@launch
+
             // Actualizar información de los tokens
             if (result != null) {
                 val tokens = recoverTokens()
