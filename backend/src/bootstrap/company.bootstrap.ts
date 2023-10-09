@@ -18,8 +18,12 @@ export default class CompanyBootstrap extends Bootstrapper {
         city: 'Ciudad de México',
         state: 'CDMX',
         zipCode: '72000',
-        status: 'pending_approval',
+        latitude: 19.5051687,
+        longitude: -99.2565699,  
         score: 4.3,
+        profilePicture:
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Sunpower_logo.svg/2560px-Sunpower_logo.svg.png',
+        status: 'pending_approval',
         files: [
           {
             companyFileId: '7f9a3d21-6b49-4e7c-ae56-1b0e8fcd9821',
@@ -51,15 +55,20 @@ export default class CompanyBootstrap extends Bootstrapper {
         companyId: 'a2b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
         userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
         name: 'Exel Solar',
+        oneComment: 'This is a comment',
         description: 'Company 2 description',
         email: 'company2@outlook.com',
         phone: '0123456799',
         webPage: 'https://www.company2.com',
-        street: 'Nezahualcóyotl, Estado de México, 57430',
-        streetNumber: '123',
+        street: 'Pino Suárez',
+        streetNumber: '383',
         city: 'Queretaro',
         state: 'QRO',
-        zipCode: '76152',
+        zipCode: '76178',
+        latitude: 20.5844021,
+        longitude: -100.412604,  
+        profilePicture:
+          'https://latam.apsystems.com/wp-content/uploads/2018/08/apsystems-exelsolar.png',
         status: 'pending_approval',
         score: 4.3,
         files: [
@@ -93,6 +102,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         companyId: 'a2c0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
         userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b7',
         name: 'TESLA ENERGY',
+        oneComment: 'This is a comment',
         description: 'Company 3 description',
         email: 'company3@outlook.com',
         phone: '0126756789',
@@ -102,6 +112,10 @@ export default class CompanyBootstrap extends Bootstrapper {
         city: 'Ciudad de México',
         state: 'CDMX',
         zipCode: '76152',
+        latitude: 19.4126494,
+        longitude: -99.0553812,  
+        profilePicture:
+          'https://cdn11.bigcommerce.com/s-3nrr5bfo5i/product_images/uploaded_images/tesla-logo.png',
         status: 'approved',
         score: 4.3,
         files: [

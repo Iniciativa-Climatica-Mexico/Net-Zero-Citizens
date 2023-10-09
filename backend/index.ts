@@ -7,10 +7,11 @@ import { initRouterV1 } from './src/routes/index.routes'
 import { initDB } from './src/configs/database.config'
 import morgan from 'morgan'
 import { loadFromJson } from './scripts/loadCompanies'
+import { cronEcoInfo } from './src/services/ecoinfo.service'
 
 initDB().then(() => {
-  if (process.env.NODE_ENV === 'development')
-    loadFromJson('scripts/parsedCompanies.json')
+  // if (process.env.NODE_ENV === 'development')
+  //   loadFromJson('scripts/parsedCompanies.json')
 })
 
 const app = express()
@@ -32,6 +33,8 @@ app.use(bodyParser.raw({ type: 'application/vnd.custom-type' }))
 app.use(express.urlencoded({ extended: true }))
 
 initRouterV1(app)
+
+cronEcoInfo.start()
 
 const PORT = process.env.PORT || 4000
 app.listen(PORT, () => {
