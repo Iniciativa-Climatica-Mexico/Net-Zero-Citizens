@@ -42,6 +42,11 @@ class LoginViewModel(private val context: Context) : ViewModel() {
             val result: AuthResponse? = googleAuthRequirement(token)
             _googleLoginResult.postValue(result)
 
+            if (result == null) {
+                googleLoginError.postValue(true)
+                return@launch
+            }
+
             if (result != null && result.tokens == null) {
                 googleLoginError.postValue(true)
                 return@launch
@@ -68,12 +73,18 @@ class LoginViewModel(private val context: Context) : ViewModel() {
             val result: AuthResponse? = loginCredentialsRequirement(email, password)
             _loginCredentialsResult.postValue(result)
 
-            if (result != null && result.tokens == null) {
+            if (result == null) {
+                loginError.postValue(true)
+                return@launch
+            }
+
+            if (result.tokens == null) {
                 loginError.postValue(true)
                 return@launch
             } else {
                 loginError.postValue(false)
             }
+
             // Guardar tokens
             val authToken = result?.tokens?.authToken
             val refreshToken = result?.tokens?.refreshToken

@@ -36,5 +36,6 @@
         android:layout_marginTop="20dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/catalogue_card_layout" />
+        tools:listitem="@layout/catalogue_card_layout" />
 
 </LinearLayout>
