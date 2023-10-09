@@ -99,6 +99,6 @@ struct LoginView: View {
   }
 }
 
-#Preview {
-  LoginView(goUserRegister: {}, goForm: {}, goMainMenu: {}, goCompanyRegister: {})
-}
+//#Preview {
+//  LoginView(goUserRegister: {}, goForm: {}, goMainMenu: {}, goCompanyRegister: {})
+//}
