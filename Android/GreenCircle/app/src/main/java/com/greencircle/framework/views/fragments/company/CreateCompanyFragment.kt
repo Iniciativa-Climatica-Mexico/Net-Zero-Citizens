@@ -16,8 +16,6 @@ import com.greencircle.R
 import com.greencircle.data.remote.company.CompanyAPIService
 import com.greencircle.domain.model.company.Company
 import com.greencircle.domain.model.company.files.CompanyFile
-import com.greencircle.domain.model.company.files.FileDescription
-import com.greencircle.domain.model.company.files.FileFormat
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.company.CreateCompanyViewModel
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
@@ -225,6 +223,7 @@ class CreateCompanyFragment : Fragment() {
         val city = cityInputLayout.editText?.text.toString()
         val state = stateInputLayout.editText?.text.toString()
         val zipCode = zipCodeInputLayout.editText?.text.toString()
+        val files = arrayListOf<CompanyFile>()
 
         // Send the data to the backend
         val companyData: Company = Company(
@@ -239,7 +238,7 @@ class CreateCompanyFragment : Fragment() {
             city,
             state,
             zipCode,
-            CompanyFile(UUID.randomUUID(), uuid, "", FileDescription.CURRICULUM, FileFormat.PDF)
+            files
         )
 
         val createCompanyRequest = CompanyAPIService.CreateCompanyRequest(companyData)
