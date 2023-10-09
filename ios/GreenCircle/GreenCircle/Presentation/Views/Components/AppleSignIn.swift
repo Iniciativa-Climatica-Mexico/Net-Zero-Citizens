@@ -51,8 +51,7 @@ struct AppleSignIn: View {
     
     func handle(_ authResult: Result<ASAuthorization, Error>) {
         switch authResult {
-        case .success(let auth):
-            print(auth)
+        case .success(let auth):   
             switch auth.credential {
             case let appleIdCredentials as ASAuthorizationAppleIDCredential:
                 if let appleUser = AppleUser(credentials: appleIdCredentials),

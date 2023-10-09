@@ -17,12 +17,16 @@ enum SignInState {
 class LoginViewModel: ObservableObject {
   var googleUseCase = GoogleSignInUseCase.shared
   var signInUseCase = UserSignInUseCase.shared
+  var appleUseCase = AppleSignInUseCase.shared
   
   var lService = LocalService.shared
   @Published var user = ""
   @Published var password = ""
   @Published var showAlert = false
   @Published var alertMessage = ""
+  @Published var email = ""
+  @Published var fullName = ""
+  @Published var userId = ""
   @Published var loadingGoogle = false
   
   /// Función encargada de realizar el SignIn con Google y actualizar la información de entorno
@@ -35,6 +39,18 @@ class LoginViewModel: ObservableObject {
     if res == .fail {
       showAlert = true
       alertMessage = "Intenta de nuevo más tarde."
+    }
+    
+    return res
+  }
+  
+  @MainActor
+  func handleAppleSignIn() async -> SignInState {
+    let res = await appleUseCase.signIn(userId: userId, fullName: fullName, email: email)
+    
+    if res == .fail {
+      showAlert = true
+      alertMessage = "Intenta de nuevo más tarde"
     }
     
     return res

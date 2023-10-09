@@ -63,12 +63,18 @@ class UserRepository: UserRepositoryProtocol {
                    body: params)
   }
   
-  func postAppleLogin(userId: String, fullName: String, email: String) async -> AuthResponse? {
-    let params: [String: Any] = ["userId": userId, "fullName": fullName, "email": email]
-    return await nService
-      .postRequest(URL(
-        string: "\(AuthAPI.base)\(AuthAPI.Routes.appleLogin)")!,
-                   body: params)
+  func postAppleLogin(userId: String, fullName: String, email: String) async throws -> AuthResponse {
+    let url = URL(string: "\(AuthAPI.base)\(AuthAPI.Routes.appleLogin)")!
+    
+    let body = ["email": email, "userId": userId, "fullName": fullName]
+    
+    let res: AuthResponse? = await nService.postRequest(url, body: body)
+    
+    if let authResponse = res {
+      return authResponse
+    } else {
+      throw GCError.requestFailed
+    }
   }
   
   /// Actualiza la información de un usuario
