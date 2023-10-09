@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LLContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp">
-
     <!-- Title TextView -->
     <TextView
         android:id="@+id/titleTextView"
@@ -16,6 +16,9 @@
         android:textSize="22sp"
         android:textColor="@color/black"
         android:textStyle="bold" />
+    <include
+        android:id="@+id/fragment_home_skeleton"
+        layout="@layout/fragment_home_skeleton"/>
 
     <!-- RecyclerView to display the cards -->
     <androidx.recyclerview.widget.RecyclerView
