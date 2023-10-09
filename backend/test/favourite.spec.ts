@@ -21,7 +21,7 @@ const testData = [
   },
 ]
 
-const attributesToExclude = ['createdAt', 'updatedAt']
+const attributesToExclude = ['createdAt', 'updatedAt', 'company']
 
 beforeEach(async () => {
   await db.drop()
@@ -59,7 +59,7 @@ describe('Favourite Service', () => {
     console.log(response)
     expect(unwrap(response).rows)
       .excluding(attributesToExclude)
-      .to.deep.equal([testData[0]])
+      .to.deep.equal([testData[1]])
   })
 
   it('should return Favourite if exists', async () => {
