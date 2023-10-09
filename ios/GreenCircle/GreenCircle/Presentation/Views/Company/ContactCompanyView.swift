@@ -91,6 +91,8 @@ struct CompanyReportView: View {
     @State var description: String = ""
     @State private var showAlert: Bool = false
     @State private var showReportAlert: Bool = false
+    var complaintId: String = UUID().uuidString
+
 
     let reportReasons = ["Productos defectuosos.",
                          "Inconformidad con el producto/servicio.",
@@ -151,7 +153,7 @@ struct CompanyReportView: View {
                         } else {
                             Task {
                                 print("print.......")
-                                print(await complaintViewModel.handleSubmit(complaintSubject: selectedReportReason ?? "", complaintDescription: description.isEmpty ? nil : description, companyId: companyViewModel.contentCompany.companyId.uuidString))
+                              print(await complaintViewModel.handleSubmit(complaintId: complaintId, complaintSubject: selectedReportReason ?? "", complaintDescription: description.isEmpty ? nil : description, companyId: companyViewModel.contentCompany.companyId.uuidString))
                                 showAlert = true
                             }
                         }

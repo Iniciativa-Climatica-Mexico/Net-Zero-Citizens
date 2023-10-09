@@ -19,7 +19,7 @@ class ComplaintAPI {
 /// Protocol with the functions of the complaints repository
 protocol ComplaintRepositoryProtocol {
   func postComplaint(complaint: PostComplaintData) async
-    func fetchComplaintById(complaintId: UUID) async -> Complaint?
+    func fetchComplaintById(complaintId: String) async -> Complaint?
   // You can add more functions here if you like.
 }
 
@@ -38,11 +38,8 @@ class ComplaintRepository: ComplaintRepositoryProtocol {
     /// Fetch complaint by UUID by calling the method of the backend service
     /// - Parameters: UUID of the complaint
     /// - Returns: Complaint model
-    func fetchComplaintById(complaintId: UUID) async -> Complaint? {
-        return await service
-            .getRequest(URL(string:
-                                "\(ComplaintAPI.base)/\(complaintId.uuidString.lowercased())")!)
-    }
+    func fetchComplaintById(complaintId: String) async -> Complaint? {
+      return await service.getRequest(URL(string: "\(ComplaintAPI.base)/\(complaintId.lowercased())")!)    }
     
     /// Function that calls the connection service with the API to post a new complaint
     /// - Parameters:
@@ -53,13 +50,12 @@ class ComplaintRepository: ComplaintRepositoryProtocol {
         //Hacerla no hardcodeada
         
         let body: [String: Any] = [
-            "complaint": [
+                "complaintId": complaint.complaintId,
                 "userId": userId,
                 "companyId": complaint.companyId.lowercased(),
                 "complaintSubject": complaint.complaintSubject,
                 "complaintDescription": complaint.complaintDescription ?? "",
                 "complaintStatus": "active"
-            ] as [String : Any]
         ]
         
         do {
