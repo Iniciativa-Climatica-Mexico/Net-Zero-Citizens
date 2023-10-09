@@ -31,12 +31,14 @@ class CompanyTest {
         val city = "Querétaro"
         val state = "Querétaro"
         val zipCode = "76904"
-        val files = CompanyFile(
-            companyFileId = UUID.randomUUID(),
-            companyId = UUID.randomUUID(),
-            fileDescription = FileDescription.ACTA_CONSTITUTIVA,
-            fileFormat = FileFormat.PDF,
-            fileURL = "test"
+        val files = listOf(
+            CompanyFile(
+                companyFileId = UUID.randomUUID(),
+                companyId = UUID.randomUUID(),
+                fileDescription = FileDescription.ACTA_CONSTITUTIVA,
+                fileFormat = FileFormat.PDF,
+                fileURL = "test"
+            )
         )
 
         val company = Company(
@@ -85,12 +87,14 @@ class CompanyTest {
         val city = "Querétaro"
         val state = "Querétaro"
         val zipCode = "76904"
-        val files = CompanyFile(
-            companyFileId = UUID.randomUUID(),
-            companyId = UUID.randomUUID(),
-            fileDescription = FileDescription.ACTA_CONSTITUTIVA,
-            fileFormat = FileFormat.PDF,
-            fileURL = "test"
+        val files = listOf(
+            CompanyFile(
+                companyFileId = UUID.randomUUID(),
+                companyId = UUID.randomUUID(),
+                fileDescription = FileDescription.ACTA_CONSTITUTIVA,
+                fileFormat = FileFormat.PDF,
+                fileURL = "test"
+            )
         )
 
         val company = Company(
