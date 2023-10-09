@@ -43,6 +43,11 @@ class LoginViewModel(private val context: Context) : ViewModel() {
             val result: AuthResponse? = googleAuthRequirement(token)
             _googleLoginResult.postValue(result)
 
+            if (result == null) {
+                googleLoginError.postValue(true)
+                return@launch
+            }
+
             if (result != null && result.tokens == null) {
                 googleLoginError.postValue(true)
                 return@launch

@@ -10,14 +10,15 @@ import com.greencircle.R
 import com.greencircle.databinding.ActivitySurveyBinding
 import com.greencircle.domain.model.survey.Question
 import com.greencircle.domain.model.survey.Survey
+import com.greencircle.domain.usecase.auth.RecoverUserSessionRequirement
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.survey.SurveyViewModel
 import com.greencircle.framework.views.fragments.survey.QuestionFragment
 import java.util.UUID
-import org.json.JSONObject
 
 class SurveyActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySurveyBinding
+    private lateinit var recoverUserSession: RecoverUserSessionRequirement
     private val viewModel: SurveyViewModel by viewModels {
         ViewModelFactory(applicationContext, SurveyViewModel::class.java)
     }
@@ -32,12 +33,11 @@ class SurveyActivity : AppCompatActivity() {
         initializeBinding()
         initializeObservers()
 
-        try {
-            val sharedPreferences = getSharedPreferences("my_preferences", MODE_PRIVATE)
-            val userJson = sharedPreferences?.getString("user_session", null)
-            val userJSON = JSONObject(userJson!!)
-            userId = UUID.fromString(userJSON.getString("uuid"))
+        recoverUserSession = RecoverUserSessionRequirement(this)
+        val userSession = recoverUserSession()
+        userId = userSession.uuid
 
+        try {
             val survey = intent.getBundleExtra("survey")?.getSerializable("survey") as Survey
             Log.i("SURVEY", "Survey OBTENIDO: $survey")
             Log.i("Salida", survey.toString())
