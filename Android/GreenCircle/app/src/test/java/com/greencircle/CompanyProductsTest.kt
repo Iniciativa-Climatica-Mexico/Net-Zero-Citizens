@@ -34,7 +34,11 @@ class CompanyProductsTest {
             zipCode = 12345,
             latitude = 19.4326,
             longitude = -99.1332,
-            files = listOf(CompanyFile(UUID(0, 1), UUID(0, 1), "test.jpg", FileDescription.IMAGEN, FileFormat.JPEG)),
+            files = listOf(
+                CompanyFile(
+                    UUID(0, 1), UUID(0, 1), "test.jpg", FileDescription.IMAGEN, FileFormat.JPEG
+                )
+            ),
             status = Status.APPROVED,
             createdAt = Timestamp(System.currentTimeMillis()),
             updatedAt = Timestamp(System.currentTimeMillis())
@@ -82,7 +86,11 @@ class CompanyProductsTest {
             zipCode = 12345,
             latitude = 19.4326,
             longitude = -99.1332,
-            files = listOf(CompanyFile(UUID(0, 1), UUID(0, 1), "test.jpg", FileDescription.IMAGEN, FileFormat.JPEG)),
+            files = listOf(
+                CompanyFile(
+                    UUID(0, 1), UUID(0, 1), "test.jpg", FileDescription.IMAGEN, FileFormat.JPEG
+                )
+            ),
             status = Status.APPROVED,
             createdAt = Timestamp(System.currentTimeMillis()),
             updatedAt = Timestamp(System.currentTimeMillis())
@@ -134,7 +142,11 @@ class CompanyProductsTest {
             zipCode = 12345,
             latitude = 19.4326,
             longitude = -99.1332,
-            files = listOf(CompanyFile(UUID(0, 1), UUID(0, 1), "test.jpg", FileDescription.IMAGEN, FileFormat.JPEG)),
+            files = listOf(
+                CompanyFile(
+                    UUID(0, 1), UUID(0, 1), "test.jpg", FileDescription.IMAGEN, FileFormat.JPEG
+                )
+            ),
             status = Status.APPROVED,
             createdAt = Timestamp(System.currentTimeMillis()),
             updatedAt = Timestamp(System.currentTimeMillis())
@@ -186,7 +198,11 @@ class CompanyProductsTest {
             zipCode = 12345,
             latitude = 19.4326,
             longitude = -99.1332,
-            files = listOf(CompanyFile(UUID(0, 1), UUID(0, 1), "test.jpg", FileDescription.IMAGEN, FileFormat.JPEG)),
+            files = listOf(
+                CompanyFile(
+                    UUID(0, 1), UUID(0, 1), "test.jpg", FileDescription.IMAGEN, FileFormat.JPEG
+                )
+            ),
             status = Status.APPROVED,
             createdAt = Timestamp(System.currentTimeMillis()),
             updatedAt = Timestamp(System.currentTimeMillis())
