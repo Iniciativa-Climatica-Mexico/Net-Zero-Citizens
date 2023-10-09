@@ -50,7 +50,7 @@ struct EcoInfoCard: View {
             .frame(maxWidth: .infinity, maxHeight: 250)
             .cornerRadius(10, corners: [.topLeft, .topRight])
         } placeholder: {
-          ProgressView().frame(width: 150, height: 250)
+            LoadingScreenView().frame(width: 150, height: 250)
         }
         HStack {
           VStack(alignment: .leading) {
