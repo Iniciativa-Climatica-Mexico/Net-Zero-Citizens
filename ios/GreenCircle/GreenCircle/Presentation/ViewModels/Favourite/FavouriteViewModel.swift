@@ -20,6 +20,7 @@ class FavouriteViewModel: ObservableObject {
   @Published var listFavourites: PaginatedQuery<Favourite> = PaginatedQuery(rows: [], start: 0, pageSize: 10, total: 0)
   
   /// Creación de viewModel si se presiona corazón
+
   @Published var contentFavourite: FavouriteCreationResponse = FavouriteCreationResponse(
     favouriteId: UUID(uuidString: "") ?? UUID(),
     companyId: UUID(uuidString: "") ?? UUID(),
@@ -38,6 +39,7 @@ class FavouriteViewModel: ObservableObject {
     rows: 0,
     message: ""
   )
+
   /// Para implementar el caso de uso en la vista que llame al ViewModel Favourite
   init(useCase: FavouriteUseCase = FavouriteUseCase.shared) {
     self.useCase = useCase
