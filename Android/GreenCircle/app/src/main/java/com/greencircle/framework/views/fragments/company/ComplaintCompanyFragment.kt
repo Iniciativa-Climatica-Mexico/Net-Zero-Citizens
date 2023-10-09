@@ -4,10 +4,9 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.view.View
+import android.util.Log
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
@@ -67,38 +66,10 @@ class ComplaintCompanyFragment : DialogFragment() {
         val spinnerOptions: Spinner = view!!.findViewById(R.id.spinnerProblems)
 
         spinnerOptions.adapter = adapter
-        spinnerOptions.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            /**
-             * Se ejecuta cuando no se selecciona ningún elemento del spinner
-             * @param parent: AdapterView<*> -> Spinner
-             */
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                Toast.makeText(requireContext(), "No issue selected", Toast.LENGTH_SHORT).show()
-            }
-
-            /**
-             * Se ejecuta cuando se selecciona un elemento del spinner
-             * @param parent: AdapterView<*> -> Spinner
-             * @param view: View -> Vista
-             * @param position: Int -> Posición del elemento seleccionado
-             * @param id: Long -> Id del elemento seleccionado
-             */
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val selectedItem = parent?.getItemAtPosition(position).toString()
-                Toast.makeText(
-                    requireContext(), "Selected: $selectedItem", Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
 
         return AlertDialog.Builder(requireContext()).setView(view)
             .setNegativeButton("Cancelar") { _, _ ->
-                Toast.makeText(requireContext(), "Cancel", Toast.LENGTH_SHORT).show()
+                Log.i("ComplaintCompanyFragment", "Cancel")
             }.setPositiveButton("Reportar") { _, _ ->
                 val complaintTitle = spinnerOptions.selectedItem.toString()
                 val complaintDescription =
@@ -122,20 +93,18 @@ class ComplaintCompanyFragment : DialogFragment() {
                         if (response?.isSuccessful == true) {
                             Toast.makeText(
                                 requireContext(),
-                                "Report sent successfully",
+                                "Reporte enviado correctamente",
                                 Toast.LENGTH_SHORT
                             ).show()
                         } else {
                             Toast.makeText(
                                 requireContext(),
-                                "Error sending report",
+                                "Error enviando reporte",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
                     }
                 }
-
-                Toast.makeText(requireContext(), "Report", Toast.LENGTH_SHORT).show()
             }.create()
     }
 
