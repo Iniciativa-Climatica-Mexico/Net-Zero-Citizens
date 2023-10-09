@@ -2,7 +2,7 @@ package com.greencircle.utils
 
 object Constants {
     const val SPLASHSCREEN_DURATION = 3000L
-    const val SERVER_BASE_URL = "http://10.25.69.224:4000/api/v1/"
+    const val SERVER_BASE_URL = "https://sentest.tech/api/v1/"
     const val SHARED_PREFERENCES_NAME = "GreenCircleSharedPreferences"
     const val AUTH_TOKEN_SP_NAME = "auth_token"
     const val REFRESH_TOKEN_SP_NAME = "refresh_token"
