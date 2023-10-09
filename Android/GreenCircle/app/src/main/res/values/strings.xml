@@ -42,6 +42,7 @@
     <string name="user_review_empty_view">No has escrito ninguna reseña</string>
     <string name="user_favourite_empty_view">No has agregado proveedores como favoritos</string>
     <string name="select_problem_prompt">Selecciona el problema</string>
+    <string name="error_message">Ha ocurrido un error, por favor intenta mas tarde.</string>
 
     <string-array name="options_array">
         <item>Productos Defectuosos</item>
