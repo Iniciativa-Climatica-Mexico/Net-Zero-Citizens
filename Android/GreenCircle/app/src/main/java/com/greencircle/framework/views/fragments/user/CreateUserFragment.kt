@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -139,6 +140,24 @@ class CreateUserFragment : Fragment() {
                 uuid = result.user.uuid
             } else {
                 Log.d("CreateUserFragment", "Google login failed")
+            }
+        }
+
+        createUserViewModel.error.observe(viewLifecycleOwner) { error ->
+            try {
+                if (error) {
+                    Toast.makeText(
+                        requireContext(), "Error al crear usuario", Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        requireContext(), "Usuario creado correctamente", Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(
+                    requireContext(), "Error al crear usuario", Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
