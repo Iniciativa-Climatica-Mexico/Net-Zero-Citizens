@@ -148,7 +148,9 @@ struct CardCatalogView: View {
           .frame(maxWidth: 300, maxHeight: 140)
         }
       }.onAppear {
+        
         Task {
+        
           await viewModel.fetchCompanyById(idCompany: companyId)
           if favouriteViewModel.existsFavourite(companyId: companyId) {
             emptyHeartFill = true
