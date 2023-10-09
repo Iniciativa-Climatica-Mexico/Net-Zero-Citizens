@@ -27,14 +27,24 @@ export type Payload = {
 
 export type ApplePayload = {
   id: string
-  first_name: string
-  last_name: string
+  full_name: string
   uuid: string
   email: string
   roles: string
   appleId?: string | null
   login_type?: string
   created_at?: number
+}
+
+export type AppleResponse = {
+  id: string
+  first_name: string
+  last_name: string
+  uuid: string
+  email: string
+  roles: string
+  login_type: string
+  appleId: string | null
 }
 
 /**
@@ -430,16 +440,19 @@ export const register = async (
 export const appleLogin = async (
   payload: ApplePayload
 ): Promise<AuthResponse | null> => {
-  const { appleId, first_name, last_name, email } = payload
+  const { appleId, full_name, email } = payload
 
   const user = await UserService.getUserByEmailWithRole(email)
 
   // Registrar cliente
   if (!user) {
     const userCreate = {
+      age: 0,
+      state: '',
+      gender: 'no_answer',
       email,
-      firstName: first_name,
-      lastName: last_name,
+      firstName: full_name.split(' ')[0],
+      lastName: full_name.split(' ')[1],
       appleId: appleId,
       roleId: 'NEW_USER_ROLE_ID',
     }
@@ -451,7 +464,7 @@ export const appleLogin = async (
   if (!userDb) return null
 
   // Si ya está registrado, crear un Payload con la información del usuario
-  const userPayload: ApplePayload = {
+  const userPayload: AppleResponse = {
     id: userDb.userId,
     first_name: userDb.firstName,
     last_name: userDb.lastName,

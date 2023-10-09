@@ -66,7 +66,7 @@ class UserRepository: UserRepositoryProtocol {
   func postAppleLogin(userId: String, fullName: String, email: String) async throws -> AuthResponse {
     let url = URL(string: "\(AuthAPI.base)\(AuthAPI.Routes.appleLogin)")!
     
-    let body = ["email": email, "userId": userId, "fullName": fullName]
+    let body = ["applePayload": ["email": email, "userId": userId, "full_name": fullName]]
     
     let res: AuthResponse? = await nService.postRequest(url, body: body)
     

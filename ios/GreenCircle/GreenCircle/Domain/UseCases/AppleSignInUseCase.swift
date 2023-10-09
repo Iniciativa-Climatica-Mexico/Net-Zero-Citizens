@@ -15,6 +15,7 @@ class AppleSignInUseCase {
     do {
       let authRes = try await repository.postAppleLogin(userId: userId, fullName: fullName, email: email)
       if !authRes.user.id.isEmpty {
+        NetworkAPIService.shared.setAuthTokens(authRes.tokens.authToken)
         repository.saveAuthData(authData: authRes)
         return .success
       }
