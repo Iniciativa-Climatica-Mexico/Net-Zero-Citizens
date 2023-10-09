@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 class ApiEcoInfo {
-  static let base = "http://localhost:4000/api/v1"
+  static let base = APIRoutes.baseURL
   struct Routes {
     static let ecoInfo = "/ecoInfo/"
   }

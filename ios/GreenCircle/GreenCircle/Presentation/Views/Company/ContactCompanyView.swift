@@ -22,7 +22,7 @@ struct TabViewImagesProducts: View {
               AsyncImage(url: URL(string: product.imageUrl)) { phase in
                 switch phase {
                 case .empty:
-                  ProgressView()
+                    LoadingScreenView()
                 case .success(let imageProduct):
                   imageProduct
                     .resizable()
@@ -211,7 +211,7 @@ struct ContactCompanyView: View {
                 AsyncImage(url: URL(string: imageUrl)) { phase in
                   switch phase {
                     case .empty:
-                      ProgressView()
+                      LoadingScreenView()
                     case .success(let image):
                       ZStack {
                         image
@@ -256,7 +256,7 @@ struct ContactCompanyView: View {
                                    primaryButton: .destructive(Text("Borrar")) {
                                   Task {
                                     emptyHeartFill = false
-                                    try await favouriteViewModel.deleteFavouriteById(favouriteId: favouriteViewModel.contentFavourite.favouriteId)
+                                    try await favouriteViewModel.deleteFavouriteById(companyId: contactCompanyViewModel.contentCompany.companyId)
                                   }
                                    },
                                    secondaryButton: .cancel())

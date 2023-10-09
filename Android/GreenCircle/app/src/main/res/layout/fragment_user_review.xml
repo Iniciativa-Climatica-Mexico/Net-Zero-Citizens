@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginVertical="20dp"
+        android:layout_marginHorizontal="20dp"
         android:text="@string/user_review_empty_view"
         android:textSize="16sp"
         android:visibility="gone" />
