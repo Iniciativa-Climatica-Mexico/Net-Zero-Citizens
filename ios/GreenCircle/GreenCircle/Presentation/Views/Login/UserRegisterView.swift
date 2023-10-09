@@ -82,7 +82,7 @@ struct UserRegisterView: View {
         }
         .padding(.horizontal)
         
-        AppleSignIn()
+        AppleSignIn(goForm: goForm, goMainMenu: goMainMenu)
       
         Divider().padding(.horizontal)
         

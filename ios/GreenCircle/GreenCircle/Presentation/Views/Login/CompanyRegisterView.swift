@@ -30,8 +30,9 @@ struct CompanyRegisterView: View {
 
                 Spacer()
 
-                VStack {
-                  AppleSignIn()
+        VStack {
+          AppleSignIn(goForm: goForm, goMainMenu: goMainMenu)
+          
           GoogleSignInButton(style: .wide) {
                       loadingGoogle = true
                     Task {

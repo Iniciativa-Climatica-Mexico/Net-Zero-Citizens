@@ -83,19 +83,7 @@ struct LoginView: View {
         }
         .padding(.horizontal)
 
-        AppleSignIn() {
-          Task {
-            let state = await viewModel.handleAppleSignIn()
-            switch state {
-            case .fail:
-              break
-            case .newUser:
-              goForm()
-            case .success:
-              goMainMenu()
-            }
-          }
-        }
+        AppleSignIn(goForm: goForm, goMainMenu: goMainMenu) 
         
         HStack {
           Text("¿No tienes una cuenta?")

@@ -33,7 +33,7 @@ protocol UserRepositoryProtocol {
 //  func updateUserData(updatedUserData: User, userId: String) async -> User?
   func updateUserCredentials(userId: String, newUserCredentials: Credentials) async -> User?;
   func postGoogleLogin(googleToken: String) async -> AuthResponse?
-  func postAppleLogin(userId: String, fullName: String, email: String) async -> AuthResponse?
+  func postAppleLogin(userId: String, fullName: String, email: String) async throws -> AuthResponse
   func putUser(_ user: UserAuth) async -> Bool
   func deleteUserById(userId: String)  async -> UserDeleteResponse?
 }
