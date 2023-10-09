@@ -174,4 +174,42 @@ class UserRepository: UserRepositoryProtocol {
       throw GCError.requestFailed
     }
   }
+  
+  func updateLocalUserAuth(updatedUserAuth: UserAuth) {
+      let encoder = JSONEncoder()
+      if let encoded = try? encoder.encode(updatedUserAuth) {
+          UserDefaults.standard.set(encoded, forKey: "userAuthData")
+      }
+  }
+  
+//  func updateUserDataOnServer(userAuth: UserAuth, userId: String) async -> Bool {
+//      let endpoint = "\(UserAPI.base)\(UserAPI.Routes.userId)".replacingOccurrences(of: ":userId", with: userId)
+//      
+//      let encoder = JSONEncoder()
+//      guard let encodedData = try? encoder.encode(userAuth) else { return false }
+//
+//      guard let body = try? JSONSerialization.jsonObject(with: encodedData, options: .allowFragments) as? [String: Any] else { return false }
+//      
+//      let result: NoResponse? = await nService.putRequest(URL(string: endpoint)!, body: body)
+//      return result != nil
+//  }
+  
+  
+  func updateUserDataOnServer(userAuth: UserAuth, userId: String) async -> UserAuth? {
+      let endpoint = "\(UserAPI.base)\(UserAPI.Routes.userId)".replacingOccurrences(of: ":userId", with: userId)
+      
+      let encoder = JSONEncoder()
+      guard let encodedData = try? encoder.encode(userAuth) else { return nil }
+
+      guard let body = try? JSONSerialization.jsonObject(with: encodedData, options: .allowFragments) as? [String: Any] else { return nil }
+      
+      let result: NoResponse? = await nService.putRequest(URL(string: endpoint)!, body: body)
+      
+      if let _ = result {
+          return userAuth // Return the updated user data
+      } else {
+          return nil
+      }
+  }
+  
 }

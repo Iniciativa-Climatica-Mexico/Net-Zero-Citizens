@@ -20,5 +20,19 @@ class ProfileUseCase {
     }
   }
   
+//  @MainActor
+//  func updateUserData(userAuth: UserAuth) async -> Bool {
+//     
+//      repository.updateLocalUserAuth(updatedUserAuth: userAuth)
+//      let userId = userAuth.uuid
+//      return await repository.updateUserDataOnServer(userAuth: userAuth, userId: userId)
+//  }
 
+  @MainActor
+  func updateUserData(userAuth: UserAuth) async -> UserAuth? {
+      repository.updateLocalUserAuth(updatedUserAuth: userAuth)
+      let userId = userAuth.uuid
+      return await repository.updateUserDataOnServer(userAuth: userAuth, userId: userId)
+  }
+  
 }

@@ -65,7 +65,8 @@ struct SectionProfile: View{
 }
 ///__----------------- SECTION 1__
 struct Section1: View{
-  @ObservedObject var modelUser = UserViewModel()
+  @ObservedObject var modelUser: UserViewModel
+  //@ObservedObject var modelUser = UserViewModel()
   
   func containsNumber(input: String) -> Bool {
       return input.range(of: "\\d", options: .regularExpression) != nil
@@ -141,8 +142,8 @@ struct Section1: View{
 
 ///__----------------- SECTION 2__
 struct Section2: View {
-  @ObservedObject var modelUser = UserViewModel()
-
+  @ObservedObject var modelUser: UserViewModel
+  
   func isBlank(input: String) -> Bool {
       return input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
   }
@@ -219,8 +220,8 @@ struct Section2: View {
 
 ///__----------------- SECTION 3__
 struct Section3: View {
-  @ObservedObject var modelUser = UserViewModel()
-
+  @ObservedObject var modelUser: UserViewModel
+  
   func isBlank(input: String?) -> Bool {
       guard let input = input else { return true }
       return input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -326,9 +327,27 @@ struct Section3: View {
         }
         
         VStack {
+//          Button(action: {
+//              Task {
+//                let isSuccess = await ProfileUseCase.shared.updateUserData(userAuth: modelUser.contentUser)
+//                print("----------------------")
+//                print(isSuccess)
+//                  showAlert2 = isSuccess
+//              }
+//          }) 
+          
           Button(action: {
-            showAlert2 = true
-          }) {
+                 Task {
+                     if let updatedUser = await ProfileUseCase.shared.updateUserData(userAuth: modelUser.contentUser) {
+                         modelUser.contentUser = updatedUser // Update the view model with the new data
+                       print("Updated user data: \(updatedUser)")
+                         showAlert2 = true
+                     } else {
+                         showAlert2 = false
+                     }
+                 }
+             })
+          {
             Text("Guardar")
               .foregroundColor(.white)
               .padding(.vertical, 12)
@@ -429,10 +448,10 @@ struct SectionDelete: View{
           SectionProfile(modelUser: modelUser)
             .padding(.top, 70)
           ScrollView {
-            Section1(modelUser: UserViewModel())
-            Section2(modelUser:  UserViewModel())
-            Section3(modelUser:  UserViewModel())
-            SectionButton(modelUser: UserViewModel(), selectedTab: $currentTab)
+            Section1(modelUser: modelUser)
+            Section2(modelUser: modelUser)
+            Section3(modelUser: modelUser)
+            SectionButton(modelUser: modelUser, selectedTab: $currentTab)
             SectionDelete(goLogin: goLogin)
           }
           .padding(.top, 10)

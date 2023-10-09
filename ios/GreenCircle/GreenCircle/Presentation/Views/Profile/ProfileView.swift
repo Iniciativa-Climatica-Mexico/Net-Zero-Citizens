@@ -78,7 +78,8 @@ struct ProfileView: View {
             }
             .padding(.trailing, 10)
             
-            NavigationLink(destination: EditProfileView(modelUser: UserViewModel(), goLogin: goLogin)) {
+            NavigationLink(destination: EditProfileView(modelUser: modelUser, goLogin: goLogin)) {
+            //NavigationLink(destination: EditProfileView(modelUser: UserViewModel(), goLogin: goLogin)) {
               Text("Editar perfil")
                 .foregroundColor(.white)
                 .padding(.vertical, 12)
