@@ -1,16 +1,21 @@
 package com.greencircle.framework.views.fragments.catalogue
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.greencircle.databinding.FragmentCompanyCatalogueBinding
 import com.greencircle.databinding.FragmentErrorBinding
+import com.greencircle.domain.model.company.CompanyParams
 import com.greencircle.framework.ui.adapters.catalogue.CatalogueAdapter
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.catalogue.CatalogueViewModel
@@ -20,6 +25,14 @@ class CatalogueFragment : Fragment() {
     private lateinit var binding: FragmentCompanyCatalogueBinding
     private val adapter = CatalogueAdapter()
     private lateinit var viewModel: CatalogueViewModel
+    private var params = CompanyParams(
+        ordering = "",
+        name = "",
+        state = "",
+        productName = "",
+        latitude = 0.0,
+        longitude = 0.0
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +67,7 @@ class CatalogueFragment : Fragment() {
 
         lifecycleScope.launch {
             try {
-                viewModel.fetchAllCompanies()
+                viewModel.fetchAllCompanies(params)
             } catch (e: Exception) {
                 val errorView = FragmentErrorBinding.inflate(layoutInflater)
                 binding.root.removeView(recyclerView)
@@ -65,7 +78,39 @@ class CatalogueFragment : Fragment() {
             }
         }
 
+        val searchText = binding.SearchBar.searchInput
+        searchText.setOnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                params.name = searchText.text.toString()
+                lifecycleScope.launch {
+                    try {
+                        viewModel.fetchAllCompanies(params)
+                        hideKeyboard(binding.root.context)
+                    } catch (e: Exception) {
+                        val errorView = FragmentErrorBinding.inflate(layoutInflater)
+                        binding.root.removeView(recyclerView)
+                        binding.LLContainer.addView(errorView.root)
+                        errorView.root.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+                        removeSkeleton()
+                        Log.e("Salida", e.message.toString())
+                    }
+                }
+                true
+            } else {
+                false
+            }
+        }
         return binding.root
+    }
+
+    /**
+     * Cierra el teclado
+     */
+    fun hideKeyboard(context: Context) {
+        val inputManager =
+            context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val v = (context as Activity).currentFocus ?: return
+        inputManager.hideSoftInputFromWindow(v.windowToken, 0)
     }
 
     /**
