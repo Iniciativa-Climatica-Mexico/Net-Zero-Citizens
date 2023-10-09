@@ -17,13 +17,13 @@
         <item name="colorOnSurfaceVariant">#FFFFFF</item>
     </style>
 
-    <style name="Theme.GreenCircle.NoActionBar" parent="Theme.MaterialComponents.DayNight">
+    <style name="Theme.GreenCircle.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="colorOnSurfaceVariant">#FFFFFF</item>
     </style>
 
-    <style name="Theme.GreenCircle.CustomRadioButtonStyle" parent="Theme.MaterialComponents.DayNight">
+    <style name="Theme.GreenCircle.CustomRadioButtonStyle">
         <item name="android:background">@drawable/custom_radio_selector</item>
         <item name="android:textColor">@drawable/custom_radio_text_selector</item>
         <item name="android:button">@android:color/transparent</item>
