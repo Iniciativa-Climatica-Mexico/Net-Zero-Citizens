@@ -19,7 +19,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         state: 'CDMX',
         zipCode: '72000',
         latitude: 19.5051687,
-        longitude: -99.2565699,  
+        longitude: -99.2565699,
         score: 4.3,
         profilePicture:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Sunpower_logo.svg/2560px-Sunpower_logo.svg.png',
@@ -66,7 +66,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         state: 'QRO',
         zipCode: '76178',
         latitude: 20.5844021,
-        longitude: -100.412604,  
+        longitude: -100.412604,
         profilePicture:
           'https://latam.apsystems.com/wp-content/uploads/2018/08/apsystems-exelsolar.png',
         status: 'pending_approval',
@@ -113,7 +113,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         state: 'CDMX',
         zipCode: '76152',
         latitude: 19.4126494,
-        longitude: -99.0553812,  
+        longitude: -99.0553812,
         profilePicture:
           'https://cdn11.bigcommerce.com/s-3nrr5bfo5i/product_images/uploaded_images/tesla-logo.png',
         status: 'approved',

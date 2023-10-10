@@ -61,7 +61,7 @@ class RegisterCompanyFragment : Fragment() {
                         }
                     } catch (e: ApiException) {
                         Toast.makeText(
-                            requireContext(), "Something went wrong", Toast.LENGTH_SHORT
+                            requireContext(), "Algo salió mal", Toast.LENGTH_SHORT
                         ).show()
                     }
                 }

@@ -176,7 +176,7 @@ class CreateCompanyFragment : Fragment() {
                     ).show()
                 } else {
                     Toast.makeText(
-                        requireContext(), "Empresa creado correctamente", Toast.LENGTH_SHORT
+                        requireContext(), "Empresa creada correctamente", Toast.LENGTH_SHORT
                     ).show()
                 }
             } catch (e: Exception) {

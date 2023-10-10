@@ -122,6 +122,9 @@ class CompanyContactFragment : Fragment() {
     fun initCarousel(files: List<CompanyFile>?) {
         val carousel = binding.carousel
         val images = files?.filter { file -> file.fileDescription == FileDescription.IMAGEN }
+        if (images.isNullOrEmpty()) {
+            carousel.addData(CarouselItem(R.drawable.main_logo_bg))
+        }
         images?.forEach { image ->
             carousel.addData(CarouselItem(image.fileURL))
         }
