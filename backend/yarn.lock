@@ -498,7 +498,7 @@ __metadata:
   checksum: 8335eb0a453b956cc2da5431269e4732e0063c6cca0763cf779c7c242d0dfe3eea1929951a0b11fb9e7a2eee838836ee8cda79e9d6098b1bee91d5a17dce1e73
   languageName: node
   linkType: hard
-
+  
 "@types/node-fetch@npm:^2":
   version: 2.6.6
   resolution: "@types/node-fetch@npm:2.6.6"
@@ -1077,7 +1077,6 @@ __metadata:
     "@types/mocha": ^10.0.1
     "@types/morgan": ^1.9.5
     "@types/node": 20.6.0
-    "@types/node-cron": ^3.0.9
     "@types/node-geocoder": ^4.2.2
     "@types/proxyquire": ^1.3.28
     "@types/sinon": ^10.0.16
@@ -1108,7 +1107,6 @@ __metadata:
     mocha: ^10.2.0
     morgan: ^1.10.0
     nock: ^13.3.3
-    node-cron: ^3.0.2
     node-geocoder: ^4.2.0
     nodemon: ^3.0.1
     prettier: 3.0.3
@@ -1123,7 +1121,6 @@ __metadata:
     ts-node: ^10.9.1
     ts-node-dev: ^2.0.0
     typescript: ^5.2.2
-    yarn: ^1.22.19
     zod: ^3.22.2
   languageName: unknown
   linkType: soft
@@ -5825,11 +5822,11 @@ eslint-config-standard-with-typescript@latest:
 
 "typescript@patch:typescript@^5.2.2#~builtin<compat/typescript>":
   version: 5.2.2
-  resolution: "typescript@patch:typescript@npm%3A5.2.2#~builtin<compat/typescript>::version=5.2.2&hash=1f5320"
+  resolution: "typescript@patch:typescript@npm%3A5.2.2#~builtin<compat/typescript>::version=5.2.2&hash=f3b441"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 07106822b4305de3f22835cbba949a2b35451cad50888759b6818421290ff95d522b38ef7919e70fb381c5fe9c1c643d7dea22c8b31652a717ddbd57b7f4d554
+  checksum: 0f4da2f15e6f1245e49db15801dbee52f2bbfb267e1c39225afdab5afee1a72839cd86000e65ee9d7e4dfaff12239d28beaf5ee431357fcced15fb08583d72ca
   languageName: node
   linkType: hard
 
@@ -5957,7 +5954,7 @@ eslint-config-standard-with-typescript@latest:
   languageName: node
   linkType: hard
 
-"uuid@npm:8.3.2, uuid@npm:^8.3.2":
+"uuid@npm:^8.3.2":
   version: 8.3.2
   resolution: "uuid@npm:8.3.2"
   bin:
@@ -6183,7 +6180,6 @@ eslint-config-standard-with-typescript@latest:
   checksum: b43d2cc5fee7e933beb12a8aee7dfceca9e9ef2dd17c5d04d15a12ab7bec5f5744ea34a07b86e013da7f291a18c4e1ad8f70e150f5ed2f4666e6723c7f0a8452
   languageName: node
   linkType: hard
-
 "yn@npm:3.1.1":
   version: 3.1.1
   resolution: "yn@npm:3.1.1"
