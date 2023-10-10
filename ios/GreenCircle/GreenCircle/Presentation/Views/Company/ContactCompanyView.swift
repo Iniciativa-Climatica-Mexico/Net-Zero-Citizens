@@ -206,70 +206,53 @@ struct ContactCompanyView: View {
       NavigationStack {
         VStack(alignment: .leading) {
           TabView {
-            ForEach(contactCompanyViewModel.contentCompany.images ?? [], id: \.self) { image in
-              if let imageUrl = image.imageUrl {
-                AsyncImage(url: URL(string: imageUrl)) { phase in
-                  switch phase {
-                    case .empty:
-                      LoadingScreenView()
-                    case .success(let image):
-                      ZStack {
-                        image
-                          .resizable()
-                          .scaledToFill()
-                          .frame(maxWidth: .infinity, maxHeight: 155)
-                          .cornerRadius(10, corners: [.bottomLeft, .bottomRight])
-                        VStack {
-                          Spacer()
-                          HStack {
-                            Spacer()
-                            Button(action: {
-                              Task {
-                                if !emptyHeartFill {
-                                  showingAlertHeart = true
-                                  await favouriteViewModel.postFavouriteById(companyId: contactCompanyViewModel.contentCompany.companyId)
-                                  if favouriteViewModel.contentFavourite.message ==
-                                      "Favourite created" {
-                                    messageAlert = "Se ha agregado a: " + contactCompanyViewModel.contentCompany.name + " a tus favoritos!"
-                                    emptyHeartFill = true
-                                    deleteOperation = false
-                                  }
-                                } else {
-                                  deleteOperation = true
-                                  showingAlertHeart = true
-                                  messageAlert = "¿Eliminar a: " + contactCompanyViewModel.contentCompany.name + " de tus favoritos?"
-                                }
-                              }
-                            }, label: {
-                              Image(systemName: emptyHeartFill ? "heart.fill" : "heart")
-                                .foregroundColor(.white)
-                                .font(.system(size: 24))
-                                .padding(EdgeInsets(top: 40, leading: 40, bottom: 0, trailing: 0))
-                                .padding()
-                            })
-                            .alert(isPresented: $showingAlertHeart) {
-                              if !deleteOperation {
-                                return Alert(title: Text("Éxito"), message: Text(messageAlert))
-                              }
-                              else {
-                                return Alert(title: Text("Confirmar borrar favoritos"), message: Text(messageAlert),
-                                   primaryButton: .destructive(Text("Borrar")) {
-                                  Task {
-                                    emptyHeartFill = false
-                                    try await favouriteViewModel.deleteFavouriteById(companyId: contactCompanyViewModel.contentCompany.companyId)
-                                  }
-                                   },
-                                   secondaryButton: .cancel())
-                              }
-                            }
-                          }
+            ZStack {
+              LoadingScreenView()
+                .frame(height: 155)
+                .scaledToFill()
+                .cornerRadius(10, corners: [.bottomLeft, .bottomRight])
+              VStack {
+                Spacer()
+                HStack {
+                  Spacer()
+                  Button(action: {
+                    Task {
+                      if !emptyHeartFill {
+                        showingAlertHeart = true
+                        await favouriteViewModel.postFavouriteById(companyId: contactCompanyViewModel.contentCompany.companyId)
+                        if favouriteViewModel.contentFavourite.message ==
+                            "Favourite created" {
+                          messageAlert = "Se ha agregado a: " + contactCompanyViewModel.contentCompany.name + " a tus favoritos!"
+                          emptyHeartFill = true
+                          deleteOperation = false
                         }
+                      } else {
+                        deleteOperation = true
+                        showingAlertHeart = true
+                        messageAlert = "¿Eliminar a: " + contactCompanyViewModel.contentCompany.name + " de tus favoritos?"
                       }
-                     
-                    case .failure:
-                      Text("Failed to load Image!!")
-                    @unknown default:
-                      fatalError()
+                    }
+                  }, label: {
+                    Image(systemName: emptyHeartFill ? "heart.fill" : "heart")
+                      .foregroundColor(Color("BlueCustom"))
+                      .font(.system(size: 24))
+                      .padding(EdgeInsets(top: 40, leading: 40, bottom: 0, trailing: 0))
+                      .padding()
+                  })
+                  .alert(isPresented: $showingAlertHeart) {
+                    if !deleteOperation {
+                      return Alert(title: Text("Éxito"), message: Text(messageAlert))
+                    }
+                    else {
+                      return Alert(title: Text("Confirmar borrar favoritos"), message: Text(messageAlert),
+                         primaryButton: .destructive(Text("Borrar")) {
+                        Task {
+                          emptyHeartFill = false
+                          try await favouriteViewModel.deleteFavouriteById(companyId: contactCompanyViewModel.contentCompany.companyId)
+                        }
+                         },
+                         secondaryButton: .cancel())
+                    }
                   }
                 }
               }
@@ -327,7 +310,7 @@ struct ContactCompanyView: View {
       Spacer()
           .alert(isPresented: $showAlert) {
             Alert(title: Text("Error"),
-                  message: Text("No contamos con products aún"),
+                  message: Text("No contamos con productos aún"),
                   dismissButton: .default(Text("Ok")) {
               presentationMode.wrappedValue.dismiss()
               
