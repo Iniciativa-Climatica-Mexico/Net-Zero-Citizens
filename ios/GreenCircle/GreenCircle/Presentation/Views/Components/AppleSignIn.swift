@@ -77,6 +77,9 @@ struct AppleSignIn: View {
           
           
         } else {
+          
+          goMainMenu()
+          
           print("missing some fields", appleIdCredentials.email, appleIdCredentials.fullName, appleIdCredentials.user)
           
           guard
