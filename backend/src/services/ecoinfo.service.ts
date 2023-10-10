@@ -19,7 +19,7 @@ export const getAllEcoinfo = async (): Promise<Ecoinfo[]> => {
  * Funcion que realiza un fetch a la página de Facebook de ICM
  * Cada día
  */
-export const cronEcoInfo = cron.schedule('0 0 * * * *', () => {
+export const cronEcoInfo = cron.schedule('0 0 * * * ', () => {
   fetchEcoInfo()
   console.log('EcoInfo updated')
 })
@@ -100,7 +100,10 @@ const updateEcoInfo = async (data: EcoInfoApiModel) => {
           return
         } else {
           const coverImage = post.attachments.data[0].media.image.src
-          const description = post.attachments.data[0].description
+          let description = post.attachments.data[0].description
+          if (description && description.length > 500) {
+            description = post.attachments.data[0].description?.slice(0, 500)
+          }
           const postLink = post.attachments.data[0].url
           const tempEcoInfoTemplate = {
             postId,
