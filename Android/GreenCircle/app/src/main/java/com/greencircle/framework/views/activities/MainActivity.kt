@@ -127,6 +127,9 @@ class MainActivity : AppCompatActivity() {
             else -> {
                 onBackPressedDispatcher.onBackPressed()
             }
+        }
+    }
+
     private fun attemptOpenSurvey() {
         try {
             Log.i("SURVEY", "Intentando abrir encuesta")
