@@ -4,10 +4,9 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.view.View
+import android.util.Log
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
@@ -17,13 +16,14 @@ import com.greencircle.R
 import com.greencircle.data.remote.complaints.ComplaintClient
 import com.greencircle.domain.model.complaints.Complaint
 import com.greencircle.domain.model.complaints.ComplaintStatus
+import com.greencircle.domain.usecase.auth.RecoverTokensRequirement
+import com.greencircle.domain.usecase.auth.RecoverUserSessionRequirement
 import java.util.UUID
 import kotlin.math.roundToInt
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
 
 /**
  * Modal para reportar una empresa
@@ -33,7 +33,18 @@ import org.json.JSONObject
 class ComplaintCompanyFragment : DialogFragment() {
     private lateinit var companyId: UUID
     private lateinit var authToken: String
+    private lateinit var recoverUserSession: RecoverUserSessionRequirement
+    private lateinit var recoverTokens: RecoverTokensRequirement
     private val complaintClient = ComplaintClient()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        recoverUserSession = RecoverUserSessionRequirement(requireContext())
+        recoverTokens = RecoverTokensRequirement(requireContext())
+        val tokens = recoverTokens()
+        if (tokens != null)
+            authToken = tokens.authToken
+    }
 
     /**
      * Se ejecuta cuando la vista se ha creado
@@ -55,54 +66,18 @@ class ComplaintCompanyFragment : DialogFragment() {
         val spinnerOptions: Spinner = view!!.findViewById(R.id.spinnerProblems)
 
         spinnerOptions.adapter = adapter
-        spinnerOptions.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            /**
-             * Se ejecuta cuando no se selecciona ningún elemento del spinner
-             * @param parent: AdapterView<*> -> Spinner
-             */
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                Toast.makeText(requireContext(), "No issue selected", Toast.LENGTH_SHORT).show()
-            }
-
-            /**
-             * Se ejecuta cuando se selecciona un elemento del spinner
-             * @param parent: AdapterView<*> -> Spinner
-             * @param view: View -> Vista
-             * @param position: Int -> Posición del elemento seleccionado
-             * @param id: Long -> Id del elemento seleccionado
-             */
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val selectedItem = parent?.getItemAtPosition(position).toString()
-                Toast.makeText(
-                    requireContext(), "Selected: $selectedItem", Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
 
         return AlertDialog.Builder(requireContext()).setView(view)
             .setNegativeButton("Cancelar") { _, _ ->
-                Toast.makeText(requireContext(), "Cancel", Toast.LENGTH_SHORT).show()
+                Log.i("ComplaintCompanyFragment", "Cancel")
             }.setPositiveButton("Reportar") { _, _ ->
                 val complaintTitle = spinnerOptions.selectedItem.toString()
                 val complaintDescription =
                     view.findViewById<EditText>(R.id.TellUsMore).text.toString()
 
-                val sharedPreferences =
-                    context?.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
-
-                val userJson = sharedPreferences?.getString("user_session", null)
-                val userJSON = JSONObject(userJson!!)
-                val userId = UUID.fromString(userJSON.getString("uuid"))
-
-                authToken = sharedPreferences.getString("auth_token", null)!!
-
+                val userSession = recoverUserSession()
                 val complaint = Complaint(
-                    userId = userId,
+                    userId = userSession.uuid,
                     companyId = companyId,
                     complaintSubject = complaintTitle,
                     complaintDescription = complaintDescription,
@@ -118,20 +93,18 @@ class ComplaintCompanyFragment : DialogFragment() {
                         if (response?.isSuccessful == true) {
                             Toast.makeText(
                                 requireContext(),
-                                "Report sent successfully",
+                                "Reporte enviado correctamente",
                                 Toast.LENGTH_SHORT
                             ).show()
                         } else {
                             Toast.makeText(
                                 requireContext(),
-                                "Error sending report",
+                                "Error enviando reporte",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
                     }
                 }
-
-                Toast.makeText(requireContext(), "Report", Toast.LENGTH_SHORT).show()
             }.create()
     }
 

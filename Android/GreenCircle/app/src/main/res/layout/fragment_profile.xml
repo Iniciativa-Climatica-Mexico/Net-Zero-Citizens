@@ -46,6 +46,7 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/misFavoritos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_corner"
@@ -99,7 +100,6 @@
             android:textColor="@color/gray_800"
             android:textSize="23dp"
             android:textStyle="bold" />
-
     </LinearLayout>
 
 
