@@ -19,7 +19,7 @@ export const getAllEcoinfo = async (): Promise<Ecoinfo[]> => {
  * Funcion que realiza un fetch a la página de Facebook de ICM
  * Cada día
  */
-export const cronEcoInfo = cron.schedule('0 */1 * * * *', () => {
+export const cronEcoInfo = cron.schedule('0 0 * * * *', () => {
   fetchEcoInfo()
   console.log('EcoInfo updated')
 })
