@@ -12,6 +12,8 @@ struct ProfileView: View {
   @ObservedObject var modelUser = UserViewModel()
   @ObservedObject var modelReview = ReviewViewModel()
 
+
+  
   var goLogin: () -> Void
 
   var body: some View {
