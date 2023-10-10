@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -162,6 +163,23 @@ class CreateCompanyFragment : Fragment() {
                 uuid = result.user.uuid
             } else {
                 Log.d("CreateCompanyFragment", "Google login failed")
+            }
+        }
+        viewModel.error.observe(viewLifecycleOwner) { error ->
+            try {
+                if (error) {
+                    Toast.makeText(
+                        requireContext(), "Error al crear nueva empresa", Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        requireContext(), "Empresa creado correctamente", Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(
+                    requireContext(), "Error al crear nueva empresa", Toast.LENGTH_SHORT
+                ).show()
             }
         }
         setSwitch(view.findViewById(R.id.avisoPrivacidad))

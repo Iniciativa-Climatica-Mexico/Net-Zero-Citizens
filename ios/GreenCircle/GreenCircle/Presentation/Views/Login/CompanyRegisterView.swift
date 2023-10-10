@@ -15,7 +15,9 @@ struct CompanyRegisterView: View {
 
   @StateObject var viewModel = LoginViewModel()
   @EnvironmentObject var user: UserData
-
+  @State private var isPrivacyPolicyVisible = false
+  private let privacyPolicyTextView = PrivacyPolicyTextView(dismiss: .constant(false))
+    
   var body: some View {
     ZStack {
 
@@ -41,39 +43,40 @@ struct CompanyRegisterView: View {
               case .fail:
                 break
               }
+                        }
+                    }
+                    .alert("Algo salió mal", isPresented: $viewModel.showAlert) {
+                        Button("Entendido", role: .cancel) {}
+                    } message: {
+                        Text("Intenta de nuevo por favor")
+                    }
+                    .padding(.horizontal)
+                }
+
+                Spacer()
+
+                Divider().padding(.horizontal)
+
+                HStack {
+                    Text("¿No eres un proveedor?")
+                    Spacer()
+                    LinkButton("Inicia Sesión", buttonColor: .blue) {
+                        goLogin()
+                    }
+                }
+                .padding(.horizontal)
+
+                LinkButton("Aviso de privacidad", buttonColor: .blue) {
+                    isPrivacyPolicyVisible.toggle()
+                }
+                .padding(.bottom)
+                
             }
-          }.alert("Algo salió mal",
-                  isPresented: $viewModel.showAlert) {
-            Button("Entendido", role: .cancel) {}
-          } message: {
-            Text("Intenta de nuevo por favor")
-          }
+            .foregroundColor(Color("MainText"))
         }
-        .padding(.horizontal)
-
-        Spacer()
-
-        Divider().padding(.horizontal)
-
-        HStack {
-          Text("¿No eres un proveedor?")
-          Spacer()
-          LinkButton("Inicia Sesión",
-                     buttonColor: .blue) {
-            goLogin()
-          }
-        }.padding(.horizontal)
-
-        LinkButton("Aviso de privacidad",
-                   buttonColor: .blue, action: {})
-          .padding(.bottom)
-      }.foregroundColor(Color("MainText"))
-    }
-  }
-}
-
-struct CompanyRegisterView_Previews: PreviewProvider {
-    static var previews: some View {
-      CompanyRegisterView(goLogin: {}, goForm: {}, goMainMenu: {})
+    .sheet(isPresented: $isPrivacyPolicyVisible) {
+            PrivacyPolicyTextView(dismiss: $isPrivacyPolicyVisible) // Pass the boolean as a binding
+        }
     }
 }
+
