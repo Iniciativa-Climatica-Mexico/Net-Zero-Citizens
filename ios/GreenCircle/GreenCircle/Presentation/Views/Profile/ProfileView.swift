@@ -41,14 +41,14 @@ struct ProfileView: View {
           
           HStack {
             //Nombre del usuario
-            Text(modelUser.contentUser.first_name)
+            Text(modelUser.contentBaseUser?.firstName ?? "Cargando...")
               .foregroundColor(Color.black)
               .font(.system(size: 16))
               .fontWeight(.semibold)
               .padding(.top, 10)
               .padding(.bottom, 2)
             //Apellido del Usuario
-            Text(modelUser.contentUser.last_name)
+            Text(modelUser.contentBaseUser?.lastName ?? "Cargando...")
               .foregroundColor(Color.black)
               .font(.system(size: 16))
               .fontWeight(.semibold)

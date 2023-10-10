@@ -184,32 +184,31 @@ class UserRepository: UserRepositoryProtocol {
   
 //  func updateUserDataOnServer(userAuth: UserAuth, userId: String) async -> Bool {
 //      let endpoint = "\(UserAPI.base)\(UserAPI.Routes.userId)".replacingOccurrences(of: ":userId", with: userId)
-//      
+//
 //      let encoder = JSONEncoder()
 //      guard let encodedData = try? encoder.encode(userAuth) else { return false }
 //
 //      guard let body = try? JSONSerialization.jsonObject(with: encodedData, options: .allowFragments) as? [String: Any] else { return false }
-//      
+//
 //      let result: NoResponse? = await nService.putRequest(URL(string: endpoint)!, body: body)
 //      return result != nil
 //  }
   
   
-  func updateUserDataOnServer(userAuth: UserAuth, userId: String) async -> UserAuth? {
+  func updateUserDataOnServer(user: User) async -> User? {
+      let userId = (lService.getUserInformation()?.user.id)!
       let endpoint = "\(UserAPI.base)\(UserAPI.Routes.userId)".replacingOccurrences(of: ":userId", with: userId)
-      
       let encoder = JSONEncoder()
-      guard let encodedData = try? encoder.encode(userAuth) else { return nil }
+      guard let encodedData = try? encoder.encode(user) else { return nil }
 
       guard let body = try? JSONSerialization.jsonObject(with: encodedData, options: .allowFragments) as? [String: Any] else { return nil }
       
       let result: NoResponse? = await nService.putRequest(URL(string: endpoint)!, body: body)
       
       if let _ = result {
-          return userAuth // Return the updated user data
+          return user // Return the updated user data
       } else {
           return nil
       }
   }
-  
 }

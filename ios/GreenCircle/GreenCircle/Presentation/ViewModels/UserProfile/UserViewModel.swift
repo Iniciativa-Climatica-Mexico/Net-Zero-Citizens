@@ -9,12 +9,30 @@ import Foundation
 
 class UserViewModel: ObservableObject {
     private let useCase = ProfileUseCase.shared
-  
-    @Published var contentUser: UserAuth
-  
+    private let lService = LocalService.shared
+    private let repository = UserRepository.shared
+    
+    @Published var contentUser: UserAuth?
+    @Published var contentBaseUser: User?
+    
+    @MainActor
+    func getAllUserData(userId: String? = nil) async {
+        // Usa el userId proporcionado o obténlo de lService
+        let finalUserId = userId ?? lService.getUserInformation()?.user.id
+        if let uid = finalUserId {
+            do {
+                contentBaseUser = try await repository.fetchUserById(userId: uid)
+            } catch {
+                print("Error fetching user data: \(error)")
+            }
+        }
+    }
+    
     init() {
         contentUser = useCase.getUserData()
+        Task {
+            await getAllUserData()
+        }
     }
-  
-  
 }
+
