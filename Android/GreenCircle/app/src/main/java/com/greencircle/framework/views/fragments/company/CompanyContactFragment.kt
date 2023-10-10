@@ -129,7 +129,9 @@ class CompanyContactFragment : Fragment() {
 
     fun initCarousel(images: List<CompanyImages>?) {
         val carousel = binding.carousel
-
+        if (images.isNullOrEmpty()) {
+            carousel.addData(CarouselItem(R.drawable.main_logo_bg))
+        }
         images?.forEach { image ->
             carousel.addData(CarouselItem(image.imageUrl))
         }

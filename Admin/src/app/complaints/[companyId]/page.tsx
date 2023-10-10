@@ -18,8 +18,7 @@ import { usePathname, useRouter } from 'next/navigation'
 export default function Home() {
   const [SelectedComplaint, setSelectedComplaint] =
     useState<ComplaintsWithUser>()
-  const [currentPage, setCurrentPage] = useState(1)
-  const itemsPerPage = 8
+
   const [complaintsWithUsers, setComplaintsWithUsers] = useState<
     ComplaintsWithUser[]
   >([])
@@ -39,11 +38,6 @@ export default function Home() {
       console.error('Fetch of complaints by user was not successful', error)
     }
   }
-
-  const startIndex = (currentPage - 1) * itemsPerPage
-  const endIndex = startIndex + itemsPerPage
-
-  const handlePageChange = (newPage: number) => setCurrentPage(newPage)
 
   const changeToInactive = (id: string, status: string = 'inactive') => {
     setComplaintsWithUsers((prevComplaints) => {
@@ -98,23 +92,19 @@ export default function Home() {
           </TableHeader>
           <TableBody>
             {complaintsWithUsers?.map((company) => (
-              <TableRow key={company.complaintId}>
+              <TableRow key={company.complaintId} className="min-h-max">
                 <TableCell className="cursor-pointer">
                   {company.firstName} {company.lastName}
                 </TableCell>
                 <TableCell className="cursor-pointer">
                   {company.complaintSubject}
                 </TableCell>
-                <TableCell
-                  className="cursor-pointer"
-                  style={{
-                    maxWidth: '150px',
-                    maxLines: '3',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                  }}
-                >
-                  {company.complaintDescription}
+                <TableCell className="cursor-pointer max-w-xs overflow-hidden">
+                  {company.complaintDescription ? (
+                    company.complaintDescription
+                  ) : (
+                    <span>No description available</span> // Alternate message
+                  )}
                 </TableCell>
                 <TableCell className="cursor-pointer">
                   {formatDate(company.createdAt) ?? 'N/A'}
