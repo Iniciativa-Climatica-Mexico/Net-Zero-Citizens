@@ -26,7 +26,6 @@ class SurveyRepository: SurveyApiProtocol {
   /// - Returns: Modelo de encuesta o nil (SurveyModel?)
   func getPendingSurvey(userId: String) async -> SurveyModel? {
     let surveyRoute = APIRoutes.Survey.base + APIRoutes.Survey.pending.replacingOccurrences(of: ":userId", with: userId)
-    print(surveyRoute)
     let url = URL(string: surveyRoute) ?? URL(string: APIRoutes.Survey.base + userId)
     return await service.getRequest(url!)
   }
