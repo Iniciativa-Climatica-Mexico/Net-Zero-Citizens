@@ -62,7 +62,6 @@ struct CoordinatesView: View {
                 await setRegion()
                 observeCoordinateUpdates()
                 observeLocationAccessDenied()
-                deviceLocationService.requestLocationUpdates()
             }
         }
     }
