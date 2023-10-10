@@ -1,6 +1,9 @@
 package com.greencircle
 
 import com.greencircle.domain.model.company.Companies
+import com.greencircle.domain.model.company.files.CompanyFile
+import com.greencircle.domain.model.company.files.FileDescription
+import com.greencircle.domain.model.company.files.FileFormat
 import com.greencircle.domain.model.status.Status
 import java.sql.Timestamp
 import java.util.UUID
@@ -39,13 +42,15 @@ class CompaniesTest {
             zipCode = 12345,
             latitude = 19.4326,
             longitude = -99.1332,
-            profilePicture = "test.jpg",
-            pdfCurriculumUrl = "test.pdf",
-            pdfDicCdmxUrl = null,
-            pdfPeeFideUrl = null,
-            pdfGuaranteeSecurityUrl = "test.pdf",
-            pdfActaConstituyentesUrl = "test.pdf",
-            pdfIneUrl = "test.pdf",
+            files = listOf(
+                CompanyFile(
+                    UUID(0, 1),
+                    UUID(0, 1),
+                    "test.jpg",
+                    FileDescription.IMAGEN,
+                    FileFormat.JPEG
+                )
+            ),
             status = status,
             createdAt = timestamp,
             updatedAt = timestamp
@@ -65,13 +70,7 @@ class CompaniesTest {
         assertEquals(12345, company.zipCode)
         assertEquals(19.4326, company.latitude, 0.0)
         assertEquals(-99.1332, company.longitude, 0.0)
-        assertEquals("test.jpg", company.profilePicture)
-        assertEquals("test.pdf", company.pdfCurriculumUrl)
-        assertNull(company.pdfDicCdmxUrl)
-        assertNull(company.pdfPeeFideUrl)
-        assertEquals("test.pdf", company.pdfGuaranteeSecurityUrl)
-        assertEquals("test.pdf", company.pdfActaConstituyentesUrl)
-        assertEquals("test.pdf", company.pdfIneUrl)
+        assertEquals(1, company.files.size)
         assertEquals(status, company.status)
         assertEquals(timestamp, company.createdAt)
         assertEquals(timestamp, company.updatedAt)
@@ -100,13 +99,15 @@ class CompaniesTest {
             zipCode = 12345,
             latitude = 19.4326,
             longitude = -99.1332,
-            profilePicture = "test.jpg",
-            pdfCurriculumUrl = "test.pdf",
-            pdfDicCdmxUrl = null,
-            pdfPeeFideUrl = null,
-            pdfGuaranteeSecurityUrl = "test.pdf",
-            pdfActaConstituyentesUrl = "test.pdf",
-            pdfIneUrl = "test.pdf",
+            files = listOf(
+                CompanyFile(
+                    UUID(0, 1),
+                    UUID(0, 1),
+                    "test.jpg",
+                    FileDescription.IMAGEN,
+                    FileFormat.JPEG
+                )
+            ),
             status = status,
             createdAt = timestamp,
             updatedAt = timestamp
@@ -127,13 +128,15 @@ class CompaniesTest {
             zipCode = 12345,
             latitude = 19.4326,
             longitude = -99.1332,
-            profilePicture = "test.jpg",
-            pdfCurriculumUrl = "test.pdf",
-            pdfDicCdmxUrl = null,
-            pdfPeeFideUrl = null,
-            pdfGuaranteeSecurityUrl = "test.pdf",
-            pdfActaConstituyentesUrl = "test.pdf",
-            pdfIneUrl = "test.pdf",
+            files = listOf(
+                CompanyFile(
+                    UUID(0, 1),
+                    UUID(0, 1),
+                    "test.jpg",
+                    FileDescription.IMAGEN,
+                    FileFormat.JPEG
+                )
+            ),
             status = status,
             createdAt = timestamp,
             updatedAt = timestamp
@@ -165,13 +168,15 @@ class CompaniesTest {
             zipCode = 12345,
             latitude = 19.4326,
             longitude = -99.1332,
-            profilePicture = "test.jpg",
-            pdfCurriculumUrl = "test.pdf",
-            pdfDicCdmxUrl = null,
-            pdfPeeFideUrl = null,
-            pdfGuaranteeSecurityUrl = "test.pdf",
-            pdfActaConstituyentesUrl = "test.pdf",
-            pdfIneUrl = "test.pdf",
+            files = listOf(
+                CompanyFile(
+                    UUID(0, 1),
+                    UUID(0, 1),
+                    "test.jpg",
+                    FileDescription.IMAGEN,
+                    FileFormat.JPEG
+                )
+            ),
             status = status,
             createdAt = timestamp,
             updatedAt = timestamp
@@ -192,13 +197,15 @@ class CompaniesTest {
             zipCode = 12345,
             latitude = 19.4326,
             longitude = -99.1332,
-            profilePicture = "test.jpg",
-            pdfCurriculumUrl = "test.pdf",
-            pdfDicCdmxUrl = null,
-            pdfPeeFideUrl = null,
-            pdfGuaranteeSecurityUrl = "test.pdf",
-            pdfActaConstituyentesUrl = "test.pdf",
-            pdfIneUrl = "test.pdf",
+            files = listOf(
+                CompanyFile(
+                    UUID(0, 1),
+                    UUID(0, 1),
+                    "test.jpg",
+                    FileDescription.IMAGEN,
+                    FileFormat.JPEG
+                )
+            ),
             status = status,
             createdAt = timestamp,
             updatedAt = timestamp
@@ -230,13 +237,15 @@ class CompaniesTest {
             zipCode = 12345,
             latitude = 19.4326,
             longitude = -99.1332,
-            profilePicture = "test.jpg",
-            pdfCurriculumUrl = "test.pdf",
-            pdfDicCdmxUrl = null,
-            pdfPeeFideUrl = null,
-            pdfGuaranteeSecurityUrl = "test.pdf",
-            pdfActaConstituyentesUrl = "test.pdf",
-            pdfIneUrl = "test.pdf",
+            files = listOf(
+                CompanyFile(
+                    UUID(0, 1),
+                    UUID(0, 1),
+                    "test.jpg",
+                    FileDescription.IMAGEN,
+                    FileFormat.JPEG
+                )
+            ),
             status = status,
             createdAt = timestamp,
             updatedAt = timestamp
@@ -257,13 +266,15 @@ class CompaniesTest {
             zipCode = 12345,
             latitude = 19.4326,
             longitude = -99.1332,
-            profilePicture = "test.jpg",
-            pdfCurriculumUrl = "test.pdf",
-            pdfDicCdmxUrl = null,
-            pdfPeeFideUrl = null,
-            pdfGuaranteeSecurityUrl = "test.pdf",
-            pdfActaConstituyentesUrl = "test.pdf",
-            pdfIneUrl = "test.pdf",
+            files = listOf(
+                CompanyFile(
+                    UUID(0, 1),
+                    UUID(0, 1),
+                    "test.jpg",
+                    FileDescription.IMAGEN,
+                    FileFormat.JPEG
+                )
+            ),
             status = status,
             createdAt = timestamp,
             updatedAt = timestamp

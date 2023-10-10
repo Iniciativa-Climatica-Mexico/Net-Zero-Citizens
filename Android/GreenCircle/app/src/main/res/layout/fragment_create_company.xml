@@ -308,8 +308,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="horizontal"
-                android:paddingLeft="20dp"
-                android:paddingRight="30dp"
                 android:paddingBottom="10dp">
 
 
@@ -333,14 +331,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Acepto las"
-                    android:paddingLeft="3dp"
+                    android:paddingStart="3dp"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
                 <Button
                     android:id="@+id/login_register"
                     style="@style/Widget.Material3.Button.TextButton"
-                    android:layout_width="192dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="políticas de privacidad"
                     android:textAlignment="textStart"

@@ -39,6 +39,10 @@ class CreateCompanyViewModel(private val context: Context) : ViewModel() {
     val assignCompanyResult = MutableLiveData<String?>()
     val googleLoginError = MutableLiveData<Boolean>()
 
+    private val _createCompanyResult = MutableLiveData<CompanyAPIService.CreateCompanyResponse?>()
+    val createCompanyResult: LiveData<CompanyAPIService.CreateCompanyResponse?> =
+        _createCompanyResult
+
     /**
      * Realiza el inicio de sesión con Google utilizando el token proporcionado.
      *

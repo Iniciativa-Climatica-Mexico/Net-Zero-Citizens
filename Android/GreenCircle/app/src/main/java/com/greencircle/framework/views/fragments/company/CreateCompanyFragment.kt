@@ -16,6 +16,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.greencircle.R
 import com.greencircle.data.remote.company.CompanyAPIService
 import com.greencircle.domain.model.company.Company
+import com.greencircle.domain.model.company.files.CompanyFile
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.company.CreateCompanyViewModel
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
@@ -32,6 +33,7 @@ class CreateCompanyFragment : Fragment() {
     private var arguments = Bundle()
     private lateinit var authToken: String
     private lateinit var uuid: UUID
+    private var companyId: String? = null
     private lateinit var nameInputLayout: TextInputLayout
     private lateinit var descriptionInputLayout: TextInputLayout
     private lateinit var emailInputLayout: TextInputLayout
@@ -160,6 +162,7 @@ class CreateCompanyFragment : Fragment() {
             // Handle the result here
             if (result != null && result.tokens != null) {
                 authToken = result.tokens.authToken
+                arguments.putString("authToken", authToken)
                 uuid = result.user.uuid
             } else {
                 Log.d("CreateCompanyFragment", "Google login failed")
@@ -183,6 +186,15 @@ class CreateCompanyFragment : Fragment() {
             }
         }
         setSwitch(view.findViewById(R.id.avisoPrivacidad))
+
+        viewModel.createCompanyResult.observe(viewLifecycleOwner) { result ->
+            // Handle the result here
+            if (result != null) {
+                companyId = result.companyId
+                arguments.putString("companyId", companyId)
+                nextFragment(arguments)
+            }
+        }
     }
 
     /**
@@ -228,6 +240,7 @@ class CreateCompanyFragment : Fragment() {
         val city = cityInputLayout.editText?.text.toString()
         val state = stateInputLayout.editText?.text.toString()
         val zipCode = zipCodeInputLayout.editText?.text.toString()
+        val files = arrayListOf<CompanyFile>()
 
         // Send the data to the backend
         val companyData: Company = Company(
@@ -242,10 +255,7 @@ class CreateCompanyFragment : Fragment() {
             city,
             state,
             zipCode,
-            "test1",
-            "test2",
-            "test3",
-            "test4"
+            files
         )
 
         val createCompanyRequest = CompanyAPIService.CreateCompanyRequest(companyData)
@@ -253,7 +263,6 @@ class CreateCompanyFragment : Fragment() {
         val validation: Boolean = validateForm(view)
         if (validation) {
             viewModel.createCompany(createCompanyRequest)
-            nextFragment()
         }
     }
 
