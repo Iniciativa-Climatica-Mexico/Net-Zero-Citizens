@@ -93,11 +93,41 @@
         android:padding="6dp"
         android:prompt="@string/select_state_prompt" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancelar"
+            android:layout_weight="1"
+            android:background="@drawable/accept_button"
+            android:textColor="@color/white"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/cancelButton"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Aplicar"
+            android:layout_weight="1"
+            android:background="@drawable/accept_button"
+            android:textColor="@color/white"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/applyButton"
+            />
+    </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/spinner_underline" />
+
 
 </LinearLayout>

@@ -22,6 +22,19 @@ class CatalogueViewModel(private val context: Context) : ViewModel() {
     val companyLiveData = MutableLiveData<CompanySummary?>()
     private val catalogueRequirement = CatalogueRequirement()
     private val recoverTokens = RecoverTokensRequirement(context)
+    val params = MutableLiveData<CompanyParams>(
+        CompanyParams(
+            "",
+            "",
+            "",
+            "",
+            0.0,
+            0.0,
+        )
+    )
+    fun updateParams(params: CompanyParams) {
+        this.params.value = params
+    }
 
     /**
      * Esta función se utiliza para obtener la lista de resumen de la empresa

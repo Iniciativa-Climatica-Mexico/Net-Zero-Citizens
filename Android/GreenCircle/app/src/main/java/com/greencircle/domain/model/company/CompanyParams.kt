@@ -1,10 +1,10 @@
 package com.greencircle.domain.model.company
 
 data class CompanyParams(
-    val ordering: String,
+    var ordering: String,
     var name: String,
-    val state: String,
-    val productName: String,
-    val latitude: Double,
-    val longitude: Double,
+    var state: String,
+    var productName: String,
+    var latitude: Double,
+    var longitude: Double,
 )

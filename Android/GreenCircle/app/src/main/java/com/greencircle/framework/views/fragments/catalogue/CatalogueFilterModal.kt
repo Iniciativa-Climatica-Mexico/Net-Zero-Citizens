@@ -3,11 +3,14 @@ package com.greencircle.framework.views.fragments.catalogue
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.greencircle.R
+import com.greencircle.databinding.FragmentCompanyFilterBinding
+import com.greencircle.framework.viewmodel.catalogue.CatalogueViewModel
 import kotlin.math.roundToInt
 
 /**
@@ -15,7 +18,8 @@ import kotlin.math.roundToInt
  *
  * @since 3.0.0
  */
-class CatalogueFilterModal : DialogFragment() {
+class CatalogueFilterModal(private val viewModel: CatalogueViewModel) : DialogFragment() {
+
     companion object {
         /**
          * Crea una nueva instancia del fragmento
@@ -23,8 +27,8 @@ class CatalogueFilterModal : DialogFragment() {
          * @return CatalogueFilterModal Nueva instancia del fragmento
          * @since 3.0.0
          */
-        fun newInstance(): CatalogueFilterModal {
-            return CatalogueFilterModal()
+        fun newInstance(viewModel: CatalogueViewModel): CatalogueFilterModal {
+            return CatalogueFilterModal(viewModel)
         }
     }
 
@@ -42,8 +46,30 @@ class CatalogueFilterModal : DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_company_filter, container, false)
+    ): View {
+        val binding = FragmentCompanyFilterBinding.inflate(inflater, container, false)
+
+        val cancelButton = binding.cancelButton
+
+        cancelButton.setOnClickListener {
+            dismiss()
+        }
+
+        val applyButton = binding.applyButton
+
+        applyButton.setOnClickListener {
+            val newParams = viewModel.params.value
+            newParams?.ordering = binding.companyRating.selectedItem.toString()
+            newParams?.productName = binding.companyProducts.selectedItem.toString()
+            newParams?.state = binding.companyPhyisicalState.selectedItem.toString()
+            if (newParams != null) {
+                viewModel.updateParams(newParams)
+                Log.d("Params Update: ", viewModel.params.value.toString())
+            }
+            dismiss()
+        }
+
+        return binding.root
     }
 
     /**

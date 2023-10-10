@@ -25,15 +25,6 @@ class CatalogueFragment : Fragment() {
     private lateinit var binding: FragmentCompanyCatalogueBinding
     private val adapter = CatalogueAdapter()
     private lateinit var viewModel: CatalogueViewModel
-    private var params = CompanyParams(
-        ordering = "",
-        name = "",
-        state = "",
-        productName = "",
-        latitude = 0.0,
-        longitude = 0.0
-    )
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setUpViewModel()
@@ -65,36 +56,21 @@ class CatalogueFragment : Fragment() {
             }
         }
 
-        lifecycleScope.launch {
-            try {
-                viewModel.fetchAllCompanies(params)
-            } catch (e: Exception) {
-                val errorView = FragmentErrorBinding.inflate(layoutInflater)
-                binding.root.removeView(recyclerView)
-                binding.LLContainer.addView(errorView.root)
-                errorView.root.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
-                removeSkeleton()
-                Log.e("Salida", e.message.toString())
-            }
+        viewModel.params.observe(viewLifecycleOwner) { params ->
+            Log.d("Params to search: ", params.toString())
+            search(params)
         }
+
+        search()
 
         val searchText = binding.SearchBar.searchInput
         searchText.setOnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
-                params.name = searchText.text.toString()
-                lifecycleScope.launch {
-                    try {
-                        viewModel.fetchAllCompanies(params)
-                        hideKeyboard(binding.root.context)
-                    } catch (e: Exception) {
-                        val errorView = FragmentErrorBinding.inflate(layoutInflater)
-                        binding.root.removeView(recyclerView)
-                        binding.LLContainer.addView(errorView.root)
-                        errorView.root.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
-                        removeSkeleton()
-                        Log.e("Salida", e.message.toString())
-                    }
+                val newParams = viewModel.params.value
+                if (newParams != null) {
+                    newParams.name = searchText.text.toString()
                 }
+                viewModel.updateParams(newParams!!)
                 true
             } else {
                 false
@@ -104,7 +80,7 @@ class CatalogueFragment : Fragment() {
         // Get the buttonOpenModal and setup onClickListener
         val buttonOpenModal = binding.SearchBar.buttonOpenModal
         buttonOpenModal.setOnClickListener {
-            val modal = CatalogueFilterModal.newInstance()
+            val modal = CatalogueFilterModal.newInstance(viewModel)
             modal.show(parentFragmentManager, "CatalogueFilterModal")
         }
         return binding.root
@@ -137,6 +113,23 @@ class CatalogueFragment : Fragment() {
         } catch (e: Exception) {
             Log.e("HomeFragment", "Error al eliminar el skeleton")
             Log.e("HomeFragment", e.message.toString())
+        }
+    }
+
+    private fun search(params: CompanyParams = viewModel.params.value!!) {
+        val recyclerView = binding.newRecyclerView
+        lifecycleScope.launch {
+            try {
+                viewModel.fetchAllCompanies(params)
+                hideKeyboard(binding.root.context)
+            } catch (e: Exception) {
+                val errorView = FragmentErrorBinding.inflate(layoutInflater)
+                binding.root.removeView(recyclerView)
+                binding.LLContainer.addView(errorView.root)
+                errorView.root.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+                removeSkeleton()
+                Log.e("Salida", e.message.toString())
+            }
         }
     }
 }
