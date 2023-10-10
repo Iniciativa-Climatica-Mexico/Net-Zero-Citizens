@@ -12,7 +12,7 @@ import com.greencircle.databinding.ActivityMainBinding
 import com.greencircle.databinding.TopBarBinding
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.survey.SurveyViewModel
-import com.greencircle.framework.views.fragments.HomeFragment
+import com.greencircle.framework.views.fragments.ecoinfo.HomeFragment
 import com.greencircle.framework.views.fragments.catalogue.CatalogueFragment
 import com.greencircle.framework.views.fragments.map.MapFragment
 import com.greencircle.framework.views.fragments.profile.ProfileFragment

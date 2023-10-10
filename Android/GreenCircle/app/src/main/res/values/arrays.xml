@@ -41,4 +41,23 @@
         <item>Prefiero no decirlo</item>
     </string-array>
 
+    <string-array name="options_array">
+        <item>Productos Defectuosos</item>
+        <item>Inconformidad con el producto / servicio</item>
+        <item>Comportamiento Inapropiado</item>
+        <item>Mal Servicio</item>
+        <item>Fraudes o estafas</item>
+        <item>Violación legal o ética</item>
+    </string-array>
+
+    <string-array name="company_filter">
+        <item>Cercania</item>
+        <item>Rating</item>
+    </string-array>
+
+    <string-array name="company_product">
+        <item>Paneles Solares</item>
+        <item>Celdas Fotovoltaicas</item>
+    </string-array>
+
 </resources>

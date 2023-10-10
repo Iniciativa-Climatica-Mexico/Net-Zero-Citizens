@@ -100,6 +100,13 @@ class CatalogueFragment : Fragment() {
                 false
             }
         }
+
+        // Get the buttonOpenModal and setup onClickListener
+        val buttonOpenModal = binding.SearchBar.buttonOpenModal
+        buttonOpenModal.setOnClickListener {
+            val modal = CatalogueFilterModal.newInstance()
+            modal.show(parentFragmentManager, "CatalogueFilterModal")
+        }
         return binding.root
     }
 
