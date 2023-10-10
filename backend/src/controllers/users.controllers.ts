@@ -87,9 +87,9 @@ export const getUserInfo: RequestHandler<{ userId: string }> = async (
 
   try {
     if (userInfo) {
-      res.status(200).json(userInfo)
+      res.json(userInfo)
     } else {
-      res.status(404).json({ error: 'User not found' })
+      res.status(200).status(404).json({ error: 'User not found' })
     }
   } catch (error) {
     res.status(400).json({ error: 'Error getting user' })

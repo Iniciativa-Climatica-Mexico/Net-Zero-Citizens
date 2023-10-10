@@ -1,5 +1,5 @@
 import CompanyProducts from '../models/companyProducts.model'
-import CompanyFiles from '../models/companyFiles.model'
+import CompanyImages from '../models/companyImages.model'
 import Product from '../models/products.model'
 import Review from '../models/review.model'
 import { Op, col, fn, literal } from 'sequelize'
@@ -33,6 +33,12 @@ export type CompanyType = {
   zipCode: string
   userId: string | null
   profilePicture?: string | null
+  pdfCurriculumUrl: string
+  pdfDicCdmxUrl?: string | null
+  pdfPeeFideUrl?: string | null
+  pdfGuaranteeSecurityUrl: string
+  pdfActaConstitutivaUrl: string
+  pdfIneUrl: string
   status?: string
 }
 
@@ -110,10 +116,6 @@ export const getAllCompanies = async (
         model: Review,
         as: 'reviews',
         attributes: [],
-      },
-      {
-        model: CompanyFiles,
-        as: 'companyFiles',
       },
     ],
     order: ordering === 'score' ? literal('score DESC') : undefined,
@@ -446,24 +448,24 @@ export const getCompanyById = async (id: string): Promise<Company | null> => {
   const company = await Company.findByPk(id)
   const companyScore = await getCompanyScore(id)
   const companyProducts = await getCompanyProducts(id)
-  const companyFiles = await getCompanyFiles(id)
+  const companyImages = await getCompanyImages(id)
   const rating = Math.round(companyScore?.[0].getDataValue('score') * 10) / 10
   const comment = companyScore?.[0].getDataValue('review')
   const products: Product[] = []
-  const files: CompanyFiles[] = []
+  const images: CompanyImages[] = []
 
   companyProducts?.forEach(function (product) {
     products.push(product.getDataValue('product').dataValues)
   })
 
-  companyFiles?.forEach(function (file) {
-    files.push(file.dataValues)
+  companyImages?.forEach(function (image) {
+    images.push(image.dataValues)
   })
 
   company?.setDataValue('products', products)
   company?.setDataValue('score', rating)
   company?.setDataValue('oneComment', comment)
-  company?.setDataValue('files', files)
+  company?.setDataValue('images', images)
 
   return company
 }
@@ -509,13 +511,14 @@ export const unbindUserFromCompany = async (
   return company
 }
 
-const getCompanyFiles = async (id: string): Promise<CompanyFiles[] | null> => {
-  return await CompanyFiles.findAll({
+const getCompanyImages = async (
+  id: string
+): Promise<CompanyImages[] | null> => {
+  return await CompanyImages.findAll({
     where: {
       companyId: id,
     },
     attributes: {
-      include: ['companyFileId', 'fileUrl'],
       exclude: ['createdAt', 'updatedAt'],
     },
   })
@@ -593,6 +596,8 @@ export const assignCompanyUser = async (
 
     company.userId = userId
     user.companyId = companyId
+    user.roleId = 'COMAPNY_ROLE_ID'
+
     await company.save()
     try {
       await user.save()

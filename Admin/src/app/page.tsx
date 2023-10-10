@@ -7,6 +7,7 @@ import {
   getApprovedCompanies,
 } from '@/api/v1/company'
 
+import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -44,7 +45,12 @@ export default function Home() {
     description: '',
     createdAt: '',
     streetNumber: '',
-    companyFiles: []
+    pdfCurriculumUrl: '',
+    pdfDicCdmxUrl: '',
+    pdfPeeFideUrl: '',
+    pdfGuaranteeSecurityUrl: '',
+    pdfActaConstitutivaUrl: '',
+    pdfIneUrl: '',
   })
   const [modalOpen, setIsModalOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
@@ -52,7 +58,9 @@ export default function Home() {
   const [pendingCompanies, setPendingCompanies] = useState<Company[]>([])
   const [approvedCompanies, setApprovedCompanies] = useState<Company[]>([])
   const [searchTerm, setSearchTerm] = useState('')
-  const [activeTab, setActiveTab] = useState<tabs>('pending_approval')
+  const [activeTab, setActiveTab] = useState<tabs>(
+    'pending_approval'
+  )
 
   const handleTableRowClick = (company: Company) => {
     setSelectedCompany(company)
@@ -82,15 +90,12 @@ export default function Home() {
       ? pendingCompanies?.filter((company) =>
         company.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
-      : activeTab === 'approved'
-        ? approvedCompanies?.filter((company) =>
-          company.name.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-        : approvedCompanies?.filter(
-          (company) =>
-            company.userId === null &&
-            company.name.toLowerCase().includes(searchTerm.toLowerCase())
-        )
+      : activeTab === 'approved' ? approvedCompanies?.filter((company) =>
+        company.name.toLowerCase().includes(searchTerm.toLowerCase())
+      ) : approvedCompanies?.filter((company) =>
+        company.userId === null &&
+        company.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
 
   const startIndex = (currentPage - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
@@ -109,9 +114,7 @@ export default function Home() {
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">Imagen</TableHead>
-          {activeTab === 'no_user' ? (
-            <TableHead>Token de registro</TableHead>
-          ) : null}
+          { activeTab === 'no_user' ? <TableHead>Token de registro</TableHead> : null}
           <TableHead>Nombre</TableHead>
           <TableHead>Correo</TableHead>
           <TableHead>Ubicación</TableHead>
@@ -125,22 +128,26 @@ export default function Home() {
               className="cursor-pointer"
               onClick={() => handleTableRowClick(company)}
             >
-              <Image
-                src={LogoSm}
-                alt="Placeholder"
-                width={350}
-                height={350}
-                className="basis-6/12 mr-[10px] rounded-l-xl object-cover"
-              />
+              {company.profilePicture != null ?
+                <Avatar>
+                  <AvatarImage src={company.profilePicture} />
+                </Avatar>
+                :
+                <Image
+                  src={LogoSm}
+                  alt="Placeholder"
+                  width={350}
+                  height={350}
+                  className="basis-6/12 mr-[10px] rounded-l-xl object-cover"
+                />
+              }
             </TableCell>
-            {activeTab === 'no_user' ? (
-              <TableCell
-                className="cursor-pointer"
-                onClick={() => handleTableRowClick(company)}
-              >
-                {company.companyId}
-              </TableCell>
-            ) : null}
+            { activeTab === 'no_user' ? <TableCell
+              className="cursor-pointer"
+              onClick={() => handleTableRowClick(company)}
+            >
+              {company.companyId}
+            </TableCell> : null}
             <TableCell
               className="cursor-pointer"
               onClick={() => handleTableRowClick(company)}

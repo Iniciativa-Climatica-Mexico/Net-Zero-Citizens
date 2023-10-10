@@ -7,54 +7,6 @@
 
 import SwiftUI
 
-class ImageLoader: ObservableObject {
-    @Published var uiImage: UIImage?
-
-    func load(url: URL) {
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data = data, error == nil else {
-                return
-            }
-
-            DispatchQueue.main.async {
-                self.uiImage = UIImage(data: data)
-            }
-        }.resume()
-    }
-}
-
-struct AsyncImage: View {
-    @ObservedObject private var loader: ImageLoader
-    private let placeholder: Image
-
-    init(url: URL, placeholder: Image = Image("Sun")) {
-        self.loader = ImageLoader()
-        self.placeholder = placeholder
-        self.loader.load(url: url)
-    }
-
-    var body: some View {
-        if let uiImage = loader.uiImage {
-            Image(uiImage: uiImage)
-        } else {
-            placeholder
-        }
-    }
-}
-
-@ViewBuilder
-private func userProfileImage() -> some View {
-    @ObservedObject var imageModel = UserImageViewModel()
-    if let imageURL = URL(string: imageModel.profilePictureURL ?? "") {
-        AsyncImage(url: imageURL)
-            .frame(width: 100, height: 100)
-    } else {
-        Image("Sun")
-            .resizable()
-            .frame(width: 100, height: 100)
-    }
-}
-
 
 struct ProfileView: View {
   
@@ -88,7 +40,9 @@ struct ProfileView: View {
         VStack {
           
           //Imagen provicional
-            userProfileImage()
+          Image("Sun")
+            .resizable() // Hacer que la imagen sea redimensionable
+            .frame(width: 100, height: 100)
           
           HStack {
             //Nombre del usuario

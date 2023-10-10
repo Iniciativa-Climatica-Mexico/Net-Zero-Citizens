@@ -12,6 +12,7 @@ import Foundation
 /// Struct representando el usuario
 struct UserAuth: Codable, Identifiable, Equatable {
   var id: String {uuid}
+  
   var first_name: String
   var last_name: String
   var uuid: String

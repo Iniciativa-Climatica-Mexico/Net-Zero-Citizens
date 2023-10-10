@@ -1,7 +1,6 @@
 package com.greencircle.domain.model.company
 
 import com.google.gson.annotations.SerializedName
-import com.greencircle.domain.model.company.files.CompanyFile
 import com.greencircle.domain.model.product.Product
 import com.greencircle.domain.model.status.Status
 import java.io.Serializable
@@ -26,7 +25,13 @@ import java.util.UUID
  * @property zipCode Código postal de la empresa
  * @property latitude Latitud de la empresa
  * @property longitude Longitud de la empresa
- * @property files Lista de archivos de la empresa
+ * @property profilePicture Imagen de perfil de la empresa
+ * @property pdfCurriculumUrl URL del PDF del curriculum de la empresa
+ * @property pdfDicCdmxUrl URL del PDF del DIC CDMX de la empresa
+ * @property pdfPeeFideUrl URL del PDF del PEE FIDE de la empresa
+ * @property pdfGuaranteeSecurityUrl URL del PDF de la garantía de seguridad de la empresa
+ * @property pdfActaConstituyentesUrl URL del PDF del acta constituyentes de la empresa
+ * @property pdfIneUrl URL del PDF del INE de la empresa
  * @property status Estatus de la empresa
  * @property createdAt Fecha de creación de la empresa
  * @property updatedAt Fecha de actualización de la empresa
@@ -46,7 +51,13 @@ data class Companies(
     @SerializedName("zipCode") val zipCode: Int,
     @SerializedName("latitude") val latitude: Double,
     @SerializedName("longitude") val longitude: Double,
-    @SerializedName("files") val files: List<CompanyFile>,
+    @SerializedName("profilePicture") val profilePicture: String? = null,
+    @SerializedName("pdfCurriculumUrl") val pdfCurriculumUrl: String,
+    @SerializedName("pdfDicCdmxUrl") val pdfDicCdmxUrl: String? = null,
+    @SerializedName("pdfPeeFideUrl") val pdfPeeFideUrl: String? = null,
+    @SerializedName("pdfGuaranteeSecurityUrl") val pdfGuaranteeSecurityUrl: String,
+    @SerializedName("pdfActaConstitutivaUrl") val pdfActaConstituyentesUrl: String,
+    @SerializedName("pdfIneUrl") val pdfIneUrl: String,
     @SerializedName("status") val status: Status,
     @SerializedName("createdAt") val createdAt: Timestamp,
     @SerializedName("updatedAt") val updatedAt: Timestamp,

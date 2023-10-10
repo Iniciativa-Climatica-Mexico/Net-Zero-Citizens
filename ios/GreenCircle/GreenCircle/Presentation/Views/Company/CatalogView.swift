@@ -41,8 +41,8 @@ struct CardCatalogView: View {
           .shadow(color: Color("BlueCustom"), radius: 1)
         HStack {
           VStack (alignment: .leading) {
-              if let imageUrl = URL(string: viewModel.contentCompany.files?.first?.fileUrl ?? "") {
-              AsyncImage(url: imageUrl) { phase in
+            if let imageURL = URL(string: viewModel.contentCompany.images?.first?.imageUrl ?? "") {
+              AsyncImage(url: imageURL) { phase in
                 switch phase {
                   case .empty:
                     LoadingScreenView().frame(width: 100, height: 100)
@@ -173,12 +173,8 @@ struct CatalogView: View {
         }
         .onAppear {
           Task {
-                  do {
-                      try await viewModel.fetchAllCompanies()
-                  } catch {
-                      print("Failed to fetch all companies: \(error)")
-                  }
-              }
+            await viewModel.fetchAllCompanies()
+          }
         }
       }
       .accentColor(.white)
