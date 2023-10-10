@@ -22,12 +22,7 @@ import { Theme } from '@/@types/icons/material'
 
 import { useToast } from './ui/use-toast'
 
-import {
-  Company,
-  CompanyFiles,
-  updateCompany,
-  UpdateCompanyInfoBody,
-} from '@/api/v1/company'
+import { Company, updateCompany, UpdateCompanyInfoBody } from '@/api/v1/company'
 
 import CloseIcon from '@mui/icons-material/Close'
 import PhoneIcon from '@mui/icons-material/Phone'
@@ -50,9 +45,6 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { tabs } from '@/app/page'
-
-import { Carousel } from 'react-responsive-carousel'
-import 'react-responsive-carousel/lib/styles/carousel.min.css'
 
 interface ModalProveedorProps {
   setIsModalOpen: (value: boolean) => void
@@ -147,9 +139,7 @@ export default function ModalProveedor({
             <Card className="w-[450px] modal-card">
               <CardHeader>
                 <CardTitle>Confirmar Acción</CardTitle>
-                <CardDescription>
-                  Seguro que desea eliminar al proveedor?
-                </CardDescription>
+                <CardDescription>Seguro que desea eliminar al proveedor?</CardDescription>
               </CardHeader>
               <CardFooter className="flex justify-between">
                 <Button
@@ -158,12 +148,16 @@ export default function ModalProveedor({
                     toast({
                       description: 'Proveedor eliminado exitosamente.',
                     })
-                  }}
+                  }
+                  }
                   variant="default"
                 >
                   Confirmar
                 </Button>
-                <Button onClick={() => setViewModal(false)} variant="outline">
+                <Button
+                  onClick={() => setViewModal(false)}
+                  variant="outline"
+                >
                   Cancelar
                 </Button>
               </CardFooter>
@@ -184,51 +178,26 @@ export default function ModalProveedor({
           </div>
           <article className="flex flex-col border border-[#C1C9D2] justify-center items-center rounded-lg w-[823px] py-[25px] bg-white z-10">
             <article className="flex border border-[#C1C9D2] rounded-xl w-[763px]">
-              {selectedCompany.companyFiles &&
-              selectedCompany.companyFiles.length > 0 ? (
-                  <div className="basis-6/12 mr-[10px] rounded-l-xl object-cover border-r">
-                    <Carousel
-                      showThumbs={false}
-                      showStatus={false}
-                      dynamicHeight={false}
-                      emulateTouch={true}
-                      autoPlay
-                      infiniteLoop
-                    >
-                      {selectedCompany.companyFiles
-                        .filter(
-                          (file: CompanyFiles) =>
-                            file.fileDescription === 'Imagen' ||
-                          /\.(png|jpg|jpeg)$/.test(file.fileFormat)
-                        )
-                        .map((file: CompanyFiles) => (
-                          <div key={file.companyFileId}>
-                            <img
-                              src={file.fileUrl}
-                              alt={file.fileDescription}
-                              width={350}
-                              height={405}
-                              className="basis-6/12 mr-[10px] rounded-l-xl object-cover border-r"
-                              style={{ height: '405px' }}
-                            />
-                          </div>
-                        ))}
-                    </Carousel>
-                  </div>
-                ) : (
-                  <Image
-                    src={Logo}
-                    alt="Placeholder"
-                    width={350}
-                    height={350}
-                    className="basis-6/12 mr-[10px] rounded-l-xl object-cover border-r"
-                  />
-                )}
+              {selectedCompany.profilePicture  != null ? (
+                <img
+                  src={selectedCompany.profilePicture}
+                  alt="Company Profile"
+                  width={350}
+                  height={350}
+                  className="basis-6/12 mr-[10px] rounded-l-xl object-cover border-r"
+                />
+              ) : (
+                <Image
+                  src={Logo}
+                  alt="Placeholder"
+                  width={350}
+                  height={350}
+                  className="basis-6/12 mr-[10px] rounded-l-xl object-cover border-r"
+                />
+              )}
 
               <aside className="basis-6/12 pl-[15px] pr-[25px] py-[20px] pb-[0px] text-[14px]">
-                <h2 className="text-[20px] font-bold">
-                  {selectedCompany.name}
-                </h2>
+                <h2 className="text-[20px] font-bold">{selectedCompany.name}</h2>
                 <section className="flex items-center text-[#589A74] py-[10px] gap-x-2">
                   <PlaceIcon color="primary" />
                   {`${selectedCompany.city} ${selectedCompany.state} ${selectedCompany.zipCode}`}
@@ -257,70 +226,83 @@ export default function ModalProveedor({
                     </section>
                   </>
                 )}
-                <h3 className="font-bold">Documentos</h3>
-                <div className="flex flex-wrap justify-between items-end mb-1">
-                  {selectedCompany.companyFiles &&
-                  selectedCompany.companyFiles.length > 3 ? (
-                      <div className="mb-3">
-                        <Carousel
-                          showThumbs={false}
-                          width={350}
-                          emulateTouch={true}
-                          dynamicHeight={false}
-                          showArrows={true}
-                          showStatus={false}
-                          centerMode
-                          centerSlidePercentage={33.33}
-                        >
-                          {selectedCompany.companyFiles
-                            .filter(
-                              (file: CompanyFiles) =>
-                                file.fileDescription !== 'Imagen' && // Exclude image files
-                                !/\.(png|jpg|jpeg)$/.test(file.fileFormat)
-                            )
-                            .map((file: CompanyFiles) => (
-                              <a
-                                key={file.companyFileId}
-                                href={file.fileUrl}
-                                className="min-w-[31%] no-underline text-[#333333] font-medium"
-                                target="_blank"
-                              >
-                                <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                                  <FileOpenIcon color="info" className="mt-3" />
-                                  <p className="my-2 text-[11px]">{file.fileDescription}</p>
-                                </div>
-                              </a>
-                            ))}
-                        </Carousel>
-                      </div>
-                    ) : (
-                      <div className="flex flex-wrap justify-between items-end mb-3 w-full">
-                        {selectedCompany.companyFiles &&
-                          selectedCompany.companyFiles
-                            .filter(
-                              (file: CompanyFiles) =>
-                                file.fileDescription !== 'Imagen' && // Exclude image files
-                                !/\.(png|jpg|jpeg)$/.test(file.fileFormat)
-                            )
-                            .map((file: CompanyFiles) => (
-                              <a
-                                key={file.companyFileId}
-                                href={file.fileUrl}
-                                className="min-w-[31%] no-underline text-[#333333] font-medium"
-                                target="_blank"
-                              >
-                                <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                                  <FileOpenIcon color="info" className="mt-3" />
-                                  <p className="my-2 text-[11px]">{file.fileDescription}</p>
-                                </div>
-                              </a>
-                            ))}
-                      </div>
-                    )}
-                </div>
-                <section className="flex justify-end">
+                {selectedCompany.pdfCurriculumUrl && selectedCompany.pdfDicCdmxUrl && selectedCompany.pdfPeeFideUrl && selectedCompany.pdfGuaranteeSecurityUrl && selectedCompany.pdfActaConstitutivaUrl && selectedCompany.pdfIneUrl &&
+                <h2 className="text-[14px] font-bold mt-[10px] mb-[10px]">
+                  Documentos
+                </h2>
+                }
+                {selectedCompany.pdfCurriculumUrl && selectedCompany.pdfDicCdmxUrl && selectedCompany.pdfPeeFideUrl &&
+
+                <section className="flex justify-between items-end mb-3">
+                  <a
+                    href={selectedCompany.pdfCurriculumUrl}
+                    className="min-w-[31%] no-underline text-[#333333] font-medium"
+                    target="_blank"
+                  >
+                    <div className="border px-[5px] rounded flex flex-col justify-center items-center">
+                      <FileOpenIcon color="info" className="mt-3" />
+                      <p className="my-2 text-[11px]">Curriculum</p>
+                    </div>
+                  </a>
+                  <a
+                    href={selectedCompany.pdfDicCdmxUrl}
+                    className="min-w-[31%] no-underline text-[#333333] font-medium"
+                    target="_blank"
+                  >
+                    <div className="border px-[5px] rounded flex flex-col justify-center items-center">
+                      <FileOpenIcon color="info" className="mt-3" />
+                      <p className="my-2 text-[11px]">Dic CDMX</p>
+                    </div>
+                  </a>
+                  <a
+                    href={selectedCompany.pdfPeeFideUrl}
+                    className="min-w-[31%]  no-underline text-[#333333] font-medium"
+                    target="_blank"
+                  >
+                    <div className="border px-[5px] rounded flex flex-col justify-center items-center">
+                      <FileOpenIcon color="info" className="mt-3" />
+                      <p className="my-2 text-[11px]">Pee Fide</p>
+                    </div>
+                  </a>
+                </section>
+                }
+                {selectedCompany.pdfGuaranteeSecurityUrl && selectedCompany.pdfActaConstitutivaUrl && selectedCompany.pdfIneUrl &&
+                <section className="flex justify-between items-end mb-3">
+                  <a
+                    href={selectedCompany.pdfGuaranteeSecurityUrl}
+                    className="min-w-[31%] no-underline text-[#333333] font-medium"
+                    target="_blank"
+                  >
+                    <div className="border px-[5px] rounded flex flex-col justify-center items-center">
+                      <FileOpenIcon color="info" className="mt-3" />
+                      <p className="my-2 text-[11px]">Guarantee</p>
+                    </div>
+                  </a>
+                  <a
+                    href={selectedCompany.pdfActaConstitutivaUrl}
+                    className="min-w-[31%] no-underline text-[#333333] font-medium"
+                    target="_blank"
+                  >
+                    <div className="border px-[5px] rounded flex flex-col justify-center items-center">
+                      <FileOpenIcon color="info" className="mt-3" />
+                      <p className="my-2 text-[11px]">Acta Constitutiva</p>
+                    </div>
+                  </a>
+                  <a
+                    href={selectedCompany.pdfIneUrl}
+                    className="min-w-[31%] no-underline text-[#333333] font-medium"
+                    target="_blank"
+                  >
+                    <div className="border px-[5px] rounded flex flex-col justify-center items-center">
+                      <FileOpenIcon color="info" className="mt-3" />
+                      <p className="my-2 text-[11px]">INE</p>
+                    </div>
+                  </a>
+                </section>
+                }
+                <section className='flex justify-end'>
                   <p className="text-right text-[#858585] text-[14px]">
-                    Fecha que se registró:
+                    Fecha que se registro:
                   </p>
                   <p className="text-right text-[#858585] text-[14px] ml-2">
                     {formatDate(selectedCompany.createdAt)}
@@ -332,11 +314,8 @@ export default function ModalProveedor({
               {activeTab === 'no_user' ? (
                 <>
                   <h3 className="font-bold">Token de registro</h3>
-                  <p className="text-sm py-[15px]">
-                    {selectedCompany.companyId}
-                  </p>
-                </>
-              ) : null}
+                  <p className="text-sm py-[15px]">{selectedCompany.companyId}</p>
+                </>) : null}
               <h3 className="font-bold">Descripción</h3>
               <p className="text-sm py-[15px]">{selectedCompany.description}</p>
               {activeTab === 'pending_approval' ? (
@@ -372,7 +351,8 @@ export default function ModalProveedor({
                         toast({
                           description: 'Proveedor rechazado exitosamente.',
                         })
-                      }}
+                      }
+                      }
                       variant="outline"
                     >
                       Rechazar
@@ -380,7 +360,12 @@ export default function ModalProveedor({
                   </footer>
                 </>
               ) : (
-                <Button onClick={() => setViewModal(true)} variant="default">
+                <Button
+                  onClick={() =>
+                    setViewModal(true)
+                  }
+                  variant="default"
+                >
                   Eliminar
                 </Button>
               )}

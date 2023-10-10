@@ -1,13 +1,5 @@
 import { authAxios } from '../axios.config'
 
-export interface CompanyFiles {
-  companyFileId: string
-  companyId: string
-  fileUrl: string
-  fileDescription: string
-  fileFormat: string
-}
-
 export interface Company {
   companyId: string
   userId: string | null
@@ -24,7 +16,12 @@ export interface Company {
   description: string
   createdAt: string
   streetNumber: string
-  companyFiles: CompanyFiles[]
+  pdfCurriculumUrl: string
+  pdfDicCdmxUrl: string
+  pdfPeeFideUrl: string
+  pdfGuaranteeSecurityUrl: string
+  pdfActaConstitutivaUrl: string
+  pdfIneUrl: string
 }
 
 /**

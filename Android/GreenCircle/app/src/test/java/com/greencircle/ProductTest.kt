@@ -1,9 +1,6 @@
 package com.greencircle
 
 import com.greencircle.domain.model.company.Companies
-import com.greencircle.domain.model.company.files.CompanyFile
-import com.greencircle.domain.model.company.files.FileDescription
-import com.greencircle.domain.model.company.files.FileFormat
 import com.greencircle.domain.model.product.Product
 import com.greencircle.domain.model.status.Status
 import java.sql.Timestamp
@@ -34,15 +31,13 @@ class ProductTest {
             zipCode = 12345,
             latitude = 19.4326,
             longitude = -99.1332,
-            files = listOf(
-                CompanyFile(
-                    UUID(0, 1),
-                    UUID(0, 1),
-                    "test.jpg",
-                    FileDescription.IMAGEN,
-                    FileFormat.JPEG
-                )
-            ),
+            profilePicture = "test.jpg",
+            pdfCurriculumUrl = "test.pdf",
+            pdfDicCdmxUrl = null,
+            pdfPeeFideUrl = null,
+            pdfGuaranteeSecurityUrl = "test.pdf",
+            pdfActaConstituyentesUrl = "test.pdf",
+            pdfIneUrl = "test.pdf",
             status = Status.APPROVED,
             createdAt = Timestamp(System.currentTimeMillis()),
             updatedAt = Timestamp(System.currentTimeMillis())
@@ -80,15 +75,13 @@ class ProductTest {
             zipCode = 12345,
             latitude = 19.4326,
             longitude = -99.1332,
-            files = listOf(
-                CompanyFile(
-                    UUID(0, 1),
-                    UUID(0, 1),
-                    "test.jpg",
-                    FileDescription.IMAGEN,
-                    FileFormat.JPEG
-                )
-            ),
+            profilePicture = "test.jpg",
+            pdfCurriculumUrl = "test.pdf",
+            pdfDicCdmxUrl = null,
+            pdfPeeFideUrl = null,
+            pdfGuaranteeSecurityUrl = "test.pdf",
+            pdfActaConstituyentesUrl = "test.pdf",
+            pdfIneUrl = "test.pdf",
             status = Status.APPROVED,
             createdAt = Timestamp(System.currentTimeMillis()),
             updatedAt = Timestamp(System.currentTimeMillis())
@@ -130,15 +123,13 @@ class ProductTest {
             zipCode = 12345,
             latitude = 19.4326,
             longitude = -99.1332,
-            files = listOf(
-                CompanyFile(
-                    UUID(0, 1),
-                    UUID(0, 1),
-                    "test.jpg",
-                    FileDescription.IMAGEN,
-                    FileFormat.JPEG
-                )
-            ),
+            profilePicture = "test.jpg",
+            pdfCurriculumUrl = "test.pdf",
+            pdfDicCdmxUrl = null,
+            pdfPeeFideUrl = null,
+            pdfGuaranteeSecurityUrl = "test.pdf",
+            pdfActaConstituyentesUrl = "test.pdf",
+            pdfIneUrl = "test.pdf",
             status = Status.APPROVED,
             createdAt = Timestamp(System.currentTimeMillis()),
             updatedAt = Timestamp(System.currentTimeMillis())
@@ -180,15 +171,13 @@ class ProductTest {
             zipCode = 12345,
             latitude = 19.4326,
             longitude = -99.1332,
-            files = listOf(
-                CompanyFile(
-                    UUID(0, 1),
-                    UUID(0, 1),
-                    "test.jpg",
-                    FileDescription.IMAGEN,
-                    FileFormat.JPEG
-                )
-            ),
+            profilePicture = "test.jpg",
+            pdfCurriculumUrl = "test.pdf",
+            pdfDicCdmxUrl = null,
+            pdfPeeFideUrl = null,
+            pdfGuaranteeSecurityUrl = "test.pdf",
+            pdfActaConstituyentesUrl = "test.pdf",
+            pdfIneUrl = "test.pdf",
             status = Status.APPROVED,
             createdAt = Timestamp(System.currentTimeMillis()),
             updatedAt = Timestamp(System.currentTimeMillis())

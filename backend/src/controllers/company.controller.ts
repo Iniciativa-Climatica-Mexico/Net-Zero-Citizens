@@ -166,7 +166,7 @@ export const createCompany: RequestHandler<
       return res
         .status(400)
         .json({ companyId: '', error: 'Error creating company' })
-    console.log(newCompany.dataValues.companyId)
+
     return res.json({
       companyId: newCompany?.dataValues.companyId,
       message: 'Company created',

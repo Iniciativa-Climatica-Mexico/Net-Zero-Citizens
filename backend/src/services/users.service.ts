@@ -94,9 +94,7 @@ export const getUserByEmailWithRole = async (
  * @returns User or Null
  */
 
-export const getUserCompany = async (
-  companyId: string
-): Promise<User | null> => {
+export const getUserCompany = async (companyId: string): Promise<User | null> => {
   return await User.findOne({
     where: { companyId },
   })
@@ -125,13 +123,6 @@ export const updateUserInfo = async (
 ): Promise<User | null> => {
   const userInfo = await User.findByPk(userId)
   if (userInfo) {
-    if (newUserInfo.roleId == 'CUSTOMER_ROLE_ID') {
-      newUserInfo.profilePicture =
-        'https://greencircle-imagenes.s3.us-east-2.amazonaws.com/Imagenes+Perfil/ImagenUsuario.png'
-    } else if (newUserInfo.roleId == 'COMPANY_ROLE_ID') {
-      newUserInfo.profilePicture =
-        'https://greencircle-imagenes.s3.us-east-2.amazonaws.com/Imagenes+Perfil/ImagenProveedor.png'
-    }
     return userInfo.update(newUserInfo)
   } else {
     return null

@@ -1,6 +1,5 @@
 package com.greencircle.domain.model.company
 
-import com.greencircle.domain.model.company.files.CompanyFile
 import java.util.UUID
 
 data class Company(
@@ -15,5 +14,8 @@ data class Company(
     val city: String,
     val state: String,
     val zipCode: String,
-    val files: List<CompanyFile>
+    val pdfCurriculumUrl: String,
+    val pdfGuaranteeSecurityUrl: String,
+    val pdfActaConstitutivaUrl: String,
+    val pdfIneUrl: String
 )

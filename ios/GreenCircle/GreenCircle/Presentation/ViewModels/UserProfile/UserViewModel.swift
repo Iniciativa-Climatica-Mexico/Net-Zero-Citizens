@@ -7,26 +7,6 @@
 
 import Foundation
 
-class UserImageViewModel: ObservableObject {
-    private let repository = UserRepository.shared
-    private var local = LocalService.shared
-    
-    @Published var profilePictureURL: String?
-    
-    init(local: LocalService = LocalService.shared) {
-        self.local = local
-    }
-    
-    private func fetchUserProfilePicture() async {
-        if let userId = local.getUserInformation()?.user.id,
-           let user = await repository.fetchUserById(userId: userId) {
-            profilePictureURL = user.profilePicture
-        }
-        print(profilePictureURL)
-    }
-}
-
-
 /// Implementación de view model de modelo de Compañía
 class UserViewModel: ObservableObject {
     /// Caso de uso para hacer fetch de los datos de compañía
