@@ -110,15 +110,11 @@ class UserRepository: UserRepositoryProtocol {
     let _: NoResponse? = await nService.putRequest(url, body: params)
   }
   
-  //func updateUserData()
   
   func fetchUserById(userId: String) async -> User? {
     return await nService.getRequest(URL(string: "\(UserAPI.base)/\(userId)")!)
   }
   
-//    func updateUserData(updatedUserData: User, userId: String) async -> User? {
-//      return await nService.putRequest(url, body: updatedUserData)
-//  }
   
   func updateUserCredentials(userId: String, newUserCredentials: Credentials) async -> User? {
     let url = URL(string: "\(UserAPI.base)/\(UserAPI.Routes.credentials)/\(userId)")!
@@ -181,19 +177,6 @@ class UserRepository: UserRepositoryProtocol {
           UserDefaults.standard.set(encoded, forKey: "userAuthData")
       }
   }
-  
-//  func updateUserDataOnServer(userAuth: UserAuth, userId: String) async -> Bool {
-//      let endpoint = "\(UserAPI.base)\(UserAPI.Routes.userId)".replacingOccurrences(of: ":userId", with: userId)
-//
-//      let encoder = JSONEncoder()
-//      guard let encodedData = try? encoder.encode(userAuth) else { return false }
-//
-//      guard let body = try? JSONSerialization.jsonObject(with: encodedData, options: .allowFragments) as? [String: Any] else { return false }
-//
-//      let result: NoResponse? = await nService.putRequest(URL(string: endpoint)!, body: body)
-//      return result != nil
-//  }
-  
   
   func updateUserDataOnServer(user: User) async -> User? {
       let userId = (lService.getUserInformation()?.user.id)!

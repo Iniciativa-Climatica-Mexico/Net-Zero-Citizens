@@ -35,14 +35,6 @@ class UserViewModel: ObservableObject {
             contentBaseUser = await repository.updateUserDataOnServer(user: userToUpdate)
         }
     }
-
-//  @MainActor
-//  func saveProfileChanges() async {
-//      if let userToUpdate = tempContentBaseUser {
-//          tempContentBaseUser = await repository.updateUserDataOnServer(user: userToUpdate)
-//          modelUser.contentBaseUser = tempContentBaseUser  // Actualizar la instancia principal solo después de guardar
-//      }
-//  }
   
     init() {
         contentUser = useCase.getUserData()

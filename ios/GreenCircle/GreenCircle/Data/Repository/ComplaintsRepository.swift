@@ -47,7 +47,6 @@ class ComplaintRepository: ComplaintRepositoryProtocol {
     ///   - complaint: the object with the information of the complaint
     func postComplaint(complaint: PostComplaintData) async {
         let userId = uRepositoty.getAuthData()!.user.uuid
-        //Hacerla no hardcodeada
         
         let body: [String: Any] = [
                 "complaintId": complaint.complaintId,
