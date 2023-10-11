@@ -143,7 +143,7 @@ struct CompanyReportView: View {
                     .font(.system(size: 12))
                     .foregroundColor(Color("BlackCustom")).contrast(12.6)
                     .padding(.top ,10).bold()
-                    .padding(.leading ,-90)
+                    .padding(.leading ,-78)
 
                 TextField("Comentario adicional al reporte...", text: $description, onCommit: {
                     self.hideKeyboard()
