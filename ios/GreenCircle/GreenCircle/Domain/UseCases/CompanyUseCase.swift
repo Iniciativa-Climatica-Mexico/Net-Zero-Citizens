@@ -54,4 +54,30 @@ class CompanyUseCase {
     }
     return nil
   }
+  
+  func filterCompany(order: String, product: String, state: String) async -> [Company] {
+    var newOrder = ""
+    var newProduct = ""
+
+    switch order {
+    case "Cercanía":
+      newOrder = "distance"
+    case "Rating":
+      newOrder = "score"
+    default:
+      break
+    }
+    
+    switch product {
+    case "Paneles Solares":
+      newProduct = ""
+    case "Celdas Fotovoltaicas":
+      newProduct = ""
+    default:
+      break
+    }
+    
+    return await cRepository.fetchFilteredCompanies(order: newOrder, product: newProduct, state: state)!.rows
+    
+  }
 }

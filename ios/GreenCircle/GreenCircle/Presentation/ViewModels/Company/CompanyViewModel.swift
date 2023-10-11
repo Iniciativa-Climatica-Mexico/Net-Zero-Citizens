@@ -11,8 +11,11 @@ import Foundation
 class CompanyViewModel: ObservableObject {
   /// Caso de uso para hacer fetch de los datos de compañía
   private let useCase: CompanyUseCase
-    @Published var currentCompany: Company?
+  @Published var currentCompany: Company?
   
+  @Published var order: String = ""
+  @Published var state: String = ""
+  @Published var product: String = ""
   
   @Published var companies = [Company]()
   
@@ -44,7 +47,7 @@ class CompanyViewModel: ObservableObject {
     score: 0.0,
     oneComment: "",
     images: []
-    )
+  )
   
   /// Para implementar el caso de uso en la vista que llame al ViewModel Compañía
   init(useCase: CompanyUseCase = CompanyUseCase.shared) {
@@ -57,13 +60,18 @@ class CompanyViewModel: ObservableObject {
   func fetchCompanyById(idCompany: UUID) async {
     let resultCompany = await useCase.fetchCompanyById(id: idCompany)
     if let resultCompany = resultCompany {
-        contentCompany = resultCompany
+      contentCompany = resultCompany
     }
   }
-
+  
   @MainActor
   func fetchAllCompanies() async {
     self.companies = await useCase.fetchAllCompanies()!.rows
   }
-   
+  
+  
+  @MainActor
+  func fetchFilteredCompanies() async {
+    self.companies = await useCase.filterCompany(order: order, product: product, state: state)
+  }
 }
