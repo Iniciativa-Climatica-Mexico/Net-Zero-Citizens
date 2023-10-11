@@ -47,6 +47,6 @@
         android:src="@drawable/baseline_filter_list_24"
         android:contentDescription="Abre los filtros"
         app:tint="@color/blue"
-    />
+        />
 
 </RelativeLayout>
