@@ -2,12 +2,62 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:id="@+id/LLContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="40dp"
     android:layout_marginBottom="10dp"
-    >
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/fragment_company_catalogue_skeleton"
+        layout="@layout/fragment_company_catalogue_skeleton" />
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/catalogue_search_bar"
+        android:layout_marginTop="20dp"
+        android:id="@+id/SearchBar"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/NoResultsContainer"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_marginTop="16dp"
+        >
+
+
+        <ImageView
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:src="@drawable/baseline_error_outline_24"
+            android:layout_gravity="center_horizontal"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No hay resultados para tu búsqueda"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Intenta revisar tu ortografia o cambiar los filtros"
+            android:layout_gravity="center_horizontal"
+            />
+
+
+    </LinearLayout>
+
 
     <include
         android:layout_width="match_parent"
@@ -61,7 +111,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/catalogue_card_layout"
-        />
+        tools:listitem="@layout/catalogue_card_layout" />
 
 </LinearLayout>

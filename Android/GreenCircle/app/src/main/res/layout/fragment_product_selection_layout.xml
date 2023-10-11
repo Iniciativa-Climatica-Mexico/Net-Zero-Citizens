@@ -10,8 +10,6 @@
         android:layout_height="49dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
-
-mn
         <View
             android:layout_width="0dp"
             android:layout_height="1dp"
@@ -70,7 +68,7 @@ mn
             android:orientation="horizontal">
 
             <com.google.android.material.materialswitch.MaterialSwitch
-                android:id="@+id/photovoltaics"
+                android:id="@+id/fotovoltaics"
                 style="@style/Widget.Material3.CompoundButton.MaterialSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -84,7 +82,7 @@ mn
                 app:thumbTint="@color/white"
                 app:trackTint="@color/gray_500"
                 android:padding="4dp"
-            />
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -119,7 +117,7 @@ mn
                 app:thumbTint="@color/white"
                 app:trackTint="@color/gray_500"
                 android:padding="4dp"
-            />
+                />
 
             <TextView
                 android:layout_width="wrap_content"
