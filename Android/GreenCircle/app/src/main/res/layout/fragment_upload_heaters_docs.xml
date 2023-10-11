@@ -136,7 +136,7 @@
                         app:layout_constraintTop_toBottomOf="@id/more_than_file_desc" />
 
                     <ImageView
-                        android:id="@+id/lessThanChevron"
+                        android:id="@+id/moreThanChevron"
                         android:layout_width="30dp"
                         android:layout_height="0dp"
                         android:contentDescription="@string/chevron"
@@ -147,7 +147,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
-                        android:id="@+id/lessThanCheck"
+                        android:id="@+id/moreThanCheck"
                         android:layout_width="30dp"
                         android:layout_height="0dp"
                         android:contentDescription="@string/check"
@@ -214,7 +214,7 @@
                         app:layout_constraintTop_toBottomOf="@id/less_than_file_desc" />
 
                     <ImageView
-                        android:id="@+id/moreThanChevron"
+                        android:id="@+id/lessThanChevron"
                         android:layout_width="30dp"
                         android:layout_height="0dp"
                         android:contentDescription="@string/chevron"
@@ -225,7 +225,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
-                        android:id="@+id/moreThanCheck"
+                        android:id="@+id/lessThanCheck"
                         android:layout_width="30dp"
                         android:layout_height="0dp"
                         android:contentDescription="@string/check"
