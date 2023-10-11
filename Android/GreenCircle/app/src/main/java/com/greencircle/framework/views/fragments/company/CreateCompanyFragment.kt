@@ -29,8 +29,9 @@ import java.util.UUID
  * @constructor Incializa y crea la vista del "CreateCompanyFragment"
  */
 class CreateCompanyFragment : Fragment() {
-    private lateinit var viewModel: CreateCompanyViewModel
     private var arguments = Bundle()
+    private var companyId: String? = null
+    private lateinit var viewModel: CreateCompanyViewModel
     private lateinit var authToken: String
     private lateinit var uuid: UUID
     private lateinit var nameInputLayout: TextInputLayout
@@ -161,6 +162,7 @@ class CreateCompanyFragment : Fragment() {
             // Handle the result here
             if (result != null && result.tokens != null) {
                 authToken = result.tokens.authToken
+                arguments.putString("authToken", authToken)
                 uuid = result.user.uuid
             } else {
                 Log.d("CreateCompanyFragment", "Google login failed")
@@ -183,6 +185,16 @@ class CreateCompanyFragment : Fragment() {
                 ).show()
             }
         }
+
+        viewModel.createCompanyResult.observe(viewLifecycleOwner) { result ->
+            // Handle the result here
+            if (result != null) {
+                companyId = result.companyId
+                arguments.putString("companyId", companyId)
+                nextFragment(arguments)
+            }
+        }
+
         setSwitch(view.findViewById(R.id.avisoPrivacidad))
     }
 
@@ -252,7 +264,6 @@ class CreateCompanyFragment : Fragment() {
         val validation: Boolean = validateForm(view)
         if (validation) {
             viewModel.createCompany(createCompanyRequest)
-            nextFragment()
         }
     }
 
