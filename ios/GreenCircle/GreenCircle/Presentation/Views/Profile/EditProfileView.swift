@@ -437,6 +437,8 @@ struct SectionButton: View{
            secondaryButton: .destructive(Text("Salir"), action: {
              presentationMode.wrappedValue.dismiss()
              selectedTab = .profile
+             
+             
            })
          )
        }

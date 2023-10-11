@@ -13,7 +13,8 @@ struct ProfileView: View {
     @State var totalFavourites: Int = 0
     @State private var showAlertFavourites = false
     var goLogin: () -> Void
-
+  
+  
     var body: some View {
         NavigationView {
             ZStack {
@@ -129,9 +130,9 @@ struct ProfileView: View {
                     }
                 }
                 .padding(.top, 70)
-            }
+            }.onAppear(perform: loadProfileData)
         }
-        .onAppear(perform: loadProfileData)
+        
     }
 
     private func loadProfileData() {
