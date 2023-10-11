@@ -68,8 +68,8 @@ struct SectionProfile: View{
 ///_----------------- SECTION 1_
 struct Section1: View{
   @ObservedObject var modelUser = UserViewModel()
+  @State private var shouldDisableSaveButton = true
 
-      // Propiedad computada para el binding del TextField
       private var firstNameBinding: Binding<String> {
           Binding<String>(
               get: { self.modelUser.contentBaseUser?.firstName ?? "" },
@@ -224,28 +224,27 @@ struct Section2: View {
                   .foregroundColor(Color("GreenColor"))
                   .font(.system(size: 13))
                   .fontWeight(.semibold)
+            let ageStringBinding = Binding<String>(
+                get: {
+                    if let age = modelUser.contentBaseUser?.age, age > 0 {
+                        return String(age)
+                    } else {
+                        return ""
+                    }
+                },
+                set: {
+                    let filtered = $0.filter { "0123456789".contains($0) }
 
-              let ageStringBinding = Binding<String>(
-                  get: {
-                    if let age = modelUser.contentBaseUser?.age {
-                          return String(age)
-                      } else {
-                          return "Cargando..."
-                      }
-                  },
-                  set: {
-                      let filtered = $0.filter { "0123456789".contains($0) }
-                      
-                      // Limitamos la entrada a un máximo de 2 dígitos
-                      if filtered.count <= 2 {
-                          if let age = Int(filtered) {
+                    // Limitamos la entrada a un máximo de 2 dígitos
+                    if filtered.count <= 2 {
+                        if let age = Int(filtered) {
                             modelUser.contentBaseUser?.age  = age
-                          } else {
+                        } else {
                             modelUser.contentBaseUser?.age = 0
-                          }
-                      }
-                  }
-              )
+                        }
+                    }
+                }
+            )
 
               TextField("Edad", text: ageStringBinding)
                   .keyboardType(.numberPad)
@@ -327,22 +326,35 @@ struct Section3: View {
       guard let input = input else { return false }
       return input.range(of: "^[0-9]+$", options: .regularExpression) != nil
   }
+    
+  func isPhoneNumberValid() -> Bool {
+      guard let phoneNumber = modelUser.contentBaseUser?.phoneNumber else {
+          return false
+      }
+      return phoneNumber.count == 10
+  }
   
-    var body: some View {
-        VStack(alignment: .leading) {
-            //----Field Celular----------------------------------------------------------
-            Text("Teléfono")
-                .padding(.top, 16)
-                .foregroundColor(Color("GreenColor"))
-                .font(.system(size: 13))
-                .fontWeight(.semibold)
+  var body: some View {
+      VStack(alignment: .leading) {
+          //----Field Celular----------------------------------------------------------
+          Text("Teléfono")
+              .padding(.top, 16)
+              .foregroundColor(Color("GreenColor"))
+              .font(.system(size: 13))
+              .fontWeight(.semibold)
 
           TextField("Teléfono", text: Binding(
-              get: { self.modelUser.contentBaseUser?.phoneNumber ?? "Cargando..."  },
+              get: {
+                  if let phoneNumber = self.modelUser.contentBaseUser?.phoneNumber, !phoneNumber.isEmpty {
+                      return phoneNumber
+                  } else {
+                      return ""
+                  }
+              },
               set: {
                   let filtered = $0.filter { "0123456789".contains($0) }
                   if filtered.count <= 10 {
-                      self.modelUser.contentBaseUser?.phoneNumber = filtered.isEmpty ? nil : filtered
+                      self.modelUser.contentBaseUser?.phoneNumber = filtered
                   }
               }
           ))
@@ -351,35 +363,39 @@ struct Section3: View {
           .font(.system(size: 13))
           .textFieldStyle(RoundedBorderTextFieldStyle())
 
-                     // Mostrar mensaje solo si el campo está vacío.
-                     if isBlank(input: modelUser.contentBaseUser?.phoneNumber ?? "Cargando...") {
-                         Text("No puedes dejar este campo vacío.")
-                             .foregroundColor(.red)
-                             .font(.system(size: 11))
-                     }
-
-            //----Picker Estado----------------------------------------------------------
-            Text("Estado")
-                .padding(.top, 16)
-                .foregroundColor(Color("GreenColor"))
-                .font(.system(size: 13))
-                .fontWeight(.semibold)
-            
-            PickerFormView2(
-                selectedOption: Binding<String>(
-                    get: { modelUser.contentBaseUser?.state ?? "Cargando..."},
-                    set: { newValue in
-                      modelUser.contentBaseUser?.state = newValue.isEmpty ? nil : newValue
-                    }
-                ),
-                label:  modelUser.contentBaseUser?.state ?? "Selecciona un estado...",
-                options: Constants.states
-            )
-            .padding(.top, 5)
+          // Mostrar mensaje si el campo está vacío.
+        if isBlank(input: modelUser.contentBaseUser?.phoneNumber) {
+            Text("No puedes dejar este campo vacío.")
+                .foregroundColor(.red)
+                .font(.system(size: 11))
+        } else if let phone = modelUser.contentBaseUser?.phoneNumber, phone.count != 10 {
+            Text("El teléfono debe tener exactamente 10 dígitos.")
+                .foregroundColor(.red)
+                .font(.system(size: 11))
         }
-    }
-}
+        
+        //----Picker Estado----------------------------------------------------------
+        Text("Estado")
+            .padding(.top, 16)
+            .foregroundColor(Color("GreenColor"))
+            .font(.system(size: 13))
+            .fontWeight(.semibold)
+        
+        PickerFormView2(
+            selectedOption: Binding<String>(
+                get: { modelUser.contentBaseUser?.state ?? "Cargando..."},
+                set: { newValue in
+                  modelUser.contentBaseUser?.state = newValue.isEmpty ? nil : newValue
+                }
+            ),
+            label:  modelUser.contentBaseUser?.state ?? "Selecciona un estado...",
+            options: Constants.states
+        )
+        .padding(.top, 5)
+      }
 
+    }
+  }
 
 struct SectionButton: View{
    var modelUser: UserViewModel
@@ -388,6 +404,9 @@ struct SectionButton: View{
    @Environment(\.presentationMode) var presentationMode
    @State private var navigateToProfile = false
    @Binding var selectedTab: TabSelection
+  var isFormValid: Bool
+  var isPhoneNumberValid: Bool
+
    
    var body: some View{
      HStack {
@@ -437,6 +456,11 @@ struct SectionButton: View{
              .background(TitleBarColor.TitleBarColor)
              .cornerRadius(8)
          }
+         .opacity(isFormValid || isPhoneNumberValid ? 1.0 : 0.5)
+         .opacity(isFormValid && isPhoneNumberValid ? 1.0 : 0.5)
+         //.opacity(isPhoneNumberValid ? 1.0 : 0.5)
+         .disabled(!isPhoneNumberValid)
+         .disabled(!isFormValid)
          .alert(isPresented: $showAlert2) {
            Alert(
              title: Text("Datos Actualizados"),
@@ -457,41 +481,6 @@ struct SectionButton: View{
      .padding(.top, 30)
    }
   
-  
-//  func saveProfileChanges() {
-//       Task {
-//           // Recoge los datos actuales de tu perfil
-//         let updatedUser = User(
-//             userId: UUID(),  // Si estás editando un usuario existente, este debería ser el UUID existente.
-//             roleId: "ElRoleID",  // Deberías obtener el role actual del usuario.
-//             companyId: "ElCompanyId", // Lo mismo aquí, usa el valor actual del usuario.
-//             googleId: modelUser.contentBaseUser?.googleId,  // Suponiendo que estás obteniendo estos datos de tu ViewModel.
-//             facebookId: modelUser.contentBaseUser?.facebookId,
-//             appleId: modelUser.contentBaseUser?.appleId,
-//             firstName: modelUser.contentBaseUser?.firstName ?? "",
-//             lastName: modelUser.contentBaseUser?.lastName ?? "",
-//             secondLastName: modelUser.contentBaseUser?.secondLastName,  // Si tienes un campo para esto en tu vista, úsalo.
-//             email: modelUser.contentBaseUser?.email ?? "",
-//             password: nil,  // No parece que estés editando la contraseña aquí, pero si es el caso, agrégalo.
-//             phoneNumber: modelUser.contentBaseUser?.phoneNumber,
-//             age: modelUser.contentBaseUser?.age ?? 0,
-//             state: modelUser.contentBaseUser?.state,
-//             gender: modelUser.contentBaseUser?.gender ?? "",
-//             profilePicture: modelUser.contentBaseUser?.profilePicture,  // Si tienes una manera de editar esto en tu vista, úsalo.
-//             createdAt: Date(),  // De nuevo, si estás editando un usuario existente, este debería ser la fecha de creación original.
-//             updatedAt: Date()   // Como estás actualizando, esta fecha debería ser la actual.
-//         )
-//
-//           // Usa el use case para actualizar los datos en el servidor
-////           let result = await ProfileUseCase.shared.updateUserData(user: updatedUser)
-//         let result = await UserRepository.shared.updateUserData(updatedUserData: updatedUser, userId: updatedUser.userId.uuidString)
-//           if let _ = result {
-//               // Aquí maneja un resultado exitoso, como mostrar un mensaje o redirigir al usuario
-//           } else {
-//               // Aquí maneja un error, como mostrar un mensaje de error al usuario
-//           }
-//       }
-//   }
 }
 
   
@@ -506,15 +495,16 @@ struct SectionDelete: View{
           .padding(.top, 40)
         Text("Elimina tu cuenta de usuario")
           .padding(.top, 30)
+          .padding(.bottom, 30)
           .bold()
-          .font(.system(size: 20))
+          .font(.system(size: 17))
         Button(action: {
           showAlert = true
         }, label: {
           Text("Eliminar cuenta")
             .foregroundColor(.white)
             .padding(.vertical, 12)
-            .padding(.horizontal, 40)
+            .padding(.horizontal, 30)
             .frame(maxWidth: .infinity)
             .background(Color("RedCustom"))
             .cornerRadius(8)
@@ -532,7 +522,7 @@ struct SectionDelete: View{
           })
         })
         
-        } .padding(.top, 12)
+        } .padding(.top, 3)
           .padding(.horizontal, 70)
       }
     }
@@ -545,6 +535,12 @@ struct SectionDelete: View{
     @State private var currentTab: TabSelection = .profile
     var goLogin: () -> Void
     
+    func isPhoneNumberValid() -> Bool {
+        guard let phoneNumber = modelUser.contentBaseUser?.phoneNumber else {
+            return false
+        }
+        return phoneNumber.count == 10
+    }
     
     var body: some View {
       ZStack {
@@ -569,13 +565,40 @@ struct SectionDelete: View{
             Section1(modelUser: modelUser)
             Section2(modelUser: modelUser)
             Section3(modelUser: modelUser)
-            SectionButton(modelUser: modelUser, selectedTab: $currentTab)
+            SectionButton(modelUser: modelUser, selectedTab: $currentTab, isFormValid: isFormValid, isPhoneNumberValid: isPhoneNumberValid())
             SectionDelete(goLogin: goLogin)
           }
           .padding(.top, 10)
           .padding(.horizontal, 20)
           Spacer()
         }
-      }
+      }.onAppear(perform: loadProfileData)
     }
+    
+    private func loadProfileData() {
+        Task {
+            await modelUser.getAllUserData()
+        }
+    }
+    }
+  
+
+
+extension EditProfileView {
+    var isFormValid: Bool {
+        guard let user = modelUser.contentBaseUser else { return false }
+        
+        let hasFirstName = !isBlank(input: user.firstName)
+        let hasLastName = !isBlank(input: user.lastName)
+        let hasPhone = !isBlank(input: user.phoneNumber)
+        let hasAge = user.age > 0
+        
+        return hasFirstName && hasLastName && hasPhone && hasAge
+    }
+  
+  func isBlank(input: String?) -> Bool {
+      guard let input = input else { return true }
+      return input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
   }
+  
+}

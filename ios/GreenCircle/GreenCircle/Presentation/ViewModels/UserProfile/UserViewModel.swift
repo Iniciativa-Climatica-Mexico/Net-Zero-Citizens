@@ -14,7 +14,8 @@ class UserViewModel: ObservableObject {
     
     @Published var contentUser: UserAuth?
     @Published var contentBaseUser: User?
-    
+  @Published var tempContentBaseUser: User?
+  
     @MainActor
     func getAllUserData(userId: String? = nil) async {
         // Usa el userId proporcionado o obténlo de lService
@@ -35,6 +36,14 @@ class UserViewModel: ObservableObject {
         }
     }
 
+//  @MainActor
+//  func saveProfileChanges() async {
+//      if let userToUpdate = tempContentBaseUser {
+//          tempContentBaseUser = await repository.updateUserDataOnServer(user: userToUpdate)
+//          modelUser.contentBaseUser = tempContentBaseUser  // Actualizar la instancia principal solo después de guardar
+//      }
+//  }
+  
     init() {
         contentUser = useCase.getUserData()
         Task {
