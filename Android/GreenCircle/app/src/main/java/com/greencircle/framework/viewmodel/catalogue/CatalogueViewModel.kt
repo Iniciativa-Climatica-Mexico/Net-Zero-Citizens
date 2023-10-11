@@ -22,6 +22,7 @@ class CatalogueViewModel(private val context: Context) : ViewModel() {
     val companyLiveData = MutableLiveData<CompanySummary?>()
     private val catalogueRequirement = CatalogueRequirement()
     private val recoverTokens = RecoverTokensRequirement(context)
+
     val params = MutableLiveData<CompanyParams>(
         CompanyParams(
             "",
@@ -32,19 +33,22 @@ class CatalogueViewModel(private val context: Context) : ViewModel() {
             0.0,
         )
     )
+
     fun updateParams(params: CompanyParams) {
         this.params.value = params
     }
 
     fun clearParams() {
-        this.params.value = CompanyParams(
-            "",
-            "",
-            "",
-            "",
-            0.0,
-            0.0,
-        )
+        this.params.value = this.params.value?.name?.let {
+            CompanyParams(
+                "",
+                it,
+                "",
+                "",
+                0.0,
+                0.0,
+            )
+        }
     }
 
     /**

@@ -94,7 +94,7 @@
     <string-array name="company_product">
         <item>Selecciona un producto</item>
         <item>Paneles Solares</item>
-        <item>Celdas Fotovoltaicas</item>
+        <item>Calentadores Solares</item>
     </string-array>
 
 </resources>

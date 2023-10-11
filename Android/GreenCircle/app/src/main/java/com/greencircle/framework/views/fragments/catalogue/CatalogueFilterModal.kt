@@ -80,7 +80,12 @@ class CatalogueFilterModal(private val viewModel: CatalogueViewModel) : DialogFr
             val newParams = viewModel.params.value
 
             if (binding.companyRating.selectedItemPosition != 0) {
-                newParams?.ordering = binding.companyRating.selectedItem.toString()
+                val order = binding.companyRating.selectedItem.toString()
+                if (order == "Rating") {
+                    newParams?.ordering = "score"
+                } else {
+                    newParams?.ordering = "distance"
+                }
             } else {
                 newParams?.ordering = ""
             }
