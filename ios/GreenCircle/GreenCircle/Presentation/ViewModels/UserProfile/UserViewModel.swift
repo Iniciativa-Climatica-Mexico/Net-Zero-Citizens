@@ -7,14 +7,40 @@
 
 import Foundation
 
-/// Implementación de view model de modelo de Compañía
 class UserViewModel: ObservableObject {
-    /// Caso de uso para hacer fetch de los datos de compañía
     private let useCase = ProfileUseCase.shared
-    /// La compañía puede cambiar en la vista (se construye .onAppear())
-    @Published var contentUser: UserAuth
-    /// Para implementar el caso de uso en la vista que llame al ViewModel Compañía
+    private let lService = LocalService.shared
+    private let repository = UserRepository.shared
+    
+    @Published var contentUser: UserAuth?
+    @Published var contentBaseUser: User?
+  @Published var tempContentBaseUser: User?
+  
+    @MainActor
+    func getAllUserData(userId: String? = nil) async {
+        // Usa el userId proporcionado o obténlo de lService
+        let finalUserId = userId ?? lService.getUserInformation()?.user.id
+        if let uid = finalUserId {
+            do {
+                contentBaseUser = try await repository.fetchUserById(userId: uid)
+            } catch {
+                print("Error fetching user data: \(error)")
+            }
+        }
+    }
+    
+    @MainActor
+    func saveProfileChanges() async {
+        if let userToUpdate = contentBaseUser {
+            contentBaseUser = await repository.updateUserDataOnServer(user: userToUpdate)
+        }
+    }
+  
     init() {
         contentUser = useCase.getUserData()
+        Task {
+            await getAllUserData()
+        }
     }
 }
+

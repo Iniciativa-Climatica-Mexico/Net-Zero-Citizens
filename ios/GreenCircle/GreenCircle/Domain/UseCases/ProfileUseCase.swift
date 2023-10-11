@@ -20,5 +20,9 @@ class ProfileUseCase {
     }
   }
   
-
+  @MainActor
+  func updateUserData(user: User) async -> User? {
+      return await repository.updateUserDataOnServer(user: user)
+  }
+  
 }
