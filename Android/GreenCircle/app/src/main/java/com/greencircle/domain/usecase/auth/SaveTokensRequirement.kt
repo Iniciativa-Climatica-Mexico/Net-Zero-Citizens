@@ -2,7 +2,6 @@ package com.greencircle.domain.usecase.auth
 
 import android.content.Context
 import com.greencircle.data.repository.TokenRepository
-import com.greencircle.utils.Constants
 
 /**
  * Caso de uso para guardar tokens de autenticación y actualización en el almacenamiento compartido.
@@ -13,9 +12,8 @@ import com.greencircle.utils.Constants
  * @param context El contexto de la aplicación Android necesario para acceder al almacenamiento compartido.
  */
 class SaveTokensRequirement(private val context: Context) {
-    private val sharedPreferencesName: String = Constants.SHARED_PREFERENCES_NAME
     private val sharedPreferences =
-        context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+        context.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
     private val repository = TokenRepository(sharedPreferences)
 
     /**

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -18,7 +17,6 @@ import com.greencircle.databinding.ActivityLoginBinding
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.auth.LoginViewModel
 import com.greencircle.utils.AuthUtils
-import com.greencircle.utils.GoogleSignInHelper
 import com.greencircle.utils.RequestPermissions
 
 /**
@@ -29,24 +27,27 @@ import com.greencircle.utils.RequestPermissions
  */
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
-    private val authUtils = AuthUtils(this)
-
+    private val authUtils = AuthUtils()
     private val viewModel: LoginViewModel by viewModels {
         ViewModelFactory(applicationContext, LoginViewModel::class.java)
     }
 
-    private val registerCompanyActivityResult = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        handleActivityResult(result)
-    }
-
-    private val registerUserActivityResult = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        handleActivityResult(result)
-    }
-
+    private val registerCompanyActivityResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // Handle the result as needed, e.g., update UI or perform actions
+            } else if (result.resultCode == Activity.RESULT_CANCELED) {
+                // Handle the case where the user canceled the registration
+            }
+        }
+    private val registerUserActivityResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // Handle the result as needed, e.g., update UI or perform actions
+            } else if (result.resultCode == Activity.RESULT_CANCELED) {
+                // Handle the case where the user canceled the registration
+            }
+        }
     private val googleSignInActivityResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -79,62 +80,51 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
+
         validatePermissions()
 
-        // Registra los listeners de los botones
+        // Configuración de los listeners para los botones de registro de empresa y usuario
         registerCompanyOnClickListener()
         registerUserOnClickListener()
 
-        // Maneja el inicio de sesión con credenciales
+        // Login credentials
         loginCredentialsOnClickListener()
 
         // Google Login
-        val googleSignInHelper = GoogleSignInHelper(this, googleSignInActivityResult)
-        googleSignInHelper.setupGoogleLoginListener(binding.root)
+        authUtils.googleLoginListener(binding, this, googleSignInActivityResult)
 
+        // Observador para el estado de autenticación
         viewModel.googleLoginResult.observe(this) { authResponse ->
-            val task = GoogleSignIn.getSignedInAccountFromIntent(intent)
-
-            try {
-                if (authResponse != null) {
-                    if (authResponse.user.roles != "new_user") {
-                        AuthUtils(this).navigateToMain()
-                    } else {
-                        Toast.makeText(
-                            applicationContext, "Por favor, regístrate", Toast.LENGTH_SHORT
-                        ).show()
-                        AuthUtils(this).navigateToRegisterUser(registerUserActivityResult)
-                    }
+            if (authResponse != null) {
+                if (authResponse.user?.roles != "new_user") {
+                    navigateToSurvey()
+                } else {
+                    Toast.makeText(
+                        applicationContext, "Por favor, regístrate", Toast.LENGTH_SHORT
+                    ).show()
+                    navigateToRegisterUser()
                 }
-            } catch (e: ApiException) {
-                googleSignInHelper.handleSignInException(e)
+            } else {
+                // Handle the case where the Google login failed
+                Toast.makeText(
+                    applicationContext, "Ocurrió un error", Toast.LENGTH_SHORT
+                ).show()
             }
         }
-
         viewModel.loginError.observe(this) { error ->
-            try {
-                if (error) {
-                    Toast.makeText(
-                        applicationContext, "Credenciales incorrectas", Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    googleSignInHelper.googleSignOut()
-                    Log.d("LoginActivity", "Login successful")
-                    AuthUtils(this).navigateToMain()
-                }
-            } catch (e: Exception) {
+            if (error) {
                 Toast.makeText(
                     applicationContext, "Credenciales incorrectas", Toast.LENGTH_SHORT
                 ).show()
-
-                Log.d("LoginActivity", e.toString())
+            } else {
+                Log.d("LoginActivity", "Login successful")
+                navigateToSurvey()
             }
         }
     }
 
-    // Metodos privados
+    // Login
     private fun loginCredentials() {
         val emailInputLayout: TextInputLayout = binding.userEmail
         val passwordInputLayout: TextInputLayout = binding.userPassword
@@ -162,31 +152,32 @@ class LoginActivity : AppCompatActivity() {
     private fun registerCompanyOnClickListener() {
         val registerCompanyButton = binding.root.findViewById<View>(R.id.login_register_company)
         registerCompanyButton.setOnClickListener {
-            authUtils.navigateToRegisterCompany(registerCompanyActivityResult)
+            navigateToRegisterCompany()
         }
     }
 
     private fun registerUserOnClickListener() {
         val registerUserButton = binding.root.findViewById<View>(R.id.login_register_user)
         registerUserButton.setOnClickListener {
-            authUtils.navigateToRegisterUser(registerUserActivityResult)
+            navigateToRegisterUser()
         }
     }
 
-    private fun handleActivityResult(result: ActivityResult): String {
-        return when (result.resultCode) {
-            Activity.RESULT_OK -> {
-                "Registro exitoso"
-            }
+    // Métodos de navegación
+    private fun navigateToSurvey() {
+        var intent: Intent = Intent(this, SurveyActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 
-            Activity.RESULT_CANCELED -> {
-                "Registro cancelado"
-            }
+    private fun navigateToRegisterCompany() {
+        var intent: Intent = Intent(this, RegisterCompanyActivity::class.java)
+        registerCompanyActivityResult.launch(intent)
+    }
 
-            else -> {
-                "Error en el registro"
-            }
-        }
+    private fun navigateToRegisterUser() {
+        var intent: Intent = Intent(this, RegisterUserActivity::class.java)
+        registerUserActivityResult.launch(intent)
     }
 
     private fun validatePermissions() {

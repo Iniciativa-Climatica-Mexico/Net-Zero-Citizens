@@ -2,16 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/LLContainer"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="40dp"
     android:layout_marginBottom="10dp"
-    android:orientation="vertical">
-
-    <include
-        android:id="@+id/fragment_company_catalogue_skeleton"
-        layout="@layout/fragment_company_catalogue_skeleton" />
+    >
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/newRecyclerView"
@@ -19,6 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/catalogue_card_layout" />
+        tools:listitem="@layout/catalogue_card_layout"
+        />
 
 </LinearLayout>

@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.greencircle.databinding.FragmentCompanyCatalogueBinding
-import com.greencircle.databinding.FragmentErrorBinding
 import com.greencircle.framework.ui.adapters.catalogue.CatalogueAdapter
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.catalogue.CatalogueViewModel
@@ -39,28 +38,16 @@ class CatalogueFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(binding.root.context)
 
         viewModel.catalogueLiveData.observe(viewLifecycleOwner) { list ->
-            if (list == null) {
-                val errorView = FragmentErrorBinding.inflate(layoutInflater)
-                binding.root.removeView(recyclerView)
-                binding.LLContainer.addView(errorView.root)
-                errorView.root.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
-                removeSkeleton()
-            } else {
-                removeSkeleton()
+            if (list != null) {
                 adapter.initCustomAdapter(list, binding.root.context)
-                recyclerView.adapter = adapter
             }
+            recyclerView.adapter = adapter
         }
 
         lifecycleScope.launch {
             try {
                 viewModel.fetchAllCompanies()
             } catch (e: Exception) {
-                val errorView = FragmentErrorBinding.inflate(layoutInflater)
-                binding.root.removeView(recyclerView)
-                binding.LLContainer.addView(errorView.root)
-                errorView.root.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
-                removeSkeleton()
                 Log.e("Salida", e.message.toString())
             }
         }
@@ -76,15 +63,5 @@ class CatalogueFragment : Fragment() {
             this,
             ViewModelFactory(requireContext(), CatalogueViewModel::class.java)
         )[CatalogueViewModel::class.java]
-    }
-
-    private fun removeSkeleton() {
-        try {
-            val skeleton = binding.fragmentCompanyCatalogueSkeleton.root
-            binding.root.removeView(skeleton)
-        } catch (e: Exception) {
-            Log.e("HomeFragment", "Error al eliminar el skeleton")
-            Log.e("HomeFragment", e.message.toString())
-        }
     }
 }

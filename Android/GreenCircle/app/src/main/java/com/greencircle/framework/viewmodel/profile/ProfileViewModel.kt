@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.greencircle.domain.model.profile.Profile
-import com.greencircle.domain.usecase.auth.DeleteUserSessionRequirement
 import com.greencircle.domain.usecase.auth.RecoverTokensRequirement
 import com.greencircle.domain.usecase.auth.SaveTokensRequirement
 import com.greencircle.domain.usecase.auth.SaveUserSessionRequirement
@@ -28,8 +27,6 @@ class ProfileViewModel(private val context: Context) : ViewModel() {
     private val updateTokensData = UpdateTokensDataRequirement()
     private val saveTokens = SaveTokensRequirement(context)
     private val saveUserSession = SaveUserSessionRequirement(context)
-    private val deleteUserSession = DeleteUserSessionRequirement(context)
-    private val deleteTokens = DeleteUserSessionRequirement(context)
     private lateinit var userId: UUID
     fun setUserId(userId: UUID) {
         this.userId = userId
@@ -79,12 +76,6 @@ class ProfileViewModel(private val context: Context) : ViewModel() {
             val tokens = recoverTokens() ?: return@launch
             val authToken = tokens.authToken
             val response = deleteUser(authToken, userId)
-            if (response != null) {
-                // Eliminar tokens
-                deleteTokens()
-                // Eliminar usuario global
-                deleteUserSession()
-            }
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.greencircle.domain.model.survey
 
-import java.io.Serializable
 import java.util.UUID
 
 /**
@@ -11,4 +10,4 @@ data class Survey(
     val questions: ArrayList<Question>,
     val surveyId: UUID,
     val title: String,
-) : Serializable
+)

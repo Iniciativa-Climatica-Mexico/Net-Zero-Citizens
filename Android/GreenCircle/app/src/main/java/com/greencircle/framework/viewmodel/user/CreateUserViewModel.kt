@@ -30,8 +30,7 @@ class CreateUserViewModel(private val context: Context) : ViewModel() {
     private val recoverTokens = RecoverTokensRequirement(context)
     private val saveTokens = SaveTokensRequirement(context)
     private val updateTokensData = UpdateTokensDataRequirement()
-    val googleLoginError = MutableLiveData<Boolean>()
-    val error = MutableLiveData<Boolean>()
+
     private val _googleLoginResult = MutableLiveData<AuthResponse?>()
     val googleLoginResult: LiveData<AuthResponse?> = _googleLoginResult
 
@@ -44,18 +43,6 @@ class CreateUserViewModel(private val context: Context) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             val result: AuthResponse? = googleAuthRequirement(token)
             _googleLoginResult.postValue(result)
-
-            if (result == null) {
-                googleLoginError.postValue(true)
-                return@launch
-            }
-
-            if (result != null && result.tokens == null) {
-                googleLoginError.postValue(true)
-                return@launch
-            } else {
-                googleLoginError.postValue(false)
-            }
 
             // Guardar tokens
             val authToken = result?.tokens?.authToken
@@ -75,55 +62,29 @@ class CreateUserViewModel(private val context: Context) : ViewModel() {
      */
     fun updateUser(userId: UUID, userInfo: UserAPIService.UpdateUserRequest) {
         val tokens = recoverTokens()
-        if (tokens == null) {
-            error.postValue(true)
-            return
-        }
-
         var authToken = ""
-        if (tokens != null)
+        if (tokens != null) {
             authToken = tokens.authToken
-        if (authToken == "") {
-            error.postValue(true)
-            return
         }
 
         viewModelScope.launch(Dispatchers.IO) {
-            val result: UserAPIService.UpdateUserResponse =
-                updateUserRequirement(userId, userInfo, authToken) ?: return@launch
-
-            if (result == null) {
-                error.postValue(true)
-                return@launch
-            } else {
-                error.postValue(false)
-            }
-
+            val result: UserAPIService.UpdateUserResponse? =
+                updateUserRequirement(userId, userInfo, authToken)
             // Actualizar información de los tokens
-            val tokens = recoverTokens()
-            val cauthToken = tokens?.authToken
-            val res = cauthToken?.let { updateTokensData(it) }
+            if (result != null) {
+                val tokens = recoverTokens()
+                val cauthToken = tokens?.authToken
+                val res = cauthToken?.let { updateTokensData(it) }
 
-            if (res == null) {
-                error.postValue(true)
-                return@launch
-            }
+                // Guardar tokens
+                val authToken = res?.tokens?.authToken
+                val refreshToken = res?.tokens?.refreshToken
+                saveTokens(authToken!!, refreshToken!!)
 
-            if (res.tokens == null) {
-                error.postValue(true)
-                return@launch
-            } else {
-                error.postValue(false)
-            }
-
-            // Guardar tokens
-            val authToken = res?.tokens?.authToken
-            val refreshToken = res?.tokens?.refreshToken
-            saveTokens(authToken!!, refreshToken!!)
-
-            // Guardar usuario global
-            if (res != null) {
-                saveUserSession(res.user)
+                // Guardar usuario global
+                if (res != null) {
+                    saveUserSession(res.user)
+                }
             }
         }
     }

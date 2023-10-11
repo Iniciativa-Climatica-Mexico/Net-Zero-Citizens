@@ -9,7 +9,4 @@ class CatalogueRepository {
     suspend fun getCatalogue(authToken: String): ArrayList<CompanySummary> ? {
         return apiCatalogue.getCatalogue(authToken)
     }
-    suspend fun getCompanyData(authToken: String, idCompany: String): CompanySummary? {
-        return apiCatalogue.getCompanyById(authToken, idCompany)
-    }
 }

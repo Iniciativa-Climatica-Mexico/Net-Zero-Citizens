@@ -44,11 +44,6 @@ class RegisterViewModel(private val context: Context) : ViewModel() {
 
             Log.d("RegisterViewModel", "registerCredentials: $result")
 
-            if (result == null) {
-                registerError.postValue(true)
-                return@launch
-            }
-
             if (result != null && result.tokens == null) {
                 registerError.postValue(true)
                 return@launch
