@@ -1,5 +1,6 @@
 package com.greencircle.framework.views.fragments.company.upload_documents
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,8 @@ import com.greencircle.databinding.FragmentUploadCommitmentBinding
 import com.greencircle.domain.model.company.files.FileDescription
 import com.greencircle.domain.model.company.files.FileFormat
 import com.greencircle.framework.viewmodel.company.files.FileNamesViewModel
+import com.greencircle.framework.views.activities.RegisterCompanyActivity
+import com.greencircle.framework.views.fragments.company.UnverifiedCompanyFragment
 
 /**Constructor de "UploadCommitmentFragment"
  *
@@ -205,7 +208,11 @@ class UploadCommitmentFragment : Fragment(), UploadDocumentDialogFragment.Upload
      * Método que navega al siguiente fragmento.
      */
     private fun navigateToNextFragment() {
-        //        TODO("Not yet implemented")
+        val fragment = UnverifiedCompanyFragment()
+        val activity = requireActivity() as RegisterCompanyActivity
+        val intent = Intent(activity, RegisterCompanyActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        activity.replaceFragment(fragment, arguments)
         return
     }
 
