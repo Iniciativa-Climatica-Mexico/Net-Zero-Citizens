@@ -175,155 +175,203 @@ struct Section1: View{
   }
 }
 
-/////__----------------- SECTION 2__
-//struct Section2: View {
-//  @ObservedObject var modelUser: UserViewModel
-//  
-//  func isBlank(input: String) -> Bool {
-//      return input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-//  }
-//
-//  func containsOnlyNumbers(input: String) -> Bool {
-//      return input.range(of: "^[0-9]+$", options: .regularExpression) != nil
-//  }
-//    var body: some View {
-//        HStack {
-//            //---Field Edad----------------------------------------------------------
-//          VStack(alignment: .leading) {
-//              Text("Edad")
-//                  .padding(.top, 16)
-//                  .foregroundColor(Color("GreenColor"))
-//                  .font(.system(size: 13))
-//                  .fontWeight(.semibold)
-//
-//              let ageStringBinding = Binding<String>(
-//                  get: {
-//                    if let age = modelUser.contentBaseUser?.age {
-//                          return String(age)
-//                      } else {
-//                          return "Cargando..."
-//                      }
-//                  },
-//                  set: {
-//                      let filtered = $0.filter { "0123456789".contains($0) }
-//                      
-//                      // Limitamos la entrada a un máximo de 2 dígitos
-//                      if filtered.count <= 2 {
-//                          if let age = Int(filtered) {
-//                              modelUser.contentUser.age = age
-//                          } else {
-//                              modelUser.contentUser.age = nil
-//                          }
-//                      }
-//                  }
-//              )
-//
-//              TextField("Edad", text: ageStringBinding)
-//                  .keyboardType(.numberPad)
-//                  .padding(.top, 3)
-//                  .font(.system(size: 13))
-//                  .textFieldStyle(RoundedBorderTextFieldStyle())
-//
-//              if isBlank(input: ageStringBinding.wrappedValue) {
-//                  Text("No puede estar vacío.")
-//                      .foregroundColor(.red)
-//                      .font(.system(size: 11))
-//              } else if !containsOnlyNumbers(input: ageStringBinding.wrappedValue) {
-//                  Text("Solo se permiten números.")
-//                      .foregroundColor(.red)
-//                      .font(.system(size: 11))
-//              }
-//          }
-//
-//            //----Picker Género----------------------------------------------------------
-//            VStack(alignment: .leading) {
-//                Text("Género")
-//                    .padding(.top, 16)
-//                    .foregroundColor(Color("GreenColor"))
-//                    .font(.system(size: 13))
-//                    .fontWeight(.semibold)
-//                PickerFormView2(
-//                    selectedOption: Binding<String>(
-//                        get: { modelUser.contentUser.gender ?? "" },
-//                        set: { newValue in
-//                            modelUser.contentUser.gender = newValue.isEmpty ? nil : newValue
-//                        }
-//                    ),
-//                    label: modelUser.contentUser.gender ?? "Selecciona un género",
-//                    options: GENDERS
-//                )
-//                .padding(.top, 5)
-//            }
-//        }
-//    }
-//}
-//
-/////__----------------- SECTION 3__
-//struct Section3: View {
-//  @ObservedObject var modelUser: UserViewModel
-//  
-//  func isBlank(input: String?) -> Bool {
-//      guard let input = input else { return true }
-//      return input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-//  }
-//
-//  func containsOnlyNumbers(input: String?) -> Bool {
-//      guard let input = input else { return false }
-//      return input.range(of: "^[0-9]+$", options: .regularExpression) != nil
-//  }
-//  
-//    var body: some View {
-//        VStack(alignment: .leading) {
-//            //----Field Celular----------------------------------------------------------
-//            Text("Teléfono")
-//                .padding(.top, 16)
-//                .foregroundColor(Color("GreenColor"))
-//                .font(.system(size: 13))
-//                .fontWeight(.semibold)
-//
-//          TextField("Teléfono", text: Binding(
-//              get: { self.modelUser.contentUser.phone ?? "" },
-//              set: {
-//                  let filtered = $0.filter { "0123456789".contains($0) }
-//                  if filtered.count <= 10 {
-//                      self.modelUser.contentUser.phone = filtered.isEmpty ? nil : filtered
-//                  }
-//              }
-//          ))
-//          .keyboardType(.numberPad)
-//          .padding(.top, 3)
-//          .font(.system(size: 13))
-//          .textFieldStyle(RoundedBorderTextFieldStyle())
-//
-//                     // Mostrar mensaje solo si el campo está vacío.
-//                     if isBlank(input: modelUser.contentUser.phone) {
-//                         Text("No puedes dejar este campo vacío.")
-//                             .foregroundColor(.red)
-//                             .font(.system(size: 11))
-//                     }
-//
-//            //----Picker Estado----------------------------------------------------------
-//            Text("Estado")
-//                .padding(.top, 16)
-//                .foregroundColor(Color("GreenColor"))
-//                .font(.system(size: 13))
-//                .fontWeight(.semibold)
-//            
-//            PickerFormView2(
-//                selectedOption: Binding<String>(
-//                    get: { modelUser.contentUser.state ?? "" },
-//                    set: { newValue in
-//                        modelUser.contentUser.state = newValue.isEmpty ? nil : newValue
-//                    }
-//                ),
-//                label: modelUser.contentUser.gender ?? "Selecciona un estado",
-//                options: Constants.states
-//            )
-//            .padding(.top, 5)
-//        }
-//    }
-//}
-//  
+///__----------------- SECTION 2__
+struct Section2: View {
+  @ObservedObject var modelUser = UserViewModel()
+  
+  
+  private var edadBinding: Binding<Int> {
+      Binding<Int>(
+          get: { self.modelUser.contentBaseUser?.age ?? 0 },
+          set: { newValue in
+              if self.modelUser.contentBaseUser != nil {
+                  self.modelUser.contentBaseUser?.age = newValue
+              }
+          }
+      )
+  }
+  
+  private var generoBinding: Binding<String> {
+      Binding<String>(
+          get: { self.modelUser.contentBaseUser?.gender ?? "Cargando..." },
+          set: { newValue in
+              if self.modelUser.contentBaseUser != nil {
+                  self.modelUser.contentBaseUser?.gender = newValue
+              }
+          }
+      )
+  }
+  
+  func isBlank(input: String) -> Bool {
+      return input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+  }
+
+  func containsOnlyNumbers(input: String) -> Bool {
+      return input.range(of: "^[0-9]+$", options: .regularExpression) != nil
+  }
+    var body: some View {
+        HStack {
+            //---Field Edad----------------------------------------------------------
+          VStack(alignment: .leading) {
+              Text("Edad")
+                  .padding(.top, 16)
+                  .foregroundColor(Color("GreenColor"))
+                  .font(.system(size: 13))
+                  .fontWeight(.semibold)
+
+              let ageStringBinding = Binding<String>(
+                  get: {
+                    if let age = modelUser.contentBaseUser?.age {
+                          return String(age)
+                      } else {
+                          return "Cargando..."
+                      }
+                  },
+                  set: {
+                      let filtered = $0.filter { "0123456789".contains($0) }
+                      
+                      // Limitamos la entrada a un máximo de 2 dígitos
+                      if filtered.count <= 2 {
+                          if let age = Int(filtered) {
+                            modelUser.contentBaseUser?.age  = age
+                          } else {
+                            modelUser.contentBaseUser?.age = 0
+                          }
+                      }
+                  }
+              )
+
+              TextField("Edad", text: ageStringBinding)
+                  .keyboardType(.numberPad)
+                  .padding(.top, 3)
+                  .font(.system(size: 13))
+                  .textFieldStyle(RoundedBorderTextFieldStyle())
+
+              if isBlank(input: ageStringBinding.wrappedValue) {
+                  Text("No puede estar vacío.")
+                      .foregroundColor(.red)
+                      .font(.system(size: 11))
+              } else if !containsOnlyNumbers(input: ageStringBinding.wrappedValue) {
+                  Text("Solo se permiten números.")
+                      .foregroundColor(.red)
+                      .font(.system(size: 11))
+              }
+          }
+
+            //----Picker Género----------------------------------------------------------
+            VStack(alignment: .leading) {
+                Text("Género")
+                    .padding(.top, 16)
+                    .foregroundColor(Color("GreenColor"))
+                    .font(.system(size: 13))
+                    .fontWeight(.semibold)
+              PickerFormView2(
+                  selectedOption: Binding<String>(
+                      get: { modelUser.contentBaseUser?.gender ?? "Cargando..." },
+                      set: { newValue in
+                          if !newValue.isEmpty {
+                              modelUser.contentBaseUser?.gender = newValue
+                          }
+                      }
+                  ),
+                  label:  modelUser.contentBaseUser?.gender ?? "Selecciona un género...",
+                  options: GENDERS
+              )
+              .padding(.top, 5)
+            }
+        }
+    }
+}
+
+///__----------------- SECTION 3__
+struct Section3: View {
+  @ObservedObject var modelUser: UserViewModel
+  
+  private var phoneBinding: Binding<String> {
+      Binding<String>(
+          get: { self.modelUser.contentBaseUser?.phoneNumber ?? "Cargando..." },
+          set: { newValue in
+              if self.modelUser.contentBaseUser != nil {
+                  self.modelUser.contentBaseUser?.phoneNumber = newValue
+              }
+          }
+      )
+  }
+  
+  private var estadoBinding: Binding<String> {
+      Binding<String>(
+          get: { self.modelUser.contentBaseUser?.state ?? "Cargando..." },
+          set: { newValue in
+              if self.modelUser.contentBaseUser != nil {
+                  self.modelUser.contentBaseUser?.state = newValue
+              }
+          }
+      )
+  }
+
+  
+  func isBlank(input: String?) -> Bool {
+      guard let input = input else { return true }
+      return input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+  }
+
+  func containsOnlyNumbers(input: String?) -> Bool {
+      guard let input = input else { return false }
+      return input.range(of: "^[0-9]+$", options: .regularExpression) != nil
+  }
+  
+    var body: some View {
+        VStack(alignment: .leading) {
+            //----Field Celular----------------------------------------------------------
+            Text("Teléfono")
+                .padding(.top, 16)
+                .foregroundColor(Color("GreenColor"))
+                .font(.system(size: 13))
+                .fontWeight(.semibold)
+
+          TextField("Teléfono", text: Binding(
+              get: { self.modelUser.contentBaseUser?.phoneNumber ?? "Cargando..."  },
+              set: {
+                  let filtered = $0.filter { "0123456789".contains($0) }
+                  if filtered.count <= 10 {
+                      self.modelUser.contentBaseUser?.phoneNumber = filtered.isEmpty ? nil : filtered
+                  }
+              }
+          ))
+          .keyboardType(.numberPad)
+          .padding(.top, 3)
+          .font(.system(size: 13))
+          .textFieldStyle(RoundedBorderTextFieldStyle())
+
+                     // Mostrar mensaje solo si el campo está vacío.
+                     if isBlank(input: modelUser.contentBaseUser?.phoneNumber ?? "Cargando...") {
+                         Text("No puedes dejar este campo vacío.")
+                             .foregroundColor(.red)
+                             .font(.system(size: 11))
+                     }
+
+            //----Picker Estado----------------------------------------------------------
+            Text("Estado")
+                .padding(.top, 16)
+                .foregroundColor(Color("GreenColor"))
+                .font(.system(size: 13))
+                .fontWeight(.semibold)
+            
+            PickerFormView2(
+                selectedOption: Binding<String>(
+                    get: { modelUser.contentBaseUser?.state ?? "Cargando..."},
+                    set: { newValue in
+                      modelUser.contentBaseUser?.state = newValue.isEmpty ? nil : newValue
+                    }
+                ),
+                label:  modelUser.contentBaseUser?.state ?? "Selecciona un estado...",
+                options: Constants.states
+            )
+            .padding(.top, 5)
+        }
+    }
+}
+  
   ///__-----------------BUTTON SECTION__
 //extension EditProfileView {
 //    var isFormValid: Bool {
@@ -472,8 +520,8 @@ struct SectionDelete: View{
             .padding(.top, 70)
           ScrollView {
             Section1(modelUser: modelUser)
-//            Section2(modelUser: modelUser)
-//            Section3(modelUser: modelUser)
+            Section2(modelUser: modelUser)
+            Section3(modelUser: modelUser)
 //            SectionButton(disabledOpacity: isFormValid ? 1.0 : 0.5, isFormValid: isFormValid, modelUser: modelUser, selectedTab: $currentTab)
             SectionButton(modelUser: modelUser, selectedTab: $currentTab)
             SectionDelete(goLogin: goLogin)

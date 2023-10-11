@@ -21,7 +21,7 @@ struct User: Codable {
     var password: String?
     var phoneNumber: String?
     var age: Int
-    var state: String
+    var state: String?
     var gender: String
     var profilePicture: String?
     let createdAt: Date
