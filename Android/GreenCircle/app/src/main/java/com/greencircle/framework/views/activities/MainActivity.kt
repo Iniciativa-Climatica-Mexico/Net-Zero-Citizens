@@ -16,6 +16,7 @@ import com.greencircle.framework.views.fragments.HomeFragment
 import com.greencircle.framework.views.fragments.catalogue.CatalogueFragment
 import com.greencircle.framework.views.fragments.map.MapFragment
 import com.greencircle.framework.views.fragments.profile.ProfileFragment
+import com.greencircle.utils.Constants
 import java.util.UUID
 import org.json.JSONObject
 
@@ -56,6 +57,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val fromSurvey = intent.getBooleanExtra("fromSurvey", false)
+        Log.i("SURVEY", "From survey: $fromSurvey")
         if (!fromSurvey) {
             attemptOpenSurvey()
         }
@@ -133,14 +135,13 @@ class MainActivity : AppCompatActivity() {
     private fun attemptOpenSurvey() {
         try {
             Log.i("SURVEY", "Intentando abrir encuesta")
-            val sharedPreferences = getSharedPreferences("my_preferences", MODE_PRIVATE)
-            val userJson = sharedPreferences?.getString("user_session", null)
+            val sharedPreferences =
+                getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE)
+            val userJson = sharedPreferences?.getString(Constants.USER_SESSION_SP_NAME, null)
             val userJSON = JSONObject(userJson!!)
             val userId = UUID.fromString(userJSON.getString("uuid"))
-            Log.i("SURVEY", "UUID: $userId")
             surveyViewModel.getSurveyPending(userId)
             surveyViewModel.surveyLiveData.observe(this) { survey ->
-                Log.i("SURVEY", "Survey: $survey")
                 if (survey != null) {
                     val bundle = Bundle()
                     bundle.putSerializable("survey", survey)
@@ -150,6 +151,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         } catch (e: Exception) {
+            Log.e("SURVEY", "Error al abrir encuesta")
+            Log.e("SURVEY", e.toString())
             e.printStackTrace()
         }
     }
