@@ -112,4 +112,10 @@
     </string-array>
     <string name="upload_all_documents">Por favor, sube todos los documentos solicitados antes de continuar</string>
     <string name="accept_tc_and_privacy">Por favor, acepta las políticas de privacidad y los términos y condiciones para continuar</string>
+    <string name="favourites_user">Favoritos (</string>
+    <string name="user_favourite_empty_view">No has agregado proveedores como favoritos</string>
+    <string name="error_message">Ha ocurrido un error, por favor intenta mas tarde.</string>
+    <string name="select_rating_prompt">Selecciona una calificación</string>
+    <string name="select_product_prompt">Selecciona un producto</string>
+    <string name="select_state_prompt">Selecciona un estado</string>
 </resources>
