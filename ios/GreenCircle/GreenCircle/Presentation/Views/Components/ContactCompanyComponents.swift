@@ -174,6 +174,7 @@ struct ContactCompanyComponentView: View {
 
 struct ContactCompanyRatingView: View {
   @ObservedObject var modelCompanyRating: CompanyViewModel
+  @EnvironmentObject var companyId: CompanyReviewViewModel
   @Binding var dispScrollView: Bool
   
   var goReviews: () -> Void
@@ -225,11 +226,12 @@ struct ContactCompanyRatingView: View {
         }.padding(.bottom, 10)
         HStack {
           Spacer()
-          NavigationLink(destination: ScrollViewRating(goOpinions: goOpinions, goScrollRating: goScrollRating), label: {
+            NavigationLink(destination: ScrollViewRating(goOpinions: goOpinions, goScrollRating: goScrollRating), label: {
             Text("Ver mas...")
-              .font(.system(size: 13))
+              .font(.system(size: 17))
               .foregroundColor(Color("BlueCustom"))
               .onTapGesture {
+                  companyId.setCompanyId(companyId: modelCompanyRating.contentCompany.companyId)
                 goReviews()
               }
           })

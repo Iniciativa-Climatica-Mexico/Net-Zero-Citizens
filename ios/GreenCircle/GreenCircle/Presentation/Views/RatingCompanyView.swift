@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct ScrollViewRating: View {
+    
+  @StateObject var reviewViewModel : ReviewViewModel = ReviewViewModel()
   
   /// Estas dos funciones permiten hacer el flujo de las vistas
   /// desde el contacto de compañía hasta vista de opiniones
@@ -16,17 +18,18 @@ struct ScrollViewRating: View {
   
   /// Esta función, toma el papel de regresar en una vista, o de regresar al ScrollViewRating
   var goScrollRating: () -> Void
-  
+  @EnvironmentObject var companyId: CompanyReviewViewModel
   var body: some View {
     NavigationStack {
       ScrollView {
-        VStack {
-          ReviewsView(goOpinions: goOpinions, goScrollRating: goScrollRating)
-          ReviewCardProvider(reviewViewModel: ReviewViewModel(), profilePicture: Image(systemName: "person.circle.fill"))
-        }
-        .padding(.top, 10)
-      }.navigationTitle("Reviews")
-        .navigationBarTitleDisplayMode(.inline)
+          VStack {
+              ReviewsView(goOpinions: goOpinions, goScrollRating: goScrollRating).frame(height: 300)
+              ReviewCardProvider(reviewViewModel: ReviewViewModel(), profilePicture: Image(systemName: "person.circle.fill"))
+          }
+          .padding()
+      }
+      .navigationTitle("Reviews")
+      .navigationBarTitleDisplayMode(.inline)
         .toolbar {
           ToolbarItem(placement: .topBarLeading) {
             Button {

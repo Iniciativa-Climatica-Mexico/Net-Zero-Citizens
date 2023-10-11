@@ -10,6 +10,7 @@ import SwiftUI
 
 struct CoordinatorView: View {
   @StateObject var viewModel = CoordinatorViewModel()
+  @StateObject var companyId: CompanyReviewViewModel = CompanyReviewViewModel()
   @StateObject var deviceLocationService = DeviceLocationService.shared
   @State var hasPendingSurvey: Bool = false
   @State var photovoltaicToggle: Bool = false
@@ -78,6 +79,7 @@ struct CoordinatorView: View {
         
       case .mainMenuView:
         TabBarView(goSurvey: goSurvey, goLogin: goLogin, goReviews: goReviews, goOpinions: goOpinions, goScrollRating: goReviews)
+            .environmentObject(companyId)
             .onAppear {
               deviceLocationService.requestLocationUpdates()
             }
@@ -90,10 +92,10 @@ struct CoordinatorView: View {
           .applyNavBarTheme()
           
       case .reviews:
-        ScrollViewRating(goOpinions: goOpinions, goScrollRating: goBack)
+          ScrollViewRating(goOpinions: goOpinions, goScrollRating: goBack).environmentObject(companyId)
           
       case .opinions:
-          OpinionsView(goReviews: goBack)
+          OpinionsView(goReviews: goBack, goOpinions: goOpinions).environmentObject(companyId)
       }
     }
     .onAppear {
