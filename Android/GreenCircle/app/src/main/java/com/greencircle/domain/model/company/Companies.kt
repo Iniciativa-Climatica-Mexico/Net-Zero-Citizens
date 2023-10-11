@@ -1,6 +1,7 @@
 package com.greencircle.domain.model.company
 
 import com.google.gson.annotations.SerializedName
+import com.greencircle.domain.model.company.files.CompanyFile
 import com.greencircle.domain.model.product.Product
 import com.greencircle.domain.model.status.Status
 import java.io.Serializable
@@ -51,17 +52,12 @@ data class Companies(
     @SerializedName("zipCode") val zipCode: Int,
     @SerializedName("latitude") val latitude: Double,
     @SerializedName("longitude") val longitude: Double,
-    @SerializedName("profilePicture") val profilePicture: String? = null,
-    @SerializedName("pdfCurriculumUrl") val pdfCurriculumUrl: String,
-    @SerializedName("pdfDicCdmxUrl") val pdfDicCdmxUrl: String? = null,
-    @SerializedName("pdfPeeFideUrl") val pdfPeeFideUrl: String? = null,
-    @SerializedName("pdfGuaranteeSecurityUrl") val pdfGuaranteeSecurityUrl: String,
-    @SerializedName("pdfActaConstitutivaUrl") val pdfActaConstituyentesUrl: String,
-    @SerializedName("pdfIneUrl") val pdfIneUrl: String,
     @SerializedName("status") val status: Status,
     @SerializedName("createdAt") val createdAt: Timestamp,
     @SerializedName("updatedAt") val updatedAt: Timestamp,
+    @SerializedName("profilePicture") val profilePicture: String? = null,
     @SerializedName("products") val products: ArrayList<Product>? = arrayListOf(),
+    @SerializedName("files") val files: ArrayList<CompanyFile>? = arrayListOf(),
     @SerializedName("images") val companyImages: List<CompanyImages>? = listOf(),
     @SerializedName("score") val rating: Float? = null,
     @SerializedName("oneComment") val oneComment: String? = null,
