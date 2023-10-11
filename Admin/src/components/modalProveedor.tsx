@@ -192,8 +192,8 @@ export default function ModalProveedor({
                   ¿Seguro que desea rechazar al proveedor?
                 </CardDescription>
                 <form className="flex items-center space-x-2 pt-4" ref={form} onSubmit={sendEmail}>
-                  <input type="hidden" name="user_email" value="jn7924@gmail.com" />
-                  <input type="hidden" name="to_name" value="Yuna" />
+                  <input type="hidden" name="user_email" value={selectedCompany.email} />
+                  <input type="hidden" name="to_name" value={selectedCompany.name} />
                   <textarea
                     placeholder="Redacta el mensaje para el proveedor"
                     className="h-60 flex w-full border-[#C1C9D2] border-1 py-4 pl-2 rounded-l-md rounded-r-md"
@@ -433,18 +433,12 @@ export default function ModalProveedor({
                     <Button
                       disabled={!checkboxChecked}
                       onClick={() => {
-                        if (notifyEmail('accepted') === '') {
-                          toast({
-                            description:
-                              'Por favor, escribe un mensaje para el proveedor.',
-                          })
-                        } else {
-                          handleAccept(
-                            selectedCompany,
-                            selectedCompany.companyId
-                          )
-                        }
-                      }}
+                        handleAccept(
+                          selectedCompany,
+                          selectedCompany.companyId
+                        )
+                      }
+                      }
                       variant="default"
                     >
                       Aprobar
@@ -471,11 +465,4 @@ export default function ModalProveedor({
       </div>
     </>
   )
-}
-
-function notifyEmail(source: string) {
-  const input = document.getElementById('messageInput') as HTMLInputElement
-  const message = input.value
-  console.log(message)
-  return message
 }
