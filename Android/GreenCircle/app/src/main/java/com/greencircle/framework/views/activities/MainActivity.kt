@@ -136,17 +136,12 @@ class MainActivity : AppCompatActivity() {
         try {
             Log.i("SURVEY", "Intentando abrir encuesta")
             val sharedPreferences =
-                    getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE)
-            Log.i("SURVEY", "Shared Preferences: $sharedPreferences")
+                getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE)
             val userJson = sharedPreferences?.getString(Constants.USER_SESSION_SP_NAME, null)
-            Log.i("SURVEY", "User Json: $userJson")
             val userJSON = JSONObject(userJson!!)
-            Log.i("SURVEY", "User JSON: $userJSON")
             val userId = UUID.fromString(userJSON.getString("uuid"))
-            Log.i("SURVEY", "UUID: $userId")
             surveyViewModel.getSurveyPending(userId)
             surveyViewModel.surveyLiveData.observe(this) { survey ->
-                Log.i("SURVEY", "Survey: $survey")
                 if (survey != null) {
                     val bundle = Bundle()
                     bundle.putSerializable("survey", survey)
