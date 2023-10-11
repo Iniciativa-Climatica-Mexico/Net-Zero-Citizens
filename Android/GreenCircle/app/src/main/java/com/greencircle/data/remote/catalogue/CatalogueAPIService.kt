@@ -4,10 +4,12 @@ import com.greencircle.domain.model.catalogue.CatalogueResponse
 import com.greencircle.domain.model.company.CompanySummary
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.QueryMap
 
 interface CatalogueAPIService {
     @GET("company/approved")
-    suspend fun getCatalogue(): CatalogueResponse
+    @JvmSuppressWildcards
+    suspend fun getCatalogue(@QueryMap params: Map<String, Any>): CatalogueResponse
 
     @GET("company/{id}")
     suspend fun getCompany(
