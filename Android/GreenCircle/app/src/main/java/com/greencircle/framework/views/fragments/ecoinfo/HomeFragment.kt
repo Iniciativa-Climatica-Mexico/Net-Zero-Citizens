@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.greencircle.R
 import com.greencircle.data.remote.ecoinfo.EcoInfoRetrofit
 import com.greencircle.data.repository.EcoInfoRepository
+import com.greencircle.databinding.FragmentErrorBinding
+import com.greencircle.databinding.FragmentHomeBinding
 import com.greencircle.domain.usecase.auth.RecoverTokensRequirement
 import com.greencircle.framework.ui.adapters.ecoinfo.EcoInfoAdapter
 import com.greencircle.framework.viewmodel.ecoinfo.EcoInfoViewModel
@@ -26,6 +28,7 @@ class HomeFragment : Fragment() {
     private lateinit var viewModel: EcoInfoViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var recoverTokens: RecoverTokensRequirement
+    private lateinit var binding: FragmentHomeBinding
 
     /**
      * Infla el layout del fragmento y configura el RecyclerView
@@ -60,7 +63,8 @@ class HomeFragment : Fragment() {
      * @return View? Vista del fragmento
      */
     private fun inflateView(inflater: LayoutInflater, container: ViewGroup?): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     /**
@@ -92,6 +96,13 @@ class HomeFragment : Fragment() {
             try {
                 viewModel.fetchEcoInfos()
             } catch (e: Exception) {
+                // insert error view
+                val errorView = FragmentErrorBinding.inflate(layoutInflater)
+                binding.root.removeView(recyclerView)
+                binding.LLContainer.addView(errorView.root)
+                errorView.root.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+                removeSkeleton()
+                Log.e("HomeFragment", "Error al obtener los datos")
                 Log.e("HomeFragment", e.message.toString())
             }
         }
@@ -102,7 +113,19 @@ class HomeFragment : Fragment() {
      */
     private fun observeData() {
         viewModel.ecoInfos.observe(viewLifecycleOwner) { ecoInfos ->
+            // delete the skeleton
+            removeSkeleton()
             recyclerView.adapter = EcoInfoAdapter(ecoInfos)
+        }
+    }
+
+    private fun removeSkeleton() {
+        try {
+            val skeleton = binding.fragmentHomeSkeleton.root
+            binding.root.removeView(skeleton)
+        } catch (e: Exception) {
+            Log.e("HomeFragment", "Error al eliminar el skeleton")
+            Log.e("HomeFragment", e.message.toString())
         }
     }
 }
