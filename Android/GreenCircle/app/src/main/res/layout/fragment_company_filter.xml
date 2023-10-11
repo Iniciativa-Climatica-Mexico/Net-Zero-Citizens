@@ -92,6 +92,24 @@
         android:padding="6dp"
         android:prompt="@string/select_state_prompt" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/spinner_underline" />
+
+    <TextView
+        android:layout_marginTop="12dp"
+        android:id="@+id/clearFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Limpiar Filtros"
+        android:textSize="16sp"
+        android:textColor="@color/blue"
+        android:layout_marginBottom="20dp"
+        />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -120,13 +138,6 @@
             android:id="@+id/applyButton"
             />
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/spinner_underline" />
 
 
 </LinearLayout>

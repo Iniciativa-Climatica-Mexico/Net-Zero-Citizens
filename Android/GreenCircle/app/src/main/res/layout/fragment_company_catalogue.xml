@@ -21,6 +21,43 @@
         android:id="@+id/SearchBar"
         />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/NoResultsContainer"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+
+
+        <ImageView
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:src="@drawable/baseline_error_outline_24"
+            android:layout_gravity="center_horizontal"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No hay resultados para tu búsqueda"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Intenta revisar tu ortografia o cambiar los filtros"
+            android:layout_gravity="center_horizontal"
+            />
+
+
+    </LinearLayout>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/newRecyclerView"
         android:layout_width="match_parent"

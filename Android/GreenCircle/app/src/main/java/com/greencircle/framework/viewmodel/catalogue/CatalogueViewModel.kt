@@ -36,6 +36,17 @@ class CatalogueViewModel(private val context: Context) : ViewModel() {
         this.params.value = params
     }
 
+    fun clearParams() {
+        this.params.value = CompanyParams(
+            "",
+            "",
+            "",
+            "",
+            0.0,
+            0.0,
+        )
+    }
+
     /**
      * Esta función se utiliza para obtener la lista de resumen de la empresa
      */

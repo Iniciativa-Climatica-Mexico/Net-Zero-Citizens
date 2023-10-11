@@ -50,6 +50,11 @@ class CatalogueFragment : Fragment() {
                 errorView.root.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
                 removeSkeleton()
             } else {
+                if (list.size == 0) {
+                    binding.NoResultsContainer.visibility = View.VISIBLE
+                } else {
+                    binding.NoResultsContainer.visibility = View.GONE
+                }
                 removeSkeleton()
                 adapter.initCustomAdapter(list, binding.root.context)
                 recyclerView.adapter = adapter
