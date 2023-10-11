@@ -13,7 +13,7 @@ struct LoginView: View {
   var goForm: () -> Void
   var goMainMenu: () -> Void
   var goCompanyRegister: () -> Void
-  
+  //@State var loadingGoogle = false
   @StateObject var viewModel = LoginViewModel()
   
   var body: some View {
@@ -53,13 +53,14 @@ struct LoginView: View {
           }.padding(.bottom)
           
           ButtonDividerView(text: "O continúa con")
-          
-          GoogleSignInButton(style: .wide) {
+        GoogleSignInButton(style: .wide) {
+            viewModel.loadingGoogle = true
             Task {
               let state = await viewModel
                 .handleGoogleSignIn()
               switch state {
               case .fail:
+                  viewModel.loadingGoogle = false
                 break
               case .newUser:
                 goForm()
@@ -68,6 +69,14 @@ struct LoginView: View {
               }
             }
           }
+         /*
+          .onTapGesture {
+              self.loadingGoogle.toggle()
+          }*/
+          .overlay(LoadingScreenView()
+            .opacity(viewModel.loadingGoogle ? 1.0 : 0.00)
+          )
+            
           .alert("Algo salió mal",
                  isPresented: $viewModel.showAlert) {
             Button("Entendido", role: .cancel) {}
