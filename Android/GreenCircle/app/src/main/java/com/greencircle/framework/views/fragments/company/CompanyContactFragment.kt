@@ -132,7 +132,7 @@ class CompanyContactFragment : Fragment() {
         val carousel = binding.carousel
         val images = files?.filter { it.fileDescription == FileDescription.IMAGEN }
 
-        if(images.isNullOrEmpty()){
+        if (images.isNullOrEmpty()) {
             carousel.addData(CarouselItem(R.drawable.carousel1))
             carousel.addData(CarouselItem(R.drawable.carousel2))
             carousel.addData(CarouselItem(R.drawable.carousel3))
