@@ -13,7 +13,7 @@
         android:textSize="30sp"
         android:layout_marginBottom="20dp"
         android:layout_below="@id/ordenaPor"
-    />
+        />
 
     <TextView
         android:id="@+id/ordenaPor"
@@ -33,7 +33,7 @@
         android:entries="@array/company_filter"
         android:padding="6dp"
         android:prompt="@string/select_rating_prompt" />
-        />
+    />
 
     <View
         android:layout_width="match_parent"
@@ -62,7 +62,7 @@
         android:entries="@array/company_product"
         android:padding="6dp"
         android:prompt="@string/select_product_prompt" />
-        />
+    />
 
     <View
         android:layout_width="match_parent"

@@ -10,7 +10,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import com.greencircle.R
 import com.greencircle.databinding.FragmentCompanyContactBinding
-import com.greencircle.domain.model.company.CompanyImages
+import com.greencircle.domain.model.company.files.CompanyFile
+import com.greencircle.domain.model.company.files.FileDescription
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.company.CompanyContactViewModel
 import com.greencircle.framework.views.fragments.catalogue.CatalogueFragment
@@ -46,7 +47,7 @@ class CompanyContactFragment : Fragment() {
 
             if (companyData == null) return@observe
 
-            initCarousel(companyData.companyImages)
+            initCarousel(companyData.files)
             binding.TVCompanyName.text = companyData.name
 
             // bundle para pasar los datos de contacto a CompanyContactInfoFragment
@@ -127,13 +128,19 @@ class CompanyContactFragment : Fragment() {
         _binding = null
     }
 
-    fun initCarousel(images: List<CompanyImages>?) {
+    private fun initCarousel(files: List<CompanyFile>?) {
         val carousel = binding.carousel
+        val images = files?.filter { it.fileDescription == FileDescription.IMAGEN }
+
         if (images.isNullOrEmpty()) {
-            carousel.addData(CarouselItem(R.drawable.main_logo_bg))
+            carousel.addData(CarouselItem(R.drawable.carousel1))
+            carousel.addData(CarouselItem(R.drawable.carousel2))
+            carousel.addData(CarouselItem(R.drawable.carousel3))
+            return
         }
-        images?.forEach { image ->
-            carousel.addData(CarouselItem(image.imageUrl))
+
+        images.forEach { image ->
+            carousel.addData(CarouselItem(image.fileURL))
         }
     }
 

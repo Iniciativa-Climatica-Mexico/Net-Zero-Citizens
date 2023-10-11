@@ -34,10 +34,15 @@ class CreateCompanyViewModel(private val context: Context) : ViewModel() {
     private val recoverTokens = RecoverTokensRequirement(context)
     private val updateTokensData = UpdateTokensDataRequirement()
     val error = MutableLiveData<Boolean>()
+
     private val _googleLoginResult = MutableLiveData<AuthResponse?>()
     val googleLoginResult: LiveData<AuthResponse?> = _googleLoginResult
     val assignCompanyResult = MutableLiveData<String?>()
     val googleLoginError = MutableLiveData<Boolean>()
+
+    private val _createCompanyResult = MutableLiveData<CompanyAPIService.CreateCompanyResponse?>()
+    val createCompanyResult: LiveData<CompanyAPIService.CreateCompanyResponse?> =
+        _createCompanyResult
 
     /**
      * Realiza el inicio de sesión con Google utilizando el token proporcionado.
@@ -48,13 +53,10 @@ class CreateCompanyViewModel(private val context: Context) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             val result: AuthResponse? = googleAuthRequirement(token)
             _googleLoginResult.postValue(result)
-
             if (result == null) {
                 googleLoginError.postValue(true)
                 return@launch
-            }
-
-            if (result != null && result.tokens == null) {
+            } else if (result != null && result.tokens == null) {
                 googleLoginError.postValue(true)
                 return@launch
             } else {
@@ -97,6 +99,7 @@ class CreateCompanyViewModel(private val context: Context) : ViewModel() {
                 return@launch
             } else {
                 error.postValue(false)
+                _createCompanyResult.postValue(result)
             }
 
             // Actualizar información de los tokens
