@@ -34,8 +34,7 @@ export default function SurveyReportComponent(props: SurveyReportProps) {
         <div className="sm:hidden md:hidden lg:hidden xl:hidden">
           {/* Message for small and medium devices */}
           <p className="text-center mt-4">
-            Para ver el reporte generado ingresa desde tu dispositivo de
-            escritorio.
+            Para ver el reporte generado ingresa desde tu dispositivo de escritorio. Gracias.
           </p>
         </div>
       </div>

@@ -58,12 +58,18 @@ export default function Home() {
   const [pendingCompanies, setPendingCompanies] = useState<Company[]>([])
   const [approvedCompanies, setApprovedCompanies] = useState<Company[]>([])
   const [searchTerm, setSearchTerm] = useState('')
+  const [message, setMessage] = useState('')
   const [activeTab, setActiveTab] = useState<tabs>(
     'pending_approval'
   )
 
   const handleTableRowClick = (company: Company) => {
     setSelectedCompany(company)
+    if (window.innerWidth <= 850) { 
+      setMessage('Para visualizar detalles de un proveedor ingresa desde tu dispositivo de escritorio. Gracias.')
+    } else {
+      setMessage('')
+    }
     setIsModalOpen(true)
   }
 
@@ -200,6 +206,7 @@ export default function Home() {
             fetchPendingCompanies={() => fetchPendingCompanies()}
             fetchApprovedCompanies={() => fetchApprovedCompanies()}
             activeTab={activeTab}
+            message={message}
           />
         </div>
       )}

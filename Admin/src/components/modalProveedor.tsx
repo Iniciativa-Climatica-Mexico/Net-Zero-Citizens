@@ -52,6 +52,7 @@ interface ModalProveedorProps {
   fetchPendingCompanies: () => void
   fetchApprovedCompanies: () => void
   activeTab: tabs | 'rejected'
+  message: string
 }
 
 export default function ModalProveedor({
@@ -60,6 +61,7 @@ export default function ModalProveedor({
   fetchPendingCompanies,
   fetchApprovedCompanies,
   activeTab,
+  message
 }: ModalProveedorProps) {
   const [viewModal, setViewModal] = useState<boolean>(false)
   const [checkboxChecked, setCheckboxChecked] = useState(false)
@@ -131,6 +133,27 @@ export default function ModalProveedor({
     }
   }
 
+  if (message) {
+    return (
+      <div>
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="modal-container">
+            <CloseIcon
+              color="primary"
+              className="cursor-pointer"
+              onClick={() => {
+                setIsModalOpen(false)
+              }}
+            />
+            <Card className="w-[350px] modal-card">
+              <CardDescription className='p-4 text-center'>{message}</CardDescription>
+            </Card>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div>
       {viewModal && (
@@ -165,9 +188,10 @@ export default function ModalProveedor({
           </div>
         </div>
       )}
+      
       <div className="fixed inset-0 flex flex-col items-center justify-center">
         <ThemeProvider theme={Theme}>
-          <div className="flex justify-end w-50 pr-4 pb-2">
+          <div className="flex justify-end w-50 pl-[800px] pb-2">
             <CloseIcon
               color="secondary"
               className="cursor-pointer"
