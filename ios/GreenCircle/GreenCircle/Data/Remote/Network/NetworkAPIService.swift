@@ -29,9 +29,9 @@ class NetworkAPIService {
   /// Ejecuta la get request a la url proporcionada
   /// - Parameter url: el url a la cuál hacer el request
   /// - Returns: el tipo de dato inferido o nil si falla
-  func getRequest<T: Codable>(_ url: URL) async -> T? {
+  func getRequest<T: Codable>(_ url: URL, params: [String: Any] = [:]) async -> T? {
     let requestTask = session
-      .request(url).validate()
+      .request(url, parameters: params).validate()
 
     let response = await requestTask.serializingData().response
 

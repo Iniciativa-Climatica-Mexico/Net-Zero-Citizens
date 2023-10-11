@@ -11,10 +11,18 @@ import Foundation
 class CompanyViewModel: ObservableObject {
   /// Caso de uso para hacer fetch de los datos de compañía
   private let useCase: CompanyUseCase
-    @Published var currentCompany: Company?
   
+  @Published var currentCompany: Company?
+  
+  @Published var order: String = ""
+  @Published var state: String = ""
+  @Published var product: String = ""
+  
+  @Published var sheet: Bool = false
   
   @Published var companies = [Company]()
+  
+  @Published var searchCompany = ""
   
   /// La compañía puede cambiar en la vista (se construye .onAppear())
   @Published var contentCompany: Company = Company(
@@ -44,7 +52,7 @@ class CompanyViewModel: ObservableObject {
     score: 0.0,
     oneComment: "",
     images: []
-    )
+  )
   
   /// Para implementar el caso de uso en la vista que llame al ViewModel Compañía
   init(useCase: CompanyUseCase = CompanyUseCase.shared) {
@@ -57,13 +65,29 @@ class CompanyViewModel: ObservableObject {
   func fetchCompanyById(idCompany: UUID) async {
     let resultCompany = await useCase.fetchCompanyById(id: idCompany)
     if let resultCompany = resultCompany {
-        contentCompany = resultCompany
+      contentCompany = resultCompany
     }
   }
-
+  
   @MainActor
   func fetchAllCompanies() async {
     self.companies = await useCase.fetchAllCompanies()!.rows
   }
-   
+  
+  
+  @MainActor
+  func fetchFilteredCompanies() async {
+    self.companies = await useCase.filterCompany(order: order, product: product, state: state)
+  }
+  
+  var filteredCompanies: [Company] {
+    if searchCompany.isEmpty {
+      return companies
+    } else {
+      return companies.filter { company in
+        return company.name.localizedCaseInsensitiveContains(searchCompany)
+      }
+    }
+  }
+
 }
