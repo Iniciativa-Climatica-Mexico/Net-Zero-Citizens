@@ -12,10 +12,11 @@ import com.greencircle.databinding.ActivityMainBinding
 import com.greencircle.databinding.TopBarBinding
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.survey.SurveyViewModel
-import com.greencircle.framework.views.fragments.HomeFragment
 import com.greencircle.framework.views.fragments.catalogue.CatalogueFragment
+import com.greencircle.framework.views.fragments.ecoinfo.HomeFragment
 import com.greencircle.framework.views.fragments.map.MapFragment
 import com.greencircle.framework.views.fragments.profile.ProfileFragment
+import com.greencircle.utils.Constants
 import java.util.UUID
 import org.json.JSONObject
 
@@ -39,10 +40,11 @@ class MainActivity : AppCompatActivity() {
      *
      * @param fragment El fragmento que se va a mostrar.
      */
-    fun replaceFragment(fragment: Fragment) {
+    fun replaceFragment(fragment: Fragment, tag: String) {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.frame_layout, fragment)
+            .addToBackStack(tag).replace(R.id.frame_layout, fragment)
+
         fragmentTransaction.commit()
     }
 
@@ -55,6 +57,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val fromSurvey = intent.getBooleanExtra("fromSurvey", false)
+        Log.i("SURVEY", "From survey: $fromSurvey")
         if (!fromSurvey) {
             attemptOpenSurvey()
         }
@@ -63,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         topBarBinding = TopBarBinding.bind(binding.root)
-        replaceFragment(HomeFragment())
+        replaceFragment(HomeFragment(), "HomeFragment")
 
         topBarBinding.title.text = "EcoInfo"
         bottomNavigationView = binding.bottomNaSvigation
@@ -71,25 +74,25 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.ecoInfo -> {
-                    replaceFragment(HomeFragment())
+                    replaceFragment(HomeFragment(), "EcoInfoFragment")
                     topBarBinding.title.text = "EcoInfo"
                     true
                 }
 
                 R.id.proveedores -> {
-                    replaceFragment(CatalogueFragment())
+                    replaceFragment(CatalogueFragment(), "CatalogueFragment")
                     topBarBinding.title.text = "Catálogo de Proveedores"
                     true
                 }
 
                 R.id.mapa -> {
-                    replaceFragment(MapFragment())
+                    replaceFragment(MapFragment(), "MapFragment")
                     topBarBinding.title.text = "Mapa Proveedores"
                     true
                 }
 
                 R.id.perfil -> {
-                    replaceFragment(ProfileFragment())
+                    replaceFragment(ProfileFragment(), "ProfileFragment")
                     topBarBinding.title.text = "Perfil"
                     true
                 }
@@ -99,17 +102,46 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Método llamado cuando se presiona el botón de retroceso.
+     *
+     * Esta función se utiliza para controlar el comportamiento del botón de retroceso
+     * en la actividad principal de la aplicación
+     *
+     * Si el fragmento actual es [HomeFragment], se finaliza la actividad.
+     * Si el fragmento actual es [CatalogueFragment], [MapFragment] o [ProfileFragment],
+     * se reemplaza el fragmento actual con [HomeFragment].
+     */
+    override fun onBackPressed() {
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.frame_layout)
+
+        when (currentFragment) {
+            is HomeFragment -> {
+                finish()
+            }
+
+            is CatalogueFragment, is MapFragment, is ProfileFragment -> {
+                replaceFragment(HomeFragment(), "HomeFragment")
+                topBarBinding.title.text = "EcoInfo"
+                bottomNavigationView.selectedItemId = R.id.ecoInfo
+            }
+
+            else -> {
+                onBackPressedDispatcher.onBackPressed()
+            }
+        }
+    }
+
     private fun attemptOpenSurvey() {
         try {
             Log.i("SURVEY", "Intentando abrir encuesta")
-            val sharedPreferences = getSharedPreferences("my_preferences", MODE_PRIVATE)
-            val userJson = sharedPreferences?.getString("user_session", null)
+            val sharedPreferences =
+                getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE)
+            val userJson = sharedPreferences?.getString(Constants.USER_SESSION_SP_NAME, null)
             val userJSON = JSONObject(userJson!!)
             val userId = UUID.fromString(userJSON.getString("uuid"))
-            Log.i("SURVEY", "UUID: $userId")
             surveyViewModel.getSurveyPending(userId)
             surveyViewModel.surveyLiveData.observe(this) { survey ->
-                Log.i("SURVEY", "Survey: $survey")
                 if (survey != null) {
                     val bundle = Bundle()
                     bundle.putSerializable("survey", survey)
@@ -119,6 +151,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         } catch (e: Exception) {
+            Log.e("SURVEY", "Error al abrir encuesta")
+            Log.e("SURVEY", e.toString())
             e.printStackTrace()
         }
     }

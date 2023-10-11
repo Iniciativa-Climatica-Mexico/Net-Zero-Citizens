@@ -43,13 +43,7 @@
     <string name="user_favourite_empty_view">No has agregado proveedores como favoritos</string>
     <string name="select_problem_prompt">Selecciona el problema</string>
     <string name="error_message">Ha ocurrido un error, por favor intenta mas tarde.</string>
-
-    <string-array name="options_array">
-        <item>Productos Defectuosos</item>
-        <item>Inconformidad con el producto / servicio</item>
-        <item>Comportamiento Inapropiado</item>
-        <item>Mal Servicio</item>
-        <item>Fraudes o estafas</item>
-        <item>Violación legal o ética</item>
-    </string-array>
+    <string name="select_rating_prompt">Selecciona una calificación</string>
+    <string name="select_product_prompt">Selecciona un producto</string>
+    <string name="select_state_prompt">Selecciona un estado</string>
 </resources>

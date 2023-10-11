@@ -226,6 +226,7 @@ struct ContactCompanyRatingView: View {
         }.padding(.bottom, 10)
         HStack {
           Spacer()
+
             NavigationLink(destination: ScrollViewRating(goOpinions: goOpinions, goScrollRating: goScrollRating), label: {
             Text("Ver mas...")
               .font(.system(size: 17))
@@ -235,6 +236,7 @@ struct ContactCompanyRatingView: View {
                 goReviews()
               }
           })
+
           Spacer()
         }
         Spacer()

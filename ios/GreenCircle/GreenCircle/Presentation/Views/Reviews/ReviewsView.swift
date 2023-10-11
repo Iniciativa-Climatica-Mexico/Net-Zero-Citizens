@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct ReviewsView: View {
+
   @State private var isSecondViewPresented = false
   @State private var scoreRating: Int = 0
   @EnvironmentObject var reviewViewModel: ReviewViewModel
@@ -178,7 +179,7 @@ struct RatingView: View {
                     Text(String(format: "%.1f", reviewModel.reviewFields.score))
                         .font(.system(size: 60, weight: .bold, design: .default)).foregroundColor(Color("GreenCustom"))
                 }
-                
+
                 VStack(alignment: .leading) {
                     HStack {
                         ForEach(0..<5) { index in
@@ -189,6 +190,7 @@ struct RatingView: View {
                     .font(.headline)
     
                     Text("\(reviewModel.totalReviews) opiniones")
+
                         .font(.caption)
                         .foregroundColor(.gray)
                 }
@@ -272,7 +274,7 @@ struct StarRatingView: View {
 
 extension View {
     func customSectionPadding() -> some View {
-        self.padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+        return self.padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
     }
     func customTextPadding() -> some View {
         return self.padding(EdgeInsets(top: 7, leading: 0, bottom: 7, trailing: 0))

@@ -101,7 +101,6 @@ struct ReviewCompanyCard: View {
             
             VStack (alignment: .leading) {
                 Text(review.reviewTitle)
-                
                     .foregroundColor(Color("MainText"))
                     .fontWeight(.bold)
                 

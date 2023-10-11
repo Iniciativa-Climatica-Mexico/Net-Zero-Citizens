@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct ReviewPostData {
     let reviewTitle: String
     let review: String
@@ -28,6 +27,7 @@ class ReviewViewModel: ObservableObject {
         createdAt: "",
         updatedAt: ""
     )
+  
     @Published var totalReviews = Int ()
     @Published var responsePost : String = ""
     
@@ -36,8 +36,10 @@ class ReviewViewModel: ObservableObject {
     }
     
     @MainActor
+
     func fetchReviewByCompanyId(companyId: UUID) async {
         let resultReview = await fetchReviewUseCase.fetchReviewByCompanyId(cmpyId: companyId.uuidString.lowercased())
+
         if let resultReview = resultReview {
             print("Review recibida: \(resultReview)")
             contentReview = resultReview.rows
@@ -71,5 +73,4 @@ class ReviewViewModel: ObservableObject {
             responsePost = responsePost
         }
     }
-    
 }

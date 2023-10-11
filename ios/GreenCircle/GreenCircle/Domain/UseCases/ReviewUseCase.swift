@@ -30,6 +30,7 @@ class ReviewUseCase {
     
     @MainActor
     func fetchReviewByUserId(usId: String) async -> PaginatedQuery<Review>? {
+
         return await repository.fetchReviewByUserId(userId: usId)
     }
     

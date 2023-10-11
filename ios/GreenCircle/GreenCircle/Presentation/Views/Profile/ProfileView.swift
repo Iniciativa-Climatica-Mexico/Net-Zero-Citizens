@@ -103,6 +103,7 @@ struct ProfileView: View {
           
           //--------------------Sección de Reseñas-----------------------------------------
             Text(myFavourites ? "Mis Favoritos(" + "\(totalFavourites))" : "Mis Reseñas(\(modelReview.totalReviews))")
+
             .font(.system(size: 20))
             .fontWeight(.bold)
             .padding(EdgeInsets(top: 32, leading: 15, bottom: 0, trailing: 0))
@@ -111,6 +112,7 @@ struct ProfileView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
           ScrollView {
             //Aquí irán las tarjetas de reseñas
+
             if myFavourites {
               if totalFavourites > 0 {
                 LazyVStack(spacing: 8) {
@@ -127,6 +129,7 @@ struct ProfileView: View {
               
             } else {
               ReviewCardClient(reviewViewModel: modelReview)
+
             }
           }.onAppear {
             Task {

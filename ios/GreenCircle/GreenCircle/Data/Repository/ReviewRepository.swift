@@ -9,6 +9,7 @@ import Foundation
 
 /// Clase con la estructura de la API de autenticación
 class ReviewAPI {
+
     static let base = APIRoutes.Review.base
   struct Routes {
     static let companyReview = "/company"
@@ -28,6 +29,7 @@ protocol ReviewRepositoryProtocol {
 class ReviewRepository: ReviewRepositoryProtocol {
 
   let service : NetworkAPIService
+
   let lService = LocalService.shared
   static let shared = ReviewRepository()
   
@@ -39,7 +41,6 @@ class ReviewRepository: ReviewRepositoryProtocol {
     func fetchReviewByCompanyId(companyId: String) async -> PaginatedQuery<Review>? {
         return await NetworkAPIService.shared.getRequest(URL(string: "\(ReviewAPI.base)\(ReviewAPI.Routes.companyReview)/\(companyId)")!)
     }
-    
     
     func fetchReviewByUserId(userId: String) async -> PaginatedQuery<Review>? {
         return await NetworkAPIService.shared.getRequest(URL(string: "\(ReviewAPI.base)\(ReviewAPI.Routes.userReview)/\(userId)")!)
