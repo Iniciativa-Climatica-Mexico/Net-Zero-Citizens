@@ -11,4 +11,7 @@ class CatalogueRequirement {
     ? {
         return catalogueRepository.getCatalogue(authToken, params)
     }
+    suspend fun getCompanyData(authToken: String, idCompany: String): CompanySummary? {
+        return catalogueRepository.getCompanyData(authToken, idCompany)
+    }
 }
