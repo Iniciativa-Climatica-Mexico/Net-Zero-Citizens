@@ -59,14 +59,14 @@ export default function Home() {
   const [approvedCompanies, setApprovedCompanies] = useState<Company[]>([])
   const [searchTerm, setSearchTerm] = useState('')
   const [message, setMessage] = useState('')
-  const [activeTab, setActiveTab] = useState<tabs>(
-    'pending_approval'
-  )
+  const [activeTab, setActiveTab] = useState<tabs>('pending_approval')
 
   const handleTableRowClick = (company: Company) => {
     setSelectedCompany(company)
-    if (window.innerWidth <= 850) { 
-      setMessage('Para visualizar detalles de un proveedor ingresa desde tu dispositivo de escritorio. Gracias.')
+    if (window.innerWidth <= 850) {
+      setMessage(
+        'Para visualizar detalles de un proveedor ingresa desde tu dispositivo de escritorio. Gracias.'
+      )
     } else {
       setMessage('')
     }
@@ -96,12 +96,15 @@ export default function Home() {
       ? pendingCompanies?.filter((company) =>
         company.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
-      : activeTab === 'approved' ? approvedCompanies?.filter((company) =>
-        company.name.toLowerCase().includes(searchTerm.toLowerCase())
-      ) : approvedCompanies?.filter((company) =>
-        company.userId === null &&
-        company.name.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+      : activeTab === 'approved'
+        ? approvedCompanies?.filter((company) =>
+          company.name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+        : approvedCompanies?.filter(
+          (company) =>
+            company.userId === null &&
+            company.name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
 
   const startIndex = (currentPage - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
@@ -120,11 +123,14 @@ export default function Home() {
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">Imagen</TableHead>
-          { activeTab === 'no_user' ? <TableHead>Token de registro</TableHead> : null}
+          {activeTab === 'no_user' ? (
+            <TableHead>Token de registro</TableHead>
+          ) : null}
           <TableHead>Nombre</TableHead>
           <TableHead>Correo</TableHead>
           <TableHead>Ubicación</TableHead>
           <TableHead>Estado</TableHead>
+          <TableHead className="text-right"></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -134,11 +140,11 @@ export default function Home() {
               className="cursor-pointer"
               onClick={() => handleTableRowClick(company)}
             >
-              {company.profilePicture != null ?
+              {company.profilePicture != null ? (
                 <Avatar>
                   <AvatarImage src={company.profilePicture} />
                 </Avatar>
-                :
+              ) : (
                 <Image
                   src={LogoSm}
                   alt="Placeholder"
@@ -146,14 +152,16 @@ export default function Home() {
                   height={350}
                   className="basis-6/12 mr-[10px] rounded-l-xl object-cover"
                 />
-              }
+              )}
             </TableCell>
-            { activeTab === 'no_user' ? <TableCell
-              className="cursor-pointer"
-              onClick={() => handleTableRowClick(company)}
-            >
-              {company.companyId}
-            </TableCell> : null}
+            {activeTab === 'no_user' ? (
+              <TableCell
+                className="cursor-pointer"
+                onClick={() => handleTableRowClick(company)}
+              >
+                {company.companyId}
+              </TableCell>
+            ) : null}
             <TableCell
               className="cursor-pointer"
               onClick={() => handleTableRowClick(company)}
@@ -223,21 +231,21 @@ export default function Home() {
         <Tabs defaultValue="pending_approval" className="sm:flex-row mb-4">
           <TabsList className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2  p-2 rounded h-full sm:w-auto md:w-96 justify-start sm:justify-start">
             <TabsTrigger
-              className='bg-gray-100'
+              className="bg-gray-100"
               value="pending_approval"
               onClick={() => setActiveTab('pending_approval')}
             >
               Pendientes
             </TabsTrigger>
             <TabsTrigger
-              className='bg-gray-100'
+              className="bg-gray-100"
               value="approved"
               onClick={() => setActiveTab('approved')}
             >
               Aprobados
             </TabsTrigger>
             <TabsTrigger
-              className='bg-gray-100'
+              className="bg-gray-100"
               value="no_user"
               onClick={() => setActiveTab('no_user')}
             >
@@ -268,5 +276,4 @@ export default function Home() {
       </main>
     </>
   )
-  
 }

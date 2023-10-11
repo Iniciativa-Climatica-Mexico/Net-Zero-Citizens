@@ -91,6 +91,13 @@ export default function Home() {
             </TableRow>
           </TableHeader>
           <TableBody>
+            (complaintsWithUsers?.length === 0) ? (
+            <TableRow>
+              <TableCell colSpan={6} className="text-center">
+                Error al cargar reportes
+              </TableCell>
+            </TableRow>
+            )
             {complaintsWithUsers?.map((company) => (
               <TableRow key={company.complaintId} className="min-h-max">
                 <TableCell className="cursor-pointer">

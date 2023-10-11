@@ -46,7 +46,11 @@ export default function Navbar() {
 
   const [mobileMenuVisible, setMobileMenuVisible] = useState(false)
 
-  if (pathname === '/login' || pathname === '/notAllowed') {
+  if (
+    pathname == '/login' ||
+    pathname == '/notAllowed' ||
+    pathname == '/notRegistered'
+  ) {
     return <></>
   }
 

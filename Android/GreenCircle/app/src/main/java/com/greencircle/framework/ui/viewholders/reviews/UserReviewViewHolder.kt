@@ -37,10 +37,12 @@ class UserReviewViewHolder(
                         navigateToUpdateReviewFormFragment()
                         true
                     }
+
                     R.id.delete_review -> {
                         buildAlertDialog()
                         true
                     }
+
                     else -> false
                 }
             }
@@ -94,9 +96,14 @@ class UserReviewViewHolder(
         alertDialogBuilder.setPositiveButton("Si") { dialog, _ ->
             try {
                 deleteReview(reviewId)
-                Toast.makeText(itemView.context, reviewId.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    itemView.context,
+                    "Reseña eliminada",
+                    Toast.LENGTH_SHORT
+                ).show()
             } catch (e: Exception) {
-                Toast.makeText(itemView.context, e.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(itemView.context, "Error al eliminar reseña", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
 
