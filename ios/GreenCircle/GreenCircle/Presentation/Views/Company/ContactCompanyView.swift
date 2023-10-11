@@ -198,7 +198,7 @@ struct ContactCompanyView: View {
   @State var deleteOperation: Bool = false
   @State var messageAlert: String = ""
   @Binding var emptyHeartFill: Bool
-
+    
   @Environment(\.presentationMode) var presentationMode
 
   var body: some View {
@@ -318,11 +318,6 @@ struct ContactCompanyView: View {
         )
           }
     }
-      } else {
-        ScrollViewRating(idCompany: idCompany, emptyHeartFill: emptyHeartFill, dispScrollView: $dispScrollView, isPressed: $isPressed)
-          .onAppear {
-            isPressed = ["Producto": false, "Contacto": false, "Reviews": true]
-          }
       }
     }
 }

@@ -137,4 +137,10 @@ class CompanyRepository: CompanyRepositoryProtocol {
         let mimeType = mimeType
         return await service.uploadFileRequest(uploadURL, file: file, fileName: fileName, mimeType: mimeType, additionalParameters: additionalParameters)
     }
+  func fetchFilteredCompanies(order: String, product: String, state: String) async -> PaginatedQuery<Company>? {
+    let params = ["ordering": order, "state": state, "productName": product]
+    
+    return await service.getRequest(URL(string: "\(CompanyAPI.base)")!, params: params)
+  }
+  
 }

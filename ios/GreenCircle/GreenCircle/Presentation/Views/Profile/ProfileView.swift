@@ -9,8 +9,9 @@ import SwiftUI
 
 
 struct ProfileView: View {
-  
   @ObservedObject var modelUser = UserViewModel()
+
+  @ObservedObject var modelReview = ReviewViewModel()
   @StateObject var favourites = FavouriteViewModel()
   @State var myFavourites: Bool = false
   @State var totalFavourites: Int = 0
@@ -102,7 +103,8 @@ struct ProfileView: View {
           Spacer()
           
           //--------------------Sección de Reseñas-----------------------------------------
-          Text(myFavourites ? "Mis Favoritos(" + "\(totalFavourites))" : "Mis Reseñas")
+          Text(myFavourites ? "Mis Favoritos(" + "\(totalFavourites))" : "Mis Reseñas (\(modelReview.totalReviews))")
+
             .font(.system(size: 20))
             .fontWeight(.bold)
             .padding(EdgeInsets(top: 32, leading: 15, bottom: 0, trailing: 0))
@@ -111,6 +113,7 @@ struct ProfileView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
           ScrollView {
             //Aquí irán las tarjetas de reseñas
+
             if myFavourites {
               if totalFavourites > 0 {
                 LazyVStack(spacing: 8) {
@@ -126,7 +129,7 @@ struct ProfileView: View {
               }
               
             } else {
-              /// TODO reviews of user
+              ReviewCardClient(reviewViewModel: ReviewViewModel())
             }
           }.onAppear {
             Task {
@@ -139,6 +142,11 @@ struct ProfileView: View {
           }
         }
         .padding(.top, 70)
+      }
+      .onAppear{
+          Task{
+              await modelReview.fetchReviewByUserId()
+          }
       }
     }
   }

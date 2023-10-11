@@ -16,7 +16,7 @@ enum StatusEnum: String, Codable, Equatable {
 }
 
 /// Struct representando la información presente en una compañía
-struct Company: Codable, Identifiable {
+struct Company: Codable, Identifiable, Equatable {
   var id: String { companyId.uuidString }
   var companyId: UUID
   var userId: String?
