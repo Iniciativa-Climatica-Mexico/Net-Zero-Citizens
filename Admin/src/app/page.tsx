@@ -64,6 +64,7 @@ export default function Home() {
 
   const handleTableRowClick = (company: Company) => {
     setSelectedCompany(company)
+    console.log(company)
     setIsModalOpen(true)
   }
 
@@ -93,7 +94,7 @@ export default function Home() {
       : activeTab === 'approved' ? approvedCompanies?.filter((company) =>
         company.name.toLowerCase().includes(searchTerm.toLowerCase())
       ) : approvedCompanies?.filter((company) =>
-        company.userId === null &&
+        company.userId === null && 
         company.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
 
@@ -119,6 +120,7 @@ export default function Home() {
           <TableHead>Correo</TableHead>
           <TableHead>Ubicación</TableHead>
           <TableHead>Estado</TableHead>
+          <TableHead className="text-right"></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
