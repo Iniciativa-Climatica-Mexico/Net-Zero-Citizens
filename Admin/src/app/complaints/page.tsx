@@ -69,6 +69,7 @@ export default function Home() {
   return (
     <main className="border border-[#C1C9D2] m-[30px] mt-[15px] p-[20px] pb-5 rounded-lg">
       <h1 className="text-[20px] font-bold">Proveedores Reportados: </h1>
+
       <div className="flex items-center py-4 gap-x-2">
         <Input
           placeholder="Busca un proveedor"
@@ -77,6 +78,7 @@ export default function Home() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
+
       <Table className="border border-[#C1C9D2] rounded">
         <TableCaption></TableCaption>
         <TableHeader>
@@ -88,6 +90,14 @@ export default function Home() {
           </TableRow>
         </TableHeader>
         <TableBody>
+          {companiesWithComplaints?.length === 0 && (
+            <TableRow>
+              <TableCell colSpan={4} className="text-center">
+                No hay proveedores reportados
+              </TableCell>
+            </TableRow>
+          )}
+
           {companiesWithComplaints?.map((company) => (
             <TableRow key={company.companyId}>
               <TableCell
