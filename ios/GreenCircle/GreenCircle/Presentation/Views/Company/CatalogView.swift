@@ -9,8 +9,8 @@ import SwiftUI
 
 struct CatalogView: View {
   @StateObject var viewModel = CompanyViewModel()
-  @State var searchQuery  = ""
   @State var filtered = CompanyViewModel().companies
+  @State private var isFilteringEmpty = false
   
   var body: some View {
     ZStack {
@@ -18,12 +18,13 @@ struct CatalogView: View {
         ScrollView {
           LazyVStack{
             HStack {
-              TextField("Search...", text: $searchQuery)
+              TextField("Search...", text: $viewModel.searchCompany)
                 .padding(7)
                 .background(Color(.systemGray6))
                 .cornerRadius(10)
                 .frame(width: 340)
                 .padding(.trailing, 10)
+              
               Button(action: { viewModel.sheet = true
               }) {
                 Image(systemName: "slider.horizontal.3")
@@ -38,11 +39,18 @@ struct CatalogView: View {
                 }
             }
             
-            ForEach(viewModel.companies, id: \.id) { company in
+            ForEach(viewModel.filteredCompanies, id: \.id) { company in
               CardCatalogView(companyId: company.companyId,
                               companyName: company.name, city: company.city,
                               state: company.state)
             }.padding(.top, 10)
+            
+            if isFilteringEmpty {
+              Text("No se encontraron compañías.")
+                .foregroundColor(.gray)
+                .padding(.top, 10)
+            }
+            
           }.padding(.top, 10)
         }
         .onAppear {
@@ -53,15 +61,8 @@ struct CatalogView: View {
       }
       .accentColor(.white)
     }
-  }
-  
-  func filteredCompanies() {
-    if searchQuery.isEmpty {
-      filtered = viewModel.companies
-    } else {
-      filtered = viewModel.companies.filter {
-        $0.name.localizedCaseInsensitiveContains(searchQuery)
-      }
+    .onChange(of: viewModel.filteredCompanies) { filteredCompanies in
+      isFilteringEmpty = filteredCompanies.isEmpty
     }
   }
 }

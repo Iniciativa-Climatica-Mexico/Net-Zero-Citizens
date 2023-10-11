@@ -60,8 +60,6 @@ class CompanyUseCase {
     var newProduct = ""
 
     switch order {
-    case "Cercanía":
-      newOrder = "distance"
     case "Rating":
       newOrder = "score"
     default:
@@ -70,9 +68,9 @@ class CompanyUseCase {
     
     switch product {
     case "Paneles Solares":
-      newProduct = ""
-    case "Celdas Fotovoltaicas":
-      newProduct = ""
+      newProduct = "Paneles Solares"
+    case "Calentadores Solares":
+      newProduct = "Calentadores Solares"
     default:
       break
     }

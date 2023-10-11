@@ -11,6 +11,7 @@ import Foundation
 class CompanyViewModel: ObservableObject {
   /// Caso de uso para hacer fetch de los datos de compañía
   private let useCase: CompanyUseCase
+  
   @Published var currentCompany: Company?
   
   @Published var order: String = ""
@@ -20,6 +21,8 @@ class CompanyViewModel: ObservableObject {
   @Published var sheet: Bool = false
   
   @Published var companies = [Company]()
+  
+  @Published var searchCompany = ""
   
   /// La compañía puede cambiar en la vista (se construye .onAppear())
   @Published var contentCompany: Company = Company(
@@ -76,4 +79,15 @@ class CompanyViewModel: ObservableObject {
   func fetchFilteredCompanies() async {
     self.companies = await useCase.filterCompany(order: order, product: product, state: state)
   }
+  
+  var filteredCompanies: [Company] {
+    if searchCompany.isEmpty {
+      return companies
+    } else {
+      return companies.filter { company in
+        return company.name.localizedCaseInsensitiveContains(searchCompany)
+      }
+    }
+  }
+
 }

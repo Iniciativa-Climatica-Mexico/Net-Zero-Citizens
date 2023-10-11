@@ -10,8 +10,8 @@ import SwiftUI
 struct FilterView: View {
   @StateObject var vm: CompanyViewModel
   
-  var orderBy = ["Cercanía", "Rating"]
-  var products = ["Paneles Solares", "Celdas Fotovoltaicas"]
+  var orderBy = ["Rating"]
+  var products = ["Paneles Solares", "Calentadores Solares"]
   
   @Environment(\.dismiss) var dismiss
   
