@@ -1,37 +1,33 @@
-package com.greencircle.framework.views.fragments.company
+package com.greencircle.framework.views.fragments.catalogue
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
-import com.greencircle.R
-import com.greencircle.databinding.FragmentCompanyContactBinding
-import com.greencircle.domain.model.company.CompanyImages
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.greencircle.databinding.FragmentCompanyCatalogueBinding
+import com.greencircle.databinding.FragmentErrorBinding
+import com.greencircle.domain.model.company.CompanyParams
+import com.greencircle.framework.ui.adapters.catalogue.CatalogueAdapter
 import com.greencircle.framework.viewmodel.ViewModelFactory
-import com.greencircle.framework.viewmodel.company.CompanyContactViewModel
-import com.greencircle.framework.views.fragments.catalogue.CatalogueFragment
-import com.greencircle.framework.views.fragments.reviews.CompanyReviewFragment
-import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
+import com.greencircle.framework.viewmodel.catalogue.CatalogueViewModel
+import kotlinx.coroutines.launch
 
-class CompanyContactFragment : Fragment() {
-
-    private lateinit var viewModel: CompanyContactViewModel
-    private var _binding: FragmentCompanyContactBinding? = null
-    private val binding get() = _binding!!
-
-    private val servicesFragment by lazy { CompanyServicesFragment() }
-    private val contactInfoFragment by lazy { CompanyContactInfoFragment() }
-    private val companyReviewsFragment by lazy { CompanyReviewFragment() }
-
+class CatalogueFragment : Fragment() {
+    private lateinit var binding: FragmentCompanyCatalogueBinding
+    private val adapter = CatalogueAdapter()
+    private lateinit var viewModel: CatalogueViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(
-            this, ViewModelFactory(requireContext(), CompanyContactViewModel::class.java)
-        )[CompanyContactViewModel::class.java]
+        setUpViewModel()
     }
 
     override fun onCreateView(
@@ -39,123 +35,107 @@ class CompanyContactFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        onBackPress()
-        _binding = FragmentCompanyContactBinding.inflate(inflater, container, false)
+        // Inflate the layout for this fragment
+        binding = FragmentCompanyCatalogueBinding
+            .inflate(layoutInflater, container, false)
 
-        viewModel.companyData.observe(viewLifecycleOwner) { companyData ->
+        val recyclerView = binding.newRecyclerView
+        recyclerView.layoutManager = LinearLayoutManager(binding.root.context)
 
-            if (companyData == null) return@observe
-
-            initCarousel(companyData.companyImages)
-            binding.TVCompanyName.text = companyData.name
-
-            // bundle para pasar los datos de contacto a CompanyContactInfoFragment
-            val bundle = Bundle()
-            bundle.putString("CompanyId", companyData.companyId.toString())
-            bundle.putFloat("AverageRating", companyData.rating ?: 0.0f)
-
-            companyReviewsFragment.arguments = bundle
-
-            bundle.putString("WebPage", companyData.webPage)
-            bundle.putString("Email", companyData.email)
-            bundle.putString("Phone", companyData.phone)
-
-            var direction: String = ""
-            var fullStreet: String = "${companyData.street} ${companyData.streetNumber}"
-            fullStreet = fullStreet.trim()
-            if (fullStreet.isNotEmpty()) {
-                direction += "$fullStreet, "
-            }
-
-            direction += companyData.zipCode.toString() +
-                    ", " + companyData.state +
-                    ", " + companyData.city
-
-            bundle.putString("Direction", direction)
-            contactInfoFragment.arguments = bundle
-
-            // bundle para pasar los servicios a CompanyServicesFragment
-            val bundleServices = Bundle()
-            bundleServices.putSerializable("Services", companyData.products)
-            servicesFragment.arguments = bundleServices
-
-            // Revisa si ya hay fragmentos en el contenedor
-            if (childFragmentManager.fragments.size > 0) {
-                FragmentActivity().supportFragmentManager.popBackStack()
-                childFragmentManager.beginTransaction().remove(servicesFragment)
-                    .remove(contactInfoFragment).remove(companyReviewsFragment).commit()
+        viewModel.catalogueLiveData.observe(viewLifecycleOwner) { list ->
+            if (list == null) {
+                val errorView = FragmentErrorBinding.inflate(layoutInflater)
+                binding.root.removeView(recyclerView)
+                binding.LLContainer.addView(errorView.root)
+                errorView.root.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+                removeSkeleton()
             } else {
-                childFragmentManager.beginTransaction()
-                    .add(R.id.fragmentContainer, servicesFragment)
-                    .add(R.id.fragmentContainer, contactInfoFragment)
-                    .add(R.id.fragmentContainer, companyReviewsFragment).hide(contactInfoFragment)
-                    .hide(companyReviewsFragment).commit()
-            }
-        }
-
-        val companyId = arguments?.getString("id")
-        viewModel.getCompanyData(companyId!!)
-
-        /*
-        *Boton que cambia entre los fragmentos de servicios, informacion de contacto y reviews
-        */
-        binding.toggleButtonGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
-            if (isChecked) {
-                when (checkedId) {
-                    R.id.btnServices -> {
-                        childFragmentManager.beginTransaction().show(servicesFragment)
-                            .hide(contactInfoFragment).hide(companyReviewsFragment).commit()
-                    }
-
-                    R.id.btnContactInfo -> {
-                        childFragmentManager.beginTransaction().show(contactInfoFragment)
-                            .hide(servicesFragment).hide(companyReviewsFragment).commit()
-                    }
-
-                    R.id.btnReviews -> {
-                        childFragmentManager.beginTransaction().show(companyReviewsFragment)
-                            .hide(contactInfoFragment).hide(servicesFragment).commit()
-                    }
+                if (list.size == 0) {
+                    binding.NoResultsContainer.visibility = View.VISIBLE
+                } else {
+                    binding.NoResultsContainer.visibility = View.GONE
                 }
+                removeSkeleton()
+                adapter.initCustomAdapter(list, binding.root.context)
+                recyclerView.adapter = adapter
             }
         }
+
+        viewModel.params.observe(viewLifecycleOwner) { params ->
+            Log.d("Params to search: ", params.toString())
+            search(params)
+        }
+
+        search()
+
+        val searchText = binding.SearchBar.searchInput
+        searchText.setOnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                val newParams = viewModel.params.value
+                if (newParams != null) {
+                    newParams.name = searchText.text.toString()
+                }
+                viewModel.updateParams(newParams!!)
+                true
+            } else {
+                false
+            }
+        }
+
+        // Get the buttonOpenModal and setup onClickListener
+        val buttonOpenModal = binding.SearchBar.buttonOpenModal
+        buttonOpenModal.setOnClickListener {
+            val modal = CatalogueFilterModal.newInstance(viewModel)
+            modal.show(parentFragmentManager, "CatalogueFilterModal")
+        }
+
         return binding.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    fun initCarousel(images: List<CompanyImages>?) {
-        val carousel = binding.carousel
-        if (images.isNullOrEmpty()) {
-            carousel.addData(CarouselItem(R.drawable.main_logo_bg))
-        }
-        images?.forEach { image ->
-            carousel.addData(CarouselItem(image.imageUrl))
-        }
+    /**
+     * Cierra el teclado
+     */
+    fun hideKeyboard(context: Context) {
+        val inputManager =
+            context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val v = (context as Activity).currentFocus ?: return
+        inputManager.hideSoftInputFromWindow(v.windowToken, 0)
     }
 
     /**
-     * Función que se encarga de cambiar el fragmento actual por el fragmento de catálogo
-     * cuando se presiona el botón de retroceso
+     * Configura el ViewModel
      */
-    private fun onBackPress() {
-        // Override the back button behavior
-        val onBackPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                val fragmentManager = requireActivity().supportFragmentManager
-                val fragmentTransaction = fragmentManager.beginTransaction()
-                val catalogue = CatalogueFragment()
+    private fun setUpViewModel() {
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(requireContext(), CatalogueViewModel::class.java)
+        )[CatalogueViewModel::class.java]
+    }
 
-                // replace the current fragment with the catalogue fragment
-                fragmentTransaction.replace(R.id.frame_layout, catalogue)
-                fragmentTransaction.commit()
+    private fun removeSkeleton() {
+        try {
+            val skeleton = binding.fragmentCompanyCatalogueSkeleton.root
+            binding.root.removeView(skeleton)
+        } catch (e: Exception) {
+            Log.e("HomeFragment", "Error al eliminar el skeleton")
+            Log.e("HomeFragment", e.message.toString())
+        }
+    }
+
+    private fun search(params: CompanyParams = viewModel.params.value!!) {
+        val recyclerView = binding.newRecyclerView
+        lifecycleScope.launch {
+            try {
+                viewModel.fetchAllCompanies(params)
+                hideKeyboard(binding.root.context)
+            } catch (e: Exception) {
+                val errorView = FragmentErrorBinding.inflate(layoutInflater)
+                binding.root.removeView(recyclerView)
+                binding.LLContainer.addView(errorView.root)
+                errorView.root.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+                removeSkeleton()
+                Log.e("Salida", e.message.toString())
             }
         }
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner, onBackPressedCallback
-        )
     }
 }
