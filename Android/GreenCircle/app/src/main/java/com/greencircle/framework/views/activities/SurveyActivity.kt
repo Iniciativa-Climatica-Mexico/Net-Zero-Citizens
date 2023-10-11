@@ -65,7 +65,7 @@ class SurveyActivity : AppCompatActivity() {
                     MaterialAlertDialogBuilder(this).setTitle("Faltan preguntas")
                         .setMessage(
                             "No puedes enviar sin antes haber " +
-                                    "termiandode llenar todas las preguntas obligatorias.",
+                                "termiandode llenar todas las preguntas obligatorias.",
                         ).setCancelable(false).setPositiveButton("Seguir") { _, _ -> }.show()
                 }
 

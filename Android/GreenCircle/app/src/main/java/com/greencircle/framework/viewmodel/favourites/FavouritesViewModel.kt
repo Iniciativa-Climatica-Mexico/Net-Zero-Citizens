@@ -57,7 +57,7 @@ class FavouritesViewModel(private val context: Context) : ViewModel() {
     }
 
     private suspend fun fetchFavouriteCompanies
-                (favourites: FavouriteResponse): List<CompanySummary>? {
+    (favourites: FavouriteResponse): List<CompanySummary>? {
         val companies = mutableListOf<CompanySummary>()
         val favouritesList = favourites.rows
 
