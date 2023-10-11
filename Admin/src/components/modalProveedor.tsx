@@ -130,7 +130,7 @@ export default function ModalProveedor({
       fetchApprovedCompanies()
     }
   }
-  
+
   return (
     <div>
       {viewModal && (
@@ -139,7 +139,9 @@ export default function ModalProveedor({
             <Card className="w-[450px] modal-card">
               <CardHeader>
                 <CardTitle>Confirmar Acción</CardTitle>
-                <CardDescription>Seguro que desea eliminar al proveedor?</CardDescription>
+                <CardDescription>
+                  Seguro que desea eliminar al proveedor?
+                </CardDescription>
               </CardHeader>
               <CardFooter className="flex justify-between">
                 <Button
@@ -148,16 +150,12 @@ export default function ModalProveedor({
                     toast({
                       description: 'Proveedor eliminado exitosamente.',
                     })
-                  }
-                  }
+                  }}
                   variant="default"
                 >
                   Confirmar
                 </Button>
-                <Button
-                  onClick={() => setViewModal(false)}
-                  variant="outline"
-                >
+                <Button onClick={() => setViewModal(false)} variant="outline">
                   Cancelar
                 </Button>
               </CardFooter>
@@ -178,7 +176,7 @@ export default function ModalProveedor({
           </div>
           <article className="flex flex-col border border-[#C1C9D2] justify-center items-center rounded-lg w-[823px] py-[25px] bg-white z-10">
             <article className="flex border border-[#C1C9D2] rounded-xl w-[763px]">
-              {selectedCompany.profilePicture  != null ? (
+              {selectedCompany.profilePicture != null ? (
                 <img
                   src={selectedCompany.profilePicture}
                   alt="Company Profile"
@@ -197,7 +195,9 @@ export default function ModalProveedor({
               )}
 
               <aside className="basis-6/12 pl-[15px] pr-[25px] py-[20px] text-[14px]">
-                <h2 className="text-[20px] font-bold">{selectedCompany.name}</h2>
+                <h2 className="text-[20px] font-bold">
+                  {selectedCompany.name}
+                </h2>
                 <section className="flex items-center text-[#589A74] py-[10px] gap-x-2">
                   <PlaceIcon color="primary" />
                   {`${selectedCompany.city} ${selectedCompany.state} ${selectedCompany.zipCode}`}
@@ -226,80 +226,88 @@ export default function ModalProveedor({
                     </section>
                   </>
                 )}
-                {selectedCompany.pdfCurriculumUrl && selectedCompany.pdfDicCdmxUrl && selectedCompany.pdfPeeFideUrl && selectedCompany.pdfGuaranteeSecurityUrl && selectedCompany.pdfActaConstitutivaUrl && selectedCompany.pdfIneUrl &&
-                <h2 className="text-[14px] font-bold mt-[10px] mb-[10px]">
-                  Documentos
-                </h2>
-                }
-                {selectedCompany.pdfCurriculumUrl && selectedCompany.pdfDicCdmxUrl && selectedCompany.pdfPeeFideUrl &&
-
-                <section className="flex justify-between items-end mb-3">
-                  <a
-                    href={selectedCompany.pdfCurriculumUrl}
-                    className="min-w-[31%]"
-                    target="_blank"
-                  >
-                    <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                      <FileOpenIcon color="info" className="mt-3" />
-                      <p className="my-2 text-[11px]">Curriculum</p>
-                    </div>
-                  </a>
-                  <a
-                    href={selectedCompany.pdfDicCdmxUrl}
-                    className="min-w-[31%]"
-                    target="_blank"
-                  >
-                    <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                      <FileOpenIcon color="info" className="mt-3" />
-                      <p className="my-2 text-[11px]">Dic CDMX</p>
-                    </div>
-                  </a>
-                  <a
-                    href={selectedCompany.pdfPeeFideUrl}
-                    className="min-w-[31%]"
-                    target="_blank"
-                  >
-                    <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                      <FileOpenIcon color="info" className="mt-3" />
-                      <p className="my-2 text-[11px]">Pee Fide</p>
-                    </div>
-                  </a>
-                </section>
-                }
-                {selectedCompany.pdfGuaranteeSecurityUrl && selectedCompany.pdfActaConstitutivaUrl && selectedCompany.pdfIneUrl &&
-                <section className="flex justify-between items-end mb-3">
-                  <a
-                    href={selectedCompany.pdfGuaranteeSecurityUrl}
-                    className="min-w-[31%]"
-                    target="_blank"
-                  >
-                    <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                      <FileOpenIcon color="info" className="mt-3" />
-                      <p className="my-2 text-[11px]">Guarantee</p>
-                    </div>
-                  </a>
-                  <a
-                    href={selectedCompany.pdfActaConstitutivaUrl}
-                    className="min-w-[31%]"
-                    target="_blank"
-                  >
-                    <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                      <FileOpenIcon color="info" className="mt-3" />
-                      <p className="my-2 text-[11px]">Acta Constitutiva</p>
-                    </div>
-                  </a>
-                  <a
-                    href={selectedCompany.pdfIneUrl}
-                    className="min-w-[31%]"
-                    target="_blank"
-                  >
-                    <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                      <FileOpenIcon color="info" className="mt-3" />
-                      <p className="my-2 text-[11px]">INE</p>
-                    </div>
-                  </a>
-                </section>
-                }
+                {selectedCompany.pdfCurriculumUrl &&
+                  selectedCompany.pdfDicCdmxUrl &&
+                  selectedCompany.pdfPeeFideUrl &&
+                  selectedCompany.pdfGuaranteeSecurityUrl &&
+                  selectedCompany.pdfActaConstitutivaUrl &&
+                  selectedCompany.pdfIneUrl && (
+                    <h2 className="text-[14px] font-bold mt-[10px] mb-[10px]">
+                      Documentos
+                    </h2>
+                  )}
+                {selectedCompany.pdfCurriculumUrl &&
+                  selectedCompany.pdfDicCdmxUrl &&
+                  selectedCompany.pdfPeeFideUrl && (
+                    <section className="flex justify-between items-end mb-3">
+                      <a
+                        href={selectedCompany.pdfCurriculumUrl}
+                        className="min-w-[31%]"
+                        target="_blank"
+                      >
+                        <div className="border px-[5px] rounded flex flex-col justify-center items-center">
+                          <FileOpenIcon color="info" className="mt-3" />
+                          <p className="my-2 text-[11px]">Curriculum</p>
+                        </div>
+                      </a>
+                      <a
+                        href={selectedCompany.pdfDicCdmxUrl}
+                        className="min-w-[31%]"
+                        target="_blank"
+                      >
+                        <div className="border px-[5px] rounded flex flex-col justify-center items-center">
+                          <FileOpenIcon color="info" className="mt-3" />
+                          <p className="my-2 text-[11px]">Dic CDMX</p>
+                        </div>
+                      </a>
+                      <a
+                        href={selectedCompany.pdfPeeFideUrl}
+                        className="min-w-[31%]"
+                        target="_blank"
+                      >
+                        <div className="border px-[5px] rounded flex flex-col justify-center items-center">
+                          <FileOpenIcon color="info" className="mt-3" />
+                          <p className="my-2 text-[11px]">Pee Fide</p>
+                        </div>
+                      </a>
+                    </section>
+                  )}
+                {selectedCompany.pdfGuaranteeSecurityUrl &&
+                  selectedCompany.pdfActaConstitutivaUrl &&
+                  selectedCompany.pdfIneUrl && (
+                    <section className="flex justify-between items-end mb-3">
+                      <a
+                        href={selectedCompany.pdfGuaranteeSecurityUrl}
+                        className="min-w-[31%]"
+                        target="_blank"
+                      >
+                        <div className="border px-[5px] rounded flex flex-col justify-center items-center">
+                          <FileOpenIcon color="info" className="mt-3" />
+                          <p className="my-2 text-[11px]">Guarantee</p>
+                        </div>
+                      </a>
+                      <a
+                        href={selectedCompany.pdfActaConstitutivaUrl}
+                        className="min-w-[31%]"
+                        target="_blank"
+                      >
+                        <div className="border px-[5px] rounded flex flex-col justify-center items-center">
+                          <FileOpenIcon color="info" className="mt-3" />
+                          <p className="my-2 text-[11px]">Acta Constitutiva</p>
+                        </div>
+                      </a>
+                      <a
+                        href={selectedCompany.pdfIneUrl}
+                        className="min-w-[31%]"
+                        target="_blank"
+                      >
+                        <div className="border px-[5px] rounded flex flex-col justify-center items-center">
+                          <FileOpenIcon color="info" className="mt-3" />
+                          <p className="my-2 text-[11px]">INE</p>
+                        </div>
+                      </a>
+                    </section>
+                  )}
                 <p className="text-right text-[#858585] text-[14px]">
                   {formatDate(selectedCompany.createdAt)}
                 </p>
@@ -309,13 +317,23 @@ export default function ModalProveedor({
               {activeTab === 'no_user' ? (
                 <>
                   <h3 className="font-bold">Token de registro</h3>
-                  <p className="text-sm py-[15px]">{selectedCompany.companyId}</p>
-                </>) : null}
+                  <p className="text-sm py-[15px]">
+                    {selectedCompany.companyId}
+                  </p>
+                </>
+              ) : null}
               <h3 className="font-bold">Descripción</h3>
               <p className="text-sm py-[15px]">{selectedCompany.description}</p>
               {activeTab === 'pending_approval' ? (
                 <>
                   <Separator />
+                  <div className="flex items-center space-x-2 pt-4">
+                    <input
+                      placeholder="Redacta el mensaje para el proveedor"
+                      className="flex w-full border-[#C1C9D2] border-1 py-4 pl-2 rounded-l-md rounded-r-md"
+                      id="messageInput"
+                    />
+                  </div>
                   <div className="flex items-center space-x-2 py-[25px]">
                     <Checkbox
                       onClick={() => {
@@ -323,6 +341,7 @@ export default function ModalProveedor({
                       }}
                       id="terms"
                     />
+
                     <label
                       htmlFor="terms"
                       className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -333,21 +352,41 @@ export default function ModalProveedor({
                   <footer className="flex gap-x-3">
                     <Button
                       disabled={!checkboxChecked}
-                      onClick={() =>
-                        handleAccept(selectedCompany, selectedCompany.companyId)
-                      }
+                      onClick={() => {
+                        if (notifyEmail('accepted') === '') {
+                          toast({
+                            description:
+                              'Por favor, escribe un mensaje para el proveedor.',
+                          })
+                        } else {
+                          handleAccept(
+                            selectedCompany,
+                            selectedCompany.companyId
+                          )
+                        }
+                      }}
                       variant="default"
                     >
                       Aprobar
                     </Button>
                     <Button
                       onClick={() => {
-                        handleReject(selectedCompany, selectedCompany.companyId)
-                        toast({
-                          description: 'Proveedor rechazado exitosamente.',
-                        })
-                      }
-                      }
+                        if (notifyEmail('rejected') === '') {
+                          toast({
+                            description:
+                              'Por favor, escribe un mensaje para el proveedor.',
+                          })
+                        } else {
+                          handleReject(
+                            selectedCompany,
+                            selectedCompany.companyId
+                          )
+
+                          toast({
+                            description: 'Proveedor rechazado exitosamente.',
+                          })
+                        }
+                      }}
                       variant="outline"
                     >
                       Rechazar
@@ -355,12 +394,7 @@ export default function ModalProveedor({
                   </footer>
                 </>
               ) : (
-                <Button
-                  onClick={() =>
-                    setViewModal(true)
-                  }
-                  variant="default"
-                >
+                <Button onClick={() => setViewModal(true)} variant="default">
                   Eliminar
                 </Button>
               )}
@@ -370,4 +404,11 @@ export default function ModalProveedor({
       </div>
     </div>
   )
+}
+
+function notifyEmail(source: string) {
+  const input = document.getElementById('messageInput') as HTMLInputElement
+  const message = input.value
+  console.log(message)
+  return message
 }

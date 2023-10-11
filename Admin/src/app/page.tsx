@@ -183,7 +183,7 @@ export default function Home() {
                 {company.status === 'approved' ? 'Aprobado' : 'Pendiente'}
               </div>
             </TableCell>
-            <TableCell className="text-right">
+            {/* <TableCell className="text-right">
               <CellAction
                 setIsModalOpen={setIsModalOpen}
                 companyId={company.companyId}
@@ -192,7 +192,7 @@ export default function Home() {
                 company={company}
                 activeTab={activeTab}
               />
-            </TableCell>
+            </TableCell> */}
           </TableRow>
         ))}
       </TableBody>
