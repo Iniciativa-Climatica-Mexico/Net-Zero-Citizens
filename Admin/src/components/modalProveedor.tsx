@@ -15,7 +15,7 @@
  */
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 
 import { ThemeProvider } from '@mui/material/styles'
 import { Theme } from '@/@types/icons/material'
@@ -45,6 +45,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { tabs } from '@/app/page'
+import emailjs from '@emailjs/browser'
 
 interface ModalProveedorProps {
   setIsModalOpen: (value: boolean) => void
@@ -66,6 +67,8 @@ export default function ModalProveedor({
   const [rejectCompany, setRejectCompany] = useState(false)
   const [rejectCompanyMessage, setRejectCompanyMessage] = useState('')
   const [showErrorMessage, setShowErrorMessage] = useState(false)
+  const form = useRef(HTMLFormElement)
+  const submitButton = useRef(HTMLButtonElement)
   const { toast } = useToast()
   /**
    * @brief Function that allows admin to accept a specific company
@@ -137,6 +140,16 @@ export default function ModalProveedor({
     }
   }
 
+  const sendEmail = (e:HTMLFormElement) => {
+    e.preventDefault()
+    emailjs.sendForm('service_icm2023', 'template_vjx2ic3', form.current, 'LSXaN-F4jhFZ5mzIt')
+      .then((result) => {
+        console.log(result.text)
+      }).catch((error) => {
+        console.log(error)
+      })
+  }
+
   return (
     <>
       {viewModal && !rejectCompany && (
@@ -178,17 +191,21 @@ export default function ModalProveedor({
                 <CardDescription>
                   ¿Seguro que desea rechazar al proveedor?
                 </CardDescription>
-                <div className="flex items-center space-x-2 pt-4">
-                  <input
+                <form className="flex items-center space-x-2 pt-4" ref={form} onSubmit={sendEmail}>
+                  <input type="hidden" name="user_email" value="jn7924@gmail.com" />
+                  <input type="hidden" name="to_name" value="Yuna" />
+                  <textarea
                     placeholder="Redacta el mensaje para el proveedor"
-                    className="flex w-full border-[#C1C9D2] border-1 py-4 pl-2 rounded-l-md rounded-r-md"
+                    className="h-60 flex w-full border-[#C1C9D2] border-1 py-4 pl-2 rounded-l-md rounded-r-md"
                     id="messageInput"
+                    name="message"
                     onChange={(e) => {
                       setRejectCompanyMessage(e.target.value)
                       setShowErrorMessage(false)
                     }}
                   />
-                </div>
+                  <button type="submit" ref={submitButton} style={{ display: 'none' }} />
+                </form>
                 {showErrorMessage && (
                   <p className="text-[#bd4e4e] my-3">
                   Por favor, escribe un mensaje para el proveedor.
@@ -206,7 +223,7 @@ export default function ModalProveedor({
                         selectedCompany,
                         selectedCompany.companyId
                       )
-
+                      submitButton.current.click()
                       toast({
                         description: 'Proveedor rechazado exitosamente.',
                       })
