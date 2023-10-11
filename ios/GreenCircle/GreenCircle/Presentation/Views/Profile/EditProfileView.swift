@@ -74,23 +74,27 @@ struct Section1: View{
           Binding<String>(
               get: { self.modelUser.contentBaseUser?.firstName ?? "" },
               set: { newValue in
-                  if self.modelUser.contentBaseUser != nil {
-                      self.modelUser.contentBaseUser?.firstName = newValue
+                  if !containsNumber(input: newValue) {
+                      if self.modelUser.contentBaseUser != nil {
+                          self.modelUser.contentBaseUser?.firstName = newValue
+                      }
                   }
               }
           )
       }
   
-  private var lastNameBinding: Binding<String> {
-      Binding<String>(
-          get: { self.modelUser.contentBaseUser?.lastName ?? "" },
-          set: { newValue in
-              if self.modelUser.contentBaseUser != nil {
-                  self.modelUser.contentBaseUser?.lastName = newValue
-              }
-          }
-      )
-  }
+    private var lastNameBinding: Binding<String> {
+        Binding<String>(
+            get: { self.modelUser.contentBaseUser?.lastName ?? "" },
+            set: { newValue in
+                if !containsNumber(input: newValue) {
+                    if self.modelUser.contentBaseUser != nil {
+                        self.modelUser.contentBaseUser?.lastName = newValue
+                    }
+                }
+            }
+        )
+    }
   
   private var emailBinding: Binding<String> {
       Binding<String>(
@@ -180,16 +184,18 @@ struct Section2: View {
   @ObservedObject var modelUser = UserViewModel()
   
   
-  private var edadBinding: Binding<Int> {
-      Binding<Int>(
-          get: { self.modelUser.contentBaseUser?.age ?? 0 },
-          set: { newValue in
-              if self.modelUser.contentBaseUser != nil {
-                  self.modelUser.contentBaseUser?.age = newValue
-              }
-          }
-      )
-  }
+    private var edadBinding: Binding<String> {
+        Binding<String>(
+            get: { String(self.modelUser.contentBaseUser?.age ?? 0) },
+            set: { newValue in
+                if containsOnlyNumbers(input: newValue) {
+                    if let ageInt = Int(newValue), self.modelUser.contentBaseUser != nil {
+                        self.modelUser.contentBaseUser?.age = ageInt
+                    }
+                }
+            }
+        )
+    }
   
   private var generoBinding: Binding<String> {
       Binding<String>(
@@ -291,8 +297,10 @@ struct Section3: View {
       Binding<String>(
           get: { self.modelUser.contentBaseUser?.phoneNumber ?? "Cargando..." },
           set: { newValue in
-              if self.modelUser.contentBaseUser != nil {
-                  self.modelUser.contentBaseUser?.phoneNumber = newValue
+              if containsOnlyNumbers(input: newValue) {
+                  if self.modelUser.contentBaseUser != nil {
+                      self.modelUser.contentBaseUser?.phoneNumber = newValue
+                  }
               }
           }
       )
