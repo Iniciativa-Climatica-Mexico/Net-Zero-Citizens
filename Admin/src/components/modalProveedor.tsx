@@ -63,6 +63,8 @@ export default function ModalProveedor({
 }: ModalProveedorProps) {
   const [viewModal, setViewModal] = useState<boolean>(false)
   const [checkboxChecked, setCheckboxChecked] = useState(false)
+  const [rejectCompany, setRejectCompany] = useState(false)
+  const [rejectCompanyMessage, setRejectCompanyMessage] = useState('')
   const { toast } = useToast()
   /**
    * @brief Function that allows admin to accept a specific company
@@ -132,15 +134,15 @@ export default function ModalProveedor({
   }
 
   return (
-    <div>
-      {viewModal && (
+    <>
+      {viewModal && !rejectCompany && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <div className="modal-container">
             <Card className="w-[450px] modal-card">
               <CardHeader>
                 <CardTitle>Confirmar Acción</CardTitle>
                 <CardDescription>
-                  Seguro que desea eliminar al proveedor?
+                  ¿Seguro que desea eliminar al proveedor?
                 </CardDescription>
               </CardHeader>
               <CardFooter className="flex justify-between">
@@ -156,6 +158,57 @@ export default function ModalProveedor({
                   Confirmar
                 </Button>
                 <Button onClick={() => setViewModal(false)} variant="outline">
+                  Cancelar
+                </Button>
+              </CardFooter>
+            </Card>
+          </div>
+        </div>
+      )}
+      {viewModal && rejectCompany && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="modal-container">
+            <Card className="w-[450px] modal-card">
+              <CardHeader>
+                <CardTitle>Confirmar Acción</CardTitle>
+                <CardDescription>
+                  ¿Seguro que desea rechazar al proveedor?
+                </CardDescription>
+                <div className="flex items-center space-x-2 pt-4">
+                  <input
+                    placeholder="Redacta el mensaje para el proveedor"
+                    className="flex w-full border-[#C1C9D2] border-1 py-4 pl-2 rounded-l-md rounded-r-md"
+                    id="messageInput"
+                    onChange={(e) => {
+                      setRejectCompanyMessage(e.target.value)
+                    }}
+                  />
+                </div>
+              </CardHeader>
+              <CardFooter className="flex justify-between">
+                <Button
+                  onClick={() => {
+                    if (rejectCompanyMessage === '') {
+                      alert('Por favor, escribe un mensaje para el proveedor.')
+                    } else {
+                      handleReject(
+                        selectedCompany,
+                        selectedCompany.companyId
+                      )
+
+                      toast({
+                        description: 'Proveedor rechazado exitosamente.',
+                      })
+                    }
+                  }}
+                  variant="default"
+                >
+                  Confirmar
+                </Button>
+                <Button onClick={() => {
+                  setViewModal(false)
+                  setRejectCompany(false)
+                }} variant="outline">
                   Cancelar
                 </Button>
               </CardFooter>
@@ -332,13 +385,6 @@ export default function ModalProveedor({
               {activeTab === 'pending_approval' ? (
                 <>
                   <Separator />
-                  <div className="flex items-center space-x-2 pt-4">
-                    <input
-                      placeholder="Redacta el mensaje para el proveedor"
-                      className="flex w-full border-[#C1C9D2] border-1 py-4 pl-2 rounded-l-md rounded-r-md"
-                      id="messageInput"
-                    />
-                  </div>
                   <div className="flex items-center space-x-2 py-[25px]">
                     <Checkbox
                       onClick={() => {
@@ -374,27 +420,14 @@ export default function ModalProveedor({
                     >
                       Aprobar
                     </Button>
-                    <Button
-                      onClick={() => {
-                        if (notifyEmail('rejected') === '') {
-                          toast({
-                            description:
-                              'Por favor, escribe un mensaje para el proveedor.',
-                          })
-                        } else {
-                          handleReject(
-                            selectedCompany,
-                            selectedCompany.companyId
-                          )
-
-                          toast({
-                            description: 'Proveedor rechazado exitosamente.',
-                          })
-                        }
-                      }}
-                      variant="outline"
-                    >
+                    <Button onClick={() => {
+                      setViewModal(true)
+                      setRejectCompany(true)
+                    }} variant="default">
                       Rechazar
+                    </Button>
+                    <Button onClick={() => setIsModalOpen(false)} variant="outline">
+                      Cancelar
                     </Button>
                   </footer>
                 </>
@@ -407,7 +440,7 @@ export default function ModalProveedor({
           </article>
         </ThemeProvider>
       </div>
-    </div>
+    </>
   )
 }
 
