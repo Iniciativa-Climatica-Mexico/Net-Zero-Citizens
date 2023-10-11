@@ -67,6 +67,6 @@ struct FilterView: View {
   }
 }
 
-#Preview {
-  FilterView(vm: CompanyViewModel())
-}
+//#Preview {
+//  FilterView(vm: CompanyViewModel())
+//}

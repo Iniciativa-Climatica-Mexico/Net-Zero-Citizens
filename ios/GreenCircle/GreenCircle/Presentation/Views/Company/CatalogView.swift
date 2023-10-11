@@ -55,7 +55,7 @@ struct CatalogView: View {
         }
         .onAppear {
           Task {
-            await viewModel.fetchAllCompanies()
+            try await viewModel.fetchAllCompanies()
           }
         }
       }
