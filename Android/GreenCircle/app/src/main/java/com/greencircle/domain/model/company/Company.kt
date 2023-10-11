@@ -15,5 +15,5 @@ data class Company(
     val city: String,
     val state: String,
     val zipCode: String,
-    val files: CompanyFile
+    val files: List<CompanyFile>
 )
