@@ -1,9 +1,7 @@
 import CompanyFile from '../models/companyFiles.model'
-import * as CompanyService from './company.service'
 import { s3 } from '../configs/aws.config'
 import { v4 as uuidv4 } from 'uuid'
 import Company from '../models/company.model'
-import { unwrap } from '../../test/utils'
 
 export type CompanyImageType = {
   companyId: string
@@ -69,6 +67,7 @@ type CompanyFileType = {
  */
 
 export const uploadCompanyFile = async (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   file: any,
   companyId: string,
   fileDescription: FileDescription,
@@ -85,7 +84,7 @@ export const uploadCompanyFile = async (
     const company = await Company.findByPk(companyId)
 
     // Convertir el archivo a base64
-    let base64data = Buffer.from(file.buffer, 'binary')
+    const base64data = Buffer.from(file.buffer, 'binary')
 
     // Definir los parámetros para subir el archivo
     const params = {

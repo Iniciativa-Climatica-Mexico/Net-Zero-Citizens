@@ -79,7 +79,7 @@ export const getCompanyFiles: RequestHandler<
   CompanyFiles[] | null,
   NoRecord,
   NoRecord
-> = async (req, res) => {
+> = async (_, res) => {
   const companyFiles = await CompanyFileService.getCompanyFiles()
   return res.json(companyFiles)
 }
