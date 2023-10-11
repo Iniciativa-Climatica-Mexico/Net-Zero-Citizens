@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 
 class CatalogueViewModel(private val context: Context) : ViewModel() {
     val catalogueLiveData = MutableLiveData<ArrayList<CompanySummary>?>()
+    val companyLiveData = MutableLiveData<CompanySummary?>()
     private val catalogueRequirement = CatalogueRequirement()
     private val recoverTokens = RecoverTokensRequirement(context)
 

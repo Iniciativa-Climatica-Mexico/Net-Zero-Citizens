@@ -33,6 +33,7 @@ class CreateCompanyViewModel(private val context: Context) : ViewModel() {
     private val saveUserSession = SaveUserSessionRequirement(context)
     private val recoverTokens = RecoverTokensRequirement(context)
     private val updateTokensData = UpdateTokensDataRequirement()
+    val error = MutableLiveData<Boolean>()
 
     private val _googleLoginResult = MutableLiveData<AuthResponse?>()
     val googleLoginResult: LiveData<AuthResponse?> = _googleLoginResult
@@ -52,7 +53,10 @@ class CreateCompanyViewModel(private val context: Context) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             val result: AuthResponse? = googleAuthRequirement(token)
             _googleLoginResult.postValue(result)
-            if (result != null && result.tokens == null) {
+            if (result == null) {
+                googleLoginError.postValue(true)
+                return@launch
+            } else if (result != null && result.tokens == null) {
                 googleLoginError.postValue(true)
                 return@launch
             } else {
@@ -75,30 +79,54 @@ class CreateCompanyViewModel(private val context: Context) : ViewModel() {
      */
     fun createCompany(company: CompanyAPIService.CreateCompanyRequest) {
         val tokens = recoverTokens()
+        if (tokens == null) {
+            error.postValue(true)
+            return
+        }
         var authToken = ""
-        if (tokens != null) {
+        if (tokens != null)
             authToken = tokens.authToken
+        if (authToken == "") {
+            error.postValue(true)
+            return
         }
         viewModelScope.launch(Dispatchers.IO) {
             // Invoca el modelo de dominio para crear la empresa.
-            val result: CompanyAPIService.CreateCompanyResponse? =
-                createCompanyRequirement(company, authToken)
-            _createCompanyResult.postValue(result)
+            val result: CompanyAPIService.CreateCompanyResponse =
+                createCompanyRequirement(company, authToken) ?: return@launch
+            if (result == null) {
+                error.postValue(true)
+                return@launch
+            } else {
+                error.postValue(false)
+                _createCompanyResult.postValue(result)
+            }
+
             // Actualizar información de los tokens
-            if (result != null) {
-                val tokens = recoverTokens()
-                val cauthToken = tokens?.authToken
-                val res = cauthToken?.let { updateTokensData(it) }
+            val tokens = recoverTokens()
+            val cauthToken = tokens?.authToken
+            val res = cauthToken?.let { updateTokensData(it) }
 
-                // Guardar tokens
-                val authToken = res?.tokens?.authToken
-                val refreshToken = res?.tokens?.refreshToken
-                saveTokens(authToken!!, refreshToken!!)
+            if (res == null) {
+                error.postValue(true)
+                return@launch
+            }
 
-                // Guardar usuario global
-                if (res != null) {
-                    saveUserSession(res.user)
-                }
+            if (res.tokens == null) {
+                error.postValue(true)
+                return@launch
+            } else {
+                error.postValue(false)
+            }
+
+            // Guardar tokens
+            val authToken = res?.tokens?.authToken
+            val refreshToken = res?.tokens?.refreshToken
+            saveTokens(authToken!!, refreshToken!!)
+
+            // Guardar usuario global
+            if (res != null) {
+                saveUserSession(res.user)
             }
         }
     }
