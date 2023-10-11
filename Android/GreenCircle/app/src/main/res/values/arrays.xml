@@ -34,6 +34,41 @@
         <item>Zacatecas</item>
     </string-array>
 
+    <string-array name="state_options_filter">
+        <item>Selecciona un estado</item>
+        <item>Aguascalientes</item>
+        <item>Baja California</item>
+        <item>Baja California Sur</item>
+        <item>Campeche</item>
+        <item>Chiapas</item>
+        <item>Chihuahua</item>
+        <item>Coahuila</item>
+        <item>Colima</item>
+        <item>Durango</item>
+        <item>Guanajuato</item>
+        <item>Guerrero</item>
+        <item>Hidalgo</item>
+        <item>Jalisco</item>
+        <item>Estado de México</item>
+        <item>Michoacán</item>
+        <item>Morelos</item>
+        <item>Nayarit</item>
+        <item>Nuevo León</item>
+        <item>Oaxaca</item>
+        <item>Puebla</item>
+        <item>Querétaro</item>
+        <item>Quintana Roo</item>
+        <item>San Luis Potosí</item>
+        <item>Sinaloa</item>
+        <item>Sonora</item>
+        <item>Tabasco</item>
+        <item>Tamaulipas</item>
+        <item>Tlaxcala</item>
+        <item>Veracruz</item>
+        <item>Yucatán</item>
+        <item>Zacatecas</item>
+    </string-array>
+
     <string-array name="gender_options">
         <item>Femenino</item>
         <item>Masculino</item>
@@ -51,11 +86,13 @@
     </string-array>
 
     <string-array name="company_filter">
+        <item>Selecciona un filtro</item>
         <item>Cercania</item>
         <item>Rating</item>
     </string-array>
 
     <string-array name="company_product">
+        <item>Selecciona un producto</item>
         <item>Paneles Solares</item>
         <item>Celdas Fotovoltaicas</item>
     </string-array>

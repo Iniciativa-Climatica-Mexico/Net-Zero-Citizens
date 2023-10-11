@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Spinner
 import androidx.fragment.app.DialogFragment
 import com.greencircle.R
 import com.greencircle.databinding.FragmentCompanyFilterBinding
@@ -49,23 +50,58 @@ class CatalogueFilterModal(private val viewModel: CatalogueViewModel) : DialogFr
     ): View {
         val binding = FragmentCompanyFilterBinding.inflate(inflater, container, false)
 
-        val cancelButton = binding.cancelButton
+        // Set spinner selections based on the current values in viewModel.params.value
+        binding.companyRating.setSelection(
+            getSpinnerPosition(
+                binding.companyRating,
+                viewModel.params.value?.ordering
+            )
+        )
+        binding.companyProducts.setSelection(
+            getSpinnerPosition(
+                binding.companyProducts,
+                viewModel.params.value?.productName
+            )
+        )
+        binding.companyPhyisicalState.setSelection(
+            getSpinnerPosition(
+                binding.companyPhyisicalState,
+                viewModel.params.value?.state
+            )
+        )
 
+        val cancelButton = binding.cancelButton
         cancelButton.setOnClickListener {
             dismiss()
         }
 
         val applyButton = binding.applyButton
-
         applyButton.setOnClickListener {
             val newParams = viewModel.params.value
-            newParams?.ordering = binding.companyRating.selectedItem.toString()
-            newParams?.productName = binding.companyProducts.selectedItem.toString()
-            newParams?.state = binding.companyPhyisicalState.selectedItem.toString()
+
+            if (binding.companyRating.selectedItemPosition != 0) {
+                newParams?.ordering = binding.companyRating.selectedItem.toString()
+            } else {
+                newParams?.ordering = ""
+            }
+
+            if (binding.companyProducts.selectedItemPosition != 0) {
+                newParams?.productName = binding.companyProducts.selectedItem.toString()
+            } else {
+                newParams?.productName = ""
+            }
+
+            if (binding.companyPhyisicalState.selectedItemPosition != 0) {
+                newParams?.state = binding.companyPhyisicalState.selectedItem.toString()
+            } else {
+                newParams?.state = ""
+            }
+
             if (newParams != null) {
                 viewModel.updateParams(newParams)
                 Log.d("Params Update: ", viewModel.params.value.toString())
             }
+
             dismiss()
         }
 
@@ -125,5 +161,17 @@ class CatalogueFilterModal(private val viewModel: CatalogueViewModel) : DialogFr
     private fun Int.dpToPx(context: Context): Int {
         val metrics = context.resources.displayMetrics
         return this * (metrics.densityDpi / 160f).roundToInt()
+    }
+
+    /**
+     * Helper function to get the spinner position based on the value.
+     */
+    private fun getSpinnerPosition(spinner: Spinner, value: String?): Int {
+        for (i in 0 until spinner.adapter.count) {
+            if (spinner.adapter.getItem(i).toString() == value) {
+                return i
+            }
+        }
+        return 0
     }
 }

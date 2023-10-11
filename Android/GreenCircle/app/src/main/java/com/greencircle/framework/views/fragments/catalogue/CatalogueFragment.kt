@@ -83,6 +83,7 @@ class CatalogueFragment : Fragment() {
             val modal = CatalogueFilterModal.newInstance(viewModel)
             modal.show(parentFragmentManager, "CatalogueFilterModal")
         }
+
         return binding.root
     }
 
