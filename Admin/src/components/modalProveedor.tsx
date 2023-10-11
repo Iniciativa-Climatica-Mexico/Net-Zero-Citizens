@@ -172,25 +172,22 @@ export default function ModalProveedor({
       <div>
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <div className="modal-container">
+            <CloseIcon
+              color="primary"
+              className="cursor-pointer"
+              onClick={() => {
+                setIsModalOpen(false)
+              }}
+            />
             <Card className="w-[350px] modal-card">
-              <div className="flex justify-end w-50 pr-4 pb-2 self-end absolute top-4">
-                <CloseIcon
-                  color="disabled"
-                  className="cursor-pointer"
-                  onClick={() => {
-                    setIsModalOpen(false)
-                  }}
-                />
-              </div>
-              <CardDescription className="p-4 text-center">
-                {message}
-              </CardDescription>
+              <CardDescription className='p-4 text-center'>{message}</CardDescription>
             </Card>
           </div>
         </div>
       </div>
     )
   }
+  
 
   return (
     <>
