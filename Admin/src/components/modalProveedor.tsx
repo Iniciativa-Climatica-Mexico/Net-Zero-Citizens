@@ -65,6 +65,7 @@ export default function ModalProveedor({
   const [checkboxChecked, setCheckboxChecked] = useState(false)
   const [rejectCompany, setRejectCompany] = useState(false)
   const [rejectCompanyMessage, setRejectCompanyMessage] = useState('')
+  const [showErrorMessage, setShowErrorMessage] = useState(false)
   const { toast } = useToast()
   /**
    * @brief Function that allows admin to accept a specific company
@@ -130,6 +131,9 @@ export default function ModalProveedor({
       setIsModalOpen(false)
       fetchPendingCompanies()
       fetchApprovedCompanies()
+      setRejectCompany(false)
+      setRejectCompanyMessage('')
+      setShowErrorMessage(false)
     }
   }
 
@@ -181,16 +185,23 @@ export default function ModalProveedor({
                     id="messageInput"
                     onChange={(e) => {
                       setRejectCompanyMessage(e.target.value)
+                      setShowErrorMessage(false)
                     }}
                   />
                 </div>
+                {showErrorMessage && (
+                  <p className="text-[#bd4e4e] my-3">
+                  Por favor, escribe un mensaje para el proveedor.
+                  </p>
+                )}
               </CardHeader>
               <CardFooter className="flex justify-between">
                 <Button
                   onClick={() => {
-                    if (rejectCompanyMessage === '') {
-                      alert('Por favor, escribe un mensaje para el proveedor.')
+                    if (rejectCompanyMessage == '') {
+                      setShowErrorMessage(true)
                     } else {
+                      console.log(rejectCompanyMessage)
                       handleReject(
                         selectedCompany,
                         selectedCompany.companyId
@@ -208,6 +219,7 @@ export default function ModalProveedor({
                 <Button onClick={() => {
                   setViewModal(false)
                   setRejectCompany(false)
+                  setRejectCompanyMessage('')
                 }} variant="outline">
                   Cancelar
                 </Button>
