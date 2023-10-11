@@ -16,6 +16,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.greencircle.R
 import com.greencircle.data.remote.company.CompanyAPIService
 import com.greencircle.domain.model.company.Company
+import com.greencircle.domain.model.company.files.CompanyFile
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.company.CreateCompanyViewModel
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
@@ -230,7 +231,8 @@ class CreateCompanyFragment : Fragment() {
         val zipCode = zipCodeInputLayout.editText?.text.toString()
 
         // Send the data to the backend
-        val companyData: Company = Company(
+        val files = emptyList<CompanyFile>()
+        val companyData = Company(
             uuid,
             name,
             description,
@@ -242,10 +244,7 @@ class CreateCompanyFragment : Fragment() {
             city,
             state,
             zipCode,
-            "test1",
-            "test2",
-            "test3",
-            "test4"
+            files
         )
 
         val createCompanyRequest = CompanyAPIService.CreateCompanyRequest(companyData)
