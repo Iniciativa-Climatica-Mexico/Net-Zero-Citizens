@@ -29,7 +29,7 @@ class UserAPI {
 /// Protocolo con la declaración del repositorio del usuario
 protocol UserRepositoryProtocol {
   func fetchUserById(userId: String) async -> User?
-  func updateUserData(updatedUserData: User, userId: String) async -> User?
+//  func updateUserData(updatedUserData: User, userId: String) async -> User?
   func updateUserCredentials(userId: String, newUserCredentials: Credentials) async -> User?;
   func postGoogleLogin(googleToken: String) async -> AuthResponse?
   func putUser(_ user: UserAuth) async -> Bool
@@ -110,15 +110,11 @@ class UserRepository: UserRepositoryProtocol {
     let _: NoResponse? = await nService.putRequest(url, body: params)
   }
   
-  //func updateUserData()
   
   func fetchUserById(userId: String) async -> User? {
     return await nService.getRequest(URL(string: "\(UserAPI.base)/\(userId)")!)
   }
   
-  func updateUserData(updatedUserData: User, userId: String) async -> User? {
-    return await backEndService.UpdateUserData(url: URL(string: "\(UserAPI.base)/\(userId)")!, updatedUserData: updatedUserData)
-  }
   
   func updateUserCredentials(userId: String, newUserCredentials: Credentials) async -> User? {
     let url = URL(string: "\(UserAPI.base)/\(UserAPI.Routes.credentials)/\(userId)")!
@@ -173,5 +169,29 @@ class UserRepository: UserRepositoryProtocol {
     } else {
       throw GCError.requestFailed
     }
+  }
+  
+  func updateLocalUserAuth(updatedUserAuth: UserAuth) {
+      let encoder = JSONEncoder()
+      if let encoded = try? encoder.encode(updatedUserAuth) {
+          UserDefaults.standard.set(encoded, forKey: "userAuthData")
+      }
+  }
+  
+  func updateUserDataOnServer(user: User) async -> User? {
+      let userId = (lService.getUserInformation()?.user.id)!
+      let endpoint = "\(UserAPI.base)\(UserAPI.Routes.userId)".replacingOccurrences(of: ":userId", with: userId)
+      let encoder = JSONEncoder()
+      guard let encodedData = try? encoder.encode(user) else { return nil }
+
+      guard let body = try? JSONSerialization.jsonObject(with: encodedData, options: .allowFragments) as? [String: Any] else { return nil }
+      
+      let result: NoResponse? = await nService.putRequest(URL(string: endpoint)!, body: body)
+      
+      if let _ = result {
+          return user // Return the updated user data
+      } else {
+          return nil
+      }
   }
 }

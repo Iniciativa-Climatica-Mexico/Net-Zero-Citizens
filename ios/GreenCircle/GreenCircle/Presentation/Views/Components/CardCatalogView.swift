@@ -42,7 +42,7 @@ struct CardCatalogView: View {
           .shadow(color: Color("BlueCustom"), radius: 1)
         HStack {
           VStack (alignment: .leading) {
-            if let imageURL = URL(string: viewModel.contentCompany.images?.first?.imageUrl ?? "") {
+            if let imageURL = URL(string: viewModel.contentCompany.files?.first?.fileUrl ?? "") {
               AsyncImage(url: imageURL) { phase in
                 switch phase {
                 case .empty:
@@ -157,10 +157,10 @@ struct CardCatalogView: View {
   }
 }
 
-#Preview {
-  CardCatalogView(
-    companyId: UUID(uuidString: ("08b49208-7b8e-42b9-8164-c0688676609e"))!,
-    companyName: "ENERGIA PUEBLO SOLAR S.A. DE C.V.",
-    city: "Hermosillo",
-    state: "Sonora")
-}
+//#Preview {
+//  CardCatalogView(
+//    companyId: UUID(uuidString: ("08b49208-7b8e-42b9-8164-c0688676609e"))!,
+//    companyName: "ENERGIA PUEBLO SOLAR S.A. DE C.V.",
+//    city: "Hermosillo",
+//    state: "Sonora")
+//}
