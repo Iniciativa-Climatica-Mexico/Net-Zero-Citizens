@@ -2,10 +2,12 @@ import Company from '../models/company.model'
 import CompanyProduct from '../models/companyProducts.model'
 import * as CompanyService from '../services/company.service'
 import { NoRecord, Paginator, PaginationParams } from '../utils/RequestResponse'
-import { RequestHandler } from 'express'
+import { Request, Response, RequestHandler } from 'express'
 import { Prettify } from '../utils/RequestResponse'
 
-type GetCompaniesQueryParams = Prettify<PaginationParams<CompanyService.FiltersGetCompaniesByStatus>>
+type GetCompaniesQueryParams = Prettify<
+  PaginationParams<CompanyService.FiltersGetCompaniesByStatus>
+>
 /**
  * @brief
  * Función del controlador que devuelve todos los proveedores
@@ -61,8 +63,9 @@ export const getCompanyById: RequestHandler<
   }
 }
 
-
-type GetCompaniesNoStatusQueryParams = Prettify<PaginationParams<CompanyService.FiltersGetCompaniesByStatus>>
+type GetCompaniesNoStatusQueryParams = Prettify<
+  PaginationParams<CompanyService.FiltersGetCompaniesByStatus>
+>
 
 /**
  * @brief
@@ -160,7 +163,6 @@ export const createCompany: RequestHandler<
     const company = req.body.company
 
     const newCompany = await CompanyService.createCompany(company)
-    console.log(newCompany)
 
     if (!newCompany)
       return res
@@ -267,7 +269,6 @@ export const assignCompanyUser: RequestHandler<
 > = async (req, res) => {
   const companyId = req.params.companyId
   const userId = req.body.userId
-  console.log(companyId, userId)
   const assign = await CompanyService.assignCompanyUser(companyId, userId)
   console.log(assign)
   if (assign === 'success') {
