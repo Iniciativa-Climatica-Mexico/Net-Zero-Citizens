@@ -8,12 +8,12 @@ import SwiftUI
 
 struct ProfileView: View {
     @ObservedObject var modelUser = UserViewModel()
+    @ObservedObject var modelReview = ReviewViewModel()
     @StateObject var favourites = FavouriteViewModel()
     @State var myFavourites: Bool = false
     @State var totalFavourites: Int = 0
     @State private var showAlertFavourites = false
     var goLogin: () -> Void
-  
   
     var body: some View {
         NavigationView {
@@ -34,20 +34,20 @@ struct ProfileView: View {
                 }
 
                 VStack {
-                    //Imagen provisional
+                    // Imagen provisional
                     Image("Sun")
                         .resizable() // Hacer que la imagen sea redimensionable
                         .frame(width: 100, height: 100)
 
                     HStack {
-                        //Nombre del usuario
+                        // Nombre del usuario
                         Text(modelUser.contentBaseUser?.firstName ?? "Cargando...")
                             .foregroundColor(Color.black)
                             .font(.system(size: 16))
                             .fontWeight(.semibold)
                             .padding(.top, 10)
                             .padding(.bottom, 2)
-                        //Apellido del Usuario
+                        // Apellido del Usuario
                         Text(modelUser.contentBaseUser?.lastName ?? "Cargando...")
                             .foregroundColor(Color.black)
                             .font(.system(size: 16))
@@ -116,7 +116,7 @@ struct ProfileView: View {
                                     .font(.system(size: 18))
                             }
                         } else {
-                            // TODO: reviews of user
+                            ReviewCardClient(reviewViewModel: ReviewViewModel())
                         }
                     }
                     .onAppear {
@@ -132,12 +132,12 @@ struct ProfileView: View {
                 .padding(.top, 70)
             }.onAppear(perform: loadProfileData)
         }
-        
     }
 
     private func loadProfileData() {
         Task {
             await modelUser.getAllUserData()
+            await modelReview.fetchReviewByUserId()
         }
     }
 }
@@ -147,6 +147,3 @@ struct ProfileView_Previews: PreviewProvider {
         ProfileView(modelUser: UserViewModel(), goLogin: {})
     }
 }
-
-  
-
