@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="800dp"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/rounded_modal"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Filtros"
+        android:textSize="30sp"
+        android:layout_marginBottom="20dp"
+        android:layout_below="@id/ordenaPor"
+    />
+
+    <TextView
+        android:id="@+id/ordenaPor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ordena por"
+        android:textSize="20sp"
+        android:textColor="@color/blue"
+        android:layout_marginBottom="20dp"
+        />
+
+    <Spinner
+        android:id="@+id/companyRating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:entries="@array/company_filter"
+        android:padding="6dp"
+        android:prompt="@string/select_rating_prompt" />
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@id/companyProducts"
+        android:background="@drawable/spinner_underline" />
+
+    <TextView
+        android:id="@+id/selectProducts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Elige un producto"
+        android:textSize="20sp"
+        android:textColor="@color/blue"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        />
+
+    <Spinner
+        android:id="@+id/companyProducts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:entries="@array/company_product"
+        android:padding="6dp"
+        android:prompt="@string/select_product_prompt" />
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@id/companyPhyisicalState"
+        android:background="@drawable/spinner_underline" />
+
+    <TextView
+        android:id="@+id/filtraPorEstados"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Estados de la Republica"
+        android:textSize="20sp"
+        android:textColor="@color/blue"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        />
+
+    <Spinner
+        android:id="@+id/companyPhyisicalState"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:entries="@array/state_options_filter"
+        android:padding="6dp"
+        android:prompt="@string/select_state_prompt" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/spinner_underline" />
+
+    <TextView
+        android:layout_marginTop="12dp"
+        android:id="@+id/clearFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Limpiar Filtros"
+        android:textSize="16sp"
+        android:textColor="@color/blue"
+        android:layout_marginBottom="20dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancelar"
+            android:layout_weight="1"
+            android:background="@drawable/accept_button"
+            android:textColor="@color/white"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/cancelButton"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Aplicar"
+            android:layout_weight="1"
+            android:background="@drawable/accept_button"
+            android:textColor="@color/white"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/applyButton"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>
