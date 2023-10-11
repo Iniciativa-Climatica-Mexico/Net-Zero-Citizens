@@ -29,7 +29,7 @@ class UserAPI {
 /// Protocolo con la declaración del repositorio del usuario
 protocol UserRepositoryProtocol {
   func fetchUserById(userId: String) async -> User?
-  func updateUserData(updatedUserData: User, userId: String) async -> User?
+//  func updateUserData(updatedUserData: User, userId: String) async -> User?
   func updateUserCredentials(userId: String, newUserCredentials: Credentials) async -> User?;
   func postGoogleLogin(googleToken: String) async -> AuthResponse?
   func putUser(_ user: UserAuth) async -> Bool
@@ -116,9 +116,9 @@ class UserRepository: UserRepositoryProtocol {
     return await nService.getRequest(URL(string: "\(UserAPI.base)/\(userId)")!)
   }
   
-  func updateUserData(updatedUserData: User, userId: String) async -> User? {
-    return await backEndService.UpdateUserData(url: URL(string: "\(UserAPI.base)/\(userId)")!, updatedUserData: updatedUserData)
-  }
+//    func updateUserData(updatedUserData: User, userId: String) async -> User? {
+//      return await nService.putRequest(url, body: updatedUserData)
+//  }
   
   func updateUserCredentials(userId: String, newUserCredentials: Credentials) async -> User? {
     let url = URL(string: "\(UserAPI.base)/\(UserAPI.Routes.credentials)/\(userId)")!

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-///__----------------- TITLE BAR SECTION__
+///_----------------- TITLE BAR SECTION_
 
 struct SectionTitleBar: View{
   var title: String
@@ -33,7 +33,7 @@ struct SectionTitleBar: View{
      }
 }
 
-///__----------------- PROFILE SECTION__
+///_----------------- PROFILE SECTION_
 struct SectionProfile: View{
   @ObservedObject var modelUser = UserViewModel()
   var body: some View{
@@ -65,7 +65,7 @@ struct SectionProfile: View{
 }
 
 
-///__----------------- SECTION 1__
+///_----------------- SECTION 1_
 struct Section1: View{
   @ObservedObject var modelUser = UserViewModel()
 
@@ -175,7 +175,7 @@ struct Section1: View{
   }
 }
 
-///__----------------- SECTION 2__
+///_----------------- SECTION 2_
 struct Section2: View {
   @ObservedObject var modelUser = UserViewModel()
   
@@ -283,7 +283,7 @@ struct Section2: View {
     }
 }
 
-///__----------------- SECTION 3__
+///_----------------- SECTION 3_
 struct Section3: View {
   @ObservedObject var modelUser: UserViewModel
   
@@ -371,84 +371,123 @@ struct Section3: View {
         }
     }
 }
-  
-  ///__-----------------BUTTON SECTION__
-//extension EditProfileView {
-//    var isFormValid: Bool {
-//        // Here you can add conditions to ensure all your requirements are met
-//        if modelUser.contentUser.first_name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-//            return false
-//        }
-//        
-//        if modelUser.contentUser.last_name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-//            return false
-//        }
-      
-//      if ((modelUser.contentUser.phone?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty) != nil) {
-//          return false
-//      }
-//      
-//      if let age = modelUser.contentUser.age, String(age).trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-//          return false
-//      }
-//      
-//        return true
-//    }
-//}
 
 
-  struct SectionButton: View{
-    var modelUser: UserViewModel
-    @State private var showAlert = false
-    @State private var showAlert2 = false
-    @Environment(\.presentationMode) var presentationMode
-    @State private var navigateToProfile = false
-    @Binding var selectedTab: TabSelection
-    
-    var body: some View{
-      HStack {
-        Button(action: {
-          showAlert = true
-        }) {
-          Text("Cancelar")
-            .foregroundColor(TitleBarColor.TitleBarColor)
-            .padding(.vertical, 12)
-            .padding(.horizontal)
-            .frame(maxWidth: .infinity)
-            .background(Color.white)
-            .cornerRadius(8)
-            .overlay(
-              RoundedRectangle(cornerRadius: 8)
-                .stroke(TitleBarColor.TitleBarColor, lineWidth: 1)
-            )
-        }
-        .frame(maxWidth: 100)
-        .padding(.trailing, 10)
-        .alert(isPresented: $showAlert) {
-          Alert(
-            title: Text("Salir sin guardar"),
-            message: Text("Si sales, los datos actualizados no se guardarán. ¿Estás seguro de que quieres salir?"),
-            primaryButton: .default(Text("Seguir editando"), action: {
-              
-            }),
-            secondaryButton: .destructive(Text("Salir"), action: {
-              presentationMode.wrappedValue.dismiss()
-              selectedTab = .profile
-            })
-          )
-        }
-        
-//        VStack
-        .padding(.leading, 8)
-        
-        
-      }
-      .padding(.horizontal, 20)
-      .padding(.top, 30)
-    }
-  }
+struct SectionButton: View{
+   var modelUser: UserViewModel
+   @State private var showAlert = false
+   @State private var showAlert2 = false
+   @Environment(\.presentationMode) var presentationMode
+   @State private var navigateToProfile = false
+   @Binding var selectedTab: TabSelection
+   
+   var body: some View{
+     HStack {
+       Button(action: {
+         showAlert = true
+       }) {
+         Text("Cancelar")
+           .foregroundColor(TitleBarColor.TitleBarColor)
+           .padding(.vertical, 12)
+           .padding(.horizontal)
+           .frame(maxWidth: .infinity)
+           .background(Color.white)
+           .cornerRadius(8)
+           .overlay(
+             RoundedRectangle(cornerRadius: 8)
+               .stroke(TitleBarColor.TitleBarColor, lineWidth: 1)
+           )
+       }
+       .frame(maxWidth: 100)
+       .padding(.trailing, 10)
+       .alert(isPresented: $showAlert) {
+         Alert(
+           title: Text("Salir sin guardar"),
+           message: Text("Si sales, los datos actualizados no se guardarán. ¿Estás seguro de que quieres salir?"),
+           primaryButton: .default(Text("Seguir editando"), action: {
+             
+           }),
+           secondaryButton: .destructive(Text("Salir"), action: {
+             presentationMode.wrappedValue.dismiss()
+             selectedTab = .profile
+           })
+         )
+       }
+       
+       VStack {
+         Button(action: {
+             async {
+                 await modelUser.saveProfileChanges()
+                 }
+           showAlert2 = true
+         }) {
+           Text("Guardar")
+             .foregroundColor(.white)
+             .padding(.vertical, 12)
+             .padding(.horizontal)
+             .frame(maxWidth: .infinity)
+             .background(TitleBarColor.TitleBarColor)
+             .cornerRadius(8)
+         }
+         .alert(isPresented: $showAlert2) {
+           Alert(
+             title: Text("Datos Actualizados"),
+             message: Text("Los datos se actualizaron correctamente."),
+             dismissButton: .default(Text("OK"), action: {
+               presentationMode.wrappedValue.dismiss()
+               selectedTab = .profile
+             })
+           )
+         }
+         
+       }
+       .padding(.leading, 8)
+       
+       
+     }
+     .padding(.horizontal, 20)
+     .padding(.top, 30)
+   }
   
-  ///__----------------- DELETE SECTION__
+  
+//  func saveProfileChanges() {
+//       Task {
+//           // Recoge los datos actuales de tu perfil
+//         let updatedUser = User(
+//             userId: UUID(),  // Si estás editando un usuario existente, este debería ser el UUID existente.
+//             roleId: "ElRoleID",  // Deberías obtener el role actual del usuario.
+//             companyId: "ElCompanyId", // Lo mismo aquí, usa el valor actual del usuario.
+//             googleId: modelUser.contentBaseUser?.googleId,  // Suponiendo que estás obteniendo estos datos de tu ViewModel.
+//             facebookId: modelUser.contentBaseUser?.facebookId,
+//             appleId: modelUser.contentBaseUser?.appleId,
+//             firstName: modelUser.contentBaseUser?.firstName ?? "",
+//             lastName: modelUser.contentBaseUser?.lastName ?? "",
+//             secondLastName: modelUser.contentBaseUser?.secondLastName,  // Si tienes un campo para esto en tu vista, úsalo.
+//             email: modelUser.contentBaseUser?.email ?? "",
+//             password: nil,  // No parece que estés editando la contraseña aquí, pero si es el caso, agrégalo.
+//             phoneNumber: modelUser.contentBaseUser?.phoneNumber,
+//             age: modelUser.contentBaseUser?.age ?? 0,
+//             state: modelUser.contentBaseUser?.state,
+//             gender: modelUser.contentBaseUser?.gender ?? "",
+//             profilePicture: modelUser.contentBaseUser?.profilePicture,  // Si tienes una manera de editar esto en tu vista, úsalo.
+//             createdAt: Date(),  // De nuevo, si estás editando un usuario existente, este debería ser la fecha de creación original.
+//             updatedAt: Date()   // Como estás actualizando, esta fecha debería ser la actual.
+//         )
+//
+//           // Usa el use case para actualizar los datos en el servidor
+////           let result = await ProfileUseCase.shared.updateUserData(user: updatedUser)
+//         let result = await UserRepository.shared.updateUserData(updatedUserData: updatedUser, userId: updatedUser.userId.uuidString)
+//           if let _ = result {
+//               // Aquí maneja un resultado exitoso, como mostrar un mensaje o redirigir al usuario
+//           } else {
+//               // Aquí maneja un error, como mostrar un mensaje de error al usuario
+//           }
+//       }
+//   }
+}
+
+  
+  ///_----------------- DELETE SECTION_
 struct SectionDelete: View{
     @StateObject var deleteUserViewModel = DeleteUserViewModel()
     @State var showAlert: Bool = false
@@ -490,7 +529,7 @@ struct SectionDelete: View{
       }
     }
 
-  ///__----------------- MAIN SECTION__
+  ///_----------------- MAIN SECTION_
 
   struct EditProfileView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -522,7 +561,6 @@ struct SectionDelete: View{
             Section1(modelUser: modelUser)
             Section2(modelUser: modelUser)
             Section3(modelUser: modelUser)
-//            SectionButton(disabledOpacity: isFormValid ? 1.0 : 0.5, isFormValid: isFormValid, modelUser: modelUser, selectedTab: $currentTab)
             SectionButton(modelUser: modelUser, selectedTab: $currentTab)
             SectionDelete(goLogin: goLogin)
           }
@@ -533,4 +571,3 @@ struct SectionDelete: View{
       }
     }
   }
-

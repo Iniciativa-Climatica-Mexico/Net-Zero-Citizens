@@ -28,6 +28,13 @@ class UserViewModel: ObservableObject {
         }
     }
     
+    @MainActor
+    func saveProfileChanges() async {
+        if let userToUpdate = contentBaseUser {
+            contentBaseUser = await repository.updateUserDataOnServer(user: userToUpdate)
+        }
+    }
+
     init() {
         contentUser = useCase.getUserData()
         Task {
