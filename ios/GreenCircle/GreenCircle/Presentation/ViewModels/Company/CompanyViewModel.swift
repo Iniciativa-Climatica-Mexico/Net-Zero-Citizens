@@ -17,6 +17,8 @@ class CompanyViewModel: ObservableObject {
   @Published var state: String = ""
   @Published var product: String = ""
   
+  @Published var sheet: Bool = false
+  
   @Published var companies = [Company]()
   
   /// La compañía puede cambiar en la vista (se construye .onAppear())

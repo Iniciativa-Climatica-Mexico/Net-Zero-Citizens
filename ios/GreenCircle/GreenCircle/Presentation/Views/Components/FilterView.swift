@@ -44,21 +44,26 @@ struct FilterView: View {
       .foregroundColor(Color.gray)
       .padding(.bottom)
       
+      Button("Borrar Filtros") {
+        vm.order = ""
+        vm.product = ""
+        vm.state = ""
+      }
+      .foregroundStyle(Color("Primary"))
+      .frame(maxWidth: .infinity, alignment: .leading)
+      
       HStack(spacing: 10) {
         MainButton("Cancelar",
-                   action: {})
+                   action: {vm.sheet = false})
         MainButton("Aplicar",
                    action: {
           Task {
             await vm.fetchFilteredCompanies()
           }
+          vm.sheet = false
         })
       }.padding(.top)
     }.padding()
-    
-    Button("Cerrar") {
-      dismiss()
-    } .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
   }
 }
 

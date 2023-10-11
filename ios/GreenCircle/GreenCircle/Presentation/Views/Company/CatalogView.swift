@@ -10,7 +10,6 @@ import SwiftUI
 struct CatalogView: View {
   @StateObject var viewModel = CompanyViewModel()
   @State var searchQuery  = ""
-  @State private var showingPrivacy = false
   @State var filtered = CompanyViewModel().companies
   
   var body: some View {
@@ -25,7 +24,7 @@ struct CatalogView: View {
                 .cornerRadius(10)
                 .frame(width: 340)
                 .padding(.trailing, 10)
-              Button(action: { showingPrivacy = true
+              Button(action: { viewModel.sheet = true
               }) {
                 Image(systemName: "slider.horizontal.3")
                   .resizable()
@@ -34,7 +33,7 @@ struct CatalogView: View {
                   .foregroundColor(Color("Primary"))
                   .padding(.trailing, 9)
               }.foregroundColor(.blue)
-                .sheet(isPresented: $showingPrivacy) {
+                .sheet(isPresented: $viewModel.sheet) {
                   FilterView(vm: viewModel)
                 }
             }
