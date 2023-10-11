@@ -176,8 +176,8 @@ export default function ModalProveedor({
               }}
             />
           </div>
-          <article className="flex flex-col border border-[#C1C9D2] justify-center items-center rounded-lg w-[823px] py-[25px] bg-white z-10">
-            <article className="flex border border-[#C1C9D2] rounded-xl w-[763px]">
+          <article className="flex flex-col border border-[#C1C9D2] justify-center items-center rounded-lg lg:w-[823px] md:w-[512px] sm:w-[360px] py-[25px] bg-white z-10">
+            <article className="flex border border-[#C1C9D2] rounded-xl lg:w-[763px] md:w-[500px] sm:w-[250px]">
               {selectedCompany.profilePicture  != null ? (
                 <img
                   src={selectedCompany.profilePicture}

@@ -17,41 +17,44 @@ export default function ListSurveys() {
     })
     return (
       <div>
-        <div className="flex-row flex items-center justify-between my-8 mx-8">
-          <h1 className="self-start font-extrabold my-8 mx-8 text-4xl text-txt">
+        <div className="flex flex-col sm:flex-row items-center justify-between my-8">
+          <h1 className="font-extrabold my-8 sm:ml-12 md:ml-32 text-4xl sm:text-3xl text-txt">
             Encuestas
           </h1>
           <a
             href="/encuestas/crear"
-            className="flex items-center justify-center px-4 py-2 my-8 mx-8 text-white bg-primary-base rounded hover:bg-primary-dark">Crear Encuesta</a>
+            className="flex items-center justify-center px-4 py-2 my-8 md:mr-32 sm:mr-12 text-white bg-primary-base rounded hover:bg-primary-dark text-center"
+          >
+            Crear Encuesta
+          </a>
         </div>
-        <div className="flex flex-col items-center w-full justify-center">
-          <table className="table-fixed border-collapse w-4/5">
+        <div className="w-10/12 m-auto p-3 overflow-x-auto">
+          <table className="border-collapse justify-center items-center w-full">
             <thead className="">
               <tr className="text-txt font-bold">
                 <th
                   scope="col"
                   className="py-8 border-b w-[20%] border-gray-700"
                 >
-                  Title
+                  Título
                 </th>
                 <th
                   scope="col"
                   className="py-8 w-[40%] border-b border-gray-700"
                 >
-                  Description
+                  Descripción
                 </th>
                 <th
                   scope="col"
                   className="py-8 border-b border-gray-700 w-[20%]"
                 >
-                  Start Date
+                  Fecha de inicio
                 </th>
                 <th
                   scope="col"
                   className="py-8 border-b border-gray-700 w-[20%]"
                 >
-                  End Date
+                  Fecha de cierre
                 </th>
               </tr>
             </thead>

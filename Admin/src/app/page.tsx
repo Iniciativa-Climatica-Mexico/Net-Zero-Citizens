@@ -205,7 +205,7 @@ export default function Home() {
       )}
       <main className="border border-[#C1C9D2] m-[30px] mt-[15px] p-[20px] pb-5 rounded-lg">
         <h1 className="text-[20px] font-bold">Descubre Proveedores</h1>
-        <div className="flex items-center py-4 gap-x-2">
+        <div className="flex items-center pt-4 pb-2 gap-x-2">
           <Input
             placeholder="Busca un proveedor"
             className="max-w-sm"
@@ -213,21 +213,24 @@ export default function Home() {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <Tabs defaultValue="pending_approval">
-          <TabsList>
+        <Tabs defaultValue="pending_approval" className="sm:flex-row mb-4">
+          <TabsList className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2  p-2 rounded h-full sm:w-auto md:w-96 justify-start sm:justify-start">
             <TabsTrigger
+              className='bg-gray-100'
               value="pending_approval"
               onClick={() => setActiveTab('pending_approval')}
             >
               Pendientes
             </TabsTrigger>
             <TabsTrigger
+              className='bg-gray-100'
               value="approved"
               onClick={() => setActiveTab('approved')}
             >
               Aprobados
             </TabsTrigger>
             <TabsTrigger
+              className='bg-gray-100'
               value="no_user"
               onClick={() => setActiveTab('no_user')}
             >
@@ -238,7 +241,7 @@ export default function Home() {
             {renderTable(paginatedCompanies)}
           </TabsContent>
         </Tabs>
-        <div className="flex justify-end items-center pt-2 gap-x-2">
+        <div className="flex justify-end items-center pt-2 gap-x-2 z-0">
           <Button
             variant="outline"
             className="px-4"
@@ -258,4 +261,5 @@ export default function Home() {
       </main>
     </>
   )
+  
 }
