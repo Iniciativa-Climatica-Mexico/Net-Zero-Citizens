@@ -1,5 +1,6 @@
 import SwiftUI
 import MapKit
+import Combine
 
 class IdentifiablePointAnnotation: NSObject, MKAnnotation, Identifiable {
     let id = UUID()
@@ -17,13 +18,21 @@ class IdentifiablePointAnnotation: NSObject, MKAnnotation, Identifiable {
 }
 
 struct CoordinatesView: View {
+    @StateObject var deviceLocationService = DeviceLocationService.shared
+    @State var tokens: Set<AnyCancellable> = []
+    @State var coordinates: (lat: Double, lon: Double) = (0,0)
+    
     @ObservedObject var viewModel = CoordinatesCompanyViewModel()
     @State var region = MKCoordinateRegion()
     @State var annotations: [IdentifiablePointAnnotation] = []
     @State var selectedAnnotation: IdentifiablePointAnnotation?
     
+    @State private var userLocation: CLLocationCoordinate2D?
+    @State private var isTrackingUserLocation = true
+
+    
     var body: some View {
-        Map(coordinateRegion: $region, annotationItems: annotations) { annotation in
+        Map(coordinateRegion: $region, showsUserLocation: true, userTrackingMode: .constant(isTrackingUserLocation ? .follow : .none), annotationItems: annotations) { annotation in
             MapAnnotation(coordinate: annotation.coordinate) {
                 VStack {
                     if annotation.id == selectedAnnotation?.id {
@@ -47,9 +56,12 @@ struct CoordinatesView: View {
                 }
             }
         }
+
         .onAppear {
             Task {
                 await setRegion()
+                observeCoordinateUpdates()
+                observeLocationAccessDenied()
             }
         }
     }
@@ -70,6 +82,28 @@ struct CoordinatesView: View {
         )
 
         region = coordinatesRegion
+    }
+    
+    func observeCoordinateUpdates() {
+        deviceLocationService.coordinatesPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                if case .failure(let error) = completion {
+                    print(error)
+                }
+            } receiveValue: { coordinates in
+                self.coordinates = (coordinates.latitude, coordinates.longitude)
+                self.userLocation = coordinates
+            }
+            .store(in: &tokens)
+    }
+    func observeLocationAccessDenied() {
+        deviceLocationService.deniedLocationAccessPublisher
+            .receive(on: DispatchQueue.main)
+            .sink {
+                print("Show some kind of alert to the user")
+            }
+            .store (in: &tokens)
     }
     
     struct CoordinatesView_Previews: PreviewProvider {

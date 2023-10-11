@@ -1,7 +1,6 @@
 package com.greencircle.framework.viewmodel.auth
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -43,6 +42,11 @@ class LoginViewModel(private val context: Context) : ViewModel() {
             val result: AuthResponse? = googleAuthRequirement(token)
             _googleLoginResult.postValue(result)
 
+            if (result == null) {
+                googleLoginError.postValue(true)
+                return@launch
+            }
+
             if (result != null && result.tokens == null) {
                 googleLoginError.postValue(true)
                 return@launch
@@ -73,8 +77,6 @@ class LoginViewModel(private val context: Context) : ViewModel() {
                 loginError.postValue(true)
                 return@launch
             }
-
-            Log.d("LoginViewModel", "result: $result")
 
             if (result.tokens == null) {
                 loginError.postValue(true)

@@ -67,7 +67,9 @@ class LocalService {
         /// - Description:
         ///   Función que borra la información del usuario cuando este ya no quiere su cuenta
         func deleteUserInformation() {
-          UserDefaults.standard.removeObject(forKey: USER_DATA)
+          let domain = Bundle.main.bundleIdentifier!
+          UserDefaults.standard.removePersistentDomain(forName: domain)
+          UserDefaults.standard.synchronize()
         }
   
   /// - Description: Stores favourite to maintain heart filled when closing app
@@ -89,7 +91,6 @@ class LocalService {
   func deleteFavourite(companyId: UUID) {
     UserDefaults.standard.removeObject(forKey: "\(companyId.uuidString)_favourite")
   }
-  
   
   
 }

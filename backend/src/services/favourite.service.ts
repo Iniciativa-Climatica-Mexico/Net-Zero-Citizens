@@ -60,7 +60,7 @@ export const deleteFavouriteById = async (
   try {
     return await Favourite.destroy({
       where: { companyId: companyId,
-      userId: userId },
+        userId: userId },
     })
   } catch {
     throw new Error('Favourite not found')

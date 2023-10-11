@@ -45,11 +45,7 @@ struct CardCatalogView: View {
               AsyncImage(url: imageURL) { phase in
                 switch phase {
                   case .empty:
-                    Image(systemName: "square.fill")
-                      .resizable()
-                      .frame(width: 100, height: 100)
-                      .foregroundColor(.gray)
-                      .opacity(0.3)
+                    LoadingScreenView().frame(width: 100, height: 100)
                   case .success(let image):
                     image
                       .resizable()
@@ -63,11 +59,7 @@ struct CardCatalogView: View {
                 }
               }
             } else {
-              Image(systemName: "square.fill")
-                .resizable()
-                .frame(width: 100, height: 100)
-                .foregroundColor(.gray)
-                .opacity(0.3)
+              LoadingScreenView().frame(width: 100, height: 100)
             }
           }
           Spacer()
@@ -148,7 +140,9 @@ struct CardCatalogView: View {
           .frame(maxWidth: 300, maxHeight: 140)
         }
       }.onAppear {
+        
         Task {
+        
           await viewModel.fetchCompanyById(idCompany: companyId)
           if favouriteViewModel.existsFavourite(companyId: companyId) {
             emptyHeartFill = true

@@ -1,7 +1,6 @@
 package com.greencircle.framework.views.fragments.map
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -20,6 +19,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.greencircle.R
 import com.greencircle.data.repository.GoogleMapsRepository
 import com.greencircle.domain.model.googlemaps.Company
+import com.greencircle.domain.usecase.auth.RecoverTokensRequirement
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,6 +27,16 @@ import kotlinx.coroutines.withContext
 
 class MapFragment : Fragment(), OnMapReadyCallback {
     private var mGoogleMap: GoogleMap? = null
+    private lateinit var recoverTokens: RecoverTokensRequirement
+    private lateinit var authToken: String
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        recoverTokens = RecoverTokensRequirement(requireContext())
+        val tokens = recoverTokens()
+        if (tokens != null)
+            authToken = tokens.authToken
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,11 +89,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun getCompanyList() {
-        val sharedPreferences =
-            context?.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
-
-        val authToken = sharedPreferences?.getString("auth_token", null)!!
-
         CoroutineScope(Dispatchers.IO).launch {
             val companyRepository = GoogleMapsRepository()
             val result: List<Company>? = companyRepository.getCompanyList(authToken)

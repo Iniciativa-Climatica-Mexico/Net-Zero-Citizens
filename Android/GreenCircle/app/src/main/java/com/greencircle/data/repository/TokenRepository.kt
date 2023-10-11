@@ -2,6 +2,7 @@ package com.greencircle.data.repository
 
 import android.content.SharedPreferences
 import com.greencircle.domain.model.auth.Tokens
+import com.greencircle.utils.Constants
 
 /**
  * Repositorio para gestionar operaciones relacionadas con el manejo de tokens de autenticación.
@@ -11,8 +12,8 @@ import com.greencircle.domain.model.auth.Tokens
  * @param sharedPreferences El objeto [SharedPreferences] utilizado para almacenar y recuperar los tokens.
  */
 class TokenRepository(private val sharedPreferences: SharedPreferences) {
-    private val authTokenKey: String = "auth_token"
-    private val refreshTokenKey: String = "refresh_token"
+    private val authTokenKey: String = Constants.AUTH_TOKEN_SP_NAME
+    private val refreshTokenKey: String = Constants.REFRESH_TOKEN_SP_NAME
 
     /**
      * Guarda los tokens de autenticación y actualización en el almacenamiento compartido.

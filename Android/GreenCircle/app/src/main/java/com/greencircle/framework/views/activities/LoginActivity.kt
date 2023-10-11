@@ -100,7 +100,7 @@ class LoginActivity : AppCompatActivity() {
             try {
                 if (authResponse != null) {
                     if (authResponse.user.roles != "new_user") {
-                        AuthUtils(this).navigateToSurvey()
+                        AuthUtils(this).navigateToMain()
                     } else {
                         Toast.makeText(
                             applicationContext, "Por favor, regístrate", Toast.LENGTH_SHORT
@@ -122,7 +122,7 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     googleSignInHelper.googleSignOut()
                     Log.d("LoginActivity", "Login successful")
-                    AuthUtils(this).navigateToSurvey()
+                    AuthUtils(this).navigateToMain()
                 }
             } catch (e: Exception) {
                 Toast.makeText(
