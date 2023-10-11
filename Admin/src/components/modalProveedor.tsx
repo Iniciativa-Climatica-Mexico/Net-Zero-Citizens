@@ -232,83 +232,83 @@ export default function ModalProveedor({
                   selectedCompany.pdfGuaranteeSecurityUrl &&
                   selectedCompany.pdfActaConstitutivaUrl &&
                   selectedCompany.pdfIneUrl && (
-                    <h2 className="text-[14px] font-bold mt-[10px] mb-[10px]">
+                  <h2 className="text-[14px] font-bold mt-[10px] mb-[10px]">
                       Documentos
-                    </h2>
-                  )}
+                  </h2>
+                )}
                 {selectedCompany.pdfCurriculumUrl &&
-                  selectedCompany.pdfDicCdmxUrl &&
-                  selectedCompany.pdfPeeFideUrl && (
-                    <section className="flex justify-between items-end mb-3">
-                      <a
-                        href={selectedCompany.pdfCurriculumUrl}
-                        className="min-w-[31%] no-underline text-[#333333] font-medium"
-                        target="_blank"
-                      >
-                        <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                          <FileOpenIcon color="info" className="mt-3" />
-                          <p className="my-2 text-[11px]">Curriculum</p>
-                        </div>
-                      </a>
-                      <a
-                        href={selectedCompany.pdfDicCdmxUrl}
-                        className="min-w-[31%] no-underline text-[#333333] font-medium"
-                        target="_blank"
-                      >
-                        <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                          <FileOpenIcon color="info" className="mt-3" />
-                          <p className="my-2 text-[11px]">Dic CDMX</p>
-                        </div>
-                      </a>
-                      <a
-                        href={selectedCompany.pdfPeeFideUrl}
-                        className="min-w-[31%]  no-underline text-[#333333] font-medium"
-                        target="_blank"
-                      >
-                        <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                          <FileOpenIcon color="info" className="mt-3" />
-                          <p className="my-2 text-[11px]">Pee Fide</p>
-                        </div>
-                      </a>
-                    </section>
-                  )}
+                selectedCompany.pdfDicCdmxUrl &&
+                selectedCompany.pdfPeeFideUrl && (
+                  <section className="flex justify-between items-end mb-3">
+                    <a
+                      href={selectedCompany.pdfCurriculumUrl}
+                      className="min-w-[31%] no-underline text-[#333333] font-medium"
+                      target="_blank"
+                    >
+                      <div className="border px-[5px] rounded flex flex-col justify-center items-center">
+                        <FileOpenIcon color="info" className="mt-3" />
+                        <p className="my-2 text-[11px]">Curriculum</p>
+                      </div>
+                    </a>
+                    <a
+                      href={selectedCompany.pdfDicCdmxUrl}
+                      className="min-w-[31%] no-underline text-[#333333] font-medium"
+                      target="_blank"
+                    >
+                      <div className="border px-[5px] rounded flex flex-col justify-center items-center">
+                        <FileOpenIcon color="info" className="mt-3" />
+                        <p className="my-2 text-[11px]">Dic CDMX</p>
+                      </div>
+                    </a>
+                    <a
+                      href={selectedCompany.pdfPeeFideUrl}
+                      className="min-w-[31%]  no-underline text-[#333333] font-medium"
+                      target="_blank"
+                    >
+                      <div className="border px-[5px] rounded flex flex-col justify-center items-center">
+                        <FileOpenIcon color="info" className="mt-3" />
+                        <p className="my-2 text-[11px]">Pee Fide</p>
+                      </div>
+                    </a>
+                  </section>
+                )}
                 {selectedCompany.pdfGuaranteeSecurityUrl &&
                   selectedCompany.pdfActaConstitutivaUrl &&
                   selectedCompany.pdfIneUrl && (
-                    <section className="flex justify-between items-end mb-3">
-                      <a
-                        href={selectedCompany.pdfGuaranteeSecurityUrl}
-                        className="min-w-[31%] no-underline text-[#333333] font-medium"
-                        target="_blank"
-                      >
-                        <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                          <FileOpenIcon color="info" className="mt-3" />
-                          <p className="my-2 text-[11px]">Guarantee</p>
-                        </div>
-                      </a>
-                      <a
-                        href={selectedCompany.pdfActaConstitutivaUrl}
-                        className="min-w-[31%] no-underline text-[#333333] font-medium"
-                        target="_blank"
-                      >
-                        <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                          <FileOpenIcon color="info" className="mt-3" />
-                          <p className="my-2 text-[11px]">Acta Constitutiva</p>
-                        </div>
-                      </a>
-                      <a
-                        href={selectedCompany.pdfIneUrl}
-                        className="min-w-[31%] no-underline text-[#333333] font-medium"
-                        target="_blank"
-                      >
-                        <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                          <FileOpenIcon color="info" className="mt-3" />
-                          <p className="my-2 text-[11px]">INE</p>
-                        </div>
-                      </a>
-                    </section>
-                  )}
-                <section className='flex justify-end'>
+                  <section className="flex justify-between items-end mb-3">
+                    <a
+                      href={selectedCompany.pdfGuaranteeSecurityUrl}
+                      className="min-w-[31%] no-underline text-[#333333] font-medium"
+                      target="_blank"
+                    >
+                      <div className="border px-[5px] rounded flex flex-col justify-center items-center">
+                        <FileOpenIcon color="info" className="mt-3" />
+                        <p className="my-2 text-[11px]">Guarantee</p>
+                      </div>
+                    </a>
+                    <a
+                      href={selectedCompany.pdfActaConstitutivaUrl}
+                      className="min-w-[31%] no-underline text-[#333333] font-medium"
+                      target="_blank"
+                    >
+                      <div className="border px-[5px] rounded flex flex-col justify-center items-center">
+                        <FileOpenIcon color="info" className="mt-3" />
+                        <p className="my-2 text-[11px]">Acta Constitutiva</p>
+                      </div>
+                    </a>
+                    <a
+                      href={selectedCompany.pdfIneUrl}
+                      className="min-w-[31%] no-underline text-[#333333] font-medium"
+                      target="_blank"
+                    >
+                      <div className="border px-[5px] rounded flex flex-col justify-center items-center">
+                        <FileOpenIcon color="info" className="mt-3" />
+                        <p className="my-2 text-[11px]">INE</p>
+                      </div>
+                    </a>
+                  </section>
+                )}
+                <section className="flex justify-end">
                   <p className="text-right text-[#858585] text-[14px]">
                     Fecha que se registro:
                   </p>
