@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputLayout
@@ -20,6 +21,7 @@ import com.greencircle.domain.usecase.auth.RecoverUserSessionRequirement
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.reviews.ReviewFormViewModel
 import com.greencircle.framework.views.fragments.catalogue.CatalogueFragment
+import com.greencircle.framework.views.fragments.company.CompanyContactFragment
 import java.util.UUID
 
 class ReviewFormFragment : Fragment() {
@@ -70,6 +72,8 @@ class ReviewFormFragment : Fragment() {
         initializeRatingBarListener()
         initializePublishReviewButton()
 
+        onBackPress()
+
         return root
     }
 
@@ -106,14 +110,12 @@ class ReviewFormFragment : Fragment() {
 
         if (reviewTitleString.isBlank() && reviewString.isNotBlank()) {
             setTextInputError(
-                binding.titleTextField,
-                getString(R.string.no_title_form_review_error)
+                binding.titleTextField, getString(R.string.no_title_form_review_error)
             )
             return false
         } else if (reviewTitleString.isNotBlank() && reviewString.isBlank()) {
             setTextInputError(
-                binding.reviewTextField,
-                getString(R.string.no_review_form_review_error)
+                binding.reviewTextField, getString(R.string.no_review_form_review_error)
             )
             return false
         } else if (reviewTitleString.isBlank() && reviewString.isBlank()) {
@@ -121,7 +123,6 @@ class ReviewFormFragment : Fragment() {
             review = null
             return true
         }
-
         clearTextFieldsErrors()
         reviewTitle = reviewTitleString
         review = reviewString
@@ -171,17 +172,13 @@ class ReviewFormFragment : Fragment() {
         if (res.isFailure) {
             Log.e("ReviewFormFragment", res.exceptionOrNull()?.message.toString())
             Toast.makeText(
-                requireContext(),
-                getString(R.string.review_submit_error),
-                Toast.LENGTH_SHORT
+                requireContext(), getString(R.string.review_submit_error), Toast.LENGTH_SHORT
             ).show()
             return
         }
 
         Toast.makeText(
-            requireContext(),
-            getString(R.string.review_submit_toast),
-            Toast.LENGTH_SHORT
+            requireContext(), getString(R.string.review_submit_toast), Toast.LENGTH_SHORT
         ).show()
 
         navigateToCompanyReviewFragment()
@@ -202,5 +199,31 @@ class ReviewFormFragment : Fragment() {
         val publishReviewButton = binding.publishReviewButton
 
         publishReviewButton.setOnClickListener { publishReview() }
+    }
+
+    /**
+     * Función que se encarga de cambiar el fragmento actual por el fragmento de contacto
+     * cuando se presiona el botón de retroceso
+     */
+    private fun onBackPress() {
+        // Override the back button behavior
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val fragmentManager = requireActivity().supportFragmentManager
+                val fragmentTransaction = fragmentManager.beginTransaction()
+                val companyDetail = CompanyContactFragment()
+
+                val bundle = Bundle()
+                bundle.putString("id", companyId.toString())
+
+                companyDetail.arguments = bundle
+                // add to the back stack
+                fragmentTransaction.replace(R.id.frame_layout, companyDetail)
+                fragmentTransaction.commit()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner, onBackPressedCallback
+        )
     }
 }

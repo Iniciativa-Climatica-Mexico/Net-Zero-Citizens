@@ -4,13 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import com.greencircle.R
 import com.greencircle.databinding.FragmentCompanyContactBinding
 import com.greencircle.domain.model.company.CompanyImages
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.company.CompanyContactViewModel
+import com.greencircle.framework.views.fragments.catalogue.CatalogueFragment
 import com.greencircle.framework.views.fragments.reviews.CompanyReviewFragment
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 
@@ -36,6 +39,7 @@ class CompanyContactFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        onBackPress()
         _binding = FragmentCompanyContactBinding.inflate(inflater, container, false)
 
         viewModel.companyData.observe(viewLifecycleOwner) { companyData ->
@@ -75,10 +79,18 @@ class CompanyContactFragment : Fragment() {
             bundleServices.putSerializable("Services", companyData.products)
             servicesFragment.arguments = bundleServices
 
-            childFragmentManager.beginTransaction().add(R.id.fragmentContainer, servicesFragment)
-                .add(R.id.fragmentContainer, contactInfoFragment)
-                .add(R.id.fragmentContainer, companyReviewsFragment).hide(contactInfoFragment)
-                .hide(companyReviewsFragment).commit()
+            // Revisa si ya hay fragmentos en el contenedor
+            if (childFragmentManager.fragments.size > 0) {
+                FragmentActivity().supportFragmentManager.popBackStack()
+                childFragmentManager.beginTransaction().remove(servicesFragment)
+                    .remove(contactInfoFragment).remove(companyReviewsFragment).commit()
+            } else {
+                childFragmentManager.beginTransaction()
+                    .add(R.id.fragmentContainer, servicesFragment)
+                    .add(R.id.fragmentContainer, contactInfoFragment)
+                    .add(R.id.fragmentContainer, companyReviewsFragment).hide(contactInfoFragment)
+                    .hide(companyReviewsFragment).commit()
+            }
         }
 
         val companyId = arguments?.getString("id")
@@ -117,9 +129,33 @@ class CompanyContactFragment : Fragment() {
 
     fun initCarousel(images: List<CompanyImages>?) {
         val carousel = binding.carousel
-
+        if (images.isNullOrEmpty()) {
+            carousel.addData(CarouselItem(R.drawable.main_logo_bg))
+        }
         images?.forEach { image ->
             carousel.addData(CarouselItem(image.imageUrl))
         }
+    }
+
+    /**
+     * Función que se encarga de cambiar el fragmento actual por el fragmento de catálogo
+     * cuando se presiona el botón de retroceso
+     */
+    private fun onBackPress() {
+        // Override the back button behavior
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val fragmentManager = requireActivity().supportFragmentManager
+                val fragmentTransaction = fragmentManager.beginTransaction()
+                val catalogue = CatalogueFragment()
+
+                // replace the current fragment with the catalogue fragment
+                fragmentTransaction.replace(R.id.frame_layout, catalogue)
+                fragmentTransaction.commit()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner, onBackPressedCallback
+        )
     }
 }

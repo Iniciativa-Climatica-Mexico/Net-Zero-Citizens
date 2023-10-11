@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -20,8 +21,8 @@ import com.greencircle.data.remote.user.UserAPIService
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.auth.LoginViewModel
 import com.greencircle.framework.viewmodel.user.CreateUserViewModel
+import com.greencircle.framework.views.activities.MainActivity
 import com.greencircle.framework.views.activities.RegisterUserActivity
-import com.greencircle.framework.views.activities.SurveyActivity
 import com.greencircle.framework.views.fragments.TermsAndConditions.TermsAndConditions
 import java.util.UUID
 
@@ -142,6 +143,24 @@ class CreateUserFragment : Fragment() {
             }
         }
 
+        createUserViewModel.error.observe(viewLifecycleOwner) { error ->
+            try {
+                if (error) {
+                    Toast.makeText(
+                        requireContext(), "Error al crear usuario", Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        requireContext(), "Usuario creado correctamente", Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(
+                    requireContext(), "Error al crear usuario", Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
         setSwitch(view.findViewById(R.id.avisoPrivacidad))
     }
 
@@ -174,6 +193,12 @@ class CreateUserFragment : Fragment() {
         val gender = genderInputLayout.editText?.text.toString()
         val roleId = "CUSTOMER_ROLE_ID"
 
+        var validGender = ""
+        if (gender == "Masculino") validGender = "masculine"
+        if (gender == "Femenine") validGender = "femenine"
+        if (gender == "Otro") validGender = "other"
+        if (gender == "Prefiero no decirlo") validGender = "no_answer"
+
         val validation = validateForm(view)
 
         if (validation) {
@@ -181,10 +206,9 @@ class CreateUserFragment : Fragment() {
                 phone,
                 age,
                 state,
-                gender,
+                validGender,
                 roleId,
             )
-
             createUserViewModel.updateUser(uuid, userInfo)
             navigateToHome()
         } else {
@@ -301,7 +325,7 @@ class CreateUserFragment : Fragment() {
      * (`MainActivity`) y luego inicia la actividad para mostrar la pantalla de inicio.
      */
     private fun navigateToHome() {
-        var intent: Intent = Intent(requireContext(), SurveyActivity::class.java)
+        var intent: Intent = Intent(requireContext(), MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }

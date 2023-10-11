@@ -3,9 +3,10 @@ package com.greencircle.data.repository
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.greencircle.domain.model.user.User
+import com.greencircle.utils.Constants
 
 class UserSessionRepository(private val sharedPreferences: SharedPreferences) {
-    private val userSession: String = "user_session"
+    private val userSession: String = Constants.USER_SESSION_SP_NAME
 
     /**
      * Guarda los datos del usaurio activo en el almacenamiento compartido.

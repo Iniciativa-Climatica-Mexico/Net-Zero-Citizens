@@ -10,6 +10,7 @@ import SwiftUI
 
 struct CoordinatorView: View {
   @StateObject var viewModel = CoordinatorViewModel()
+  @StateObject var deviceLocationService = DeviceLocationService.shared
   @State var hasPendingSurvey: Bool = false
   @State var photovoltaicToggle: Bool = false
   @State var solarToggle: Bool = false
@@ -74,7 +75,10 @@ struct CoordinatorView: View {
                                solarToggle: $solarToggle)
         
       case .mainMenuView:
-        TabBarView(goSurvey: goSurvey)
+        TabBarView(goSurvey: goSurvey, goLogin: goLogin)
+            .onAppear {
+              deviceLocationService.requestLocationUpdates()
+            }
         
       case .pendingCompany:
         PendingCompanyView()
@@ -131,6 +135,7 @@ struct CoordinatorView: View {
   private func goCompanyRegisterDivider() {
     routes.presentCover(.companyRegisterDivider)
   }
+  
   
   private func goUploadCompanyFiles(photovoltaicToggle: Binding<Bool>, solarToggle: Binding<Bool>) {
     routes.presentCover(.uploadCompanyFiles)

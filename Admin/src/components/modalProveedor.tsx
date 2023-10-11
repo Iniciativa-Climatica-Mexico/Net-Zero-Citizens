@@ -242,7 +242,7 @@ export default function ModalProveedor({
                     <section className="flex justify-between items-end mb-3">
                       <a
                         href={selectedCompany.pdfCurriculumUrl}
-                        className="min-w-[31%]"
+                        className="min-w-[31%] no-underline text-[#333333] font-medium"
                         target="_blank"
                       >
                         <div className="border px-[5px] rounded flex flex-col justify-center items-center">
@@ -252,7 +252,7 @@ export default function ModalProveedor({
                       </a>
                       <a
                         href={selectedCompany.pdfDicCdmxUrl}
-                        className="min-w-[31%]"
+                        className="min-w-[31%] no-underline text-[#333333] font-medium"
                         target="_blank"
                       >
                         <div className="border px-[5px] rounded flex flex-col justify-center items-center">
@@ -262,7 +262,7 @@ export default function ModalProveedor({
                       </a>
                       <a
                         href={selectedCompany.pdfPeeFideUrl}
-                        className="min-w-[31%]"
+                        className="min-w-[31%]  no-underline text-[#333333] font-medium"
                         target="_blank"
                       >
                         <div className="border px-[5px] rounded flex flex-col justify-center items-center">
@@ -278,7 +278,7 @@ export default function ModalProveedor({
                     <section className="flex justify-between items-end mb-3">
                       <a
                         href={selectedCompany.pdfGuaranteeSecurityUrl}
-                        className="min-w-[31%]"
+                        className="min-w-[31%] no-underline text-[#333333] font-medium"
                         target="_blank"
                       >
                         <div className="border px-[5px] rounded flex flex-col justify-center items-center">
@@ -288,7 +288,7 @@ export default function ModalProveedor({
                       </a>
                       <a
                         href={selectedCompany.pdfActaConstitutivaUrl}
-                        className="min-w-[31%]"
+                        className="min-w-[31%] no-underline text-[#333333] font-medium"
                         target="_blank"
                       >
                         <div className="border px-[5px] rounded flex flex-col justify-center items-center">
@@ -298,7 +298,7 @@ export default function ModalProveedor({
                       </a>
                       <a
                         href={selectedCompany.pdfIneUrl}
-                        className="min-w-[31%]"
+                        className="min-w-[31%] no-underline text-[#333333] font-medium"
                         target="_blank"
                       >
                         <div className="border px-[5px] rounded flex flex-col justify-center items-center">
@@ -308,9 +308,14 @@ export default function ModalProveedor({
                       </a>
                     </section>
                   )}
-                <p className="text-right text-[#858585] text-[14px]">
-                  {formatDate(selectedCompany.createdAt)}
-                </p>
+                <section className='flex justify-end'>
+                  <p className="text-right text-[#858585] text-[14px]">
+                    Fecha que se registro:
+                  </p>
+                  <p className="text-right text-[#858585] text-[14px] ml-2">
+                    {formatDate(selectedCompany.createdAt)}
+                  </p>
+                </section>
               </aside>
             </article>
             <section className="text-[13px] px-[35px] pt-[25px] w-full">

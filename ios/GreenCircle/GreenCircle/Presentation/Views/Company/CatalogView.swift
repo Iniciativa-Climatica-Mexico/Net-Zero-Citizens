@@ -11,13 +11,19 @@ struct CardCatalogView: View {
   @StateObject var viewModel: CompanyViewModel
   @StateObject var favouriteViewModel: FavouriteViewModel
   @State var emptyHeartFill: Bool = false
-  @State var showingAlert: Bool = false
+  @State private var showAlert = false
+  @State private var messageAlert = ""
+  @State private var deleteOperation = false
   var companyId: UUID
   var companyName: String
   var city: String
   var state: String
   
-  init(companyId: UUID, companyName: String, city: String, state: String) {
+  init(companyId: UUID,
+       companyName: String,
+       city: String,
+       state: String) {
+    
     _viewModel = StateObject(wrappedValue: CompanyViewModel())
     _favouriteViewModel = StateObject(wrappedValue: FavouriteViewModel())
     self.companyId = companyId
@@ -27,7 +33,7 @@ struct CardCatalogView: View {
   }
   
   var body: some View {
-    NavigationLink(destination: ContactCompanyView(idCompany: companyId, emptyHeartFill: $emptyHeartFill)){
+    NavigationLink(destination: ContactCompanyView(idCompany: companyId, favouriteViewModel: favouriteViewModel, emptyHeartFill: $emptyHeartFill)){
       ZStack {
         RoundedRectangle(cornerRadius: 10, style:.continuous)
           .fill(.white)
@@ -39,11 +45,7 @@ struct CardCatalogView: View {
               AsyncImage(url: imageURL) { phase in
                 switch phase {
                   case .empty:
-                    Image(systemName: "square.fill")
-                      .resizable()
-                      .frame(width: 100, height: 100)
-                      .foregroundColor(.gray)
-                      .opacity(0.3)
+                    LoadingScreenView().frame(width: 100, height: 100)
                   case .success(let image):
                     image
                       .resizable()
@@ -57,11 +59,7 @@ struct CardCatalogView: View {
                 }
               }
             } else {
-              Image(systemName: "square.fill")
-                .resizable()
-                .frame(width: 100, height: 100)
-                .foregroundColor(.gray)
-                .opacity(0.3)
+              LoadingScreenView().frame(width: 100, height: 100)
             }
           }
           Spacer()
@@ -83,42 +81,58 @@ struct CardCatalogView: View {
               .padding(.bottom, 3)
             
             HStack {
-              ForEach(0..<5, id: \.self) { index in
-                Image(systemName: index < Int(viewModel.contentCompany.score!) ? "star.fill" : "star")
-              }.foregroundColor(Color("GreenCustom"))
-              Text("\(Int(viewModel.contentCompany.score!))")
+              if Int(viewModel.contentCompany.score!) > 0 {
+                ForEach(0..<5, id: \.self) { index in
+                  Image(systemName: index < Int(viewModel.contentCompany.score!) ? "star.fill" : "star")
+                }.foregroundColor(Color("GreenCustom"))
+                Text("\(Int(viewModel.contentCompany.score!))")
+              } else {
+                Text("No hay rating").foregroundColor(Color("GreenCustom"))
+              }
             }.font(.system(size: 13))
-              .foregroundColor(Color("GreenCustom"))
           }
           .frame(maxWidth: 180, maxHeight: 120)
           .multilineTextAlignment(.leading)
           Spacer()
           VStack {
             Button(action: {
-              if !emptyHeartFill {
-                Task {
-                  await favouriteViewModel.postFavouriteById(companyId: companyId)
-                  if favouriteViewModel.contentFavourite.message ==
-                      "Favourite created" {
+              Task {
+                if favouriteViewModel.existsFavourite(companyId: companyId) && emptyHeartFill {
                     emptyHeartFill = true
-                    showingAlert = true
+                    deleteOperation = true
+                    showAlert = true
+                    messageAlert = "¿Eliminar a: " + companyName + " de tus favoritos?"
+                } else if !favouriteViewModel.existsFavourite(companyId: companyId) {
+                    showAlert = true
+                    await favouriteViewModel.postFavouriteById(companyId: companyId)
+                    if favouriteViewModel.contentFavourite.message ==
+                        "Favourite created" {
+                      messageAlert = "Se ha agregado a: " + companyName + " a tus favoritos!"
+                      emptyHeartFill = true
+                      deleteOperation = false
+                    }
                   }
-                }
-              } else {
-                /// TODO : Delete favourite
-                /// emptyFill = false
               }
-              
             }, label: {
               Image(systemName: emptyHeartFill ? "heart.fill" : "heart")
                 .foregroundColor(Color("BlueCustom"))
                 .font(.system(size: 24))
                 .padding(.top, 20)
-            }).alert(isPresented: $showingAlert) {
-              Alert(title: Text("Nuevo favorito!"),
-                    message: Text("Se agregó: " + companyName +
-                                  " a tu lista de favoritos"),
-                    dismissButton: .default(Text("Ok")))
+            })
+            .alert(isPresented: $showAlert) {
+              if !deleteOperation {
+                return Alert(title: Text("Éxito"), message: Text(messageAlert))
+              }
+              else {
+                return Alert(title: Text("Confirmar borrar favoritos"), message: Text(messageAlert),
+                   primaryButton: .destructive(Text("Borrar")) {
+                  Task {
+                    emptyHeartFill = false
+                    try await favouriteViewModel.deleteFavouriteById( companyId: companyId)
+                  }
+                   },
+                   secondaryButton: .cancel())
+              }
             }
               Spacer()
             }.frame(maxWidth: 25)
@@ -126,8 +140,15 @@ struct CardCatalogView: View {
           .frame(maxWidth: 300, maxHeight: 140)
         }
       }.onAppear {
+        
         Task {
+        
           await viewModel.fetchCompanyById(idCompany: companyId)
+          if favouriteViewModel.existsFavourite(companyId: companyId) {
+            emptyHeartFill = true
+          } else {
+            emptyHeartFill = false
+          }
         }
       }
       .navigationTitle("Proveedores")
@@ -137,23 +158,27 @@ struct CardCatalogView: View {
 
 struct CatalogView: View {
   @StateObject var viewModel = CompanyViewModel()
+
   var body: some View {
-    NavigationStack {
-      ScrollView {
-        LazyVStack{
-          ForEach(viewModel.companies, id: \.id) { company in
-            CardCatalogView(companyId: company.companyId,
-                            companyName: company.name, city: company.city, state: company.state)
-          }.padding(.top, 5)
-        }.padding(.top, 10)
-      }
-      .onAppear {
-        Task {
-          await viewModel.fetchAllCompanies()
+    ZStack {
+      NavigationStack {
+        ScrollView {
+          LazyVStack{
+            ForEach(viewModel.companies, id: \.id) { company in
+              CardCatalogView(companyId: company.companyId,
+                              companyName: company.name, city: company.city,
+                              state: company.state)
+            }.padding(.top, 5)
+          }.padding(.top, 10)
+        }
+        .onAppear {
+          Task {
+            await viewModel.fetchAllCompanies()
+          }
         }
       }
+      .accentColor(.white)
     }
-    .accentColor(.white)
   }
 }
     

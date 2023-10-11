@@ -3,6 +3,7 @@ package com.greencircle.framework.views.fragments.profile
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import com.greencircle.domain.usecase.auth.RecoverUserSessionRequirement
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.profile.ProfileViewModel
 import com.greencircle.framework.views.activities.LoginActivity
+import com.greencircle.utils.GoogleSignInClientProvider
 import java.util.UUID
 
 class EditProfileFragment : Fragment() {
@@ -80,8 +82,14 @@ class EditProfileFragment : Fragment() {
         binding.inputPrimerApellido.setText(user.lastName)
         binding.inputSegundoApellido.setText(user.secondLastName)
         binding.inputEdad.setText(user.age.toString())
+
+        var validGender = ""
+        if (user.gender == "masculine") validGender = "Masculino"
+        if (user.gender == "femenine") validGender = "Femenino"
+        if (user.gender == "other") validGender = "Otro"
+        if (user.gender == "no_answer") validGender = "Prefiero no decirlo"
         val genderOptions = resources.getStringArray(R.array.gender_options)
-        val genderPosition = genderOptions.indexOf(user.gender)
+        val genderPosition = genderOptions.indexOf(validGender)
 
         if (genderPosition != -1) {
             // Si se encuentra la posición, selecciona el elemento correspondiente en el Spinner
@@ -100,6 +108,14 @@ class EditProfileFragment : Fragment() {
 
     // call to update user from viewmodel and repository
     private fun updateUser() {
+        val gender = binding.inputSexo.selectedItem.toString()
+        Log.d("CreateUserFragment", "$gender")
+        var validGender = ""
+        if (gender == "Masculino") validGender = "masculine"
+        if (gender == "Femenino") validGender = "femenine"
+        if (gender == "Otro") validGender = "other"
+        if (gender == "Prefiero no decirlo") validGender = "no_answer"
+
         val user = Profile(
             user.userId,
             binding.inputNombre.text.toString(),
@@ -110,11 +126,12 @@ class EditProfileFragment : Fragment() {
             binding.inputTelefono.text.toString(),
             binding.inputEdad.text.toString().toInt(),
             binding.inputEstado.selectedItem.toString(),
-            binding.inputSexo.selectedItem.toString(),
+            validGender,
             user.profilePicture,
             user.createdAt,
             user.updatedAt
         )
+        Log.d("CreateUserFragment", "$user")
         viewModel.updateUser(user)
     }
 
@@ -143,7 +160,40 @@ class EditProfileFragment : Fragment() {
 
             // Si la edad es válida, elimina cualquier mensaje de error anterior
             binding.inputEdad.error = null
-
+            if (binding.inputNombre.text.toString().isEmpty()) {
+                binding.inputNombre.error = "El nombre no puede estar vacío"
+                return@setOnClickListener
+            }
+            if (binding.inputNombre.text.toString().any { it.isDigit() }) {
+                binding.inputNombre.error = "El nombre no puede contener números"
+                return@setOnClickListener
+            }
+            binding.inputNombre.error = null
+            if (binding.inputPrimerApellido.text.toString().isEmpty()) {
+                binding.inputPrimerApellido.error = "El primer apellido no puede estar vacío"
+                return@setOnClickListener
+            }
+            if (binding.inputPrimerApellido.text.toString().any { it.isDigit() }) {
+                binding.inputPrimerApellido.error =
+                    "El primer apellido no puede contener números"
+                return@setOnClickListener
+            }
+            binding.inputPrimerApellido.error = null
+            if (binding.inputEdad.text.toString().isEmpty()) {
+                binding.inputEdad.error = "La edad no puede estar vacía"
+                return@setOnClickListener
+            }
+            if (binding.inputSegundoApellido.text.toString().any { it.isDigit() }) {
+                binding.inputSegundoApellido.error =
+                    "El segundo apellido no puede contener números"
+                return@setOnClickListener
+            }
+            binding.inputEdad.error = null
+            if (binding.inputTelefono.text.toString().isEmpty()) {
+                binding.inputTelefono.error = "El teléfono no puede estar vacío"
+                return@setOnClickListener
+            }
+            binding.inputTelefono.error = null
             // Procede con la actualización del usuario
             updateUser()
             Toast.makeText(
@@ -196,6 +246,7 @@ class EditProfileFragment : Fragment() {
                 // Lógica para eliminar
                 dialog.dismiss()
                 viewModel.deleteUser(uuid)
+                GoogleSignInClientProvider.getClient(requireActivity()).signOut()
                 navigateToLogin()
             }
             alertDialogBuilder.setNegativeButton("Cancelar") { dialog, _ ->

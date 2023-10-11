@@ -33,7 +33,12 @@ struct Credentials: Codable {
     let password: String
 }
 
-
+/// Modelo que representa respuesta cuando se elimina al usuario
+struct UserDeleteResponse: Codable {
+  let message: String
+  let error: String?
+  let status: Int?
+}
 //struct User: Codable, Identifiable {
 //  var id: String {uuid}
 //

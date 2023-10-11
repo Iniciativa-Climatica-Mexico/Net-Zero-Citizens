@@ -23,7 +23,6 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import LogoSm from './../../public/LogoSm.svg'
 
-import { CellAction } from '@/components/cellAction'
 import ModalProveedor from '@/components/modalProveedor'
 import Image from 'next/image'
 
@@ -94,7 +93,7 @@ export default function Home() {
       : activeTab === 'approved' ? approvedCompanies?.filter((company) =>
         company.name.toLowerCase().includes(searchTerm.toLowerCase())
       ) : approvedCompanies?.filter((company) =>
-        company.userId === null && 
+        company.userId === null &&
         company.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
 
@@ -120,7 +119,6 @@ export default function Home() {
           <TableHead>Correo</TableHead>
           <TableHead>Ubicación</TableHead>
           <TableHead>Estado</TableHead>
-          <TableHead className="text-right"></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -183,16 +181,6 @@ export default function Home() {
                 {company.status === 'approved' ? 'Aprobado' : 'Pendiente'}
               </div>
             </TableCell>
-            {/* <TableCell className="text-right">
-              <CellAction
-                setIsModalOpen={setIsModalOpen}
-                companyId={company.companyId}
-                fetchPendingCompanies={() => fetchPendingCompanies()}
-                fetchApprovedCompanies={() => fetchApprovedCompanies()}
-                company={company}
-                activeTab={activeTab}
-              />
-            </TableCell> */}
           </TableRow>
         ))}
       </TableBody>

@@ -3,13 +3,13 @@
 //  GreenCircle
 //
 //  Created by Ricardo Adolfo Fernández Alvarado on 17/09/23.
-//
+//  Modified by Daniel Gutiérrez Gómez on 03/10/23
 
 import Foundation
 
 /// Clase con la estructura de la API de autenticación
 class AuthAPI {
-  static let base = "http://localhost:4000/api/v1/auth"
+  static let base = APIRoutes.Auth.base
   struct Routes {
     static let googleLogin = "/login/google"
     static let login = "/login/credentials"
@@ -19,7 +19,7 @@ class AuthAPI {
 
 /// Clase con la estructura de la API de usuarios
 class UserAPI {
-  static let base = "http://localhost:4000/api/v1/users"
+  static let base = APIRoutes.User.base
   struct Routes {
     static let userId = "/:userId"
     static let credentials = "users/credentials"
@@ -33,6 +33,7 @@ protocol UserRepositoryProtocol {
   func updateUserCredentials(userId: String, newUserCredentials: Credentials) async -> User?;
   func postGoogleLogin(googleToken: String) async -> AuthResponse?
   func putUser(_ user: UserAuth) async -> Bool
+  func deleteUserById(userId: String)  async -> UserDeleteResponse?
 }
 
 
@@ -125,11 +126,17 @@ class UserRepository: UserRepositoryProtocol {
   }
   
   func saveAuthData(authData: AuthResponse) {
-    lService.setToken(userData: authData)
+    lService.setUserInformation(userData: authData)
   }
   
   func getAuthData() -> AuthResponse? {
-    return lService.getToken()
+    return lService.getUserInformation()
+  }
+  
+  func deleteUserById(userId: String)  async -> UserDeleteResponse? {
+    let endpoint = UserAPI.base + "/delete" + UserAPI.Routes.userId
+          .replacingOccurrences(of: ":userId", with: userId)
+        return await NetworkAPIService.shared.deleteRequest(URL(string: endpoint)!)
   }
   
   func postLogin(user: String, password: String) async throws -> AuthResponse {

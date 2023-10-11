@@ -14,7 +14,7 @@ import { RequestHandler } from 'express'
 
 export const getAllComplaints: RequestHandler<
   NoRecord,
-  Paginator<Complaint>| { error: string },
+  Paginator<Complaint> | { error: string },
   NoRecord,
   PaginationParams<{ name?: string }>
 > = async (req, res) => {
@@ -25,7 +25,7 @@ export const getAllComplaints: RequestHandler<
       name: req.query.name || '',
     },
   }
-  try{
+  try {
     const complaints = await ComplaintService.getAllComplaints(params)
     res.json({
       rows: complaints.rows,
@@ -33,9 +33,8 @@ export const getAllComplaints: RequestHandler<
       pageSize: params.pageSize,
       total: complaints.count,
     })
-  }
-  catch(error){
-    res.status(400).json({error: 'Error getting complaints'})
+  } catch (error) {
+    res.status(400).json({ error: 'Error getting complaints' })
   }
 }
 
@@ -54,7 +53,9 @@ export const getComplaintById: RequestHandler<
   { complaintId: string }
 > = async (req, res) => {
   try {
-    const complaint = await ComplaintService.getComplaintById(req.params.complaintId)
+    const complaint = await ComplaintService.getComplaintById(
+      req.params.complaintId
+    )
 
     if (!complaint) {
       res.status(404).json({ message: 'Complaint not found' })
@@ -97,6 +98,26 @@ export const getComplaintsByCompany: RequestHandler<
   })
 }
 
+export const getDetailsComplaintsByCompany: RequestHandler<
+  { companyId: string },
+  Paginator<Complaint>,
+  NoRecord,
+  NoRecord
+> = async (req, res) => {
+  const { companyId } = req.params
+  const params = {
+    start: req.query.start || 0,
+    pageSize: req.query.pageSize || 10,
+    companyId: companyId,
+  }
+  const complaint = await ComplaintService.getComplaintsByCompany(params)
+  res.json({
+    rows: complaint.rows,
+    start: params.start,
+    pageSize: params.pageSize,
+    total: complaint.count,
+  })
+}
 
 /**
  * @brief
@@ -135,7 +156,6 @@ export const getComplaintByUser: RequestHandler<
   }
 }
 
-
 /**
  * @brief
  * Función del controlador que agrega una complaint a la base de datos
@@ -149,10 +169,23 @@ export const getComplaintByUser: RequestHandler<
 
 export const addComplaint: RequestHandler = async (req, res) => {
   try {
-    const { userId, companyId, complaintSubject, complaintDescription, complaintStatus } = req.body
+    const {
+      userId,
+      companyId,
+      complaintSubject,
+      complaintDescription,
+      complaintStatus,
+    } = req.body
 
-    if (!userId || !companyId || !complaintSubject || !complaintDescription || !complaintStatus) {
-      return res.status(400).json({ complaintId: '', error: 'Missing required data!' })
+    if (
+      !userId ||
+      !companyId ||
+      !complaintSubject ||
+      !complaintStatus
+    ) {
+      return res
+        .status(400)
+        .json({ complaintId: '', error: 'Missing required data!' })
     }
 
     const newComplaint = await ComplaintService.addComplaint({
@@ -160,24 +193,26 @@ export const addComplaint: RequestHandler = async (req, res) => {
       companyId,
       complaintSubject,
       complaintDescription,
-      complaintStatus
+      complaintStatus,
     })
 
     if (!newComplaint) {
-      return res.status(500).json({ complaintId: '', error: 'Error creating complaint!' })
+      return res
+        .status(500)
+        .json({ complaintId: '', error: 'Error creating complaint!' })
     }
 
     return res.status(201).json({
       complaintId: newComplaint?.dataValues.complaintId,
-      message: 'Complaint created'
+      message: 'Complaint created',
     })
   } catch (error) {
     console.error(error)
-    res.status(500).json({ complaintId: '', error: 'Error creating complaint!' })
+    res
+      .status(500)
+      .json({ complaintId: '', error: 'Error creating complaint!' })
   }
 }
-
-
 
 /**
  * @brief
@@ -191,27 +226,29 @@ export const addComplaint: RequestHandler = async (req, res) => {
  */
 
 export const updateComplaintStatus: RequestHandler<
-  { complaintId: string },
-  string,
-  { complaintStatus: typeof Complaint.prototype.complaintStatus },
-  NoRecord
+  NoRecord,
+  { message: string },
+  ComplaintService.ComplaintStatusType,
+  undefined
 > = async (req, res) => {
-  const { complaintId } = req.params
-  const { complaintStatus } = req.body
-  
-  if (!complaintId) {
-    res.status(400).json('Missing complaintId!')
-    return
+  const complaintId = req.body.complaintId
+  const complaintStatus = req.body.complaintStatus
+
+  if (
+    !(
+      complaintStatus == 'active' ||
+      complaintStatus == 'inactive' ||
+      complaintStatus == 'invalid'
+    )
+  ) {
+    return res.status(400).json({ message: 'Invalid status' })
   }
-  if (!complaintStatus) {
-    res.status(400).json('Missing status!')
-    return
-  }
+
   try {
     await ComplaintService.updateComplaintStatus(complaintId, complaintStatus)
-    res.status(200).send('Updated complaint status')
+    res.status(200).json({ message: 'Complaint updated' })
   } catch (error) {
     console.log(error)
-    res.status(500).send('Error')
+    res.status(500).json({ message: 'Error' })
   }
 }
