@@ -139,7 +139,7 @@ class CatalogueFilterModal(private val viewModel: CatalogueViewModel) : DialogFr
             window?.attributes = params
 
             val width = 325.dpToPx(requireContext())
-            val height = 500.dpToPx(requireContext())
+            val height = 525.dpToPx(requireContext())
 
             dialog.window?.setLayout(width, height)
 
