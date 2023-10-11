@@ -12,7 +12,7 @@ type QuestionWrapperProps = {
   questions: Question[]
   id: number
   setQuestions: React.Dispatch<React.SetStateAction<Question[]>>
-  survey: React.Dispatch<React.SetStateAction<CreateSurveyBody>>
+  survey: CreateSurveyBody
   setSurvey: React.Dispatch<React.SetStateAction<CreateSurveyBody>>
 }
 export const QuestionWrapper = ({

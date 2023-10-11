@@ -7,7 +7,7 @@ import { CreateSurveyBody } from '../../../app/encuestas/crear/page'
  * El tipo de las props
  */
 export type MulOPQuestionProps = {
-  survey: React.Dispatch<React.SetStateAction<CreateSurveyBody>>
+  survey: CreateSurveyBody
   setSurvey: React.Dispatch<React.SetStateAction<CreateSurveyBody>>
 }
 

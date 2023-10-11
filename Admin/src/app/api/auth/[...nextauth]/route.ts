@@ -3,7 +3,7 @@ import { SERVER_BASE_URL } from '@/utils/constants'
 import nextAuth from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import { refreshTokenResponse, refreshTokens } from '@/utils/sessionHooks'
+import { refreshTokenResponse } from '@/utils/sessionHooks'
 import axios from 'axios'
 
 const handler = nextAuth({
@@ -53,7 +53,8 @@ const handler = nextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async signIn(user) {
-      if (user.user.login_type == 'none') return '/notAllowed'
+      if (user.user.login_type == 'none') return '/notRegistered'
+      if (user.user.roles != 'admin') return '/notAllowed'
       return true
     },
     async jwt({ token, account, user }) {

@@ -35,7 +35,7 @@ export default function Navbar() {
     }
   }, [])
 
-  if (pathname == '/login' || pathname == '/notAllowed') {
+  if (pathname == '/login' || pathname == '/notAllowed' || pathname == '/notRegistered') {
     return <></>
   }
 
