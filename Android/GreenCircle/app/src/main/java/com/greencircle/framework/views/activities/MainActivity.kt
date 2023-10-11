@@ -39,10 +39,11 @@ class MainActivity : AppCompatActivity() {
      *
      * @param fragment El fragmento que se va a mostrar.
      */
-    fun replaceFragment(fragment: Fragment) {
+    fun replaceFragment(fragment: Fragment, tag: String) {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.frame_layout, fragment)
+            .addToBackStack(tag).replace(R.id.frame_layout, fragment)
+
         fragmentTransaction.commit()
     }
 
@@ -63,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         topBarBinding = TopBarBinding.bind(binding.root)
-        replaceFragment(HomeFragment())
+        replaceFragment(HomeFragment(), "HomeFragment")
 
         topBarBinding.title.text = "EcoInfo"
         bottomNavigationView = binding.bottomNaSvigation
@@ -71,30 +72,60 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.ecoInfo -> {
-                    replaceFragment(HomeFragment())
+                    replaceFragment(HomeFragment(), "EcoInfoFragment")
                     topBarBinding.title.text = "EcoInfo"
                     true
                 }
 
                 R.id.proveedores -> {
-                    replaceFragment(CatalogueFragment())
+                    replaceFragment(CatalogueFragment(), "CatalogueFragment")
                     topBarBinding.title.text = "Catálogo de Proveedores"
                     true
                 }
 
                 R.id.mapa -> {
-                    replaceFragment(MapFragment())
+                    replaceFragment(MapFragment(), "MapFragment")
                     topBarBinding.title.text = "Mapa Proveedores"
                     true
                 }
 
                 R.id.perfil -> {
-                    replaceFragment(ProfileFragment())
+                    replaceFragment(ProfileFragment(), "ProfileFragment")
                     topBarBinding.title.text = "Perfil"
                     true
                 }
 
                 else -> false
+            }
+        }
+    }
+
+    /**
+     * Método llamado cuando se presiona el botón de retroceso.
+     *
+     * Esta función se utiliza para controlar el comportamiento del botón de retroceso
+     * en la actividad principal de la aplicación
+     *
+     * Si el fragmento actual es [HomeFragment], se finaliza la actividad.
+     * Si el fragmento actual es [CatalogueFragment], [MapFragment] o [ProfileFragment],
+     * se reemplaza el fragmento actual con [HomeFragment].
+     */
+    override fun onBackPressed() {
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.frame_layout)
+
+        when (currentFragment) {
+            is HomeFragment -> {
+                finish()
+            }
+
+            is CatalogueFragment, is MapFragment, is ProfileFragment -> {
+                replaceFragment(HomeFragment(), "HomeFragment")
+                topBarBinding.title.text = "EcoInfo"
+                bottomNavigationView.selectedItemId = R.id.ecoInfo
+            }
+
+            else -> {
+                onBackPressedDispatcher.onBackPressed()
             }
         }
     }

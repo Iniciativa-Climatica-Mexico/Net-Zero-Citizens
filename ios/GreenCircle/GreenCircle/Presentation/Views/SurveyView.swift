@@ -56,7 +56,7 @@ struct SurveyView: View {
     }
     .onAppear {
       Task {
-        print(await vm.getPendingSurvey())
+        await vm.getPendingSurvey()
       }
     }
     .onTapGesture {

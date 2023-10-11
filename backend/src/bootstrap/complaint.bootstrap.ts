@@ -49,7 +49,7 @@ export default class ComplaintBootstrap extends Bootstrapper {
         companyId: 'c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
         complaintSubject: 'Comportamiento Inapropiado',
         complaintDescription:
-          'El vendedor me insultóoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo',
+          'El vendedor me insultóooooo ooooooooooo oooooooooo ooooooooooooooo oooooooooooo oooooooo oooooooo ooooooooo oooooooooo ooooooo',
         complaintStatus: 'active',
       },
     ])
