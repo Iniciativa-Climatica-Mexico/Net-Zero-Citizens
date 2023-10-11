@@ -57,7 +57,7 @@ data class Companies(
     @SerializedName("updatedAt") val updatedAt: Timestamp,
     @SerializedName("profilePicture") val profilePicture: String? = null,
     @SerializedName("products") val products: ArrayList<Product>? = arrayListOf(),
-    @SerializedName("files") val files: ArrayList<CompanyFile>? = arrayListOf(),
+    @SerializedName("files") val files: List<CompanyFile> = arrayListOf(),
     @SerializedName("images") val companyImages: List<CompanyImages>? = listOf(),
     @SerializedName("score") val rating: Float? = null,
     @SerializedName("oneComment") val oneComment: String? = null,
