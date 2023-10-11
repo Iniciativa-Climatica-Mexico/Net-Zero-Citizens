@@ -492,6 +492,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node-cron@npm:^3.0.9":
+  version: 3.0.9
+  resolution: "@types/node-cron@npm:3.0.9"
+  checksum: 8335eb0a453b956cc2da5431269e4732e0063c6cca0763cf779c7c242d0dfe3eea1929951a0b11fb9e7a2eee838836ee8cda79e9d6098b1bee91d5a17dce1e73
+  languageName: node
+  linkType: hard
+  
 "@types/node-fetch@npm:^2":
   version: 2.6.6
   resolution: "@types/node-fetch@npm:2.6.6"
@@ -4199,6 +4206,15 @@ eslint-config-standard-with-typescript@latest:
   languageName: node
   linkType: hard
 
+"node-cron@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "node-cron@npm:3.0.2"
+  dependencies:
+    uuid: 8.3.2
+  checksum: dd21585c0d4069a0752022dad9b8380a4393c4783ec78355ffa99ff32b018c3743a35d4ebf9d7c7863949e94e302b440f58c884eb4960e71c7260d817e2d3f25
+  languageName: node
+  linkType: hard
+
 "node-fetch@npm:^2.6.0, node-fetch@npm:^2.6.7, node-fetch@npm:^2.6.9":
   version: 2.7.0
   resolution: "node-fetch@npm:2.7.0"
@@ -6155,6 +6171,15 @@ eslint-config-standard-with-typescript@latest:
   languageName: node
   linkType: hard
 
+"yarn@npm:^1.22.19":
+  version: 1.22.19
+  resolution: "yarn@npm:1.22.19"
+  bin:
+    yarn: bin/yarn.js
+    yarnpkg: bin/yarn.js
+  checksum: b43d2cc5fee7e933beb12a8aee7dfceca9e9ef2dd17c5d04d15a12ab7bec5f5744ea34a07b86e013da7f291a18c4e1ad8f70e150f5ed2f4666e6723c7f0a8452
+  languageName: node
+  linkType: hard
 "yn@npm:3.1.1":
   version: 3.1.1
   resolution: "yn@npm:3.1.1"
