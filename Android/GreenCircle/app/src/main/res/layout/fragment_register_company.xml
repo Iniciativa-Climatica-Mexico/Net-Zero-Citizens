@@ -216,19 +216,6 @@
             android:gravity="center"
             android:orientation="vertical"
             android:layout_marginTop="30dp">
-
-            <View
-                android:layout_width="300dp"
-                android:layout_height="1dp"
-                android:background="#B7B7B8" />
-
-            <Button
-                android:id="@+id/textButton"
-                style="@style/Widget.Material3.Button.TextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Aviso de privacidad"
-                android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
