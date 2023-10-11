@@ -10,7 +10,7 @@ import Foundation
 
 /// Clase representando la estructura de la API para las compañías
 class CompanyAPI {
-  static let base = "http://localhost:4000/api/v1/company"
+  static let base = APIRoutes.Company.base
   struct Routes {
     static let create = "/create"
     static let company = "/company/"
@@ -91,6 +91,12 @@ class CompanyRepository: CompanyRepositoryProtocol {
   func fetchAllCompanies() async -> PaginatedQuery<Company>? {
     return await service
       .getRequest(URL(string: "\(CompanyAPI.base)")!)
+  }
+  
+  func fetchFilteredCompanies(order: String, product: String, state: String) async -> PaginatedQuery<Company>? {
+    let params = ["ordering": order, "state": state, "productName": product]
+    
+    return await service.getRequest(URL(string: "\(CompanyAPI.base)")!, params: params)
   }
   
 }

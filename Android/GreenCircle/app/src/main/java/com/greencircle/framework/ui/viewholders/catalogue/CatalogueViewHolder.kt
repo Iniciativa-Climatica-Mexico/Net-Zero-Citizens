@@ -1,6 +1,7 @@
 package com.greencircle.framework.ui.viewholders.catalogue
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.greencircle.R
@@ -49,7 +50,19 @@ class CatalogueViewHolder(private val binding: CatalogueCardLayoutBinding) :
     private fun passViewGoToCompanyDetail(bundle: Bundle) {
         val companyContactFragment = CompanyContactFragment()
         companyContactFragment.arguments = bundle
+        replaceFragment(companyContactFragment, "CompanyContactFragment")
+    }
+
+    /**
+     * Esta función se utiliza para reemplazar el fragmento actual con el fragmento
+     * de contacto de la empresa
+     * @param fragment: Objeto Fragment
+     * @param tag: Objeto String
+     */
+    private fun replaceFragment(fragment: Fragment, tag: String) {
         val activity = binding.root.context as MainActivity
-        activity.replaceFragment(companyContactFragment)
+        val CompanyContactFragment = CompanyContactFragment()
+
+        activity.replaceFragment(fragment, tag)
     }
 }

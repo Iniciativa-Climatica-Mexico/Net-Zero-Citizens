@@ -21,7 +21,7 @@ const testData = [
   },
 ]
 
-const attributesToExclude = ['createdAt', 'updatedAt']
+const attributesToExclude = ['createdAt', 'updatedAt', 'company']
 
 beforeEach(async () => {
   await db.drop()
@@ -43,9 +43,9 @@ describe('Favourite Service', () => {
   })
 
   it('should return row affected when deleting', async () => {
-    const response = await FavouriteService.addFavourite(newFavourite)
     const responseRowAffected = await FavouriteService.deleteFavouriteById(
-      response?.get().favouriteId
+      'a2c0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e',
+      '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9'
     )
     expect(responseRowAffected).equal(1)
   })

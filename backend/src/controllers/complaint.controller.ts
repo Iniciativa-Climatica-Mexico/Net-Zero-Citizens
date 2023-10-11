@@ -182,7 +182,6 @@ export const addComplaint: RequestHandler = async (req, res) => {
       !userId ||
       !companyId ||
       !complaintSubject ||
-      !complaintDescription ||
       !complaintStatus
     ) {
       return res

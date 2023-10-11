@@ -54,14 +54,15 @@ export const getFavouriteById = async (
  */
 
 export const deleteFavouriteById = async (
-  favouriteId: string
+  companyId: string,
+  userId: string
 ): Promise<number> => {
-  const favourite = await getFavouriteById(favouriteId)
-  if (favourite) {
+  try {
     return await Favourite.destroy({
-      where: { favouriteId: favourite.favouriteId },
+      where: { companyId: companyId,
+        userId: userId },
     })
-  } else {
+  } catch {
     throw new Error('Favourite not found')
   }
 }
@@ -85,5 +86,12 @@ export const getAllFavouritesByUser = async (
     where: {
       userId: userId,
     },
+    include: [
+      {
+        model: Company,
+        as: 'company',
+      },
+    ],
+    order: [['company','name','ASC']]
   })
 }
