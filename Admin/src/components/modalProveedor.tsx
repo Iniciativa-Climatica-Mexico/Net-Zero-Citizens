@@ -142,7 +142,10 @@ export default function ModalProveedor({
 
   const sendEmail = (e:HTMLFormElement) => {
     e.preventDefault()
-    emailjs.sendForm('service_icm2023', 'template_vjx2ic3', form.current, 'LSXaN-F4jhFZ5mzIt')
+
+    if(process.env.EMAILJS_SERVICE_ID == undefined || process.env.EMAILJS_TEMPLATE_ID == undefined || process.env.EMAILJS_USER_ID == undefined) return
+
+    emailjs.sendForm(process.env.EMAILJS_SERVICE_ID, process.env.EMAILJS_TEMPLATE_ID, form.current, process.env.EMAILJS_USER_ID)
       .then((result) => {
         console.log(result.text)
       }).catch((error) => {
