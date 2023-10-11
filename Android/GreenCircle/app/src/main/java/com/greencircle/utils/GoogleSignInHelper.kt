@@ -71,7 +71,7 @@ class GoogleSignInHelper(
 
             CommonStatusCodes.INVALID_ACCOUNT -> showToast(
                 "La cuenta proporcionada parece ser inválida." +
-                        "Por favor, elige una cuenta de Google válida"
+                    "Por favor, elige una cuenta de Google válida"
             )
 
             CommonStatusCodes.SIGN_IN_REQUIRED -> showToast(
@@ -84,7 +84,7 @@ class GoogleSignInHelper(
 
             CommonStatusCodes.TIMEOUT -> showToast(
                 "No pudimos conectarnos a nuestros servidores." +
-                        "Por favor, verifica tu conexión a internet y vuelve a intentarlo."
+                    "Por favor, verifica tu conexión a internet y vuelve a intentarlo."
             )
 
             CommonStatusCodes.CANCELED -> showToast(

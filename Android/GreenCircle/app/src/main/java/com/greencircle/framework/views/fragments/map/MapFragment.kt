@@ -45,8 +45,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_map, container, false)
 
-        val mapFragment = childFragmentManager.findFragmentById(R.id.mapFragment)
-                as SupportMapFragment
+        val mapFragment =
+            childFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
         getCompanyList()
