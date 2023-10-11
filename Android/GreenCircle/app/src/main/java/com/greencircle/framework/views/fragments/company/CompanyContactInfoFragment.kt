@@ -41,12 +41,7 @@ class CompanyContactInfoFragment : Fragment() {
     * Se encarga de bindear los datos de contacto de la empresa
      */
     fun bindCompanyContactInfo() {
-        val webPage = arguments?.getString("WebPage")
-        if (webPage.isNullOrEmpty()) {
-            binding.LLWP.visibility = View.GONE
-        } else {
-            binding.TVWPValue.text = webPage
-        }
+        binding.TVWPValue.text = arguments?.getString("WebPage")
         binding.TVEmailValue.text = arguments?.getString("Email")
         binding.TVPhoneValue.text = arguments?.getString("Phone")
         binding.TVAddressValue.text = arguments?.getString("Direction")
