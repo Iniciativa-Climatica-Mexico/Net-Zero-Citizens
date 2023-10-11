@@ -93,4 +93,10 @@ class CompanyRepository: CompanyRepositoryProtocol {
       .getRequest(URL(string: "\(CompanyAPI.base)")!)
   }
   
+  func fetchFilteredCompanies(order: String, product: String, state: String) async -> PaginatedQuery<Company>? {
+    let params = ["ordering": order, "state": state, "productName": product]
+    
+    return await service.getRequest(URL(string: "\(CompanyAPI.base)")!, params: params)
+  }
+  
 }

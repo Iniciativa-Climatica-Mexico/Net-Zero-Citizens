@@ -10,7 +10,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         name: 'SUNPOWER',
         oneComment: 'This is a comment',
         description: 'Más potencia en condiciones del mundo real',
-        email: 'contact@sunpower.com',
+        email: 'jn7924@gmail.com',
         phone: '8453728592',
         webPage: 'https://www.sunpower.com',
         street: 'Las Lomas Verdes',
