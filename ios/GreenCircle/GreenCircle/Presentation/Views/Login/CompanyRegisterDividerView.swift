@@ -10,7 +10,6 @@ import SwiftUI
 
 struct CompanyRegisterDividerView: View {
   var goUploadCompanyFiles: (Binding<Bool>, Binding<Bool>) -> Void
-  
   @Binding var photovoltaicToggle: Bool
   @Binding var solarToggle: Bool
   @State private var showAlert: Bool = false
@@ -49,19 +48,14 @@ struct CompanyRegisterDividerView: View {
           }.foregroundColor(Color("GreenCustom"))
             .frame(maxWidth: 255).padding()
         }
-
-        
       }.frame(maxWidth: .infinity, alignment: .center)
 
       Spacer()
       HStack {
         Spacer()
         MainButton("Continuar", action: {
-            if photovoltaicToggle || solarToggle
-            || (photovoltaicToggle && solarToggle) {
-              goUploadCompanyFiles(
-                $photovoltaicToggle,
-                $solarToggle)
+            if photovoltaicToggle || solarToggle {
+              goUploadCompanyFiles($photovoltaicToggle, $solarToggle)
             } else {
               showAlert = true
             }

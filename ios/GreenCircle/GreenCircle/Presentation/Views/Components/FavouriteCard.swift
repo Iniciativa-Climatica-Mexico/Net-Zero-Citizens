@@ -36,7 +36,7 @@ struct FavouriteCardView: View {
             .font(.system(size: 22))
         }.padding(EdgeInsets(top: 5, leading: 15, bottom: 0, trailing: 10))
         HStack {
-          AsyncImage(url: URL(string: companyViewModel.contentCompany.images?.first?.imageUrl ?? "")) { phase in
+          AsyncImage(url: URL(string: companyViewModel.contentCompany.files?.first?.fileUrl ?? "")) { phase in
             switch phase {
               case .empty:
                 Image(systemName: "square.fill")
