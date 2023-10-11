@@ -47,11 +47,6 @@ class UserRegisterUseCase {
     return await repository.fetchUserById(userId: id)
   }
   
-//  @MainActor
-//  func execute(updatedUserData: User, userId: String) async -> User? {
-//    return await repository.updateUserData(updatedUserData: updatedUserData, userId: userId)
-//  }
-  
   @MainActor
   func updateCredentials(userId: String, newUserCredentials: Credentials) async -> User? {
     return await repository.updateUserCredentials(userId: userId, newUserCredentials: newUserCredentials)
