@@ -59,7 +59,7 @@ struct CatalogView: View {
           }
         }
       }
-      .accentColor(.white)
+       .accentColor(.white)
     }
     .onChange(of: viewModel.filteredCompanies) { filteredCompanies in
       isFilteringEmpty = filteredCompanies.isEmpty
