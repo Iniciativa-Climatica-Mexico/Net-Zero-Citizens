@@ -1,5 +1,13 @@
 import { authAxios } from '../axios.config'
 
+export interface CompanyFiles {
+  companyFileId: string
+  companyId: string
+  fileUrl: string
+  fileDescription: string
+  fileFormat: string
+}
+
 export interface Company {
   companyId: string
   userId: string | null
@@ -16,12 +24,7 @@ export interface Company {
   description: string
   createdAt: string
   streetNumber: string
-  pdfCurriculumUrl: string
-  pdfDicCdmxUrl: string
-  pdfPeeFideUrl: string
-  pdfGuaranteeSecurityUrl: string
-  pdfActaConstitutivaUrl: string
-  pdfIneUrl: string
+  companyFiles: CompanyFiles[]
 }
 
 /**
@@ -33,6 +36,7 @@ export interface Company {
 export const getPendingCompanies = async () => {
   try {
     const response = await authAxios().get('/company/pending')
+    console.log(response.data.rows)
     return response.data.rows
   } catch (error) {
     console.error('Error fetching pending companies:', error)
