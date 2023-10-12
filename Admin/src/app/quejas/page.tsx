@@ -40,7 +40,6 @@ export default function Home() {
   const fetchCompaniesWithComplaints = async () => {
     try {
       const companies = await getCompaniesWithComplaints()
-      console.log(companies)
       setCompaniesWithComplaints(companies)
     } catch (error) {
       console.error('Fetch of complaints by company was not successful', error)
@@ -88,7 +87,7 @@ export default function Home() {
             </TableRow>
           )}
 
-          {companiesWithComplaints?.map((company) => (
+          {companiesWithComplaints.length>0 && companiesWithComplaints.map((company) => (
             <TableRow key={company.companyId}>
               <TableCell
                 className="cursor-pointer"

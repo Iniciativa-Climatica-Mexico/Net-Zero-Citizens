@@ -22,6 +22,25 @@ export const getCompaniesWithComplaints = async () => {
   }
 }
 
+export const getComplaintsWithUsers = async (companyId: string) => {
+  try {
+    const complaintsByCompany = await authAxios().get(
+      `/complaints/company/${companyId}`
+    )
+    const complaints = complaintsByCompany.data.rows
+    const complaintsWithUsers: ComplaintsWithUser[] = []
+    for (const complaint of complaints) {
+      const user = await authAxios().get(`/users/${complaint.userId}`)
+      complaintsWithUsers.push({ ...user.data, ...complaint })
+    }
+
+    return complaintsWithUsers
+  } catch (error) {
+    console.error('Error fetching companies with complaints:', error)
+    throw error
+  }
+}
+
 export const postUpdateStatus = async (
   complaintId: string,
   complaintStatus: string
