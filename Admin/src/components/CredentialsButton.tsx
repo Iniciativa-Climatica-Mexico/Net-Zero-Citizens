@@ -10,7 +10,7 @@ export const CredentialsButton = () => {
   return (
     <>
       <button
-        className="flex w-full justify-center gap-5 rounded bg-white px-4 text-sm font-bold drop-shadow-md hover:bg-gray-50 h-12 items-center rounded-4xl"
+        className="bg-primary-base flex w-full justify-center gap-5 rounded text-white px-4 text-sm font-bold drop-shadow-md hover:bg-[#345561] h-12 items-center rounded-4xl"
         onClick={() => setIsOpen(true)}
       >
         <span>Iniciar Sesión</span>
