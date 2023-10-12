@@ -12,26 +12,10 @@ import type { ComplaintsWithUser } from '@/@types/complaint/complaint'
 
 export const getCompaniesWithComplaints = async () => {
   try {
-    const approvedCompanies = await authAxios().get('/company/approved')
+    const approvedCompaniesWithComplaints = await authAxios().get('/company/approved/complaints')
+    const companies = approvedCompaniesWithComplaints.data
 
-    const companies: Company[] = approvedCompanies.data.rows
-    const companiesWithComplaints: CompanyComplaints[] = []
-
-    for (const company of companies) {
-      const companyComplaints = await authAxios().get(
-        `/complaints/company/${company.companyId}`
-      )
-      const numberComplaints = companyComplaints.data.rows.length
-      if (numberComplaints > 0) {
-        companiesWithComplaints.push({
-          ...company,
-          numberComplaints: numberComplaints,
-          complaints: companyComplaints.data.rows,
-        })
-      }
-    }
-
-    return companiesWithComplaints
+    return companies
   } catch (error) {
     console.error('Error fetching companies with complaints:', error)
     throw error
