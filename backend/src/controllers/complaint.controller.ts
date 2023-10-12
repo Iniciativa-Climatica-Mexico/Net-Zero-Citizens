@@ -168,6 +168,7 @@ export const getComplaintByUser: RequestHandler<
  */
 
 export const addComplaint: RequestHandler = async (req, res) => {
+  console.log('Data received in request body:', req.body)
   try {
     const {
       userId,
@@ -181,7 +182,6 @@ export const addComplaint: RequestHandler = async (req, res) => {
       !userId ||
       !companyId ||
       !complaintSubject ||
-      !complaintDescription ||
       !complaintStatus
     ) {
       return res

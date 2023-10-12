@@ -71,6 +71,7 @@ struct CoordinatorView: View {
         
       case .uploadCompanyFiles:
         CompanyUploadFilesView(goPending: goPending,
+                               goBack: goBack,
                                photovoltaicToggle: $photovoltaicToggle,
                                solarToggle: $solarToggle)
         

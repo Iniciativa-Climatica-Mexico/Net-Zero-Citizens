@@ -6,8 +6,8 @@ import { Lato } from 'next/font/google'
 const lato = Lato({ weight: ['400', '700'], subsets: ['latin-ext'] })
 
 export const metadata: Metadata = {
-  title: 'Net Zero',
-  description: 'Iniciativa climática',
+  title: 'Green Circle App - Iniciativa Climática de México',
+  description: 'Iniciativa Climática de México',
 }
 
 export default function RootLayout({

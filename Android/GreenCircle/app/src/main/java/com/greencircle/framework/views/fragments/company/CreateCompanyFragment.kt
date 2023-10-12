@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -15,6 +16,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.greencircle.R
 import com.greencircle.data.remote.company.CompanyAPIService
 import com.greencircle.domain.model.company.Company
+import com.greencircle.domain.model.company.files.CompanyFile
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.company.CreateCompanyViewModel
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
@@ -27,8 +29,9 @@ import java.util.UUID
  * @constructor Incializa y crea la vista del "CreateCompanyFragment"
  */
 class CreateCompanyFragment : Fragment() {
-    private lateinit var viewModel: CreateCompanyViewModel
     private var arguments = Bundle()
+    private var companyId: String? = null
+    private lateinit var viewModel: CreateCompanyViewModel
     private lateinit var authToken: String
     private lateinit var uuid: UUID
     private lateinit var nameInputLayout: TextInputLayout
@@ -159,11 +162,39 @@ class CreateCompanyFragment : Fragment() {
             // Handle the result here
             if (result != null && result.tokens != null) {
                 authToken = result.tokens.authToken
+                arguments.putString("authToken", authToken)
                 uuid = result.user.uuid
             } else {
                 Log.d("CreateCompanyFragment", "Google login failed")
             }
         }
+        viewModel.error.observe(viewLifecycleOwner) { error ->
+            try {
+                if (error) {
+                    Toast.makeText(
+                        requireContext(), "Error al crear nueva empresa", Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        requireContext(), "Empresa creada correctamente", Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(
+                    requireContext(), "Error al crear nueva empresa", Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+        viewModel.createCompanyResult.observe(viewLifecycleOwner) { result ->
+            // Handle the result here
+            if (result != null) {
+                companyId = result.companyId
+                arguments.putString("companyId", companyId)
+                nextFragment(arguments)
+            }
+        }
+
         setSwitch(view.findViewById(R.id.avisoPrivacidad))
     }
 
@@ -212,7 +243,8 @@ class CreateCompanyFragment : Fragment() {
         val zipCode = zipCodeInputLayout.editText?.text.toString()
 
         // Send the data to the backend
-        val companyData: Company = Company(
+        val files = emptyList<CompanyFile>()
+        val companyData = Company(
             uuid,
             name,
             description,
@@ -224,10 +256,7 @@ class CreateCompanyFragment : Fragment() {
             city,
             state,
             zipCode,
-            "test1",
-            "test2",
-            "test3",
-            "test4"
+            files
         )
 
         val createCompanyRequest = CompanyAPIService.CreateCompanyRequest(companyData)
@@ -235,7 +264,6 @@ class CreateCompanyFragment : Fragment() {
         val validation: Boolean = validateForm(view)
         if (validation) {
             viewModel.createCompany(createCompanyRequest)
-            nextFragment()
         }
     }
 

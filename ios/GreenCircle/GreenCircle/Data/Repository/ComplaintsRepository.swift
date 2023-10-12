@@ -9,7 +9,7 @@ import Foundation
 
 /// Class representing the structure of the API for complaints
 class ComplaintAPI {
-  static let base = "http://localhost:4000/api/v1/complaints"
+  static let base = APIRoutes.Complaint.base
   struct Routes {
     //static let create = "/:userId/:companyId"
     static let create = "/create"
@@ -19,7 +19,7 @@ class ComplaintAPI {
 /// Protocol with the functions of the complaints repository
 protocol ComplaintRepositoryProtocol {
   func postComplaint(complaint: PostComplaintData) async
-    func fetchComplaintById(complaintId: UUID) async -> Complaint?
+    func fetchComplaintById(complaintId: String) async -> Complaint?
   // You can add more functions here if you like.
 }
 
@@ -38,11 +38,8 @@ class ComplaintRepository: ComplaintRepositoryProtocol {
     /// Fetch complaint by UUID by calling the method of the backend service
     /// - Parameters: UUID of the complaint
     /// - Returns: Complaint model
-    func fetchComplaintById(complaintId: UUID) async -> Complaint? {
-        return await service
-            .getRequest(URL(string:
-                                "\(ComplaintAPI.base)/\(complaintId.uuidString.lowercased())")!)
-    }
+    func fetchComplaintById(complaintId: String) async -> Complaint? {
+      return await service.getRequest(URL(string: "\(ComplaintAPI.base)/\(complaintId.lowercased())")!)    }
     
     /// Function that calls the connection service with the API to post a new complaint
     /// - Parameters:
@@ -50,16 +47,14 @@ class ComplaintRepository: ComplaintRepositoryProtocol {
     ///   - complaint: the object with the information of the complaint
     func postComplaint(complaint: PostComplaintData) async {
         let userId = uRepositoty.getAuthData()!.user.uuid
-        //Hacerla no hardcodeada
         
         let body: [String: Any] = [
-            "complaint": [
+                "complaintId": complaint.complaintId,
                 "userId": userId,
                 "companyId": complaint.companyId.lowercased(),
                 "complaintSubject": complaint.complaintSubject,
                 "complaintDescription": complaint.complaintDescription ?? "",
                 "complaintStatus": "active"
-            ] as [String : Any]
         ]
         
         do {

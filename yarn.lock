@@ -8,9 +8,9 @@
   integrity sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==
 
 "@babel/runtime@^7.20.13":
-  version "7.22.15"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.22.15.tgz#38f46494ccf6cf020bd4eed7124b425e83e523b8"
-  integrity sha512-T0O+aa+4w0u06iNmapipJXMV4HoUir03hpx3/YqXXhu9xim3w+dVphjFWl1OH8NbZHw5Lbm9k45drDkgq2VNNA==
+  version "7.23.2"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.23.2.tgz#062b0ac103261d68a966c4c7baf2ae3e62ec3885"
+  integrity sha512-mM8eg4yl5D6i3lu2QKPuPH4FArvJ8KhTofbE7jwMUv9KX5mBvwPAqnV3MlyBNqdp9RyRKP6Yck8TrfYrPvX3bg==
   dependencies:
     regenerator-runtime "^0.14.0"
 
@@ -200,11 +200,6 @@ fsevents@~2.3.2:
   resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.3.tgz#cac6407785d03675a2a5e1a5305c697b347d90d6"
   integrity sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==
 
-function-bind@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
-  integrity sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==
-
 glob-parent@^5.1.2, glob-parent@~5.1.2:
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-5.1.2.tgz#869832c58034fe68a4093c17dc15e8340d8401c4"
@@ -232,11 +227,9 @@ glob@7.1.6:
     path-is-absolute "^1.0.0"
 
 has@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/has/-/has-1.0.3.tgz#722d7cbfc1f6aa8241f16dd814e011e1f41e8796"
-  integrity sha512-f2dvO0VU6Oej7RkWJGrehjbzMAjFp5/VKPp5tTpWIV4JHHZK1/BxbFRtf/siA2SWTe09caDmVtYYzWEIbBS4zw==
-  dependencies:
-    function-bind "^1.1.1"
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/has/-/has-1.0.4.tgz#2eb2860e000011dae4f1406a86fe80e530fb2ec6"
+  integrity sha512-qdSAmqLF6209RFj4VVItywPMbm3vWylknmB3nvNiUIs72xAimcM8nVYxYr7ncvZq5qzk9MKIZR8ijqD/1QuYjQ==
 
 husky@^8.0.3:
   version "8.0.3"
@@ -292,10 +285,10 @@ jiti@^1.18.2:
   resolved "https://registry.yarnpkg.com/jiti/-/jiti-1.20.0.tgz#2d823b5852ee8963585c8dd8b7992ffc1ae83b42"
   integrity sha512-3TV69ZbrvV6U5DfQimop50jE9Dl6J8O1ja1dvBbMba/sZ3YBEQqJ2VZRoQPVnhlzjNtU1vaXRZVrVjU4qtm8yA==
 
-jose@^4.11.4, jose@^4.14.4:
-  version "4.14.6"
-  resolved "https://registry.yarnpkg.com/jose/-/jose-4.14.6.tgz#94dca1d04a0ad8c6bff0998cdb51220d473cc3af"
-  integrity sha512-EqJPEUlZD0/CSUMubKtMaYUOtWe91tZXTWMJZoKSbLk+KtdhNdcvppH8lA9XwVu2V4Ailvsj0GBZJ2ZwDjfesQ==
+jose@^4.11.4, jose@^4.15.1:
+  version "4.15.3"
+  resolved "https://registry.yarnpkg.com/jose/-/jose-4.15.3.tgz#92fdac3ff0f345aab103211fc90b58f187fcdceb"
+  integrity sha512-RZJdL9Qjd1sqNdyiVteRGV/bnWtik/+PJh1JP4kT6+x1QQMn+7ryueRys5BEueuayvSVY8CWGCisCDazeRLTuw==
 
 lilconfig@^2.0.5, lilconfig@^2.1.0:
   version "2.1.0"
@@ -349,9 +342,9 @@ nanoid@^3.3.6:
   integrity sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==
 
 next-auth@^4.23.1:
-  version "4.23.1"
-  resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-4.23.1.tgz#7a82f5327cf4c7e32819da4eb977f2251a23c3cf"
-  integrity sha512-mL083z8KgRtlrIV6CDca2H1kduWJuK/3pTS0Fe2og15KOm4v2kkLGdSDfc2g+019aEBrJUT0pPW2Xx42ImN1WA==
+  version "4.23.2"
+  resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-4.23.2.tgz#6a93ec8bb59890dd43ed149a367852c7d12d0f7c"
+  integrity sha512-VRmInu0r/yZNFQheDFeOKtiugu3bt90Po3owAQDnFQ3YLQFmUKgFjcE2+3L0ny5jsJpBXaKbm7j7W2QTc6Ye2A==
   dependencies:
     "@babel/runtime" "^7.20.13"
     "@panva/hkdf" "^1.0.2"
@@ -401,11 +394,11 @@ once@^1.3.0:
     wrappy "1"
 
 openid-client@^5.4.0:
-  version "5.5.0"
-  resolved "https://registry.yarnpkg.com/openid-client/-/openid-client-5.5.0.tgz#0c631b33c6a2c3e01197506978d6bff70e75c858"
-  integrity sha512-Y7Xl8BgsrkzWLHkVDYuroM67hi96xITyEDSkmWaGUiNX6CkcXC3XyQGdv5aWZ6dukVKBFVQCADi9gCavOmU14w==
+  version "5.6.1"
+  resolved "https://registry.yarnpkg.com/openid-client/-/openid-client-5.6.1.tgz#8f7526a50c290a5e28a7fe21b3ece3107511bc73"
+  integrity sha512-PtrWsY+dXg6y8mtMPyL/namZSYVz8pjXz3yJiBNZsEdCnu9miHLB4ELVC85WvneMKo2Rg62Ay7NkuCpM0bgiLQ==
   dependencies:
-    jose "^4.14.4"
+    jose "^4.15.1"
     lru-cache "^6.0.0"
     object-hash "^2.2.0"
     oidc-token-hash "^5.0.3"
@@ -485,9 +478,9 @@ postcss-value-parser@^4.0.0:
   integrity sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==
 
 postcss@^8.4.23:
-  version "8.4.30"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.30.tgz#0e0648d551a606ef2192a26da4cabafcc09c1aa7"
-  integrity sha512-7ZEao1g4kd68l97aWG/etQKPKq07us0ieSZ2TnFDk11i0ZfDW2AwKHYU8qv4MZKqN2fdBfg+7q0ES06UA73C1g==
+  version "8.4.31"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.31.tgz#92b451050a9f914da6755af352bdc0192508656d"
+  integrity sha512-PS08Iboia9mts/2ygV3eLpY5ghnUcfLV/EXTOW1E2qYxJKGGBUtNjN76FYHnMs36RmARn41bC0AZmn+rR0OVpQ==
   dependencies:
     nanoid "^3.3.6"
     picocolors "^1.0.0"
@@ -501,9 +494,9 @@ preact-render-to-string@^5.1.19:
     pretty-format "^3.8.0"
 
 preact@^10.6.3:
-  version "10.17.1"
-  resolved "https://registry.yarnpkg.com/preact/-/preact-10.17.1.tgz#0a1b3c658c019e759326b9648c62912cf5c2dde1"
-  integrity sha512-X9BODrvQ4Ekwv9GURm9AKAGaomqXmip7NQTZgY7gcNmr7XE83adOMJvd3N42id1tMFU7ojiynRsYnY6/BRFxLA==
+  version "10.18.1"
+  resolved "https://registry.yarnpkg.com/preact/-/preact-10.18.1.tgz#3b84bb305f0b05f4ad5784b981d15fcec4e105da"
+  integrity sha512-mKUD7RRkQQM6s7Rkmi7IFkoEHjuFqRQUaXamO61E6Nn7vqF/bo7EZCmSyrUnp2UWHw0O7XjZ2eeXis+m7tf4lg==
 
 pretty-format@^3.8.0:
   version "3.8.0"
@@ -535,9 +528,9 @@ regenerator-runtime@^0.14.0:
   integrity sha512-srw17NI0TUWHuGa5CFGGmhfNIeja30WMBfbslPNhf6JrqQlLN5gcrvig1oqPxiVaXb0oW0XRKtH6Nngs5lKCIA==
 
 resolve@^1.1.7, resolve@^1.22.2:
-  version "1.22.6"
-  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.22.6.tgz#dd209739eca3aef739c626fea1b4f3c506195362"
-  integrity sha512-njhxM7mV12JfufShqGy3Rz8j11RPdLy4xi15UurGJeoHLfJpVXKdh3ueuOqbYUcDZnffr6X739JBo5LzyahEsw==
+  version "1.22.8"
+  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.22.8.tgz#b6c87a9f2aa06dfab52e3d70ac8cde321fa5a48d"
+  integrity sha512-oKWePCxqpd6FlLvGV1VU0x7bkPmmCNolxzjMf4NczoDnQcIWrAF+cPtZn5i6n+RfD2d9i0tzpKnG6Yk168yIyw==
   dependencies:
     is-core-module "^2.13.0"
     path-parse "^1.0.7"

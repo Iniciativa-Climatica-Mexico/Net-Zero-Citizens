@@ -30,11 +30,12 @@ struct SurveyView: View {
         }
         .padding([.leading, .trailing], 22)
         
-        Button("Enviar", action: {
+        
+        MainButton("Enviar") {
           Task {
             await vm.handleSubmit()
           }
-        })
+        }
         .alert("Mensaje",
                isPresented: $vm.showAlert) {
           Button("Ok", role: .cancel){
@@ -56,7 +57,7 @@ struct SurveyView: View {
     }
     .onAppear {
       Task {
-        print(await vm.getPendingSurvey())
+        await vm.getPendingSurvey()
       }
     }
     .onTapGesture {

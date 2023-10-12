@@ -30,29 +30,31 @@
             android:textColor="@color/blue"
             android:textSize="30sp"
             android:textStyle="bold" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Regístrate para disfrutar de todos los beneficios de la aplicación."
-            android:textColor="@color/blue"
-            android:textSize="16sp"
-            android:layout_marginBottom="10dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Regístrate para disfrutar de todos los beneficios de la aplicación."
+            android:textColor="@color/blue"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
             android:text="Nunca te enviaremos anuncios ni compartiremos tus datos con nadie más."
             android:textColor="@color/blue"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="30dp"/>
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
             android:gravity="top"
-            android:orientation="vertical"
-            android:layout_marginBottom="10dp">
+            android:orientation="vertical">
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/user_first_name"
                 style="?attr/textInputOutlinedDenseStyle"
@@ -61,16 +63,16 @@
                 android:layout_marginBottom="10dp"
                 android:hint="Nombre *"
                 android:textColorHint="@color/gray_500"
+                app:boxBackgroundColor="@color/white"
                 app:boxStrokeColor="@color/blue"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/gray_500"
-                app:hintTextColor="@color/blue"
-                app:boxBackgroundColor="@color/white">
+                app:hintTextColor="@color/blue">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/gray_900"/>
+                    android:textColor="@color/gray_900" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -81,16 +83,16 @@
                 android:layout_marginBottom="10dp"
                 android:hint="Apellido Paterno *"
                 android:textColorHint="@color/gray_500"
+                app:boxBackgroundColor="@color/white"
                 app:boxStrokeColor="@color/blue"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/gray_500"
-                app:hintTextColor="@color/blue"
-                app:boxBackgroundColor="@color/white">
+                app:hintTextColor="@color/blue">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/gray_900"/>
+                    android:textColor="@color/gray_900" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -101,82 +103,82 @@
                 android:layout_marginBottom="10dp"
                 android:hint="Apellido Materno *"
                 android:textColorHint="@color/gray_500"
+                app:boxBackgroundColor="@color/white"
                 app:boxStrokeColor="@color/blue"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/gray_500"
-                app:hintTextColor="@color/blue"
-                app:boxBackgroundColor="@color/white">
+                app:hintTextColor="@color/blue">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/gray_900"/>
+                    android:textColor="@color/gray_900" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/user_email"
                 style="?attr/textInputOutlinedDenseStyle"
-                android:inputType="textEmailAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:hint="Email *"
+                android:inputType="textEmailAddress"
                 android:textColorHint="@color/gray_500"
+                app:boxBackgroundColor="@color/white"
                 app:boxStrokeColor="@color/blue"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/gray_500"
-                app:hintTextColor="@color/blue"
-                app:boxBackgroundColor="@color/white">
+                app:hintTextColor="@color/blue">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/gray_900"
-                    android:inputType="textEmailAddress"/>
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/gray_900" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/user_password"
                 style="?attr/textInputOutlinedDenseStyle"
-                android:inputType="textPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:hint="Contraseña *"
+                android:inputType="textPassword"
                 android:textColorHint="@color/gray_500"
-                app:boxStrokeColor="@color/blue"
-                app:endIconTint="@color/gray_500"
-                app:hintTextColor="@color/blue"
                 app:boxBackgroundColor="@color/white"
-                app:endIconMode="password_toggle">
+                app:boxStrokeColor="@color/blue"
+                app:endIconMode="password_toggle"
+                app:endIconTint="@color/gray_500"
+                app:hintTextColor="@color/blue">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/gray_900"
-                    android:inputType="textPassword"/>
+                    android:inputType="textPassword"
+                    android:textColor="@color/gray_900" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/user_confirm_password"
                 style="?attr/textInputOutlinedDenseStyle"
-                android:inputType="textPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:hint="Confirmar Contraseña *"
+                android:inputType="textPassword"
                 android:textColorHint="@color/gray_500"
-                app:boxStrokeColor="@color/blue"
-                app:endIconTint="@color/gray_500"
-                app:hintTextColor="@color/blue"
                 app:boxBackgroundColor="@color/white"
-                app:endIconMode="password_toggle">
+                app:boxStrokeColor="@color/blue"
+                app:endIconMode="password_toggle"
+                app:endIconTint="@color/gray_500"
+                app:hintTextColor="@color/blue">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/gray_900"
-                    android:inputType="textPassword"/>
+                    android:inputType="textPassword"
+                    android:textColor="@color/gray_900" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
@@ -195,40 +197,27 @@
 
             <TextView
                 style="@style/Widget.Material3.Button.TextButton"
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
                 android:text="O regístrate con"
                 android:textColor="@color/black"
-                android:textSize="14sp"
-                android:gravity="center"
-                android:layout_marginBottom="20dp"/>
+                android:textSize="14sp" />
 
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/sign_in_button"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"/>
+                android:layout_height="60dp" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:layout_marginTop="30dp"
             android:gravity="center"
-            android:orientation="vertical"
-            android:layout_marginTop="30dp">
-
-            <View
-                android:layout_width="300dp"
-                android:layout_height="1dp"
-                android:background="#B7B7B8" />
-
-            <Button
-                android:id="@+id/textButton"
-                style="@style/Widget.Material3.Button.TextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Aviso de privacidad"
-                android:textSize="12sp" />
-        </LinearLayout>
+            android:orientation="vertical"></LinearLayout>
     </LinearLayout>
 </LinearLayout>

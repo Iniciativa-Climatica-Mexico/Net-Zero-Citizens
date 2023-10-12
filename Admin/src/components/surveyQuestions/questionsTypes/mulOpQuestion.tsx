@@ -1,13 +1,13 @@
 import { MouseEventHandler, useState, MouseEvent } from 'react'
 import { useEffect } from 'react'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
-import { CreateSurveyBody } from '../../../app/encuestas/crear/page'
+import { CreateSurveyBody } from '@/api/v1/survey'
 
 /**
  * El tipo de las props
  */
 export type MulOPQuestionProps = {
-  survey: React.Dispatch<React.SetStateAction<CreateSurveyBody>>
+  survey: CreateSurveyBody
   setSurvey: React.Dispatch<React.SetStateAction<CreateSurveyBody>>
 }
 
@@ -55,12 +55,12 @@ export const MulOPQuestion = ({ setSurvey }: MulOPQuestionProps) => {
       const newSurvey = { ...prevSurvey }
       newSurvey.questions.map((question) => {
         if (question.questionType === 'multiple_choice') {
-          question.options = options.map((option) => option.textOption)
+          question.questionOptions = options
         }
         if (
-          question.options &&
-          question.options.length &&
-          question.options.length >= 2
+          question.questionOptions &&
+          question.questionOptions.length &&
+          question.questionOptions.length >= 2
         ) {
           const errorText = document.getElementById('noOpErrorText')
           if (errorText) {
