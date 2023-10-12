@@ -32,7 +32,6 @@ export default function Home() {
       companyId: '',
       name: '',
       profilePicture: '',
-      numberComplaints: 0,
       complaints: [],
     }
   )
@@ -51,6 +50,7 @@ export default function Home() {
   const fetchCompaniesWithComplaints = async () => {
     try {
       const companies = await getCompaniesWithComplaints()
+      console.log(companies)
       setCompaniesWithComplaints(companies)
     } catch (error) {
       console.error('Fetch of complaints by company was not successful', error)
@@ -126,7 +126,7 @@ export default function Home() {
                 className="cursor-pointer"
                 onClick={() => handleTableRowClick(company)}
               >
-                {company.numberComplaints}
+                {company.complaints.length}
               </TableCell>
             </TableRow>
           ))}

@@ -14,7 +14,6 @@ export interface CompanyComplaints {
   companyId: string
   name: string
   profilePicture: string
-  numberComplaints: number
   complaints: Complaint[]
 }
 
