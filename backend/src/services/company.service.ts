@@ -111,6 +111,10 @@ export const getAllCompanies = async (
         as: 'reviews',
         attributes: [],
       },
+      {
+        model: CompanyFiles,
+        as: 'companyFiles',
+      }
     ],
     order: ordering === 'score' ? literal('score DESC') : undefined,
     group: ['companyId'],

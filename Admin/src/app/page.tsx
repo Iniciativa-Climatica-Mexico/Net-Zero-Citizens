@@ -45,12 +45,7 @@ export default function Home() {
     description: '',
     createdAt: '',
     streetNumber: '',
-    pdfCurriculumUrl: '',
-    pdfDicCdmxUrl: '',
-    pdfPeeFideUrl: '',
-    pdfGuaranteeSecurityUrl: '',
-    pdfActaConstitutivaUrl: '',
-    pdfIneUrl: '',
+    companyFiles: [],
   })
   const [modalOpen, setIsModalOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
