@@ -26,15 +26,6 @@ import { useRouter } from 'next/navigation'
 
 export default function Home() {
   const router = useRouter()
-
-  const [SelectedComplaint, setSelectedComplaint] = useState<CompanyComplaints>(
-    {
-      companyId: '',
-      name: '',
-      profilePicture: '',
-      complaints: [],
-    }
-  )
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 8
   const [companiesWithComplaints, setCompaniesWithComplaints] = useState<
@@ -43,7 +34,6 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState('')
 
   const handleTableRowClick = (company: CompanyComplaints) => {
-    setSelectedComplaint(company)
     router.push(`/quejas/${company.companyId}`)
   }
 

@@ -1,3 +1,5 @@
+import { Company } from "../company/company"
+
 export interface Complaint {
   complaintId: string
   userId: string
@@ -10,10 +12,7 @@ export interface Complaint {
   createdAt: string
 }
 
-export interface CompanyComplaints {
-  companyId: string
-  name: string
-  profilePicture: string
+export interface CompanyComplaints extends Company {
   complaints: Complaint[]
 }
 
