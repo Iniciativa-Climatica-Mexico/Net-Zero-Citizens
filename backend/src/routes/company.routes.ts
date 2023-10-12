@@ -14,6 +14,7 @@ router.post('/upload/image', upload, CompanyFilesController.uploadCompanyImage)
 router.post('/upload/file', upload, CompanyFilesController.uploadCompanyFile)
 
 router.get('/approved', CompanyController.getApprovedCompanies)
+router.get('/approved/complaints', CompanyController.getApprovedCompaniesWithComplaints)
 
 router.get('/pending', CompanyController.getPendingCompanies)
 
