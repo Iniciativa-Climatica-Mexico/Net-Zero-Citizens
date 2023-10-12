@@ -52,6 +52,9 @@ struct LoginView: View {
                 }
               }
             }.padding(.bottom)
+              .onTapGesture {
+                hideKeyboard()
+              }
             
             ButtonDividerView(text: "O continúa con")
             
@@ -78,7 +81,7 @@ struct LoginView: View {
           }
           .padding(.horizontal)
         }
-
+        
         AppleSignIn(goForm: goForm, goMainMenu: goMainMenu)
         
         HStack {
@@ -94,9 +97,7 @@ struct LoginView: View {
           .padding(.bottom, 8)
       }
       .foregroundColor(Color("MainText"))
-      .onTapGesture {
-        hideKeyboard()
-      }
+      
     }
   }
 }
