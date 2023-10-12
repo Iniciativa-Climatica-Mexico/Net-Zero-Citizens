@@ -25,6 +25,7 @@ import LogoSm from './../../public/LogoSm.svg'
 
 import ModalProveedor from '@/components/modalProveedor'
 import Image from 'next/image'
+import { Pill } from '@/components/pill/pill'
 
 export type tabs = 'pending_approval' | 'approved' | 'no_user'
 
@@ -89,13 +90,13 @@ export default function Home() {
   const filteredCompanies =
     activeTab === 'pending_approval'
       ? pendingCompanies?.filter((company) =>
-        company.name.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-      : activeTab === 'approved'
-        ? approvedCompanies?.filter((company) =>
           company.name.toLowerCase().includes(searchTerm.toLowerCase())
         )
-        : approvedCompanies?.filter(
+      : activeTab === 'approved'
+      ? approvedCompanies?.filter((company) =>
+          company.name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      : approvedCompanies?.filter(
           (company) =>
             company.userId === null &&
             company.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -173,16 +174,7 @@ export default function Home() {
               className="cursor-pointer"
               onClick={() => handleTableRowClick(company)}
             >
-              <div
-                className={`${
-                  company.status === 'approved'
-                    ? 'bg-[#547C8B] text-white'
-                    : 'bg-[#FFE6C2] text-jet'
-                }
-                text-center rounded-xl p-2.5`}
-              >
-                {company.status === 'approved' ? 'Aprobado' : 'Pendiente'}
-              </div>
+              <Pill status={company.status} />
             </TableCell>
           </TableRow>
         ))}
