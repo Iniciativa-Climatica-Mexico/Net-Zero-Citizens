@@ -1,4 +1,4 @@
-import { Company } from "../company/company"
+import { Company } from '../company/company'
 
 export interface Complaint {
   complaintId: string
