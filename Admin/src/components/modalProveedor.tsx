@@ -53,6 +53,7 @@ interface ModalProveedorProps {
   fetchPendingCompanies: () => void
   fetchApprovedCompanies: () => void
   activeTab: tabs | 'rejected'
+  message: string
 }
 
 export default function ModalProveedor({
@@ -61,6 +62,7 @@ export default function ModalProveedor({
   fetchPendingCompanies,
   fetchApprovedCompanies,
   activeTab,
+  message,
 }: ModalProveedorProps) {
   const [viewModal, setViewModal] = useState<boolean>(false)
   const [checkboxChecked, setCheckboxChecked] = useState(false)
@@ -140,16 +142,39 @@ export default function ModalProveedor({
     }
   }
 
-  const sendEmail = (e:HTMLFormElement) => {
+  const sendEmail = (e: HTMLFormElement) => {
     e.preventDefault()
 
     emailjs.sendForm('service_icm2023', 'template_vjx2ic3', form.current, 'LSXaN-F4jhFZ5mzIt')
       .then((result) => {
         console.log(result.text)
-      }).catch((error) => {
+      })
+      .catch((error) => {
         console.log(error)
       })
   }
+
+  if (message) {
+    return (
+      <div>
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="modal-container">
+            <CloseIcon
+              color="primary"
+              className="cursor-pointer"
+              onClick={() => {
+                setIsModalOpen(false)
+              }}
+            />
+            <Card className="w-[350px] modal-card">
+              <CardDescription className='p-4 text-center'>{message}</CardDescription>
+            </Card>
+          </div>
+        </div>
+      </div>
+    )
+  }
+  
 
   return (
     <>
@@ -192,9 +217,21 @@ export default function ModalProveedor({
                 <CardDescription>
                   ¿Seguro que desea rechazar al proveedor?
                 </CardDescription>
-                <form className="flex items-center space-x-2 pt-4" ref={form} onSubmit={sendEmail}>
-                  <input type="hidden" name="user_email" value={selectedCompany.email} />
-                  <input type="hidden" name="to_name" value={selectedCompany.name} />
+                <form
+                  className="flex items-center space-x-2 pt-4"
+                  ref={form}
+                  onSubmit={sendEmail}
+                >
+                  <input
+                    type="hidden"
+                    name="user_email"
+                    value={selectedCompany.email}
+                  />
+                  <input
+                    type="hidden"
+                    name="to_name"
+                    value={selectedCompany.name}
+                  />
                   <textarea
                     placeholder="Redacta el mensaje para el proveedor"
                     className="h-60 flex w-full border-[#C1C9D2] border-1 py-4 pl-2 rounded-l-md rounded-r-md"
@@ -205,11 +242,15 @@ export default function ModalProveedor({
                       setShowErrorMessage(false)
                     }}
                   />
-                  <button type="submit" ref={submitButton} style={{ display: 'none' }} />
+                  <button
+                    type="submit"
+                    ref={submitButton}
+                    style={{ display: 'none' }}
+                  />
                 </form>
                 {showErrorMessage && (
                   <p className="text-[#bd4e4e] my-3">
-                  Por favor, escribe un mensaje para el proveedor.
+                    Por favor, escribe un mensaje para el proveedor.
                   </p>
                 )}
               </CardHeader>
@@ -220,10 +261,7 @@ export default function ModalProveedor({
                       setShowErrorMessage(true)
                     } else {
                       console.log(rejectCompanyMessage)
-                      handleReject(
-                        selectedCompany,
-                        selectedCompany.companyId
-                      )
+                      handleReject(selectedCompany, selectedCompany.companyId)
                       submitButton.current.click()
                       toast({
                         description: 'Proveedor rechazado exitosamente.',
@@ -234,11 +272,14 @@ export default function ModalProveedor({
                 >
                   Confirmar
                 </Button>
-                <Button onClick={() => {
-                  setViewModal(false)
-                  setRejectCompany(false)
-                  setRejectCompanyMessage('')
-                }} variant="outline">
+                <Button
+                  onClick={() => {
+                    setViewModal(false)
+                    setRejectCompany(false)
+                    setRejectCompanyMessage('')
+                  }}
+                  variant="outline"
+                >
                   Cancelar
                 </Button>
               </CardFooter>
@@ -246,9 +287,10 @@ export default function ModalProveedor({
           </div>
         </div>
       )}
+
       <div className="fixed inset-0 flex flex-col items-center justify-center">
         <ThemeProvider theme={Theme}>
-          <div className="flex justify-end w-50 pr-4 pb-2">
+          <div className="flex justify-end w-50 pl-[800px] pb-2">
             <CloseIcon
               color="secondary"
               className="cursor-pointer"
@@ -257,8 +299,8 @@ export default function ModalProveedor({
               }}
             />
           </div>
-          <article className="flex flex-col border border-[#C1C9D2] justify-center items-center rounded-lg w-[823px] py-[25px] bg-white z-10">
-            <article className="flex border border-[#C1C9D2] rounded-xl w-[763px]">
+          <article className="flex flex-col border border-[#C1C9D2] justify-center items-center rounded-lg lg:w-[823px] md:w-[512px] sm:w-[360px] py-[25px] bg-white z-10">
+            <article className="flex border border-[#C1C9D2] rounded-xl lg:w-[763px] md:w-[500px] sm:w-[250px]">
               {selectedCompany.profilePicture != null ? (
                 <img
                   src={selectedCompany.profilePicture}
@@ -320,8 +362,8 @@ export default function ModalProveedor({
                   </h2>
                 )}
                 {selectedCompany.pdfCurriculumUrl &&
-                selectedCompany.pdfDicCdmxUrl &&
-                selectedCompany.pdfPeeFideUrl && (
+                  selectedCompany.pdfDicCdmxUrl &&
+                  selectedCompany.pdfPeeFideUrl && (
                   <section className="flex justify-between items-end mb-3">
                     <a
                       href={selectedCompany.pdfCurriculumUrl}
@@ -434,23 +476,25 @@ export default function ModalProveedor({
                     <Button
                       disabled={!checkboxChecked}
                       onClick={() => {
-                        handleAccept(
-                          selectedCompany,
-                          selectedCompany.companyId
-                        )
-                      }
-                      }
+                        handleAccept(selectedCompany, selectedCompany.companyId)
+                      }}
                       variant="default"
                     >
                       Aprobar
                     </Button>
-                    <Button onClick={() => {
-                      setViewModal(true)
-                      setRejectCompany(true)
-                    }} variant="default">
+                    <Button
+                      onClick={() => {
+                        setViewModal(true)
+                        setRejectCompany(true)
+                      }}
+                      variant="default"
+                    >
                       Rechazar
                     </Button>
-                    <Button onClick={() => setIsModalOpen(false)} variant="outline">
+                    <Button
+                      onClick={() => setIsModalOpen(false)}
+                      variant="outline"
+                    >
                       Cancelar
                     </Button>
                   </footer>
