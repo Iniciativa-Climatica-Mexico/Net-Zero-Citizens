@@ -38,9 +38,10 @@ struct SectionProfile: View{
   @ObservedObject var modelUser = UserViewModel()
   var body: some View{
     VStack {
-        Image("Sun")
+        Image(systemName: "person.crop.circle.fill")
             .resizable()
             .frame(width: 100, height: 100)
+            .foregroundStyle(Color("Primary"))
         HStack {
           Text("\(modelUser.contentBaseUser?.firstName ?? "Cargando...") \(modelUser.contentBaseUser?.lastName ?? "")")
               .foregroundColor(Color.black)
@@ -115,7 +116,7 @@ struct Section1: View{
       //---Field Nombre----------------------------------------------------------
       Text("Nombre")
                       .padding(.top, 16)
-                      .foregroundColor(Color("GreenColor"))
+                      .foregroundColor(Color("Secondary"))
                       .font(.system(size: 13))
                       .fontWeight(.semibold)
                   
@@ -138,7 +139,7 @@ struct Section1: View{
       //---Field Apellido----------------------------------------------------------
       Text("Apellido")
         .padding(.top, 16)
-        .foregroundColor(Color("GreenColor"))
+        .foregroundColor(Color("Secondary"))
         .font(.system(size: 13))
         .fontWeight(.semibold)
       TextField("Primer Apellido", text: lastNameBinding)
@@ -159,7 +160,7 @@ struct Section1: View{
       
       Text("Email")
         .padding(.top, 16)
-        .foregroundColor(Color("GreenColor"))
+        .foregroundColor(Color("Secondary"))
         .font(.system(size: 13))
         .fontWeight(.semibold)
       TextField("Email", text: emailBinding)
@@ -215,7 +216,7 @@ struct Section2: View {
           VStack(alignment: .leading) {
               Text("Edad")
                   .padding(.top, 16)
-                  .foregroundColor(Color("GreenColor"))
+                  .foregroundColor(Color("Secondary"))
                   .font(.system(size: 13))
                   .fontWeight(.semibold)
             let ageStringBinding = Binding<String>(
@@ -261,7 +262,7 @@ struct Section2: View {
             VStack(alignment: .leading) {
                 Text("Género")
                     .padding(.top, 16)
-                    .foregroundColor(Color("GreenColor"))
+                    .foregroundColor(Color("Secondary"))
                     .font(.system(size: 13))
                     .fontWeight(.semibold)
               PickerFormView2(
@@ -333,7 +334,7 @@ struct Section3: View {
           //----Field Celular----------------------------------------------------------
           Text("Teléfono")
               .padding(.top, 16)
-              .foregroundColor(Color("GreenColor"))
+              .foregroundColor(Color("Secondary"))
               .font(.system(size: 13))
               .fontWeight(.semibold)
 
@@ -376,7 +377,7 @@ struct Section3: View {
         //----Picker Estado----------------------------------------------------------
         Text("Estado")
             .padding(.top, 16)
-            .foregroundColor(Color("GreenColor"))
+            .foregroundColor(Color("Secondary"))
             .font(.system(size: 13))
             .fontWeight(.semibold)
         
@@ -507,7 +508,7 @@ struct SectionDelete: View{
             .padding(.vertical, 12)
             .padding(.horizontal, 30)
             .frame(maxWidth: .infinity)
-            .background(Color("RedCustom"))
+            .background(Color("Alert"))
             .cornerRadius(8)
         }).alert(isPresented: $showAlert, content: {
           Alert(title: Text("¿Deseas borrar tu cuenta?"), message: Text("Si aceptas, no guardaremos ningún dato tuyo."),

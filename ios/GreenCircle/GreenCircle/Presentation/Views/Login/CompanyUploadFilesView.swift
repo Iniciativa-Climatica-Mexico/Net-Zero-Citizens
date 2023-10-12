@@ -22,7 +22,7 @@ struct FirstSection: View {
                 
             }, label: {
                 Image (systemName: "chevron.left")
-                .foregroundColor(Color("GreenColor"))
+                .foregroundColor(Color("Secondary"))
             })
             .padding(.leading, 30)
             Spacer()
@@ -351,7 +351,7 @@ struct SeventhSection: View{
             .padding(.vertical, 12)
             .padding(.horizontal)
             .frame(maxWidth: 200)
-            .background(privacidad && terminos ? Color("GreenCustom") : Color.gray)
+            .background(privacidad && terminos ? Color("Secondary") : Color.gray)
             .cornerRadius(8)
     }
     .alert(isPresented: $showAlert) {

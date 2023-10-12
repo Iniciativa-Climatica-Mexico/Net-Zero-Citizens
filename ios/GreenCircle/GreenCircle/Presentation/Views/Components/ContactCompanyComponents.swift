@@ -207,7 +207,7 @@ struct ContactCompanyRatingView: View {
           }
         }
           .padding(.bottom, 5)
-          .foregroundColor(Color("GreenCustom"))
+          .foregroundColor(Color("Secondary"))
         
         Divider()
         Text("Reviews")
@@ -228,7 +228,7 @@ struct ContactCompanyRatingView: View {
               ScrollViewRating()
           }
           .font(.system(size: 17))
-          .foregroundColor(Color("BlueCustom"))
+          .foregroundColor(Color("Primary"))
           Spacer()
         }
         Spacer()

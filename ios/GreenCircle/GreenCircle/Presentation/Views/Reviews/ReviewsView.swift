@@ -30,7 +30,7 @@ struct ReviewsView: View {
                     VStack {
                         Text("Escribe una opinión")
                             .font(.headline)
-                            .foregroundColor(Color("GreenCustom"))
+                            .foregroundColor(Color("Secondary"))
                             .onTapGesture {
                                 isSecondViewPresented = true
                             }
@@ -99,7 +99,7 @@ struct OpinionsView: View {
                         print("Formulario enviado")
                     }) {
                         Text("Publicar")
-                            .padding().frame(maxWidth: .infinity).background(Color("BlueCustom"))
+                            .padding().frame(maxWidth: .infinity).background(Color("Primary"))
                             .foregroundColor(.white).cornerRadius(10).customSectionPadding()
                     }
                 }
@@ -126,7 +126,7 @@ struct RatingView: View {
             HStack {
                 VStack(alignment: .center) {
                     Text(String(format: "%.1f", reviewModel.reviewFields.score))
-                        .font(.system(size: 60, weight: .bold, design: .default)).foregroundColor(Color("GreenCustom"))
+                        .font(.system(size: 60, weight: .bold, design: .default)).foregroundColor(Color("Secondary"))
     
                     Spacer()
                 }
@@ -135,7 +135,7 @@ struct RatingView: View {
                     HStack {
                         ForEach(0..<5) { index in
                             Image(systemName: index < Int(reviewModel.reviewFields.score) ? "star.fill" : "star")
-                                .foregroundColor(Color("GreenCustom"))
+                                .foregroundColor(Color("Secondary"))
                         }
                     }
                     .font(.headline)
@@ -166,7 +166,7 @@ struct StarView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 40, height: 40)
-                    .foregroundColor(Color("GreenCustom"))
+                    .foregroundColor(Color("Secondary"))
                     .padding(.trailing, 20)
                     .onTapGesture {
                         reviewModel.reviewFields.score = index
