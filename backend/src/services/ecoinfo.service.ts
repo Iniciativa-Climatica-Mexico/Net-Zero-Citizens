@@ -11,8 +11,10 @@ import cron from 'node-cron'
  *            información de paginación
  */
 export const getAllEcoinfo = async (): Promise<Ecoinfo[]> => {
-  // await fetchEcoInfo()
-  return await Ecoinfo.findAll()
+  return await Ecoinfo.findAll({
+    attributes: { exclude: ['createdPostAt'] },
+    order: [['createdPostAt', 'DESC']],
+  })
 }
 
 /**
@@ -20,7 +22,7 @@ export const getAllEcoinfo = async (): Promise<Ecoinfo[]> => {
  * Funcion que realiza un fetch a la página de Facebook de ICM
  * Cada día
  */
-export const cronEcoInfo = cron.schedule('48 16 * * *', () => {
+export const cronEcoInfo = cron.schedule('0 0 * * *', () => {
   fetchEcoInfo()
   console.log('EcoInfo updated')
 })
@@ -34,7 +36,7 @@ const fetchEcoInfo = async () => {
   const pageId: string = process.env.ECO_INFO_PAGE_ID || ''
   const pageAccessToken: string = process.env.ECO_INFO_TOKEN || ''
 
-  const apiUrl = `https://graph.facebook.com/${pageId}/posts?limit=10&fields=attachments{media,description,url}&access_token=${pageAccessToken}`
+  const apiUrl = `https://graph.facebook.com/${pageId}/posts?limit=10&fields=attachments{media,description},created_time,permalink_url&access_token=${pageAccessToken}`
 
   if (pageId === '' || pageAccessToken === '') {
     throw new Error('No se ha configurado el id de la página o el access token')
@@ -70,11 +72,12 @@ const EcoInfoApiSchema = z.object({
             z.object({
               media: z.object({ image: z.object({ src: z.string() }) }),
               description: z.string().optional(),
-              url: z.string(),
             })
           ),
         })
         .optional(),
+      created_time: z.string(),
+      permalink_url: z.string(),
       id: z.string(),
     })
   ),
@@ -105,12 +108,14 @@ const updateEcoInfo = async (data: EcoInfoApiModel) => {
           if (description && description.length > 500) {
             description = post.attachments.data[0].description?.slice(0, 500)
           }
-          const postLink = post.attachments.data[0].url
+          const postLink = post.permalink_url
+          const createdPostAt = post.created_time
           const tempEcoInfoTemplate = {
             postId,
             coverImage,
             description,
             postLink,
+            createdPostAt,
           }
           return Ecoinfo.create(tempEcoInfoTemplate)
         }
