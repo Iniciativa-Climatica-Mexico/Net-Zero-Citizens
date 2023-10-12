@@ -2,6 +2,7 @@ import CompanyFile from '../models/companyFiles.model'
 import { s3 } from '../configs/aws.config'
 import { v4 as uuidv4 } from 'uuid'
 import Company from '../models/company.model'
+import { Readable } from 'stream'
 
 export type CompanyImageType = {
   companyId: string
@@ -108,6 +109,42 @@ export const uploadCompanyFile = async (
     })
 
     return newFile
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
+
+export const downloadCompanyFile = async (
+  companyId: string,
+  fileDescription: string,
+  fileFormat: string
+): Promise<Readable | null> => {
+  const bucketName = process.env.AWS_BUCKET_NAME
+  if (!bucketName) {
+    throw new Error('AWS_BUCKET_NAME is not defined')
+  }
+
+  const company = await Company.findByPk(companyId)
+
+  try {
+    // Usar el fileUrl directamente como la Key de S3
+    const params = {
+      Bucket: bucketName,
+      Key: `${company?.name}/${fileDescription + '.' + fileFormat}`,
+    }
+
+    console.log(params.Key)
+
+    // Descargar el archivo de S3
+    const s3Response = await s3.getObject(params).promise()
+
+    // Convertir el Body (Buffer) a un stream legible
+    const readable = new Readable()
+    readable._read = () => {} // _read es necesario
+    readable.push(s3Response.Body)
+    readable.push(null)
+    return readable
   } catch (error) {
     console.log(error)
     return null
