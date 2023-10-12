@@ -38,7 +38,7 @@ struct CardCatalogView: View {
       ZStack {
         RoundedRectangle(cornerRadius: 10, style:.continuous)
           .fill(.white)
-          .frame(width: 380, height: 150)
+          .frame(width: .infinity, height: 150)
           .shadow(color: Color("BlueCustom"), radius: 1)
         HStack {
           VStack (alignment: .leading) {
@@ -92,7 +92,7 @@ struct CardCatalogView: View {
               }
             }.font(.system(size: 13))
           }
-          .frame(maxWidth: 180, maxHeight: 120)
+          .frame(maxWidth: .infinity, maxHeight: 120)
           .multilineTextAlignment(.leading)
           Spacer()
           VStack {
@@ -136,11 +136,13 @@ struct CardCatalogView: View {
               }
             }
             Spacer()
-          }.frame(maxWidth: 15)
+          }.frame(maxWidth: 55)
         }
-        .frame(maxWidth: 330, maxHeight: 140)
+        .frame(maxWidth: .infinity, maxHeight: 140)
       }
-    }.onAppear {
+    }
+    
+    .onAppear {
       
       Task {
         
@@ -155,12 +157,13 @@ struct CardCatalogView: View {
     .navigationTitle("Proveedores")
     .navigationBarTitleDisplayMode(.inline)
   }
+  
 }
 
-//#Preview {
-//  CardCatalogView(
-//    companyId: UUID(uuidString: ("08b49208-7b8e-42b9-8164-c0688676609e"))!,
-//    companyName: "ENERGIA PUEBLO SOLAR S.A. DE C.V.",
-//    city: "Hermosillo",
-//    state: "Sonora")
-//}
+#Preview {
+  CardCatalogView(
+    companyId: UUID(uuidString: ("08b49208-7b8e-42b9-8164-c0688676609e"))!,
+    companyName: "ENERGIA PUEBLO SOLAR S.A. DE C.V.",
+    city: "Hermosillo",
+    state: "Sonora")
+}

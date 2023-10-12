@@ -27,6 +27,7 @@ struct LoadingScreenView: View {
                   .aspectRatio(contentMode: .fit)
                   .frame(height: 50)
                   .opacity(0.5)
+                  .background(.red)
                   .rotationEffect(.degrees(rotationDegrees))
                 
                   .onAppear {
