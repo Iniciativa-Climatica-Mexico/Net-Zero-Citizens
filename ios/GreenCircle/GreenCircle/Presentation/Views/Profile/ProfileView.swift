@@ -63,17 +63,9 @@ struct ProfileView: View {
                         .padding(.top, 4)
 
                     HStack {
-                        Button(action: {
-                            myFavourites.toggle()
-                        }) {
-                            Text(myFavourites ? "Mis Reseñas" : "Mis favoritos")
-                                .foregroundColor(.white)
-                                .padding(.vertical, 12)
-                                .padding(.horizontal)
-                                .frame(maxWidth: .infinity)
-                                .background(TitleBarColor.TitleBarColor)
-                                .cornerRadius(8)
-                        }
+                      MainButton(myFavourites ? "Mis Reseñas" : "Mis Favoritos") {
+                        myFavourites.toggle()
+                      }
                         .padding(.trailing, 10)
 
                         NavigationLink(destination: EditProfileView(modelUser: modelUser, goLogin: goLogin)) {
@@ -92,7 +84,7 @@ struct ProfileView: View {
 
                     Spacer()
 
-                    Text(myFavourites ? "Mis Favoritos(" + "\(totalFavourites))" : "Mis Reseñas")
+                    Text(myFavourites ? "Mis Favoritos (\(totalFavourites))" : "Mis Reseñas")
                         .font(.system(size: 20))
                         .fontWeight(.bold)
                         .padding(EdgeInsets(top: 32, leading: 15, bottom: 0, trailing: 0))

@@ -30,6 +30,7 @@ struct MainButton: View {
         Text(content)
           .foregroundColor(.white)
           .bold()
+          .frame(maxWidth: .infinity, maxHeight: 45)
       }
     }
   }
