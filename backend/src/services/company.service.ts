@@ -184,6 +184,14 @@ export const getAllCompanies = async (
 
   for (const company of res.rows as (Company & { score: number })[]) {
     company.dataValues.score = Number(company.dataValues.score) ?? null
+    const companyFiles = await getCompanyFiles(company.companyId)
+    const files: CompanyFiles[] = []
+
+    companyFiles?.forEach(function (file) {
+      files.push(file.dataValues)
+    })
+
+    company.dataValues.companyFiles = files
   }
 
   return {
