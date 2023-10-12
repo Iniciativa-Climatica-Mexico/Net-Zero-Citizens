@@ -56,7 +56,7 @@ export default class CompanyBootstrap extends Bootstrapper {
         userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
         name: 'Exel Solar',
         description: 'Company 2 description',
-        email: 'company2@outlook.com',
+        email: 'danielsebascm@hotmail.com',
         phone: '0123456799',
         webPage: 'https://www.company2.com',
         street: 'Pino Suárez',
