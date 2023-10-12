@@ -74,7 +74,7 @@ struct ReportReasonView: View {
                 Spacer()
                 if reason == selectedReason {
                     Image(systemName: "checkmark")
-                        .foregroundColor(Color("GreenCustom"))
+                        .foregroundColor(Color("Secondary"))
                 }
             }
         }
@@ -242,7 +242,7 @@ struct ContactCompanyView: View {
                     }
                   }, label: {
                     Image(systemName: emptyHeartFill ? "heart.fill" : "heart")
-                      .foregroundColor(Color("BlueCustom"))
+                      .foregroundColor(Color("Primary"))
                       .font(.system(size: 24))
                       .padding(EdgeInsets(top: 40, leading: 40, bottom: 0, trailing: 0))
                       .padding()
