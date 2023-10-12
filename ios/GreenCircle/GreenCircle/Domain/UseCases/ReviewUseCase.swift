@@ -30,12 +30,7 @@ class ReviewUseCase {
     
     @MainActor
     func fetchReviewByUserId(usId: String) async -> PaginatedQuery<Review>? {
-
+        
         return await repository.fetchReviewByUserId(userId: usId)
-    }
-    
-    @MainActor
-    func addReview(usId: String, cmpyId: String, reviewBody: ReviewPostData) async -> String? {
-        return await repository.addReview(userId: usId, companyId: cmpyId, reviewBody: reviewBody)
     }
 }

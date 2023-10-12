@@ -9,27 +9,24 @@ import Foundation
 
 /// Clase con la estructura de la API de autenticación
 class ReviewAPI {
-
-    static let base = APIRoutes.Review.base
+  static let base = "http://localhost:4000/api/v1/review"
   struct Routes {
-    static let companyReview = "/company"
-    static let userReview = "/user"
-    static let postReview = "/:userId/:companyId"
+    static let companyReview = "/company" //:companyId
+    static let userReview = "/user" //:userId
   }
 }
 
 /// Protocolo con la declaración del repositorio del usuario2
 protocol ReviewRepositoryProtocol {
   func fetchReviewByCompanyId(companyId: String) async -> PaginatedQuery<Review>?
-  func fetchReviewByUserId(userId: String) async -> PaginatedQuery<Review>?
+    func fetchReviewByUserId(userId: String) async -> PaginatedQuery<Review>?
 }
 
 
 /// Clase con la funcionalidad del repositorio de usuario
 class ReviewRepository: ReviewRepositoryProtocol {
 
-  let service : NetworkAPIService
-
+    let service : NetworkAPIService
   let lService = LocalService.shared
   static let shared = ReviewRepository()
   
@@ -42,20 +39,8 @@ class ReviewRepository: ReviewRepositoryProtocol {
         return await NetworkAPIService.shared.getRequest(URL(string: "\(ReviewAPI.base)\(ReviewAPI.Routes.companyReview)/\(companyId)")!)
     }
     
-    func fetchReviewByUserId(userId: String) async -> PaginatedQuery<Review>? {
-        return await NetworkAPIService.shared.getRequest(URL(string: "\(ReviewAPI.base)\(ReviewAPI.Routes.userReview)/\(userId)")!)
-    }
     
-    func addReview(userId: String, companyId: String, reviewBody: ReviewPostData) async -> String? {
-        let jsonObjetct: [String: Any] = [
-            "reviewTitle": reviewBody.reviewTitle,
-            "review": reviewBody.review,
-            "score": reviewBody.score
-            ]
-        
-        let endpoint = ReviewAPI.base + ReviewAPI.Routes.postReview.replacingOccurrences(of: ":userId", with: userId)
-            .replacingOccurrences(of: ":companyId", with: companyId)
-        
-        return await NetworkAPIService.shared.postRequest(URL(string: endpoint)!, body: jsonObjetct)
-    }
+  func fetchReviewByUserId(userId: String) async -> PaginatedQuery<Review>? {
+      return await NetworkAPIService.shared.getRequest(URL(string: "\(ReviewAPI.base)\(ReviewAPI.Routes.userReview)/\(userId)")!)
+  }
 }
