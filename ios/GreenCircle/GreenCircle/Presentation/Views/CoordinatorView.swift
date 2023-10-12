@@ -10,8 +10,6 @@ import SwiftUI
 
 struct CoordinatorView: View {
   @StateObject var viewModel = CoordinatorViewModel()
-  @StateObject var companyId: CompanyReviewViewModel = CompanyReviewViewModel()
-  @StateObject var deviceLocationService = DeviceLocationService.shared
   @State var hasPendingSurvey: Bool = false
   @State var photovoltaicToggle: Bool = false
   @State var solarToggle: Bool = false
@@ -29,8 +27,6 @@ struct CoordinatorView: View {
     case mainMenuView
     case pendingCompany
     case survey
-    case reviews
-    case opinions
   }
   
   @State var routes: Routes<Screens> = [.root(.splashScreen)]
@@ -79,11 +75,7 @@ struct CoordinatorView: View {
                                solarToggle: $solarToggle)
         
       case .mainMenuView:
-        TabBarView(goSurvey: goSurvey, goLogin: goLogin, goReviews: goReviews, goOpinions: goOpinions, goScrollRating: goReviews)
-            .environmentObject(companyId)
-            .onAppear {
-              deviceLocationService.requestLocationUpdates()
-            }
+        TabBarView(goSurvey: goSurvey, goLogin: goLogin)
         
       case .pendingCompany:
         PendingCompanyView()
@@ -91,12 +83,6 @@ struct CoordinatorView: View {
       case .survey:
         SurveyView(goBack: goBack)
           .applyNavBarTheme()
-          
-      case .reviews:
-          ScrollViewRating(goOpinions: goOpinions, goScrollRating: goBack).environmentObject(companyId)
-          
-      case .opinions:
-          OpinionsView(goReviews: goBack, goOpinions: goOpinions).environmentObject(companyId)
       }
     }
     .onAppear {
@@ -162,13 +148,5 @@ struct CoordinatorView: View {
   
   private func goBack() {
     routes.goBack()
-  }
-  
-  private func goReviews() {
-    routes.presentCover(.reviews)
-  }
-  
-  private func goOpinions() {
-    routes.presentCover(.opinions)
   }
 }
