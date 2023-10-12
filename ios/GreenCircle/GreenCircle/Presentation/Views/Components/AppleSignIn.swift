@@ -63,6 +63,10 @@ struct AppleSignIn: View {
           
           print("saved apple user", appleUser)
           
+          vm.userId = appleUser.userId
+          vm.email = appleUser.email
+          vm.fullName = "\(appleUser.firstName) \(appleUser.lastName)"
+          
           Task {
             let state = await vm.handleAppleSignIn()
             switch state {
