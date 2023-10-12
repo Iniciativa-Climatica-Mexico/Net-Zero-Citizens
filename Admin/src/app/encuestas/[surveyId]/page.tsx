@@ -37,19 +37,19 @@ export default function DetailedSurvey(props: DetailedSurveyProps) {
 
     return (
       <div>
-        <div className="flex flex-row items-center justify-between my-8 mx-8">
-          <h1 className="self-start font-extrabold mt-8 mx-8 text-4xl text-txt">
+        <div className="flex flex-col sm:flex-row items-center justify-between mt-8 mx-8">
+          <h1 className="font-extrabold my-8 sm:ml-8 md:ml-32 sm:pr-2 md:pr-6 text-4xl sm:text-3xl text-txt text-center">
             {surveyDetail.title}
           </h1>
           <div className="flex flex-row gap-4">
             <button
               onClick={() => setIsOpen(true)}
-              className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end mt-4"
+              className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end mt-4 "
             >
               Cerrar Encuesta
             </button>
             <Link href={'/reportes/encuesta/' + surveyId}>
-              <button className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end mt-4">
+              <button className="flex items-center justify-center bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end mt-4 md:mr-32 sm:mr-12">
                 Generar Reporte
               </button>
             </Link>
@@ -108,8 +108,8 @@ export default function DetailedSurvey(props: DetailedSurveyProps) {
             )}
           </div>
         </div>
-        <div className="flex flex-col items-center w-full justify-center">
-          <table className="table-fixed border-collapse w-4/5">
+        <div className="w-2/3 m-auto p-3 overflow-x-auto">
+          <table className="border-collapse justify-center items-center w-full">
             <thead className="">
               <tr className="text-txt font-bold">
                 <th scope="col" className="py-8 border-b border-gray-700">

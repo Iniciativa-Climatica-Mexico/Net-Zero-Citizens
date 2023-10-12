@@ -2,29 +2,9 @@
 import { QuestionWrapper } from '../../../components/surveyQuestions/questionWrapper'
 import AddIcon from '@mui/icons-material/Add'
 import { MouseEventHandler, useState } from 'react'
-import { createSurvey } from '@/api/v1/survey'
+import { CreateSurveyBody, Question, createSurvey } from '@/api/v1/survey'
 import { useEffect } from 'react'
 import SurveyModal from '@/components/surveyModal'
-
-/**
- * El tipo de encuesta
- */
-export type CreateSurveyBody = {
-  title: string
-  description: string
-  questions: Question[]
-}
-
-/**
- * El tipo de pregunta
- */
-export type Question = {
-  id: number
-  questionText: string
-  questionType: string
-  isRequired: boolean
-  options?: string[]
-}
 
 export default function CreateSurvey() {
   // Estado para el contador de preguntas
@@ -131,16 +111,18 @@ export default function CreateSurvey() {
         question.questionType === 'open' ||
         question.questionType === 'scale' ||
         (question.questionType === 'multiple_choice' &&
-          question.options &&
-          question.options.length >= 2)
+          question.questionOptions &&
+          question.questionOptions.length >= 2)
     )
 
     //Se revisa que las opciones de las preguntas de opcion multiple no esten vacias
     const emptyOptions = questions.some(
       (question) =>
         question.questionType === 'multiple_choice' &&
-        question.options &&
-        question.options.some((option) => option === '' || option === ' ')
+        question.questionOptions &&
+        question.questionOptions.some(
+          (option) => option.textOption === '' || option.textOption === ' '
+        )
     )
 
     //Se revisa que las preguntas no esten vacias

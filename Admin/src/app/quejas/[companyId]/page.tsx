@@ -91,37 +91,40 @@ export default function Home() {
             </TableRow>
           </TableHeader>
           <TableBody>
+            {complaintsWithUsers?.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={6} className="text-center">
+                  Error al cargar reportes
+                </TableCell>
+              </TableRow>
+            ) : null}
             {complaintsWithUsers?.map((company) => (
               <TableRow key={company.complaintId} className="min-h-max">
-                <TableCell className="cursor-pointer">
+                <TableCell>
                   {company.firstName} {company.lastName}
                 </TableCell>
-                <TableCell className="cursor-pointer">
-                  {company.complaintSubject}
-                </TableCell>
-                <TableCell className="cursor-pointer max-w-xs overflow-hidden">
+                <TableCell>{company.complaintSubject}</TableCell>
+                <TableCell className="max-w-xs overflow-hidden">
                   {company.complaintDescription ? (
                     company.complaintDescription
                   ) : (
                     <span>No description available</span> // Alternate message
                   )}
                 </TableCell>
-                <TableCell className="cursor-pointer">
-                  {formatDate(company.createdAt) ?? 'N/A'}
-                </TableCell>
-                <TableCell
-                  className="cursor-pointer"
-                  onClick={() => changeToInvalid(company.complaintId)}
-                >
-                  <Button className="bg-[#F2F5FA] rounded-lg p-2">
+                <TableCell>{formatDate(company.createdAt) ?? 'N/A'}</TableCell>
+                <TableCell>
+                  <Button
+                    className="bg-[#F2F5FA] rounded-lg p-2"
+                    onClick={() => changeToInvalid(company.complaintId)}
+                  >
                     Descartar
                   </Button>
                 </TableCell>
-                <TableCell
-                  className="cursor-pointer"
-                  onClick={() => changeToInactive(company.complaintId)}
-                >
-                  <Button className="bg-[#F2F5FA] rounded-lg p-2">
+                <TableCell>
+                  <Button
+                    className="bg-[#F2F5FA] rounded-lg p-2"
+                    onClick={() => changeToInactive(company.complaintId)}
+                  >
                     Rechazar
                   </Button>
                 </TableCell>

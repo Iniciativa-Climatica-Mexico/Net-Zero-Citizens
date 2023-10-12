@@ -1,6 +1,7 @@
 import CompanyProducts from '../models/companyProducts.model'
 import CompanyFiles from '../models/companyFiles.model'
 import Product from '../models/products.model'
+import Complaint from '../models/complaint.model'
 import Review from '../models/review.model'
 import { Op, col, fn, literal } from 'sequelize'
 import Company from '../models/company.model'
@@ -180,6 +181,19 @@ export const getAllCompanies = async (
       return distA - distB
     })
   }
+
+  for (const company of res.rows as (Company & { score: number })[]) {
+    company.dataValues.score = Number(company.dataValues.score) ?? null
+    const companyFiles = await getCompanyFiles(company.companyId)
+    const files: CompanyFiles[] = []
+
+    companyFiles?.forEach(function (file) {
+      files.push(file.dataValues)
+    })
+
+    company.dataValues.companyFiles = files
+  }
+
   return {
     count: res.count.length,
     rows: res.rows as (Company & { score: number })[],
@@ -245,6 +259,10 @@ export interface FilteredCompany {
   latitude: number
   longitude: number
   profilePicture: string | null
+}
+
+export interface CompanyWithComplaints extends Company {
+  complaints: Complaint[]
 }
 
 /**
@@ -358,6 +376,11 @@ export const getCoordinatesIos = async (): Promise<
   const filteredCompaniesTyped: FilteredCompany[] = filteredCompanies.filter(
     (company): company is FilteredCompany => company !== null
   )
+
+  for (const company of filteredCompaniesTyped) {
+    company.latitude = Number(company.latitude)
+    company.longitude = Number(company.longitude)
+  }
 
   const paginator: Paginator<FilteredCompany> = {
     rows: filteredCompaniesTyped,
@@ -510,6 +533,25 @@ const getCompanyFiles = async (id: string): Promise<CompanyFiles[] | null> => {
     attributes: {
       exclude: ['createdAt', 'updatedAt'],
     },
+  })
+}
+
+export const getApprovedCompaniesWithComplaints = async (): Promise<Company[] | null> => {
+  return await Company.findAll({
+    where: {
+      status: 'approved',
+    },
+    attributes: {
+      exclude: ['createdAt', 'updatedAt'],
+    },
+    include: [
+      {
+        model: Complaint,
+        attributes: {
+          exclude: ['updatedAt'],
+        },
+      },
+    ],
   })
 }
 
