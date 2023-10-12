@@ -180,6 +180,11 @@ export const getAllCompanies = async (
       return distA - distB
     })
   }
+
+  for (const company of res.rows as (Company & { score: number })[]) {
+    company.score = Number(company.score) ?? null
+  }
+
   return {
     count: res.count.length,
     rows: res.rows as (Company & { score: number })[],
