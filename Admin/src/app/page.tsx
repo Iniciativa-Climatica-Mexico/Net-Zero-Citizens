@@ -135,19 +135,13 @@ export default function Home() {
               className="cursor-pointer"
               onClick={() => handleTableRowClick(company)}
             >
-              {company.profilePicture != null ? (
-                <Avatar>
-                  <AvatarImage src={company.profilePicture} />
-                </Avatar>
-              ) : (
-                <Image
-                  src={LogoSm}
-                  alt="Placeholder"
-                  width={350}
-                  height={350}
-                  className="basis-6/12 mr-[10px] rounded-l-xl object-cover"
-                />
-              )}
+              <Image
+                src={LogoSm}
+                alt="Placeholder"
+                width={350}
+                height={350}
+                className="basis-6/12 mr-[10px] rounded-l-xl object-cover"
+              />
             </TableCell>
             {activeTab === 'no_user' ? (
               <TableCell

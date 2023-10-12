@@ -308,47 +308,13 @@ export default function ModalProveedor({
           </div>
           <article className="flex flex-col border border-[#C1C9D2] justify-center items-center rounded-lg lg:w-[823px] md:w-[512px] sm:w-[360px] py-[25px] bg-white z-10">
             <article className="flex border border-[#C1C9D2] rounded-xl lg:w-[763px] md:w-[500px] sm:w-[250px]">
-              {selectedCompany.companyFiles &&
-              selectedCompany.companyFiles.length > 0 ? (
-                  <div className="basis-6/12 mr-[10px] rounded-l-xl object-cover border-r">
-                    <Carousel
-                      showThumbs={false}
-                      showStatus={false}
-                      dynamicHeight={false}
-                      emulateTouch={true}
-                      autoPlay
-                      infiniteLoop
-                    >
-                      {selectedCompany.companyFiles
-                        .filter(
-                          (file: CompanyFiles) =>
-                            file.fileDescription === 'Imagen' ||
-                          /\.(png|jpg|jpeg)$/.test(file.fileFormat)
-                        )
-                        .map((file: CompanyFiles) => (
-                          <div key={file.companyFileId}>
-                            <img
-                              src={file.fileUrl}
-                              alt={file.fileDescription}
-                              width={350}
-                              height={405}
-                              className="basis-6/12 mr-[10px] rounded-l-xl object-cover border-r"
-                              style={{ height: '405px' }}
-                            />
-                          </div>
-                        ))}
-                    </Carousel>
-                  </div>
-                ) : (
-                  <Image
-                    src={Logo}
-                    alt="Placeholder"
-                    width={350}
-                    height={350}
-                    className="basis-6/12 mr-[10px] rounded-l-xl object-cover border-r"
-                  />
-                )}
-
+              <Image
+                src={Logo}
+                alt="Placeholder"
+                width={350}
+                height={350}
+                className="basis-6/12 mr-[10px] rounded-l-xl object-cover border-r"
+              />
               <aside className="basis-6/12 pl-[15px] pr-[25px] py-[20px] text-[14px]">
                 <h2 className="text-[20px] font-bold">
                   {selectedCompany.name}
