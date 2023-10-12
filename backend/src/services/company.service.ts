@@ -182,7 +182,7 @@ export const getAllCompanies = async (
   }
 
   for (const company of res.rows as (Company & { score: number })[]) {
-    company.score = Number(company.score) ?? null
+    company.dataValues.score = Number(company.dataValues.score) ?? null
   }
 
   return {
