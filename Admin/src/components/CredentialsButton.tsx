@@ -10,7 +10,7 @@ export const CredentialsButton = () => {
   return (
     <>
       <button
-        className="flex w-full justify-center gap-5 rounded bg-white px-4 text-sm font-bold drop-shadow-md hover:bg-gray-50 h-12 items-center rounded-4xl"
+        className="bg-primary-base flex w-full justify-center gap-5 rounded text-white px-4 text-sm font-bold drop-shadow-md hover:bg-[#345561] h-12 items-center rounded-4xl"
         onClick={() => setIsOpen(true)}
       >
         <span>Iniciar Sesión</span>
@@ -32,6 +32,8 @@ export const CredentialsButton = () => {
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
+            width: 'full sm:w-full md:w-3/4 lg:w-1/2 xl:w-1/3 2xl:w-1/4',
+            minWidth: '20rem',
             maxWidth: '40rem',
             height: 'fit-content',
             border: 'transparent',
@@ -51,16 +53,12 @@ export const CredentialsButton = () => {
           </div>
           <div className="flex flex-col items-center justify-center rounded-lg bg-background border-[2px] border-gray-300 py-16 px-10 shadow-md">
             <Input
-              id='email'
-              type='text'
+              id="email"
+              type="text"
               placeholder="Email"
-              className='mb-3'
+              className="mb-3"
             />
-            <Input
-              id='passwordIn'
-              type='password'
-              placeholder="Password"
-            />
+            <Input id="passwordIn" type="password" placeholder="Password" />
             <button
               className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded mt-4 shadow-md"
               onClick={() => {

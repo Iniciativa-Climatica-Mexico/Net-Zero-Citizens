@@ -7,7 +7,7 @@ import Providers from '@/components/Providers'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Admim - GreenCircle',
+  title: 'Admin - GreenCircle',
   description: 'Administra GreenCircle desde aquí',
 }
 
