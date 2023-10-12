@@ -46,7 +46,7 @@ class LoginViewModel: ObservableObject {
   
   @MainActor
   func handleAppleSignIn() async -> SignInState {
-    let res = await appleUseCase.signIn(userId: "001602.c8d6835d52754fe59710ebb7430ebb7430eeca4.0939", fullName: "Denisse Maldonado", email: "denissem@icloud.com")
+    let res = await appleUseCase.signIn(userId: userId, fullName: fullName, email: email)
     
     if res == .fail {
       showAlert = true

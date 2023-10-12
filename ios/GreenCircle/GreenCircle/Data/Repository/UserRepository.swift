@@ -71,6 +71,7 @@ class UserRepository: UserRepositoryProtocol {
     let res: AuthResponse? = await nService.postRequest(url, body: body)
     
     if let authResponse = res {
+      print(authResponse)
       return authResponse
     } else {
       throw GCError.requestFailed
