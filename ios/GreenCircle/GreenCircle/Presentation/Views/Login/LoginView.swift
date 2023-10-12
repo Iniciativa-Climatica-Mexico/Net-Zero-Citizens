@@ -69,11 +69,7 @@ struct LoginView: View {
               }
             }
           }
-         /*
-          .onTapGesture {
-              self.loadingGoogle.toggle()
-          }*/
-          .overlay(LoadingScreenView()
+          .overlay(LoadingScreen2View()
             .opacity(viewModel.loadingGoogle ? 1.0 : 0.00)
           )
             
