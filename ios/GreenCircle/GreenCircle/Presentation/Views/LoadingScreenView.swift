@@ -38,7 +38,7 @@ struct LoadingScreenView: View {
                   .resizable()
                   .aspectRatio(contentMode: .fit)
                   .frame(height: 50)
-                  .opacity(viewModel.loader2 ? 0.4 : 0.00)
+                  .opacity(viewModel.loader2 ? 0.3 : 0.00)
                   
                   
               
