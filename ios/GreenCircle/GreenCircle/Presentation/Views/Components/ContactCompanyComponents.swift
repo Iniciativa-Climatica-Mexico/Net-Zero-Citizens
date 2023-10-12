@@ -174,13 +174,8 @@ struct ContactCompanyComponentView: View {
 
 struct ContactCompanyRatingView: View {
   @ObservedObject var modelCompanyRating: CompanyViewModel
-  @EnvironmentObject var companyId: CompanyReviewViewModel
   @Binding var dispScrollView: Bool
-  
-  var goReviews: () -> Void
-  var goOpinions: () -> Void
-  var goScrollRating: () -> Void
-  
+    @State private var isSecondViewPresented = false
   var body: some View {
     if !dispScrollView {
       VStack(alignment: .leading, spacing: 5) {
@@ -226,17 +221,14 @@ struct ContactCompanyRatingView: View {
         }.padding(.bottom, 10)
         HStack {
           Spacer()
-
-            NavigationLink(destination: ScrollViewRating(goOpinions: goOpinions, goScrollRating: goScrollRating), label: {
-            Text("Ver mas...")
-              .font(.system(size: 17))
-              .foregroundColor(Color("BlueCustom"))
-              .onTapGesture {
-                  companyId.setCompanyId(companyId: modelCompanyRating.contentCompany.companyId)
-                goReviews()
-              }
-          })
-
+          Text("Ver mas...").onTapGesture {
+              isSecondViewPresented = true
+          }
+          .sheet(isPresented: $isSecondViewPresented) {
+              ScrollViewRating()
+          }
+          .font(.system(size: 17))
+          .foregroundColor(Color("BlueCustom"))
           Spacer()
         }
         Spacer()

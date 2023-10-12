@@ -45,7 +45,7 @@ export default function Home() {
 
   const handleTableRowClick = (company: CompanyComplaints) => {
     setSelectedComplaint(company)
-    router.push(`/complaints/${company.companyId}`)
+    router.push(`/quejas/${company.companyId}`)
   }
 
   const fetchCompaniesWithComplaints = async () => {

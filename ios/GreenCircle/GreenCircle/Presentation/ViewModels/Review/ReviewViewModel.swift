@@ -7,12 +7,6 @@
 
 import Foundation
 
-struct ReviewPostData {
-    let reviewTitle: String
-    let review: String
-    let score: Float
-}
-
 class ReviewViewModel: ObservableObject {
     private let fetchReviewUseCase: ReviewUseCase
     
@@ -26,20 +20,18 @@ class ReviewViewModel: ObservableObject {
         review: "",
         createdAt: "",
         updatedAt: ""
+//        user: User()
     )
-  
     @Published var totalReviews = Int ()
-    @Published var responsePost : String = ""
     
     init (reviewUseCase: ReviewUseCase = ReviewUseCase.shared) {
         self.fetchReviewUseCase = reviewUseCase
     }
     
     @MainActor
-
-    func fetchReviewByCompanyId(companyId: UUID) async {
-        let resultReview = await fetchReviewUseCase.fetchReviewByCompanyId(cmpyId: companyId.uuidString.lowercased())
-
+    
+    func fetchReviewByCompanyId(companyId: String) async {
+        let resultReview = await fetchReviewUseCase.fetchReviewByCompanyId(cmpyId: companyId)
         if let resultReview = resultReview {
             print("Review recibida: \(resultReview)")
             contentReview = resultReview.rows
@@ -61,16 +53,6 @@ class ReviewViewModel: ObservableObject {
             print("Total de reseñas: \(totalReviews)")
         } else {
             print("No se pudo obtener la review por User")
-        }
-    }
-    
-    @MainActor
-    func addReview(companyId: UUID, reviewTitle: String, review: String, score: Float) async {
-        let userId: String = fetchReviewUseCase.lService?.user.id ?? ""
-        let reviewBody = ReviewPostData(reviewTitle: reviewTitle, review: review, score: score)
-        if let resposePost = await fetchReviewUseCase.addReview(usId: userId, cmpyId: companyId.uuidString.lowercased(), reviewBody: reviewBody)
-        {
-            responsePost = responsePost
         }
     }
 }
