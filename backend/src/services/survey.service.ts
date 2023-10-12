@@ -284,7 +284,9 @@ export const answerSurvey = async (answers: FullAnswers): Promise<Answer[]> => {
       if (!ans.scaleValue) throw new Error('Scale value is required')
     } else if (question.questionType === 'open') {
       if (ans.scaleValue) throw new Error('Scale value not allowed')
-      if (!ans.answerText) throw new Error('Text answer is required')
+      if (!ans.answerText)
+        if (question.isRequired) throw new Error('Text answer is required')
+        else continue
     } else {
       throw new Error('Invalid question type')
     }
@@ -295,14 +297,15 @@ export const answerSurvey = async (answers: FullAnswers): Promise<Answer[]> => {
   return unwrap(s)
 }
 
-
 /**
- * @brieg Función del servicio que asigna un string vacío a las respuestas de una encuesta 
+ * @brieg Función del servicio que asigna un string vacío a las respuestas de una encuesta
  * de un usuario eliminado
  * @param uuid El id del usuario eliminado
  * @returns Una promesa con las respuestas actualizadas
  */
-export const updateAnswersByUserId = async (uuid: string): Promise<Answer[]> => {
+export const updateAnswersByUserId = async (
+  uuid: string
+): Promise<Answer[]> => {
   const answers = await Answer.findAll({
     where: {
       userId: uuid,

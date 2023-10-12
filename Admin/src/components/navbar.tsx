@@ -9,11 +9,10 @@
  */
 
 'use client'
-import { signOut, useSession } from 'next-auth/react'
-import 'bootstrap/dist/css/bootstrap.min.css'
 
-import Image from 'next/image'
+import { signOut, useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import Logo from '../../public/Logo.svg'
 import { usePathname } from 'next/navigation'
 import { deleteSession, refreshTokens } from '@/utils/sessionHooks'
@@ -35,7 +34,23 @@ export default function Navbar() {
     }
   }, [])
 
-  if (pathname == '/login' || pathname == '/notAllowed') {
+  const toggleMobileMenu = () => {
+    if (!mobileMenuVisible) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'auto'
+    }
+
+    setMobileMenuVisible((prev) => !prev)
+  }
+
+  const [mobileMenuVisible, setMobileMenuVisible] = useState(false)
+
+  if (
+    pathname == '/login' ||
+    pathname == '/notAllowed' ||
+    pathname == '/notRegistered'
+  ) {
     return <></>
   }
 
@@ -56,6 +71,7 @@ export default function Navbar() {
                 Green Circle
               </span>
             </div>
+            {/* Desktop navigation */}
             <div
               className="hidden w-full md:block md:w-auto"
               id="navbar-default"
@@ -80,7 +96,7 @@ export default function Navbar() {
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="/usuarios"
                     className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent no-underline"
                   >
                     Usuarios
@@ -88,8 +104,8 @@ export default function Navbar() {
                 </li>
                 <li>
                   <a
-                    href="/complaints"
-                    className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                    href="/quejas"
+                    className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent no-underline"
                   >
                     Quejas
                   </a>
@@ -122,7 +138,72 @@ export default function Navbar() {
                 </li>
               </ul>
             </div>
+            {/* Mobile navigation */}
+            <div className="md:hidden">
+              <button
+                onClick={toggleMobileMenu}
+                className={`text-gray-900 dark:text-white transition-transform ease-in-out duration-200 ${
+                  mobileMenuVisible ? 'rotate-90' : ''
+                }`}
+              >
+                ☰
+              </button>
+            </div>
           </div>
+          {/* Mobile menu */}
+          {mobileMenuVisible && (
+            <div className="md:hidden fixed top-17 right-0 h-screen w-48 bg-white border-l border-[#C1C9D2] dark:bg-gray-800 overflow-auto transform transition-transform ease-in-out duration-200 z-10">
+              <ul className="flex flex-col py-4">
+                <li className="border-b border-[#C1C9D2] border-opacity-50">
+                  <a
+                    href="/"
+                    className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 dark:text-white"
+                  >
+                    Proovedores
+                  </a>
+                </li>
+                <li className="border-b border-[#C1C9D2] border-opacity-50">
+                  <a
+                    href="/encuestas"
+                    className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 dark:text-white"
+                  >
+                    Encuestas
+                  </a>
+                </li>
+                <li className="border-b border-[#C1C9D2] border-opacity-50">
+                  <a
+                    href="/usuarios"
+                    className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 dark:text-white"
+                  >
+                    Usuarios
+                  </a>
+                </li>
+                <li className="border-b border-[#C1C9D2] border-opacity-50">
+                  <a
+                    href="/quejas"
+                    className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 dark:text-white"
+                  >
+                    Quejas
+                  </a>
+                </li>
+                <li className="border-b border-[#C1C9D2] border-opacity-50">
+                  <div className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 dark:text-white">
+                    {session && session.user && (
+                      <button
+                        onClick={() => {
+                          signOut()
+                          deleteSession()
+                        }}
+                        className="text-red-600"
+                      >
+                        Salir
+                      </button>
+                    )}
+                  </div>
+                </li>
+              </ul>
+            </div>
+          )}
         </nav>
       )}
     </>

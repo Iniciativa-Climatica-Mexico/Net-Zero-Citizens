@@ -11,33 +11,21 @@ import SwiftUI
 //
 struct ReviewCardProvider: View {
     @StateObject var reviewViewModel: ReviewViewModel
-    @EnvironmentObject var companyId: CompanyReviewViewModel
     
     var profilePicture: Image
     
     var body: some View {
         VStack {
-            VStack {
-                if !reviewViewModel.contentReview.isEmpty{
-                    ForEach(reviewViewModel.contentReview) { review in
-                        Divider()
-                        ReviewCompanyCard(review: review, profilePicture: profilePicture )
-                    }
-                    .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
-                }else {
-                    Divider()
-                    Text("Aún no hay reviews para está compañia")
-                      .foregroundColor(Color("MainText"))
-                      .font(.system(size: 18))
-                      .padding(.top, 30)
-                  }
+            ForEach(reviewViewModel.contentReview) { review in
+                Divider()
+                ReviewCompanyCard(review: review, profilePicture: profilePicture )
             }
+            .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
         }
-        Spacer()
         
         .onAppear {
             Task {
-                await reviewViewModel.fetchReviewByCompanyId(companyId: companyId.companyReviewId.companyId)
+                await reviewViewModel.fetchReviewByCompanyId(companyId: "c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e")
             }
         }
     }
@@ -74,8 +62,8 @@ struct ReviewCompanyCard: View {
 //                    Text(review.user.firstName + " " + review.user.lastName)
 //                        .font(.headline)
                     Text(formatDate(review.createdAt))
-                        .font(.system(size: 13))
-                        .foregroundColor(Color("MainText"))
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
                 }
                 
                 Spacer()
@@ -101,12 +89,10 @@ struct ReviewCompanyCard: View {
             
             VStack (alignment: .leading) {
                 Text(review.reviewTitle)
-                
-                    .foregroundColor(Color("MainText"))
-                    .fontWeight(.bold)
+                    .font(.headline)
                 
                 Text(review.review)
-                    .font(.system(size: 15))
+                    .font(.body)
                     .foregroundColor(Color("BlackCustom"))
                     .padding(.top, 10)
             }

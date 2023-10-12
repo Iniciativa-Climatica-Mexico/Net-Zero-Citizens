@@ -29,9 +29,9 @@ class NetworkAPIService {
   /// Ejecuta la get request a la url proporcionada
   /// - Parameter url: el url a la cuál hacer el request
   /// - Returns: el tipo de dato inferido o nil si falla
-  func getRequest<T: Codable>(_ url: URL) async -> T? {
+  func getRequest<T: Codable>(_ url: URL, params: [String: Any] = [:]) async -> T? {
     let requestTask = session
-      .request(url).validate()
+      .request(url, parameters: params).validate()
 
     let response = await requestTask.serializingData().response
 
@@ -104,6 +104,62 @@ class NetworkAPIService {
       return nil
     }
   }
+
+    /// Realiza un put request a la url dada
+    /// - Parameters:
+    ///   - url: la url a la cual hacer el put request
+    ///   - fileURL: url a donde esta almacenado el archivo en el dispositivo
+    ///   
+    ///   - body: el body de la request
+    /// - Returns: la respuesta inferida o nil si falla
+    ///
+
+    enum UploadStatus {
+        case success(message: String)
+        case failure(message: String)
+    }
+    
+    func uploadFileRequest<T: Codable>(
+        _ url: URL,
+        file: Data,
+        fileParameterName: String = "file",
+        fileName: String?,
+        mimeType: String?,
+        additionalParameters: [String: Any] = [:]
+    ) async -> T? {
+        var responseResult: T?
+
+        // 1. Obtener el token de LocalService
+        guard let authToken = LocalService.shared.getUserInformation()?.tokens.authToken else {
+            print("Error: Unable to fetch token")
+            return nil
+        }
+
+        // Crear encabezados con el token de autenticación
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(authToken)",
+            "Accept": "application/json"
+        ]
+
+        do {
+            let response = try await AF.upload(multipartFormData: { multipartFormData in
+                multipartFormData.append(file, withName: fileParameterName, fileName: fileName, mimeType: mimeType)
+                
+                for (key, value) in additionalParameters {
+                    if let stringValue = value as? String {
+                        multipartFormData.append(stringValue.data(using: .utf8)!, withName: key)
+                    } else if let dataValue = value as? Data {
+                        multipartFormData.append(dataValue, withName: key)
+                    }
+                }
+            }, to: url, headers: headers).serializingData().value
+
+            return responseResult
+        } catch {
+            print(error)
+            return responseResult
+        }
+    }
   
   /// Realiza un delete request a la url dada
   /// - Parameters:

@@ -26,14 +26,12 @@ export default function Hero() {
         <p className="text-lg">
           ¡Conéctate con proveedores y desata el potencial del sol!
         </p>
-        {/* TODO: CHANGE STORE BUTTON FOR A REAL ONE */}
-        {/* STORE BUTTONS */}
-        <StoreButton />
+        <a href="https://www.iniciativaclimatica.org/wp-content/uploads/2023/10/app-release.apk" target="_blank" className="bg-primary-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Descargar para Android</a>
       </article>
       <Image
         src={PhoneMockup}
         alt="Phone mockup"
-        className="w-full h-auto -mt-20 lg:w-[28%] lg:-mt-16 lg:mr-40"
+        className="w-4/6 h-auto -mt-12 lg:w-[23%] lg:-mt-10 lg:mr-52"
         priority
         width={0}
         height={0}

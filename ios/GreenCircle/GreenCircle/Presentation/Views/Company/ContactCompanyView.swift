@@ -90,7 +90,8 @@ struct CompanyReportView: View {
     @State var selectedReportReason: String? = nil
     @State var description: String = ""
     @State private var showAlert: Bool = false
-    @State private var showReportAlert: Bool = false
+    var complaintId: String = UUID().uuidString
+    let screenHeight = UIScreen.main.bounds.height
 
     let reportReasons = ["Productos defectuosos.",
                          "Inconformidad con el producto/servicio.",
@@ -104,6 +105,7 @@ struct CompanyReportView: View {
             Text("Reportar Proveedor")
                 .font(.system(size: 18))
                 .padding(.bottom, 5).bold()
+                .padding(.top, 20)
 
             Divider()
 
@@ -114,6 +116,13 @@ struct CompanyReportView: View {
             
             if hasTriedToSubmit && (selectedReportReason == nil || selectedReportReason!.isEmpty) {
                 Text("Por favor, selecciona una razón para reportar.")
+                    .font(.system(size: 14))
+                    .foregroundColor(.red)
+                    .padding(.bottom, 10)
+            }
+
+            if hasTriedToSubmit && description.isEmpty {
+                Text("El comentario es obligatorio.")
                     .font(.system(size: 14))
                     .foregroundColor(.red)
                     .padding(.bottom, 10)
@@ -130,13 +139,15 @@ struct CompanyReportView: View {
                 Divider()
                     .padding(.top, 20)
 
-                Text(" Añade un comentario adicional (opcional)")
+                Text("Añade un comentario adicional (obligatorio)")
                     .font(.system(size: 12))
                     .foregroundColor(Color("BlackCustom")).contrast(12.6)
                     .padding(.top ,10).bold()
-                    .padding(.leading ,-100)
+                    .padding(.leading ,-78)
 
-                TextField("Comentario adicional al reporte...", text: $description)
+                TextField("Comentario adicional al reporte...", text: $description, onCommit: {
+                    self.hideKeyboard()
+                })
                     .disableAutocorrection(true)
                     .padding(.top, 3)
                     .font(.system(size: 16))
@@ -145,13 +156,12 @@ struct CompanyReportView: View {
                 HStack {
                     Spacer()
                     Button(action: {
-                        if selectedReportReason == nil || selectedReportReason!.isEmpty {
+                        if selectedReportReason == nil || selectedReportReason!.isEmpty || description.isEmpty {
                             hasTriedToSubmit = true
-//                            showReportAlert = true
                         } else {
                             Task {
                                 print("print.......")
-                                print(await complaintViewModel.handleSubmit(complaintSubject: selectedReportReason ?? "", complaintDescription: description.isEmpty ? nil : description, companyId: companyViewModel.contentCompany.companyId.uuidString))
+                                print(await complaintViewModel.handleSubmit(complaintId: complaintId, complaintSubject: selectedReportReason ?? "", complaintDescription: description, companyId: companyViewModel.contentCompany.companyId.uuidString))
                                 showAlert = true
                             }
                         }
@@ -167,18 +177,16 @@ struct CompanyReportView: View {
                 }
                 .padding(.top, 30)
             }
-            .frame(height: 300)
+            .frame(height: screenHeight * 0.40)
         }
         .padding(EdgeInsets(top: 230, leading: 20, bottom: 0, trailing: 20))
         .foregroundColor(Color("BlackCustom"))
         .alert(isPresented: $showAlert) {
             Alert(title: Text("Confirmación"), message: Text("El reporte ha sido enviado con éxito."), dismissButton: .default(Text("Ok")))
         }
-//        .alert(isPresented: $showReportAlert) {
-//            Alert(title: Text("Atención"), message: Text("Por favor, selecciona una razón para reportar."), dismissButton: .default(Text("Entendido")))
-//        }
     }
 }
+
 
 
 
@@ -198,14 +206,11 @@ struct ContactCompanyView: View {
   @State var deleteOperation: Bool = false
   @State var messageAlert: String = ""
   @Binding var emptyHeartFill: Bool
-  
-  var goReviews: () -> Void
-  var goOpinions: () -> Void
-  var goScrollRating: () -> Void
-
+    
   @Environment(\.presentationMode) var presentationMode
 
   var body: some View {
+    if !dispScrollView {
       NavigationStack {
         VStack(alignment: .leading) {
           TabView {
@@ -287,12 +292,7 @@ struct ContactCompanyView: View {
                 }
               }
               if key == "Reviews" {
-                ContactCompanyRatingView(modelCompanyRating: contactCompanyViewModel,
-                                         dispScrollView: $dispScrollView,
-                                         goReviews: goReviews,
-                                         goOpinions: goOpinions,
-                                         goScrollRating: goScrollRating
-                ).onAppear {
+                ContactCompanyRatingView(modelCompanyRating: contactCompanyViewModel, dispScrollView: $dispScrollView).onAppear {
                   bindImageToDescription = false
                 }
               }
@@ -325,6 +325,7 @@ struct ContactCompanyView: View {
             }
         )
           }
+    }
       }
     }
 }

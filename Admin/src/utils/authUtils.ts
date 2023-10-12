@@ -63,7 +63,6 @@ export const googleLogin = async (
  * @function credentialsLogin
  * @desc This function is used to authenticate users using Google OAuth.
  * @example
- * googleLogin('http://localhost:3000/api/auth/google', '1234')
  * // => {message: 'success'}
  */
 export const credentialsLogin = async (
