@@ -149,10 +149,22 @@ export default function ModalProveedor({
     }
   }
 
-  const sendEmail = (e: HTMLFormElement) => {
+  const sendRejectEmail = (e: HTMLFormElement) => {
     e.preventDefault()
 
     emailjs.sendForm('service_icm2023', 'template_vjx2ic3', form.current, 'LSXaN-F4jhFZ5mzIt')
+      .then((result) => {
+        console.log(result.text)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  const sendAcceptEmail = (e: HTMLFormElement) => {
+    e.preventDefault()
+
+    emailjs.sendForm('service_icm2023', 'template_f34afsb', form.current, 'LSXaN-F4jhFZ5mzIt')
       .then((result) => {
         console.log(result.text)
       })
@@ -227,7 +239,7 @@ export default function ModalProveedor({
                 <form
                   className="flex items-center space-x-2 pt-4"
                   ref={form}
-                  onSubmit={sendEmail}
+                  onSubmit={sendRejectEmail}
                 >
                   <input
                     type="hidden"
@@ -448,15 +460,33 @@ export default function ModalProveedor({
                     </label>
                   </div>
                   <footer className="flex gap-x-3">
-                    <Button
-                      disabled={!checkboxChecked}
-                      onClick={() => {
-                        handleAccept(selectedCompany, selectedCompany.companyId)
-                      }}
-                      variant="default"
+                    <form 
+                      className="flex items-center space-x-2"
+                      ref={form}
+                      onSubmit={sendAcceptEmail}
                     >
-                      Aprobar
-                    </Button>
+
+                      <input
+                        type="hidden"
+                        name="user_email"
+                        value={selectedCompany.email}
+                      />
+                      <input
+                        type="hidden"
+                        name="to_name"
+                        value={selectedCompany.name}
+                      />
+                      <Button
+                        disabled={!checkboxChecked}
+                        onClick={() => {
+                          handleAccept(selectedCompany, selectedCompany.companyId)
+                        }}
+                        variant="default"
+                      >
+                        Aprobar
+                      </Button>
+                    </form>
+                    
                     <Button
                       onClick={() => {
                         setViewModal(true)
