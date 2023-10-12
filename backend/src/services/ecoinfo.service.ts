@@ -11,6 +11,7 @@ import cron from 'node-cron'
  *            información de paginación
  */
 export const getAllEcoinfo = async (): Promise<Ecoinfo[]> => {
+  // await fetchEcoInfo()
   return await Ecoinfo.findAll()
 }
 
@@ -19,7 +20,7 @@ export const getAllEcoinfo = async (): Promise<Ecoinfo[]> => {
  * Funcion que realiza un fetch a la página de Facebook de ICM
  * Cada día
  */
-export const cronEcoInfo = cron.schedule('0 0 * * * ', () => {
+export const cronEcoInfo = cron.schedule('48 16 * * *', () => {
   fetchEcoInfo()
   console.log('EcoInfo updated')
 })
