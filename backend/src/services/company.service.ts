@@ -364,6 +364,11 @@ export const getCoordinatesIos = async (): Promise<
     (company): company is FilteredCompany => company !== null
   )
 
+  for (const company of filteredCompaniesTyped) {
+    company.latitude = Number(company.latitude)
+    company.longitude = Number(company.longitude)
+  }
+
   const paginator: Paginator<FilteredCompany> = {
     rows: filteredCompaniesTyped,
     start: 0,
