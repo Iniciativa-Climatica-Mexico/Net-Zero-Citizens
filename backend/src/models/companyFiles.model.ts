@@ -24,13 +24,13 @@ export type FileDescription =
   | 'Otro' // EVITAR USAR ESTE VALOR
 
 export type FileFormat =
-  | 'jpg'
-  | 'jpeg'
-  | 'png'
-  | 'pdf'
-  | 'docx'
-  | 'xlsx'
-  | 'pptx'
+  | '.jpg'
+  | '.jpeg'
+  | '.png'
+  | '.pdf'
+  | '.docx'
+  | '.xlsx'
+  | '.pptx'
 
 @Table({ tableName: 'COMPANY_FILES' })
 export default class CompanyFiles extends Model {

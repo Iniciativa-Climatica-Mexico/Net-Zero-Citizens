@@ -38,13 +38,13 @@ type FileDescription =
   | 'Otro' // EVITAR USAR ESTE VALOR
 
 type FileFormat =
-  | 'jpg'
-  | 'jpeg'
-  | 'png'
-  | 'pdf'
-  | 'docx'
-  | 'xlsx'
-  | 'pptx'
+  | '.jpg'
+  | '.jpeg'
+  | '.png'
+  | '.pdf'
+  | '.docx'
+  | '.xlsx'
+  | '.pptx'
 
 /**
  * @brief Tipo de dato para la información de un archivo
@@ -89,7 +89,7 @@ export const uploadCompanyFile = async (
     // Definir los parámetros para subir el archivo
     const params = {
       Bucket: bucketName,
-      Key: `${company?.name}/${fileDescription + '.' + fileFormat}`,
+      Key: `${company?.name}/${fileDescription + fileFormat}`,
       Body: base64data,
     }
 
