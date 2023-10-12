@@ -63,7 +63,9 @@ struct AppleSignIn: View {
           
           print("saved apple user", appleUser)
           
+          print(appleUser.userId)
           vm.userId = appleUser.userId
+          print(vm.userId)
           vm.email = appleUser.email
           vm.fullName = "\(appleUser.firstName) \(appleUser.lastName)"
           
@@ -78,13 +80,10 @@ struct AppleSignIn: View {
               goMainMenu()
             }
           }
-          
-          
+    
         } else {
           
           goMainMenu()
-          
-          print("missing some fields", appleIdCredentials.email, appleIdCredentials.fullName, appleIdCredentials.user)
           
           guard
             let appleUserData = UserDefaults.standard.data(forKey: appleIdCredentials.user),
