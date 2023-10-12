@@ -1,6 +1,9 @@
 package com.greencircle
 
 import com.greencircle.domain.model.company.Company
+import com.greencircle.domain.model.company.files.CompanyFile
+import com.greencircle.domain.model.company.files.FileDescription
+import com.greencircle.domain.model.company.files.FileFormat
 import java.util.UUID
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -28,10 +31,15 @@ class CompanyTest {
         val city = "Querétaro"
         val state = "Querétaro"
         val zipCode = "76904"
-        val pdfCurriculumUrl = "test1"
-        val pdfGuaranteeSecurityUrl = "test2"
-        val pdfActaConstitutivaUrl = "test3"
-        val pdfIneUrl = "test4"
+        val files = listOf(
+            CompanyFile(
+                companyFileId = UUID.randomUUID(),
+                companyId = UUID.randomUUID(),
+                fileDescription = FileDescription.ACTA_CONSTITUTIVA,
+                fileFormat = FileFormat.PDF,
+                fileURL = "test"
+            )
+        )
 
         val company = Company(
             userId = userId,
@@ -45,10 +53,7 @@ class CompanyTest {
             city = city,
             state = state,
             zipCode = zipCode,
-            pdfCurriculumUrl = pdfCurriculumUrl,
-            pdfGuaranteeSecurityUrl = pdfGuaranteeSecurityUrl,
-            pdfActaConstitutivaUrl = pdfActaConstitutivaUrl,
-            pdfIneUrl = pdfIneUrl
+            files = files
         )
 
         // Checar la integridad de los datos
@@ -63,10 +68,7 @@ class CompanyTest {
         assertEquals(city, company.city)
         assertEquals(state, company.state)
         assertEquals(zipCode, company.zipCode)
-        assertEquals(pdfCurriculumUrl, company.pdfCurriculumUrl)
-        assertEquals(pdfGuaranteeSecurityUrl, company.pdfGuaranteeSecurityUrl)
-        assertEquals(pdfActaConstitutivaUrl, company.pdfActaConstitutivaUrl)
-        assertEquals(pdfIneUrl, company.pdfIneUrl)
+        assertEquals(files, company.files)
     }
 
     /**
@@ -85,10 +87,15 @@ class CompanyTest {
         val city = "Querétaro"
         val state = "Querétaro"
         val zipCode = "76904"
-        val pdfCurriculumUrl = "test1"
-        val pdfGuaranteeSecurityUrl = "test2"
-        val pdfActaConstitutivaUrl = "test3"
-        val pdfIneUrl = "test4"
+        val files = listOf(
+            CompanyFile(
+                companyFileId = UUID.randomUUID(),
+                companyId = UUID.randomUUID(),
+                fileDescription = FileDescription.ACTA_CONSTITUTIVA,
+                fileFormat = FileFormat.PDF,
+                fileURL = "test"
+            )
+        )
 
         val company = Company(
             userId = userId,
@@ -102,10 +109,7 @@ class CompanyTest {
             city = city,
             state = state,
             zipCode = zipCode,
-            pdfCurriculumUrl = pdfCurriculumUrl,
-            pdfGuaranteeSecurityUrl = pdfGuaranteeSecurityUrl,
-            pdfActaConstitutivaUrl = pdfActaConstitutivaUrl,
-            pdfIneUrl = pdfIneUrl
+            files = files
         )
 
         val company2 = Company(
@@ -120,10 +124,7 @@ class CompanyTest {
             city = city,
             state = state,
             zipCode = zipCode,
-            pdfCurriculumUrl = pdfCurriculumUrl,
-            pdfGuaranteeSecurityUrl = pdfGuaranteeSecurityUrl,
-            pdfActaConstitutivaUrl = pdfActaConstitutivaUrl,
-            pdfIneUrl = pdfIneUrl
+            files = files
         )
 
         assertEquals(company, company2)

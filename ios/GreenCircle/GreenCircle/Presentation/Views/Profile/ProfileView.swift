@@ -4,19 +4,35 @@
 //
 //  Created by ITESM on 07/09/23.
 //
-
 import SwiftUI
 
-
 struct ProfileView: View {
-  @ObservedObject var modelUser = UserViewModel()
-  @ObservedObject var modelReview = ReviewViewModel()
-  @StateObject var favourites = FavouriteViewModel()
-  @State var myFavourites: Bool = false
-  @State var totalFavourites: Int = 0
-  @State private var showAlertFavourites = false
+    @ObservedObject var modelUser = UserViewModel()
+    @ObservedObject var modelReview = ReviewViewModel()
+    @StateObject var favourites = FavouriteViewModel()
+    @State var myFavourites: Bool = false
+    @State var totalFavourites: Int = 0
+    @State private var showAlertFavourites = false
+    var goLogin: () -> Void
+
   
-  var goLogin: () -> Void
+    var body: some View {
+        NavigationView {
+            ZStack {
+                // Title Bar
+                VStack {
+                    TitleBarView(
+                        title: "Mi Perfil",
+                        leftIcon: nil,
+                        rightIcon: nil,
+                        leftDestination: {},
+                        rightDestination: {}
+                    )
+                    .frame(height: 10)
+                    .offset(y: -60)
+                    .navigationBarBackButtonHidden(true)
+                    Spacer() // Esto empuja el TitleBarView hacia arriba
+                }
 
   var body: some View {
     NavigationView {
@@ -103,16 +119,28 @@ struct ProfileView: View {
           
           //--------------------Sección de Reseñas-----------------------------------------
             Text(myFavourites ? "Mis Favoritos(" + "\(totalFavourites))" : "Mis Reseñas(\(modelReview.totalReviews))")
+                VStack {
+                    // Imagen provisional
+                    Image("Sun")
+                        .resizable() // Hacer que la imagen sea redimensionable
+                        .frame(width: 100, height: 100)
 
-            .font(.system(size: 20))
-            .fontWeight(.bold)
-            .padding(EdgeInsets(top: 32, leading: 15, bottom: 0, trailing: 0))
-            .padding(.leading)
-            .foregroundColor(.black)
-            .frame(maxWidth: .infinity, alignment: .leading)
-          ScrollView {
-            //Aquí irán las tarjetas de reseñas
-
+                    HStack {
+                        // Nombre del usuario
+                        Text(modelUser.contentBaseUser?.firstName ?? "Cargando...")
+                            .foregroundColor(Color.black)
+                            .font(.system(size: 16))
+                            .fontWeight(.semibold)
+                            .padding(.top, 10)
+                            .padding(.bottom, 2)
+                        // Apellido del Usuario
+                        Text(modelUser.contentBaseUser?.lastName ?? "Cargando...")
+                            .foregroundColor(Color.black)
+                            .font(.system(size: 16))
+                            .fontWeight(.semibold)
+                            .padding(.top, 10)
+                            .padding(.bottom, 2)
+                    }
             if myFavourites {
               if totalFavourites > 0 {
                 LazyVStack(spacing: 8) {
@@ -150,14 +178,90 @@ struct ProfileView: View {
       }
     }
   }
-  
-  struct ProfileView_Previews: PreviewProvider {
+ 
 
-    static var previews: some View {
+                    HStack {
+                        Button(action: {
+                            myFavourites.toggle()
+                        }) {
+                            Text(myFavourites ? "Mis Reseñas" : "Mis favoritos")
+                                .foregroundColor(.white)
+                                .padding(.vertical, 12)
+                                .padding(.horizontal)
+                                .frame(maxWidth: .infinity)
+                                .background(TitleBarColor.TitleBarColor)
+                                .cornerRadius(8)
+                        }
+                        .padding(.trailing, 10)
 
-      ProfileView(modelUser: UserViewModel(), goLogin: {})
+                        NavigationLink(destination: EditProfileView(modelUser: modelUser, goLogin: goLogin)) {
+                            Text("Editar perfil")
+                                .foregroundColor(.white)
+                                .padding(.vertical, 12)
+                                .padding(.horizontal)
+                                .frame(maxWidth: .infinity)
+                                .background(TitleBarColor.TitleBarColor)
+                                .cornerRadius(8)
+                        }
+                        .padding(.leading, 10)
+                    }
+                    .padding(.horizontal, 40)
+                    .padding(.top, 24)
 
+                    Spacer()
+
+                    Text(myFavourites ? "Mis Favoritos(" + "\(totalFavourites))" : "Mis Reseñas")
+                        .font(.system(size: 20))
+                        .fontWeight(.bold)
+                        .padding(EdgeInsets(top: 32, leading: 15, bottom: 0, trailing: 0))
+                        .padding(.leading)
+                        .foregroundColor(.black)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+
+                    ScrollView {
+                        if myFavourites {
+                            if totalFavourites > 0 {
+                                LazyVStack(spacing: 8) {
+                                    ForEach(Array(0..<favourites.listFavourites.rows.count), id: \.self) { index in
+                                        let favourite = favourites.listFavourites.rows[index]
+                                        FavouriteCardView(idCompany: favourite.companyId)
+                                    }
+                                }
+                                .padding(10)
+                            } else {
+                                Text("No has agregado proveedores como favoritos")
+                                    .foregroundColor(Color("MainText"))
+                                    .font(.system(size: 18))
+                            }
+                        } else {
+                            ReviewCardClient(reviewViewModel: ReviewViewModel())
+                        }
+                    }
+                    .onAppear {
+                        Task {
+                            try await favourites.getAllFavouritesByUser()
+                            totalFavourites = favourites.listFavourites.rows.count
+                            if totalFavourites == 0 {
+                                showAlertFavourites = true
+                            }
+                        }
+                    }
+                }
+                .padding(.top, 70)
+            }.onAppear(perform: loadProfileData)
+        }
     }
-  }
-  
+
+    private func loadProfileData() {
+        Task {
+            await modelUser.getAllUserData()
+            await modelReview.fetchReviewByUserId()
+        }
+    }
+}
+
+struct ProfileView_Previews: PreviewProvider {
+    static var previews: some View {
+        ProfileView(modelUser: UserViewModel(), goLogin: {})
+    }
 }

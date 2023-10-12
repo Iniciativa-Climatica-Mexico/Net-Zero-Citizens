@@ -16,18 +16,20 @@ export type QuestionDetail = {
   isRequired: boolean
 }
 
-type CreateSurveyBody = {
+export type CreateSurveyBody = {
   title: string
   description: string
   questions: Question[]
 }
 
-type Question = {
+export type Question = {
   id: number
   questionText: string
   questionType: string
   isRequired: boolean
-  options?: string[]
+  questionOptions?: {
+    textOption: string
+  }[]
 }
 
 export async function fetchAllSurveys() {

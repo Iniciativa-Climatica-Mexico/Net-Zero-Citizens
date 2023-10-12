@@ -2,7 +2,7 @@ import Switch from '@mui/material/Switch'
 import React, { useState } from 'react'
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'
 import { MulOPQuestion } from './questionsTypes/mulOpQuestion'
-import { Question, CreateSurveyBody } from '../../app/encuestas/crear/page'
+import { Question, CreateSurveyBody } from '@/api/v1/survey'
 import { useEffect } from 'react'
 
 /**
@@ -12,7 +12,7 @@ type QuestionWrapperProps = {
   questions: Question[]
   id: number
   setQuestions: React.Dispatch<React.SetStateAction<Question[]>>
-  survey: React.Dispatch<React.SetStateAction<CreateSurveyBody>>
+  survey: CreateSurveyBody
   setSurvey: React.Dispatch<React.SetStateAction<CreateSurveyBody>>
 }
 export const QuestionWrapper = ({
