@@ -13,7 +13,7 @@ struct UserRegisterView: View {
   var goLogin: () -> Void
   var goForm: () -> Void
   var goTutorial: () -> Void
-  
+  @State var loadingGoogle = false
   var body: some View {
     ScrollView {
       VStack(spacing: 40) {
@@ -55,6 +55,7 @@ struct UserRegisterView: View {
         
         VStack {
           GoogleSignInButton(style: .wide) {
+              loadingGoogle = true
             Task {
               let state = await viewModel
                 .handleGoogleSignIn()
@@ -64,10 +65,15 @@ struct UserRegisterView: View {
               case .success:
                 goTutorial()
               case .fail:
+                  loadingGoogle = false
                 break
               }
             }
-          }.alert("Algo salió mal",
+          }
+          .overlay(LoadingScreen2View()
+            .opacity(loadingGoogle ? 1.0 : 0.00)
+          )
+          .alert("Algo salió mal",
                   isPresented: $viewModel.showAlert) {
             Button("Entendido", role: .cancel) {}
           } message: {
