@@ -18,7 +18,7 @@ struct NavBarTheme: ViewModifier {
   func body(content: Content) -> some View {
     content.onAppear {
       let appearance = UINavigationBarAppearance()
-      appearance.backgroundColor = colorScheme == .light ? UIColor(Color("BlueCustom")) : UIColor(Color("BlueCustom"))
+      appearance.backgroundColor = colorScheme == .light ? UIColor(Color("Primary")) : UIColor(Color("Primary"))
       appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
       appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
 
