@@ -43,4 +43,11 @@ export default class Ecoinfo extends Model {
     field: 'DESCRIPTION',
   })
   description: string | null
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: false,
+    field: 'CREATED_POST_AT',
+  })
+  createdPostAt: Date
 }
