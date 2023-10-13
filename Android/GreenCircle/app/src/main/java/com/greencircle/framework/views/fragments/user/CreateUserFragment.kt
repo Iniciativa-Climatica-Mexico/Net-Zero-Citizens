@@ -21,8 +21,8 @@ import com.greencircle.data.remote.user.UserAPIService
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.auth.LoginViewModel
 import com.greencircle.framework.viewmodel.user.CreateUserViewModel
-import com.greencircle.framework.views.activities.MainActivity
 import com.greencircle.framework.views.activities.RegisterUserActivity
+import com.greencircle.framework.views.activities.TutorialActivity
 import com.greencircle.framework.views.fragments.TermsAndConditions.TermsAndConditions
 import java.util.UUID
 
@@ -210,7 +210,7 @@ class CreateUserFragment : Fragment() {
                 roleId,
             )
             createUserViewModel.updateUser(uuid, userInfo)
-            navigateToHome()
+            navigateToTutorial()
         } else {
             hideKeyboard()
         }
@@ -319,13 +319,10 @@ class CreateUserFragment : Fragment() {
     }
 
     /**
-     * Navega a la pantalla de inicio de la aplicación.
-     *
-     * Esta función se encarga de crear un intent para abrir la actividad principal de la aplicación
-     * (`MainActivity`) y luego inicia la actividad para mostrar la pantalla de inicio.
+     * Navega al tutorial de la aplicación.
      */
-    private fun navigateToHome() {
-        var intent: Intent = Intent(requireContext(), MainActivity::class.java)
+    private fun navigateToTutorial() {
+        var intent: Intent = Intent(requireContext(), TutorialActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
