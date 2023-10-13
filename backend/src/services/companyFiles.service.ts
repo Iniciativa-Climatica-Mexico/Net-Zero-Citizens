@@ -134,8 +134,6 @@ export const downloadCompanyFile = async (
       Key: `${company?.name}/${fileDescription + '.' + fileFormat}`,
     }
 
-    console.log(params.Key)
-
     // Descargar el archivo de S3
     const s3Response = await s3.getObject(params).promise()
 

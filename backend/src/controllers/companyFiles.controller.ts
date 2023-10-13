@@ -86,9 +86,7 @@ export const getCompanyFiles: RequestHandler<
 
 export const downloadCompanyFile: RequestHandler = async (req, res) => {
   try {
-    console.log('PUTA')
     const { companyId, fileDescription, fileFormat } = req.params
-    console.log('Params: ', req.params)
     if (!companyId || !fileFormat || !fileDescription) {
       return res.status(400).send('Missing parameters')
     }
@@ -98,7 +96,6 @@ export const downloadCompanyFile: RequestHandler = async (req, res) => {
       fileDescription,
       fileFormat
     )
-    console.log('File stream: ', fileStream)
     if (!fileStream) {
       return res.status(404).send('File not found')
     }
