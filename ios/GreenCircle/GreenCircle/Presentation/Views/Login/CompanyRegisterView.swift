@@ -12,7 +12,7 @@ struct CompanyRegisterView: View {
   var goLogin: () -> Void
   var goForm: () -> Void
   var goMainMenu: () -> Void
-
+  @State var loadingGoogle = false
   @StateObject var viewModel = LoginViewModel()
   @EnvironmentObject var user: UserData
   @State private var isPrivacyPolicyVisible = false
@@ -28,28 +28,35 @@ struct CompanyRegisterView: View {
           title: "Crear cuenta de empresa",
           subTitle: "Registrate con tu cuenta preferida")
 
-        Spacer()
+                Spacer()
 
-        VStack {
-          GoogleSignInButton(style: .wide) {
-            Task {
-              let state = await viewModel
-                .handleGoogleSignIn()
-              switch state {
-              case .newUser:
-                goForm()
-              case .success:
-                goMainMenu()
-              case .fail:
-                break
-              }
-                        }
+                VStack {
+                  GoogleSignInButton(style: .wide) {
+                      loadingGoogle = true
+                    Task {
+                      let state = await viewModel
+                        .handleGoogleSignIn()
+                      switch state {
+                      case .newUser:
+                        goForm()
+                      case .success:
+                        goMainMenu()
+                      case .fail:
+                          loadingGoogle = false
+                        break
+                      }
                     }
+                  }
+                  .overlay(LoadingScreen2View()
+                    .opacity(loadingGoogle ? 1.0 : 0.00)
+                    )
+                  
                     .alert("Algo salió mal", isPresented: $viewModel.showAlert) {
                         Button("Entendido", role: .cancel) {}
                     } message: {
                         Text("Intenta de nuevo por favor")
                     }
+                   
                     .padding(.horizontal)
                 }
 
