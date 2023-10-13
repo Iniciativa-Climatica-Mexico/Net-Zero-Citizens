@@ -83,3 +83,31 @@ export const getCompanyFiles: RequestHandler<
   const companyFiles = await CompanyFileService.getCompanyFiles()
   return res.json(companyFiles)
 }
+
+export const downloadCompanyFile: RequestHandler = async (req, res) => {
+  try {
+    const { companyId, fileDescription, fileFormat } = req.params
+    if (!companyId || !fileFormat || !fileDescription) {
+      return res.status(400).send('Missing parameters')
+    }
+
+    const fileStream = await CompanyFileService.downloadCompanyFile(
+      companyId,
+      fileDescription,
+      fileFormat
+    )
+    if (!fileStream) {
+      return res.status(404).send('File not found')
+    }
+
+    res.setHeader(
+      'Content-Disposition',
+      `attachment; filename=${fileDescription}.${fileFormat}`
+    )
+    res.setHeader('Content-Type', 'application/pdf')
+    fileStream.pipe(res)
+  } catch (error) {
+    console.error(error)
+    return res.status(500).send('Error downloading file')
+  }
+}
