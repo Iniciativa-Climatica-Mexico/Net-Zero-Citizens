@@ -20,6 +20,9 @@ struct TabBarView: View {
     
     var goSurvey: () -> Void
     var goLogin: () -> Void
+    var goReviews: () -> Void
+    var goOpinions: () -> Void
+    var goScrollRating: () -> Void
 
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -31,7 +34,7 @@ struct TabBarView: View {
                 }
                 .tag(TabSelection.ecoInfo)
 
-            CatalogView()
+            CatalogView(goReviews: goReviews, goOpinions: goOpinions, goScrollRating: goScrollRating)
                 .applyNavBarTheme()
                 .tabItem {
                     Image(systemName: "book.fill")

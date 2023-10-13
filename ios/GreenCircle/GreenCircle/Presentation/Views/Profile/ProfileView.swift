@@ -79,7 +79,7 @@ struct ProfileView: View {
 
                     Spacer()
 
-                    Text(myFavourites ? "Mis Favoritos (\(totalFavourites))" : "Mis Reseñas")
+                    Text(myFavourites ? "Mis Favoritos (\(totalFavourites))" : "Mis Reseñas (\(modelReview.totalReviews))")
                         .font(.system(size: 20))
                         .fontWeight(.bold)
                         .padding(EdgeInsets(top: 32, leading: 15, bottom: 0, trailing: 0))
@@ -103,7 +103,7 @@ struct ProfileView: View {
                                     .font(.system(size: 18))
                             }
                         } else {
-                            ReviewCardClient(reviewViewModel: ReviewViewModel())
+                            ReviewCardClient(reviewViewModel: modelReview)
                         }
                     }
                     .onAppear {
