@@ -43,18 +43,12 @@ struct SectionProfile: View{
             .frame(width: 100, height: 100)
             .foregroundStyle(Color("Primary"))
         HStack {
-          Text(modelUser.contentBaseUser?.firstName ?? "Cargando...")
-                .foregroundColor(Color.black)
-                .font(.system(size: 16))
-                .fontWeight(.semibold)
-                .padding(.top, 12)
-                .padding(.bottom, 2)
-            Text(modelUser.contentBaseUser?.lastName ?? "Cargando...")
-                .foregroundColor(Color.black)
-                .font(.system(size: 16))
-                .fontWeight(.semibold)
-                .padding(.top, 12)
-                .padding(.bottom, 2)
+          Text("\(modelUser.contentBaseUser?.firstName ?? "Cargando...") \(modelUser.contentBaseUser?.lastName ?? "")")
+              .foregroundColor(Color.black)
+              .font(.system(size: 16))
+              .fontWeight(.semibold)
+              .padding(.top, 10)
+              .padding(.bottom, 2)
         }
         NavigationLink("Cerrar Sesión", destination: Example2View())
             .foregroundColor(TitleBarColor.TitleBarColor)
@@ -76,8 +70,8 @@ struct Section1: View{
               get: { self.modelUser.contentBaseUser?.firstName ?? "" },
               set: { newValue in
                   if !containsNumber(input: newValue) {
-                      if self.modelUser.contentBaseUser != nil {
-                          self.modelUser.contentBaseUser?.firstName = newValue
+                    if var contentUser = self.modelUser.contentBaseUser {
+                      contentUser.firstName = newValue
                       }
                   }
               }
@@ -202,8 +196,8 @@ struct Section2: View {
       Binding<String>(
           get: { self.modelUser.contentBaseUser?.gender ?? "Cargando..." },
           set: { newValue in
-              if self.modelUser.contentBaseUser != nil {
-                  self.modelUser.contentBaseUser?.gender = newValue
+              if var contentUser = self.modelUser.contentBaseUser {
+                contentUser.gender = newValue
               }
           }
       )
@@ -310,8 +304,8 @@ struct Section3: View {
       Binding<String>(
           get: { self.modelUser.contentBaseUser?.state ?? "Cargando..." },
           set: { newValue in
-              if self.modelUser.contentBaseUser != nil {
-                  self.modelUser.contentBaseUser?.state = newValue
+              if var contentUser = self.modelUser.contentBaseUser {
+                  contentUser.state = newValue
               }
           }
       )
@@ -325,13 +319,13 @@ struct Section3: View {
 
   func containsOnlyNumbers(input: String?) -> Bool {
       guard let input = input else { return false }
-      return input.range(of: "^[0-9]+$", options: .regularExpression) != nil
+      return input.range(of: "^[0-9]+$",
+                         options: .regularExpression) != nil
   }
     
   func isPhoneNumberValid() -> Bool {
-      guard let phoneNumber = modelUser.contentBaseUser?.phoneNumber else {
-          return false
-      }
+      guard let phoneNumber = modelUser.contentBaseUser?.phoneNumber 
+    else { return false }
       return phoneNumber.count == 10
   }
   
@@ -347,16 +341,18 @@ struct Section3: View {
           TextField("Teléfono", text: Binding(
               get: {
                   if let phoneNumber = self.modelUser.contentBaseUser?.phoneNumber, !phoneNumber.isEmpty {
-                      return phoneNumber
+                    return Utils
+                      .formatNumber(with: "XXX-XXX-XXXX",
+                                    for: phoneNumber)
                   } else {
                       return ""
                   }
               },
               set: {
-                  let filtered = $0.filter { "0123456789".contains($0) }
-                  if filtered.count <= 10 {
-                      self.modelUser.contentBaseUser?.phoneNumber = filtered
-                  }
+                self.modelUser.contentBaseUser?
+                  .phoneNumber =
+                Utils.formatNumber(with: "XXX-XXX-XXXX",
+                                   for: $0)
               }
           ))
           .keyboardType(.numberPad)
@@ -369,7 +365,10 @@ struct Section3: View {
             Text("No puedes dejar este campo vacío.")
                 .foregroundColor(.red)
                 .font(.system(size: 11))
-        } else if let phone = modelUser.contentBaseUser?.phoneNumber, phone.count != 10 {
+        } else if let phone = modelUser.contentBaseUser?.phoneNumber,
+                  Utils
+          .formatNumber(with: "XXX-XXX-XXXX", for: phone)
+          .count != 12 {
             Text("El teléfono debe tener exactamente 10 dígitos.")
                 .foregroundColor(.red)
                 .font(.system(size: 11))
@@ -539,10 +538,11 @@ struct SectionDelete: View{
     var goLogin: () -> Void
     
     func isPhoneNumberValid() -> Bool {
-        guard let phoneNumber = modelUser.contentBaseUser?.phoneNumber else {
+        guard let phoneNumber = modelUser
+          .contentBaseUser?.phoneNumber else {
             return false
         }
-        return phoneNumber.count == 10
+        return phoneNumber.count == 12
     }
     
     var body: some View {

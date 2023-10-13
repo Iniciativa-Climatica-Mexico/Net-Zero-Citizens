@@ -1,8 +1,8 @@
 //
-//  CompanyImagesModel.swift
+//  CompanyFilesModel.swift
 //  GreenCircle
 //
-//  Created by Dani Gutiérrez on 12/09/23.
+//  Created by Daniel Hurtado on 12/09/23.
 //
 
 import Foundation

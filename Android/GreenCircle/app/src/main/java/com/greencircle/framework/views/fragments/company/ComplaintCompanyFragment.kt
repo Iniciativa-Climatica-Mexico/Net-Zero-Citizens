@@ -5,6 +5,8 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ArrayAdapter
@@ -36,6 +38,7 @@ class ComplaintCompanyFragment : DialogFragment() {
     private lateinit var recoverUserSession: RecoverUserSessionRequirement
     private lateinit var recoverTokens: RecoverTokensRequirement
     private val complaintClient = ComplaintClient()
+    private lateinit var context: Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +47,15 @@ class ComplaintCompanyFragment : DialogFragment() {
         val tokens = recoverTokens()
         if (tokens != null)
             authToken = tokens.authToken
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        context = requireContext()
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     /**
@@ -88,21 +100,20 @@ class ComplaintCompanyFragment : DialogFragment() {
                     val response = withContext(Dispatchers.IO) {
                         complaintClient.postComplaint(authToken, complaint)
                     }
+                    Log.d("ComplaintCompanyFragment", response.toString())
 
-                    if (isAdded) {
-                        if (response?.isSuccessful == true) {
-                            Toast.makeText(
-                                requireContext(),
-                                "Reporte enviado correctamente",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        } else {
-                            Toast.makeText(
-                                requireContext(),
-                                "Error enviando reporte",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                    if (response?.isSuccessful == true) {
+                        Toast.makeText(
+                            context,
+                            "Reporte enviado correctamente",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Error enviando reporte",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }.create()
