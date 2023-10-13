@@ -32,8 +32,8 @@ struct CompanyRegisterDividerView: View {
           HStack {
             Toggle(isOn: $photovoltaicToggle){
               Text("Sistemas Fotovoltaicos")
-            }.toggleStyle(SwitchToggleStyle(tint: Color("GreenCustom")))
-          }.foregroundColor(Color("GreenCustom"))
+            }.toggleStyle(SwitchToggleStyle(tint: Color("Secondary")))
+          }.foregroundColor(Color("Secondary"))
             .frame(maxWidth: 255).padding()
         }
 
@@ -44,8 +44,8 @@ struct CompanyRegisterDividerView: View {
           HStack {
             Toggle(isOn: $solarToggle){
               Text("Calentadores Solares")
-            }.toggleStyle(SwitchToggleStyle(tint: Color("GreenCustom")))
-          }.foregroundColor(Color("GreenCustom"))
+            }.toggleStyle(SwitchToggleStyle(tint: Color("Secondary")))
+          }.foregroundColor(Color("Secondary"))
             .frame(maxWidth: 255).padding()
         }
       }.frame(maxWidth: .infinity, alignment: .center)
