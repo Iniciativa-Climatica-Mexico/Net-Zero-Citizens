@@ -78,7 +78,7 @@
 //                        Group {
 //                            Text("Nombre")
 //                                 .padding(.top, 16)
-//                                 .foregroundColor(Color("GreenColor"))
+//                                 .foregroundColor(Color("Secondary"))
 //                                 .font(.system(size: 13))
 //                                 .fontWeight(.semibold)
 //                                
@@ -95,7 +95,7 @@
 //                        Group {
 //                            Text("Primer Apellido")
 //                                .padding(.top, 16)
-//                                .foregroundColor(Color("GreenColor"))
+//                                .foregroundColor(Color("Secondary"))
 //                                .font(.system(size: 13))
 //                                .fontWeight(.semibold)
 //                            
@@ -110,7 +110,7 @@
 //                        Group {
 //                            Text("Segundo Apellido")
 //                                .padding(.top, 16)
-//                                .foregroundColor(Color("GreenColor"))
+//                                .foregroundColor(Color("Secondary"))
 //                                .font(.system(size: 13))
 //                                .fontWeight(.semibold)
 //                            
@@ -131,7 +131,7 @@
 //                            VStack(alignment: .leading) {
 //                                Text("Edad")
 //                                    .padding(.top, 16)
-//                                    .foregroundColor(Color("GreenColor"))
+//                                    .foregroundColor(Color("Secondary"))
 //                                    .font(.system(size: 13))
 //                                    .fontWeight(.semibold)
 //                                
@@ -155,7 +155,7 @@
 //                            VStack(alignment: .leading) {
 //                                Text("Género")
 //                                    .padding(.top, 16)
-//                                    .foregroundColor(Color("GreenColor"))
+//                                    .foregroundColor(Color("Secondary"))
 //                                    .font(.system(size: 13))
 //                                    .fontWeight(.semibold)
 //                                
@@ -173,7 +173,7 @@
 //                        Group {
 //                            Text("Correo Electrónico")
 //                                .padding(.top, 16)
-//                                .foregroundColor(Color("GreenColor"))
+//                                .foregroundColor(Color("Secondary"))
 //                                .font(.system(size: 13))
 //                                .fontWeight(.semibold)
 //                            
@@ -188,7 +188,7 @@
 //                        Group {
 //                            Text("Celular")
 //                                .padding(.top, 16)
-//                                .foregroundColor(Color("GreenColor"))
+//                                .foregroundColor(Color("Secondary"))
 //                                .font(.system(size: 13))
 //                                .fontWeight(.semibold)
 //                            
@@ -205,7 +205,7 @@
 //                            VStack(alignment: .leading) {
 //                                Text("Estado")
 //                                    .padding(.top, 16)
-//                                    .foregroundColor(Color("GreenColor"))
+//                                    .foregroundColor(Color("Secondary"))
 //                                    .font(.system(size: 13))
 //                                    .fontWeight(.semibold)
 //                                
