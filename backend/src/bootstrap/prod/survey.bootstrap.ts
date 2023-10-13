@@ -57,13 +57,6 @@ export default class SurveysBootstrapper extends Bootstrapper {
                 order: 4,
               },
             ],
-            answers: [
-              {
-                userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
-                answerId: 'd9634fec-d669-4619-bcb2-e137b4ea508f',
-                answerText: '4+',
-              },
-            ],
           },
           {
             questionId: 'b84348e0-c7bf-4c09-82ce-5366c81d764e',
@@ -71,26 +64,12 @@ export default class SurveysBootstrapper extends Bootstrapper {
               '¿Qué acciones tomas para reducir tu huella de carbono?',
             questionType: 'open',
             isRequired: false,
-            answers: [
-              {
-                answerId: 'b84348e0-c7bf-4c09-82ce-5366c81d764e',
-                userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
-                answerText: 'Reciclo',
-              },
-            ],
           },
           {
             questionId: '3c9dccbb-1b19-49c0-b8e0-170e047a336a',
             questionText:
               '¿Qué tan amigable con el medio ambiente te consideras? (1, muy poco; 5, mucho)',
             questionType: 'scale',
-            answers: [
-              {
-                answerId: '73910c50-0827-43dc-ace7-f03ed8c44a3f',
-                userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
-                scaleValue: 5,
-              },
-            ],
           },
           {
             questionId: 'ea067a23-3a46-41a6-b6e4-152aa199535a',
@@ -122,13 +101,6 @@ export default class SurveysBootstrapper extends Bootstrapper {
                 questionOptionId: '06329a73-b188-4b77-8ab9-5f783a510807',
                 textOption: '5+',
                 order: 5,
-              },
-            ],
-            answers: [
-              {
-                answerId: 'ad767557-62d9-4c31-9277-c7a2aa25bed6',
-                userId: '8de45630-2e76-4d97-98c2-9ec0d1f3a5b9',
-                answerText: '3',
               },
             ],
           },
