@@ -52,7 +52,7 @@ struct StarRating: View {
           .scaledToFit()
       }
     }
-    .foregroundStyle(Color("GreenCustom"))
+    .foregroundStyle(Color("Secondary"))
   }
 }
 

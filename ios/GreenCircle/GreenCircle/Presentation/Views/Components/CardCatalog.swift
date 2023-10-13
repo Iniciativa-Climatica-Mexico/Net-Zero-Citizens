@@ -56,7 +56,7 @@ struct CardCatalog: View {
                 fatalError()
               }
             }
-          
+            
           } else {
             
             LoadingScreenView().frame(width: 100, height: 100)
@@ -71,11 +71,11 @@ struct CardCatalog: View {
               .fontWeight(.bold)
               .lineLimit(2)
               .multilineTextAlignment(.leading)
-
+            
             
             HStack {
               Image(systemName: "location.fill")
-                .foregroundColor(Color("BlueCustom"))
+                .foregroundColor(Color("Primary"))
               Text("\(city), \(state)")
                 .font(.system(size: 13))
                 .lineSpacing(2)
@@ -91,7 +91,7 @@ struct CardCatalog: View {
             } else {
               Text("No hay rating")
                 .font(.system(size: 13))
-                .foregroundColor(Color("GreenCustom"))
+                .foregroundColor(Color("Secondary"))
             }
           }
           
@@ -116,11 +116,10 @@ struct CardCatalog: View {
               }
             }
           }, label: {
-            Image(systemName: emptyHeartFill ? "heart.fill" : "heart")
-              .foregroundColor(Color("BlueCustom"))
-              .font(.system(size: 24))
-              .padding(.bottom, 80)
-          })
+              Image(systemName: emptyHeartFill ? "heart.fill" : "heart")
+                .foregroundColor(Color("Primary"))
+                .font(.system(size: 24))
+          }).padding(.bottom, 80)
           .alert(isPresented: $showAlert) {
             if !deleteOperation {
               return Alert(title: Text("Éxito"), message: Text(messageAlert))
@@ -140,24 +139,24 @@ struct CardCatalog: View {
         .padding()
       }
     }.foregroundColor(.black)
-    .onAppear {
-      Task {
-        await vm.fetchCompanyById(idCompany: companyId)
-        if favouriteViewModel.existsFavourite(companyId: companyId) {
-          emptyHeartFill = true
-        } else {
-          emptyHeartFill = false
+      .onAppear {
+        Task {
+          await vm.fetchCompanyById(idCompany: companyId)
+          if favouriteViewModel.existsFavourite(companyId: companyId) {
+            emptyHeartFill = true
+          } else {
+            emptyHeartFill = false
+          }
         }
       }
-    }
-    .navigationTitle("Proveedores")
-    .navigationBarTitleDisplayMode(.inline)
+      .navigationTitle("Proveedores")
+      .navigationBarTitleDisplayMode(.inline)
   }
 }
 
 #Preview {
   CardCatalog(companyId: UUID(uuidString: ("08b49208-7b8e-42b9-8164-c0688676609e"))!,
-                 companyName: "ENERGIA PUEBLO SOLAR S.A. DE C.V.",
-                 city: "Hermosillo",
-                 state: "Sonora")
+              companyName: "ENERGIA PUEBLO SOLAR S.A. DE C.V.",
+              city: "Hermosillo",
+              state: "Sonora")
 }
