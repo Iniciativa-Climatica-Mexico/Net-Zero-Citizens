@@ -122,9 +122,6 @@ class CompanyRepository: CompanyRepositoryProtocol {
         let uploadURL = URL(string: "\(CompanyAPI.base)\(CompanyAPI.Routes.uploadFile)")!
         
         guard let companyId = local.getCompanyId() else {
-            // Si no puedes obtener el companyId, decides si quieres devolver un error o continuar
-            // Por ahora, simplemente imprimiré un mensaje y retornaré nil. Puedes adaptar esto a tu caso de uso.
-            print("Error: No se pudo obtener el companyId")
             return nil
         }
         
