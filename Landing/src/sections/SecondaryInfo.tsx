@@ -12,36 +12,37 @@ export default function SecondaryInfo() {
             <h2 className="font-semibold text-3xl">
               Acceso directo a proveedores confiables
             </h2>
-            <p className='mt-10'>
+            <p className="mt-10">
               Obtén acceso rápido y directo a una red verificada de proveedores
               de paneles solares de alta calidad.
             </p>
           </div>
-          <div className="flex justify-center mx-12 mt-10 items-start overflow-hidden lg:max-w-[30rem] h-80 rounded-lg shadow-lg">
+          <div className="flex justify-center mx-12 mt-10 items-start overflow-hidden w-96 max-w-[30rem] h-80 rounded-lg shadow-lg">
             <Image
-              className='object-cover -mt-6 lg:-mt-24'
-              src={CatalogueScreen}
+              className="object-cover -mt-6 lg:-mt-24 w-full h-auto min-h-full"
+              src={'/images/catalogue-screen.jpg'}
               alt="Catálogo de proveedores"
+              width={0}
+              height={0}
             />
           </div>
         </div>
 
         <div className="flex flex-col mt-12 lg:flex-row justify-between items-center">
-          <div className="flex order-2 lg:order-1 justify-center mx-12 mt-10 items-start overflow-hidden max-w-[30rem] h-80 rounded-lg shadow-lg">
+          <div className="flex order-2 lg:order-1 justify-center mx-12 mt-10 items-start overflow-hidden w-96 max-w-[30rem] h-80 rounded-lg shadow-lg">
             <Image
-              className='object-cover -mt-6 lg:-mt-24'
-              src={MapScreen}
+              className="object-cover -mt-6 lg:-mt-24 w-full h-auto min-h-full"
+              src={'/images/map-screen.jpg'}
               alt="Mapa de proveedores"
+              width={0}
+              height={0}
             />
           </div>
           <div className="text-left lg:max-w-md  order-1 lg:order-2">
-            <h2 className="font-semibold text-3xl">
-              Variedad de opciones
-            </h2>
-            <p className='mt-10'>
+            <h2 className="font-semibold text-3xl">Variedad de opciones</h2>
+            <p className="mt-10">
               Explora una amplia gama de paneles y calentadores solares para
               encontrar la solución perfecta para tu hogar o negocio.
-              
             </p>
           </div>
         </div>
@@ -51,16 +52,18 @@ export default function SecondaryInfo() {
             <h2 className="font-semibold text-3xl">
               Contribuye al medio ambiente
             </h2>
-            <p className='mt-10'>
+            <p className="mt-10">
               Al optar por la energía solar, estás ayudando a reducir tu huella
               de carbono y a cuidar el medio ambiente.
             </p>
           </div>
-          <div className="flex justify-center mx-12 mt-10 items-start overflow-hidden max-w-[30rem] h-80 lg:h-[28rem] rounded-lg shadow-lg">
+          <div className="flex justify-center mx-12 mt-10 items-start overflow-hidden w-96 max-w-[30rem] h-80 lg:h-[28rem] rounded-lg shadow-lg">
             <Image
-              className='object-cover -mt-6 lg:-mt-24'
-              src={ReviewScreen}
+              className="object-cover -mt-6 lg:-mt-24 w-full h-auto min-h-full"
+              src={'/images/review-screen.jpg'}
               alt="Reviews"
+              width={0}
+              height={0}
             />
           </div>
         </div>

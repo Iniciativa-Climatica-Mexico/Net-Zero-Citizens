@@ -15,7 +15,7 @@
  */
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, FormEventHandler } from 'react'
 
 import { ThemeProvider } from '@mui/material/styles'
 import { Theme } from '@/@types/icons/material'
@@ -27,7 +27,7 @@ import {
   CompanyFiles,
   updateCompany,
   UpdateCompanyInfoBody,
-  getCompanyFileDownload
+  getCompanyFileDownload,
 } from '@/api/v1/company'
 
 import CloseIcon from '@mui/icons-material/Close'
@@ -77,8 +77,8 @@ export default function ModalProveedor({
   const [rejectCompany, setRejectCompany] = useState(false)
   const [rejectCompanyMessage, setRejectCompanyMessage] = useState('')
   const [showErrorMessage, setShowErrorMessage] = useState(false)
-  const form = useRef(HTMLFormElement)
-  const submitButton = useRef(HTMLButtonElement)
+  const form = useRef<HTMLFormElement>(null)
+  const submitButton = useRef<HTMLButtonElement>(null)
   const { toast } = useToast()
   /**
    * @brief Function that allows admin to accept a specific company
@@ -150,10 +150,20 @@ export default function ModalProveedor({
     }
   }
 
-  const sendRejectEmail = (e: HTMLFormElement) => {
+  const sendRejectEmail: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault()
+    if (!form.current) {
+      console.error('Error sending email: form is null')
+      return
+    }
 
-    emailjs.sendForm('service_icm2023', 'template_vjx2ic3', form.current, 'LSXaN-F4jhFZ5mzIt')
+    emailjs
+      .sendForm(
+        'service_icm2023',
+        'template_vjx2ic3',
+        form.current,
+        'LSXaN-F4jhFZ5mzIt'
+      )
       .then((result) => {
         console.log(result.text)
       })
@@ -162,10 +172,20 @@ export default function ModalProveedor({
       })
   }
 
-  const sendAcceptEmail = (e: HTMLFormElement) => {
+  const sendAcceptEmail: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault()
+    if (!form.current) {
+      console.error('Error sending email: form is null')
+      return
+    }
 
-    emailjs.sendForm('service_icm2023', 'template_f34afsb', form.current, 'LSXaN-F4jhFZ5mzIt')
+    emailjs
+      .sendForm(
+        'service_icm2023',
+        'template_f34afsb',
+        form.current,
+        'LSXaN-F4jhFZ5mzIt'
+      )
       .then((result) => {
         console.log(result.text)
       })
@@ -174,7 +194,11 @@ export default function ModalProveedor({
       })
   }
 
-  const downloadCompanyFile = async (companyId: string, fileDescription: string, fileFormat: string) => {
+  const downloadCompanyFile = async (
+    companyId: string,
+    fileDescription: string,
+    fileFormat: string
+  ) => {
     try {
       await getCompanyFileDownload(companyId, fileDescription, fileFormat)
     } catch (error) {
@@ -195,14 +219,15 @@ export default function ModalProveedor({
               }}
             />
             <Card className="w-[350px] modal-card">
-              <CardDescription className='p-4 text-center'>{message}</CardDescription>
+              <CardDescription className="p-4 text-center">
+                {message}
+              </CardDescription>
             </Card>
           </div>
         </div>
       </div>
     )
   }
-  
 
   return (
     <>
@@ -290,7 +315,7 @@ export default function ModalProveedor({
                     } else {
                       console.log(rejectCompanyMessage)
                       handleReject(selectedCompany, selectedCompany.companyId)
-                      submitButton.current.click()
+                      submitButton.current?.click()
                       toast({
                         description: 'Proveedor rechazado exitosamente.',
                       })
@@ -370,66 +395,81 @@ export default function ModalProveedor({
                 )}
                 <h3 className="font-bold">Documentos</h3>
                 <div className="flex flex-wrap justify-between items-end mb-1">
-                  {selectedCompany.files &&
-                  selectedCompany.files.length > 3 ? (
-                      <div className="mb-3">
-                        <Carousel
-                          showThumbs={false}
-                          width={350}
-                          emulateTouch={true}
-                          dynamicHeight={false}
-                          showArrows={true}
-                          showStatus={false}
-                          centerMode
-                          centerSlidePercentage={33.33}
-                        >
-                          {selectedCompany.files
-                            .filter(
-                              (file: CompanyFiles) =>
-                                file.fileDescription !== 'Imagen' && // Exclude image files
-                                !/\.(png|jpg|jpeg)$/.test(file.fileFormat)
-                            )
-                            .map((file: CompanyFiles) => (
-                              <a
-                                key={file.companyFileId}
-                                href={file.fileUrl}
-                                className="min-w-[31%] no-underline text-[#333333] font-medium"
-                                target="_blank"
-                                onClick={() => downloadCompanyFile(selectedCompany.companyId, file.fileDescription, file.fileFormat)}
-                              >
-                                <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                                  <FileOpenIcon color="info" className="mt-3" />
-                                  <p className="my-2 text-[11px]">{file.fileDescription}</p>
-                                </div>
-                              </a>
-                            ))}
-                        </Carousel>
-                      </div>
-                    ) : (
-                      <div className="flex flex-wrap justify-between items-end mb-3 w-full">
-                        {selectedCompany.files &&
-                          selectedCompany.files
-                            .filter(
-                              (file: CompanyFiles) =>
-                                file.fileDescription !== 'Imagen' && // Exclude image files
-                                !/\.(png|jpg|jpeg)$/.test(file.fileFormat)
-                            )
-                            .map((file: CompanyFiles) => (
-                              <a
-                                key={file.companyFileId}
-                                href={file.fileUrl}
-                                className="min-w-[31%] no-underline text-[#333333] font-medium"
-                                target="_blank"
-                                onClick={() => downloadCompanyFile(selectedCompany.companyId, file.fileDescription, file.fileFormat)}
-                              >
-                                <div className="border px-[5px] rounded flex flex-col justify-center items-center">
-                                  <FileOpenIcon color="info" className="mt-3" />
-                                  <p className="my-2 text-[11px]">{file.fileDescription}</p>
-                                </div>
-                              </a>
-                            ))}
-                      </div>
-                    )}
+                  {selectedCompany.files && selectedCompany.files.length > 3 ? (
+                    <div className="mb-3">
+                      <Carousel
+                        showThumbs={false}
+                        width={350}
+                        emulateTouch={true}
+                        dynamicHeight={false}
+                        showArrows={true}
+                        showStatus={false}
+                        centerMode
+                        centerSlidePercentage={33.33}
+                      >
+                        {selectedCompany.files
+                          .filter(
+                            (file: CompanyFiles) =>
+                              file.fileDescription !== 'Imagen' && // Exclude image files
+                              !/\.(png|jpg|jpeg)$/.test(file.fileFormat)
+                          )
+                          .map((file: CompanyFiles) => (
+                            <a
+                              key={file.companyFileId}
+                              href={file.fileUrl}
+                              className="min-w-[31%] no-underline text-[#333333] font-medium"
+                              target="_blank"
+                              onClick={() =>
+                                downloadCompanyFile(
+                                  selectedCompany.companyId,
+                                  file.fileDescription,
+                                  file.fileFormat
+                                )
+                              }
+                            >
+                              <div className="border px-[5px] rounded flex flex-col justify-center items-center">
+                                <FileOpenIcon color="info" className="mt-3" />
+                                <p className="my-2 text-[11px]">
+                                  {file.fileDescription}
+                                </p>
+                              </div>
+                            </a>
+                          ))}
+                      </Carousel>
+                    </div>
+                  ) : (
+                    <div className="flex flex-wrap justify-between items-end mb-3 w-full">
+                      {selectedCompany.files &&
+                        selectedCompany.files
+                          .filter(
+                            (file: CompanyFiles) =>
+                              file.fileDescription !== 'Imagen' && // Exclude image files
+                              !/\.(png|jpg|jpeg)$/.test(file.fileFormat)
+                          )
+                          .map((file: CompanyFiles) => (
+                            <a
+                              key={file.companyFileId}
+                              href={file.fileUrl}
+                              className="min-w-[31%] no-underline text-[#333333] font-medium"
+                              target="_blank"
+                              onClick={() =>
+                                downloadCompanyFile(
+                                  selectedCompany.companyId,
+                                  file.fileDescription,
+                                  file.fileFormat
+                                )
+                              }
+                            >
+                              <div className="border px-[5px] rounded flex flex-col justify-center items-center">
+                                <FileOpenIcon color="info" className="mt-3" />
+                                <p className="my-2 text-[11px]">
+                                  {file.fileDescription}
+                                </p>
+                              </div>
+                            </a>
+                          ))}
+                    </div>
+                  )}
                 </div>
                 <section className="flex justify-end">
                   <p className="text-right text-[#858585] text-[14px]">
@@ -471,12 +511,11 @@ export default function ModalProveedor({
                     </label>
                   </div>
                   <footer className="flex gap-x-3">
-                    <form 
+                    <form
                       className="flex items-center space-x-2"
                       ref={form}
                       onSubmit={sendAcceptEmail}
                     >
-
                       <input
                         type="hidden"
                         name="user_email"
@@ -490,14 +529,17 @@ export default function ModalProveedor({
                       <Button
                         disabled={!checkboxChecked}
                         onClick={() => {
-                          handleAccept(selectedCompany, selectedCompany.companyId)
+                          handleAccept(
+                            selectedCompany,
+                            selectedCompany.companyId
+                          )
                         }}
                         variant="default"
                       >
                         Aprobar
                       </Button>
                     </form>
-                    
+
                     <Button
                       onClick={() => {
                         setViewModal(true)
