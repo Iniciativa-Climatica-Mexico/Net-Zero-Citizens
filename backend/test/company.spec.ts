@@ -24,6 +24,7 @@ const testData = [
     webPage: 'https://www.sunpower.com',
     street: 'Las Lomas Verdes',
     streetNumber: '123',
+    companyFiles: [],
     city: 'Ciudad de México',
     state: 'CDMX',
     zipCode: '72000',
@@ -70,6 +71,7 @@ const testData = [
     webPage: 'https://www.company2.com',
     street: 'Pino Suárez',
     streetNumber: '383',
+    companyFiles: [],
     city: 'Queretaro',
     state: 'QRO',
     zipCode: '76178',
@@ -113,6 +115,7 @@ const testData = [
     email: 'company3@outlook.com',
     phone: '0126756789',
     webPage: 'https://www.company3.com',
+    companyFiles: [],
     street: 'Nezahualcóyotl, Estado de México, 57430',
     streetNumber: '123',
     city: 'Ciudad de México',
@@ -219,7 +222,7 @@ describe('Company Service', () => {
     )
 
     expect(response?.get())
-      .excludingEvery(attributesToExclude.concat('oneComment'))
+      .excludingEvery(attributesToExclude.concat(['oneComment', 'companyFiles']))
       .to.deep.equal(testData[0])
   })
 

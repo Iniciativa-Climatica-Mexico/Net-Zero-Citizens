@@ -182,7 +182,7 @@ struct CompanyRegisterHeaderView: View {
     VStack(alignment: .leading, spacing: 10) {
       Image(systemName: "leaf")
         .font(.largeTitle)
-        .foregroundColor(Color("GreenCustom"))
+        .foregroundColor(Color("Secondary"))
       Text("Servicios que ofreces")
         .font(.system(size: 40, weight: .bold))
         .frame(maxWidth: 230)

@@ -22,15 +22,15 @@ struct CustomButtonOption: View {
       }, label: {
         if content == "Report"{
           Image(systemName: "exclamationmark.bubble")
-          .shadow(color: isPressed[content] ?? false ? Color("GreenCustom") : Color.clear, radius: 10, y: 9)
-          .foregroundColor(isPressed[content] ?? false ? Color("GreenCustom") : Color("MainText"))
+          .shadow(color: isPressed[content] ?? false ? Color("Secondary") : Color.clear, radius: 10, y: 9)
+          .foregroundColor(isPressed[content] ?? false ? Color("Secondary") : Color("MainText"))
           
         } else {
           Text(content)
           .font(.system(size: 18))
           .scaleEffect(isPressed[content] ?? false ? 1.1 : 1.0)
-          .shadow(color: isPressed[content] ?? false ? Color("GreenCustom") : Color.clear, radius: 10, y: 9)
-          .foregroundColor(isPressed[content] ?? false ? Color("GreenCustom") : Color("MainText"))
+          .shadow(color: isPressed[content] ?? false ? Color("Secondary") : Color.clear, radius: 10, y: 9)
+          .foregroundColor(isPressed[content] ?? false ? Color("Secondary") : Color("MainText"))
         }
       })
     .frame(maxWidth: .infinity, maxHeight: 15)

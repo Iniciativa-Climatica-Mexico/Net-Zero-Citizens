@@ -2,6 +2,9 @@
 import { Survey, fetchAllSurveys } from '@/api/v1/survey'
 import moment from 'moment'
 import { useEffect, useState } from 'react'
+import 'moment/locale/es'
+
+moment.locale('es')
 
 export default function ListSurveys() {
   try {
@@ -93,11 +96,11 @@ function SurveyComponent(props: Survey) {
         {props.description}
       </td>
       <td className="text-center truncate py-8 px-8 border-gray-300 text-txt ">
-        {moment(props.startDate).format('MMM Do YYYY')}
+        {moment(props.startDate).format('DD MMMM YYYY')}
       </td>
       <td className="text-center truncate py-8 px-8 border-gray-300 text-txt ">
         {props.endDate
-          ? moment(props.endDate).format('MMM Do YYYY')
+          ? moment(props.endDate).format('DD MMMM YYYY')
           : '---------'}
       </td>
     </tr>

@@ -39,7 +39,7 @@ struct CardCatalogView: View {
         RoundedRectangle(cornerRadius: 10, style:.continuous)
           .fill(.white)
           .frame(width: 380, height: 150)
-          .shadow(color: Color("BlueCustom"), radius: 1)
+          .shadow(color: Color("Primary"), radius: 1)
         HStack {
           VStack (alignment: .leading) {
             if let imageURL = URL(string: viewModel.contentCompany.files?.first?.fileUrl ?? "") {
@@ -74,7 +74,7 @@ struct CardCatalogView: View {
             }
             HStack {
               Image(systemName: "location.fill")
-                .foregroundColor(Color("BlueCustom"))
+                .foregroundColor(Color("Primary"))
               Text("\(city), \(state)")
                 .font(.system(size: 13))
                 .lineSpacing(2)
@@ -85,10 +85,10 @@ struct CardCatalogView: View {
               if Int(viewModel.contentCompany.score!) > 0 {
                 ForEach(0..<5, id: \.self) { index in
                   Image(systemName: index < Int(viewModel.contentCompany.score!) ? "star.fill" : "star")
-                }.foregroundColor(Color("GreenCustom"))
+                }.foregroundColor(Color("Secondary"))
                 Text("\(Int(viewModel.contentCompany.score!))")
               } else {
-                Text("No hay rating").foregroundColor(Color("GreenCustom"))
+                Text("No hay rating").foregroundColor(Color("Secondary"))
               }
             }.font(.system(size: 13))
           }
@@ -116,7 +116,7 @@ struct CardCatalogView: View {
               }
             }, label: {
               Image(systemName: emptyHeartFill ? "heart.fill" : "heart")
-                .foregroundColor(Color("BlueCustom"))
+                .foregroundColor(Color("Primary"))
                 .font(.system(size: 24))
                 .padding(.top, 20)
             })
