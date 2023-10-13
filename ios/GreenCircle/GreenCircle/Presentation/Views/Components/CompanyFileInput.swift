@@ -29,7 +29,7 @@ struct CompanyFileInput: View {
                 HStack{
                     VStack(alignment: .leading, spacing: 5) {
                         Text(title)
-                            .foregroundColor(Color("GreenColor"))
+                            .foregroundColor(Color("Secondary"))
                             .bold()
                             .font(.system(size: 14))
                             .padding(.leading, 30)
@@ -50,7 +50,7 @@ struct CompanyFileInput: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
                     Image(systemName: selectedFile != nil ? "checkmark" : "chevron.right")
-                        .foregroundColor(Color("GreenColor"))
+                        .foregroundColor(Color("Secondary"))
                         .padding(.trailing, 30)
                 }
                 .padding()
