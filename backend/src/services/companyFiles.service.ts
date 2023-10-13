@@ -89,7 +89,7 @@ export const uploadCompanyFile = async (
     // Definir los parámetros para subir el archivo
     const params = {
       Bucket: bucketName,
-      Key: `${company?.name}/${fileDescription + '.' + fileFormat}`,
+      Key: `${company?.name}/${fileDescription + fileFormat}`,
       Body: base64data,
     }
 

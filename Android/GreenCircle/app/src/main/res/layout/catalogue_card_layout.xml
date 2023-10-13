@@ -8,7 +8,8 @@
     card_view:cardBackgroundColor="#FFFFFF"
     card_view:cardCornerRadius="12dp"
     card_view:cardElevation="6dp"
-    card_view:contentPadding="2dp">
+    card_view:contentPadding="2dp"
+    card_view:contentPaddingBottom="4dp">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,8 +24,8 @@
             android:layout_marginEnd="-284dp"
             android:layout_toStartOf="@id/company_profile_pic"
             android:ellipsize="end"
-            android:maxLines="1"
-            android:text="Usuario con un nombre muy muy largo"
+            android:maxLines="2"
+            android:text="Usuario con un nombre muy muy largo Usuario con un nombre muy muy largo"
             android:textAlignment="textStart"
             android:textColor="#333333"
             android:textSize="15sp"
@@ -120,7 +121,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="7dp"
             android:layout_marginLeft="7dp"
-            android:layout_marginTop="37dp"
+            android:layout_marginTop="60dp"
             android:layout_marginRight="16dp"
             android:src="@mipmap/ic_launcher" />
         />

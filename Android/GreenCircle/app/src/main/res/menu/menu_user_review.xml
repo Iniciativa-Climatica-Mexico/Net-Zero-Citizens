@@ -2,13 +2,8 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/update_review"
-        android:icon="@drawable/icon_edit"
-        android:title="Edit"
-        app:showAsAction="ifRoom" />
-    <item
         android:id="@+id/delete_review"
         android:icon="@drawable/icon_delete"
-        android:title="Delete"
+        android:title="Eliminar"
         app:showAsAction="ifRoom"/>
 </menu>
