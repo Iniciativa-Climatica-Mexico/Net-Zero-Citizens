@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/table'
 
 import { usePathname, useRouter } from 'next/navigation'
+import { error } from 'console'
 
 export default function Home() {
   const [SelectedComplaint, setSelectedComplaint] =
@@ -78,10 +79,11 @@ export default function Home() {
             {complaintsWithUsers?.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={6} className="text-center">
-                  Error al cargar reportes
+                  No hay reportes para mostrar
                 </TableCell>
               </TableRow>
             ) : null}
+
             {complaintsWithUsers?.map((company) => (
               <TableRow key={company.complaintId} className="min-h-max">
                 <TableCell>
