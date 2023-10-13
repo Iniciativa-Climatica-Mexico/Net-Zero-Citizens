@@ -100,8 +100,8 @@ readCSVFile(__dirname + '/PADRON.EMPRESAS.FIDE.AGOSTO2023.csv').then(
           parsedCompany.products.push('Paneles Solares')
         }
 
-        if (company['Rama Especialización'].includes('Calentadores Solares')) {
-          parsedCompany.products.push('Calentadores solares')
+        if (company['Rama Especialización'].includes('Calentadores solares')) {
+          parsedCompany.products.push('Calentadores Solares')
         }
         return parsedCompany
       })
