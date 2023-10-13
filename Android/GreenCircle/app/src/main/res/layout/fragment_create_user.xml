@@ -184,9 +184,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingRight="0dp"
-                android:paddingBottom="10dp">
+                android:paddingLeft="0dp"
+                android:paddingRight="30dp">
 
 
                 <com.google.android.material.materialswitch.MaterialSwitch
@@ -209,21 +208,21 @@
                     style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Acepto las"
+                    android:text="Acepto el"
                     android:paddingLeft="10dp"
                     android:paddingRight="0dp"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/login_register"
                     style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="192dp"
                     android:layout_height="wrap_content"
-                    android:text="políticas de privacidad"
+                    android:text="aviso de privacidad"
                     android:textAlignment="textStart"
                     android:textColorLink="@color/blue"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     android:paddingLeft="0dp"
                     android:textStyle="bold" />
 

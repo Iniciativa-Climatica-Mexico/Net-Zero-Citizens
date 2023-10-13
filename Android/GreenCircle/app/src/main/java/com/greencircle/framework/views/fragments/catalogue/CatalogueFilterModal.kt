@@ -139,10 +139,7 @@ class CatalogueFilterModal(private val viewModel: CatalogueViewModel) : DialogFr
             window?.attributes = params
 
             val width = 325.dpToPx(requireContext())
-            val height = 525.dpToPx(requireContext())
-
-            dialog.window?.setLayout(width, height)
-
+            dialog.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
             dialog.window?.setBackgroundDrawableResource(R.drawable.rounded_modal)
             dialog.setCancelable(true)
             dialog.setCanceledOnTouchOutside(true)

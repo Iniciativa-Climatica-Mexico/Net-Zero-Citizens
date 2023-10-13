@@ -9,7 +9,7 @@ import SwiftUI
 
 // Definición de colores para Title Bar
 struct TitleBarColor {
-    static let TitleBarColor = Color("TitleBarColor")
+    static let TitleBarColor = Color("Primary")
 }
 
 // Vista genérica para la Title Bar
