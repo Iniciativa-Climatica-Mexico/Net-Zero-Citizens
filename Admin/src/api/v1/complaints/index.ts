@@ -12,7 +12,9 @@ import type { ComplaintsWithUser } from '@/@types/complaint/complaint'
 
 export const getCompaniesWithComplaints = async () => {
   try {
-    const approvedCompaniesWithComplaints = await authAxios().get('/company/approved/complaints')
+    const approvedCompaniesWithComplaints = await authAxios().get(
+      '/company/approved/complaints'
+    )
     const companies = approvedCompaniesWithComplaints.data
 
     return companies
@@ -28,11 +30,20 @@ export const getComplaintsWithUsers = async (companyId: string) => {
       `/complaints/company/${companyId}`
     )
     const complaints = complaintsByCompany.data.rows
+    console.log('complaints', complaints)
+    /** fetch only the complaints where the status is active
+     */
+    const complaintsNew = complaints.filter(
+      (complaint: ComplaintsWithUser) => complaint.complaintStatus == 'active'
+    )
+
     const complaintsWithUsers: ComplaintsWithUser[] = []
-    for (const complaint of complaints) {
+    for (const complaint of complaintsNew) {
       const user = await authAxios().get(`/users/${complaint.userId}`)
       complaintsWithUsers.push({ ...user.data, ...complaint })
     }
+
+    console.log('complaintsWithUsers', complaintsWithUsers)
 
     return complaintsWithUsers
   } catch (error) {
