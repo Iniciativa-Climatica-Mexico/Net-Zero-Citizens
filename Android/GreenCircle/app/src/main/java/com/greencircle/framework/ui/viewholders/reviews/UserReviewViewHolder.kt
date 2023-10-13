@@ -2,7 +2,6 @@ package com.greencircle.framework.ui.viewholders.reviews
 
 import android.app.AlertDialog
 import android.content.Context
-import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
 import android.widget.PopupMenu
@@ -14,7 +13,6 @@ import com.greencircle.databinding.ItemUserReviewBinding
 import com.greencircle.domain.model.reviews.UserReview
 import com.greencircle.framework.viewmodel.reviews.DeleteUserReviewViewModel
 import com.greencircle.framework.views.fragments.profile.ProfileFragment
-import com.greencircle.framework.views.fragments.reviews.UpdateReviewFragment
 import java.util.UUID
 
 class UserReviewViewHolder(
@@ -37,6 +35,7 @@ class UserReviewViewHolder(
                         buildAlertDialog()
                         true
                     }
+
                     else -> false
                 }
             }
@@ -51,35 +50,6 @@ class UserReviewViewHolder(
         binding.reviewCardRating.text = item.score.toString() + " de 5"
         binding.reviewCardDate.text = item.updatedAt.toString().slice(0..9)
         binding.reviewCardRatingBar.rating = item.score.toFloat()
-    }
-
-    private fun navigateToUpdateReviewFormFragment() {
-        val title: String = binding.reviewCardTitle.text.toString()
-        val review: String = binding.reviewCardContent.text.toString()
-        val score: Float = binding.reviewCardRatingBar.rating
-
-        val bundle = Bundle()
-        bundle.putString("title", title)
-        bundle.putString("review", review)
-        bundle.putFloat("score", score)
-        bundle.putString("reviewId", reviewId.toString())
-
-        val updateReviewFragment = UpdateReviewFragment()
-        updateReviewFragment.arguments = bundle
-        val fragmentManager = (itemView.context as? AppCompatActivity)?.supportFragmentManager
-
-        val fragmentTransaction = fragmentManager?.beginTransaction()
-
-        fragmentTransaction?.setCustomAnimations(
-            R.animator.slide_in_right,
-            R.animator.slide_out_left,
-            R.animator.slide_in_left,
-            R.animator.slide_out_right
-        )
-
-        fragmentTransaction?.replace(R.id.frame_layout, updateReviewFragment)
-        fragmentTransaction?.addToBackStack("Review Form")
-        fragmentTransaction?.commit()
     }
 
     private fun buildAlertDialog() {

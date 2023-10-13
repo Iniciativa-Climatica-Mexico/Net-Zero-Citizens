@@ -28,10 +28,10 @@ export default function SurveyReportComponent(props: SurveyReportProps) {
     return (
       <div>
         {/* Use Tailwind CSS classes to conditionally show content based on screen size */}
-        <div className="hidden sm:block md:block lg:block xl:block">
+        <div className="max-md:hidden">
           <QuestionChartContainer {...surveyReport} />
         </div>
-        <div className="sm:hidden md:hidden lg:hidden xl:hidden">
+        <div className="md:hidden">
           {/* Message for small and medium devices */}
           <p className="text-center mt-4">
             Para ver el reporte generado ingresa desde tu dispositivo de escritorio. Gracias.
