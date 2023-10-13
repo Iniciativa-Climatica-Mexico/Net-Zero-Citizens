@@ -60,6 +60,6 @@ struct TabBarView: View {
                 }
             }
         }
-        .accentColor(Color("GreenCustom"))
+        .accentColor(Color("Secondary"))
     }
 }

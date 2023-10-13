@@ -87,7 +87,6 @@
 
     <string-array name="company_filter">
         <item>Selecciona un filtro</item>
-        <item>Cercania</item>
         <item>Rating</item>
     </string-array>
 
