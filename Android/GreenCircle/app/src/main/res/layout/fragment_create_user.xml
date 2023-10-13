@@ -184,9 +184,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="horizontal"
-                android:paddingLeft="20dp"
-                android:paddingRight="30dp"
-                android:paddingBottom="10dp">
+                android:paddingLeft="0dp"
+                android:paddingRight="30dp">
 
 
                 <com.google.android.material.materialswitch.MaterialSwitch
@@ -211,6 +210,7 @@
                     android:layout_height="match_parent"
                     android:text="Acepto las"
                     android:paddingLeft="10dp"
+                    android:paddingRight="0dp"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 

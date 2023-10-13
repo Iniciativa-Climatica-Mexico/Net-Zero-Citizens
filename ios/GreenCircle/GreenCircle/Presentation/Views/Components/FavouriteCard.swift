@@ -22,7 +22,7 @@ struct FavouriteCardView: View {
       RoundedRectangle(cornerRadius: 10, style: .continuous)
         .fill(.white)
         .frame(width: 335, height: 150)
-        .shadow(color: Color("BlueCustom"), radius: 1)
+        .shadow(color: Color("Primary"), radius: 1)
     HStack {
       VStack(alignment: .leading) {
         HStack {
@@ -67,15 +67,15 @@ struct FavouriteCardView: View {
               if Int(companyViewModel.contentCompany.score!) > 0 {
                 ForEach(0..<5, id: \.self) { index in
                   Image(systemName: index < Int(companyViewModel.contentCompany.score!) ? "star.fill" : "star")
-                }.foregroundColor(Color("GreenCustom"))
+                }.foregroundColor(Color("Secondary"))
                 Text("\(Int(companyViewModel.contentCompany.score!))")
               } else {
-                Text("No hay rating").foregroundColor(Color("GreenCustom"))
+                Text("No hay rating").foregroundColor(Color("Secondary"))
               }
             }.font(.system(size: 14))
-              .foregroundColor(Color("GreenCustom"))
+              .foregroundColor(Color("Secondary"))
           }
-          .foregroundColor(Color("MainText"))
+          .foregroundColor(Color("Secondary"))
           Spacer()
         }.frame(maxWidth: 320)
           .padding(EdgeInsets(top: 0, leading: 10, bottom: 5, trailing: 10))
