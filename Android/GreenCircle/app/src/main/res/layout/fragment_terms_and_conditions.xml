@@ -38,7 +38,6 @@
                 android:text="En cumplimiento con la Ley Federal de Protección de Datos Personales en Posesión de Particulares (la “Ley”), y demás relacionadas, nos permitimos informarle sobre las características y finalidades del tratamiento que se dará a sus datos personales que por el ejercicio de sus actividades realice Iniciativa Climática de México AC. (“ICM”)"
                 android:textColor="#333333"
                 android:justificationMode="inter_word"
-                android:lineHeight="0.17in"
                 android:textSize="20sp" />
 
             <TextView
@@ -74,7 +73,6 @@
                 android:text="Respecto de la información de sus datos personales, proporcionada personal y directamente por usted, ya sea de manera verbal o por escrito, por correo electrónico o correspondencia, tarjetas de presentación, o por llenado de formularios de contactos y de datos personales, y también recabada a través de nuestro sitio de Internet, o cualesquier otro medio, le comunicamos que seguimos los principios exigidos por la legislación vigente: licitud, consentimiento, información, finalidad, lealtad, confidencialidad, seguridad, proporcionalidad y responsabilidad."
                 android:textColor="#333333"
                 android:justificationMode="inter_word"
-                android:lineHeight="0.17in"
                 android:textSize="20sp" />
 
             <Button

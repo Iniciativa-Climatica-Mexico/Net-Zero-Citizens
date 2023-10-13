@@ -16,7 +16,7 @@
         android:layout_marginTop="0dp"
         android:layout_marginBottom="0dp"
         card_view:cardCornerRadius="16dp"
-        app:cardElevation="0dp"
+        app:cardElevation="8dp"
         card_view:cardUseCompatPadding="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,14 +28,14 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingBottom="12dp"
+            android:paddingBottom="4dp"
             >
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/CVSImage"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.6"
+                android:layout_weight="1"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="0dp"
                 app:cardUseCompatPadding="true"
