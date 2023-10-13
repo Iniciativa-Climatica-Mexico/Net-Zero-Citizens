@@ -3,21 +3,26 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 const pillVariants = cva(
-  'inline-flex items-center justify-center rounded-full text-sm font-medium transition-colors',
+  'inline-flex items-center justify-center rounded-full text-sm font-medium transition-colors relative overflow-hidden',
   {
     variants: {
       status: {
-        approved: 'bg-[#547C8B] text-white hover:bg-[#658997]',
-        pending_approval: 'bg-[#FFA000] text-white hover:bg-[#FF8F00]',
-        rejected: 'bg-[#D32F2F] text-white hover:bg-[#C1272D]',
+        approved: 'bg-[#547C8B] text-white opacity-80',
+        pending_approval: 'bg-[#FFE6C2] text-[#D32F2F]',
+        rejected: 'bg-[#D32F2F] text-white',
+        optional: 'bg-[#547C8B] text-white',
+        mandatory: 'bg-[#547C8B] text-white',
+        multiple_choice: 'bg-[#589A74] text-white',
+        open: 'bg-[#589A74] text-white',
+        scale: 'bg-[#589A74] text-white',
       },
       size: {
         default: 'h-[2rem] min-w-[6rem] max-w-max',
+        small: 'h-[1.5rem] min-w-[4rem] max-w-max',
       },
     },
 
     defaultVariants: {
-      status: 'approved',
       size: 'default',
     },
   }
@@ -27,6 +32,11 @@ const statusToSpanish = {
   approved: 'Aprobado',
   pending_approval: 'Pendiente',
   rejected: 'Rechazado',
+  optional: 'Opcional',
+  mandatory: 'Obligatorio',
+  multiple_choice: 'Opción múltiple',
+  open: 'Abierta',
+  scale: 'Escala',
 }
 
 interface PillProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -43,10 +53,11 @@ interface PillProps extends React.HTMLAttributes<HTMLDivElement> {
 const Pill = React.forwardRef<HTMLDivElement, PillProps>(
   ({ status, ...props }, ref) => {
     const pillClasses = pillVariants({ status })
+    const text = statusToSpanish[status]
 
     return (
       <div ref={ref} className={cn(pillClasses, props.className)} {...props}>
-        {statusToSpanish[status]}
+        {text}
       </div>
     )
   }

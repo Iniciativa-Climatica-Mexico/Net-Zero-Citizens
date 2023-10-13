@@ -14,6 +14,7 @@ import { signOut, useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Logo from '../../public/Logo.svg'
+import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { deleteSession, refreshTokens } from '@/utils/sessionHooks'
 
@@ -59,18 +60,20 @@ export default function Navbar() {
       {condition && (
         <nav className="bg-white border-b border-[#C1C9D2] dark:bg-gray-900 w-full h-17">
           <div className="flex flex-wrap justify-between items-center mx-auto px-4 py-1 mt-2 font-bold">
-            <div className="flex items-center space-x-4">
-              <Image
-                src={Logo}
-                alt="Green Circle"
-                width={46}
-                height={46}
-                className="inline-block w-10 h-10 mr-2"
-              />
-              <span className="flex text-base whitespace-nowrap dark:text-white">
-                Green Circle
-              </span>
-            </div>
+            <Link href="/" passHref>
+              <div className="flex items-center space-x-4">
+                <Image
+                  src={Logo}
+                  alt="Green Circle"
+                  width={46}
+                  height={46}
+                  className="inline-block w-10 h-10 mr-2"
+                />
+                <span className="flex text-base whitespace-nowrap dark:text-white">
+                  Green Circle
+                </span>
+              </div>
+            </Link>
             {/* Desktop navigation */}
             <div
               className="hidden w-full md:block md:w-auto"
@@ -83,7 +86,7 @@ export default function Navbar() {
                     className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent no-underline"
                     aria-current="page"
                   >
-                    Proovedores
+                    Proveedores
                   </a>
                 </li>
                 <li>
@@ -110,17 +113,7 @@ export default function Navbar() {
                     Quejas
                   </a>
                 </li>
-                <li>
-                  <div>
-                    <Image
-                      src={Logo}
-                      alt="Green Circle"
-                      width={40}
-                      height={40}
-                      className="mr-2 rounded-full"
-                    />
-                  </div>
-                </li>
+
                 <li>
                   <div>
                     {session && session.user && (
@@ -159,7 +152,7 @@ export default function Navbar() {
                     href="/"
                     className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 dark:text-white"
                   >
-                    Proovedores
+                    Proveedores
                   </a>
                 </li>
                 <li className="border-b border-[#C1C9D2] border-opacity-50">
