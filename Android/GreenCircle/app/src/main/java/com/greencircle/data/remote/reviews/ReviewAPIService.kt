@@ -10,7 +10,6 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
-import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface ReviewAPIService {
@@ -29,12 +28,6 @@ interface ReviewAPIService {
     suspend fun addReview(
         @Path("userId") userId: UUID,
         @Path("companyId") companyId: UUID,
-        @Body review: ReviewBase
-    ): Response<ResponseBody>
-
-    @PUT("review/{reviewId}")
-    suspend fun updateReview(
-        @Path("reviewId") reviewId: UUID,
         @Body review: ReviewBase
     ): Response<ResponseBody>
 

@@ -27,6 +27,7 @@ import {
   CompanyFiles,
   updateCompany,
   UpdateCompanyInfoBody,
+  getCompanyFileDownload
 } from '@/api/v1/company'
 
 import CloseIcon from '@mui/icons-material/Close'
@@ -171,6 +172,14 @@ export default function ModalProveedor({
       .catch((error) => {
         console.log(error)
       })
+  }
+
+  const downloadCompanyFile = async (companyId: string, fileDescription: string, fileFormat: string) => {
+    try {
+      await getCompanyFileDownload(companyId, fileDescription, fileFormat)
+    } catch (error) {
+      console.error('Error downloading file:', error)
+    }
   }
 
   if (message) {
@@ -361,8 +370,8 @@ export default function ModalProveedor({
                 )}
                 <h3 className="font-bold">Documentos</h3>
                 <div className="flex flex-wrap justify-between items-end mb-1">
-                  {selectedCompany.companyFiles &&
-                  selectedCompany.companyFiles.length > 3 ? (
+                  {selectedCompany.files &&
+                  selectedCompany.files.length > 3 ? (
                       <div className="mb-3">
                         <Carousel
                           showThumbs={false}
@@ -374,7 +383,7 @@ export default function ModalProveedor({
                           centerMode
                           centerSlidePercentage={33.33}
                         >
-                          {selectedCompany.companyFiles
+                          {selectedCompany.files
                             .filter(
                               (file: CompanyFiles) =>
                                 file.fileDescription !== 'Imagen' && // Exclude image files
@@ -386,6 +395,7 @@ export default function ModalProveedor({
                                 href={file.fileUrl}
                                 className="min-w-[31%] no-underline text-[#333333] font-medium"
                                 target="_blank"
+                                onClick={() => downloadCompanyFile(selectedCompany.companyId, file.fileDescription, file.fileFormat)}
                               >
                                 <div className="border px-[5px] rounded flex flex-col justify-center items-center">
                                   <FileOpenIcon color="info" className="mt-3" />
@@ -397,8 +407,8 @@ export default function ModalProveedor({
                       </div>
                     ) : (
                       <div className="flex flex-wrap justify-between items-end mb-3 w-full">
-                        {selectedCompany.companyFiles &&
-                          selectedCompany.companyFiles
+                        {selectedCompany.files &&
+                          selectedCompany.files
                             .filter(
                               (file: CompanyFiles) =>
                                 file.fileDescription !== 'Imagen' && // Exclude image files
@@ -410,6 +420,7 @@ export default function ModalProveedor({
                                 href={file.fileUrl}
                                 className="min-w-[31%] no-underline text-[#333333] font-medium"
                                 target="_blank"
+                                onClick={() => downloadCompanyFile(selectedCompany.companyId, file.fileDescription, file.fileFormat)}
                               >
                                 <div className="border px-[5px] rounded flex flex-col justify-center items-center">
                                   <FileOpenIcon color="info" className="mt-3" />

@@ -4,6 +4,8 @@ import Link from 'next/link'
 import Modal from 'react-modal'
 import { useEffect, useState } from 'react'
 import { authAxios } from '@/api/v1/axios.config'
+import { Pill } from '@/components/pill/pill'
+import LoadingPage from '@/components/loadingPage/page'
 
 type DetailedSurveyProps = {
   params: {
@@ -18,6 +20,7 @@ export default function DetailedSurvey(props: DetailedSurveyProps) {
     const surveyId = props.params.surveyId
     const [modalIsOpen, setIsOpen] = useState(false)
     const [surveyDetail, setSurveyDetail] = useState({} as Survey)
+    const [isGeneratingReport, setIsGeneratingReport] = useState(false)
 
     useEffect(() => {
       fetchSurveyById(surveyId).then((res) =>
@@ -35,6 +38,10 @@ export default function DetailedSurvey(props: DetailedSurveyProps) {
       }
     }
 
+    if (isGeneratingReport) {
+      return <LoadingPage />
+    }
+
     return (
       <div>
         <div className="flex flex-col sm:flex-row items-center justify-between mt-8 mx-8">
@@ -42,21 +49,26 @@ export default function DetailedSurvey(props: DetailedSurveyProps) {
             {surveyDetail.title}
           </h1>
           <div className="flex flex-row gap-4">
-            <button
-              onClick={() => setIsOpen(true)}
-              className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end mt-4 "
-            >
-              Cerrar Encuesta
-            </button>
+            {surveyDetail.endDate == null && (
+              <button
+                onClick={() => setIsOpen(true)}
+                className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end mt-4 "
+              >
+                Cerrar Encuesta
+              </button>
+            )}
             <Link href={'/reportes/encuesta/' + surveyId}>
-              <button className="flex items-center justify-center bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end mt-4 md:mr-32 sm:mr-12">
+              <button
+                className="flex items-center justify-center bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end mt-4 md:mr-32 sm:mr-12"
+                onClick={() => setIsGeneratingReport(true)}
+              >
                 Generar Reporte
               </button>
             </Link>
           </div>
         </div>
         <div className="flex mx-8 justify-between">
-          <p className="self-start mb-8 mx-8 text-secondary">
+          <p className="font-normal sm:ml-8 md:ml-32 sm:pr-2 md:pr-6 text-txt">
             {surveyDetail.description}
           </p>
           <div className="flex gap-4">
@@ -154,13 +166,9 @@ function QuestionComponent(props: QuestionDetail) {
       </td>
       <td className="text-center truncate py-8 px-8 text-txt ">
         {props.isRequired ? (
-          <div className="bg-primary-base text-white py-2 px-4 w-[8rem] rounded">
-            Obligatorio
-          </div>
+          <Pill status="mandatory" />
         ) : (
-          <div className="text-primary-base py-2 px-4 w-[8rem] rounded border-primary-base border-2">
-            Opcional
-          </div>
+          <Pill status="optional" />
         )}
       </td>
     </tr>

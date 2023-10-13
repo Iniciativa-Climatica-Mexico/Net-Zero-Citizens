@@ -123,41 +123,13 @@ export const deleteReview = async (reviewId: string): Promise<Review> => {
 
 /**
  * @brief
- * Función del servicio que actualiza una review de la base de datos
- * @param params reviewId, review, score
- * @returns Una promesa con la review actualizada
- */
-export const updateReview = async (
-  reviewId: string,
-  reviewTitle: string,
-  review: string,
-  score: number
-): Promise<Review> => {
-  const res = await Review.findOne({
-    where: {
-      reviewId: reviewId,
-    },
-  })
-
-  if (res) {
-    res.reviewTitle = reviewTitle
-    res.review = review
-    res.score = score
-    await res.save()
-    return res
-  } else {
-    throw new Error('Review not found')
-  }
-}
-
-
-/**
- * @brief
  * Función del servicio que a elimina todas las reseñas de un usuario
  * @param params UUID
  * @returns number
  */
-export const deleteAllReviewsFromUser = async (userId: string): Promise<number> => {
+export const deleteAllReviewsFromUser = async (
+  userId: string
+): Promise<number> => {
   return await Review.destroy({
     where: {
       userId: userId,
