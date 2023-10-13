@@ -44,7 +44,7 @@ struct CatalogView: View {
 
             
             ForEach(viewModel.filteredCompanies, id: \.id) { company in
-              CardCatalogView(companyId: company.companyId,
+              CardCatalog(companyId: company.companyId,
                               companyName: company.name, city: company.city,
                               state: company.state)
             }

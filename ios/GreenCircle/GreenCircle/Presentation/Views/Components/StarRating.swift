@@ -8,17 +8,18 @@
 import SwiftUI
 
 struct StarRating: View {
-  var value: Float
+  
+  var value: Double
   var maxValue = 5
   var wholeStars: Int
   var halfStar = false
   var emptyStars: Int
   
-  init(_ value: Float) {
+  init(_ value: Double) {
     self.value = value
     self.wholeStars = Int(floor(value))
     
-    if value - Float(wholeStars) >= 0.5 {
+    if value - Double(wholeStars) >= 0.5 {
       self.halfStar = true
     }
     
@@ -51,7 +52,7 @@ struct StarRating: View {
           .scaledToFit()
       }
     }
-    .foregroundStyle(.yellow)
+    .foregroundStyle(Color("GreenCustom"))
   }
 }
 
