@@ -4,7 +4,7 @@
     <string name="proveedores">Proveedores</string>
     <string name="mapa">Mapa</string>
     <string name="perfil">Perfil</string>
-    <string name="Cerrar_sesion">Cerrar sesion</string>
+    <string name="Cerrar_sesion">Cerrar sesión</string>
     <string name="favourites_user">Favoritos (</string>
     <string name="review_nested_scroll_desc">Scrollable content</string>
     <string name="review_opinions_count">%d opiniones</string>
@@ -34,10 +34,10 @@
     <string name="contacto">Contacto</string>
     <string name="rese_as">Reseñas</string>
     <string name="review_submit_error">Hubo un error al publicar la review. Por favor intenta de nuevo más tarde</string>
-    <string name="review_placeholder_user">User</string>
-    <string name="review_placeholder_date">Date</string>
-    <string name="review_placeholder_title">Title</string>
-    <string name="review_placeholder_review">Review</string>
+    <string name="review_placeholder_user">Usuario</string>
+    <string name="review_placeholder_date">Fecha</string>
+    <string name="review_placeholder_title">Título</string>
+    <string name="review_placeholder_review">Reseña</string>
     <string name="reviews_written_user">Reseñas Escritas (</string>
     <string name="user_review_empty_view">No has escrito ninguna reseña</string>
     <string name="user_favourite_empty_view">No has agregado proveedores como favoritos</string>

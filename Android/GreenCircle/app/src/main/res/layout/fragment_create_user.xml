@@ -184,9 +184,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingRight="0dp"
-                android:paddingBottom="10dp">
+                android:paddingLeft="0dp"
+                android:paddingRight="30dp">
 
 
                 <com.google.android.material.materialswitch.MaterialSwitch

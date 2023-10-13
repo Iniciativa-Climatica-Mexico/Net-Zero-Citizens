@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:text="Inicia sesión con tu cuenta"
-                android:textColor="@color/black"
+                android:textColor="#333333"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
