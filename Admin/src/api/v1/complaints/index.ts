@@ -12,7 +12,9 @@ import type { ComplaintsWithUser } from '@/@types/complaint/complaint'
 
 export const getCompaniesWithComplaints = async () => {
   try {
-    const approvedCompaniesWithComplaints = await authAxios().get('/company/approved/complaints')
+    const approvedCompaniesWithComplaints = await authAxios().get(
+      '/company/approved/complaints'
+    )
     const companies = approvedCompaniesWithComplaints.data
 
     return companies
