@@ -73,7 +73,7 @@ class CompanyViewModel: ObservableObject {
     @MainActor
     func uploadFile(file: Data, fileDescription: String, mimeType: String) async {
         let mimeType = "application/pdf"
-        let fileFormat = "pdf"
+        let fileFormat = ".pdf"
         
         if let response = await repository.uploadCompanyFile(file: file, fileDescription: fileDescription, fileFormat: fileFormat, mimeType: mimeType) {
             // Maneja el valor 'response' según sea necesario
