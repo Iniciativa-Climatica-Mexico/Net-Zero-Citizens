@@ -22,7 +22,7 @@ struct Tutorial: View {
     NavigationView {
       
       VStack(alignment: .leading) {
-        Text("¿Cómo uso la App?").font(.title)
+        Text("¿Cómo uso la App?").font(.title).bold()
           .padding(.leading)
           .padding(.top, 30)
         ScrollView(.horizontal) {
@@ -31,7 +31,7 @@ struct Tutorial: View {
               let tutorial = tutoImgs[index]
               let text = textImgs[index]
               VStack {
-                Text(text).font(.headline)
+                Text(text).font(.headline).foregroundColor(Color("Secondary"))
                 Image(tutorial)
                   .resizable()
                   .scaledToFit()

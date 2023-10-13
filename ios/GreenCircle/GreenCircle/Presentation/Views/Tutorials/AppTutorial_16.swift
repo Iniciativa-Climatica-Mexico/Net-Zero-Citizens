@@ -24,14 +24,14 @@ struct AppTutorial_16: View {
     NavigationView {
       
       VStack(alignment: .leading) {
-        Text("¿Cómo uso la App?").font(.title).padding([.leading, .top])
+        Text("¿Cómo uso la App?").font(.title).bold().padding([.leading, .top])
         ScrollView(.horizontal) {
           LazyHStack(spacing: 0) {
             ForEach(tutoImgs.indices, id: \.self) { index in
               let tutorial = tutoImgs[index]
               let text = textImgs[index]
               VStack {
-                Text(text).font(.headline)
+                Text(text).font(.headline).foregroundColor(Color("Secondary"))
                 Image(tutorial)
                   .resizable()
                   .scaledToFit()

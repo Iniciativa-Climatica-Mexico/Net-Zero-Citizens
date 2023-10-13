@@ -25,7 +25,7 @@ struct AppTutorial_17: View {
     NavigationView {
       
       VStack(alignment: .leading) {
-        Text("¿Cómo uso la App?")
+        Text("¿Cómo uso la App?").bold()
           .font(.title)
           .padding(.leading)
           .padding(.top, 20)
@@ -35,11 +35,11 @@ struct AppTutorial_17: View {
               let tutorial = tutoImgs[index]
               let text = textImgs[index]
               VStack {
-                Text(text).font(.headline)
+                Text(text).font(.headline).foregroundColor(Color("Secondary"))
                 Image(tutorial)
                   .resizable()
                   .scaledToFit()
-                  .frame(height: 650)
+                  .frame(height: 635)
                   .clipShape(RoundedRectangle(cornerRadius: 25.0))
                   .padding(.horizontal, 20)
                   .containerRelativeFrame(.horizontal)
