@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".framework.views.fragments.profile.ProfileFragment">
-
+    tools:context=".framework.views.fragments.profile.ProfileFragment"
+    android:layout_marginTop="70dp">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,72 +18,21 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/my_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:background="@drawable/top_background"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/arrow_back_icon"
-                    android:background="@null"
-                    android:layout_marginLeft="20dp"
-                    android:layout_gravity="center_vertical"
-                    android:onClick="goBack"/>
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/edit_icon"
-                    android:background="@null"
-                    android:layout_gravity="center_vertical|right"
-                    android:layout_marginRight="20dp"
-                    android:onClick="goToEditProfile"
-                    />
-
-
-                <TextView
-                    android:id="@+id/headerText"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Mis Datos" />
-            </androidx.appcompat.widget.Toolbar>
-
             <ImageView
                 android:id="@+id/profileImage"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/circle_background"
                 android:scaleType="centerCrop"
-                android:src="@drawable/pp_icon" />
-
-            <TextView
-                android:id="@+id/username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/gray_800"
-                android:layout_marginTop="10dp"/>
+                android:src="@drawable/pp_icon"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:orientation="vertical"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp" >
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
