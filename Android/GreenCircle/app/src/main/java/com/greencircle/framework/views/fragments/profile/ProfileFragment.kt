@@ -18,6 +18,7 @@ import com.greencircle.domain.usecase.auth.RecoverUserSessionRequirement
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.profile.ProfileViewModel
 import com.greencircle.framework.views.activities.LoginActivity
+import com.greencircle.framework.views.activities.TutorialActivity
 import com.greencircle.framework.views.fragments.favourites.FavouriteFragment
 import com.greencircle.framework.views.fragments.reviews.UserReviewFragment
 import com.greencircle.utils.GoogleSignInClientProvider
@@ -63,6 +64,13 @@ class ProfileFragment : Fragment() {
         initializeFavouritesButton()
         logoutOnClickListener()
         displayUserReviewFragment()
+
+        val tutorialButton = binding.root.findViewById<View>(R.id.tutorialButton)
+
+        tutorialButton.setOnClickListener {
+            val intent: Intent = Intent(requireContext(), TutorialActivity::class.java)
+            startActivity(intent)
+        }
 
         binding.resenasCountTextView.text = "$reviewsCount"
         return root
