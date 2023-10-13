@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.greencircle.R
 import com.greencircle.databinding.FragmentFavouriteProfileBinding
 import com.greencircle.domain.model.company.CompanySummary
 import com.greencircle.domain.usecase.auth.DeleteTokensRequirement
@@ -83,7 +82,6 @@ class FavouriteFragment : Fragment() {
 
         // Inicializar Observers
         initializeObservers()
-        logoutOnClickListener()
 
         binding.favouritesCountTextView.text = "$favouritesCount"
         return root
@@ -101,13 +99,6 @@ class FavouriteFragment : Fragment() {
         val intent: Intent = Intent(requireContext(), LoginActivity::class.java)
         startActivity(intent)
         requireActivity().finish()
-    }
-
-    private fun logoutOnClickListener() {
-        val logoutButton = binding.root.findViewById<View>(R.id.logout)
-        logoutButton.setOnClickListener {
-            logout()
-        }
     }
 
     private fun logout() {
