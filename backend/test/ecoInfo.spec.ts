@@ -50,7 +50,7 @@ const testData = [
   },
 ]
 
-const exclude = ['createdAt', 'updatedAt']
+const exclude = ['createdAt', 'updatedAt', 'createdPostAt']
 
 beforeEach(() => {
   db.drop()
