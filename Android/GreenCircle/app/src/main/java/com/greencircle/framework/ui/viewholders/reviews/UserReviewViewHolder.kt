@@ -33,16 +33,10 @@ class UserReviewViewHolder(
 
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
-                    R.id.update_review -> {
-                        navigateToUpdateReviewFormFragment()
-                        true
-                    }
-
                     R.id.delete_review -> {
                         buildAlertDialog()
                         true
                     }
-
                     else -> false
                 }
             }

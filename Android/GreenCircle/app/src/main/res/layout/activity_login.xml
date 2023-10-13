@@ -19,7 +19,8 @@
             android:layout_height="match_parent"
             android:background="@android:color/white"
             android:orientation="vertical"
-            android:padding="30dp">
+            android:padding="30dp"
+            android:paddingBottom="0dp">
 
             <ImageView
                 android:layout_width="50dp"
@@ -172,12 +173,12 @@
                         style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="0.6"
                         android:text="Regístrate"
                         android:textColorLink="@color/blue"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        android:gravity="end"/>
+                        android:gravity="center"/>
                 </LinearLayout>
 
                 <Button

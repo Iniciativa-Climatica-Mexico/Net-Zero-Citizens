@@ -11,7 +11,10 @@
 
     <include
         android:id="@+id/fragment_company_catalogue_skeleton"
-        layout="@layout/fragment_company_catalogue_skeleton" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/fragment_company_catalogue_skeleton"
+        android:layout_marginTop="20dp"/>
 
     <include
         android:layout_width="match_parent"
