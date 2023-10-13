@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".framework.views.fragments.company.CompanyContactFragment">
+    tools:context=".framework.views.fragments.company.CompanyContactFragment"
+    android:paddingBottom="20dp">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
