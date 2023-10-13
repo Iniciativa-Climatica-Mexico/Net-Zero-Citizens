@@ -38,22 +38,17 @@ struct SectionProfile: View{
   @ObservedObject var modelUser = UserViewModel()
   var body: some View{
     VStack {
-        Image("Sun")
+        Image(systemName: "person.crop.circle.fill")
             .resizable()
             .frame(width: 100, height: 100)
+            .foregroundStyle(Color("Primary"))
         HStack {
-          Text(modelUser.contentBaseUser?.firstName ?? "Cargando...")
-                .foregroundColor(Color.black)
-                .font(.system(size: 16))
-                .fontWeight(.semibold)
-                .padding(.top, 12)
-                .padding(.bottom, 2)
-            Text(modelUser.contentBaseUser?.lastName ?? "Cargando...")
-                .foregroundColor(Color.black)
-                .font(.system(size: 16))
-                .fontWeight(.semibold)
-                .padding(.top, 12)
-                .padding(.bottom, 2)
+          Text("\(modelUser.contentBaseUser?.firstName ?? "Cargando...") \(modelUser.contentBaseUser?.lastName ?? "")")
+              .foregroundColor(Color.black)
+              .font(.system(size: 16))
+              .fontWeight(.semibold)
+              .padding(.top, 10)
+              .padding(.bottom, 2)
         }
         NavigationLink("Cerrar Sesión", destination: Example2View())
             .foregroundColor(TitleBarColor.TitleBarColor)
@@ -75,8 +70,8 @@ struct Section1: View{
               get: { self.modelUser.contentBaseUser?.firstName ?? "" },
               set: { newValue in
                   if !containsNumber(input: newValue) {
-                      if self.modelUser.contentBaseUser != nil {
-                          self.modelUser.contentBaseUser?.firstName = newValue
+                    if var contentUser = self.modelUser.contentBaseUser {
+                      contentUser.firstName = newValue
                       }
                   }
               }
@@ -121,7 +116,7 @@ struct Section1: View{
       //---Field Nombre----------------------------------------------------------
       Text("Nombre")
                       .padding(.top, 16)
-                      .foregroundColor(Color("GreenColor"))
+                      .foregroundColor(Color("Secondary"))
                       .font(.system(size: 13))
                       .fontWeight(.semibold)
                   
@@ -144,7 +139,7 @@ struct Section1: View{
       //---Field Apellido----------------------------------------------------------
       Text("Apellido")
         .padding(.top, 16)
-        .foregroundColor(Color("GreenColor"))
+        .foregroundColor(Color("Secondary"))
         .font(.system(size: 13))
         .fontWeight(.semibold)
       TextField("Primer Apellido", text: lastNameBinding)
@@ -165,7 +160,7 @@ struct Section1: View{
       
       Text("Email")
         .padding(.top, 16)
-        .foregroundColor(Color("GreenColor"))
+        .foregroundColor(Color("Secondary"))
         .font(.system(size: 13))
         .fontWeight(.semibold)
       TextField("Email", text: emailBinding)
@@ -201,8 +196,8 @@ struct Section2: View {
       Binding<String>(
           get: { self.modelUser.contentBaseUser?.gender ?? "Cargando..." },
           set: { newValue in
-              if self.modelUser.contentBaseUser != nil {
-                  self.modelUser.contentBaseUser?.gender = newValue
+              if var contentUser = self.modelUser.contentBaseUser {
+                contentUser.gender = newValue
               }
           }
       )
@@ -221,7 +216,7 @@ struct Section2: View {
           VStack(alignment: .leading) {
               Text("Edad")
                   .padding(.top, 16)
-                  .foregroundColor(Color("GreenColor"))
+                  .foregroundColor(Color("Secondary"))
                   .font(.system(size: 13))
                   .fontWeight(.semibold)
             let ageStringBinding = Binding<String>(
@@ -267,7 +262,7 @@ struct Section2: View {
             VStack(alignment: .leading) {
                 Text("Género")
                     .padding(.top, 16)
-                    .foregroundColor(Color("GreenColor"))
+                    .foregroundColor(Color("Secondary"))
                     .font(.system(size: 13))
                     .fontWeight(.semibold)
               PickerFormView2(
@@ -309,8 +304,8 @@ struct Section3: View {
       Binding<String>(
           get: { self.modelUser.contentBaseUser?.state ?? "Cargando..." },
           set: { newValue in
-              if self.modelUser.contentBaseUser != nil {
-                  self.modelUser.contentBaseUser?.state = newValue
+              if var contentUser = self.modelUser.contentBaseUser {
+                  contentUser.state = newValue
               }
           }
       )
@@ -324,13 +319,13 @@ struct Section3: View {
 
   func containsOnlyNumbers(input: String?) -> Bool {
       guard let input = input else { return false }
-      return input.range(of: "^[0-9]+$", options: .regularExpression) != nil
+      return input.range(of: "^[0-9]+$",
+                         options: .regularExpression) != nil
   }
     
   func isPhoneNumberValid() -> Bool {
-      guard let phoneNumber = modelUser.contentBaseUser?.phoneNumber else {
-          return false
-      }
+      guard let phoneNumber = modelUser.contentBaseUser?.phoneNumber 
+    else { return false }
       return phoneNumber.count == 10
   }
   
@@ -339,23 +334,25 @@ struct Section3: View {
           //----Field Celular----------------------------------------------------------
           Text("Teléfono")
               .padding(.top, 16)
-              .foregroundColor(Color("GreenColor"))
+              .foregroundColor(Color("Secondary"))
               .font(.system(size: 13))
               .fontWeight(.semibold)
 
           TextField("Teléfono", text: Binding(
               get: {
                   if let phoneNumber = self.modelUser.contentBaseUser?.phoneNumber, !phoneNumber.isEmpty {
-                      return phoneNumber
+                    return Utils
+                      .formatNumber(with: "XXX-XXX-XXXX",
+                                    for: phoneNumber)
                   } else {
                       return ""
                   }
               },
               set: {
-                  let filtered = $0.filter { "0123456789".contains($0) }
-                  if filtered.count <= 10 {
-                      self.modelUser.contentBaseUser?.phoneNumber = filtered
-                  }
+                self.modelUser.contentBaseUser?
+                  .phoneNumber =
+                Utils.formatNumber(with: "XXX-XXX-XXXX",
+                                   for: $0)
               }
           ))
           .keyboardType(.numberPad)
@@ -368,7 +365,10 @@ struct Section3: View {
             Text("No puedes dejar este campo vacío.")
                 .foregroundColor(.red)
                 .font(.system(size: 11))
-        } else if let phone = modelUser.contentBaseUser?.phoneNumber, phone.count != 10 {
+        } else if let phone = modelUser.contentBaseUser?.phoneNumber,
+                  Utils
+          .formatNumber(with: "XXX-XXX-XXXX", for: phone)
+          .count != 12 {
             Text("El teléfono debe tener exactamente 10 dígitos.")
                 .foregroundColor(.red)
                 .font(.system(size: 11))
@@ -377,7 +377,7 @@ struct Section3: View {
         //----Picker Estado----------------------------------------------------------
         Text("Estado")
             .padding(.top, 16)
-            .foregroundColor(Color("GreenColor"))
+            .foregroundColor(Color("Secondary"))
             .font(.system(size: 13))
             .fontWeight(.semibold)
         
@@ -508,7 +508,7 @@ struct SectionDelete: View{
             .padding(.vertical, 12)
             .padding(.horizontal, 30)
             .frame(maxWidth: .infinity)
-            .background(Color("RedCustom"))
+            .background(Color("Alert"))
             .cornerRadius(8)
         }).alert(isPresented: $showAlert, content: {
           Alert(title: Text("¿Deseas borrar tu cuenta?"), message: Text("Si aceptas, no guardaremos ningún dato tuyo."),
@@ -538,10 +538,11 @@ struct SectionDelete: View{
     var goLogin: () -> Void
     
     func isPhoneNumberValid() -> Bool {
-        guard let phoneNumber = modelUser.contentBaseUser?.phoneNumber else {
+        guard let phoneNumber = modelUser
+          .contentBaseUser?.phoneNumber else {
             return false
         }
-        return phoneNumber.count == 10
+        return phoneNumber.count == 12
     }
     
     var body: some View {

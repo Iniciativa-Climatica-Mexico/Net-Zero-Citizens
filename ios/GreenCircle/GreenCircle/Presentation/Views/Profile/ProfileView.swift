@@ -35,20 +35,14 @@ struct ProfileView: View {
 
                 VStack {
                     // Imagen provisional
-                    Image("Sun")
+                  Image(systemName: "person.crop.circle.fill")
                         .resizable() // Hacer que la imagen sea redimensionable
                         .frame(width: 100, height: 100)
+                        .foregroundStyle(Color("Primary"))
 
                     HStack {
                         // Nombre del usuario
-                        Text(modelUser.contentBaseUser?.firstName ?? "Cargando...")
-                            .foregroundColor(Color.black)
-                            .font(.system(size: 16))
-                            .fontWeight(.semibold)
-                            .padding(.top, 10)
-                            .padding(.bottom, 2)
-                        // Apellido del Usuario
-                        Text(modelUser.contentBaseUser?.lastName ?? "Cargando...")
+                        Text("\(modelUser.contentBaseUser?.firstName ?? "Cargando...") \(modelUser.contentBaseUser?.lastName ?? "")")
                             .foregroundColor(Color.black)
                             .font(.system(size: 16))
                             .fontWeight(.semibold)
@@ -76,6 +70,7 @@ struct ProfileView: View {
                                 .frame(maxWidth: .infinity)
                                 .background(TitleBarColor.TitleBarColor)
                                 .cornerRadius(8)
+                                .fontWeight(.semibold)
                         }
                         .padding(.leading, 10)
                     }

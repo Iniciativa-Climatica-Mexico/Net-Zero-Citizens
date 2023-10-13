@@ -27,7 +27,6 @@ class GoogleSignInUseCase {
     do {
       let res = try await GIDSignIn.sharedInstance
         .signIn(withPresenting: presentingViewController)
-      
       guard let authResponse = await repository
         .postGoogleLogin(googleToken: res.user.idToken!.tokenString)
       else { return .fail }

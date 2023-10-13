@@ -77,7 +77,6 @@ class EditProfileFragment : Fragment() {
 
     private fun setUserData() {
         val name = user.firstName + " " + user.lastName
-        binding.username.text = name
         binding.inputNombre.setText(user.firstName)
         binding.inputPrimerApellido.setText(user.lastName)
         binding.inputSegundoApellido.setText(user.secondLastName)

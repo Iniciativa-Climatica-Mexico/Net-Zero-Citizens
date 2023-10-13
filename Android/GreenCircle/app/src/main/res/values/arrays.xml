@@ -7,6 +7,7 @@
         <item>Campeche</item>
         <item>Chiapas</item>
         <item>Chihuahua</item>
+        <item>Ciudad de México</item>
         <item>Coahuila</item>
         <item>Colima</item>
         <item>Durango</item>
@@ -87,7 +88,6 @@
 
     <string-array name="company_filter">
         <item>Selecciona un filtro</item>
-        <item>Cercania</item>
         <item>Rating</item>
     </string-array>
 

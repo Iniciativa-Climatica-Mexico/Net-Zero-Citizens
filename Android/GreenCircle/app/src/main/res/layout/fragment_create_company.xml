@@ -328,28 +328,32 @@
                     app:thumbTint="@color/white"
                     app:trackTint="@color/gray_500"
                     android:padding="4dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
                     />
 
                 <TextView
                     style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Acepto las"
+                    android:text="Acepto el"
                     android:paddingLeft="3dp"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/login_register"
                     style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="192dp"
                     android:layout_height="wrap_content"
-                    android:text="políticas de privacidad"
+                    android:text="aviso de privacidad"
                     android:textAlignment="textStart"
                     android:textColorLink="@color/blue"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     android:paddingLeft="0dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_gravity="center" />
 
 
             </LinearLayout>
