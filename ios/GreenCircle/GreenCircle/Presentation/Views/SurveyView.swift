@@ -21,9 +21,27 @@ struct SurveyView: View {
         VStack(alignment: .leading) {
           Text(vm.survey.title)
             .font(.title).bold()
-            .padding([.top, .bottom])
+            .padding(.top)
+          Text("Queremos conocer más de ti en esta breve encuesta")
+            .padding(.top, 4)
+            .padding(.bottom)
           
           ForEach(Array(vm.survey.questions.enumerated()), id: \.offset) { index, question in
+            VStack(alignment: .leading) {
+              if question.isRequired == false {
+                Text(question.questionText)
+                  .font(.headline)
+              } else {
+                Text(question.questionText)
+                  .font(.headline)
+                  .padding(.bottom, 1)
+                Text("* Obligatoria")
+                  .font(.system(size: 15))
+                  .font(.title)
+                  .foregroundColor(Color("Secondary"))
+                  .padding(.bottom, 10)
+              }
+            }
             QuestionView(question: question, answer: $vm.answers[index])
           }
           
