@@ -55,8 +55,8 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
     const [page, setPage] = useState(0)
     const maxPage = Math.ceil(surveyReport.questions.length)
 
-    const onNextPage = () => setPage((page + 1) % maxPage)
-    const onPrevPage = () => setPage(page > 0 ? page - 1 : maxPage - 1)
+    const onNextPage = () => setPage(Math.min(page + 1, maxPage - 1))
+    const onPrevPage = () => setPage(Math.max(page - 1, 0))
 
     const question = surveyReport.questions[page]
     const labels = question.answers?.map((answer) => answer.label)
@@ -175,7 +175,7 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
               />
             </svg>
           </button>
-          <h3 className="text-txt font-medium text-xl">
+          <h3 className="text-txt font-medium text-xl w-[28rem]">
             {question.questionText}
           </h3>
           <button className="pl-5" onClick={onNextPage}>
@@ -193,6 +193,10 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
               />
             </svg>
           </button>
+        </div>
+        <br />
+        <div className="pl-20">
+          {page + 1} de {maxPage}
         </div>
         {(() => {
           return (
@@ -233,16 +237,16 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
                   <>
                     {/* Preguntas cerradas */}
                     {question.questionType != 'open' && (
-                      <div className="flex">
+                      <div className="flex overflow-auto">
                         {/* Tabla de labels */}
                         <div className="pt-10 w-1/2">
                           <table className="table-fixed border-collapse rounded-lg border border-slate-400">
                             <thead>
                               <tr>
-                                <th className="px-10 py-4 border border-slate-400">
+                                <th className="px-4 py-4 border border-slate-400">
                                   Opción
                                 </th>
-                                <th className="px-10 py-4 border border-slate-400">
+                                <th className="px-4 py-4 border border-slate-400">
                                   Total de respuestas
                                 </th>
                               </tr>
