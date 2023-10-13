@@ -75,7 +75,7 @@ struct ReviewCompanyCard: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 15, height: 15)
-                                .foregroundColor(Color("GreenCustom"))
+                                .foregroundColor(Color("Secondary"))
                         }
                     }
                     .font(.headline)
@@ -163,7 +163,7 @@ struct ReviewClientCard: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 10, height: 10)
-                                .foregroundColor(Color("GreenCustom"))
+                                .foregroundColor(Color("Secondary"))
                         }
                         
                         Text(String(format: "%.1f de 5", Double(review.score)))
@@ -199,7 +199,7 @@ struct ReviewClientCard: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 17, height: 17)
-                            .foregroundColor(Color("GreenCustom"))
+                            .foregroundColor(Color("Secondary"))
                             .padding(EdgeInsets(top: 0, leading: 55, bottom: 0, trailing: 0))
                     }
                 }
@@ -219,7 +219,7 @@ struct ReviewClientCard: View {
                         Text("See more...")
                             .font(.body)
                             .padding(EdgeInsets(top: 0, leading: 0, bottom: 15, trailing: 15))
-                            .foregroundColor(Color("BlueCustom"))
+                            .foregroundColor(Color("Primary"))
                             .onTapGesture {
                                 isExpanded.toggle()
                             }
@@ -230,7 +230,7 @@ struct ReviewClientCard: View {
                         Text("Show less")
                             .font(.body)
                             .padding(EdgeInsets(top: 0, leading: 0, bottom: 15, trailing: 15))
-                            .foregroundColor(Color("BlueCustom"))
+                            .foregroundColor(Color("Primary"))
                             .onTapGesture {
                                 isExpanded.toggle()
                             }
