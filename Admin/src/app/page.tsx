@@ -46,7 +46,7 @@ export default function Home() {
     description: '',
     createdAt: '',
     streetNumber: '',
-    companyFiles: [],
+    files: [],
   })
   const [modalOpen, setIsModalOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
@@ -90,13 +90,13 @@ export default function Home() {
   const filteredCompanies =
     activeTab === 'pending_approval'
       ? pendingCompanies?.filter((company) =>
-          company.name.toLowerCase().includes(searchTerm.toLowerCase())
-        )
+        company.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
       : activeTab === 'approved'
-      ? approvedCompanies?.filter((company) =>
+        ? approvedCompanies?.filter((company) =>
           company.name.toLowerCase().includes(searchTerm.toLowerCase())
         )
-      : approvedCompanies?.filter(
+        : approvedCompanies?.filter(
           (company) =>
             company.userId === null &&
             company.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -109,8 +109,8 @@ export default function Home() {
     activeTab === 'pending_approval'
       ? filteredCompanies?.length / itemsPerPage
       : activeTab === 'approved'
-      ? filteredCompanies?.length / itemsPerPage
-      : filteredCompanies?.length / itemsPerPage
+        ? filteredCompanies?.length / itemsPerPage
+        : filteredCompanies?.length / itemsPerPage
   )
 
   const handlePageChange = (newPage: number) => setCurrentPage(newPage)
