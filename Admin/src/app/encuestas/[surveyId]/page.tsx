@@ -43,12 +43,14 @@ export default function DetailedSurvey(props: DetailedSurveyProps) {
             {surveyDetail.title}
           </h1>
           <div className="flex flex-row gap-4">
-            <button
-              onClick={() => setIsOpen(true)}
-              className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end mt-4 "
-            >
-              Cerrar Encuesta
-            </button>
+            {surveyDetail.endDate == null && (
+              <button
+                onClick={() => setIsOpen(true)}
+                className=" bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end mt-4 "
+              >
+                Cerrar Encuesta
+              </button>
+            )}
             <Link href={'/reportes/encuesta/' + surveyId}>
               <button className="flex items-center justify-center bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end mt-4 md:mr-32 sm:mr-12">
                 Generar Reporte
