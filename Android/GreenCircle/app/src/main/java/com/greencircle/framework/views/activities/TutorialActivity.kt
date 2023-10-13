@@ -13,16 +13,37 @@ class TutorialActivity : AppIntro() {
 
         addSlide(
             AppIntroFragment.createInstance(
-                title = "Welcome...",
-                description = "This is the first slide of the example",
-                backgroundDrawable = R.drawable.ic_launcher_background
+                title = "Enterate de las ultimas Noticias",
+                backgroundDrawable = R.drawable.android_tutorial_ecoinfo
             )
         )
         addSlide(
             AppIntroFragment.createInstance(
-                title = "...Let's get started!",
-                description = "This is the last slide, I won't annoy you more :)",
-                backgroundDrawable = R.drawable.ic_launcher_background
+                backgroundDrawable = R.drawable.android_tutorial_catalogue
+            )
+        )
+        addSlide(
+            AppIntroFragment.createInstance(
+                title = "Filtra por tus preferencias",
+                backgroundDrawable = R.drawable.android_tutorial_filters
+            )
+        )
+        addSlide(
+            AppIntroFragment.createInstance(
+                title = "Conecta con ellos",
+                backgroundDrawable = R.drawable.android_tutorial_cdetail
+            )
+        )
+        addSlide(
+            AppIntroFragment.createInstance(
+                title = "Guarda tus preferencias",
+                backgroundDrawable = R.drawable.android_tutorial_profile
+            )
+        )
+        addSlide(
+            AppIntroFragment.createInstance(
+                title = "Edita tu perfil",
+                backgroundDrawable = R.drawable.android_tutorial_editp
             )
         )
     }
