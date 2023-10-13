@@ -21,7 +21,6 @@ import com.greencircle.data.remote.user.UserAPIService
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.auth.LoginViewModel
 import com.greencircle.framework.viewmodel.user.CreateUserViewModel
-import com.greencircle.framework.views.activities.MainActivity
 import com.greencircle.framework.views.activities.RegisterUserActivity
 import com.greencircle.framework.views.activities.TutorialActivity
 import com.greencircle.framework.views.fragments.TermsAndConditions.TermsAndConditions
