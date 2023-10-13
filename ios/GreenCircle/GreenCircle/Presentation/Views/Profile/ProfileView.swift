@@ -23,10 +23,11 @@ struct ProfileView: View {
                     TitleBarView(
                         title: "Mi Perfil",
                         leftIcon: nil,
-                        rightIcon: nil,
+                        rightIcon: "text.book.closed.fill",
                         leftDestination: {},
-                        rightDestination: {}
+                        rightDestination: { Tutorial() }
                     )
+                    .foregroundColor(.white)
                     .frame(height: 10)
                     .offset(y: -60)
                     .navigationBarBackButtonHidden(true)

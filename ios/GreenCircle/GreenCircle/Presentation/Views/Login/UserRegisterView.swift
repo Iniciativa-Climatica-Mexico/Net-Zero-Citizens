@@ -12,7 +12,7 @@ struct UserRegisterView: View {
   @ObservedObject var viewModel = UserRegisterViewModel()
   var goLogin: () -> Void
   var goForm: () -> Void
-  var goMainMenu: () -> Void
+  var goTutorial: () -> Void
   @State var loadingGoogle = false
   var body: some View {
     ScrollView {
@@ -63,7 +63,7 @@ struct UserRegisterView: View {
               case .newUser:
                 goForm()
               case .success:
-                goMainMenu()
+                goTutorial()
               case .fail:
                   loadingGoogle = false
                 break
@@ -103,6 +103,6 @@ struct UserRegisterView: View {
 
 struct RegisterView_Previews: PreviewProvider {
   static var previews: some View {
-    UserRegisterView(goLogin: {}, goForm: {}, goMainMenu: {})
+    UserRegisterView(goLogin: {}, goForm: {}, goTutorial: {})
   }
 }
