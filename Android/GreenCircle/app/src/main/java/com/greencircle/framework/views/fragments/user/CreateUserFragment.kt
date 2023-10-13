@@ -319,6 +319,9 @@ class CreateUserFragment : Fragment() {
         userEmail.text = arguments.getString("email")
     }
 
+    /**
+     * Navega al tutorial de la aplicación.
+     */
     private fun navigateToTutorial() {
         var intent: Intent = Intent(requireContext(), TutorialActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
