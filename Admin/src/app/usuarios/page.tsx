@@ -150,6 +150,7 @@ export default function Users() {
               variant="outline"
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage >= totalPages}
+              className={currentPage >= totalPages ? 'cursor-not-allowed' : ''}
             >
               Siguiente
             </Button>

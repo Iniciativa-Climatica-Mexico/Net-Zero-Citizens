@@ -5,6 +5,7 @@ import Modal from 'react-modal'
 import { useEffect, useState } from 'react'
 import { authAxios } from '@/api/v1/axios.config'
 import { Pill } from '@/components/pill/pill'
+import LoadingPage from '@/components/loadingPage/page'
 
 type DetailedSurveyProps = {
   params: {
@@ -19,6 +20,7 @@ export default function DetailedSurvey(props: DetailedSurveyProps) {
     const surveyId = props.params.surveyId
     const [modalIsOpen, setIsOpen] = useState(false)
     const [surveyDetail, setSurveyDetail] = useState({} as Survey)
+    const [isGeneratingReport, setIsGeneratingReport] = useState(false)
 
     useEffect(() => {
       fetchSurveyById(surveyId).then((res) =>
@@ -34,6 +36,10 @@ export default function DetailedSurvey(props: DetailedSurveyProps) {
         console.log(e)
         setIsOpen(false)
       }
+    }
+
+    if (isGeneratingReport) {
+      return <LoadingPage />
     }
 
     return (
@@ -52,7 +58,10 @@ export default function DetailedSurvey(props: DetailedSurveyProps) {
               </button>
             )}
             <Link href={'/reportes/encuesta/' + surveyId}>
-              <button className="flex items-center justify-center bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end mt-4 md:mr-32 sm:mr-12">
+              <button
+                className="flex items-center justify-center bg-primary-base hover:bg-primary-900 text-white font-bold py-2 px-4 rounded self-end mt-4 md:mr-32 sm:mr-12"
+                onClick={() => setIsGeneratingReport(true)}
+              >
                 Generar Reporte
               </button>
             </Link>

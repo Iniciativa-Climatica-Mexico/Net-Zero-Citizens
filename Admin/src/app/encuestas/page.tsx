@@ -3,6 +3,7 @@ import { Survey, fetchAllSurveys } from '@/api/v1/survey'
 import moment from 'moment'
 import { useEffect, useState } from 'react'
 import 'moment/locale/es'
+import LoadingPage from '@/components/loadingPage/page'
 
 moment.locale('es')
 
@@ -10,14 +11,53 @@ export default function ListSurveys() {
   try {
     // const response = await fetchAllSurveys()
     const [response, setResponse] = useState({ rows: [] } as { rows: Survey[] })
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
       fetchAllSurveys().then((res) => setResponse(res || { rows: [] }))
     }, [])
 
+    function handleRowClick() {
+      setIsLoading(true)
+
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 3000)
+    }
+
+    function SurveyComponent(props: Survey) {
+      return (
+        <tr className="border-b border-gray-300">
+          <td className="truncate cursor-pointer text-txt hover:text-primary-base hover:font-semibold">
+            <a
+              href={'/encuestas/' + props.surveyId}
+              className="text-center py-8 px-8 "
+              onClick={handleRowClick}
+            >
+              {props.title}
+            </a>
+          </td>
+          <td className="truncate py-8 px-8 text-txt">{props.description}</td>
+          <td className="text-center truncate py-8 px-8 border-gray-300 text-txt ">
+            {moment(props.startDate).format('DD MMMM YYYY')}
+          </td>
+          <td className="text-center truncate py-8 px-8 border-gray-300 text-txt ">
+            {props.endDate
+              ? moment(props.endDate).format('DD MMMM YYYY')
+              : '---------'}
+          </td>
+        </tr>
+      )
+    }
+
     const surveysList = response.rows.sort((a, b) => {
       return moment(b.startDate).diff(moment(a.startDate))
     })
+
+    if (isLoading) {
+      return <LoadingPage />
+    }
+
     return (
       <div>
         <div className="flex flex-col sm:flex-row items-center justify-between my-8">
@@ -79,28 +119,4 @@ export default function ListSurveys() {
       return <div>Unknown error</div>
     }
   }
-}
-
-function SurveyComponent(props: Survey) {
-  return (
-    <tr className="border-b border-gray-300">
-      <td className="truncate cursor-pointer text-txt hover:text-primary-base hover:font-semibold">
-        <a
-          href={'/encuestas/' + props.surveyId}
-          className="text-center py-8 px-8 "
-        >
-          {props.title}
-        </a>
-      </td>
-      <td className="truncate py-8 px-8 text-txt">{props.description}</td>
-      <td className="text-center truncate py-8 px-8 border-gray-300 text-txt ">
-        {moment(props.startDate).format('DD MMMM YYYY')}
-      </td>
-      <td className="text-center truncate py-8 px-8 border-gray-300 text-txt ">
-        {props.endDate
-          ? moment(props.endDate).format('DD MMMM YYYY')
-          : '---------'}
-      </td>
-    </tr>
-  )
 }
