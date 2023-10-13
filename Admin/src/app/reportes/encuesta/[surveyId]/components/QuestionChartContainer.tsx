@@ -7,6 +7,7 @@ import { PDFDownloadLink } from '@react-pdf/renderer'
 import htm2canvas from 'html2canvas'
 import SurveyPDFReport from '@/components/reporte/SurveyPDF/SurveyPDF'
 import ScaleChart from './ScaleChart'
+import { Pill } from '@/components/pill/pill'
 
 /**
  * `generateGraphImages` genera las imágenes de las gráficas de las
@@ -213,8 +214,8 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
                         <div className="bg-zinc-900 text-white rounded-full text-xl font-semibold p-2 px-4 inline-block">
                           {question.answers.length > 0
                             ? question.answers
-                              .map((ans) => ans.count)
-                              .reduce((prev, curr) => prev + curr)
+                                .map((ans) => ans.count)
+                                .reduce((prev, curr) => prev + curr)
                             : 0}
                         </div>
                       </td>
@@ -353,21 +354,15 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
   }
 }
 
-const questionTypeMap = {
-  scale: 'Escala',
-  open: 'Abierta',
-  multiple_choice: 'Opción Múltiple',
-}
-
 function QuestionComponent(props: QuestionReport) {
+  console.log('props', props.questionType)
+
   return (
     <div className="text-txt bg-background">
-      <h3 className="text-black font-extrabold text-3xl pt-10 pb-3">
+      <h3 className="text-black font-extrabold text-3xl pt-10 pb-5">
         Tipo de pregunta
       </h3>
-      <div className="bg-emerald-600 text-white font-semibold rounded-lg text-sm px-6 py-2 inline-block">
-        {questionTypeMap[props.questionType]}
-      </div>
+      <Pill status={props.questionType} />
     </div>
   )
 }

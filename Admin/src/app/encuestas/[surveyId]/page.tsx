@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Modal from 'react-modal'
 import { useEffect, useState } from 'react'
 import { authAxios } from '@/api/v1/axios.config'
+import { Pill } from '@/components/pill/pill'
 
 type DetailedSurveyProps = {
   params: {
@@ -56,7 +57,7 @@ export default function DetailedSurvey(props: DetailedSurveyProps) {
           </div>
         </div>
         <div className="flex mx-8 justify-between">
-          <p className="font-normal my-8 sm:ml-8 md:ml-32 sm:pr-2 md:pr-6 text-txt">
+          <p className="font-normal sm:ml-8 md:ml-32 sm:pr-2 md:pr-6 text-txt">
             {surveyDetail.description}
           </p>
           <div className="flex gap-4">
@@ -154,13 +155,9 @@ function QuestionComponent(props: QuestionDetail) {
       </td>
       <td className="text-center truncate py-8 px-8 text-txt ">
         {props.isRequired ? (
-          <div className="bg-primary-base text-white py-2 px-4 w-[8rem] rounded">
-            Obligatorio
-          </div>
+          <Pill status="mandatory" />
         ) : (
-          <div className="text-primary-base py-2 px-4 w-[8rem] rounded border-primary-base border-2">
-            Opcional
-          </div>
+          <Pill status="optional" />
         )}
       </td>
     </tr>
