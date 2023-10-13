@@ -7,6 +7,7 @@ import { PDFDownloadLink } from '@react-pdf/renderer'
 import htm2canvas from 'html2canvas'
 import SurveyPDFReport from '@/components/reporte/SurveyPDF/SurveyPDF'
 import ScaleChart from './ScaleChart'
+import { Pill } from '@/components/pill/pill'
 
 /**
  * `generateGraphImages` genera las imágenes de las gráficas de las
@@ -54,8 +55,8 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
     const [page, setPage] = useState(0)
     const maxPage = Math.ceil(surveyReport.questions.length)
 
-    const onNextPage = () => setPage((page + 1) % maxPage)
-    const onPrevPage = () => setPage(page > 0 ? page - 1 : maxPage - 1)
+    const onNextPage = () => setPage(Math.min(page + 1, maxPage - 1))
+    const onPrevPage = () => setPage(Math.max(page - 1, 0))
 
     const question = surveyReport.questions[page]
     const labels = question.answers?.map((answer) => answer.label)
@@ -174,7 +175,7 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
               />
             </svg>
           </button>
-          <h3 className="text-txt font-medium text-xl">
+          <h3 className="text-txt font-medium text-xl w-[28rem]">
             {question.questionText}
           </h3>
           <button className="pl-5" onClick={onNextPage}>
@@ -192,6 +193,10 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
               />
             </svg>
           </button>
+        </div>
+        <br />
+        <div className="pl-20">
+          {page + 1} de {maxPage}
         </div>
         {(() => {
           return (
@@ -232,16 +237,16 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
                   <>
                     {/* Preguntas cerradas */}
                     {question.questionType != 'open' && (
-                      <div className="flex">
+                      <div className="flex overflow-auto">
                         {/* Tabla de labels */}
                         <div className="pt-10 w-1/2">
                           <table className="table-fixed border-collapse rounded-lg border border-slate-400">
                             <thead>
                               <tr>
-                                <th className="px-10 py-4 border border-slate-400">
+                                <th className="px-4 py-4 border border-slate-400">
                                   Opción
                                 </th>
-                                <th className="px-10 py-4 border border-slate-400">
+                                <th className="px-4 py-4 border border-slate-400">
                                   Total de respuestas
                                 </th>
                               </tr>
@@ -353,21 +358,15 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
   }
 }
 
-const questionTypeMap = {
-  scale: 'Escala',
-  open: 'Abierta',
-  multiple_choice: 'Opción Múltiple',
-}
-
 function QuestionComponent(props: QuestionReport) {
+  console.log('props', props.questionType)
+
   return (
     <div className="text-txt bg-background">
-      <h3 className="text-black font-extrabold text-3xl pt-10 pb-3">
+      <h3 className="text-black font-extrabold text-3xl pt-10 pb-5">
         Tipo de pregunta
       </h3>
-      <div className="bg-emerald-600 text-white font-semibold rounded-lg text-sm px-6 py-2 inline-block">
-        {questionTypeMap[props.questionType]}
-      </div>
+      <Pill status={props.questionType} />
     </div>
   )
 }
