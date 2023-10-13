@@ -9,7 +9,14 @@ import SwiftUI
 
 struct AppTutorial_16: View {
   
-  private let tutoImgs = ["foto1", "foto2", "foto3", "foto4", "foto5"]
+  private let tutoImgs = ["EcoInfo",
+                          "Catalogo",
+                          "Filtros",
+                          "DetalleProveedor",
+                          "MiPerfil",
+                          "EditarPerfil"]
+  
+  private let textImgs = ["Eco Info", "Catálogo de proveedores", "Filtros del catálogo", "Detalle del proveedor", "Mi perfil", "Editar mi perfil"]
   
   var goMainMenu: () -> Void
   
@@ -22,13 +29,14 @@ struct AppTutorial_16: View {
           LazyHStack(spacing: 0) {
             ForEach(tutoImgs.indices, id: \.self) { index in
               let tutorial = tutoImgs[index]
+              let text = textImgs[index]
               VStack {
-                Text(tutorial).font(.headline)
+                Text(text).font(.headline)
                 Image(tutorial)
                   .resizable()
                   .scaledToFit()
-                  .frame(height: 450)
-                  .clipShape(RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/))
+                  .frame(height: 500)
+                  .clipShape(RoundedRectangle(cornerRadius: 25.0))
                   .padding(.horizontal, 20)
               }
             }

@@ -9,7 +9,14 @@ import SwiftUI
 
 struct Tutorial: View {
   
-  private let tutoImgs = ["foto1", "foto2", "foto3", "foto4", "foto5"]
+  private let tutoImgs = ["EcoInfo",
+                          "Catalogo",
+                          "Filtros",
+                          "DetalleProveedor",
+                          "MiPerfil",
+                          "EditarPerfil"]
+  
+  private let textImgs = ["Eco Info", "Catálogo de proveedores", "Filtros del catálogo", "Detalle del proveedor", "Mi perfil", "Editar mi perfil"]
   
   var body: some View {
     NavigationView {
@@ -22,17 +29,18 @@ struct Tutorial: View {
           LazyHStack(spacing: 0) {
             ForEach(tutoImgs.indices, id: \.self) { index in
               let tutorial = tutoImgs[index]
+              let text = textImgs[index]
               VStack {
-                Text(tutorial).font(.headline)
+                Text(text).font(.headline)
                 Image(tutorial)
                   .resizable()
                   .scaledToFit()
-                  .frame(height: 450)
+                  .frame(height: 550)
                   .clipShape(RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/))
                   .padding(.horizontal, 20)
               }
             }
-          } .padding(.bottom, 100)
+          } .padding(.bottom, 50)
         }
       }
     } .navigationBarTitle("Tutoriales")

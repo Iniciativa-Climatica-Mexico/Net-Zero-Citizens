@@ -10,7 +10,14 @@ import SwiftUI
 @available(iOS 17.0, *)
 struct AppTutorial_17: View {
   
-  private let tutoImgs = ["foto1", "foto2", "foto3", "foto4", "foto5"]
+  private let tutoImgs = ["EcoInfo",
+                          "Catalogo",
+                          "Filtros",
+                          "DetalleProveedor",
+                          "MiPerfil",
+                          "EditarPerfil"]
+  
+  private let textImgs = ["Eco Info", "Catálogo de proveedores", "Filtros del catálogo", "Detalle del proveedor", "Mi perfil", "Editar mi perfil"]
   
   var goMainMenu: () -> Void
   
@@ -18,17 +25,21 @@ struct AppTutorial_17: View {
     NavigationView {
       
       VStack(alignment: .leading) {
-        Text("¿Cómo uso la App?").font(.title).padding([.leading, .top])
+        Text("¿Cómo uso la App?")
+          .font(.title)
+          .padding(.leading)
+          .padding(.top, 20)
         ScrollView(.horizontal) {
           LazyHStack(spacing: 0) {
             ForEach(tutoImgs.indices, id: \.self) { index in
               let tutorial = tutoImgs[index]
+              let text = textImgs[index]
               VStack {
-                Text(tutorial).font(.headline)
+                Text(text).font(.headline)
                 Image(tutorial)
                   .resizable()
                   .scaledToFit()
-                  .frame(height: 450)
+                  .frame(height: 650)
                   .clipShape(RoundedRectangle(cornerRadius: 25.0))
                   .padding(.horizontal, 20)
                   .containerRelativeFrame(.horizontal)
@@ -51,7 +62,7 @@ struct AppTutorial_17: View {
             .frame(width: 178, height: 40)
             .background(Color(red: 0.33, green: 0.49, blue: 0.55))
             .cornerRadius(9)
-            .padding(.bottom, 40)
+            .padding(.top, 10)
           
           Spacer()
           
