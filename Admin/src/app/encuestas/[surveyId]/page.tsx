@@ -56,7 +56,7 @@ export default function DetailedSurvey(props: DetailedSurveyProps) {
           </div>
         </div>
         <div className="flex mx-8 justify-between">
-          <p className="self-start mb-8 mx-8 text-secondary">
+          <p className="font-normal my-8 sm:ml-8 md:ml-32 sm:pr-2 md:pr-6 text-txt">
             {surveyDetail.description}
           </p>
           <div className="flex gap-4">

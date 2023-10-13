@@ -81,7 +81,7 @@ export default function ListSurveys() {
 function SurveyComponent(props: Survey) {
   return (
     <tr className="border-b border-gray-300">
-      <td className="truncate cursor-pointer  text-txt hover:text-primary-base hover:font-semibold">
+      <td className="truncate cursor-pointer text-txt hover:text-primary-base hover:font-semibold">
         <a
           href={'/encuestas/' + props.surveyId}
           className="text-center py-8 px-8 "
@@ -89,9 +89,7 @@ function SurveyComponent(props: Survey) {
           {props.title}
         </a>
       </td>
-      <td className="truncate py-8 px-8 border-gray-300 text-txt ">
-        {props.description}
-      </td>
+      <td className="truncate py-8 px-8 text-txt">{props.description}</td>
       <td className="text-center truncate py-8 px-8 border-gray-300 text-txt ">
         {moment(props.startDate).format('MMM Do YYYY')}
       </td>
