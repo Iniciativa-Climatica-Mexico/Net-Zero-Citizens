@@ -34,14 +34,6 @@ class ReviewRepository {
         return response
     }
 
-    suspend fun updateReview(
-        authToken: String,
-        reviewId: UUID,
-        review: ReviewBase
-    ): Response<ResponseBody>? {
-        return api.updateReview(authToken, reviewId, review)
-    }
-
     suspend fun deleteReview(
         authToken: String,
         reviewId: UUID
