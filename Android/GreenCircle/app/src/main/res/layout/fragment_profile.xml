@@ -24,7 +24,8 @@
         android:layout_marginTop="32dp"
         android:background="@drawable/circle_background"
         android:scaleType="centerCrop"
-        android:src="@drawable/pp_icon" />
+        android:src="@drawable/pp_icon"
+        android:layout_marginBottom="20dp"/>
 
     <TextView
         android:id="@+id/username"
@@ -34,7 +35,8 @@
         android:layout_marginTop="10dp"
         android:textColor="@color/gray_800"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        />
 
     <TextView
         android:id="@+id/logout"
@@ -42,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="@string/Cerrar_sesion"
-        android:textColor="@color/blue"
+        android:textColor="@color/red"
         android:textSize="15sp"
         android:textStyle="bold"
         android:layout_marginTop="30dp"

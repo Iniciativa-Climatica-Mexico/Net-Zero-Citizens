@@ -8,7 +8,6 @@ class EditProfileViewHolder(private var binding: FragmentEditProfileBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(item: Profile) {
         val name = item.firstName + " " + item.lastName
-        binding.username.text = name
         // binding.profileImage.setImageResource(item.profilePicture)
     }
 }
