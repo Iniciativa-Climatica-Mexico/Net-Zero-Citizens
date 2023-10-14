@@ -59,7 +59,6 @@ struct SectionProfile: View{
   }
 }
 
-
 ///_----------------- SECTION 1_
 struct Section1: View{
   @ObservedObject var modelUser = UserViewModel()
@@ -70,8 +69,8 @@ struct Section1: View{
               get: { self.modelUser.contentBaseUser?.firstName ?? "" },
               set: { newValue in
                   if !containsNumber(input: newValue) {
-                    if var contentUser = self.modelUser.contentBaseUser {
-                      contentUser.firstName = newValue
+                      if self.modelUser.contentBaseUser != nil {
+                          self.modelUser.contentBaseUser?.firstName = newValue
                       }
                   }
               }
@@ -202,6 +201,7 @@ struct Section2: View {
           }
       )
   }
+
   
   func isBlank(input: String) -> Bool {
       return input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -322,12 +322,13 @@ struct Section3: View {
       return input.range(of: "^[0-9]+$",
                          options: .regularExpression) != nil
   }
-    
+  
   func isPhoneNumberValid() -> Bool {
-      guard let phoneNumber = modelUser.contentBaseUser?.phoneNumber 
+      guard let phoneNumber = modelUser.contentBaseUser?.phoneNumber
     else { return false }
-      return phoneNumber.count == 10
+      return phoneNumber.count == 12
   }
+
   
   var body: some View {
       VStack(alignment: .leading) {
@@ -338,23 +339,23 @@ struct Section3: View {
               .font(.system(size: 13))
               .fontWeight(.semibold)
 
-          TextField("Teléfono", text: Binding(
-              get: {
-                  if let phoneNumber = self.modelUser.contentBaseUser?.phoneNumber, !phoneNumber.isEmpty {
-                    return Utils
-                      .formatNumber(with: "XXX-XXX-XXXX",
-                                    for: phoneNumber)
-                  } else {
-                      return ""
-                  }
-              },
-              set: {
-                self.modelUser.contentBaseUser?
-                  .phoneNumber =
-                Utils.formatNumber(with: "XXX-XXX-XXXX",
-                                   for: $0)
-              }
-          ))
+        TextField("Teléfono", text: Binding(
+            get: {
+                if let phoneNumber = self.modelUser.contentBaseUser?.phoneNumber, !phoneNumber.isEmpty {
+                  return Utils
+                    .formatNumber(with: "XXX-XXX-XXXX",
+                                  for: phoneNumber)
+                } else {
+                    return ""
+                }
+            },
+            set: {
+              self.modelUser.contentBaseUser?
+                .phoneNumber =
+              Utils.formatNumber(with: "XXX-XXX-XXXX",
+                                 for: $0)
+            }
+        ))
           .keyboardType(.numberPad)
           .padding(.top, 3)
           .font(.system(size: 13))
@@ -363,13 +364,6 @@ struct Section3: View {
           // Mostrar mensaje si el campo está vacío.
         if isBlank(input: modelUser.contentBaseUser?.phoneNumber) {
             Text("No puedes dejar este campo vacío.")
-                .foregroundColor(.red)
-                .font(.system(size: 11))
-        } else if let phone = modelUser.contentBaseUser?.phoneNumber,
-                  Utils
-          .formatNumber(with: "XXX-XXX-XXXX", for: phone)
-          .count != 12 {
-            Text("El teléfono debe tener exactamente 10 dígitos.")
                 .foregroundColor(.red)
                 .font(.system(size: 11))
         }
@@ -442,7 +436,6 @@ struct SectionButton: View{
            })
          )
        }
-       
        VStack {
          Button(action: {
              async {
@@ -460,7 +453,6 @@ struct SectionButton: View{
          }
          .opacity(isFormValid || isPhoneNumberValid ? 1.0 : 0.5)
          .opacity(isFormValid && isPhoneNumberValid ? 1.0 : 0.5)
-         //.opacity(isPhoneNumberValid ? 1.0 : 0.5)
          .disabled(!isPhoneNumberValid)
          .disabled(!isFormValid)
          .alert(isPresented: $showAlert2) {
