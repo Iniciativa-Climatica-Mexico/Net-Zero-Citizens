@@ -278,6 +278,7 @@ struct Section2: View {
                   options: GENDERS
               )
               .padding(.top, 5)
+              .foregroundColor(Color("Secondary"))
             }
         }
     }
@@ -392,6 +393,7 @@ struct Section3: View {
             options: Constants.states
         )
         .padding(.top, 5)
+        .foregroundColor(Color("Secondary"))
       }
 
     }
