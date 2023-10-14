@@ -124,14 +124,14 @@ export const downloadCompanyFile = async (
   if (!bucketName) {
     throw new Error('AWS_BUCKET_NAME is not defined')
   }
-
+  console.log(companyId, fileDescription, fileFormat)
   const company = await Company.findByPk(companyId)
 
   try {
     // Usar el fileUrl directamente como la Key de S3
     const params = {
       Bucket: bucketName,
-      Key: `${company?.name}/${fileDescription + '.' + fileFormat}`,
+      Key: `${company?.name}/${fileDescription + fileFormat}`,
     }
 
     // Descargar el archivo de S3

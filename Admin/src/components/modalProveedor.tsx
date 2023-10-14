@@ -352,7 +352,7 @@ export default function ModalProveedor({
               }}
             />
           </div>
-          <article className="flex flex-col border border-[#C1C9D2] justify-center items-center rounded-lg lg:w-[823px] md:w-[512px] sm:w-[360px] py-[25px] bg-white z-10">
+          <article className="flex flex-col border border-[#C1C9D2] justify-center items-center rounded-lg lg:w-[823px] md:w-[512px] sm:w-[360px] py-[25px] bg-white z- max-h-full overflow-y-auto">
             <article className="flex border border-[#C1C9D2] rounded-xl lg:w-[763px] md:w-[500px] sm:w-[250px]">
               <Image
                 src={Logo}
@@ -430,7 +430,9 @@ export default function ModalProveedor({
                               <div className="border px-[5px] rounded flex flex-col justify-center items-center">
                                 <FileOpenIcon color="info" className="mt-3" />
                                 <p className="my-2 text-[11px]">
-                                  {file.fileDescription}
+                                  {file.fileDescription.length > 20
+                                    ? `${file.fileDescription.substring(0, 17)}...`
+                                    : file.fileDescription}
                                 </p>
                               </div>
                             </a>
@@ -463,7 +465,9 @@ export default function ModalProveedor({
                               <div className="border px-[5px] rounded flex flex-col justify-center items-center">
                                 <FileOpenIcon color="info" className="mt-3" />
                                 <p className="my-2 text-[11px]">
-                                  {file.fileDescription}
+                                  {file.fileDescription.length > 20
+                                    ? `${file.fileDescription.substring(0, 17)}...`
+                                    : file.fileDescription}
                                 </p>
                               </div>
                             </a>
