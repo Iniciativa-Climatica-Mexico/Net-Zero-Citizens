@@ -77,7 +77,7 @@ struct CoordinatorView: View {
                                solarToggle: $solarToggle)
         
       case .mainMenuView:
-        TabBarView(goSurvey: goSurvey, goLogin: goLogin)
+        TabBarView(goSurvey: goSurvey, goLogin: goLogin, goRoot: goRoot)
           .onAppear {
             deviceLocationService.requestLocationUpdates()
           }
@@ -101,7 +101,7 @@ struct CoordinatorView: View {
         
       }
     }
-    .onAppear {
+    .onAppear() {
       Task {
         let res = await viewModel.handleSignIn()
         
@@ -168,5 +168,10 @@ struct CoordinatorView: View {
   
   private func goBack() {
     routes.goBack()
+  }
+  
+  private func goRoot() {
+    routes.removeAll()
+    routes.presentCover(.login)
   }
 }
