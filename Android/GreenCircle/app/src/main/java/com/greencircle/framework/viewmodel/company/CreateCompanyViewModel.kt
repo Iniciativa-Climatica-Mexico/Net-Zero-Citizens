@@ -12,6 +12,7 @@ import com.greencircle.domain.usecase.auth.RecoverTokensRequirement
 import com.greencircle.domain.usecase.auth.SaveTokensRequirement
 import com.greencircle.domain.usecase.auth.SaveUserSessionRequirement
 import com.greencircle.domain.usecase.auth.UpdateTokensDataRequirement
+import com.greencircle.domain.usecase.company.AssignCompanyProductsRequirement
 import com.greencircle.domain.usecase.company.AssignCompanyRequirement
 import com.greencircle.domain.usecase.company.CreateCompanyRequirement
 import java.util.UUID
@@ -29,6 +30,7 @@ class CreateCompanyViewModel(private val context: Context) : ViewModel() {
     private val googleAuthRequirement = GoogleAuthRequirement()
     private val createCompanyRequirement = CreateCompanyRequirement()
     private val assignCompanyRequirement = AssignCompanyRequirement()
+    private val assignCompanyProductsRequirement = AssignCompanyProductsRequirement()
     private val saveTokens = SaveTokensRequirement(context)
     private val saveUserSession = SaveUserSessionRequirement(context)
     private val recoverTokens = RecoverTokensRequirement(context)
@@ -38,6 +40,7 @@ class CreateCompanyViewModel(private val context: Context) : ViewModel() {
     private val _googleLoginResult = MutableLiveData<AuthResponse?>()
     val googleLoginResult: LiveData<AuthResponse?> = _googleLoginResult
     val assignCompanyResult = MutableLiveData<String?>()
+    val assignCompanyProductsResult = MutableLiveData<Boolean>()
     val googleLoginError = MutableLiveData<Boolean>()
 
     private val _createCompanyResult = MutableLiveData<CompanyAPIService.CreateCompanyResponse?>()
@@ -153,6 +156,25 @@ class CreateCompanyViewModel(private val context: Context) : ViewModel() {
             }
         }
     }
+
+    fun assignCompanyProducts(
+        companyId: String,
+        products: ArrayList<String>,
+    ) {
+        val tokens = recoverTokens()
+        var authToken = ""
+        if (tokens != null) {
+            authToken = tokens.authToken
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            // Invoca el modelo de dominio para asignar la empresa.
+            val result: Boolean = assignCompanyProductsRequirement(authToken, companyId, products)
+            CoroutineScope(Dispatchers.Main).launch {
+                assignCompanyProductsResult.postValue(result)
+            }
+        }
+    }
+
 
     companion object {
         var name: String = ""

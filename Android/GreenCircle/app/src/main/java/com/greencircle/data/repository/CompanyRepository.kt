@@ -42,4 +42,13 @@ class CompanyRepository {
             return null
         }
     }
+
+    suspend fun assignCompanyProducts(
+        authToken: String,
+        companyId: String,
+        products: ArrayList<String>,
+    ): Boolean{
+        return apiCompany.assignCompanyProducts(authToken, companyId, products)
+
+    }
 }
