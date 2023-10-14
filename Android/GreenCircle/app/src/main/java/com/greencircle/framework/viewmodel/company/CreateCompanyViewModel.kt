@@ -175,7 +175,6 @@ class CreateCompanyViewModel(private val context: Context) : ViewModel() {
         }
     }
 
-
     companion object {
         var name: String = ""
         var description: String = ""
