@@ -27,8 +27,8 @@ jobs:
       - name: Check if .husky files are modified
         id: check_file
         run: |
-          if echo "${{ steps.changed_files.outputs.all }}" | grep -q ".husky/commit-msg"; then
-           echo "true" > husky_file_modified.txt
+          if echo "${{ steps.changed_files.outputs.all }}" | grep -q '".husky/commit-msg"'; then
+            echo "true" > husky_file_modified.txt
           else 
             echo "false" > husky_file_modified.txt
           fi
@@ -49,7 +49,7 @@ jobs:
         uses: xalvarez/prevent-file-change-action@v1
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-          pattern: ".husky/commit-msg"
+          pattern: '".husky/commit-msg"'
           trustedAuthors: "drlangh"
 
   # Run yarn install when a branch is created
