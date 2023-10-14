@@ -49,6 +49,5 @@ class CompanyRepository {
         products: ArrayList<String>,
     ): Boolean {
         return apiCompany.assignCompanyProducts(authToken, companyId, products)
-
     }
 }

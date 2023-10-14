@@ -6,7 +6,6 @@ import com.greencircle.data.repository.CompanyRepository
 class AssignCompanyProductsRequirement {
     private val repository = CompanyRepository()
 
-
     suspend operator fun invoke(
         authToken: String,
         companyId: String,
