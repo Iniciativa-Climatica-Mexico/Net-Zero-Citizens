@@ -25,6 +25,28 @@ export type Payload = {
   created_at?: number
 }
 
+export type ApplePayload = {
+  id: string
+  full_name: string
+  uuid: string
+  email: string
+  roles: string
+  appleId?: string | null
+  login_type?: string
+  created_at?: number
+}
+
+export type AppleResponse = {
+  id: string
+  first_name: string
+  last_name: string
+  uuid: string
+  email: string
+  roles: string
+  login_type: string
+  appleId: string | null
+}
+
 /**
  * @brief
  * Tipo de dato para el par de tokens
@@ -404,6 +426,53 @@ export const register = async (
       newUser.profilePicture != null ? newUser.profilePicture : undefined,
     roles: newUser.role.dataValues.NAME,
     login_type: 'credentials',
+  }
+
+  const tokens = await createTokens(userPayload)
+  if (!tokens) return null
+
+  return {
+    tokens: tokens,
+    user: userPayload,
+  }
+}
+
+export const appleLogin = async (
+  payload: ApplePayload
+): Promise<AuthResponse | null> => {
+  const { appleId, full_name, email } = payload
+
+  const user = await UserService.getUserByEmailWithRole(email)
+
+  // Registrar cliente
+  if (!user) {
+    const userCreate = {
+      age: 0,
+      state: '',
+      gender: 'no_answer',
+      email,
+      firstName: full_name.split(' ')[0],
+      lastName: full_name.split(' ')[1],
+      appleId: appleId,
+      roleId: 'NEW_USER_ROLE_ID',
+    }
+    const userDb = await User.create(userCreate)
+    if (!userDb) return null
+  }
+
+  const userDb = await UserService.getUserByEmailWithRole(email)
+  if (!userDb) return null
+
+  // Si ya está registrado, crear un Payload con la información del usuario
+  const userPayload: AppleResponse = {
+    id: userDb.userId,
+    first_name: userDb.firstName,
+    last_name: userDb.lastName,
+    uuid: userDb.userId,
+    email: userDb.email,
+    roles: userDb.role.dataValues.NAME,
+    login_type: 'apple',
+    appleId: userDb.appleId,
   }
 
   const tokens = await createTokens(userPayload)

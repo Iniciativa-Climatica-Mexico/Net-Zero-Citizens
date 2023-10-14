@@ -160,8 +160,7 @@ struct CompanyReportView: View {
                             hasTriedToSubmit = true
                         } else {
                             Task {
-                                print("print.......")
-                                print(await complaintViewModel.handleSubmit(complaintId: complaintId, complaintSubject: selectedReportReason ?? "", complaintDescription: description, companyId: companyViewModel.contentCompany.companyId.uuidString))
+                                
                                 showAlert = true
                             }
                         }

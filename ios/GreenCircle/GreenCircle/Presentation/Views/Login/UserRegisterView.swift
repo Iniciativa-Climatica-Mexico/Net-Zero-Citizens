@@ -13,6 +13,9 @@ struct UserRegisterView: View {
   var goLogin: () -> Void
   var goForm: () -> Void
   var goTutorial: () -> Void
+  var goMainMenu: () -> Void
+  
+  
   @State var loadingGoogle = false
   var body: some View {
     ScrollView {
@@ -82,7 +85,8 @@ struct UserRegisterView: View {
         }
         .padding(.horizontal)
         
-        Spacer()
+        AppleSignIn(goForm: goForm, goMainMenu: goMainMenu)
+      
         Divider().padding(.horizontal)
         
         HStack {
@@ -103,6 +107,6 @@ struct UserRegisterView: View {
 
 struct RegisterView_Previews: PreviewProvider {
   static var previews: some View {
-    UserRegisterView(goLogin: {}, goForm: {}, goTutorial: {})
+    UserRegisterView(goLogin: {}, goForm: {}, goTutorial: {}, goMainMenu: {})
   }
 }
