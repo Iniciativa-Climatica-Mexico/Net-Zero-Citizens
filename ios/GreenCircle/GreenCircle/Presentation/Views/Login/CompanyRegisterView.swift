@@ -12,6 +12,8 @@ struct CompanyRegisterView: View {
   var goLogin: () -> Void
   var goForm: () -> Void
   var goTutorial: () -> Void
+  var goMainMenu: () -> Void
+  
   @State var loadingGoogle = false
   @StateObject var viewModel = LoginViewModel()
   @EnvironmentObject var user: UserData

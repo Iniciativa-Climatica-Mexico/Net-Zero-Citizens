@@ -63,9 +63,7 @@ struct AppleSignIn: View {
           
           print("saved apple user", appleUser)
           
-          print(appleUser.userId)
           vm.userId = appleUser.userId
-          print(vm.userId)
           vm.email = appleUser.email
           vm.fullName = "\(appleUser.firstName) \(appleUser.lastName)"
           
