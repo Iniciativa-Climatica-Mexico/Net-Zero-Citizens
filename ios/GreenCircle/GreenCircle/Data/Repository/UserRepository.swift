@@ -12,6 +12,7 @@ class AuthAPI {
   static let base = APIRoutes.Auth.base
   struct Routes {
     static let googleLogin = "/login/google"
+    static let appleLogin = "/login/apple"
     static let login = "/login/credentials"
     static let register = "/register/credentials"
   }
@@ -32,6 +33,7 @@ protocol UserRepositoryProtocol {
 //  func updateUserData(updatedUserData: User, userId: String) async -> User?
   func updateUserCredentials(userId: String, newUserCredentials: Credentials) async -> User?;
   func postGoogleLogin(googleToken: String) async -> AuthResponse?
+  func postAppleLogin(userId: String, fullName: String, email: String) async throws -> AuthResponse
   func putUser(_ user: UserAuth) async -> Bool
   func deleteUserById(userId: String)  async -> UserDeleteResponse?
 }
@@ -59,6 +61,20 @@ class UserRepository: UserRepositoryProtocol {
       .postRequest(URL(
         string: "\(AuthAPI.base)\(AuthAPI.Routes.googleLogin)")!,
                    body: params)
+  }
+  
+  func postAppleLogin(userId: String, fullName: String, email: String) async throws -> AuthResponse {
+    let url = URL(string: "\(AuthAPI.base)\(AuthAPI.Routes.appleLogin)")!
+    
+    let body = ["applePayload": ["email": email, "userId": userId, "full_name": fullName]]
+    
+    let res: AuthResponse? = await nService.postRequest(url, body: body)
+    
+    if let authResponse = res {
+      return authResponse
+    } else {
+      throw GCError.requestFailed
+    }
   }
   
   /// Actualiza la información de un usuario
