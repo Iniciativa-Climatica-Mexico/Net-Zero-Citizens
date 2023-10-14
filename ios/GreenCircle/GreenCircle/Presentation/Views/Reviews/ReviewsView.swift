@@ -160,17 +160,9 @@ struct OpinionsView: View {
   }
 }
 
-struct CompanyRating: View {
-    @StateObject var reviewModel = ReviewViewModel()
-    var body: some View {
-        VStack {
-            RatingView()
-        }
-    }
-}
 
 struct RatingView: View {
-    @StateObject var reviewModel = ReviewViewModel()
+    @ObservedObject var reviewModel = ReviewViewModel()
     @State private var totalReviews: Int = 0
     
     var averageScore: Double {
