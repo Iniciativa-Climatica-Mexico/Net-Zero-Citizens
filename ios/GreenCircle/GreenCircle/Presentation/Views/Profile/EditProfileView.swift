@@ -50,11 +50,6 @@ struct SectionProfile: View{
           .padding(.top, 10)
           .padding(.bottom, 2)
       }
-      NavigationLink("Cerrar Sesión", destination: Example2View())
-        .foregroundColor(TitleBarColor.TitleBarColor)
-        .font(.system(size: 13))
-        .fontWeight(.bold)
-        .padding(.top, 8)
     }
   }
 }
