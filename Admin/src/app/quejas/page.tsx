@@ -1,12 +1,13 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { Company } from '@/api/v1/company'
+import { Company, updateCompany } from '@/api/v1/company'
 import { CompanyComplaints } from '@/@types/complaint/complaint'
 import { getCompaniesWithComplaints } from '@/api/v1/complaints'
 import { formatDate } from '@/utils/dateUtils'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+
 import {
   Table,
   TableBody,
@@ -26,16 +27,6 @@ import { useRouter } from 'next/navigation'
 
 export default function Home() {
   const router = useRouter()
-
-  const [SelectedComplaint, setSelectedComplaint] = useState<CompanyComplaints>(
-    {
-      companyId: '',
-      name: '',
-      profilePicture: '',
-      numberComplaints: 0,
-      complaints: [],
-    }
-  )
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 8
   const [companiesWithComplaints, setCompaniesWithComplaints] = useState<
@@ -44,7 +35,6 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState('')
 
   const handleTableRowClick = (company: CompanyComplaints) => {
-    setSelectedComplaint(company)
     router.push(`/quejas/${company.companyId}`)
   }
 
@@ -98,38 +88,39 @@ export default function Home() {
             </TableRow>
           )}
 
-          {companiesWithComplaints?.map((company) => (
-            <TableRow key={company.companyId}>
-              <TableCell
-                className="cursor-pointer"
-                onClick={() => handleTableRowClick(company)}
-              >
-                {company.profilePicture != null && (
-                  <Avatar>
-                    <AvatarImage src={company.profilePicture} />
-                  </Avatar>
-                )}
-              </TableCell>
-              <TableCell
-                className="cursor-pointer"
-                onClick={() => handleTableRowClick(company)}
-              >
-                {company.name}
-              </TableCell>
-              <TableCell
-                className="cursor-pointer"
-                onClick={() => handleTableRowClick(company)}
-              >
-                {formatDate(company.complaints[0].createdAt) ?? 'N/A'}
-              </TableCell>
-              <TableCell
-                className="cursor-pointer"
-                onClick={() => handleTableRowClick(company)}
-              >
-                {company.numberComplaints}
-              </TableCell>
-            </TableRow>
-          ))}
+          {companiesWithComplaints.length > 0 &&
+            companiesWithComplaints.map((company) => (
+              <TableRow key={company.companyId}>
+                <TableCell
+                  className="cursor-pointer"
+                  onClick={() => handleTableRowClick(company)}
+                >
+                  {company.profilePicture != null && (
+                    <Avatar>
+                      <AvatarImage src={company.profilePicture} />
+                    </Avatar>
+                  )}
+                </TableCell>
+                <TableCell
+                  className="cursor-pointer"
+                  onClick={() => handleTableRowClick(company)}
+                >
+                  {company.name}
+                </TableCell>
+                <TableCell
+                  className="cursor-pointer"
+                  onClick={() => handleTableRowClick(company)}
+                >
+                  {formatDate(company.complaints[0].createdAt) ?? 'N/A'}
+                </TableCell>
+                <TableCell
+                  className="cursor-pointer"
+                  onClick={() => handleTableRowClick(company)}
+                >
+                  {company.complaints.length}
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </main>

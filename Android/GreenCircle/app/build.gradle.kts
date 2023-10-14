@@ -136,4 +136,7 @@ dependencies {
 
     // Carousel
     implementation("org.imaginativeworld.whynotimagecarousel:whynotimagecarousel:2.1.0")
+
+    // AndroidX Capable version
+    implementation("com.github.AppIntro:AppIntro:6.3.1")
 }

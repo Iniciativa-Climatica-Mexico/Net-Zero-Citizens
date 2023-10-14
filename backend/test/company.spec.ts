@@ -219,7 +219,7 @@ describe('Company Service', () => {
     )
 
     expect(response?.get())
-      .excludingEvery(attributesToExclude.concat('oneComment'))
+      .excludingEvery(attributesToExclude.concat(['oneComment', 'companyFiles']))
       .to.deep.equal(testData[0])
   })
 

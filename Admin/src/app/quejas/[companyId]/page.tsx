@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/table'
 
 import { usePathname, useRouter } from 'next/navigation'
+import { error } from 'console'
 
 export default function Home() {
   const [SelectedComplaint, setSelectedComplaint] =
@@ -26,10 +27,6 @@ export default function Home() {
   const path = usePathname()
   const id = path.split('/')[2]
 
-  const handleTableRowClick = (complaint: ComplaintsWithUser) => {
-    setSelectedComplaint(complaint)
-  }
-
   const fetchComplaintsWithUsers = async (id: string) => {
     try {
       const complaints = await getComplaintsWithUsers(id)
@@ -40,18 +37,6 @@ export default function Home() {
   }
 
   const changeToInactive = (id: string, status: string = 'inactive') => {
-    setComplaintsWithUsers((prevComplaints) => {
-      return prevComplaints.filter((complaint) => {
-        if (complaint.complaintId === id) {
-          descartar(id, status)
-          return false
-        }
-        return true
-      })
-    })
-  }
-
-  const changeToInvalid = (id: string, status: string = 'invalid') => {
     setComplaintsWithUsers((prevComplaints) => {
       return prevComplaints.filter((complaint) => {
         if (complaint.complaintId === id) {
@@ -94,10 +79,11 @@ export default function Home() {
             {complaintsWithUsers?.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={6} className="text-center">
-                  Error al cargar reportes
+                  No hay reportes para mostrar
                 </TableCell>
               </TableRow>
             ) : null}
+
             {complaintsWithUsers?.map((company) => (
               <TableRow key={company.complaintId} className="min-h-max">
                 <TableCell>
@@ -114,18 +100,10 @@ export default function Home() {
                 <TableCell>{formatDate(company.createdAt) ?? 'N/A'}</TableCell>
                 <TableCell>
                   <Button
-                    className="bg-[#F2F5FA] rounded-lg p-2"
-                    onClick={() => changeToInvalid(company.complaintId)}
-                  >
-                    Descartar
-                  </Button>
-                </TableCell>
-                <TableCell>
-                  <Button
-                    className="bg-[#F2F5FA] rounded-lg p-2"
+                    className="bg-[#547c8b] text-white rounded-lg p-2 hover:bg-[#3e5f6b] hover:text-white"
                     onClick={() => changeToInactive(company.complaintId)}
                   >
-                    Rechazar
+                    Descartar
                   </Button>
                 </TableCell>
               </TableRow>

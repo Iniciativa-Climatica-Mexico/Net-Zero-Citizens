@@ -122,6 +122,32 @@ export const getPendingCompanies: RequestHandler<
   })
 }
 
+
+/**
+ * @brief
+ * Función del controlador que devuelve todos los proveedores aprovados y con quejas de la base de datos
+ * @param _req 
+ * @param res 
+ */
+export const getApprovedCompaniesWithComplaints: RequestHandler<
+  NoRecord,
+  CompanyService.CompanyWithComplaints[] | { message: string },
+  NoRecord,
+  NoRecord
+  > = async (_req, res) => {
+    try {
+      const companies = await CompanyService.getApprovedCompaniesWithComplaints()
+      if (!companies) {
+        res.status(404).json({ message: 'Companies not found' })
+      } else {
+        const filteredCompanies = companies.filter(company => company.complaints.length > 0)
+        res.json(filteredCompanies)
+      }
+    } catch (error) {
+      res.status(500).json({ message: 'Internal server error' })
+    }
+  }
+
 /**
  * @brief
  * Función del controlador que actualiza a un proveedor de la base de datos

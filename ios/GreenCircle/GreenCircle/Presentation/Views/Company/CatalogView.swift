@@ -22,28 +22,37 @@ struct CatalogView: View {
                 .padding(7)
                 .background(Color(.systemGray6))
                 .cornerRadius(10)
-                .frame(width: 340)
-                .padding(.trailing, 10)
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .padding(.trailing, 5)
               
-              Button(action: { viewModel.sheet = true
+              Button(action: {
+                viewModel.sheet = true
               }) {
                 Image(systemName: "slider.horizontal.3")
                   .resizable()
                   .aspectRatio(contentMode: .fill)
-                  .frame(width: 25, height: 25 )
+                  .frame(width: 25, height: 25)
                   .foregroundColor(Color("Primary"))
-                  .padding(.trailing, 9)
-              }.foregroundColor(.blue)
-                .sheet(isPresented: $viewModel.sheet) {
-                  FilterView(vm: viewModel)
-                }
-            }
+                  .padding(.leading, 10)
+              }
+              .foregroundColor(.blue)
+              .sheet(isPresented: $viewModel.sheet) {
+                FilterView(vm: viewModel)
+              }
+              Spacer()
+            } .padding(.horizontal, 13)
+              .onTapGesture {
+                hideKeyboard()
+              }
+            
             
             ForEach(viewModel.filteredCompanies, id: \.id) { company in
-              CardCatalogView(companyId: company.companyId,
-                              companyName: company.name, city: company.city,
-                              state: company.state)
-            }.padding(.top, 10)
+              CardCatalog(companyId: company.companyId,
+                          companyName: company.name, city: company.city,
+                          state: company.state)
+            }
+            .padding([.trailing, .leading], 15)
+            .padding([.top, .bottom], 7)
             
             if isFilteringEmpty {
               Text("No se encontraron compañías.")
@@ -55,7 +64,7 @@ struct CatalogView: View {
         }
         .onAppear {
           Task {
-            try await viewModel.fetchAllCompanies()
+            await viewModel.fetchAllCompanies()
           }
         }
       }

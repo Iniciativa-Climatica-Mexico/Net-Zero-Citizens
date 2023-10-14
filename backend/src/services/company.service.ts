@@ -1,6 +1,8 @@
 import CompanyProducts from '../models/companyProducts.model'
 import CompanyFiles from '../models/companyFiles.model'
+import { downloadCompanyFile } from './companyFiles.service'
 import Product from '../models/products.model'
+import Complaint from '../models/complaint.model'
 import Review from '../models/review.model'
 import { Op, col, fn, literal } from 'sequelize'
 import Company from '../models/company.model'
@@ -183,6 +185,24 @@ export const getAllCompanies = async (
 
   for (const company of res.rows as (Company & { score: number })[]) {
     company.dataValues.score = Number(company.dataValues.score) ?? null
+    const companyFiles = await getCompanyFiles(company.companyId)
+    const files: CompanyFiles[] = []
+
+    companyFiles?.forEach(async function (file) {
+      files.push(file.dataValues)
+
+      // Descargar el archivo y asignarlo a la propiedad del objeto
+      /*const downloadedFile = await downloadCompanyFile(
+        company.companyId,
+        file.fileDescription,
+        file.fileFormat
+      )
+      if (downloadedFile) {
+        file.dataValues.fileContent = downloadedFile
+      }*/
+    })
+
+    company.dataValues.files = files
   }
 
   return {
@@ -250,6 +270,10 @@ export interface FilteredCompany {
   latitude: number
   longitude: number
   profilePicture: string | null
+}
+
+export interface CompanyWithComplaints extends Company {
+  complaints: Complaint[]
 }
 
 /**
@@ -363,6 +387,11 @@ export const getCoordinatesIos = async (): Promise<
   const filteredCompaniesTyped: FilteredCompany[] = filteredCompanies.filter(
     (company): company is FilteredCompany => company !== null
   )
+
+  for (const company of filteredCompaniesTyped) {
+    company.latitude = Number(company.latitude)
+    company.longitude = Number(company.longitude)
+  }
 
   const paginator: Paginator<FilteredCompany> = {
     rows: filteredCompaniesTyped,
@@ -516,6 +545,30 @@ const getCompanyFiles = async (id: string): Promise<CompanyFiles[] | null> => {
       exclude: ['createdAt', 'updatedAt'],
     },
   })
+}
+
+
+export const getApprovedCompaniesWithComplaints = async (): Promise<Company[] | null> => { 
+  return await Company.findAll({ 
+    where: { 
+      status: 'approved', 
+    }, 
+    attributes: { 
+      exclude: ['createdAt', 'updatedAt'], 
+    }, 
+    include: [ 
+      { 
+        model: Complaint, 
+        where: {
+          complaintStatus: 'active'
+
+        },
+        attributes: { 
+          exclude: ['updatedAt'], 
+        }, 
+      }, 
+    ], 
+  }) 
 }
 
 const getCompanyProducts = async (

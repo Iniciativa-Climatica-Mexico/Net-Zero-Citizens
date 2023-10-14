@@ -56,7 +56,7 @@ struct RegisterHeaderView: View {
         Text("Te registraste con el correo")
         Text(mail).bold()
       }
-      .foregroundColor(Color("SecondaryText"))
+      .foregroundColor(Color("Secondary"))
       .font(.system(size: 20))
     }
     .padding(.horizontal)
@@ -73,7 +73,7 @@ struct InputFormView: View {
   var body: some View {
     VStack(alignment: .leading) {
       Text(label)
-        .foregroundColor(Color("SecondaryText"))
+        .foregroundColor(Color("Secondary"))
       TextField(prompt, text: bindingValue)
         .padding(10)
         .overlay {
@@ -92,7 +92,7 @@ struct SecureInputFormView: View {
   var body: some View {
     VStack(alignment: .leading) {
       Text(label)
-        .foregroundColor(Color("SecondaryText"))
+        .foregroundColor(Color("Secondary"))
       SecureField(prompt, text: bindingValue)
         .padding(10)
         .overlay {
@@ -111,7 +111,7 @@ struct PickerFormView: View {
   var body: some View {
     VStack(alignment: .leading) {
       Text(label)
-        .foregroundColor(Color("SecondaryText"))
+        .foregroundColor(Color("Secondary"))
       HStack {
         Menu {
           Picker(selection: $selectedOption) {
@@ -182,7 +182,7 @@ struct CompanyRegisterHeaderView: View {
     VStack(alignment: .leading, spacing: 10) {
       Image(systemName: "leaf")
         .font(.largeTitle)
-        .foregroundColor(Color("GreenCustom"))
+        .foregroundColor(Color("Secondary"))
       Text("Servicios que ofreces")
         .font(.system(size: 40, weight: .bold))
         .frame(maxWidth: 230)

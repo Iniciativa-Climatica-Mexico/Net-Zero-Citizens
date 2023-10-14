@@ -23,6 +23,7 @@ class LoginViewModel: ObservableObject {
   @Published var password = ""
   @Published var showAlert = false
   @Published var alertMessage = ""
+  @Published var loadingGoogle = false
   
   /// Función encargada de realizar el SignIn con Google y actualizar la información de entorno
   /// - Parameter userData: objeto de entorno

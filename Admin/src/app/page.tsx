@@ -25,6 +25,7 @@ import LogoSm from './../../public/LogoSm.svg'
 
 import ModalProveedor from '@/components/modalProveedor'
 import Image from 'next/image'
+import { Pill } from '@/components/pill/pill'
 
 export type tabs = 'pending_approval' | 'approved' | 'no_user'
 
@@ -45,12 +46,7 @@ export default function Home() {
     description: '',
     createdAt: '',
     streetNumber: '',
-    pdfCurriculumUrl: '',
-    pdfDicCdmxUrl: '',
-    pdfPeeFideUrl: '',
-    pdfGuaranteeSecurityUrl: '',
-    pdfActaConstitutivaUrl: '',
-    pdfIneUrl: '',
+    files: [],
   })
   const [modalOpen, setIsModalOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
@@ -109,6 +105,13 @@ export default function Home() {
   const startIndex = (currentPage - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
   const paginatedCompanies = filteredCompanies?.slice(startIndex, endIndex)
+  const totalPages = Math.ceil(
+    activeTab === 'pending_approval'
+      ? filteredCompanies?.length / itemsPerPage
+      : activeTab === 'approved'
+        ? filteredCompanies?.length / itemsPerPage
+        : filteredCompanies?.length / itemsPerPage
+  )
 
   const handlePageChange = (newPage: number) => setCurrentPage(newPage)
 
@@ -140,19 +143,13 @@ export default function Home() {
               className="cursor-pointer"
               onClick={() => handleTableRowClick(company)}
             >
-              {company.profilePicture != null ? (
-                <Avatar>
-                  <AvatarImage src={company.profilePicture} />
-                </Avatar>
-              ) : (
-                <Image
-                  src={LogoSm}
-                  alt="Placeholder"
-                  width={350}
-                  height={350}
-                  className="basis-6/12 mr-[10px] rounded-l-xl object-cover"
-                />
-              )}
+              <Image
+                src={LogoSm}
+                alt="Placeholder"
+                width={350}
+                height={350}
+                className="basis-6/12 mr-[10px] rounded-l-xl object-cover"
+              />
             </TableCell>
             {activeTab === 'no_user' ? (
               <TableCell
@@ -184,16 +181,7 @@ export default function Home() {
               className="cursor-pointer"
               onClick={() => handleTableRowClick(company)}
             >
-              <div
-                className={`${
-                  company.status === 'approved'
-                    ? 'bg-[#547C8B] text-white'
-                    : 'bg-[#FFE6C2] text-jet'
-                }
-                text-center rounded-xl p-2.5`}
-              >
-                {company.status === 'approved' ? 'Aprobado' : 'Pendiente'}
-              </div>
+              <Pill status={company.status} />
             </TableCell>
           </TableRow>
         ))}
@@ -256,22 +244,27 @@ export default function Home() {
             {renderTable(paginatedCompanies)}
           </TabsContent>
         </Tabs>
-        <div className="flex justify-end items-center pt-2 gap-x-2 z-0">
-          <Button
-            variant="outline"
-            className="px-4"
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            Anterior
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={endIndex >= filteredCompanies?.length}
-          >
-            Siguiente
-          </Button>
+        <div className="flex justify-between items-center pt-2 gap-x-2">
+          <span>
+            Page {currentPage} of {totalPages}
+          </span>
+          <div>
+            <Button
+              variant="outline"
+              className="px-4"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              Anterior
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage >= totalPages}
+            >
+              Siguiente
+            </Button>
+          </div>
         </div>
       </main>
     </>
