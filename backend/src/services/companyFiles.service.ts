@@ -131,7 +131,7 @@ export const downloadCompanyFile = async (
     // Usar el fileUrl directamente como la Key de S3
     const params = {
       Bucket: bucketName,
-      Key: `${company?.name}/${fileDescription + '.' + fileFormat}`,
+      Key: `${company?.name}/${fileDescription + fileFormat}`,
     }
 
     // Descargar el archivo de S3
