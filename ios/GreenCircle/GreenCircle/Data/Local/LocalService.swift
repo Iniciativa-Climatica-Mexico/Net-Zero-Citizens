@@ -92,5 +92,7 @@ class LocalService {
     UserDefaults.standard.removeObject(forKey: "\(companyId.uuidString)_favourite")
   }
   
-  
+  func deleteUserData() {
+    UserDefaults.standard.removeObject(forKey: USER_DATA)
+  }
 }

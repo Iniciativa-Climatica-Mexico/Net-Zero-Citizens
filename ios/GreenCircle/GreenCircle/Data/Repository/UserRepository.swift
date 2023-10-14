@@ -194,4 +194,8 @@ class UserRepository: UserRepositoryProtocol {
           return nil
       }
   }
+  
+  func deleteLocalUserData () {
+    lService.deleteUserData()
+  }
 }
