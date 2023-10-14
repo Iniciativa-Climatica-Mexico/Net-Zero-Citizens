@@ -105,4 +105,41 @@ describe('AuthService', () => {
     expect(loginRes?.tokens).to.be.not.null
     expect(loginRes?.error).to.be.undefined
   })
+
+  it('should register and login an apple user', async () => {
+    const testAppleUser: AuthService.RegisterUser = {
+      firstName: 'Denisse',
+      lastName: 'Maldonado',
+      email: 'hys8nf6tr7@privaterelay.appleid.com',
+      age: 20,
+      state: 'Queretaro',
+      phoneNumber: '4421234567',
+      gender: 'femenine',
+      password: 'test',
+    }
+    const authRes = await AuthService.register(testAppleUser)
+    expect(authRes?.user).to.containSubset({
+      first_name: testAppleUser.firstName,
+      last_name: testAppleUser.lastName,
+      email: testAppleUser.email,
+      roles: 'new_user',
+    })
+    expect(authRes?.tokens).to.be.not.null
+    expect(authRes?.error).to.be.undefined
+
+    const loginRes = await AuthService.login(
+      testAppleUser.email,
+      testAppleUser.password
+    )
+
+    expect(loginRes?.user).to.containSubset({
+      first_name: testAppleUser.firstName,
+      last_name: testAppleUser.lastName,
+      email: testAppleUser.email,
+      roles: 'new_user',
+    })
+
+    expect(loginRes?.tokens).to.be.not.null
+    expect(loginRes?.error).to.be.undefined
+  })
 })

@@ -16,6 +16,7 @@ struct APIRoutes {
         static let create = "/create"
         static let assign = "/:companyId/assign"
         static let geocoding = "/geocoding"
+      static let addProduct = "/:companyId/add/products"
     }
     
     struct Complaint {

@@ -71,4 +71,27 @@ class CompanyAPIClient {
             return null
         }
     }
+
+    suspend fun assignCompanyProducts(
+        authToken: String,
+        companyId: String,
+        products: ArrayList<String>
+    ): Boolean {
+        api = NetworkModel(authToken, CompanyAPIService::class.java)
+        return try {
+            val response = api.assignCompanyProducts(
+                companyId,
+                CompanyAPIService.AssignCompanyProductsRequestBody(
+                    products
+                )
+            )
+            return when {
+                response.isSuccessful -> true
+                else -> false
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return false
+        }
+    }
 }

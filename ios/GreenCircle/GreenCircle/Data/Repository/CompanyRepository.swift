@@ -141,4 +141,16 @@ class CompanyRepository: CompanyRepositoryProtocol {
     return await service.getRequest(URL(string: "\(CompanyAPI.base)")!, params: params)
   }
   
+  func addProductsToCompany(companyId: String, products: [String]) async throws {
+    let url = URL(string: "\(APIRoutes.Company.base)\(APIRoutes.Company.addProduct)"
+      .replacingOccurrences(of: ":companyId", with: companyId))!
+    let params = ["products": products]
+    
+    let res: NoResponse? = await service.putRequest(url, body: params)
+    
+    if res == nil {
+      throw GCError.requestFailed
+    }
+  }
+  
 }

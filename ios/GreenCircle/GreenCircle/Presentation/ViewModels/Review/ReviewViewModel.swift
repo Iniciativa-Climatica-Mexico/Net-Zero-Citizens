@@ -71,6 +71,4 @@ class ReviewViewModel: ObservableObject {
             responsePost = responsePost
         }
     }
-    
-    
 }

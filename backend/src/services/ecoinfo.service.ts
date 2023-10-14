@@ -32,7 +32,7 @@ export const cronEcoInfo = cron.schedule('0 0 * * *', () => {
  * Función del controlador que hace un fetch a la página de
  * Facebook de ICM
  */
-const fetchEcoInfo = async () => {
+export const fetchEcoInfo = async () => {
   const pageId: string = process.env.ECO_INFO_PAGE_ID || ''
   const pageAccessToken: string = process.env.ECO_INFO_TOKEN || ''
 
