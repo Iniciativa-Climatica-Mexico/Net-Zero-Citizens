@@ -27,6 +27,19 @@ class CompanyUseCase {
                       newRole: "COMAPNY_ROLE_ID")
   }
   
+  func addProductsToCompany(products: [String]) async -> Bool {
+    guard let companyId = cRepository.local.getCompanyId()
+    else { return false}
+    
+    do {
+      try await cRepository.addProductsToCompany(companyId: companyId,
+                                             products: products)
+      return true
+    } catch {
+      return false
+    }
+  }
+  
   @MainActor
   func assignCompanyToUser(companyId: String) async throws {
     let userId = uRepository.getAuthData()!.user.id
