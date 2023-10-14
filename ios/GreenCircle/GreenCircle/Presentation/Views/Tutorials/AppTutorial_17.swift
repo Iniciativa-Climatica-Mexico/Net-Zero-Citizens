@@ -39,7 +39,7 @@ struct AppTutorial_17: View {
                 Image(tutorial)
                   .resizable()
                   .scaledToFit()
-                  .frame(height: 635)
+                  .frame(maxHeight: .infinity)
                   .clipShape(RoundedRectangle(cornerRadius: 25.0))
                   .padding(.horizontal, 20)
                   .containerRelativeFrame(.horizontal)
@@ -63,6 +63,7 @@ struct AppTutorial_17: View {
             .background(Color(red: 0.33, green: 0.49, blue: 0.55))
             .cornerRadius(9)
             .padding(.top, 10)
+            .padding(.bottom, 20)
           
           Spacer()
           

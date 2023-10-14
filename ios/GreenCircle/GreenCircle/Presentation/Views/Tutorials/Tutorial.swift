@@ -35,7 +35,7 @@ struct Tutorial: View {
                 Image(tutorial)
                   .resizable()
                   .scaledToFit()
-                  .frame(height: 550)
+                  .frame(maxHeight: .infinity)
                   .clipShape(RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/))
                   .padding(.horizontal, 20)
               }
