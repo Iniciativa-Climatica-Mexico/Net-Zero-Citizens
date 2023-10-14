@@ -119,7 +119,7 @@ struct ProfileView: View {
                 }
                 .padding(.top, 70)
             }.onAppear(perform: loadProfileData)
-        }
+        } .accentColor(.white)
     }
 
     private func loadProfileData() {
