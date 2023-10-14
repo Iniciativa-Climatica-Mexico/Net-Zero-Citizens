@@ -368,7 +368,6 @@ struct Section3: View {
                 .font(.system(size: 11))
         }
         
-        
         //----Picker Estado----------------------------------------------------------
         Text("Estado")
             .padding(.top, 16)
@@ -531,7 +530,8 @@ struct SectionDelete: View{
     var goLogin: () -> Void
     
     func isPhoneNumberValid() -> Bool {
-        guard let phoneNumber = modelUser.contentBaseUser?.phoneNumber else {
+        guard let phoneNumber = modelUser
+          .contentBaseUser?.phoneNumber else {
             return false
         }
         return phoneNumber.count == 12
