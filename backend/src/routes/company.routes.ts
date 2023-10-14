@@ -9,7 +9,6 @@ router.get('/', CompanyController.getAllCompanies)
 router.post('/create', CompanyController.createCompany)
 
 router.get('/files', CompanyFilesController.getCompanyFiles)
-router.post('/add/product', CompanyController.addProduct)
 router.post('/upload/image', upload, CompanyFilesController.uploadCompanyImage)
 router.post('/upload/file', upload, CompanyFilesController.uploadCompanyFile)
 
@@ -32,6 +31,7 @@ router.get(
 router.post('/pending/:companyId', CompanyController.updateCompanyInfo)
 
 router.put('/:companyId/assign', CompanyController.assignCompanyUser)
+router.put('/:companyId/add/products', CompanyController.addProduct)
 router.get('/:id', CompanyController.getCompanyById)
 
 export default router
