@@ -86,7 +86,7 @@ struct OpinionsView: View {
                 .font(.system(size: 15))
                 .foregroundColor(Color("BlackCustom"))
           
-          StarRatingView().customSectionPadding()
+          StarRatingView(score: $score).customSectionPadding()
           
           Text("Escribe una opinión")
                 .font(.system(size: 24))
@@ -117,7 +117,7 @@ struct OpinionsView: View {
             Button(action:{
                 Task {
                     
-                    await opinionsViewModel.addReview(companyId: companyId.companyReviewId.companyId , reviewTitle: title, review: description, score: 2.0)
+                    await opinionsViewModel.addReview(companyId: companyId.companyReviewId.companyId , reviewTitle: title, review: description, score: score)
                     if opinionsViewModel.responsePost == "Added review" {
                         isPresented = true
                     } else {
@@ -171,20 +171,43 @@ struct CompanyRating: View {
 
 struct RatingView: View {
     @StateObject var reviewModel = ReviewViewModel()
+    @State private var totalReviews: Int = 0
+    
+    var averageScore: Double {
+        if reviewModel.contentReview.isEmpty {
+            return 0.0
+        } else {
+            let totalScore = reviewModel.contentReview.reduce(0) { $0 + Int($1.score) }
+            return Double(totalScore) / Double(reviewModel.contentReview.count)
+        }
+    }
+    
     var body: some View {
         VStack {
             HStack {
                 VStack(alignment: .center) {
-                    Text(String(format: "%.1f", reviewModel.reviewFields.score))
+                    Text(String(format: "%.1f", averageScore))
                         .font(.system(size: 60, weight: .bold, design: .default)).foregroundColor(Color("Secondary"))
                 }
                 
                 VStack(alignment: .leading) {
                     HStack {
                         ForEach(0..<5) { index in
-                            Image(systemName: index < Int(reviewModel.reviewFields.score) ? "star.fill" : "star")
-                                .foregroundColor(Color("Secondary"))
+                            if index < Int(averageScore) {
+                                Image(systemName: "star.fill")
+                                    .resizable()
+                                    .frame(width: 15, height: 15)
+                            } else if index == Int(averageScore) {
+                                Image(systemName: "star.leadinghalf.fill")
+                                    .resizable()
+                                    .frame(width: 15, height: 15)
+                            } else {
+                                Image(systemName: "star")
+                                    .resizable()
+                                    .frame(width: 15, height: 15)
+                            }
                         }
+                        .foregroundColor(Color("Secondary"))
                     }
                     .font(.headline)
     
@@ -193,8 +216,7 @@ struct RatingView: View {
                         .foregroundColor(.gray)
                 }
             }
-        }
-        .onAppear{
+        }.onAppear{
             Task {
                 await reviewModel.fetchReviewByUserId()
             }
@@ -204,7 +226,7 @@ struct RatingView: View {
 
 struct StaticStarView: View {
     @State private var isTapped = false
-    let index: Double
+    let index: Int
     let label: String
     var goOpinions: () -> Void
     
@@ -228,7 +250,7 @@ struct StaticStarRatingView: View {
     var body: some View {
         HStack {
             ForEach(1...5, id: \.self) { index in
-                StaticStarView(index: Double(index), label: index == 1 ? "Malo" : (index == 5 ? "Excelente" : ""), goOpinions: goOpinions)
+                StaticStarView(index: index, label: index == 1 ? "Malo" : (index == 5 ? "Excelente" : ""), goOpinions: goOpinions)
             }
         }
         
@@ -256,7 +278,7 @@ struct StarView: View {
 
 struct StarRatingView: View {
     @StateObject var reviewViewModel = ReviewViewModel()
-    @State private var score: Int = 0
+    @Binding var score: Int
     
     var body: some View {
         HStack {
