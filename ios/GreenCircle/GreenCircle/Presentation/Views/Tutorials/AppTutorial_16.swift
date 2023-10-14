@@ -35,7 +35,7 @@ struct AppTutorial_16: View {
                 Image(tutorial)
                   .resizable()
                   .scaledToFit()
-                  .frame(height: 500)
+                  .frame(maxHeight: .infinity)
                   .clipShape(RoundedRectangle(cornerRadius: 25.0))
                   .padding(.horizontal, 20)
               }
@@ -52,7 +52,8 @@ struct AppTutorial_16: View {
             .frame(width: 178, height: 40)
             .background(Color(red: 0.33, green: 0.49, blue: 0.55))
             .cornerRadius(9)
-            .padding(.bottom, 40)
+            .padding(.top)
+            .padding(.bottom, 20)
           
           Spacer()
           
