@@ -547,25 +547,28 @@ const getCompanyFiles = async (id: string): Promise<CompanyFiles[] | null> => {
   })
 }
 
-export const getApprovedCompaniesWithComplaints = async (): Promise<
-  Company[] | null
-> => {
-  return await Company.findAll({
-    where: {
-      status: 'approved',
-    },
-    attributes: {
-      exclude: ['createdAt', 'updatedAt'],
-    },
-    include: [
-      {
-        model: Complaint,
-        attributes: {
-          exclude: ['updatedAt'],
+
+export const getApprovedCompaniesWithComplaints = async (): Promise<Company[] | null> => { 
+  return await Company.findAll({ 
+    where: { 
+      status: 'approved', 
+    }, 
+    attributes: { 
+      exclude: ['createdAt', 'updatedAt'], 
+    }, 
+    include: [ 
+      { 
+        model: Complaint, 
+        where: {
+          complaintStatus: 'active'
+
         },
-      },
-    ],
-  })
+        attributes: { 
+          exclude: ['updatedAt'], 
+        }, 
+      }, 
+    ], 
+  }) 
 }
 
 const getCompanyProducts = async (

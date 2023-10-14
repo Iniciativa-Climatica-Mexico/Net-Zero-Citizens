@@ -12,7 +12,7 @@ struct UserRegisterFormView: View {
   UserRegisterFormViewModel()
   @State private var showingPrivacy = false
   
-  var goMainMenu: () -> Void
+  var goTutorial: () -> Void
   
   var body: some View {
     ScrollView {
@@ -80,7 +80,7 @@ struct UserRegisterFormView: View {
             let success = await viewModel
               .handleSubmit()
             if(success) {
-              goMainMenu()
+              goTutorial()
             }
           }
         })
