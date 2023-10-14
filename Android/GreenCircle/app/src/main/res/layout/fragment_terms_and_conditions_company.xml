@@ -37,7 +37,7 @@
                 android:layout_marginEnd="24dp"
                 android:text="En cumplimiento con la Ley Federal de Protección de Datos Personales en Posesión de Particulares (la “Ley”), y demás relacionadas, nos permitimos informarle sobre las características y finalidades del tratamiento que se dará a sus datos personales que por el ejercicio de sus actividades realice Iniciativa Climática de México AC. (“ICM”)"
                 android:textColor="@color/black"
-                android:lineHeight="0.17in"
+
                 android:justificationMode="inter_word"
                 android:textSize="20sp" />
 
@@ -61,7 +61,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
                 android:justificationMode="inter_word"
-                android:lineHeight="0.17in"
+
                 android:text="Iniciativa Climática de México AC es una asociación civil, donataria autorizada, con domicilio fiscal y  de sus oficinas operativas en Calle Miguel Laurent 70, Tlacoquemecatl del Valle, Del. Benito Juárez, CDMX, CP. 03200, Tel. 01 55 5335 1282, es responsable de recabar sus datos personales, del uso y almacenamiento que se le dé a los mismos y de su debida protección."
                 android:textColor="@color/black"
                 android:textSize="20sp" />
@@ -76,7 +76,6 @@
                 android:text="Respecto de la información de sus datos personales, proporcionada personal y directamente por usted, ya sea de manera verbal o por escrito, por correo electrónico o correspondencia, tarjetas de presentación, o por llenado de formularios de contactos y de datos personales, y también recabada a través de nuestro sitio de Internet, o cualesquier otro medio, le comunicamos que seguimos los principios exigidos por la legislación vigente: licitud, consentimiento, información, finalidad, lealtad, confidencialidad, seguridad, proporcionalidad y responsabilidad."
                 android:textColor="@color/black"
                 android:justificationMode="inter_word"
-                android:lineHeight="0.17in"
                 android:textSize="20sp" />
             <Button
                 android:id="@+id/dismiss_button"

@@ -31,6 +31,7 @@ struct CoordinatorView: View {
     case survey
     case reviews
     case opinions
+    case tutorial
   }
   
   @State var routes: Routes<Screens> = [.root(.splashScreen)]
@@ -50,10 +51,10 @@ struct CoordinatorView: View {
       case .userRegister:
         UserRegisterView(goLogin: goBack,
                          goForm: goUserForm,
-                         goMainMenu: goMainMenu)
+                         goTutorial: goTutorial)
         
       case .userRegisterForm:
-        UserRegisterFormView(goMainMenu: goMainMenu)
+        UserRegisterFormView(goTutorial: goTutorial)
         
       case .companyAssign:
         AssignCompanyView(goForm: goCompanyForm,
@@ -62,7 +63,7 @@ struct CoordinatorView: View {
       case .companyRegister:
         CompanyRegisterView(goLogin: goBack,
                             goForm: goAssignCompany,
-                            goMainMenu: goMainMenu)
+                            goTutorial: goTutorial)
         
       case .companyRegisterForm:
         CompanyRegisterFormView(goCompanyRegisterDivider: goCompanyRegisterDivider, goPending: goPending)
@@ -97,21 +98,31 @@ struct CoordinatorView: View {
         
       case .opinions:
         OpinionsView(goReviews: goBack, goOpinions: goOpinions).environmentObject(companyId)
+        
+      case .tutorial:
+        if #available(iOS 17.0, *) {
+          AppTutorial_17(goMainMenu: goMainMenu)
+            .applyNavBarTheme()
+          
+        } else {
+          AppTutorial_16(goMainMenu: goMainMenu)
+            .applyNavBarTheme()
+        }
       }
     }
     .onAppear {
-     Task {
-       let res = await viewModel.handleSignIn()
-       
-       switch res {
-       case .newUser:
-         goUserForm()
-       case .success:
-         goMainMenu()
-       case .fail:
-         goLogin()
-       }
-     }
+      Task {
+        let res = await viewModel.handleSignIn()
+        
+        switch res {
+        case .newUser:
+          goUserForm()
+        case .success:
+          goMainMenu()
+        case .fail:
+          goLogin()
+        }
+      }
     }
   }
   
@@ -158,6 +169,10 @@ struct CoordinatorView: View {
   
   private func goAssignCompany() {
     routes.presentCover(.companyAssign)
+  }
+  
+  private func goTutorial() {
+    routes.presentCover(.tutorial)
   }
   
   private func goBack() {
