@@ -45,6 +45,7 @@ struct ReviewCardProvider: View {
 
 //
 struct ReviewCompanyCard: View {
+    @ObservedObject var modelUser = UserViewModel()
     var review: Review
     var profilePicture: Image
     
@@ -68,11 +69,12 @@ struct ReviewCompanyCard: View {
                 
                 profilePicture
                     .resizable()
-                    .frame(width: 50, height: 50)
+                    .frame(width: 60, height: 60)
                 
                 VStack(alignment: .leading) {
-//                    Text(review.user.firstName + " " + review.user.lastName)
-//                        .font(.headline)
+                    Text("\(modelUser.contentBaseUser?.firstName ?? "Cargando...") \(modelUser.contentBaseUser?.lastName ?? "")")
+                        .font(.system(size: 13))
+                        .padding(.bottom, 5)
                     Text(formatDate(review.createdAt))
                         .font(.system(size: 13))
                         .foregroundColor(Color("MainText"))
@@ -210,7 +212,7 @@ struct ReviewClientCard: View {
                 if showSeeMore {
                    HStack {
                        Spacer()
-                       Text(isExpanded ? "Show less" : "See more...")
+                       Text(isExpanded ? "Ver menos" : "Ver más...")
                            .font(.body)
                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 15, trailing: 15))
                            .foregroundColor(Color("Primary"))

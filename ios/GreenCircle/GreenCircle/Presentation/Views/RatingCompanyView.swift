@@ -20,7 +20,7 @@ struct ScrollViewRating: View {
   var goScrollRating: () -> Void
   @EnvironmentObject var companyId: CompanyReviewViewModel
   var body: some View {
-    NavigationStack {
+    NavigationView {
       ScrollView {
           VStack {
               ReviewsView(goOpinions: goOpinions, goScrollRating: goScrollRating).frame(height: 300)

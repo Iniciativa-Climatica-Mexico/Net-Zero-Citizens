@@ -203,7 +203,7 @@ struct RatingView: View {
                     }
                     .font(.headline)
     
-                    Text("\(reviewModel.totalReviews) opiniones")
+                    Text("\(reviewModel.contentReview.count) opiniones")
                         .font(.caption)
                         .foregroundColor(.gray)
                 }

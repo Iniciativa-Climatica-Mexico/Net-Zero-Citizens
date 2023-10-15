@@ -187,6 +187,7 @@ struct CoordinatorView: View {
     
   private func goOpinions() {
     routes.presentCover(.opinions)
+  }
   
   private func goRoot() {
     routes.removeAll()
