@@ -278,6 +278,7 @@ struct Section2: View {
                   options: GENDERS
               )
               .padding(.top, 5)
+              .foregroundColor(Color("Secondary"))
             }
         }
     }
@@ -286,6 +287,7 @@ struct Section2: View {
 ///_----------------- SECTION 3_
 struct Section3: View {
   @ObservedObject var modelUser: UserViewModel
+  @FocusState private var isPhoneFieldFocused: Bool
   
   private var phoneBinding: Binding<String> {
       Binding<String>(
@@ -331,64 +333,75 @@ struct Section3: View {
 
   
   var body: some View {
-      VStack(alignment: .leading) {
-          //----Field Celular----------------------------------------------------------
-          Text("Teléfono")
-              .padding(.top, 16)
-              .foregroundColor(Color("Secondary"))
+      ZStack {
+              Color.clear
+              .contentShape(Rectangle())
+              .onTapGesture {
+                  hideKeyboard()
+              }
+
+          VStack(alignment: .leading) {
+              //----Field Celular----------------------------------------------------------
+              Text("Teléfono")
+                  .padding(.top, 16)
+                  .foregroundColor(Color("Secondary"))
+                  .font(.system(size: 13))
+                  .fontWeight(.semibold)
+
+              TextField("Teléfono", text: Binding(
+                  get: {
+                      if let phoneNumber = self.modelUser.contentBaseUser?.phoneNumber, !phoneNumber.isEmpty {
+                          return Utils
+                              .formatNumber(with: "XXX-XXX-XXXX",
+                                            for: phoneNumber)
+                      } else {
+                          return ""
+                      }
+                  },
+                  set: {
+                      self.modelUser.contentBaseUser?
+                          .phoneNumber =
+                          Utils.formatNumber(with: "XXX-XXX-XXXX",
+                                             for: $0)
+                  }
+              ))
+              .focused($isPhoneFieldFocused)
+              .keyboardType(.numberPad)
+              .padding(.top, 3)
               .font(.system(size: 13))
-              .fontWeight(.semibold)
+              .textFieldStyle(RoundedBorderTextFieldStyle())
 
-        TextField("Teléfono", text: Binding(
-            get: {
-                if let phoneNumber = self.modelUser.contentBaseUser?.phoneNumber, !phoneNumber.isEmpty {
-                  return Utils
-                    .formatNumber(with: "XXX-XXX-XXXX",
-                                  for: phoneNumber)
-                } else {
-                    return ""
-                }
-            },
-            set: {
-              self.modelUser.contentBaseUser?
-                .phoneNumber =
-              Utils.formatNumber(with: "XXX-XXX-XXXX",
-                                 for: $0)
-            }
-        ))
-          .keyboardType(.numberPad)
-          .padding(.top, 3)
-          .font(.system(size: 13))
-          .textFieldStyle(RoundedBorderTextFieldStyle())
-
-          // Mostrar mensaje si el campo está vacío.
-        if isBlank(input: modelUser.contentBaseUser?.phoneNumber) {
-            Text("No puedes dejar este campo vacío.")
-                .foregroundColor(.red)
-                .font(.system(size: 11))
-        }
-        
-        //----Picker Estado----------------------------------------------------------
-        Text("Estado")
-            .padding(.top, 16)
-            .foregroundColor(Color("Secondary"))
-            .font(.system(size: 13))
-            .fontWeight(.semibold)
-        
-        PickerFormView2(
-            selectedOption: Binding<String>(
-                get: { modelUser.contentBaseUser?.state ?? "Cargando..."},
-                set: { newValue in
-                  modelUser.contentBaseUser?.state = newValue.isEmpty ? nil : newValue
-                }
-            ),
-            label:  modelUser.contentBaseUser?.state ?? "Selecciona un estado...",
-            options: Constants.states
-        )
-        .padding(.top, 5)
+              // Mostrar mensaje si el campo está vacío.
+              if isBlank(input: modelUser.contentBaseUser?.phoneNumber) {
+                  Text("No puedes dejar este campo vacío.")
+                      .foregroundColor(.red)
+                      .font(.system(size: 11))
+              }
+              
+              //----Picker Estado----------------------------------------------------------
+              Text("Estado")
+                  .padding(.top, 16)
+                  .foregroundColor(Color("Secondary"))
+                  .font(.system(size: 13))
+                  .fontWeight(.semibold)
+              
+              PickerFormView2(
+                  selectedOption: Binding<String>(
+                      get: { modelUser.contentBaseUser?.state ?? "Cargando..."},
+                      set: { newValue in
+                          modelUser.contentBaseUser?.state = newValue.isEmpty ? nil : newValue
+                      }
+                  ),
+                  label:  modelUser.contentBaseUser?.state ?? "Selecciona un estado...",
+                  options: Constants.states
+              )
+              .padding(.top, 5)
+              .foregroundColor(Color("Secondary"))
+          }
       }
+  }
 
-    }
+
   }
 
 struct SectionButton: View{
@@ -453,7 +466,6 @@ struct SectionButton: View{
          }
          .opacity(isFormValid || isPhoneNumberValid ? 1.0 : 0.5)
          .opacity(isFormValid && isPhoneNumberValid ? 1.0 : 0.5)
-         .disabled(!isPhoneNumberValid)
          .disabled(!isFormValid)
          .alert(isPresented: $showAlert2) {
            Alert(
@@ -539,6 +551,11 @@ struct SectionDelete: View{
     
     var body: some View {
       ZStack {
+        Color.clear
+        .contentShape(Rectangle())
+        .onTapGesture {
+            hideKeyboard()
+        }
         VStack {
           TitleBarView(
             title: "Editar Datos",
@@ -568,6 +585,8 @@ struct SectionDelete: View{
           Spacer()
         }
       }.onAppear(perform: loadProfileData)
+        .accentColor(Color("Secondary"))
+
     }
     
     private func loadProfileData() {
@@ -580,16 +599,17 @@ struct SectionDelete: View{
 
 
 extension EditProfileView {
-    var isFormValid: Bool {
-        guard let user = modelUser.contentBaseUser else { return false }
-        
-        let hasFirstName = !isBlank(input: user.firstName)
-        let hasLastName = !isBlank(input: user.lastName)
-        let hasPhone = !isBlank(input: user.phoneNumber)
-        let hasAge = user.age > 0
-        
-        return hasFirstName && hasLastName && hasPhone && hasAge
-    }
+  var isFormValid: Bool {
+      guard let user = modelUser.contentBaseUser else { return false }
+      
+      let hasFirstName = !isBlank(input: user.firstName)
+      let hasLastName = !isBlank(input: user.lastName)
+      let hasPhone = !isBlank(input: user.phoneNumber)
+      let hasAge = user.age > 0
+      
+      return hasFirstName && hasLastName && hasPhone && hasAge
+  }
+
   
   func isBlank(input: String?) -> Bool {
       guard let input = input else { return true }
