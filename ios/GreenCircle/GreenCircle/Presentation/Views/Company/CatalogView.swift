@@ -11,6 +11,10 @@ struct CatalogView: View {
   @StateObject var viewModel = CompanyViewModel()
   @State var filtered = CompanyViewModel().companies
   @State private var isFilteringEmpty = false
+    
+  var goReviews: () -> Void
+  var goOpinions: () -> Void
+  var goScrollRating: () -> Void
   
   var body: some View {
     ZStack {
@@ -47,9 +51,9 @@ struct CatalogView: View {
             
             
             ForEach(viewModel.filteredCompanies, id: \.id) { company in
-              CardCatalog(companyId: company.companyId,
-                          companyName: company.name, city: company.city,
-                          state: company.state)
+              CardCatalogView(companyId: company.companyId,
+                              companyName: company.name, city: company.city,
+                              state: company.state, goReviews: goReviews, goOpinions: goOpinions, goScrollRating: goScrollRating)
             }
             .padding([.trailing, .leading], 15)
             .padding([.top, .bottom], 7)

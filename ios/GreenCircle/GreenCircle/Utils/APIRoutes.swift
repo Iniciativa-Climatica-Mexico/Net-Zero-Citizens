@@ -55,5 +55,12 @@ struct APIRoutes {
         static let userId = "/:userId"
         static let credentials = "/users/credentials"
     }
+    
+    struct Review {
+        static let base = "\(baseURL)/review"
+        static let companyReview = "/:company"
+        static let userReview = "/:user"
+        static let postReview = "/company"
+    }
 }
 

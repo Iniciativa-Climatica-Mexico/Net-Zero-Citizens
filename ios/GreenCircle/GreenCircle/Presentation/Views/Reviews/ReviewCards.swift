@@ -11,21 +11,33 @@ import SwiftUI
 //
 struct ReviewCardProvider: View {
     @StateObject var reviewViewModel: ReviewViewModel
+    @EnvironmentObject var companyId: CompanyReviewViewModel
     
     var profilePicture: Image
     
     var body: some View {
         VStack {
-            ForEach(reviewViewModel.contentReview) { review in
-                Divider()
-                ReviewCompanyCard(review: review, profilePicture: profilePicture )
+            VStack {
+                if !reviewViewModel.contentReview.isEmpty{
+                    ForEach(reviewViewModel.contentReview) { review in
+                        Divider()
+                        ReviewCompanyCard(review: review, profilePicture: profilePicture )
+                    }
+                    .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
+                }else {
+                    Divider()
+                    Text("Aún no hay reviews para está compañia")
+                      .foregroundColor(Color("MainText"))
+                      .font(.system(size: 18))
+                      .padding(.top, 30)
+                  }
             }
-            .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
         }
+        Spacer()
         
         .onAppear {
             Task {
-                await reviewViewModel.fetchReviewByCompanyId(companyId: "c1b0e7e0-0b1a-4e1a-9f1a-0e5a9a1b0e7e")
+                await reviewViewModel.fetchReviewByCompanyId(companyId: companyId.companyReviewId.companyId)
             }
         }
     }
@@ -33,6 +45,7 @@ struct ReviewCardProvider: View {
 
 //
 struct ReviewCompanyCard: View {
+    @ObservedObject var modelUser = UserViewModel()
     var review: Review
     var profilePicture: Image
     
@@ -56,14 +69,15 @@ struct ReviewCompanyCard: View {
                 
                 profilePicture
                     .resizable()
-                    .frame(width: 50, height: 50)
+                    .frame(width: 60, height: 60)
                 
                 VStack(alignment: .leading) {
-//                    Text(review.user.firstName + " " + review.user.lastName)
-//                        .font(.headline)
+                    Text("\(modelUser.contentBaseUser?.firstName ?? "Cargando...") \(modelUser.contentBaseUser?.lastName ?? "")")
+                        .font(.system(size: 13))
+                        .padding(.bottom, 5)
                     Text(formatDate(review.createdAt))
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
+                        .font(.system(size: 13))
+                        .foregroundColor(Color("MainText"))
                 }
                 
                 Spacer()
@@ -71,7 +85,7 @@ struct ReviewCompanyCard: View {
                 VStack(alignment: .trailing) {
                     HStack {
                         ForEach(0..<5) { index in
-                            Image(systemName: index < Int(review.score) ? "star.fill" : "star")
+                            Image(systemName: index < review.score ? "star.fill" : "star")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 15, height: 15)
@@ -80,7 +94,7 @@ struct ReviewCompanyCard: View {
                     }
                     .font(.headline)
                     
-                    Text(String(format: "%.1f de 5", review.score))
+                    Text("\(Int(review.score)) de 5")
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }
@@ -89,10 +103,12 @@ struct ReviewCompanyCard: View {
             
             VStack (alignment: .leading) {
                 Text(review.reviewTitle)
-                    .font(.headline)
+                
+                    .foregroundColor(Color("MainText"))
+                    .fontWeight(.bold)
                 
                 Text(review.review)
-                    .font(.body)
+                    .font(.system(size: 15))
                     .foregroundColor(Color("BlackCustom"))
                     .padding(.top, 10)
             }
@@ -107,6 +123,8 @@ struct ReviewCardClient: View {
     
     var body: some View {
         VStack {
+            Divider()
+            
             ForEach(reviewViewModel.contentReview) { review in
                     ReviewClientCard(review: review)
             }
@@ -114,9 +132,6 @@ struct ReviewCardClient: View {
         .background(Color.white)
         .cornerRadius(10)
         .padding()
-        
-        Divider()
-        
         .onAppear {
             Task {
                 await reviewViewModel.fetchReviewByUserId()
@@ -132,7 +147,7 @@ struct ReviewClientCard: View {
     var review: Review
     
     var showSeeMore: Bool {
-        return review.review.count > 30
+        return review.review.split(separator: " ").count > 10
     }
     
     func formatDate(_ dateString: String) -> String {
@@ -182,65 +197,43 @@ struct ReviewClientCard: View {
                     Text(formatDate(review.createdAt))
                         .font(.subheadline)
                         .foregroundColor(.gray)
-                    
-                    Menu {
-                        Button(action: {
-                            //                            editReview()
-                        }) {
-                            Label("Editar", systemImage: "pencil")
-                        }
-                        Button(action: {
-                            //                            deleteReview()
-                        }) {
-                            Label("Eliminar", systemImage: "trash")
-                        }
-                    } label: {
-                        Image(systemName: "ellipsis.circle")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 17, height: 17)
-                            .foregroundColor(Color("Secondary"))
-                            .padding(EdgeInsets(top: 0, leading: 55, bottom: 0, trailing: 0))
-                    }
                 }
             }
             .padding()
             
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading) {
                 
                 Text(review.review)
                     .font(.body)
-                    .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
+                    .padding(EdgeInsets(top: 0, leading: 15, bottom: 15, trailing: 15))
                     .lineLimit(isExpanded ? nil : 3)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 
-                if !isExpanded {
-                    HStack {
-                        Spacer()
-                        Text("See more...")
-                            .font(.body)
-                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 15, trailing: 15))
-                            .foregroundColor(Color("Primary"))
-                            .onTapGesture {
-                                isExpanded.toggle()
-                            }
-                    }
-                } else {
-                    HStack {
-                        Spacer()
-                        Text("Show less")
-                            .font(.body)
-                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 15, trailing: 15))
-                            .foregroundColor(Color("Primary"))
-                            .onTapGesture {
-                                isExpanded.toggle()
-                            }
-                    }
-                }
+                if showSeeMore {
+                   HStack {
+                       Spacer()
+                       Text(isExpanded ? "Ver menos" : "Ver más...")
+                           .font(.body)
+                           .padding(EdgeInsets(top: 0, leading: 0, bottom: 15, trailing: 15))
+                           .foregroundColor(Color("Primary"))
+                           .onTapGesture {
+                               isExpanded.toggle()
+                           }
+                   }
+               }
             }
         }
         .background(Color.white)
         .cornerRadius(10)
         .shadow(radius: 1)
         .padding()
+    }
+}
+
+extension String {
+    func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {
+        let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
+        let boundingBox = self.boundingRect(with: constraintRect, options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: [NSAttributedString.Key.font: font], context: nil)
+        return boundingBox.height
     }
 }
