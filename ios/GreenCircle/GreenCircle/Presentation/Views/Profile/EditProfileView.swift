@@ -50,11 +50,6 @@ struct SectionProfile: View{
               .padding(.top, 10)
               .padding(.bottom, 2)
         }
-        NavigationLink("Cerrar Sesión", destination: Example2View())
-            .foregroundColor(TitleBarColor.TitleBarColor)
-            .font(.system(size: 13))
-            .fontWeight(.bold)
-            .padding(.top, 8)
     }
   }
 }
@@ -207,9 +202,13 @@ struct Section2: View {
       return input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
   }
 
-  func containsOnlyNumbers(input: String) -> Bool {
-      return input.range(of: "^[0-9]+$", options: .regularExpression) != nil
+  
+  func containsOnlyNumbers(input: String?) -> Bool {
+      guard let input = input else { return false }
+      return input.range(of: "^[0-9]+$",
+                         options: .regularExpression) != nil
   }
+  
     var body: some View {
         HStack {
             //---Field Edad----------------------------------------------------------
@@ -230,8 +229,7 @@ struct Section2: View {
                 set: {
                     let filtered = $0.filter { "0123456789".contains($0) }
 
-                    // Limitamos la entrada a un máximo de 2 dígitos
-                    if filtered.count <= 2 {
+                  if filtered.count <= 2 {
                         if let age = Int(filtered) {
                             modelUser.contentBaseUser?.age  = age
                         } else {
@@ -286,210 +284,166 @@ struct Section2: View {
 
 ///_----------------- SECTION 3_
 struct Section3: View {
-  @ObservedObject var modelUser: UserViewModel
-  @FocusState private var isPhoneFieldFocused: Bool
-  
-  private var phoneBinding: Binding<String> {
-      Binding<String>(
-          get: { self.modelUser.contentBaseUser?.phoneNumber ?? "Cargando..." },
-          set: { newValue in
-              if containsOnlyNumbers(input: newValue) {
-                  if self.modelUser.contentBaseUser != nil {
-                      self.modelUser.contentBaseUser?.phoneNumber = newValue
-                  }
-              }
-          }
-      )
-  }
-  
-  private var estadoBinding: Binding<String> {
-      Binding<String>(
-          get: { self.modelUser.contentBaseUser?.state ?? "Cargando..." },
-          set: { newValue in
-              if var contentUser = self.modelUser.contentBaseUser {
-                  contentUser.state = newValue
-              }
-          }
-      )
-  }
+    @ObservedObject var modelUser: UserViewModel
 
-  
-  func isBlank(input: String?) -> Bool {
-      guard let input = input else { return true }
-      return input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-  }
+    func isBlank(input: String?) -> Bool {
+        guard let input = input else { return true }
+        return input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
 
-  func containsOnlyNumbers(input: String?) -> Bool {
-      guard let input = input else { return false }
-      return input.range(of: "^[0-9]+$",
-                         options: .regularExpression) != nil
-  }
+    func containsOnlyNumbers(input: String?) -> Bool {
+        guard let input = input else { return false }
+        return input.range(of: "^[0-9]+$", options: .regularExpression) != nil
+    }
   
-  func isPhoneNumberValid() -> Bool {
-      guard let phoneNumber = modelUser.contentBaseUser?.phoneNumber
-    else { return false }
+  func isPhoneNumberValid(phoneNumber: String?) -> Bool {
+      guard let phoneNumber = phoneNumber else { return false }
       return phoneNumber.count == 12
   }
 
-  
-  var body: some View {
-      ZStack {
-              Color.clear
-              .contentShape(Rectangle())
-              .onTapGesture {
-                  hideKeyboard()
-              }
+    var body: some View {
+        ZStack {
+            Color.clear
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    hideKeyboard()
+                }
 
-          VStack(alignment: .leading) {
-              //----Field Celular----------------------------------------------------------
-              Text("Teléfono")
-                  .padding(.top, 16)
-                  .foregroundColor(Color("Secondary"))
-                  .font(.system(size: 13))
-                  .fontWeight(.semibold)
+            VStack(alignment: .leading) {
+                Text("Teléfono")
+                    .padding(.top, 16)
+                    .foregroundColor(Color("Secondary"))
+                    .font(.system(size: 13))
+                    .fontWeight(.semibold)
 
-              TextField("Teléfono", text: Binding(
-                  get: {
-                      if let phoneNumber = self.modelUser.contentBaseUser?.phoneNumber, !phoneNumber.isEmpty {
-                          return Utils
-                              .formatNumber(with: "XXX-XXX-XXXX",
-                                            for: phoneNumber)
-                      } else {
-                          return ""
-                      }
-                  },
-                  set: {
-                      self.modelUser.contentBaseUser?
-                          .phoneNumber =
-                          Utils.formatNumber(with: "XXX-XXX-XXXX",
-                                             for: $0)
-                  }
-              ))
-              .focused($isPhoneFieldFocused)
-              .keyboardType(.numberPad)
-              .padding(.top, 3)
-              .font(.system(size: 13))
-              .textFieldStyle(RoundedBorderTextFieldStyle())
+                TextField("Teléfono", text: Binding(
+                    get: {
+                        if let phoneNumber = self.modelUser.contentBaseUser?.phoneNumber, !phoneNumber.isEmpty {
+                            return Utils.formatNumber(with: "XXX-XXX-XXXX", for: phoneNumber)
+                        } else {
+                            return ""
+                        }
+                    },
+                    set: {
+                        self.modelUser.contentBaseUser?.phoneNumber = Utils.formatNumber(with: "XXX-XXX-XXXX", for: $0)
+                    }
+                ))
+                .keyboardType(.numberPad)
+                .padding(.top, 3)
+                .font(.system(size: 13))
+                .textFieldStyle(RoundedBorderTextFieldStyle())
 
-              // Mostrar mensaje si el campo está vacío.
-              if isBlank(input: modelUser.contentBaseUser?.phoneNumber) {
-                  Text("No puedes dejar este campo vacío.")
-                      .foregroundColor(.red)
-                      .font(.system(size: 11))
-              }
-              
-              //----Picker Estado----------------------------------------------------------
-              Text("Estado")
-                  .padding(.top, 16)
-                  .foregroundColor(Color("Secondary"))
-                  .font(.system(size: 13))
-                  .fontWeight(.semibold)
-              
-              PickerFormView2(
-                  selectedOption: Binding<String>(
-                      get: { modelUser.contentBaseUser?.state ?? "Cargando..."},
-                      set: { newValue in
-                          modelUser.contentBaseUser?.state = newValue.isEmpty ? nil : newValue
-                      }
-                  ),
-                  label:  modelUser.contentBaseUser?.state ?? "Selecciona un estado...",
-                  options: Constants.states
-              )
-              .padding(.top, 5)
-              .foregroundColor(Color("Secondary"))
-          }
-      }
-  }
+                if isBlank(input: modelUser.contentBaseUser?.phoneNumber) {
+                    Text("No puedes dejar este campo vacío.")
+                        .foregroundColor(.red)
+                        .font(.system(size: 11))
+                }
+                
+                Text("Estado")
+                    .padding(.top, 16)
+                    .foregroundColor(Color("Secondary"))
+                    .font(.system(size: 13))
+                    .fontWeight(.semibold)
 
-
-  }
-
-struct SectionButton: View{
-   var modelUser: UserViewModel
-   @State private var showAlert = false
-   @State private var showAlert2 = false
-   @Environment(\.presentationMode) var presentationMode
-   @State private var navigateToProfile = false
-   @Binding var selectedTab: TabSelection
-  var isFormValid: Bool
-  var isPhoneNumberValid: Bool
-
-   
-   var body: some View{
-     HStack {
-       Button(action: {
-         showAlert = true
-       }) {
-         Text("Cancelar")
-           .foregroundColor(TitleBarColor.TitleBarColor)
-           .padding(.vertical, 12)
-           .padding(.horizontal)
-           .frame(maxWidth: .infinity)
-           .background(Color.white)
-           .cornerRadius(8)
-           .overlay(
-             RoundedRectangle(cornerRadius: 8)
-               .stroke(TitleBarColor.TitleBarColor, lineWidth: 1)
-           )
-       }
-       .frame(maxWidth: 100)
-       .padding(.trailing, 10)
-       .alert(isPresented: $showAlert) {
-         Alert(
-           title: Text("Salir sin guardar"),
-           message: Text("Si sales, los datos actualizados no se guardarán. ¿Estás seguro de que quieres salir?"),
-           primaryButton: .default(Text("Seguir editando"), action: {
-             
-           }),
-           secondaryButton: .destructive(Text("Salir"), action: {
-             presentationMode.wrappedValue.dismiss()
-             selectedTab = .profile
-             
-             
-           })
-         )
-       }
-       VStack {
-         Button(action: {
-             async {
-                 await modelUser.saveProfileChanges()
-                 }
-           showAlert2 = true
-         }) {
-           Text("Guardar")
-             .foregroundColor(.white)
-             .padding(.vertical, 12)
-             .padding(.horizontal)
-             .frame(maxWidth: .infinity)
-             .background(TitleBarColor.TitleBarColor)
-             .cornerRadius(8)
-         }
-         .opacity(isFormValid || isPhoneNumberValid ? 1.0 : 0.5)
-         .opacity(isFormValid && isPhoneNumberValid ? 1.0 : 0.5)
-         .disabled(!isFormValid)
-         .alert(isPresented: $showAlert2) {
-           Alert(
-             title: Text("Datos Actualizados"),
-             message: Text("Los datos se actualizaron correctamente."),
-             dismissButton: .default(Text("OK"), action: {
-               presentationMode.wrappedValue.dismiss()
-               selectedTab = .profile
-             })
-           )
-         }
-         
-       }
-       .padding(.leading, 8)
-       
-       
-     }
-     .padding(.horizontal, 20)
-     .padding(.top, 30)
-   }
-  
+                PickerFormView2(
+                    selectedOption: Binding<String>(
+                        get: { modelUser.contentBaseUser?.state ?? "Cargando..."},
+                        set: { newValue in
+                            modelUser.contentBaseUser?.state = newValue.isEmpty ? nil : newValue
+                        }
+                    ),
+                    label:  modelUser.contentBaseUser?.state ?? "Selecciona un estado...",
+                    options: Constants.states
+                )
+                .padding(.top, 5)
+                .foregroundColor(Color("Secondary"))
+            }
+        }
+    }
 }
 
-  
+
+struct SectionButton: View {
+    var modelUser: UserViewModel
+    @State private var showAlert = false
+    @State private var showAlert2 = false
+    @Environment(\.presentationMode) var presentationMode
+    @Binding var selectedTab: TabSelection
+    var isFormValid: Bool
+    var isPhoneNumberValid: Bool
+
+    func buttonOpacity() -> Double {
+        if isFormValid && isPhoneNumberValid {
+            return 1.0
+        } else {
+            return 0.5
+        }
+    }
+
+    var body: some View {
+        HStack {
+            Button(action: {
+                showAlert = true
+            }) {
+                Text("Cancelar")
+                    .foregroundColor(TitleBarColor.TitleBarColor)
+                    .padding(.vertical, 12)
+                    .padding(.horizontal)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.white)
+                    .cornerRadius(8)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(TitleBarColor.TitleBarColor, lineWidth: 1)
+                    )
+            }
+            .frame(maxWidth: 100)
+            .padding(.trailing, 10)
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text("Salir sin guardar"),
+                    message: Text("Si sales, los datos actualizados no se guardarán. ¿Estás seguro de que quieres salir?"),
+                    primaryButton: .default(Text("Seguir editando"), action: {}),
+                    secondaryButton: .destructive(Text("Salir"), action: {
+                        presentationMode.wrappedValue.dismiss()
+                        selectedTab = .profile
+                    })
+                )
+            }
+
+            VStack {
+                Button(action: {
+                    async {
+                        await modelUser.saveProfileChanges()
+                    }
+                    showAlert2 = true
+                }) {
+                    Text("Guardar")
+                        .foregroundColor(.white)
+                        .padding(.vertical, 12)
+                        .padding(.horizontal)
+                        .frame(maxWidth: .infinity)
+                        .background(TitleBarColor.TitleBarColor)
+                        .cornerRadius(8)
+                }
+                .opacity(buttonOpacity())
+                .disabled(!isFormValid || !isPhoneNumberValid)
+                .alert(isPresented: $showAlert2) {
+                    Alert(
+                        title: Text("Cambios guardados"),
+                        message: Text("Tus cambios han sido guardados con éxito."),
+                        dismissButton: .default(Text("OK"), action: {
+                            presentationMode.wrappedValue.dismiss()
+                            selectedTab = .profile
+                        })
+                    )
+                }
+            }
+        }
+    }
+}
+
+
   ///_----------------- DELETE SECTION_
 struct SectionDelete: View{
     @StateObject var deleteUserViewModel = DeleteUserViewModel()
@@ -535,85 +489,84 @@ struct SectionDelete: View{
 
   ///_----------------- MAIN SECTION_
 
-  struct EditProfileView: View {
+struct EditProfileView: View {
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var modelUser = UserViewModel()
     @State private var currentTab: TabSelection = .profile
     var goLogin: () -> Void
     
-    func isPhoneNumberValid() -> Bool {
-        guard let phoneNumber = modelUser
-          .contentBaseUser?.phoneNumber else {
-            return false
-        }
-        return phoneNumber.count == 12
-    }
+  func isPhoneNumberValid(phoneNumber: String?) -> Bool {
+      guard let phoneNumber = phoneNumber else { return false }
+      return phoneNumber.count == 12
+  }
     
     var body: some View {
-      ZStack {
-        Color.clear
-        .contentShape(Rectangle())
-        .onTapGesture {
-            hideKeyboard()
+        ZStack {
+            Color.clear
+            .contentShape(Rectangle())
+            .onTapGesture {
+                hideKeyboard()
+            }
+            
+            VStack {
+                TitleBarView(
+                    title: "Editar Datos",
+                    leftIcon: nil,
+                    rightIcon: nil,
+                    leftDestination: {},
+                    rightDestination: {}
+                )
+                .frame(height: 10)
+                .navigationBarBackButtonHidden(true)
+                .offset(y: -60)
+                
+                Spacer()
+            }
+            
+            VStack {
+                SectionProfile(modelUser: modelUser)
+                    .padding(.top, 70)
+                
+                ScrollView {
+                    Section1(modelUser: modelUser)
+                    Section2(modelUser: modelUser)
+                    Section3(modelUser: modelUser)
+                    SectionButton(modelUser: modelUser,
+                                  selectedTab: $currentTab,
+                                  isFormValid: isFormValid,
+                                  isPhoneNumberValid: isPhoneNumberValid(phoneNumber: modelUser.contentBaseUser?.phoneNumber))
+                    .padding(.top, 20)
+                    SectionDelete(goLogin: goLogin)
+                }
+                .padding(.top, 10)
+                .padding(.horizontal, 20)
+                
+                Spacer()
+            }
         }
-        VStack {
-          TitleBarView(
-            title: "Editar Datos",
-            leftIcon: nil,
-            rightIcon: nil,
-            leftDestination: {},
-            rightDestination: {}
-          )
-          .frame(height: 10)
-          .navigationBarBackButtonHidden(true)
-          .offset(y: -60)
-          
-          Spacer()
-        }
-        VStack {
-          SectionProfile(modelUser: modelUser)
-            .padding(.top, 70)
-          ScrollView {
-            Section1(modelUser: modelUser)
-            Section2(modelUser: modelUser)
-            Section3(modelUser: modelUser)
-            SectionButton(modelUser: modelUser, selectedTab: $currentTab, isFormValid: isFormValid, isPhoneNumberValid: isPhoneNumberValid())
-            SectionDelete(goLogin: goLogin)
-          }
-          .padding(.top, 10)
-          .padding(.horizontal, 20)
-          Spacer()
-        }
-      }.onAppear(perform: loadProfileData)
+        .onAppear(perform: loadProfileData)
         .accentColor(Color("Secondary"))
-
     }
     
     private func loadProfileData() {
-        Task {
-            await modelUser.getAllUserData()
-        }
+      Task {
+          await modelUser.getAllUserData()
+          
+      }
     }
+    
+    var isFormValid: Bool {
+        guard let user = modelUser.contentBaseUser else { return false }
+        let hasFirstName = !isBlank(input: user.firstName)
+        let hasLastName = !isBlank(input: user.lastName)
+        let hasPhone = isPhoneNumberValid(phoneNumber: user.phoneNumber)
+        let hasAge = user.age > 0
+        return hasFirstName && hasLastName && hasPhone && hasAge
     }
-  
 
-
-extension EditProfileView {
-  var isFormValid: Bool {
-      guard let user = modelUser.contentBaseUser else { return false }
-      
-      let hasFirstName = !isBlank(input: user.firstName)
-      let hasLastName = !isBlank(input: user.lastName)
-      let hasPhone = !isBlank(input: user.phoneNumber)
-      let hasAge = user.age > 0
-      
-      return hasFirstName && hasLastName && hasPhone && hasAge
-  }
-
-  
-  func isBlank(input: String?) -> Bool {
-      guard let input = input else { return true }
-      return input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-  }
-  
+    func isBlank(input: String?) -> Bool {
+        guard let input = input else { return true }
+        return input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
 }
+
