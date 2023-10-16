@@ -271,7 +271,7 @@ export default function ModalProveedor({
                   ¿Seguro que desea rechazar al proveedor?
                 </CardDescription>
                 <form
-                  className="flex items-center space-x-2 pt-4"
+                  className="flex items-center pt-4"
                   ref={form}
                   onSubmit={sendRejectEmail}
                 >
@@ -287,7 +287,7 @@ export default function ModalProveedor({
                   />
                   <textarea
                     placeholder="Redacta el mensaje para el proveedor"
-                    className="h-60 flex w-full border-[#C1C9D2] border-1 py-4 pl-2 rounded-l-md rounded-r-md"
+                    className="h-50 flex w-full border border-[#3333335f] py-4 px-2 rounded-l-md rounded-r-md font-light"
                     id="messageInput"
                     name="message"
                     onChange={(e) => {
@@ -393,7 +393,8 @@ export default function ModalProveedor({
                     </section>
                   </>
                 )}
-                <h3 className="font-bold">Documentos</h3>
+
+                {selectedCompany.files.length > 0 ? <h3 className="font-bold py-2">Documentos</h3> : null} 
                 <div className="flex flex-wrap justify-between items-end mb-1">
                   {selectedCompany.files && selectedCompany.files.length > 3 ? (
                     <div className="mb-3">
@@ -443,11 +444,6 @@ export default function ModalProveedor({
                     <div className="flex flex-wrap justify-between items-end mb-3 w-full">
                       {selectedCompany.files &&
                         selectedCompany.files
-                          .filter(
-                            (file: CompanyFiles) =>
-                              file.fileDescription !== 'Imagen' && // Exclude image files
-                              !/\.(png|jpg|jpeg)$/.test(file.fileFormat)
-                          )
                           .map((file: CompanyFiles) => (
                             <a
                               key={file.companyFileId}
