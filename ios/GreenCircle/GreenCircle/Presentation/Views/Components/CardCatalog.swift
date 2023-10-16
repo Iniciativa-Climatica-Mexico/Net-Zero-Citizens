@@ -22,7 +22,7 @@ struct CardCatalog: View {
   var state: String
   
   var body: some View {
-    NavigationLink(destination: ContactCompanyView(idCompany: companyId, favouriteViewModel: favouriteViewModel, emptyHeartFill: $emptyHeartFill))
+    NavigationLink(destination: ContactCompanyView(idCompany: companyId, favouriteViewModel: favouriteViewModel, emptyHeartFill: $emptyHeartFill, goReviews: {}, goOpinions: {}, goScrollRating: {}))
     {
       ZStack {
         
