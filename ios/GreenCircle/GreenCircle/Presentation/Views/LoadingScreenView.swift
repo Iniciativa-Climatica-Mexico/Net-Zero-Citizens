@@ -17,9 +17,6 @@ struct LoadingScreenView: View {
   }
   var body: some View {
     ZStack {
-      Color(.systemBackground)
-        .ignoresSafeArea()
-        .opacity(0.7)
       
       Image("GCLOGO")
         .resizable()

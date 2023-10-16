@@ -204,12 +204,13 @@ struct CompanyRegisterHeaderView: View {
 }
 
 struct ButtonDividerView: View {
+  @Environment(\.colorScheme) var colorScheme
   var text: String
   var body: some View {
     ZStack {
       Divider()
       Rectangle()
-        .foregroundColor(.white)
+        .foregroundColor(colorScheme == .dark ? Color.black : Color.white)
         .frame(width: 150)
       Text(text)
         .foregroundColor(Color("MainText"))
