@@ -20,6 +20,7 @@ struct TabBarView: View {
     
     var goSurvey: () -> Void
     var goLogin: () -> Void
+  var goRoot: () -> Void
 
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -46,7 +47,7 @@ struct TabBarView: View {
                 }
                 .tag(TabSelection.map)
 
-            ProfileView(modelUser: UserViewModel(), goLogin: goLogin)
+          ProfileView(modelUser: UserViewModel(), goLogin: goLogin, goRoot: goRoot)
                 .tabItem {
                     Image(systemName: "person.fill")
                     Text("Perfil")

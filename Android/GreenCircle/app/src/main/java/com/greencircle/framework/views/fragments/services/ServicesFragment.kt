@@ -1,5 +1,6 @@
 package com.greencircle.framework.views.fragments.services
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,10 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.materialswitch.MaterialSwitch
 import com.greencircle.R
+import com.greencircle.domain.usecase.auth.DeleteTokensRequirement
+import com.greencircle.domain.usecase.auth.DeleteUserSessionRequirement
+import com.greencircle.framework.viewmodel.ViewModelFactory
+import com.greencircle.framework.viewmodel.company.CreateCompanyViewModel
+import com.greencircle.framework.views.activities.LoginActivity
 import com.greencircle.framework.views.activities.RegisterCompanyActivity
 import com.greencircle.framework.views.fragments.company.upload_documents.UploadIdFragment
 
@@ -18,10 +26,20 @@ class ServicesFragment : Fragment() {
     private lateinit var fotoVoltaicSwitch: MaterialSwitch
     private lateinit var solarHeaterSwitch: MaterialSwitch
     private var arguments = Bundle()
-
+    private var companyId: String? = null
+    private lateinit var context: Context
+    private lateinit var viewModel: CreateCompanyViewModel
+    private lateinit var deleteTokens: DeleteTokensRequirement
+    private lateinit var deleteUserSession: DeleteUserSessionRequirement
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(requireContext(), CreateCompanyViewModel::class.java)
+        )[CreateCompanyViewModel::class.java]
         arguments = requireArguments()
+        companyId = arguments.getString("companyId")
+        context = requireContext()
     }
 
     override fun onCreateView(
@@ -43,7 +61,33 @@ class ServicesFragment : Fragment() {
                 val errorText = view.findViewById<TextView>(R.id.errorMsg)
                 errorText.visibility = View.VISIBLE
             } else {
+                val products = ArrayList<String>()
+                if (fotoVoltaicSwitch.isChecked) {
+                    products.add("Paneles Solares")
+                }
+                if (solarHeaterSwitch.isChecked) {
+                    products.add("Calentadores Solares")
+                }
+                viewModel.assignCompanyProducts(
+                    companyId.toString(),
+                    products
+                )
+            }
+        }
+
+        viewModel.assignCompanyProductsResult.observe(viewLifecycleOwner) {
+            if (it) {
                 nextFragment()
+            } else {
+                // toast error and go to main
+                Toast.makeText(
+                    context,
+                    "Error al asignar los productos",
+                    Toast.LENGTH_SHORT
+                ).show()
+                deleteTokens()
+                deleteUserSession()
+                navigateToLogin()
             }
         }
 
@@ -103,5 +147,12 @@ class ServicesFragment : Fragment() {
         val intent = Intent(activity, RegisterCompanyActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         activity.replaceFragment(uploadIdFragment, arguments)
+    }
+
+    private fun navigateToLogin() {
+        // Navigate to LoginActivity
+        val intent: Intent = Intent(requireContext(), LoginActivity::class.java)
+        startActivity(intent)
+        requireActivity().finish()
     }
 }

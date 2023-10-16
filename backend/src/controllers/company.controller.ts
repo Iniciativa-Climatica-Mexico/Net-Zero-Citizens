@@ -122,31 +122,32 @@ export const getPendingCompanies: RequestHandler<
   })
 }
 
-
 /**
  * @brief
  * Función del controlador que devuelve todos los proveedores aprovados y con quejas de la base de datos
- * @param _req 
- * @param res 
+ * @param _req
+ * @param res
  */
 export const getApprovedCompaniesWithComplaints: RequestHandler<
   NoRecord,
   CompanyService.CompanyWithComplaints[] | { message: string },
   NoRecord,
   NoRecord
-  > = async (_req, res) => {
-    try {
-      const companies = await CompanyService.getApprovedCompaniesWithComplaints()
-      if (!companies) {
-        res.status(404).json({ message: 'Companies not found' })
-      } else {
-        const filteredCompanies = companies.filter(company => company.complaints.length > 0)
-        res.json(filteredCompanies)
-      }
-    } catch (error) {
-      res.status(500).json({ message: 'Internal server error' })
+> = async (_req, res) => {
+  try {
+    const companies = await CompanyService.getApprovedCompaniesWithComplaints()
+    if (!companies) {
+      res.status(404).json({ message: 'Companies not found' })
+    } else {
+      const filteredCompanies = companies.filter(
+        (company) => company.complaints.length > 0
+      )
+      res.json(filteredCompanies)
     }
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error' })
   }
+}
 
 /**
  * @brief
@@ -212,34 +213,33 @@ export const createCompany: RequestHandler<
  *            información de paginación
  */
 export const addProduct: RequestHandler<
-  NoRecord,
-  { companyProductId: string; message?: string; error?: string },
-  { companyProduct: CompanyProduct },
+  { companyId: string },
+  { message?: string; error?: string },
+  { products: string[] },
   NoRecord
 > = async (req, res) => {
   try {
-    if (!req.body.companyProduct)
+    if (!req.body.products || !req.params.companyId)
       res.status(400).json({
-        companyProductId: '',
         error: 'Missing company or product data',
       })
-    const company = req.body.companyProduct
-    const newCompanyProduct = await CompanyService.addProduct(company)
+    const products = req.body.products
+    const companyId = req.params.companyId
+    const newCompanyProduct = await CompanyService.addProducts(
+      products,
+      companyId
+    )
 
     if (!newCompanyProduct)
       res.status(400).json({
-        companyProductId: '',
         error: 'Error adding product to company',
       })
 
     res.json({
-      companyProductId: newCompanyProduct?.dataValues.companyId,
       message: 'Product added to company',
     })
   } catch (error) {
-    res
-      .status(400)
-      .json({ companyProductId: '', error: 'Error adding product to company' })
+    res.status(400).json({ error: 'Error adding product to company' })
   }
 }
 

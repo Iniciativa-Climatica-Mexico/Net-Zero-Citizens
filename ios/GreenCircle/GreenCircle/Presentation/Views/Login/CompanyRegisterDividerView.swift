@@ -12,9 +12,9 @@ struct CompanyRegisterDividerView: View {
   var goUploadCompanyFiles: (Binding<Bool>, Binding<Bool>) -> Void
   @Binding var photovoltaicToggle: Bool
   @Binding var solarToggle: Bool
+  @StateObject var viewModel = CompanyRegisterDividerViewModel()
   @State private var showAlert: Bool = false
 
-  @EnvironmentObject var userData: UserData
   var body: some View {
     VStack(alignment: .leading) {
       VStack {
@@ -36,7 +36,7 @@ struct CompanyRegisterDividerView: View {
           }.foregroundColor(Color("Secondary"))
             .frame(maxWidth: 255).padding()
         }
-
+        
         ZStack {
           RoundedRectangle(cornerRadius: 10)
             .fill(.gray).opacity(0.1)
@@ -49,17 +49,24 @@ struct CompanyRegisterDividerView: View {
             .frame(maxWidth: 255).padding()
         }
       }.frame(maxWidth: .infinity, alignment: .center)
-
+      
       Spacer()
       HStack {
         Spacer()
         MainButton("Continuar", action: {
-            if photovoltaicToggle || solarToggle {
-              goUploadCompanyFiles($photovoltaicToggle, $solarToggle)
-            } else {
-              showAlert = true
+          if photovoltaicToggle || solarToggle {
+            Task {
+              if await viewModel
+                .handleContinue(photoVoltaicToggle: photovoltaicToggle,
+                                solarToggle: solarToggle) {
+                goUploadCompanyFiles($photovoltaicToggle,
+                                     $solarToggle)
+              }
             }
-          })
+          } else {
+            showAlert = true
+          }
+        })
         .padding(.horizontal)
         .alert(isPresented: $showAlert) {
           Alert(title: Text("Error"),

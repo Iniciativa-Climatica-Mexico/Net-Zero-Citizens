@@ -9,6 +9,7 @@ import Foundation
 
 class UserViewModel: ObservableObject {
     private let useCase = ProfileUseCase.shared
+  private let signOutCase = SignOutUseCase.shared
     private let lService = LocalService.shared
     private let repository = UserRepository.shared
     
@@ -35,6 +36,10 @@ class UserViewModel: ObservableObject {
             contentBaseUser = await repository.updateUserDataOnServer(user: userToUpdate)
         }
     }
+  
+  func logout() {
+    signOutCase.signOut()
+  }
   
     init() {
         contentUser = useCase.getUserData()

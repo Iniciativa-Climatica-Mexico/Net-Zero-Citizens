@@ -569,4 +569,3 @@ struct EditProfileView: View {
         return input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 }
-
