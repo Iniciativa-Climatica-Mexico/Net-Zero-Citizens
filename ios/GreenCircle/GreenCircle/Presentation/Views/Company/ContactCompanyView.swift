@@ -207,6 +207,10 @@ struct ContactCompanyView: View {
   @Binding var emptyHeartFill: Bool
     
   @Environment(\.presentationMode) var presentationMode
+    
+  var goReviews: () -> Void
+  var goOpinions: () -> Void
+  var goScrollRating: () -> Void
 
   var body: some View {
     if !dispScrollView {
@@ -291,8 +295,12 @@ struct ContactCompanyView: View {
                 }
               }
               if key == "Reviews" {
-                ContactCompanyRatingView(modelCompanyRating: contactCompanyViewModel, dispScrollView: $dispScrollView).onAppear {
-                  bindImageToDescription = false
+                  ContactCompanyRatingView(modelCompanyRating: contactCompanyViewModel,
+                                                           dispScrollView: $dispScrollView,
+                                                           goReviews: goReviews,
+                                                           goOpinions: goOpinions,
+                                                           goScrollRating: goScrollRating).onAppear {
+                    bindImageToDescription = false
                 }
               }
               if key == "Report" {

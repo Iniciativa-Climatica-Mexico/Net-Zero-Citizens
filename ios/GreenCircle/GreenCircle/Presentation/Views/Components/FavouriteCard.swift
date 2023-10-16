@@ -38,12 +38,8 @@ struct FavouriteCardView: View {
         HStack {
           AsyncImage(url: URL(string: companyViewModel.contentCompany.files?.first?.fileUrl ?? "")) { phase in
             switch phase {
-              case .empty:
-                Image(systemName: "square.fill")
-                  .resizable()
-                  .frame(width: 100, height: 100)
-                  .foregroundColor(.gray)
-                  .opacity(0.3)
+            case .empty:
+                LoadingScreenView().frame(width: 100, height: 100)
               case .success(let companyImage):
                 companyImage
                   .resizable()
