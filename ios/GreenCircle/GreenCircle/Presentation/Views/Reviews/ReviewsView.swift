@@ -11,7 +11,7 @@ import SwiftUI
 struct ReviewsView: View {
   @State private var isSecondViewPresented = false
   @State private var scoreRating: Int = 0
-  @EnvironmentObject var reviewViewModel: ReviewViewModel
+  @StateObject var reviewViewModel: ReviewViewModel = ReviewViewModel()
   @EnvironmentObject var companyId: CompanyReviewViewModel
     
   var goOpinions: () -> Void
@@ -52,10 +52,14 @@ struct ReviewsView: View {
                       .bold()
                   
                   VStack {
-                      RatingView()
+                      RatingView(reviewViewModel: reviewViewModel)
                   }
               }
               Spacer()
+          }
+      }.onAppear {
+          Task {
+              await reviewViewModel.fetchReviewByCompanyId(companyId: companyId.companyReviewId.companyId)
           }
       }
   }
@@ -162,15 +166,16 @@ struct OpinionsView: View {
 
 
 struct RatingView: View {
-    @ObservedObject var reviewModel = ReviewViewModel()
+    @ObservedObject var reviewViewModel: ReviewViewModel
+    @EnvironmentObject var CompanyReview: CompanyReviewViewModel
     @State private var totalReviews: Int = 0
     
     var averageScore: Double {
-        if reviewModel.contentReview.isEmpty {
+        if reviewViewModel.contentReview.isEmpty {
             return 0.0
         } else {
-            let totalScore = reviewModel.contentReview.reduce(0) { $0 + Int($1.score) }
-            return Double(totalScore) / Double(reviewModel.contentReview.count)
+            let totalScore = reviewViewModel.contentReview.reduce(0) { $0 + Int($1.score) }
+            return Double(totalScore) / Double(reviewViewModel.contentReview.count)
         }
     }
     
@@ -189,7 +194,7 @@ struct RatingView: View {
                                 Image(systemName: "star.fill")
                                     .resizable()
                                     .frame(width: 15, height: 15)
-                            } else if index == Int(averageScore) {
+                            } else if index == Int(averageScore) && averageScore.truncatingRemainder(dividingBy: 1) > 0 {
                                 Image(systemName: "star.leadinghalf.fill")
                                     .resizable()
                                     .frame(width: 15, height: 15)
@@ -203,14 +208,10 @@ struct RatingView: View {
                     }
                     .font(.headline)
     
-                    Text("\(reviewModel.contentReview.count) opiniones")
+                    Text("\(reviewViewModel.contentReview.count) opiniones")
                         .font(.caption)
                         .foregroundColor(.gray)
                 }
-            }
-        }.onAppear{
-            Task {
-                await reviewModel.fetchReviewByUserId()
             }
         }
     }
