@@ -7,13 +7,11 @@ import {
   getApprovedCompanies,
 } from '@/api/v1/company'
 
-import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -21,7 +19,7 @@ import {
 } from '@/components/ui/table'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import LogoSm from './../../public/LogoSm.svg'
+import LogoSm from './../../public/Logo.svg'
 
 import ModalProveedor from '@/components/modalProveedor'
 import Image from 'next/image'
@@ -122,7 +120,6 @@ export default function Home() {
 
   const renderTable = (companies: Company[]) => (
     <Table className="border border-[#C1C9D2] rounded">
-      <TableCaption></TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">Imagen</TableHead>
@@ -133,7 +130,6 @@ export default function Home() {
           <TableHead>Correo</TableHead>
           <TableHead>Ubicación</TableHead>
           <TableHead>Estado</TableHead>
-          <TableHead className="text-right"></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -246,9 +242,9 @@ export default function Home() {
         </Tabs>
         <div className="flex justify-between items-center pt-2 gap-x-2">
           <span>
-            Page {currentPage} of {totalPages}
+            Página {currentPage} of {totalPages === 0 ? 1 : totalPages}
           </span>
-          <div>
+          <div className='flex justify-end gap-2'>
             <Button
               variant="outline"
               className="px-4"
@@ -259,6 +255,7 @@ export default function Home() {
             </Button>
             <Button
               variant="outline"
+              className="px-4"
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage >= totalPages}
             >
