@@ -1,6 +1,7 @@
 package com.greencircle.framework.ui.viewholders.catalogue
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.CheckBox
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -24,14 +25,13 @@ import com.greencircle.framework.views.fragments.company.CompanyContactFragment
 
 class CatalogueViewHolder(private val binding: CatalogueCardLayoutBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    private lateinit var recoverUserSession: RecoverUserSessionRequirement
+    private lateinit var recoverSession: RecoverUserSessionRequirement
 
     /**
      * Esta función se utiliza para vincular los datos de resumen de la empresa
      * con la vista de la tarjeta del catálogo de la empresa
      * @param companySummary: Objeto CompanySummary
      */
-
     fun bind(companySummary: CompanySummary) {
         binding.companyName.text = companySummary.name
         binding.companyLocation.text = companySummary.city + ", " + companySummary.state
@@ -41,21 +41,28 @@ class CatalogueViewHolder(private val binding: CatalogueCardLayoutBinding) :
         Glide.with(binding.root.context).load(companySummary.profilePicture)
             .placeholder(R.drawable.main_logo).into(binding.companyProfilePic)
 
-        recoverUserSession = RecoverUserSessionRequirement(binding.root.context)
+        recoverSession = RecoverUserSessionRequirement(binding.root.context)
 
         // set checkbox
         val checkBox = binding.root.findViewById<CheckBox>(R.id.mark_as_favourite)
+        checkBox.isChecked = companySummary.isFavourite
+
+        // set on check listener
         checkBox.setOnClickListener {
-            val userId = recoverUserSession().uuid
+            val userId = recoverSession().uuid
 
             if (checkBox.isChecked) {
+                companySummary.isFavourite = true
+
                 val params = FavouriteRequest(
+                    userId.toString(),
                     companySummary.companyId.toString(),
-                    userId.toString()
                 )
 
                 val viewModel = CatalogueViewModel(binding.root.context)
                 viewModel.markAsFavourite(params)
+            } else {
+                companySummary.isFavourite = false
             }
         }
 

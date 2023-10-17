@@ -12,6 +12,6 @@ class FavouritesRepository {
     }
 
     suspend fun markAsFavourite(authToken: String, params: FavouriteRequest) {
-        api.markAsFavourite("Bearer $authToken", params)
+        api.markAsFavourite(authToken, params)
     }
 }
