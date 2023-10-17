@@ -50,7 +50,7 @@ struct ContactCompanyComponentView: View {
     .receive(on: DispatchQueue.main)
     .sink { completion in
       if case .failure(let error) = completion {
-          print(error)
+          debugPrint(error)
       }
     } receiveValue: { coordinates in
       self.coordinates = (coordinates.latitude, coordinates.longitude)
@@ -63,7 +63,7 @@ struct ContactCompanyComponentView: View {
    deviceLocationService.deniedLocationAccessPublisher
      .receive(on: DispatchQueue.main)
      .sink {
-       print("No se aceptó uso de localización")
+       debugPrint("No se aceptó uso de localización")
        self.isMapVisible = false
      }
      .store (in: &tokens)
