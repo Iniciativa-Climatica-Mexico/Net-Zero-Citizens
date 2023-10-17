@@ -9,7 +9,7 @@ import Foundation
 
 //APIRoutes.baseURL
 struct APIRoutes {
-    static let baseURL = "http://localhost:4000/api/v1"
+    static let baseURL = "https://api.iniciativaclimatica.org/api/v1"
     
     struct Company {
         static let base = "\(baseURL)/company"
