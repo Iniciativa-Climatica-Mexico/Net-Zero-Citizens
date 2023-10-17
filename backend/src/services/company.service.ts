@@ -455,10 +455,26 @@ export const createCompany = async (
  * @param CompanyProduct La información de la asociación (companyId, productId, pdfProductCertificationUrl)
  * @returns Una promesa con los proveedores y la información de paginación
  */
-export const addProduct = async (
-  companyProduct: CompanyProductType
-): Promise<CompanyProduct | null> => {
-  return await CompanyProduct.create(companyProduct)
+export const addProducts = async (
+  products: string[],
+  companyId: string
+): Promise<(CompanyProduct | null)[]> => {
+  return await Promise.all(products.map(async (productName) => {
+    const product = await Product.findOne({
+      where: {
+        name: productName,
+      },
+    })
+
+    if (!product) return null
+
+    const companyProduct = await CompanyProducts.create({
+      companyId: companyId,
+      productId: product.productId,
+      pdfProductCertificationUrl: '',
+    })
+    return companyProduct
+  }))
 }
 
 /**

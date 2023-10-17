@@ -48,7 +48,8 @@ struct CoordinatorView: View {
       case .userRegister:
         UserRegisterView(goLogin: goBack,
                          goForm: goUserForm,
-                         goTutorial: goTutorial)
+                         goTutorial: goTutorial,
+                         goMainMenu: goMainMenu)
         
       case .userRegisterForm:
         UserRegisterFormView(goTutorial: goTutorial)
@@ -60,7 +61,8 @@ struct CoordinatorView: View {
       case .companyRegister:
         CompanyRegisterView(goLogin: goBack,
                             goForm: goAssignCompany,
-                            goTutorial: goTutorial)
+                            goTutorial: goTutorial,
+                            goMainMenu: goMainMenu)
         
       case .companyRegisterForm:
         CompanyRegisterFormView(goCompanyRegisterDivider: goCompanyRegisterDivider, goPending: goPending)
@@ -77,7 +79,7 @@ struct CoordinatorView: View {
                                solarToggle: $solarToggle)
         
       case .mainMenuView:
-        TabBarView(goSurvey: goSurvey, goLogin: goLogin)
+        TabBarView(goSurvey: goSurvey, goLogin: goLogin, goRoot: goRoot)
           .onAppear {
             deviceLocationService.requestLocationUpdates()
           }
@@ -168,5 +170,10 @@ struct CoordinatorView: View {
   
   private func goBack() {
     routes.goBack()
+  }
+  
+  private func goRoot() {
+    routes.removeAll()
+    routes.presentCover(.login)
   }
 }

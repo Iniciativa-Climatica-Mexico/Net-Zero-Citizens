@@ -72,4 +72,19 @@ interface CompanyAPIService {
         @Path("companyId") companyId: UUID,
         @Body body: AssignCompanyRequestBody
     ): Response<AssignCompanyResponse>
+
+    data class AssignCompanyProductsRequestBody(
+        val products: ArrayList<String>
+    )
+
+    data class AssignCompanyProductResponse(
+        val message: String?,
+        val error: String?,
+    )
+
+    @PUT("company/{companyId}/add/products")
+    suspend fun assignCompanyProducts(
+        @Path("companyId") companyId: String,
+        @Body body: AssignCompanyProductsRequestBody
+    ): Response<AssignCompanyProductResponse>
 }
