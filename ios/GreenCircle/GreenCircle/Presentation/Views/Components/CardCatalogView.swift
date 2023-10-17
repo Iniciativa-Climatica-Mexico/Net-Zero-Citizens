@@ -49,7 +49,8 @@ struct CardCatalogView: View {
       ZStack {
         RoundedRectangle(cornerRadius: 10, style:.continuous)
           .fill(colorScheme == .dark ? Color.black : Color.white)
-          .frame(maxWidth: .infinity, maxHeight: .infinity)
+          .frame(maxWidth: .infinity)
+          .frame(height: 150)
           .shadow(color: colorScheme == .dark ? Color.white : Color.black, radius: 1)
         
         HStack {
@@ -148,9 +149,9 @@ struct CardCatalogView: View {
               }
             }
             Spacer()
-          }.frame(maxWidth: 15)
+          }
         }
-        .frame(maxWidth: 345, maxHeight: 140)
+        .frame(width: 345, height: 140)
       }
     }.onAppear {
       

@@ -55,8 +55,8 @@ struct CatalogView: View {
                               companyName: company.name, city: company.city,
                               state: company.state, goReviews: goReviews, goOpinions: goOpinions, goScrollRating: goScrollRating)
             }
-            .padding([.trailing, .leading], 15)
-            .padding([.top, .bottom], 6)
+            .padding([.trailing, .leading], 20)
+            .padding([.top, .bottom], 3)
             
             if isFilteringEmpty {
               Text("No se encontraron compañías.")
