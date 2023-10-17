@@ -22,11 +22,7 @@ class UserViewModel: ObservableObject {
         // Usa el userId proporcionado o obténlo de lService
         let finalUserId = userId ?? lService.getUserInformation()?.user.id
         if let uid = finalUserId {
-            do {
-                contentBaseUser = try await repository.fetchUserById(userId: uid)
-            } catch {
-                print("Error fetching user data: \(error)")
-            }
+            contentBaseUser = await repository.fetchUserById(userId: uid)
         }
     }
     
