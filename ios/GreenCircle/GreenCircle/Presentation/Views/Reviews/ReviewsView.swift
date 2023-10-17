@@ -40,7 +40,6 @@ struct ReviewsView: View {
                           .font(.headline)
                           .foregroundColor(Color("Secondary"))
                           .onTapGesture {
-                              print(companyId.companyReviewId.companyId)
                               goOpinions()
                           }
                   }
@@ -127,7 +126,6 @@ struct OpinionsView: View {
                     } else {
                         isError = true
                         isPresented = true
-                        print("Error: \(opinionsViewModel.responsePost)")
                     }
                 }
 

@@ -27,13 +27,13 @@ class ComplaintViewModel: ObservableObject {
             try validate(complaintData)
             await repository.postComplaint(complaint: complaintData)
         } catch {
-            print("Error submitting complaint: \(error)")
+            return
         }
     }
 
     private func validate(_ data: PostComplaintData) throws {
         if data.complaintSubject.isEmpty {
-            print("Error submitting complaint subject")
+            return
         }
     }
 }
