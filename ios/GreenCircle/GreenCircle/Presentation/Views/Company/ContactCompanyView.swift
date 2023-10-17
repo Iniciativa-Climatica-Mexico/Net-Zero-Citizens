@@ -336,4 +336,3 @@ struct ContactCompanyView: View {
       }
     }
 }
-

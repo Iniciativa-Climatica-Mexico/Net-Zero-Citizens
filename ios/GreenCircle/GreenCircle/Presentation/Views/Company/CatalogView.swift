@@ -56,7 +56,7 @@ struct CatalogView: View {
                               state: company.state, goReviews: goReviews, goOpinions: goOpinions, goScrollRating: goScrollRating)
             }
             .padding([.trailing, .leading], 15)
-            .padding([.top, .bottom], 7)
+            .padding([.top, .bottom], 6)
             
             if isFilteringEmpty {
               Text("No se encontraron compañías.")
@@ -79,3 +79,7 @@ struct CatalogView: View {
     }
   }
 }
+
+//#Preview {
+//  CatalogView(goReviews: {}, goOpinions: {}, goScrollRating: {})
+//}
