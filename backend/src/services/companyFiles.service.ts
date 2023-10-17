@@ -124,7 +124,7 @@ export const downloadCompanyFile = async (
   if (!bucketName) {
     throw new Error('AWS_BUCKET_NAME is not defined')
   }
-
+  console.log(companyId, fileDescription, fileFormat)
   const company = await Company.findByPk(companyId)
 
   try {
