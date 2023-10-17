@@ -115,7 +115,7 @@ export const getCompanyFileDownload = async (
 
     // Extract filename from the Content-Disposition header or fall back to a default name
     const contentDisposition = response.headers['content-disposition']
-    let fileName = `${fileDescription}.${fileFormat}` // default name
+    let fileName = `${fileDescription}` // default name
     if (contentDisposition) {
       const fileNameMatch = contentDisposition.match(/filename="([^"]+)"/)
       if (fileNameMatch.length > 1) {
