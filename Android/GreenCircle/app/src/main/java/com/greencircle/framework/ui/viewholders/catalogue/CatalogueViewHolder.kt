@@ -22,7 +22,10 @@ import com.greencircle.framework.views.fragments.company.CompanyContactFragment
  * @constructor CatalogueViewHolder
  */
 
-class CatalogueViewHolder(private val binding: CatalogueCardLayoutBinding) :
+class CatalogueViewHolder(
+    private val binding: CatalogueCardLayoutBinding,
+    private val editable: Boolean
+) :
     RecyclerView.ViewHolder(binding.root) {
     private lateinit var recoverSession: RecoverUserSessionRequirement
 
@@ -47,22 +50,26 @@ class CatalogueViewHolder(private val binding: CatalogueCardLayoutBinding) :
         checkBox.isChecked = companySummary.isFavourite
 
         // set on check listener
-        checkBox.setOnClickListener {
-            val userId = recoverSession().uuid
+        if (editable) {
+            checkBox.setOnClickListener {
+                val userId = recoverSession().uuid
 
-            if (checkBox.isChecked) {
-                companySummary.isFavourite = true
+                if (checkBox.isChecked) {
+                    companySummary.isFavourite = true
 
-                val params = FavouriteRequest(
-                    userId.toString(),
-                    companySummary.companyId.toString(),
-                )
+                    val params = FavouriteRequest(
+                        userId.toString(),
+                        companySummary.companyId.toString(),
+                    )
 
-                val viewModel = CatalogueViewModel(binding.root.context)
-                viewModel.markAsFavourite(params)
-            } else {
-                companySummary.isFavourite = false
+                    val viewModel = CatalogueViewModel(binding.root.context)
+                    viewModel.markAsFavourite(params)
+                } else {
+                    companySummary.isFavourite = false
+                }
             }
+        } else {
+            checkBox.isClickable = false
         }
 
         // set onclick listener

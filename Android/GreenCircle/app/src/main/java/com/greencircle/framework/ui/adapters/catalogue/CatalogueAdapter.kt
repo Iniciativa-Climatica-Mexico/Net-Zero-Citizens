@@ -14,7 +14,8 @@ import com.greencircle.framework.ui.viewholders.catalogue.CatalogueViewHolder
  * tarjeta del catálogo de la empresa
  */
 
-class CatalogueAdapter : RecyclerView.Adapter<CatalogueViewHolder>() {
+class CatalogueAdapter(private val editable: Boolean = true) :
+    RecyclerView.Adapter<CatalogueViewHolder>() {
     private var data: ArrayList<CompanySummary> = ArrayList()
     lateinit var context: Context
 
@@ -43,7 +44,7 @@ class CatalogueAdapter : RecyclerView.Adapter<CatalogueViewHolder>() {
             false
         )
 
-        return CatalogueViewHolder(v)
+        return CatalogueViewHolder(v, editable)
     }
 
     /**
