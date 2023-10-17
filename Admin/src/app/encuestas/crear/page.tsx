@@ -151,7 +151,7 @@ export default function CreateSurvey() {
 
     try {
       await createSurvey(survey)
-      // window.location.href = '/encuestas'
+      window.location.href = '/encuestas'
     } catch (e:unknown) {
       console.log(e)
       if (e instanceof Error) {
