@@ -11,6 +11,7 @@ import SwiftUI
 struct FavouriteCardView: View {
   let idCompany: UUID
   @StateObject var companyViewModel: CompanyViewModel
+  @Environment(\.colorScheme) var colorScheme
   
   init(idCompany: UUID) {
     _companyViewModel = StateObject(wrappedValue: CompanyViewModel())
@@ -20,9 +21,9 @@ struct FavouriteCardView: View {
   var body: some View {
     ZStack {
       RoundedRectangle(cornerRadius: 10, style: .continuous)
-        .fill(.white)
+        .fill(colorScheme == .dark ? Color.black : Color.white)
         .frame(width: 335, height: 150)
-        .shadow(color: Color("Primary"), radius: 1)
+        .shadow(color: colorScheme == .dark ? Color.white : Color.black, radius: 1)
     HStack {
       VStack(alignment: .leading) {
         HStack {
@@ -38,12 +39,8 @@ struct FavouriteCardView: View {
         HStack {
           AsyncImage(url: URL(string: companyViewModel.contentCompany.files?.first?.fileUrl ?? "")) { phase in
             switch phase {
-              case .empty:
-                Image(systemName: "square.fill")
-                  .resizable()
-                  .frame(width: 100, height: 100)
-                  .foregroundColor(.gray)
-                  .opacity(0.3)
+            case .empty:
+                LoadingScreenView().frame(width: 100, height: 100)
               case .success(let companyImage):
                 companyImage
                   .resizable()
