@@ -43,6 +43,9 @@ class GoogleSignInHelper(
         if (account == null) {
             googleSignOut()
         }
+        if (account != null) {
+            googleLogin(activityResult)
+        }
 
         googleButton.setOnClickListener {
             when (it.id) {
@@ -50,6 +53,22 @@ class GoogleSignInHelper(
                     googleLogin(activityResult)
                 }
             }
+        }
+    }
+
+    /**
+     * Inicia sesión de manera automática si el usuario ya ha iniciado sesión con Google.
+     *
+     * @since 2.0.0
+     */
+    fun automaticGoogleLogin() {
+        val account: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(activity)
+
+        if (account == null) {
+            googleSignOut()
+        }
+        if (account != null) {
+            googleLogin(activityResult)
         }
     }
 
