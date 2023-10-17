@@ -39,12 +39,8 @@ class ReviewViewModel: ObservableObject {
     func fetchReviewByCompanyId(companyId: UUID) async {
         let resultReview = await fetchReviewUseCase.fetchReviewByCompanyId(cmpyId: companyId.uuidString.lowercased())
         if let resultReview = resultReview {
-            print("Review recibida: \(resultReview)")
             contentReview = resultReview.rows
             totalReviews = resultReview.total
-            print("Total de reseñas: \(totalReviews)")
-        } else {
-            print("No se pudo obtener la review por Company")
         }
     }
     
@@ -53,12 +49,8 @@ class ReviewViewModel: ObservableObject {
         let userId: String = fetchReviewUseCase.lService?.user.id ?? ""
         let resultReview = await fetchReviewUseCase.fetchReviewByUserId(usId: userId)
         if let resultReview = resultReview {
-            print("Review recibida: \(resultReview)")
             contentReview = resultReview.rows
             let totalReviews = resultReview.total
-            print("Total de reseñas: \(totalReviews)")
-        } else {
-            print("No se pudo obtener la review por User")
         }
     }
     

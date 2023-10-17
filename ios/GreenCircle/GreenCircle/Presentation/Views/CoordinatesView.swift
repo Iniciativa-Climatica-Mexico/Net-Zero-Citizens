@@ -89,7 +89,7 @@ struct CoordinatesView: View {
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 if case .failure(let error) = completion {
-                    print(error)
+                    debugPrint(error)
                 }
             } receiveValue: { coordinates in
                 self.coordinates = (coordinates.latitude, coordinates.longitude)
@@ -101,7 +101,7 @@ struct CoordinatesView: View {
         deviceLocationService.deniedLocationAccessPublisher
             .receive(on: DispatchQueue.main)
             .sink {
-                print("Show some kind of alert to the user")
+                
             }
             .store (in: &tokens)
     }
