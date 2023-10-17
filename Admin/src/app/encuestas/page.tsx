@@ -23,16 +23,16 @@ export default function ListSurveys() {
           <td className="truncate cursor-pointer ">
             <a
               href={'/encuestas/' + props.surveyId}
-              className="text-center py-8 px-8 "
+              className="text-left whitespace-pre-wrap max-w-xs"
               onClick={() => setIsLoading(true)}
             >
               {props.title}
             </a>
           </td>
-          <td className="truncate py-8 px-8  max-w-xs cursor-pointer">
+          <td className="truncate py-8 px-8 max-w-xs cursor-pointer">
             <a
               href={'/encuestas/' + props.surveyId}
-              className="text-center py-8 px-8 "
+              className="text-left whitespace-pre-wrap"
               onClick={() => setIsLoading(true)}
             >
               {props.description}
