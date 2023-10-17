@@ -1,12 +1,16 @@
 package com.greencircle.framework.ui.viewholders.catalogue
 
 import android.os.Bundle
+import android.widget.CheckBox
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.greencircle.R
 import com.greencircle.databinding.CatalogueCardLayoutBinding
 import com.greencircle.domain.model.company.CompanySummary
+import com.greencircle.domain.model.favourites.FavouriteRequest
+import com.greencircle.domain.usecase.auth.RecoverUserSessionRequirement
+import com.greencircle.framework.viewmodel.catalogue.CatalogueViewModel
 import com.greencircle.framework.views.activities.MainActivity
 import com.greencircle.framework.views.fragments.company.CompanyContactFragment
 
@@ -20,6 +24,7 @@ import com.greencircle.framework.views.fragments.company.CompanyContactFragment
 
 class CatalogueViewHolder(private val binding: CatalogueCardLayoutBinding) :
     RecyclerView.ViewHolder(binding.root) {
+    private lateinit var recoverUserSession: RecoverUserSessionRequirement
 
     /**
      * Esta función se utiliza para vincular los datos de resumen de la empresa
@@ -32,12 +37,32 @@ class CatalogueViewHolder(private val binding: CatalogueCardLayoutBinding) :
         binding.companyLocation.text = companySummary.city + ", " + companySummary.state
         binding.companyRatingText.text = companySummary.rating.toString()
         binding.companyRatingBar.rating = companySummary.rating
+
         Glide.with(binding.root.context).load(companySummary.profilePicture)
             .placeholder(R.drawable.main_logo).into(binding.companyProfilePic)
+
+        recoverUserSession = RecoverUserSessionRequirement(binding.root.context)
+
+        // set checkbox
+        val checkBox = binding.root.findViewById<CheckBox>(R.id.mark_as_favourite)
+        checkBox.setOnClickListener {
+            val userId = recoverUserSession().uuid
+
+            if (checkBox.isChecked) {
+                val params = FavouriteRequest(
+                    companySummary.companyId.toString(),
+                    userId.toString()
+                )
+
+                val viewModel = CatalogueViewModel(binding.root.context)
+                viewModel.markAsFavourite(params)
+            }
+        }
 
         // set onclick listener
         binding.root.setOnClickListener {
             val bundle = Bundle()
+
             bundle.putString("id", companySummary.companyId.toString())
             passViewGoToCompanyDetail(bundle)
         }
@@ -50,6 +75,7 @@ class CatalogueViewHolder(private val binding: CatalogueCardLayoutBinding) :
     private fun passViewGoToCompanyDetail(bundle: Bundle) {
         val companyContactFragment = CompanyContactFragment()
         companyContactFragment.arguments = bundle
+
         replaceFragment(companyContactFragment, "CompanyContactFragment")
     }
 

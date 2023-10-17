@@ -6,8 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.greencircle.domain.model.company.CompanyParams
 import com.greencircle.domain.model.company.CompanySummary
+import com.greencircle.domain.model.favourites.FavouriteRequest
 import com.greencircle.domain.usecase.auth.RecoverTokensRequirement
 import com.greencircle.domain.usecase.catalogue.CatalogueRequirement
+import com.greencircle.domain.usecase.favourites.FavouritesByUserRequirement
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -63,12 +65,34 @@ class CatalogueViewModel(private val context: Context) : ViewModel() {
                 }
                 return@launch
             }
+
             val authToken = tokens.authToken
 
             val data = catalogueRequirement.getCatalogue(authToken, params)
             CoroutineScope(Dispatchers.Main).launch {
                 catalogueLiveData.postValue(data)
             }
+        }
+    }
+
+    /**
+     * Permite mandar las empresas seleccionadas como favoritas a la base de datos
+     */
+    fun markAsFavourite(params: FavouriteRequest) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val tokens = recoverTokens()
+            if (tokens == null) {
+                CoroutineScope(Dispatchers.Main).launch {
+                    catalogueLiveData.postValue(null)
+                }
+
+                return@launch
+            }
+
+            val authToken = tokens.authToken
+            val favoritesRequirement = FavouritesByUserRequirement()
+
+            favoritesRequirement.markAsFavourite(authToken, params)
         }
     }
 }

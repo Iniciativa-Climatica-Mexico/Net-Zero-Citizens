@@ -42,6 +42,7 @@ class CatalogueAdapter : RecyclerView.Adapter<CatalogueViewHolder>() {
             viewGroup,
             false
         )
+
         return CatalogueViewHolder(v)
     }
 
