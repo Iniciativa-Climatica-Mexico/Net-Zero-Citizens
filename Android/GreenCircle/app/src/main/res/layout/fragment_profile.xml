@@ -7,11 +7,21 @@
     tools:context=".framework.views.fragments.profile.ProfileFragment">
 
     <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="right"
+        android:src="@drawable/baseline_menu_book_24"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="60dp"
+        android:id="@+id/tutorialButton"
+        />
+
+    <ImageView
         android:id="@+id/profileImage"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/circle_background"
         android:scaleType="centerCrop"
         android:src="@drawable/pp_icon"

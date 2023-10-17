@@ -13,7 +13,9 @@ struct ProfileView: View {
     @State var myFavourites: Bool = false
     @State var totalFavourites: Int = 0
     @State private var showAlertFavourites = false
+  @State private var showAlert = false
     var goLogin: () -> Void
+  var goRoot: () -> Void
   
     var body: some View {
         NavigationView {
@@ -23,10 +25,11 @@ struct ProfileView: View {
                     TitleBarView(
                         title: "Mi Perfil",
                         leftIcon: nil,
-                        rightIcon: nil,
+                        rightIcon: "text.book.closed.fill",
                         leftDestination: {},
-                        rightDestination: {}
+                        rightDestination: { Tutorial() }
                     )
+                    .foregroundColor(.white)
                     .frame(height: 10)
                     .offset(y: -60)
                     .navigationBarBackButtonHidden(true)
@@ -50,11 +53,17 @@ struct ProfileView: View {
                             .padding(.bottom, 2)
                     }
 
-                    NavigationLink("Cerrar Sesión", destination: Example2View())
-                        .foregroundColor(TitleBarColor.TitleBarColor)
-                        .font(.system(size: 13))
-                        .fontWeight(.bold)
-                        .padding(.top, 4)
+                  LinkButton("Cerrar Sesión", buttonColor: Color("Alert")) {
+                    showAlert = true
+                  }.alert("Estás seguro?", isPresented: $showAlert, actions: {
+                    Button("Regresar", role: .cancel) {
+                      showAlert = false
+                    }
+                    Button("Cerrar Sesión", role: .destructive) {
+                      modelUser.logout()
+                      goRoot()
+                    }
+                  })
 
                     HStack {
                       MainButton(myFavourites ? "Mis Reseñas" : "Mis Favoritos") {
@@ -79,7 +88,7 @@ struct ProfileView: View {
 
                     Spacer()
 
-                    Text(myFavourites ? "Mis Favoritos (\(totalFavourites))" : "Mis Reseñas")
+                    Text(myFavourites ? "Mis Favoritos (\(totalFavourites))" : "Mis Reseñas (\(modelReview.contentReview.count))")
                         .font(.system(size: 20))
                         .fontWeight(.bold)
                         .padding(EdgeInsets(top: 32, leading: 15, bottom: 0, trailing: 0))
@@ -103,7 +112,7 @@ struct ProfileView: View {
                                     .font(.system(size: 18))
                             }
                         } else {
-                            ReviewCardClient(reviewViewModel: ReviewViewModel())
+                            ReviewCardClient(reviewViewModel: modelReview)
                         }
                     }
                     .onAppear {
@@ -118,7 +127,7 @@ struct ProfileView: View {
                 }
                 .padding(.top, 70)
             }.onAppear(perform: loadProfileData)
-        }
+        } .accentColor(.white)
     }
 
     private func loadProfileData() {
@@ -131,6 +140,6 @@ struct ProfileView: View {
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView(modelUser: UserViewModel(), goLogin: {})
+      ProfileView(modelUser: UserViewModel(), goLogin: {}, goRoot: {})
     }
 }

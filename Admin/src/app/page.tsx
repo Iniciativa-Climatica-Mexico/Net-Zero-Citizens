@@ -7,13 +7,11 @@ import {
   getApprovedCompanies,
 } from '@/api/v1/company'
 
-import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -21,10 +19,11 @@ import {
 } from '@/components/ui/table'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import LogoSm from './../../public/LogoSm.svg'
+import LogoSm from './../../public/Logo.svg'
 
 import ModalProveedor from '@/components/modalProveedor'
 import Image from 'next/image'
+import { Pill } from '@/components/pill/pill'
 
 export type tabs = 'pending_approval' | 'approved' | 'no_user'
 
@@ -45,7 +44,7 @@ export default function Home() {
     description: '',
     createdAt: '',
     streetNumber: '',
-    companyFiles: [],
+    files: [],
   })
   const [modalOpen, setIsModalOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
@@ -104,6 +103,13 @@ export default function Home() {
   const startIndex = (currentPage - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
   const paginatedCompanies = filteredCompanies?.slice(startIndex, endIndex)
+  const totalPages = Math.ceil(
+    activeTab === 'pending_approval'
+      ? filteredCompanies?.length / itemsPerPage
+      : activeTab === 'approved'
+        ? filteredCompanies?.length / itemsPerPage
+        : filteredCompanies?.length / itemsPerPage
+  )
 
   const handlePageChange = (newPage: number) => setCurrentPage(newPage)
 
@@ -114,7 +120,6 @@ export default function Home() {
 
   const renderTable = (companies: Company[]) => (
     <Table className="border border-[#C1C9D2] rounded">
-      <TableCaption></TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">Imagen</TableHead>
@@ -125,7 +130,6 @@ export default function Home() {
           <TableHead>Correo</TableHead>
           <TableHead>Ubicación</TableHead>
           <TableHead>Estado</TableHead>
-          <TableHead className="text-right"></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -173,16 +177,7 @@ export default function Home() {
               className="cursor-pointer"
               onClick={() => handleTableRowClick(company)}
             >
-              <div
-                className={`${
-                  company.status === 'approved'
-                    ? 'bg-[#547C8B] text-white'
-                    : 'bg-[#FFE6C2] text-jet'
-                }
-                text-center rounded-xl p-2.5`}
-              >
-                {company.status === 'approved' ? 'Aprobado' : 'Pendiente'}
-              </div>
+              <Pill status={company.status} />
             </TableCell>
           </TableRow>
         ))}
@@ -245,22 +240,28 @@ export default function Home() {
             {renderTable(paginatedCompanies)}
           </TabsContent>
         </Tabs>
-        <div className="flex justify-end items-center pt-2 gap-x-2 z-0">
-          <Button
-            variant="outline"
-            className="px-4"
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            Anterior
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={endIndex >= filteredCompanies?.length}
-          >
-            Siguiente
-          </Button>
+        <div className="flex justify-between items-center pt-2 gap-x-2">
+          <span>
+            Página {currentPage} of {totalPages === 0 ? 1 : totalPages}
+          </span>
+          <div className='flex justify-end gap-2'>
+            <Button
+              variant="outline"
+              className="px-4"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              Anterior
+            </Button>
+            <Button
+              variant="outline"
+              className="px-4"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage >= totalPages}
+            >
+              Siguiente
+            </Button>
+          </div>
         </div>
       </main>
     </>

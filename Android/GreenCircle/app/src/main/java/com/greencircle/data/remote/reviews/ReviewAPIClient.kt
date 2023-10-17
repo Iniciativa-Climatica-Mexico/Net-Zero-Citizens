@@ -46,20 +46,6 @@ class ReviewAPIClient {
         }
     }
 
-    suspend fun updateReview(
-        authToken: String,
-        reviewId: UUID,
-        review: ReviewBase
-    ): Response<ResponseBody>? {
-        api = NetworkModel(authToken, ReviewAPIService::class.java)
-        return try {
-            api.updateReview(reviewId, review)
-        } catch (e: java.lang.Exception) {
-            e.printStackTrace()
-            null
-        }
-    }
-
     suspend fun deleteReview(
         authToken: String,
         reviewId: UUID

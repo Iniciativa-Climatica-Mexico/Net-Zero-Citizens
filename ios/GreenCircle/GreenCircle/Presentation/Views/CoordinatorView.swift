@@ -10,6 +10,7 @@ import SwiftUI
 
 struct CoordinatorView: View {
   @StateObject var viewModel = CoordinatorViewModel()
+  @StateObject var companyId: CompanyReviewViewModel = CompanyReviewViewModel()
   @StateObject var deviceLocationService = DeviceLocationService.shared
   @State var hasPendingSurvey: Bool = false
   @State var photovoltaicToggle: Bool = false
@@ -28,6 +29,9 @@ struct CoordinatorView: View {
     case mainMenuView
     case pendingCompany
     case survey
+    case reviews
+    case opinions
+    case tutorial
   }
   
   @State var routes: Routes<Screens> = [.root(.splashScreen)]
@@ -47,10 +51,11 @@ struct CoordinatorView: View {
       case .userRegister:
         UserRegisterView(goLogin: goBack,
                          goForm: goUserForm,
+                         goTutorial: goTutorial,
                          goMainMenu: goMainMenu)
         
       case .userRegisterForm:
-        UserRegisterFormView(goMainMenu: goMainMenu)
+        UserRegisterFormView(goTutorial: goTutorial)
         
       case .companyAssign:
         AssignCompanyView(goForm: goCompanyForm,
@@ -59,6 +64,7 @@ struct CoordinatorView: View {
       case .companyRegister:
         CompanyRegisterView(goLogin: goBack,
                             goForm: goAssignCompany,
+                            goTutorial: goTutorial,
                             goMainMenu: goMainMenu)
         
       case .companyRegisterForm:
@@ -76,10 +82,11 @@ struct CoordinatorView: View {
                                solarToggle: $solarToggle)
         
       case .mainMenuView:
-        TabBarView(goSurvey: goSurvey, goLogin: goLogin)
-          .onAppear {
-            deviceLocationService.requestLocationUpdates()
-          }
+              TabBarView(goSurvey: goSurvey, goLogin: goLogin, goReviews: goReviews, goOpinions: goOpinions, goScrollRating: goReviews, goRoot: goRoot)
+                  .environmentObject(companyId)
+                  .onAppear {
+                    deviceLocationService.requestLocationUpdates()
+                  }
         
       case .pendingCompany:
         PendingCompanyView()
@@ -87,21 +94,37 @@ struct CoordinatorView: View {
       case .survey:
         SurveyView(goBack: goBack)
           .applyNavBarTheme()
+          
+      case .reviews:
+        ScrollViewRating(goOpinions: goOpinions, goScrollRating: goBack).environmentObject(companyId)
+        
+      case .opinions:
+        OpinionsView(goReviews: goBack, goOpinions: goOpinions).environmentObject(companyId)
+        
+      case .tutorial:
+        if #available(iOS 17.0, *) {
+          AppTutorial_17(goMainMenu: goMainMenu)
+            .applyNavBarTheme()
+          
+        } else {
+          AppTutorial_16(goMainMenu: goMainMenu)
+            .applyNavBarTheme()
+        }
       }
     }
     .onAppear {
-     Task {
-       let res = await viewModel.handleSignIn()
-       
-       switch res {
-       case .newUser:
-         goUserForm()
-       case .success:
-         goMainMenu()
-       case .fail:
-         goLogin()
-       }
-     }
+      Task {
+        let res = await viewModel.handleSignIn()
+        
+        switch res {
+        case .newUser:
+          goUserForm()
+        case .success:
+          goMainMenu()
+        case .fail:
+          goLogin()
+        }
+      }
     }
   }
   
@@ -150,7 +173,24 @@ struct CoordinatorView: View {
     routes.presentCover(.companyAssign)
   }
   
+  private func goTutorial() {
+    routes.presentCover(.tutorial)
+  }
+  
   private func goBack() {
     routes.goBack()
+  }
+    
+  private func goReviews() {
+    routes.presentCover(.reviews)
+  }
+    
+  private func goOpinions() {
+    routes.presentCover(.opinions)
+  }
+  
+  private func goRoot() {
+    routes.removeAll()
+    routes.presentCover(.login)
   }
 }

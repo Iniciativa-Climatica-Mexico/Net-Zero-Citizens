@@ -7,6 +7,13 @@
 
 import Foundation
 
+
+struct ReviewPostData {
+    let reviewTitle: String
+    let review: String
+    let score: Int
+}
+
 class ReviewViewModel: ObservableObject {
     private let fetchReviewUseCase: ReviewUseCase
     
@@ -16,26 +23,25 @@ class ReviewViewModel: ObservableObject {
         userId: UUID(),
         companyId: UUID(),
         reviewTitle: "",
-        score: 0.0,
+        score: 0,
         review: "",
         createdAt: "",
         updatedAt: ""
-//        user: User()
     )
-    @Published var totalReviews = Int ()
+    @Published var totalReviews: Int = 0
+    @Published var responsePost : String = ""
     
     init (reviewUseCase: ReviewUseCase = ReviewUseCase.shared) {
         self.fetchReviewUseCase = reviewUseCase
     }
     
     @MainActor
-    
-    func fetchReviewByCompanyId(companyId: String) async {
-        let resultReview = await fetchReviewUseCase.fetchReviewByCompanyId(cmpyId: companyId)
+    func fetchReviewByCompanyId(companyId: UUID) async {
+        let resultReview = await fetchReviewUseCase.fetchReviewByCompanyId(cmpyId: companyId.uuidString.lowercased())
         if let resultReview = resultReview {
             print("Review recibida: \(resultReview)")
             contentReview = resultReview.rows
-            let totalReviews = resultReview.total
+            totalReviews = resultReview.total
             print("Total de reseñas: \(totalReviews)")
         } else {
             print("No se pudo obtener la review por Company")
@@ -53,6 +59,16 @@ class ReviewViewModel: ObservableObject {
             print("Total de reseñas: \(totalReviews)")
         } else {
             print("No se pudo obtener la review por User")
+        }
+    }
+    
+    @MainActor
+    func addReview(companyId: UUID, reviewTitle: String, review: String, score: Int) async {
+        let userId: String = fetchReviewUseCase.lService?.user.id ?? ""
+        let reviewBody = ReviewPostData(reviewTitle: reviewTitle, review: review, score: score)
+        if let resposePost = await fetchReviewUseCase.addReview(usId: userId, cmpyId: companyId.uuidString.lowercased(), reviewBody: reviewBody)
+        {
+            responsePost = responsePost
         }
     }
 }

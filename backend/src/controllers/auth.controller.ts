@@ -104,6 +104,36 @@ export const updateTokens: RequestHandler<
   }
 }
 
+export const appleLogin: RequestHandler<
+  NoRecord,
+  AuthService.AuthResponse,
+  { applePayload: AuthService.ApplePayload },
+  NoRecord
+> = async (req, res) => {
+  let authResponse: AuthService.AuthResponse = {
+    tokens: null,
+    user: null,
+    error: null,
+  }
+
+  if (!req.body.applePayload) {
+    authResponse.error = 'No apple payload provided'
+    return res.status(400).json(authResponse)
+  }
+  const { applePayload } = req.body
+
+  const data = await AuthService.appleLogin(applePayload)
+
+  if (!data?.user || !data.tokens) {
+    authResponse.error = 'Invalid user'
+    return res.status(400).json(authResponse)
+  }
+
+  authResponse = data
+  // Devolver los tokens
+  res.status(200).json(authResponse)
+}
+
 export const login: RequestHandler<
   NoRecord,
   AuthService.AuthResponse,

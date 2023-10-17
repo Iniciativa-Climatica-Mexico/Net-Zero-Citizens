@@ -45,6 +45,13 @@ class AuthUtils(private val activity: Activity) {
         activity.finish()
     }
 
+    fun navigateToLogin() {
+        val intent = Intent(activity, LoginActivity::class.java)
+
+        activity.startActivity(intent)
+        activity.finish()
+    }
+
     fun navigateToRegisterUser(activityResult: ActivityResultLauncher<Intent>) {
         val intent = Intent(activity, RegisterUserActivity::class.java)
 

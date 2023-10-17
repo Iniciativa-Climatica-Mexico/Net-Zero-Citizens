@@ -134,10 +134,23 @@ class CompanyRepository: CompanyRepositoryProtocol {
         let mimeType = mimeType
         return await service.uploadFileRequest(uploadURL, file: file, fileName: fileName, mimeType: mimeType, additionalParameters: additionalParameters)
     }
+    
   func fetchFilteredCompanies(order: String, product: String, state: String) async -> PaginatedQuery<Company>? {
     let params = ["ordering": order, "state": state, "productName": product]
     
     return await service.getRequest(URL(string: "\(CompanyAPI.base)")!, params: params)
+  }
+  
+  func addProductsToCompany(companyId: String, products: [String]) async throws {
+    let url = URL(string: "\(APIRoutes.Company.base)\(APIRoutes.Company.addProduct)"
+      .replacingOccurrences(of: ":companyId", with: companyId))!
+    let params = ["products": products]
+    
+    let res: NoResponse? = await service.putRequest(url, body: params)
+    
+    if res == nil {
+      throw GCError.requestFailed
+    }
   }
   
 }

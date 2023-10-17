@@ -15,7 +15,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-import LogoSm from './../../../public/LogoSm.svg'
+import LogoSm from './../../../public/Logo.svg'
 
 import type { User } from '@/@types/users/users'
 import { getAllUsers } from '@/api/v1/users'
@@ -29,7 +29,7 @@ export default function Users() {
   const itemsPerPage = 8
   const [users, setUsers] = useState<User[]>([])
   const [searchTerm, setSearchTerm] = useState('')
-  const [selectedUser, setSelectedUser] = useState<User|null>(null)
+  const [selectedUser, setSelectedUser] = useState<User | null>(null)
 
   const fetchUsers = async () => {
     try {
@@ -43,7 +43,9 @@ export default function Users() {
   const filteredUsersBySearchTerm = users?.filter((user) => {
     const fullName = `${user.firstName} ${user.lastName}`
     const email = user.email
-    const includesFullName = fullName.toLowerCase().includes(searchTerm.toLowerCase())
+    const includesFullName = fullName
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
     const includesEmail = email.toLowerCase().includes(searchTerm.toLowerCase())
     return includesFullName || includesEmail
   })
@@ -51,6 +53,7 @@ export default function Users() {
   const startIndex = (currentPage - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
   const paginatedUsers = filteredUsersBySearchTerm?.slice(startIndex, endIndex)
+  const totalPages = Math.ceil(filteredUsersBySearchTerm?.length / itemsPerPage)
 
   const handlePageChange = (newPage: number) => setCurrentPage(newPage)
 
@@ -78,9 +81,7 @@ export default function Users() {
       <TableBody>
         {users?.map((user) => (
           <TableRow key={user.userId}>
-            <TableCell
-              className="cursor-pointer"
-            >
+            <TableCell className="cursor-pointer">
               {user.profilePicture != null ? (
                 <Avatar>
                   <AvatarImage src={user.profilePicture} />
@@ -95,28 +96,14 @@ export default function Users() {
                 />
               )}
             </TableCell>
+            <TableCell className="cursor-pointer">{user.firstName}</TableCell>
+            <TableCell className="cursor-pointer">{user.lastName}</TableCell>
+            <TableCell className="cursor-pointer">{user.email}</TableCell>
             <TableCell
-              className="cursor-pointer"
-            >
-              {user.firstName}
-            </TableCell>
-            <TableCell
-              className="cursor-pointer"
-            >
-              {user.lastName}
-            </TableCell>
-            <TableCell
-              className="cursor-pointer"
-            >
-              {user.email}
-            </TableCell>
-            <TableCell 
               className="text-right"
               onClick={() => handleOnDeleteUserClick(user)}
             >
-              <DeleteUsersButton
-                setIsModalOpen={setIsModalOpen}
-              />
+              <DeleteUsersButton setIsModalOpen={setIsModalOpen} />
             </TableCell>
           </TableRow>
         ))}
@@ -126,15 +113,15 @@ export default function Users() {
 
   return (
     <>
-      {isModalOpen && 
-          <DeleteUserConfirmationModal
-            userId={selectedUser?.userId}
-            firstName={selectedUser?.firstName}
-            lastName={selectedUser?.lastName}
-            setIsModalOpen={setIsModalOpen}
-            fetchUsers={fetchUsers}
-          />
-      }
+      {isModalOpen && (
+        <DeleteUserConfirmationModal
+          userId={selectedUser?.userId}
+          firstName={selectedUser?.firstName}
+          lastName={selectedUser?.lastName}
+          setIsModalOpen={setIsModalOpen}
+          fetchUsers={fetchUsers}
+        />
+      )}
       <main className="border border-[#C1C9D2] m-[30px] mt-[15px] p-[20px] pb-5 rounded-lg">
         <h1 className="text-[20px] font-bold">Usuarios</h1>
         <div className="flex items-center py-4 gap-x-2">
@@ -146,22 +133,28 @@ export default function Users() {
           />
         </div>
         {renderTable(paginatedUsers)}
-        <div className="flex justify-end items-center pt-2 gap-x-2">
-          <Button
-            variant="outline"
-            className="px-4"
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            Anterior
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={endIndex >= filteredUsersBySearchTerm?.length}
-          >
-            Siguiente
-          </Button>
+        <div className="flex justify-between items-center pt-2 gap-x-2">
+          <span>
+            Page {currentPage} of {totalPages}
+          </span>
+          <div className='flex justify-end gap-2'>
+            <Button
+              variant="outline"
+              className="px-4"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              Anterior
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage >= totalPages}
+              className={currentPage >= totalPages ? 'cursor-not-allowed' : ''}
+            >
+              Siguiente
+            </Button>
+          </div>
         </div>
       </main>
     </>

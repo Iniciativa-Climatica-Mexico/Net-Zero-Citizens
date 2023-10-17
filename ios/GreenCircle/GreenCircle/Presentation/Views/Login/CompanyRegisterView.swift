@@ -11,7 +11,9 @@ import GoogleSignInSwift
 struct CompanyRegisterView: View {
   var goLogin: () -> Void
   var goForm: () -> Void
+  var goTutorial: () -> Void
   var goMainMenu: () -> Void
+  
   @State var loadingGoogle = false
   @StateObject var viewModel = LoginViewModel()
   @EnvironmentObject var user: UserData
@@ -30,8 +32,10 @@ struct CompanyRegisterView: View {
 
                 Spacer()
 
-                VStack {
-                  GoogleSignInButton(style: .wide) {
+        VStack {
+          AppleSignIn(goForm: goForm, goMainMenu: goMainMenu)
+          
+          GoogleSignInButton(style: .wide) {
                       loadingGoogle = true
                     Task {
                       let state = await viewModel
@@ -40,7 +44,7 @@ struct CompanyRegisterView: View {
                       case .newUser:
                         goForm()
                       case .success:
-                        goMainMenu()
+                        goTutorial()
                       case .fail:
                           loadingGoogle = false
                         break

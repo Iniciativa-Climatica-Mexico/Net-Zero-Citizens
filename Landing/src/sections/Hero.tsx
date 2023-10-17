@@ -26,7 +26,7 @@ export default function Hero() {
         <p className="text-lg">
           ¡Conéctate con proveedores y desata el potencial del sol!
         </p>
-        <a href="https://www.iniciativaclimatica.org/wp-content/uploads/2023/10/app-release.apk" target="_blank" className="bg-primary-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Descargar para Android</a>
+        <a href="https://www.iniciativaclimatica.org/wp-content/uploads/android/app-release.apk" target="_blank" className="bg-primary-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Descargar para Android</a>
       </article>
       <Image
         src={PhoneMockup}

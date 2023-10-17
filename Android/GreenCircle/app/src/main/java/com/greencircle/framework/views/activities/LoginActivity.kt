@@ -96,7 +96,7 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel.googleLoginResult.observe(this) { authResponse ->
             val task = GoogleSignIn.getSignedInAccountFromIntent(intent)
-
+            Log.d("GoogleSignIn", "task: $task")
             try {
                 if (authResponse != null) {
                     if (authResponse.user.roles != "new_user") {

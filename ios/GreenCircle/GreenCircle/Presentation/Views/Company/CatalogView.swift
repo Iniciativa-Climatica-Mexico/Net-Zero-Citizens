@@ -11,6 +11,10 @@ struct CatalogView: View {
   @StateObject var viewModel = CompanyViewModel()
   @State var filtered = CompanyViewModel().companies
   @State private var isFilteringEmpty = false
+    
+  var goReviews: () -> Void
+  var goOpinions: () -> Void
+  var goScrollRating: () -> Void
   
   var body: some View {
     ZStack {
@@ -18,35 +22,38 @@ struct CatalogView: View {
         ScrollView {
           LazyVStack{
             HStack {
-                TextField("Search...", text: $viewModel.searchCompany)
-                    .padding(7)
-                    .background(Color(.systemGray6))
-                    .cornerRadius(10)
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .padding(.trailing, 5)
-                
-                Button(action: {
-                    viewModel.sheet = true
-                }) {
-                    Image(systemName: "slider.horizontal.3")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 25, height: 25)
-                        .foregroundColor(Color("Primary"))
-                        .padding(.leading, 10)
-                }
-                .foregroundColor(.blue)
-                .sheet(isPresented: $viewModel.sheet) {
-                    FilterView(vm: viewModel)
-                }
-                Spacer()
+              TextField("Search...", text: $viewModel.searchCompany)
+                .padding(7)
+                .background(Color(.systemGray6))
+                .cornerRadius(10)
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .padding(.trailing, 5)
+              
+              Button(action: {
+                viewModel.sheet = true
+              }) {
+                Image(systemName: "slider.horizontal.3")
+                  .resizable()
+                  .aspectRatio(contentMode: .fill)
+                  .frame(width: 25, height: 25)
+                  .foregroundColor(Color("Primary"))
+                  .padding(.leading, 10)
+              }
+              .foregroundColor(.blue)
+              .sheet(isPresented: $viewModel.sheet) {
+                FilterView(vm: viewModel)
+              }
+              Spacer()
             } .padding(.horizontal, 13)
-
+              .onTapGesture {
+                hideKeyboard()
+              }
+            
             
             ForEach(viewModel.filteredCompanies, id: \.id) { company in
               CardCatalogView(companyId: company.companyId,
                               companyName: company.name, city: company.city,
-                              state: company.state)
+                              state: company.state, goReviews: goReviews, goOpinions: goOpinions, goScrollRating: goScrollRating)
             }
             .padding([.trailing, .leading], 15)
             .padding([.top, .bottom], 7)

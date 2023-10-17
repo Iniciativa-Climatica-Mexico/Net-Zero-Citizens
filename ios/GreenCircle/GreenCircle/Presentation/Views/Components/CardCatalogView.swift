@@ -14,6 +14,11 @@ struct CardCatalogView: View {
   @State private var showAlert = false
   @State private var messageAlert = ""
   @State private var deleteOperation = false
+  @Environment(\.colorScheme) var colorScheme
+    
+  var goReviews: () -> Void
+  var goOpinions: () -> Void
+  var goScrollRating: () -> Void
   
   var companyId: UUID
   var companyName: String
@@ -23,7 +28,10 @@ struct CardCatalogView: View {
   init(companyId: UUID,
        companyName: String,
        city: String,
-       state: String) {
+       state: String,
+       goReviews: @escaping () -> Void,
+       goOpinions: @escaping () -> Void,
+       goScrollRating: @escaping () -> Void) {
     
     _viewModel = StateObject(wrappedValue: CompanyViewModel())
     _favouriteViewModel = StateObject(wrappedValue: FavouriteViewModel())
@@ -31,15 +39,18 @@ struct CardCatalogView: View {
     self.companyName = companyName
     self.city = city
     self.state = state
+    self.goReviews = goReviews
+    self.goOpinions = goOpinions
+    self.goScrollRating = goScrollRating
   }
   
   var body: some View {
-    NavigationLink(destination: ContactCompanyView(idCompany: companyId, favouriteViewModel: favouriteViewModel, emptyHeartFill: $emptyHeartFill)){
+    NavigationLink(destination: ContactCompanyView(idCompany: companyId, favouriteViewModel: favouriteViewModel, emptyHeartFill: $emptyHeartFill, goReviews: goReviews, goOpinions: goOpinions, goScrollRating: goScrollRating)){
       ZStack {
         RoundedRectangle(cornerRadius: 10, style:.continuous)
-          .fill(.white)
+          .fill(colorScheme == .dark ? Color.black : Color.white)
           .frame(width: 380, height: 150)
-          .shadow(color: Color("Primary"), radius: 1)
+          .shadow(color: colorScheme == .dark ? Color.white : Color.black, radius: 1)
         HStack {
           VStack (alignment: .leading) {
             if let imageURL = URL(string: viewModel.contentCompany.files?.first?.fileUrl ?? "") {
