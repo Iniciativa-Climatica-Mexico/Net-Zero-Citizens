@@ -38,10 +38,15 @@ class CompanyContactInfoFragment : Fragment() {
     }
 
     /*
-    * Se encarga de bindear los datos de contacto de la empresa
+     * Se encarga de bindear los datos de contacto de la empresa.
+     * Si no hay datos de la página web, se oculta el título y el valor de la página web
      */
-    fun bindCompanyContactInfo() {
-        binding.TVWPValue.text = arguments?.getString("WebPage")
+    private fun bindCompanyContactInfo() {
+        if (arguments?.getString("WebPage").isNullOrEmpty()) {
+            binding.TVWPTitle.visibility = View.GONE
+            binding.TVWPValue.visibility = View.GONE
+        }
+
         binding.TVEmailValue.text = arguments?.getString("Email")
         binding.TVPhoneValue.text = arguments?.getString("Phone")
         binding.TVAddressValue.text = arguments?.getString("Direction")
