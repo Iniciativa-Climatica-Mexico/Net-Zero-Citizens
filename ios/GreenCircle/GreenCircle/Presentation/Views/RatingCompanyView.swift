@@ -9,8 +9,6 @@
 import SwiftUI
 
 struct ScrollViewRating: View {
-    
-  @StateObject var reviewViewModel : ReviewViewModel = ReviewViewModel()
   
   /// Estas dos funciones permiten hacer el flujo de las vistas
   /// desde el contacto de compañía hasta vista de opiniones
