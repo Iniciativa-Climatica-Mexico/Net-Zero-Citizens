@@ -82,8 +82,12 @@ struct CoordinatorView: View {
                                solarToggle: $solarToggle)
         
       case .mainMenuView:
-              TabBarView(goSurvey: goSurvey, goLogin: goLogin, goReviews: goReviews, goOpinions: goOpinions, goScrollRating: goReviews, goRoot: goRoot)
-                  .environmentObject(companyId)
+              TabBarView(goSurvey: goSurvey,
+              goLogin: goRoot,
+              goReviews: goReviews,
+              goOpinions: goOpinions,
+              goScrollRating: goReviews, goRoot: goRoot)
+                .environmentObject(companyId)
                   .onAppear {
                     deviceLocationService.requestLocationUpdates()
                   }
