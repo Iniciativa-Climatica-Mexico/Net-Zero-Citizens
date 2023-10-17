@@ -103,7 +103,9 @@ export default function Users() {
               className="text-right"
               onClick={() => handleOnDeleteUserClick(user)}
             >
-              <DeleteUsersButton setIsModalOpen={setIsModalOpen} />
+              {user.roleId != 'ADMIN_ROLE_ID' && (
+                <DeleteUsersButton setIsModalOpen={setIsModalOpen} />
+              )}
             </TableCell>
           </TableRow>
         ))}

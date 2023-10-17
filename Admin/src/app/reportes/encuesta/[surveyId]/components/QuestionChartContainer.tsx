@@ -200,7 +200,7 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
         </div>
         {(() => {
           return (
-            <div className="flex min-h-[25rem]">
+            <div className="flex min-h-[25rem] pb-8">
               {/* Lado izquierdo de la ventana */}
               <div className="pl-20 w-2/5 flex flex-col justify-between">
                 <QuestionComponent {...question} />

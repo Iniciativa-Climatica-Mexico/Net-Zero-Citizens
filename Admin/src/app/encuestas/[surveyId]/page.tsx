@@ -5,7 +5,6 @@ import Modal from 'react-modal'
 import { useEffect, useState } from 'react'
 import { authAxios } from '@/api/v1/axios.config'
 import { Pill } from '@/components/pill/pill'
-import LoadingPage from '@/components/loadingPage/page'
 
 type DetailedSurveyProps = {
   params: {
@@ -36,10 +35,6 @@ export default function DetailedSurvey(props: DetailedSurveyProps) {
         console.log(e)
         setIsOpen(false)
       }
-    }
-
-    if (isGeneratingReport) {
-      return <LoadingPage />
     }
 
     return (
@@ -136,8 +131,8 @@ export default function DetailedSurvey(props: DetailedSurveyProps) {
               </tr>
             </thead>
             <tbody>
-              {[
-                surveyDetail.questions.map((question, index) => {
+              {surveyDetail && [
+                surveyDetail?.questions?.map((question, index) => {
                   return <QuestionComponent key={index} {...question} />
                 }),
               ]}

@@ -29,7 +29,7 @@ export default function ListSurveys() {
               {props.title}
             </a>
           </td>
-          <td className="truncate py-8 px-8  cursor-pointer">
+          <td className="truncate py-8 px-8  max-w-xs cursor-pointer">
             <a
               href={'/encuestas/' + props.surveyId}
               className="text-center py-8 px-8 "
@@ -62,10 +62,6 @@ export default function ListSurveys() {
       )
     }
 
-    if (isLoading) {
-      return <LoadingPage />
-    }
-
     const surveysList = response.rows.sort((a, b) => {
       return moment(b.startDate).diff(moment(a.startDate))
     })
@@ -89,13 +85,13 @@ export default function ListSurveys() {
               <tr className="text-txt font-bold">
                 <th
                   scope="col"
-                  className="py-8 border-b w-[20%] border-gray-700"
+                  className="py-8 border-b w-[20%] border-gray-700 max-w-xs"
                 >
                   Título
                 </th>
                 <th
                   scope="col"
-                  className="py-8 w-[40%] border-b border-gray-700"
+                  className="py-8 w-[30%] border-b border-gray-700"
                 >
                   Descripción
                 </th>
@@ -114,7 +110,7 @@ export default function ListSurveys() {
               </tr>
             </thead>
             <tbody>
-              {surveysList.map((survey, index) => (
+              {surveysList && surveysList.map((survey, index) => (
                 <SurveyComponent key={index} {...survey} />
               ))}
             </tbody>
