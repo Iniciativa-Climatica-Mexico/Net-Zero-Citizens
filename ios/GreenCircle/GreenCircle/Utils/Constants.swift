@@ -23,7 +23,7 @@ class Constants {
     "Guerrero",
     "Hidalgo",
     "Jalisco",
-    "Ciudad de México (CDMX)",
+    "Ciudad de México",
     "Estado de México",
     "Michoacán",
     "Morelos",
