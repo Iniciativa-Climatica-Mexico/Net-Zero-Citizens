@@ -30,6 +30,8 @@ export const addFavourite: RequestHandler = async (req, res) => {
         .json({ favouriteId: '', error: 'Error creating favourite!' })
     }
 
+    console.log(newFavourite)
+
     return res.status(201).json({
       favouriteId: newFavourite?.dataValues.favouriteId,
       companyId: newFavourite?.dataValues.companyId,
@@ -82,7 +84,7 @@ export const deleteFavouriteById: RequestHandler<
   NoRecord,
   { rows: number; message: string } | { message: string },
   NoRecord,
-  { companyId: string, userId: string }
+  { companyId: string; userId: string }
 > = async (req, res) => {
   try {
     const rows = await FavouriteService.deleteFavouriteById(
