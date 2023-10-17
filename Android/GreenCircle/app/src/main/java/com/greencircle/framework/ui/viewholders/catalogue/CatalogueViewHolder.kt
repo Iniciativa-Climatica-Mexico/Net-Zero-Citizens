@@ -1,7 +1,6 @@
 package com.greencircle.framework.ui.viewholders.catalogue
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.CheckBox
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
