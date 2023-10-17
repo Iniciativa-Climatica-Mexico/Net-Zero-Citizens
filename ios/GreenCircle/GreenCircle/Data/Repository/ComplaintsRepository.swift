@@ -49,7 +49,6 @@ class ComplaintRepository: ComplaintRepositoryProtocol {
         let userId = uRepositoty.getAuthData()!.user.uuid
         
         let body: [String: Any] = [
-                "complaintId": complaint.complaintId,
                 "userId": userId,
                 "companyId": complaint.companyId.lowercased(),
                 "complaintSubject": complaint.complaintSubject,

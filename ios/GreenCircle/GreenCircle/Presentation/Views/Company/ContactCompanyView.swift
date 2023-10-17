@@ -90,15 +90,15 @@ struct CompanyReportView: View {
     @State var selectedReportReason: String? = nil
     @State var description: String = ""
     @State private var showAlert: Bool = false
-    var complaintId: String = UUID().uuidString
+    let companyId: String
     let screenHeight = UIScreen.main.bounds.height
 
-    let reportReasons = ["Productos defectuosos.",
-                         "Inconformidad con el producto/servicio.",
-                         "Comportamiento inapropiado.",
-                         "Mal servicio.",
-                         "Fraudes o estafas.",
-                         "Violación legal o ética."]
+    let reportReasons = ["Productos Defectuosos",
+                         "Inconformidad con el producto / servicio",
+                         "Comportamiento Inapropiado",
+                         "Mal Servicio",
+                         "Fraudes o estafas",
+                         "Violación legal o ética"]
 
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
@@ -160,8 +160,10 @@ struct CompanyReportView: View {
                             hasTriedToSubmit = true
                         } else {
                             Task {
-                                
+                             await complaintViewModel.handleSubmit(complaintSubject: selectedReportReason!,complaintDescription: description, companyId: companyId)
                                 showAlert = true
+                              selectedReportReason = nil
+                              description = ""
                             }
                         }
                     })  {
@@ -172,9 +174,10 @@ struct CompanyReportView: View {
                             .background(TitleBarColor.TitleBarColor)
                             .cornerRadius(8)
                     }
-                    Spacer()
+                  Spacer()
                 }
                 .padding(.top, 30)
+                .padding(.bottom, 150)
             }
             .frame(height: screenHeight * 0.40)
         }
@@ -284,31 +287,14 @@ struct ContactCompanyView: View {
           }
           ForEach(Array(isPressed.keys), id: \.self) { key in
             if let value: Bool = isPressed[key], value == true {
-              if key == "Producto" {
-                Text("").onAppear {
-                  bindImageToDescription = true
-                }
-              }
-              if key == "Contacto" {
-                ContactCompanyComponentView(modelCompany: contactCompanyViewModel).onAppear {
-                  bindImageToDescription = false
-                }
-              }
-              if key == "Reviews" {
-                  ContactCompanyRatingView(modelCompanyRating: contactCompanyViewModel,
-                                                           dispScrollView: $dispScrollView,
-                                                           goReviews: goReviews,
-                                                           goOpinions: goOpinions,
-                                                           goScrollRating: goScrollRating).onAppear {
-                    bindImageToDescription = false
-                }
-              }
-              if key == "Report" {
-                CompanyReportView(companyViewModel: contactCompanyViewModel, complaintViewModel: viewModel, dispScrollView: $dispScrollView).onAppear {
-                    bindImageToDescription = false
-                  }
-
-              }
+              CompanyContentSwitchView(key: key,
+                                       bindImageToDescription: $bindImageToDescription,
+                                       dispScrollView: $dispScrollView,
+                                       contactCompanyViewModel: contactCompanyViewModel,
+                                       goReviews: goReviews,
+                                       goOpinions: goOpinions,
+                                       goScrollRating: goScrollRating,
+                                       viewModel: viewModel)
             }
           }.frame(height: bindImageToDescription ? 33 : 220)
           Spacer()
@@ -337,3 +323,50 @@ struct ContactCompanyView: View {
     }
 }
 
+struct CompanyContentSwitchView: View {
+  @State var key: String
+  @Binding var bindImageToDescription: Bool
+  @Binding var dispScrollView: Bool
+  @StateObject var contactCompanyViewModel: CompanyViewModel
+  var goReviews: () -> Void
+  var goOpinions: () -> Void
+  var goScrollRating: () -> Void
+  var viewModel: ComplaintViewModel
+  
+  var body: some View {
+    switch key {
+    case "Producto":
+      Text("").onAppear {
+        bindImageToDescription = true
+      }
+      
+    case "Contacto":
+      ContactCompanyComponentView(modelCompany: contactCompanyViewModel)
+        .onAppear {
+        bindImageToDescription = false
+      }
+      
+    case "Reviews":
+      ContactCompanyRatingView(modelCompanyRating: contactCompanyViewModel,
+                               dispScrollView: $dispScrollView,
+                               goReviews: goReviews,
+                               goOpinions: goOpinions,
+                               goScrollRating: goScrollRating)
+      .onAppear {
+        bindImageToDescription = false
+      }
+      
+    case "Report":
+      CompanyReportView(companyViewModel: contactCompanyViewModel,
+                        complaintViewModel: viewModel,
+                        dispScrollView: $dispScrollView,
+                        companyId: contactCompanyViewModel.contentCompany.id)
+      .onAppear {
+        bindImageToDescription = false
+      }
+      
+    default:
+      Text("")
+    }
+  }
+}

@@ -24,6 +24,6 @@ class SaveTokensRequirement(private val context: Context) {
      * @param authToken El token de autenticación a guardar.
      * @param refreshToken El token de actualización a guardar.
      */
-    suspend operator fun invoke(authToken: String, refreshToken: String): Unit =
+    operator fun invoke(authToken: String, refreshToken: String): Unit =
         repository.saveTokens(authToken, refreshToken)
 }
