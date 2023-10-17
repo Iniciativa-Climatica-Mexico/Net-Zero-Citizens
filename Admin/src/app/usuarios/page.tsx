@@ -15,7 +15,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-import LogoSm from './../../../public/LogoSm.svg'
+import LogoSm from './../../../public/Logo.svg'
 
 import type { User } from '@/@types/users/users'
 import { getAllUsers } from '@/api/v1/users'
@@ -137,7 +137,7 @@ export default function Users() {
           <span>
             Page {currentPage} of {totalPages}
           </span>
-          <div>
+          <div className='flex justify-end gap-2'>
             <Button
               variant="outline"
               className="px-4"
