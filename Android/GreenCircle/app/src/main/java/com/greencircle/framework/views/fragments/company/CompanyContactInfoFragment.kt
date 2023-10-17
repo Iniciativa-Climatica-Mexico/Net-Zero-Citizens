@@ -43,8 +43,7 @@ class CompanyContactInfoFragment : Fragment() {
      */
     private fun bindCompanyContactInfo() {
         if (arguments?.getString("WebPage").isNullOrEmpty()) {
-            binding.TVWPTitle.visibility = View.GONE
-            binding.TVWPValue.visibility = View.GONE
+            binding.LLWP.visibility = View.GONE
         }
 
         binding.TVEmailValue.text = arguments?.getString("Email")
