@@ -5,6 +5,7 @@ import { MouseEventHandler, useState } from 'react'
 import { CreateSurveyBody, Question, createSurvey } from '@/api/v1/survey'
 import { useEffect } from 'react'
 import SurveyModal from '@/components/surveyModal'
+import SurveyErrorModal from '@/components/surveyErrorModal'
 
 export default function CreateSurvey() {
   // Estado para el contador de preguntas
@@ -145,11 +146,20 @@ export default function CreateSurvey() {
   /**
    * Funcion que crea la encuesta
    */
-  const createSurveyHandeler = () => {
+  const createSurveyHandeler = async () => {
     console.log('clicked:', survey)
 
-    createSurvey(survey)
-    window.location.href = '/encuestas'
+    try {
+      await createSurvey(survey)
+      // window.location.href = '/encuestas'
+    } catch (e:unknown) {
+      console.log(e)
+      if (e instanceof Error) {
+        setErrorModalText(e.message)
+        closeModal()
+        openErrorModal()
+      }
+    }
   }
 
   //Estado para el modal
@@ -172,9 +182,35 @@ export default function CreateSurvey() {
     setModalIsOpen(false)
   }
 
+  //Estado para el modal
+  const [errorModalIsOpen, setErrorModalIsOpen] = useState(false)
+
+  const [errorModalText, setErrorModalText] = useState('')
+
+  /**
+   * Funcion que abre el modal
+   * @param e(evento)
+   */
+  const openErrorModal = () => {
+    console.log('clicked openmodal:', survey)
+    setErrorModalIsOpen(true)
+  }
+
+  /**
+   * Funcion que cierra el modal
+   */
+  const closeErrorModal = () => {
+    setErrorModalIsOpen(false)
+  }
+
   return (
     <div>
       <form>
+        <SurveyErrorModal
+          isOpen={errorModalIsOpen}
+          onClose={closeErrorModal}
+          modalText={errorModalText}
+        />
         <SurveyModal
           isOpen={modalIsOpen}
           onClose={closeModal}
