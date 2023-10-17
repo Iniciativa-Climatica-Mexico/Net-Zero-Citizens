@@ -56,11 +56,5 @@ export async function fetchSurveyById(surveyId: string) {
 
 export async function createSurvey(survey: CreateSurveyBody) {
   const res = await authAxios().post('/survey', survey)
-
-  if (!statusOk(res.status)) {
-    console.error('Failed to create survey')
-    return null
-  }
-
   return res.data as Survey
 }
