@@ -84,7 +84,6 @@ struct DocumentPicker: UIViewControllerRepresentable {
         }
       
         func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-            do{
                 Task{
                     let (data, _) = try await URLSession.shared.data(from: urls.first!)
                     parent.selectedFile = data
@@ -98,10 +97,6 @@ struct DocumentPicker: UIViewControllerRepresentable {
                         parent.selectedFile = selectedFile  // Establece selectedFile para actualizar la vista
                     }
                 }
-            }
-            catch{
-                print("Invalid Data")
-            }
         }
         
         func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {

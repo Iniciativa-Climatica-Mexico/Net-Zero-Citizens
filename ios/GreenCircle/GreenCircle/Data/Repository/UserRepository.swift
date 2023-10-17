@@ -41,16 +41,9 @@ protocol UserRepositoryProtocol {
 
 /// Clase con la funcionalidad del repositorio de usuario
 class UserRepository: UserRepositoryProtocol {
-  
-  let backEndService: UserService
   let nService = NetworkAPIService.shared
   let lService = LocalService.shared
   static let shared = UserRepository()
-  
-  init(backEndService: UserService = UserService.shared){
-    self.backEndService = backEndService
-    
-  }
   
   /// Llama al serivicio de API para postear un nuevo usuario por Google
   /// - Parameter googleToken: token proporcionado por Google
@@ -133,8 +126,10 @@ class UserRepository: UserRepositoryProtocol {
   
   
   func updateUserCredentials(userId: String, newUserCredentials: Credentials) async -> User? {
+    let body: [String: Any] = ["email": newUserCredentials.email,
+                               "password": newUserCredentials.password]
     let url = URL(string: "\(UserAPI.base)/\(UserAPI.Routes.credentials)/\(userId)")!
-    return await backEndService.UpdateUserCredentials(url: url, newUserCredentials: newUserCredentials)
+    return await nService.putRequest(url, body: body)
   }
   
   func saveAuthData(authData: AuthResponse) {
@@ -148,7 +143,7 @@ class UserRepository: UserRepositoryProtocol {
   func deleteUserById(userId: String)  async -> UserDeleteResponse? {
     let endpoint = UserAPI.base + "/delete" + UserAPI.Routes.userId
           .replacingOccurrences(of: ":userId", with: userId)
-        return await NetworkAPIService.shared.deleteRequest(URL(string: endpoint)!)
+        return await nService.deleteRequest(URL(string: endpoint)!)
   }
   
   func postLogin(user: String, password: String) async throws -> AuthResponse {
