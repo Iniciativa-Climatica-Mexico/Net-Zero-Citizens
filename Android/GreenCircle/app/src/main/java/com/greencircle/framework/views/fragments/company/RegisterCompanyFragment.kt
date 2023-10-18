@@ -16,6 +16,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.material.textfield.TextInputLayout
 import com.greencircle.databinding.FragmentRegisterCompanyBinding
 import com.greencircle.domain.model.user.NewUser
+import com.greencircle.domain.usecase.auth.SaveTokensRequirement
 import com.greencircle.framework.viewmodel.ViewModelFactory
 import com.greencircle.framework.viewmodel.auth.RegisterViewModel
 import com.greencircle.framework.viewmodel.company.CreateCompanyViewModel
@@ -31,6 +32,7 @@ import com.greencircle.utils.GoogleSignInHelper
 class RegisterCompanyFragment : Fragment() {
     private var _binding: FragmentRegisterCompanyBinding? = null
     private lateinit var createCompanyViewModel: CreateCompanyViewModel
+    private lateinit var saveTokensRequirement: SaveTokensRequirement
     private lateinit var registerViewModel: RegisterViewModel
     private lateinit var _arguments: Bundle
     private lateinit var authUtils: AuthUtils
@@ -85,7 +87,7 @@ class RegisterCompanyFragment : Fragment() {
             this,
             ViewModelFactory(requireContext(), RegisterViewModel::class.java)
         )[RegisterViewModel::class.java]
-
+        saveTokensRequirement = SaveTokensRequirement(requireContext())
         authUtils = AuthUtils(requireActivity())
     }
 
@@ -147,6 +149,9 @@ class RegisterCompanyFragment : Fragment() {
                     navigateToMain()
                 } else {
                     _arguments = authUtils.getDataFromRegisterResponse(result.user)
+                    saveTokensRequirement(result.tokens.authToken, result.tokens.refreshToken)
+                    _arguments.putString("authToken", result.tokens.authToken)
+                    Log.d("ARGUMENTS", _arguments.toString())
                     navigateToTokenRegistro(_arguments)
                 }
             } else {

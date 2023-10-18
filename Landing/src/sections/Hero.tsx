@@ -9,7 +9,6 @@
  */
 
 import GreenTriangleSVG from '@/components/GreenTriangle'
-import StoreButton from '@/components/StoreButton'
 import PhoneMockup from '@public/images/phoneMockup.png'
 import Image from 'next/image'
 
@@ -20,13 +19,20 @@ export default function Hero() {
         <GreenTriangleSVG />
       </div>
       <article className="relative flex flex-col items-center gap-5 py-10 px-12 lg:gap-10 lg:px-40 lg:py-28 lg:w-full lg:text-left lg:items-start">
-        <h1 className="font-bold text-[3rem] leading-[3rem] lg:text-[5.5rem] lg:leading-[5.5rem] lg:max-w-4xl relative">
-          Ilumina tu camino solar
+        <h1 className="font-bold text-[2.5rem] leading-[3rem] lg:text-[4.5rem] lg:leading-[4.5rem] lg:max-w-4xl relative">
+          Descarboniza tu vida y protege tu futuro
         </h1>
         <p className="text-lg">
-          ¡Conéctate con proveedores y desata el potencial del sol!
+          ¡Conecta con proveedores de energía solar fácilmente para que
+          experimentes la independencia energética!
         </p>
-        <a href="https://www.iniciativaclimatica.org/wp-content/uploads/android/app-release.apk" target="_blank" className="bg-primary-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Descargar para Android</a>
+        <a
+          href="https://www.iniciativaclimatica.org/wp-content/uploads/android/app-release.apk"
+          target="_blank"
+          className="bg-primary-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+        >
+          Descargar para Android
+        </a>
       </article>
       <Image
         src={PhoneMockup}
