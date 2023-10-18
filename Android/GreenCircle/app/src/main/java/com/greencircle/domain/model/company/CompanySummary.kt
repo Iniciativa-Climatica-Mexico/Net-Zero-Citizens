@@ -18,5 +18,6 @@ data class CompanySummary(
     val city: String,
     val state: String,
     @SerializedName("score") val rating: Float,
-    val profilePicture: String? = null
+    val profilePicture: String? = null,
+    var isFavourite: Boolean = false
 )
