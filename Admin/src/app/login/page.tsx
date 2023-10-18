@@ -1,5 +1,4 @@
 'use client'
-import GoogleButton from '@/components/GoogleButton'
 import { CredentialsButton } from '@/components/CredentialsButton'
 import { useSession } from 'next-auth/react'
 import { saveSession } from '@/utils/sessionHooks'
@@ -9,6 +8,7 @@ export default function Login() {
   let isLogged = false
   const sessionData = sessionContext.data
   if (sessionContext.status === 'authenticated' && sessionData) {
+    console.log('session', sessionData)
     isLogged = true
     saveSession(sessionData)
     window.location.href = '/'
