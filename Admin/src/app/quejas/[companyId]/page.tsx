@@ -73,6 +73,7 @@ export default function Home() {
               <TableHead>Clase</TableHead>
               <TableHead>Descripcion</TableHead>
               <TableHead>Fecha</TableHead>
+              <TableHead></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

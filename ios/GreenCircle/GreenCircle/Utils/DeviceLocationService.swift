@@ -3,10 +3,11 @@
 //  GreenCircle
 //
 //  Created by Sebastian Flores on 04/10/23.
-//
+//  Modified by Dani Gutiérrez Góemz on 17/10/23.
 
 import CoreLocation
 import Combine
+import MapKit
 
 class DeviceLocationService: NSObject, CLLocationManagerDelegate, ObservableObject {
     
@@ -25,6 +26,16 @@ class DeviceLocationService: NSObject, CLLocationManagerDelegate, ObservableObje
         return manager
     }()
     
+    /// - Description: Function to set the region center to where the user is at
+    /// - Returns: `MKCoordinateRegion?` only if user consent is accepted
+    func setCenterToUser() -> MKCoordinateRegion? {
+      guard let userCoordinate = locationManager.location?.coordinate else {
+              return nil
+          }
+      let span = MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
+      let region = MKCoordinateRegion(center: userCoordinate, span: span)
+      return region
+    }
     func requestLocationUpdates() {
         switch locationManager.authorizationStatus {
         case .notDetermined:

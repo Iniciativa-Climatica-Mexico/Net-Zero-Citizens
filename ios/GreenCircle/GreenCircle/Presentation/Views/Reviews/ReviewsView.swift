@@ -29,22 +29,10 @@ struct ReviewsView: View {
                       .font(.system(size: 15))
                       .foregroundColor(Color("BlackCustom"))
                   
-                  HStack(alignment: .top, spacing: 10) {
-                      
-                      StaticStarRatingView(goOpinions: goOpinions).customSectionPadding()
-                      
-                  }
+                  MainButton("Crear Reseña") {  
+                    goOpinions()
+                  }.padding()
                   
-                  VStack {
-                      Text("Escribe una opinión")
-                          .font(.headline)
-                          .foregroundColor(Color("Secondary"))
-                          .onTapGesture {
-                              print(companyId.companyReviewId.companyId)
-                              goOpinions()
-                          }
-                  }
-                  .customSectionPadding()
                   
                   Text("Opiniones del proveedor")
                       .font(.system(size: 24))
@@ -118,7 +106,7 @@ struct OpinionsView: View {
               .padding().frame(height: 150)
               .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1))
             
-            Button(action:{
+            MainButton("Publicar") {
                 Task {
                     
                     await opinionsViewModel.addReview(companyId: companyId.companyReviewId.companyId , reviewTitle: title, review: description, score: score)
@@ -127,15 +115,14 @@ struct OpinionsView: View {
                     } else {
                         isError = true
                         isPresented = true
-                        print("Error: \(opinionsViewModel.responsePost)")
                     }
                 }
 
-            }, label: {
-                Text("Publicar")
-                  .padding().frame(maxWidth: .infinity).background(Color("Primary"))
-                  .foregroundColor(.white).cornerRadius(10).customSectionPadding()
-            }).alert(isPresented: $isPresented) {
+            }
+            .padding(.top)
+            .disabled(score == 0)
+            .buttonStyle(PlainButtonStyle())
+            .alert(isPresented: $isPresented) {
                 Alert(
                     title: Text(isError ? "Reseña enviada con éxito" : "Reseña no enviada"),
                     message: Text(isError ? "La reseña se ha publicado exitosamente." : "La reseña no se pudo enviar."),

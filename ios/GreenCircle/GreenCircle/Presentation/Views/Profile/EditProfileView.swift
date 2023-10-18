@@ -265,10 +265,34 @@ struct Section2: View {
                     .fontWeight(.semibold)
               PickerFormView2(
                   selectedOption: Binding<String>(
-                      get: { modelUser.contentBaseUser?.gender ?? "Cargando..." },
+                    get: {
+                      if let gender = modelUser.contentBaseUser?.gender {
+                        switch gender {
+                        case "masculine":
+                          return "Masculino"
+                        case "femenine":
+                          return "Femenino"
+                        case "other":
+                          return "Otro"
+                        default:
+                          return "Prefiero no contestar"
+                        }
+                      } else {
+                        return "Cargando..."
+                      }
+                    },
                       set: { newValue in
                           if !newValue.isEmpty {
-                              modelUser.contentBaseUser?.gender = newValue
+                            switch newValue {
+                            case "Masculino":
+                              modelUser.contentBaseUser?.gender = "masculine"
+                            case "Femenino":
+                              modelUser.contentBaseUser?.gender = "femenine"
+                            case "Otro":
+                              modelUser.contentBaseUser?.gender = "other"
+                            default:
+                              modelUser.contentBaseUser?.gender = "no_answer"
+                            }
                           }
                       }
                   ),
@@ -543,6 +567,9 @@ struct EditProfileView: View {
                 
                 Spacer()
             }
+        }
+        .onTapGesture {
+          hideKeyboard()
         }
         .onAppear(perform: loadProfileData)
         .accentColor(Color("Secondary"))

@@ -19,9 +19,16 @@ import { usePathname } from 'next/navigation'
 import { deleteSession, refreshTokens } from '@/utils/sessionHooks'
 
 export default function Navbar() {
-  const { data: session } = useSession()
   const pathname = usePathname()
-
+  if (
+    pathname == '/login' ||
+    pathname == '/notAllowed' ||
+    pathname == '/notRegistered'
+  ) {
+    return <></>
+  }
+    
+  const { data: session } = useSession()
   const [condition, setCondition] = useState(false)
   let created = false
 
@@ -30,7 +37,7 @@ export default function Navbar() {
 
     if (!created) {
       created = true
-      console.log('Creating interval')
+      refreshTokens()
       setInterval(refreshTokens, 1 * 60 * 60 * 1000) // 1 hour
     }
   }, [])
@@ -47,13 +54,6 @@ export default function Navbar() {
 
   const [mobileMenuVisible, setMobileMenuVisible] = useState(false)
 
-  if (
-    pathname == '/login' ||
-    pathname == '/notAllowed' ||
-    pathname == '/notRegistered'
-  ) {
-    return <></>
-  }
 
   return (
     <>

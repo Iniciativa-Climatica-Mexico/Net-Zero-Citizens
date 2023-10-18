@@ -32,6 +32,7 @@ struct CoordinatorView: View {
     case reviews
     case opinions
     case tutorial
+    case privacyPolicy
   }
   
   @State var routes: Routes<Screens> = [.root(.splashScreen)]
@@ -79,11 +80,15 @@ struct CoordinatorView: View {
         CompanyUploadFilesView(goPending: goPending,
                                goBack: goBack,
                                photovoltaicToggle: $photovoltaicToggle,
-                               solarToggle: $solarToggle)
+                               solarToggle: $solarToggle, showPrivacy: showPrivacy)
         
       case .mainMenuView:
-              TabBarView(goSurvey: goSurvey, goLogin: goLogin, goReviews: goReviews, goOpinions: goOpinions, goScrollRating: goReviews, goRoot: goRoot)
-                  .environmentObject(companyId)
+              TabBarView(goSurvey: goSurvey,
+              goLogin: goRoot,
+              goReviews: goReviews,
+              goOpinions: goOpinions,
+              goScrollRating: goReviews, goRoot: goRoot)
+                .environmentObject(companyId)
                   .onAppear {
                     deviceLocationService.requestLocationUpdates()
                   }
@@ -110,6 +115,8 @@ struct CoordinatorView: View {
           AppTutorial_16(goMainMenu: goMainMenu)
             .applyNavBarTheme()
         }
+      case .privacyPolicy:
+        PrivacyUserView()
       }
     }
     .onAppear {
@@ -192,5 +199,9 @@ struct CoordinatorView: View {
   private func goRoot() {
     routes.removeAll()
     routes.presentCover(.login)
+  }
+  
+  private func showPrivacy() {
+    routes.presentSheet(.privacyPolicy)
   }
 }

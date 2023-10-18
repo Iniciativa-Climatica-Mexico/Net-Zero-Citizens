@@ -1,8 +1,14 @@
 import { Session, signOut } from 'next-auth/react'
 import { AUTH_TOKEN_KEY, REFRESH_TOKEN_KEY, SERVER_BASE_URL, USER_KEY } from './constants'
 import axios from 'axios'
+import { User } from './authUtils'
 
 export const saveSession = (session: Session) => {
+  if(!session.authToken || !session.refreshToken) {
+    console.log('No tokens to save')
+    return
+  }
+
   localStorage.setItem(AUTH_TOKEN_KEY, session.authToken || '')
   localStorage.setItem(REFRESH_TOKEN_KEY, session.refreshToken || '')
   if (session.user) {
@@ -30,31 +36,41 @@ export const deleteSession = () => {
 }
 
 export type refreshTokenResponse = {
-  authToken: string
-  refreshToken: string
+  tokens: {
+    authToken: string
+    refreshToken: string
+  }, 
+  user: User,
   error?: string
 }
 
 export const refreshTokens = async () => {
   try {
     const session = recoverSession()
-
-    console.log('UPDATING TOKENS')
     const refreshToken = session.refreshToken
-
-    const tokens: refreshTokenResponse = await axios
+    const res: refreshTokenResponse = await axios
       .post(`${SERVER_BASE_URL}/auth/refresh`, {
         refreshToken,
       })
       .then((res) => res.data)
+      .catch((err) => {
+        console.log(err)
+      })
 
-    if (tokens.error) {
-      throw Error(`Error updating tokens, ${tokens.error}`)
+    console.log(res)
+    if (res.error) {
+      throw Error(`Error updating tokens, ${res.error}`)
     }
 
-    saveSession(tokens)
-    session.authToken = tokens.authToken
-    session.refreshToken = tokens.refreshToken
+    const _session:Session = session
+
+    _session.user = res.user
+    _session.authToken = res.tokens.authToken
+    _session.refreshToken = res.tokens.refreshToken
+
+    saveSession(_session)
+    session.authToken = res.tokens.authToken
+    session.refreshToken = res.tokens.refreshToken
   } catch (e) {
     console.log('Error updating tokens: ' + e)
     signOut()

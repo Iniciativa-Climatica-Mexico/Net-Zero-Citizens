@@ -49,7 +49,6 @@ class ComplaintRepository: ComplaintRepositoryProtocol {
         let userId = uRepositoty.getAuthData()!.user.uuid
         
         let body: [String: Any] = [
-                "complaintId": complaint.complaintId,
                 "userId": userId,
                 "companyId": complaint.companyId.lowercased(),
                 "complaintSubject": complaint.complaintSubject,
@@ -57,18 +56,9 @@ class ComplaintRepository: ComplaintRepositoryProtocol {
                 "complaintStatus": "active"
         ]
         
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: body, options: .prettyPrinted)
-            print(String(data: jsonData, encoding: .utf8) ?? "Invalid JSON")
-        } catch {
-            print("Error encoding JSON: \(error)")
-        }
-        
-        //let enpoint = "\(ComplaintAPI.base)/\(userId)/\(companyId)"
-        let enpoint = "\(ComplaintAPI.base)\(ComplaintAPI.Routes.create)"
-        print("Enpoint: \(enpoint)")
+        let endpoint = "\(ComplaintAPI.base)\(ComplaintAPI.Routes.create)"
         let _: NoResponse? = await NetworkAPIService.shared
-            .postRequest(URL(string: enpoint)!, body: body)
+            .postRequest(URL(string: endpoint)!, body: body)
         
         // http://localhost:4000/api/v1/complaints/:userId/:complaintId
     }

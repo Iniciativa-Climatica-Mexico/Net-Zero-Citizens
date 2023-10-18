@@ -49,8 +49,10 @@ struct CardCatalogView: View {
       ZStack {
         RoundedRectangle(cornerRadius: 10, style:.continuous)
           .fill(colorScheme == .dark ? Color.black : Color.white)
-          .frame(width: 380, height: 150)
+          .frame(maxWidth: .infinity)
+          .frame(height: 150)
           .shadow(color: colorScheme == .dark ? Color.white : Color.black, radius: 1)
+        
         HStack {
           VStack (alignment: .leading) {
             if let imageURL = URL(string: viewModel.contentCompany.files?.first?.fileUrl ?? "") {
@@ -65,8 +67,8 @@ struct CardCatalogView: View {
                     .cornerRadius(10, corners: [.bottomLeft, .bottomRight, .topLeft, .topRight])
                     .frame(width: 100, height: 100)
                 case .failure:
-                  Text("Failed to load Image!!")
-                @unknown default:
+                  LoadingScreenView().frame(width: 100, height: 100)
+                default:
                   fatalError()
                 }
               }
@@ -147,9 +149,9 @@ struct CardCatalogView: View {
               }
             }
             Spacer()
-          }.frame(maxWidth: 15)
+          }
         }
-        .frame(maxWidth: 330, maxHeight: 140)
+        .frame(width: 345, height: 140)
       }
     }.onAppear {
       
@@ -168,10 +170,13 @@ struct CardCatalogView: View {
   }
 }
 
-//#Preview {
-//  CardCatalogView(
-//    companyId: UUID(uuidString: ("08b49208-7b8e-42b9-8164-c0688676609e"))!,
-//    companyName: "ENERGIA PUEBLO SOLAR S.A. DE C.V.",
-//    city: "Hermosillo",
-//    state: "Sonora")
-//}
+#Preview {
+  CardCatalogView(
+    companyId: UUID(uuidString: ("08b49208-7b8e-42b9-8164-c0688676609e"))!,
+    companyName: "ENERGIA PUEBLO SOLAR S.A. DE C.V.",
+    city: "Hermosillo",
+    state: "Sonora",
+    goReviews: {},
+    goOpinions: {},
+    goScrollRating: {})
+}

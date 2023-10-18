@@ -5,7 +5,6 @@ import Modal from 'react-modal'
 import { useEffect, useState } from 'react'
 import { authAxios } from '@/api/v1/axios.config'
 import { Pill } from '@/components/pill/pill'
-import LoadingPage from '@/components/loadingPage/page'
 
 type DetailedSurveyProps = {
   params: {
@@ -38,16 +37,21 @@ export default function DetailedSurvey(props: DetailedSurveyProps) {
       }
     }
 
-    if (isGeneratingReport) {
-      return <LoadingPage />
-    }
-
     return (
       <div>
         <div className="flex flex-col sm:flex-row items-center justify-between mt-8 mx-8">
-          <h1 className="font-extrabold my-8 sm:ml-8 md:ml-32 sm:pr-2 md:pr-6 text-4xl sm:text-3xl text-txt text-center">
-            {surveyDetail.title}
-          </h1>
+          <div>
+            <Link href={'/encuestas/'}>
+              <button
+                className="flex items-center justify-center text-primary-base font-bold py-2 px-4 rounded self-end md:mr-32 sm:mr-12"
+              >
+                ←  Regresar
+              </button>
+            </Link>
+            <h1 className="font-extrabold my-8 sm:ml-8 md:ml-32 sm:pr-2 md:pr-6 text-4xl sm:text-3xl text-txt text-center">
+              {surveyDetail.title}
+            </h1>
+          </div>
           <div className="flex flex-row gap-4">
             {surveyDetail.endDate == null && (
               <button
@@ -68,7 +72,7 @@ export default function DetailedSurvey(props: DetailedSurveyProps) {
           </div>
         </div>
         <div className="flex mx-8 justify-between">
-          <p className="font-normal sm:ml-8 md:ml-32 sm:pr-2 md:pr-6 text-txt">
+          <p className="font-normal mt-8 sm:ml-8 md:ml-32 sm:pr-2 md:pr-6 text-txt">
             {surveyDetail.description}
           </p>
           <div className="flex gap-4">
@@ -120,7 +124,7 @@ export default function DetailedSurvey(props: DetailedSurveyProps) {
             )}
           </div>
         </div>
-        <div className="w-2/3 m-auto p-3 overflow-x-auto">
+        <div className="w-5/6 m-auto p-3 overflow-x-auto mb-8">
           <table className="border-collapse justify-center items-center w-full">
             <thead className="">
               <tr className="text-txt font-bold">
@@ -136,8 +140,8 @@ export default function DetailedSurvey(props: DetailedSurveyProps) {
               </tr>
             </thead>
             <tbody>
-              {[
-                surveyDetail.questions.map((question, index) => {
+              {surveyDetail && [
+                surveyDetail?.questions?.map((question, index) => {
                   return <QuestionComponent key={index} {...question} />
                 }),
               ]}
@@ -158,11 +162,13 @@ export default function DetailedSurvey(props: DetailedSurveyProps) {
 function QuestionComponent(props: QuestionDetail) {
   return (
     <tr className="border-b border-gray-300">
-      <td className="text-center py-8 px-8 truncate text-txt">
+      <td className="text-left py-8 px-8 truncate whitespace-normal text-txt max-w-sm">
         {props.questionText}
       </td>
       <td className="text-center truncate py-8 px-8 text-txt ">
-        {props.questionType}
+        {props.questionType === 'open' ? 'Pregunta Abierta' : ''}
+        {props.questionType === 'scale' ? 'Escala de valores' : ''}
+        {props.questionType === 'multiple_choice' ? 'Opción múltiple' : ''}
       </td>
       <td className="text-center truncate py-8 px-8 text-txt ">
         {props.isRequired ? (

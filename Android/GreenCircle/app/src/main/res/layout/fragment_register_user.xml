@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
-            android:text="Nunca te enviaremos anuncios ni compartiremos tus datos con nadie más."
+            android:text="Nunca te enviaremos spam y trataremos tus datos con la mayor confidencialidad"
             android:textColor="@color/blue"
             android:textSize="16sp"
             android:textStyle="bold" />

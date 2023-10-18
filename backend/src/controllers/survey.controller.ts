@@ -141,7 +141,6 @@ export const answerSurvey: RequestHandler<
       userId,
       surveyId,
     })
-    console.log(answers)
     res.json(answers)
   } catch (err) {
     console.log(err)

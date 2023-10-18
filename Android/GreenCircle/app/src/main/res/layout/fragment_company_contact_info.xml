@@ -140,7 +140,5 @@
                 android:linksClickable="true" />
 
         </LinearLayout>
-
     </LinearLayout>
-
 </LinearLayout>
