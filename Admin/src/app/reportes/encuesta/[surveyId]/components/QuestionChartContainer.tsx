@@ -97,10 +97,8 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
         <div className="flex flex-row items-center justify-between my-8 mx-8">
           <div>
             <Link href={'/encuestas/' + surveyReport.surveyId}>
-              <button
-                className="flex items-center justify-center text-primary-base font-bold py-2 px-4 rounded self-end md:mr-32 sm:mr-12"
-              >
-                ←  Regresar
+              <button className="flex items-center justify-center text-primary-base font-bold py-2 px-4 rounded self-end md:mr-32 sm:mr-12">
+                ← Regresar
               </button>
             </Link>
             <h1 className="self-start font-extrabold mt-8 mx-8 text-4xl text-txt">
@@ -227,8 +225,8 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
                         <div className="bg-zinc-900 text-white rounded-full text-xl font-semibold p-2 px-4 inline-block">
                           {question.answers.length > 0
                             ? question.answers
-                              .map((ans) => ans.count)
-                              .reduce((prev, curr) => prev + curr)
+                                .map((ans) => ans.count)
+                                .reduce((prev, curr) => prev + curr)
                             : 0}
                         </div>
                       </td>
@@ -296,7 +294,7 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
                             key={index}
                             style={{
                               position: 'absolute',
-                              left: '-99999px',
+                              left: '-290px',
                             }}
                             id={`graph-${index}`}
                           >
