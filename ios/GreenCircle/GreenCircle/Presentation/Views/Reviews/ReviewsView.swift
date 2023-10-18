@@ -49,6 +49,8 @@ struct ReviewsView: View {
           Task {
               await reviewViewModel.fetchReviewByCompanyId(companyId: companyId.companyReviewId.companyId)
           }
+      }.onTapGesture {
+        hideKeyboard()
       }
   }
 }
