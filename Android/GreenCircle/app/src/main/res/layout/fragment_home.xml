@@ -16,6 +16,14 @@
         android:textSize="22sp"
         android:textColor="@color/black"
         android:textStyle="bold" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="13sp"
+        android:text="El cambio climático ya está afectando nuestra vida diaria y economía, mantente al tanto sobre el estado del clima con las últimas noticias publicadas por la Iniciativa Climática de México" />
     <include
         android:id="@+id/fragment_home_skeleton"
         layout="@layout/fragment_home_skeleton"/>
