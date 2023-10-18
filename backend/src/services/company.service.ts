@@ -646,7 +646,6 @@ export const assignCompanyUser = async (
   userId: string
 ): Promise<assignCompanyUserResponse> => {
   try {
-    console.log('assignCompanyUser')
     const user = await User.findByPk(userId)
     if (!user) return 'El usuario no existe'
     if (user.companyId !== null)

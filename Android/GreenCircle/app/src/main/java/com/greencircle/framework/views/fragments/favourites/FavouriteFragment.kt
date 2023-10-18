@@ -60,7 +60,7 @@ class FavouriteFragment : Fragment() {
                 favouritesCount = companies.size
                 binding.favouritesCountTextView.text = "$favouritesCount"
 
-                val adapter = CatalogueAdapter()
+                val adapter = CatalogueAdapter(false)
                 adapter.initCustomAdapter(companies as ArrayList<CompanySummary>, requireContext())
                 recyclerView.adapter = adapter
             } else {

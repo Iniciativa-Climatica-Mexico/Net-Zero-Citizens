@@ -32,7 +32,7 @@ struct CompanyRegisterFormView: View {
             .autocorrectionDisabled()
             VStack(alignment: .leading) {
               Text("Descripción*")
-                .foregroundColor(Color("SecondaryText"))
+                .foregroundColor(Color("Secondary"))
               TextField("Ingresa tu descripción",
                         text: $viewModel.formState.description,
                         axis: .vertical)
@@ -98,7 +98,7 @@ struct CompanyRegisterFormView: View {
             .keyboardType(.numberPad)
             InputFormView(bindingValue: $viewModel.formState.city,
                           label: "Ciudad*",
-                          prompt: "Ciudad Gótica")
+                          prompt: "Ciudad")
             PickerFormView(selectedOption: $viewModel.formState.state,
                            label: "Estado*",
                            options: Constants.states)

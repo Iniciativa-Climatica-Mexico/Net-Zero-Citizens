@@ -18,6 +18,12 @@ export type FavouriteType = {
 export const addFavourite = async (
   favourite: FavouriteType
 ): Promise<Favourite> => {
+  const favouriteExists = await Favourite.findOne({
+    where: { companyId: favourite.companyId, userId: favourite.userId },
+  })
+  if (favouriteExists) {
+    return favouriteExists
+  }
   return await Favourite.create(favourite)
 }
 
