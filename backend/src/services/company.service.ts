@@ -459,22 +459,39 @@ export const addProducts = async (
   products: string[],
   companyId: string
 ): Promise<(CompanyProduct | null)[]> => {
-  return await Promise.all(products.map(async (productName) => {
-    const product = await Product.findOne({
-      where: {
-        name: productName,
-      },
-    })
+  return await Promise.all(
+    products.map(async (productName) => {
+      const product = await Product.findOne({
+        where: {
+          name: productName,
+        },
+      })
 
-    if (!product) return null
+      if (!product) return null
 
-    const companyProduct = await CompanyProducts.create({
-      companyId: companyId,
-      productId: product.productId,
-      pdfProductCertificationUrl: '',
+      let companyProduct = await CompanyProducts.findOne({
+        where: {
+          companyId: companyId,
+          productId: product.productId,
+        },
+      })
+
+      if (companyProduct) {
+        // Si el producto ya existe para la compañía, actualízalo
+        companyProduct.pdfProductCertificationUrl = ''
+        await companyProduct.save()
+      } else {
+        // Si no existe, créalo
+        companyProduct = await CompanyProducts.create({
+          companyId: companyId,
+          productId: product.productId,
+          pdfProductCertificationUrl: '',
+        })
+      }
+
+      return companyProduct
     })
-    return companyProduct
-  }))
+  )
 }
 
 /**
@@ -563,28 +580,28 @@ const getCompanyFiles = async (id: string): Promise<CompanyFiles[] | null> => {
   })
 }
 
-
-export const getApprovedCompaniesWithComplaints = async (): Promise<Company[] | null> => { 
-  return await Company.findAll({ 
-    where: { 
-      status: 'approved', 
-    }, 
-    attributes: { 
-      exclude: ['createdAt', 'updatedAt'], 
-    }, 
-    include: [ 
-      { 
-        model: Complaint, 
+export const getApprovedCompaniesWithComplaints = async (): Promise<
+  Company[] | null
+> => {
+  return await Company.findAll({
+    where: {
+      status: 'approved',
+    },
+    attributes: {
+      exclude: ['createdAt', 'updatedAt'],
+    },
+    include: [
+      {
+        model: Complaint,
         where: {
-          complaintStatus: 'active'
-
+          complaintStatus: 'active',
         },
-        attributes: { 
-          exclude: ['updatedAt'], 
-        }, 
-      }, 
-    ], 
-  }) 
+        attributes: {
+          exclude: ['updatedAt'],
+        },
+      },
+    ],
+  })
 }
 
 const getCompanyProducts = async (

@@ -219,6 +219,7 @@ export const addProduct: RequestHandler<
   NoRecord
 > = async (req, res) => {
   try {
+    console.log("Request -----", req.body.products, req.params.companyId)
     if (!req.body.products || !req.params.companyId)
       res.status(400).json({
         error: 'Missing company or product data',
