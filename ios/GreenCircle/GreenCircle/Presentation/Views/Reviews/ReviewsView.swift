@@ -106,7 +106,7 @@ struct OpinionsView: View {
               .padding().frame(height: 150)
               .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1))
             
-            Button(action:{
+            MainButton("Publicar") {
                 Task {
                     
                     await opinionsViewModel.addReview(companyId: companyId.companyReviewId.companyId , reviewTitle: title, review: description, score: score)
@@ -119,11 +119,11 @@ struct OpinionsView: View {
                     }
                 }
 
-            }, label: {
-                Text("Publicar")
-                  .padding().frame(maxWidth: .infinity).background(Color("Primary"))
-                  .foregroundColor(.white).cornerRadius(10).customSectionPadding()
-            }).alert(isPresented: $isPresented) {
+            }
+            .padding(.top)
+            .disabled(score == 0)
+            .buttonStyle(PlainButtonStyle())
+            .alert(isPresented: $isPresented) {
                 Alert(
                     title: Text(isError ? "Reseña enviada con éxito" : "Reseña no enviada"),
                     message: Text(isError ? "La reseña se ha publicado exitosamente." : "La reseña no se pudo enviar."),
