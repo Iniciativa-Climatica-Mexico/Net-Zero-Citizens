@@ -38,7 +38,7 @@ struct ProfileView: View {
 
                 VStack {
                     // Imagen provisional
-                  Image(systemName: "person.crop.circle.fill")
+                  Image("sun")
                         .resizable() // Hacer que la imagen sea redimensionable
                         .frame(width: 100, height: 100)
                         .foregroundStyle(Color("Primary"))
