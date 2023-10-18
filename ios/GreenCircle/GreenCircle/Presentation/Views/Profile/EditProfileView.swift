@@ -38,7 +38,7 @@ struct SectionProfile: View{
   @ObservedObject var modelUser = UserViewModel()
   var body: some View{
     VStack {
-        Image(systemName: "person.crop.circle.fill")
+        Image("sun")
             .resizable()
             .frame(width: 100, height: 100)
             .foregroundStyle(Color("Primary"))
