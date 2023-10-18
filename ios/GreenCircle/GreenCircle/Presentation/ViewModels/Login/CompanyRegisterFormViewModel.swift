@@ -20,10 +20,6 @@ struct PostCompanyData {
   var state: String = ""
   var zipCode: String = ""
   var userId: String?
-  let pdfCurriculumUrl = "a"
-  let pdfGuaranteeSecurityUrl = "a"
-  let pdfActaConstitutivaUrl = "a"
-  let pdfIneUrl = "a"
 }
 
 /// ViewModel de la vista del formulario para registrar compañía
@@ -67,7 +63,7 @@ class CompanyRegisterFormViewModel: ObservableObject {
     
     if formState.description.isEmpty
         || formState.description.count < 5 {
-      throw GCError.validationError("Por favor ingresa una descripción.")
+      throw GCError.validationError("Por favor ingresa una descripción de al menos 5 caracteres.")
     }
     
     if formState.email.isEmpty
@@ -94,8 +90,12 @@ class CompanyRegisterFormViewModel: ObservableObject {
       throw GCError.validationError("Por favor ingresa una ciudad válida.")
     }
     
+    if formState.state.isEmpty {
+      throw GCError.validationError("Por favor selecciona un estado.")
+    }
+    
     if formState.zipCode.count < 5 {
-      throw GCError.validationError("Por favor ingresa un código postal válido")
+      throw GCError.validationError("Por favor ingresa un código postal válido.")
     }
   }
 }
