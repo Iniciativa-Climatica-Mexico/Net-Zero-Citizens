@@ -319,48 +319,64 @@ struct SixthSection: View{
 
 struct SeventhSection: View{
   @State private var showAlert = false
-    var goPending: () -> Void
+  var goPending: () -> Void
   // @State private var tempFiles: [String: Data] = [:]
-
+  
   @State var privacidad = false
   @State var terminos = false
-
+  var privacyPolicy: () -> Void
+  
   var body: some View{
-
+    
     VStack {
-        Toggle("Acepto las políticas de privacidad", isOn: $privacidad)
-            .font(.system(size: 16))
-            .padding(.bottom, 10)
-        Toggle("Acepto los términos y condiciones", isOn: $terminos)
-            .font(.system(size: 16))
-    }.padding(.horizontal, 40)
-        .padding(.top, 30)
-
-
-    Button(action: {
-        Task {
-            if privacidad && terminos {
-                goPending()
-            } else {
-                showAlert = true
-            }
+      Toggle(isOn: $privacidad) {
+        HStack {
+          Text("Acepto las ")
+          LinkButton("políticas de privacidad", buttonColor: .blue) {
+            privacyPolicy()
+          }
         }
-    }) {
+      }.padding(.horizontal)
+      .font(.system(size: 16))
+      .padding(.bottom, 10)
+      
+      Toggle(isOn: $terminos) {
+        HStack {
+          Text("Acepto los ")
+          LinkButton("términos y condiciones", buttonColor: .blue) {
+            privacyPolicy()
+          }
+        }
+      }.padding(.horizontal)
+      .font(.system(size: 16))
+      .padding(.bottom, 10)
+      
+      
+      Button(action: {
+        Task {
+          if privacidad && terminos {
+            goPending()
+          } else {
+            showAlert = true
+          }
+        }
+      }) {
         Text("Finalizar Registro")
-            .foregroundColor(.white)
-            .padding(.vertical, 12)
-            .padding(.horizontal)
-            .frame(maxWidth: 200)
-            .background(privacidad && terminos ? Color("Secondary") : Color.gray)
-            .cornerRadius(8)
-    }
-    .alert(isPresented: $showAlert) {
+          .foregroundColor(.white)
+          .padding(.vertical, 12)
+          .padding(.horizontal)
+          .frame(maxWidth: 200)
+          .background(privacidad && terminos ? Color("Secondary") : Color.gray)
+          .cornerRadius(8)
+      }
+      .alert(isPresented: $showAlert) {
         Alert(title: Text("Error"), message: Text("Necesitas subir todos los archivos y aceptar los términos y condiciones."), dismissButton: .default(Text("Aceptar")))
+      }
+      .padding(.top, 30)
+      
     }
-    .padding(.top, 30)
-
+    
   }
-
 }
 
 ///__------------PRINCIPAL--------
@@ -379,6 +395,7 @@ struct CompanyUploadFilesView: View {
     @State var cartaUploaded: Bool = false
     @State private var showAlert = false
 
+  var showPrivacy: () -> Void
 
         private var isFormComplete: Bool {
             return ineUploaded && actaUploaded && curriculumUploaded &&
@@ -404,7 +421,7 @@ struct CompanyUploadFilesView: View {
                     PanelesSection()
                 }
                 SixthSection()
-                SeventhSection(goPending: goPending)
+              SeventhSection(goPending: goPending, privacyPolicy: showPrivacy)
 
             }
             .padding(.vertical, 20)
@@ -419,7 +436,8 @@ struct CompanyUploadFilesView_Previews: PreviewProvider {
             goPending: {},  // función vacía
             goBack: {},     // función vacía
             photovoltaicToggle: .constant(false),
-            solarToggle: .constant(true)
+            solarToggle: .constant(true),
+            showPrivacy: {}
         )
     }
 }
