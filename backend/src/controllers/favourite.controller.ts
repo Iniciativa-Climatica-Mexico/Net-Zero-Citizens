@@ -81,10 +81,10 @@ export const getFavouriteById: RequestHandler<
  */
 
 export const deleteFavouriteById: RequestHandler<
-  NoRecord,
+  { companyId: string; userId: string },
   { rows: number; message: string } | { message: string },
   NoRecord,
-  { companyId: string; userId: string }
+  NoRecord
 > = async (req, res) => {
   try {
     const rows = await FavouriteService.deleteFavouriteById(
