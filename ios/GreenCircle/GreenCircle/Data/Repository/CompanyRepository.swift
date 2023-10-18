@@ -103,7 +103,7 @@ class CompanyRepository: CompanyRepositoryProtocol {
   
   func fetchAllCompanies() async -> PaginatedQuery<Company>? {
     return await service
-      .getRequest(URL(string: "\(CompanyAPI.base)")!)
+      .getRequest(URL(string: "\(CompanyAPI.base)/approved")!)
   }
   
     /// Funcion para llamar al servicio de subir archivos
