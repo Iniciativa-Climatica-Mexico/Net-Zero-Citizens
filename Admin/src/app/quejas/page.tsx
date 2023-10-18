@@ -19,8 +19,6 @@ import {
 } from '@/components/ui/table'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-//import LogoSm from '@/public/images/logo-sm.svg'
-
 import ModalProveedor from '@/components/modalProveedor'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -58,16 +56,9 @@ export default function Home() {
 
   return (
     <main className="border border-[#C1C9D2] m-[30px] mt-[15px] p-[20px] pb-5 rounded-lg">
-      <h1 className="text-[20px] font-bold">Proveedores Reportados: </h1>
-
-      <div className="flex items-center py-4 gap-x-2">
-        <Input
-          placeholder="Busca un proveedor"
-          className="max-w-sm"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </div>
+      <h1 className="text-[20px] font-bold mb-[1rem]">
+        Proveedores Reportados{' '}
+      </h1>
 
       <Table className="border border-[#C1C9D2] rounded">
         <TableCaption></TableCaption>
