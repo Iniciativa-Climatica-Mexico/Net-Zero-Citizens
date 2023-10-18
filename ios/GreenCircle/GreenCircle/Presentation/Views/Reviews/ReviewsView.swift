@@ -29,22 +29,10 @@ struct ReviewsView: View {
                       .font(.system(size: 15))
                       .foregroundColor(Color("BlackCustom"))
                   
-                  HStack(alignment: .top, spacing: 10) {
-                      
-                      StaticStarRatingView(goOpinions: goOpinions).customSectionPadding()
-                      
-                  }
+                  MainButton("Crear Reseña") {  
+                    goOpinions()
+                  }.padding()
                   
-                  VStack {
-                      Text("Escribe una opinión")
-                          .font(.headline)
-                          .foregroundColor(Color("Secondary"))
-                          .onTapGesture {
-                              print(companyId.companyReviewId.companyId)
-                              goOpinions()
-                          }
-                  }
-                  .customSectionPadding()
                   
                   Text("Opiniones del proveedor")
                       .font(.system(size: 24))
