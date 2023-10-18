@@ -62,14 +62,13 @@ const handler = nextAuth({
 
       if (user.login_type === 'credentials') {
         const refresh = user.refresh_token
-        const tokens: refreshTokenResponse = (await axios.post(
-          `${SERVER_BASE_URL}/auth/refresh`,
-          {
+        const tokens: refreshTokenResponse = (
+          await axios.post(`${SERVER_BASE_URL}/auth/refresh`, {
             refreshToken: refresh,
-          }
-        )).data.tokens
-        token.authToken = tokens.authToken
-        token.refreshToken = tokens.refreshToken
+          })
+        ).data
+        token.authToken = tokens.tokens.authToken
+        token.refreshToken = tokens.tokens.refreshToken
         token.user = user
       } else {
         const res: AuthResponse | null = await googleLogin(

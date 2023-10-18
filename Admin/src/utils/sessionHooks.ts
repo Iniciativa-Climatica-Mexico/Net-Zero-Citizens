@@ -57,7 +57,6 @@ export const refreshTokens = async () => {
         console.log(err)
       })
 
-    console.log(res)
     if (res.error) {
       throw Error(`Error updating tokens, ${res.error}`)
     }
