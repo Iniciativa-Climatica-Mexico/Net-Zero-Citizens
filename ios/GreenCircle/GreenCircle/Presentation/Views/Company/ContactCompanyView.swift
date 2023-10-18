@@ -180,6 +180,9 @@ struct CompanyReportView: View {
                 .padding(.bottom, 150)
             }
             .frame(height: screenHeight * 0.40)
+            .onTapGesture {
+              hideKeyboard()
+            }
         }
         .padding(EdgeInsets(top: 230, leading: 20, bottom: 0, trailing: 20))
         .foregroundColor(Color("BlackCustom"))
