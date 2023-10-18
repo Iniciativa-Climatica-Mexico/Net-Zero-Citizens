@@ -27,4 +27,14 @@ class FavouritesAPIClient {
             e.printStackTrace()
         }
     }
+
+    suspend fun unmarkAsFavourite(authToken: String, params: FavouriteRequest) {
+        api = NetworkModel(authToken, FavouritesAPIService::class.java)
+
+        try {
+            api.unmarkAsFavourite(params.companyId, params.userId)
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+    }
 }

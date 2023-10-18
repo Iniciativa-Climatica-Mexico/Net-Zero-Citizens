@@ -53,19 +53,17 @@ class CatalogueViewHolder(
         if (editable) {
             checkBox.setOnClickListener {
                 val userId = recoverSession().uuid
-
+                val params = FavouriteRequest(
+                    userId.toString(),
+                    companySummary.companyId.toString(),
+                )
+                val viewModel = CatalogueViewModel(binding.root.context)
                 if (checkBox.isChecked) {
                     companySummary.isFavourite = true
-
-                    val params = FavouriteRequest(
-                        userId.toString(),
-                        companySummary.companyId.toString(),
-                    )
-
-                    val viewModel = CatalogueViewModel(binding.root.context)
                     viewModel.markAsFavourite(params)
                 } else {
                     companySummary.isFavourite = false
+                    viewModel.unmarkAsFavourite(params)
                 }
             }
         } else {

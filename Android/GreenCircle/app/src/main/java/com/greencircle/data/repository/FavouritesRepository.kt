@@ -14,4 +14,8 @@ class FavouritesRepository {
     suspend fun markAsFavourite(authToken: String, params: FavouriteRequest) {
         api.markAsFavourite(authToken, params)
     }
+
+    suspend fun unmarkAsFavourite(authToken: String, params: FavouriteRequest) {
+        api.unmarkAsFavourite(authToken, params)
+    }
 }

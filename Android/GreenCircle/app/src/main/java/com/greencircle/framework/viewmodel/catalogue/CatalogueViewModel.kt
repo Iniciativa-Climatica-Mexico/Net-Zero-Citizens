@@ -87,7 +87,6 @@ class CatalogueViewModel(context: Context) : ViewModel() {
                 CoroutineScope(Dispatchers.Main).launch {
                     catalogueLiveData.postValue(null)
                 }
-
                 return@launch
             }
 
@@ -95,6 +94,25 @@ class CatalogueViewModel(context: Context) : ViewModel() {
             val favoritesRequirement = FavouritesByUserRequirement()
 
             favoritesRequirement.markAsFavourite(authToken, params)
+        }
+    }
+    /**
+     * Permite mandar las empresas deseleccionadas como favoritas a la base de datos
+     */
+    fun unmarkAsFavourite(params: FavouriteRequest) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val tokens = recoverTokens()
+            if (tokens == null) {
+                CoroutineScope(Dispatchers.Main).launch {
+                    catalogueLiveData.postValue(null)
+                }
+                return@launch
+            }
+
+            val authToken = tokens.authToken
+            val favoritesRequirement = FavouritesByUserRequirement()
+
+            favoritesRequirement.unmarkAsFavourite(authToken, params)
         }
     }
 }

@@ -15,4 +15,9 @@ class FavouritesByUserRequirement {
         Log.d("Params to mark: ", params.toString())
         repository.markAsFavourite(authToken, params)
     }
+
+    suspend fun unmarkAsFavourite(authToken: String, params: FavouriteRequest) {
+        Log.d("Params to mark: ", params.toString())
+        repository.unmarkAsFavourite(authToken, params)
+    }
 }
