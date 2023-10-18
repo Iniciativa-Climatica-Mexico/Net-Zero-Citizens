@@ -79,7 +79,7 @@ class CompanyViewModel: ObservableObject {
             
         } else {
             // El resultado fue nil, manejar según sea necesario
-            print("No se recibió respuesta o hubo un error al cargar el archivo.")
+            debugPrint("Error uploading file")
             // Por ejemplo: mostrar una notificación de error
         }
     }

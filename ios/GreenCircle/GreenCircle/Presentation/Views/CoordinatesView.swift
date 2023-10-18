@@ -32,7 +32,7 @@ struct CoordinatesView: View {
 
     
     var body: some View {
-        Map(coordinateRegion: $region, showsUserLocation: true, userTrackingMode: .constant(isTrackingUserLocation ? .follow : .none), annotationItems: annotations) { annotation in
+      Map(coordinateRegion: $region, showsUserLocation: true, userTrackingMode: .none, annotationItems: annotations) { annotation in
             MapAnnotation(coordinate: annotation.coordinate) {
                 VStack {
                     if annotation.id == selectedAnnotation?.id {
@@ -75,13 +75,15 @@ struct CoordinatesView: View {
             annotation.coordinate = CLLocationCoordinate2D(latitude: company.latitude, longitude: company.longitude)
             return IdentifiablePointAnnotation(annotation: annotation, name: company.name)
         }
-
-        let coordinatesRegion = MKCoordinateRegion(
-            center: CLLocationCoordinate2D(latitude: coordinates.first?.latitude ?? 0, longitude: coordinates.first?.longitude ?? 0),
-            span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
-        )
-
-        region = coordinatesRegion
+        if let centerUser = deviceLocationService.setCenterToUser() {
+            region = centerUser
+        } else {
+            let coordinatesRegion = MKCoordinateRegion(
+              center: CLLocationCoordinate2D(latitude: 19.432608, longitude: -99.133209),
+              span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
+            )
+          region = coordinatesRegion
+        }
     }
     
     func observeCoordinateUpdates() {
@@ -89,7 +91,7 @@ struct CoordinatesView: View {
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 if case .failure(let error) = completion {
-                    print(error)
+                    debugPrint(error)
                 }
             } receiveValue: { coordinates in
                 self.coordinates = (coordinates.latitude, coordinates.longitude)
@@ -101,7 +103,7 @@ struct CoordinatesView: View {
         deviceLocationService.deniedLocationAccessPublisher
             .receive(on: DispatchQueue.main)
             .sink {
-                print("Show some kind of alert to the user")
+                
             }
             .store (in: &tokens)
     }

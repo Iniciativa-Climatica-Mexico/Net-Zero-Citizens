@@ -20,7 +20,7 @@ struct CallTextMenuView: View {
           if UIApplication.shared.canOpenURL(phoneURL) {
             UIApplication.shared.open(phoneURL)
           } else {
-            print("Can't open url on this device")
+            debugPrint("Can't open url on this device")
           }
         }
       } label:  {
