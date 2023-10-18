@@ -101,9 +101,13 @@ export default function Users() {
             <TableCell className="cursor-pointer">{user.email}</TableCell>
             <TableCell
               className="text-right"
-              onClick={() => handleOnDeleteUserClick(user)}
+              onClick={() => {
+                if(user.roleId != 'ADMIN_ROLE_ID') handleOnDeleteUserClick(user)
+              }}
             >
-              <DeleteUsersButton setIsModalOpen={setIsModalOpen} />
+              {user.roleId != 'ADMIN_ROLE_ID' && (
+                <DeleteUsersButton setIsModalOpen={setIsModalOpen} />
+              )}
             </TableCell>
           </TableRow>
         ))}
@@ -129,7 +133,10 @@ export default function Users() {
             placeholder="Busca un usuario"
             className="max-w-sm"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => {
+              setSearchTerm(e.target.value)
+              setCurrentPage(1)
+            }}
           />
         </div>
         {renderTable(paginatedUsers)}
