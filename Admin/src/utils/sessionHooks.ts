@@ -38,10 +38,7 @@ export type refreshTokenResponse = {
 export const refreshTokens = async () => {
   try {
     const session = recoverSession()
-
-    console.log('UPDATING TOKENS')
     const refreshToken = session.refreshToken
-
     const tokens: refreshTokenResponse = await axios
       .post(`${SERVER_BASE_URL}/auth/refresh`, {
         refreshToken,

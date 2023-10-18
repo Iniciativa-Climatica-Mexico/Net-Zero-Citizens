@@ -64,6 +64,7 @@ class FavouritesViewModel(private val context: Context) : ViewModel() {
         favouritesList.forEach { favourite ->
             val company = fetchCompanyData(favourite.companyId.toString())
             company?.let {
+                it.isFavourite = true
                 companies.add(it)
             }
         }

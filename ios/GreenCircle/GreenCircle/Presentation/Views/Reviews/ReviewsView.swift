@@ -115,7 +115,6 @@ struct OpinionsView: View {
                     } else {
                         isError = true
                         isPresented = true
-                        print("Error: \(opinionsViewModel.responsePost)")
                     }
                 }
 

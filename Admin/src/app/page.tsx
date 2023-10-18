@@ -209,7 +209,10 @@ export default function Home() {
             placeholder="Busca un proveedor"
             className="max-w-sm"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => {
+              setSearchTerm(e.target.value)
+              setCurrentPage(1)
+            }}
           />
         </div>
         <Tabs defaultValue="pending_approval" className="sm:flex-row mb-4">

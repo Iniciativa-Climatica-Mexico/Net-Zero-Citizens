@@ -1,5 +1,5 @@
 'use client'
-
+import Link from 'next/link'
 import { QuestionReport, SurveyReport } from '@/api/v1/report'
 import { useState, useEffect } from 'react'
 import { CSVLink } from 'react-csv'
@@ -95,9 +95,16 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
     return (
       <div>
         <div className="flex flex-row items-center justify-between my-8 mx-8">
-          <h1 className="self-start font-extrabold mt-8 mx-8 text-4xl text-txt">
-            {surveyReport.title}
-          </h1>
+          <div>
+            <Link href={'/encuestas/' + surveyReport.surveyId}>
+              <button className="flex items-center justify-center text-primary-base font-bold py-2 px-4 rounded self-end md:mr-32 sm:mr-12">
+                ← Regresar
+              </button>
+            </Link>
+            <h1 className="self-start font-extrabold mt-8 mx-8 text-4xl text-txt">
+              {surveyReport.title}
+            </h1>
+          </div>
           <div className="relative inline-block text-left">
             <button
               onClick={() => setShowDropdown(!showDropdown)}
@@ -200,7 +207,7 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
         </div>
         {(() => {
           return (
-            <div className="flex min-h-[25rem]">
+            <div className="flex min-h-[25rem] pb-8">
               {/* Lado izquierdo de la ventana */}
               <div className="pl-20 w-2/5 flex flex-col justify-between">
                 <QuestionComponent {...question} />
@@ -287,7 +294,7 @@ export function QuestionChartContainer(surveyReport: SurveyReport) {
                             key={index}
                             style={{
                               position: 'absolute',
-                              left: '-99999px',
+                              left: '-290px',
                             }}
                             id={`graph-${index}`}
                           >

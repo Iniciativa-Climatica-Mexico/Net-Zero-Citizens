@@ -19,16 +19,19 @@
             android:id="@+id/company_name"
             android:layout_width="276dp"
             android:layout_height="wrap_content"
+            android:layout_alignTop="@id/company_profile_pic"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="-284dp"
-            android:layout_toStartOf="@id/company_profile_pic"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="-2dp"
+            android:paddingLeft="5dp"
+            android:layout_marginTop="4dp"
+            android:layout_toEndOf="@+id/company_profile_pic"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="Usuario con un nombre muy muy largo Usuario con un nombre muy muy largo"
             android:textAlignment="textStart"
             android:textColor="#333333"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
@@ -37,8 +40,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/company_name"
             android:layout_alignEnd="@id/company_profile_pic"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="-193dp"
+            android:layout_marginTop="8dp"
+
+            android:layout_marginEnd="-170dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="Juriquilla, Querétaro"
@@ -52,8 +56,8 @@
             android:layout_height="50px"
             android:layout_below="@id/company_name"
             android:layout_alignEnd="@id/company_profile_pic"
-            android:layout_marginTop="31dp"
-            android:layout_marginEnd="-39dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="-21dp"
             android:layout_marginBottom="8dp"
             android:src="@drawable/pin_drop_fill0_wght400_grad0_opsz24" />
 
@@ -62,9 +66,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/company_location"
-            android:layout_marginVertical="15dp"
+
             android:layout_marginLeft="23dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:layout_toRightOf="@id/company_rating_bar"
             android:text="4.5"
             android:textAlignment="textStart"
@@ -78,7 +82,7 @@
             android:layout_below="@id/company_location"
             android:layout_alignLeft="@id/company_rating_text"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:text="de 5"
             android:textColor="#333333"
             android:textSize="10sp" />
@@ -89,9 +93,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/company_location"
-            android:layout_marginVertical="15dp"
-            android:layout_marginLeft="21dp"
-            android:layout_marginTop="15dp"
+
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="5dp"
             android:layout_toRightOf="@id/company_profile_pic"
             android:isIndicator="true"
             android:numStars="5"
@@ -102,13 +106,13 @@
             android:id="@+id/mark_as_favourite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+
             android:layout_alignParentEnd="true"
             android:layout_marginLeft="19dp"
-            android:layout_marginTop="-3dp"
-            android:layout_marginEnd="3dp"
-            android:layout_marginRight="-364dp"
-            android:layout_toLeftOf="@id/company_name"
+            android:layout_marginTop="37dp"
+            android:layout_marginEnd="19dp"
+            android:layout_marginRight="-211dp"
+            android:layout_toLeftOf="@id/company_location"
             android:button="@drawable/sl_favourite_24dp"
             android:buttonTint="#589A74" />
 
@@ -119,9 +123,9 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="7dp"
-            android:layout_marginLeft="7dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginTop="-1dp"
             android:layout_marginRight="16dp"
             android:src="@mipmap/ic_launcher" />
         />
