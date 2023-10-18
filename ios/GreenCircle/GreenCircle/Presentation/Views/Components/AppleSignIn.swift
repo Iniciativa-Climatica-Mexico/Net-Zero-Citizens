@@ -61,8 +61,6 @@ struct AppleSignIn: View {
            let appleUserData = try? JSONEncoder().encode(appleUser) {
           UserDefaults.standard.setValue(appleUserData, forKey: appleUser.userId)
           
-          print("saved apple user", appleUser)
-          
           vm.userId = appleUser.userId
           vm.email = appleUser.email
           vm.fullName = "\(appleUser.firstName) \(appleUser.lastName)"
@@ -82,21 +80,14 @@ struct AppleSignIn: View {
         } else {
           
           goMainMenu()
-          
-          guard
-            let appleUserData = UserDefaults.standard.data(forKey: appleIdCredentials.user),
-            let appleUser = try? JSONDecoder().decode(AppleUser.self, from: appleUserData)
-          else { return }
-          
-          print(appleUser)
         }
         
       default:
-        print(auth.credential)
+        break
       }
       
     case .failure(let error):
-      print(error)
+      debugPrint(error)
     }
   }
 }

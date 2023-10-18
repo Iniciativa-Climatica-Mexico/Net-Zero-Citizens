@@ -5,49 +5,44 @@ import ReviewScreen from '@public/images/review-screen.jpg'
 
 export default function SecondaryInfo() {
   return (
-    <section className="px-8 py-12 w-full text-primary-black lg:px-40">
-      <article className="flex flex-col">
+    <section className="px-8 py-12 w-full text-primary-black lg:px-40 flex justify-center items-center">
+      <article className="flex flex-col w-full lg:w-11/12">
         <div className="flex flex-col lg:flex-row justify-between items-center">
           <div className="text-left lg:max-w-md">
             <h2 className="font-semibold text-3xl">
-              Acceso directo a proveedores confiables
+              Acceso directo a proveedores certificados
             </h2>
             <p className="mt-10">
-              Obtén acceso rápido y directo a una red verificada de proveedores
-              de paneles solares de alta calidad.
+              Obtén acceso rápido y directo a un catálogo verificado de
+              proveedores de paneles solares de alta calidad.
             </p>
           </div>
-          <div className="flex justify-center mx-12 mt-10 items-start overflow-hidden w-96 max-w-[30rem] h-80 rounded-lg shadow-lg">
-            <Image
-              className="object-cover -mt-6 lg:-mt-24 w-full h-auto min-h-full"
-              src={'/images/catalogue-screen.jpg'}
-              alt="Catálogo de proveedores"
-              width={0}
-              height={0}
-            />
-          </div>
+          <Image
+            className="object-cover m-9 w-5/6 lg:max-w-sm rounded-lg shadow-lg"
+            src={CatalogueScreen}
+            alt="Catálogo de proveedores"
+            width={800}
+            height={800}
+          />
         </div>
 
-        <div className="flex flex-col mt-12 lg:flex-row justify-between items-center">
-          <div className="flex order-2 lg:order-1 justify-center mx-12 mt-10 items-start overflow-hidden w-96 max-w-[30rem] h-80 rounded-lg shadow-lg">
-            <Image
-              className="object-cover -mt-6 lg:-mt-24 w-full h-auto min-h-full"
-              src={'/images/map-screen.jpg'}
-              alt="Mapa de proveedores"
-              width={0}
-              height={0}
-            />
-          </div>
+        <div className="flex flex-col mt-12 lg:mt-7 lg:flex-row justify-between items-center">
+          <Image
+            className="object-cover m-9 w-5/6 lg:max-w-sm rounded-lg shadow-lg order-2 lg:order-1"
+            src={MapScreen}
+            alt="Mapa de proveedores"
+            width={800}
+            height={800}
+          />
           <div className="text-left lg:max-w-md  order-1 lg:order-2">
             <h2 className="font-semibold text-3xl">Variedad de opciones</h2>
             <p className="mt-10">
-              Explora una amplia gama de paneles y calentadores solares para
-              encontrar la solución perfecta para tu hogar o negocio.
+              ¡Explora a tus proveedores cercanos y escoge la mejor opción!
             </p>
           </div>
         </div>
 
-        <div className="flex flex-col mt-12 lg:flex-row justify-between items-center">
+        <div className="flex flex-col mt-12 lg:mt-7 lg:flex-row justify-between items-center">
           <div className="text-left lg:max-w-md">
             <h2 className="font-semibold text-3xl">
               Contribuye al medio ambiente
@@ -57,15 +52,13 @@ export default function SecondaryInfo() {
               de carbono y a cuidar el medio ambiente.
             </p>
           </div>
-          <div className="flex justify-center mx-12 mt-10 items-start overflow-hidden w-96 max-w-[30rem] h-80 lg:h-[28rem] rounded-lg shadow-lg">
-            <Image
-              className="object-cover -mt-6 lg:-mt-24 w-full h-auto min-h-full"
-              src={'/images/review-screen.jpg'}
-              alt="Reviews"
-              width={0}
-              height={0}
-            />
-          </div>
+          <Image
+            className="object-cover mt-12 lg:mt-7 w-5/6 lg:max-w-sm rounded-lg shadow-lg"
+            src={ReviewScreen}
+            alt="Reviews"
+            width={800}
+            height={800}
+          />
         </div>
       </article>
     </section>

@@ -79,16 +79,11 @@ class CompanyRepository: CompanyRepositoryProtocol {
             ] as [String : Any]
         ]
         
-        do {
-            if let response: CreateCompanyResponse = await service.postRequest(URL(string: "\(CompanyAPI.base)\(CompanyAPI.Routes.create)")!, body: params) {
-                if let companyId = response.companyId {
-                    print("Company id del response: ------- \(companyId)")
-                    LocalService.shared.setCompanyId(companyId: companyId)
-                }
-            }
-        } catch {
-            print("Error posting company: \(error)")
-        }
+          if let response: CreateCompanyResponse = await service.postRequest(URL(string: "\(CompanyAPI.base)\(CompanyAPI.Routes.create)")!, body: params) {
+              if let companyId = response.companyId {
+                  LocalService.shared.setCompanyId(companyId: companyId)
+              }
+          }
     }
 
 
